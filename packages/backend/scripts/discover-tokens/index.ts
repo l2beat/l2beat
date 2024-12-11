@@ -254,7 +254,7 @@ async function main() {
       address,
       coingeckoId: data.coingeckoId,
     })),
-    150,
+    100,
   )
 
   const tokenMarketData = new Map<

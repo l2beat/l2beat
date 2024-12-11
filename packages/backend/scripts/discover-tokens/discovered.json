@@ -3,27 +3,27 @@
     {
       "symbol": "mog",
       "coingeckoId": "mog-coin",
-      "marketCap": 1327150781,
+      "marketCap": 1329400430,
       "circulatingSupply": 390567524379064.56,
       "address": "ethereum:0xaaee1a9723aadb7afa2810263653a34ba2c21c7a",
-      "missingValue": 75350486,
+      "missingValue": 75128866,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 86217064.49154007,
-          "value": 293,
+          "value": 292,
           "project": "arbitrum"
         },
         {
           "address": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
           "balance": 10000000,
-          "value": 34,
+          "value": 33,
           "project": "base"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 22161811682168.473,
-          "value": 75350159,
+          "value": 75128541,
           "project": "base"
         }
       ]
@@ -31,15 +31,15 @@
     {
       "symbol": "morpho",
       "coingeckoId": "morpho",
-      "marketCap": 294124608,
+      "marketCap": 292636410,
       "circulatingSupply": 149167736.3496689,
       "address": "ethereum:0x58d97b57bb95320f9a05dc918aef65434969c2b2",
-      "missingValue": 35162445,
+      "missingValue": 34983955,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 17848957.11462234,
-          "value": 35162445,
+          "value": 34983955,
           "project": "base"
         }
       ]
@@ -47,15 +47,15 @@
     {
       "symbol": "wxm",
       "coingeckoId": "weatherxm-network",
-      "marketCap": 37204903,
+      "marketCap": 37233940,
       "circulatingSupply": 60000001,
       "address": "ethereum:0xde654f497a563dd7a121c176a125dd2f11f13a83",
-      "missingValue": 34917711,
+      "missingValue": 34809304,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 56169405.9038048,
-          "value": 34917711,
+          "value": 34809304,
           "project": "arbitrum"
         }
       ]
@@ -63,15 +63,15 @@
     {
       "symbol": "genome",
       "coingeckoId": "genomesdao-genome",
-      "marketCap": 25708099,
+      "marketCap": 25800211,
       "circulatingSupply": 1000000000,
       "address": "ethereum:0x7ae4f8885f6cfa41a692cb9da3789cfa6a83e9f2",
-      "missingValue": 24446520,
+      "missingValue": 24513522,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 949981889.5699999,
-          "value": 24446520,
+          "value": 24513522,
           "project": "base"
         }
       ]
@@ -79,21 +79,21 @@
     {
       "symbol": "aius",
       "coingeckoId": "arbius",
-      "marketCap": 20236187,
+      "marketCap": 20238035,
       "circulatingSupply": 201581.775324372,
       "address": "ethereum:0x8afe4055ebc86bd2afb3940c0095c9aca511d852",
-      "missingValue": 20887720,
+      "missingValue": 20846165,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 201581.775324372,
-          "value": 20265015,
+          "value": 20224699,
           "project": "arbitrum"
         },
         {
           "address": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
           "balance": 6194.227248777861,
-          "value": 622705,
+          "value": 621466,
           "project": "nova"
         }
       ]
@@ -101,15 +101,15 @@
     {
       "symbol": "f",
       "coingeckoId": "synfutures",
-      "marketCap": 85093156,
+      "marketCap": 85054613,
       "circulatingSupply": 1200000000,
       "address": "ethereum:0x6e15a54b5ecac17e58dadeddbe8506a7560252f9",
-      "missingValue": 19591605,
+      "missingValue": 19583040,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 276284434,
-          "value": 19591605,
+          "value": 19583040,
           "project": "base"
         }
       ]
@@ -117,15 +117,15 @@
     {
       "symbol": "rsc",
       "coingeckoId": "researchcoin",
-      "marketCap": 83030405,
+      "marketCap": 82308150,
       "circulatingSupply": 95539415.67075157,
       "address": "ethereum:0xd101dcc414f310268c37eeb4cd376ccfa507f571",
-      "missingValue": 18955057,
+      "missingValue": 18477569,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 21808102.801144287,
-          "value": 18955057,
+          "value": 18477569,
           "project": "base"
         },
         {
@@ -145,33 +145,33 @@
     {
       "symbol": "ogn",
       "coingeckoId": "origin-protocol",
-      "marketCap": 92107960,
+      "marketCap": 91893635,
       "circulatingSupply": 688996255,
       "address": "ethereum:0x8207c1ffc5b6804f6024322ccf34f29c3541ae26",
-      "missingValue": 12672183,
+      "missingValue": 12601201,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 6951,
-          "value": 929,
+          "value": 924,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 94710194.17373739,
-          "value": 12664363,
+          "value": 12593425,
           "project": "base"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 50569.93884426867,
-          "value": 6762,
+          "value": 6724,
           "project": "degate3"
         },
         {
           "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
           "balance": 965.4442402,
-          "value": 129,
+          "value": 128,
           "project": "loopring"
         }
       ]
@@ -179,15 +179,15 @@
     {
       "symbol": "sexy",
       "coingeckoId": "settled-ethxy-token",
-      "marketCap": 19878361,
+      "marketCap": 20054519,
       "circulatingSupply": 100000000,
       "address": "ethereum:0xc52fafdc900cb92ae01e6e4f8979af7f436e2eb2",
-      "missingValue": 10955136,
+      "missingValue": 11060272,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 55102441.475158796,
-          "value": 10955136,
+          "value": 11060272,
           "project": "base"
         }
       ]
@@ -195,21 +195,21 @@
     {
       "symbol": "eusd",
       "coingeckoId": "electronic-usd",
-      "marketCap": 21711820,
+      "marketCap": 21694432,
       "circulatingSupply": 21710249.81729685,
       "address": "ethereum:0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f",
-      "missingValue": 9201958,
+      "missingValue": 9197946,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 1202054.9467331031,
-          "value": 1202054,
+          "value": 1201530,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 7999904.403272736,
-          "value": 7999904,
+          "value": 7996416,
           "project": "base"
         },
         {
@@ -223,7 +223,7 @@
     {
       "symbol": "pro",
       "coingeckoId": "propy",
-      "marketCap": 81496657,
+      "marketCap": 81799075,
       "circulatingSupply": 57896591.39105386,
       "address": "ethereum:0x226bb599a12c826476e3a771454697ea52e9e220",
       "missingValue": 8283789,
@@ -239,15 +239,15 @@
     {
       "symbol": "imgnai",
       "coingeckoId": "imgnai",
-      "marketCap": 11199772,
+      "marketCap": 11207053,
       "circulatingSupply": 777193333.2,
       "address": "ethereum:0xa735a3af76cc30791c61c10d585833829d36cbe0",
-      "missingValue": 7693431,
+      "missingValue": 7689785,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 533789357.2823597,
-          "value": 7693431,
+          "value": 7689785,
           "project": "base"
         }
       ]
@@ -255,15 +255,15 @@
     {
       "symbol": "sqt",
       "coingeckoId": "subquery-network",
-      "marketCap": 12946113,
+      "marketCap": 13004093,
       "circulatingSupply": 1948640419.678138,
       "address": "ethereum:0x09395a2a58db45db0da254c7eaa5ac469d8bdc85",
-      "missingValue": 6893553,
+      "missingValue": 6934504,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1036997232.1795791,
-          "value": 6893553,
+          "value": 6934504,
           "project": "base"
         }
       ]
@@ -271,15 +271,15 @@
     {
       "symbol": "gods",
       "coingeckoId": "gods-unchained",
-      "marketCap": 90229968,
+      "marketCap": 90366529,
       "circulatingSupply": 336527779.0649,
       "address": "ethereum:0xccc8cb5229b0ac8069c51fd58367fd1e622afd97",
-      "missingValue": 6358906,
+      "missingValue": 6371761,
       "escrows": [
         {
           "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "balance": 23716997.48309662,
-          "value": 6358906,
+          "value": 6371761,
           "project": "immutablex"
         }
       ]
@@ -287,15 +287,15 @@
     {
       "symbol": "fox",
       "coingeckoId": "shapeshift-fox-token",
-      "marketCap": 58011959,
+      "marketCap": 59559122,
       "circulatingSupply": 622358923.5571277,
       "address": "ethereum:0xc770eefad204b5180df6a14ee197d99d808ee52d",
-      "missingValue": 6088994,
+      "missingValue": 6260483,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 62371396.60589951,
-          "value": 5822182,
+          "value": 5986157,
           "project": "arbitrum"
         },
         {
@@ -313,13 +313,13 @@
         {
           "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "balance": 5244.657852902637,
-          "value": 489,
+          "value": 503,
           "project": "linea"
         },
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 2852832.2884210534,
-          "value": 266303,
+          "value": 273803,
           "project": "optimism"
         }
       ]
@@ -327,15 +327,15 @@
     {
       "symbol": "pumpbtc",
       "coingeckoId": "pumpbtc",
-      "marketCap": 285313827,
-      "circulatingSupply": 2925.05165621,
+      "marketCap": 284762373,
+      "circulatingSupply": 2925.05296604,
       "address": "ethereum:0xf469fbd2abcd6b9de8e169d128226c0fc90a012e",
-      "missingValue": 6029698,
+      "missingValue": 6014553,
       "escrows": [
         {
           "address": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67",
           "balance": 61.81769974,
-          "value": 6029698,
+          "value": 6014553,
           "project": "fuel"
         }
       ]
@@ -343,27 +343,27 @@
     {
       "symbol": "dog",
       "coingeckoId": "the-doge-nft",
-      "marketCap": 62547716,
+      "marketCap": 61900773,
       "circulatingSupply": 14931612637.896536,
       "address": "ethereum:0xbaac2b4491727d78d2b78815144570b9f2fe8899",
-      "missingValue": 4795360,
+      "missingValue": 4737337,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 40036760.307622485,
-          "value": 167791,
+          "value": 165761,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1104095122.9397786,
-          "value": 4627196,
+          "value": 4571207,
           "project": "base"
         },
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 89205.93225098662,
-          "value": 373,
+          "value": 369,
           "project": "optimism"
         }
       ]
@@ -371,27 +371,27 @@
     {
       "symbol": "ali",
       "coingeckoId": "alethea-artificial-liquid-intelligence-token",
-      "marketCap": 127428377,
+      "marketCap": 128316440,
       "circulatingSupply": 8189833601.855413,
       "address": "ethereum:0x6b0b3a982b4634ac68dd83a4dbf02311ce324181",
-      "missingValue": 3571419,
+      "missingValue": 3597689,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 26672.206449719524,
-          "value": 414,
+          "value": 417,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 229570681.0274041,
-          "value": 3570687,
+          "value": 3596952,
           "project": "base"
         },
         {
           "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
           "balance": 20465.012717979185,
-          "value": 318,
+          "value": 320,
           "project": "zksync2"
         }
       ]
@@ -399,21 +399,21 @@
     {
       "symbol": "om",
       "coingeckoId": "mantra-dao",
-      "marketCap": 3837366382,
-      "circulatingSupply": 943871799.7999998,
+      "marketCap": 3951187241,
+      "circulatingSupply": 943877471.4399997,
       "address": "ethereum:0x3593d125a4f7849a1b059e64f4517a86dd60c95d",
-      "missingValue": 3123294,
+      "missingValue": 3207707,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 10,
-          "value": 40,
+          "value": 41,
           "project": "astarzkevm"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 767384.3348670561,
-          "value": 3123254,
+          "value": 3207666,
           "project": "base"
         }
       ]
@@ -421,15 +421,15 @@
     {
       "symbol": "eth+",
       "coingeckoId": "reserve-protocol-eth-plus",
-      "marketCap": 198884142,
+      "marketCap": 199450084,
       "circulatingSupply": 52070.68677458956,
       "address": "ethereum:0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
-      "missingValue": 3023305,
+      "missingValue": 3025908,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 790.9361241652875,
-          "value": 3023305,
+          "value": 3025908,
           "project": "arbitrum"
         }
       ]
@@ -437,10 +437,10 @@
     {
       "symbol": "bitcoin",
       "coingeckoId": "harrypotterobamasonic10in",
-      "marketCap": 259308204,
+      "marketCap": 258448607,
       "circulatingSupply": 999798155,
       "address": "ethereum:0x72e4f9f808c49a2a61de9c5896298920dc4eeea9",
-      "missingValue": 2956621,
+      "missingValue": 2944960,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -451,7 +451,7 @@
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 12926.34825235,
-          "value": 3353,
+          "value": 3339,
           "project": "astarzkevm"
         },
         {
@@ -463,13 +463,13 @@
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 11379553.93598028,
-          "value": 2951799,
+          "value": 2940158,
           "project": "base"
         },
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 1040.491,
-          "value": 269,
+          "value": 268,
           "project": "cronoszkevm"
         },
         {
@@ -481,7 +481,7 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 4529.79924645,
-          "value": 1175,
+          "value": 1170,
           "project": "optimism"
         },
         {
@@ -507,15 +507,15 @@
     {
       "symbol": "dodo",
       "coingeckoId": "dodo",
-      "marketCap": 129425288,
+      "marketCap": 129483822,
       "circulatingSupply": 725703404.35,
       "address": "ethereum:0x43dfc4159d86f3a37a5a4b3d4580b888ad7d4ddd",
-      "missingValue": 2811722,
+      "missingValue": 2811486,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 11264828.22022745,
-          "value": 2009104,
+          "value": 2008935,
           "project": "arbitrum"
         },
         {
@@ -527,13 +527,13 @@
         {
           "address": "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00",
           "balance": 1473900.6359539991,
-          "value": 262873,
+          "value": 262851,
           "project": "bobanetwork"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 1536548.45837663,
-          "value": 274046,
+          "value": 274023,
           "project": "degate3"
         },
         {
@@ -551,7 +551,7 @@
         {
           "address": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
           "balance": 1463656.6460439635,
-          "value": 261046,
+          "value": 261024,
           "project": "scroll"
         },
         {
@@ -571,15 +571,15 @@
     {
       "symbol": "rbc",
       "coingeckoId": "rubic",
-      "marketCap": 10236000,
+      "marketCap": 10395222,
       "circulatingSupply": 188190547.559481,
       "address": "ethereum:0x3330bfb7332ca23cd071631837dc289b09c33333",
-      "missingValue": 2738401,
+      "missingValue": 2778349,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 50185130.18795397,
-          "value": 2738401,
+          "value": 2778349,
           "project": "arbitrum"
         }
       ]
@@ -587,15 +587,15 @@
     {
       "symbol": "botto",
       "coingeckoId": "botto",
-      "marketCap": 31742776,
+      "marketCap": 31763984,
       "circulatingSupply": 43069833.1510375,
       "address": "ethereum:0x9dfad1b7102d46b1b197b90095b5c4e9f5845bba",
-      "missingValue": 2484772,
+      "missingValue": 2481137,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 3365806.3541857027,
-          "value": 2484772,
+          "value": 2481137,
           "project": "base"
         }
       ]
@@ -603,7 +603,7 @@
     {
       "symbol": "olas",
       "coingeckoId": "autonolas",
-      "marketCap": 135981763,
+      "marketCap": 136091461,
       "circulatingSupply": 73222874.48943396,
       "address": "ethereum:0x0001a500a6b18995b03f44bb040a5ffc28e45cb0",
       "missingValue": 2356131,
@@ -649,15 +649,15 @@
     {
       "symbol": "moon",
       "coingeckoId": "moon",
-      "marketCap": 20339664,
+      "marketCap": 20193553,
       "circulatingSupply": 79457249.40074055,
       "address": "ethereum:0xb2490e357980ce57bf5745e181e537a64eb367b1",
-      "missingValue": 2239627,
+      "missingValue": 2203693,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 8658877.584389403,
-          "value": 2239627,
+          "value": 2203693,
           "project": "arbitrum"
         }
       ]
@@ -665,15 +665,15 @@
     {
       "symbol": "df",
       "coingeckoId": "dforce-token",
-      "marketCap": 40561408,
+      "marketCap": 40862310,
       "circulatingSupply": 999926146.6275177,
       "address": "ethereum:0x431ad2ff6a9c365805ebad47ee021148d6f7dbe0",
-      "missingValue": 2163070,
+      "missingValue": 2178336,
       "escrows": [
         {
           "address": "0xcEe284F754E854890e311e3280b767F80797180d",
           "balance": 39810775.78307824,
-          "value": 1614923,
+          "value": 1626321,
           "project": "arbitrum"
         },
         {
@@ -685,7 +685,7 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 13512588.280126078,
-          "value": 548138,
+          "value": 552006,
           "project": "optimism"
         }
       ]
@@ -693,10 +693,10 @@
     {
       "symbol": "psp",
       "coingeckoId": "paraswap",
-      "marketCap": 37267217,
+      "marketCap": 37314855,
       "circulatingSupply": 1542076010.3136098,
       "address": "ethereum:0xcafe001067cdef266afb7eb5a286dcfd277f3de5",
-      "missingValue": 2073199,
+      "missingValue": 2073500,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -707,7 +707,7 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 85721538.58498855,
-          "value": 2072723,
+          "value": 2073024,
           "project": "optimism"
         },
         {
@@ -721,15 +721,15 @@
     {
       "symbol": "lrds",
       "coingeckoId": "blocklords",
-      "marketCap": 15028735,
+      "marketCap": 15022014,
       "circulatingSupply": 21697592.096204706,
       "address": "ethereum:0xd0a6053f087e87a25dc60701ba6e663b1a548e85",
-      "missingValue": 2005972,
+      "missingValue": 2006299,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 2896104.6723626456,
-          "value": 2005972,
+          "value": 2006299,
           "project": "base"
         }
       ]
@@ -737,15 +737,15 @@
     {
       "symbol": "lmr",
       "coingeckoId": "lumerin",
-      "marketCap": 12983449,
+      "marketCap": 12980081,
       "circulatingSupply": 632542485.8069749,
       "address": "ethereum:0x4b1d0b9f081468d780ca1d5d79132b64301085d1",
-      "missingValue": 1975900,
+      "missingValue": 1974263,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 96214561.97498444,
-          "value": 1975900,
+          "value": 1974263,
           "project": "arbitrum"
         }
       ]
@@ -753,21 +753,21 @@
     {
       "symbol": "axgt",
       "coingeckoId": "axondao-governance-token",
-      "marketCap": 68300355,
+      "marketCap": 66149207,
       "circulatingSupply": 193461228.2249159,
       "address": "ethereum:0xdd66781d0e9a08d4fbb5ec7bac80b691be27f21d",
-      "missingValue": 1854039,
+      "missingValue": 1793170,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 1386815.6432145734,
-          "value": 490016,
+          "value": 473928,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 3860381.6671391986,
-          "value": 1364023,
+          "value": 1319242,
           "project": "base"
         }
       ]
@@ -775,15 +775,15 @@
     {
       "symbol": "hunt",
       "coingeckoId": "hunt-token",
-      "marketCap": 70986084,
+      "marketCap": 71636365,
       "circulatingSupply": 198912688,
       "address": "ethereum:0x9aab071b4129b083b01cb5a0cb513ce7eca26fa5",
-      "missingValue": 1734616,
+      "missingValue": 1758090,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 4865151.325589193,
-          "value": 1734616,
+          "value": 1758090,
           "project": "base"
         }
       ]
@@ -791,15 +791,15 @@
     {
       "symbol": "cah",
       "coingeckoId": "moon-tropica",
-      "marketCap": 51569889,
+      "marketCap": 51580439,
       "circulatingSupply": 2805380.50822399,
       "address": "ethereum:0x8e0e57dcb1ce8d9091df38ec1bfc3b224529754a",
-      "missingValue": 1641344,
+      "missingValue": 1640451,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 89274.57594919809,
-          "value": 1640866,
+          "value": 1639973,
           "project": "arbitrum"
         },
         {
@@ -813,10 +813,10 @@
     {
       "symbol": "ghst",
       "coingeckoId": "aavegotchi",
-      "marketCap": 62926030,
+      "marketCap": 63231913,
       "circulatingSupply": 51157239.2140685,
       "address": "ethereum:0x3f382dbd960e3a9bbceae22651e88158d2791550",
-      "missingValue": 1561230,
+      "missingValue": 1573923,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -827,7 +827,7 @@
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1269287.4152284595,
-          "value": 1561223,
+          "value": 1573916,
           "project": "base"
         }
       ]
@@ -835,33 +835,33 @@
     {
       "symbol": "ovr",
       "coingeckoId": "ovr",
-      "marketCap": 15723526,
+      "marketCap": 15781626,
       "circulatingSupply": 51265344,
       "address": "ethereum:0x21bfbda47a0b4b5b1248c767ee49f7caa9b23697",
-      "missingValue": 1459546,
+      "missingValue": 1464743,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 1076.8011228969829,
-          "value": 330,
+          "value": 331,
           "project": "arbitrum"
         },
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 812.36203228,
-          "value": 249,
+          "value": 250,
           "project": "astarzkevm"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 4676915.583964455,
-          "value": 1434452,
+          "value": 1439559,
           "project": "base"
         },
         {
           "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
           "balance": 79931.99769803172,
-          "value": 24515,
+          "value": 24603,
           "project": "loopring"
         }
       ]
@@ -869,15 +869,15 @@
     {
       "symbol": "lon",
       "coingeckoId": "tokenlon",
-      "marketCap": 100777717,
+      "marketCap": 101840210,
       "circulatingSupply": 115302598.8337984,
       "address": "ethereum:0x0000000000095413afc295d19edeb1ad7b71c952",
-      "missingValue": 1242700,
+      "missingValue": 1255801,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 1421268.8471162005,
-          "value": 1242208,
+          "value": 1255305,
           "project": "arbitrum"
         },
         {
@@ -889,7 +889,7 @@
         {
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "balance": 535.4786951156646,
-          "value": 468,
+          "value": 472,
           "project": "zksync"
         }
       ]
@@ -897,15 +897,15 @@
     {
       "symbol": "puffer",
       "coingeckoId": "puffer-finance",
-      "marketCap": 82718289,
+      "marketCap": 83150525,
       "circulatingSupply": 102300000,
       "address": "ethereum:0x4d1c297d39c5c1277964d0e3f8aa901493664530",
-      "missingValue": 1059685,
+      "missingValue": 1062763,
       "escrows": [
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 1309621.4015109,
-          "value": 1059685,
+          "value": 1062763,
           "project": "degate3"
         }
       ]
@@ -913,21 +913,21 @@
     {
       "symbol": "ctx",
       "coingeckoId": "cryptex-finance",
-      "marketCap": 20732319,
+      "marketCap": 20839838,
       "circulatingSupply": 6930471.882826732,
       "address": "ethereum:0x321c2fe4446c7c963dc41dd58879af648838f98d",
-      "missingValue": 1048691,
+      "missingValue": 1052185,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 20084.678403271348,
-          "value": 60254,
+          "value": 60454,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 329479.0407204782,
-          "value": 988437,
+          "value": 991731,
           "project": "base"
         }
       ]
@@ -935,27 +935,27 @@
     {
       "symbol": "vita",
       "coingeckoId": "vitadao",
-      "marketCap": 105515458,
+      "marketCap": 105594313,
       "circulatingSupply": 25726413.907210253,
       "address": "ethereum:0x81f8f0bb1cb2a06649e51913a151f0e7ef6fa321",
-      "missingValue": 1037449,
+      "missingValue": 1034925,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 105,
-          "value": 431,
+          "value": 430,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 177502.92703038928,
-          "value": 729537,
+          "value": 727762,
           "project": "base"
         },
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 74813.09554071147,
-          "value": 307481,
+          "value": 306733,
           "project": "optimism"
         },
         {
@@ -997,21 +997,21 @@
     {
       "symbol": "nfd",
       "coingeckoId": "feisty-doge-nft",
-      "marketCap": 12699248,
+      "marketCap": 12717189,
       "circulatingSupply": 56042983567.15788,
       "address": "ethereum:0xdfdb7f72c1f195c5951a234e8db9806eb0635346",
-      "missingValue": 925367,
+      "missingValue": 925611,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 2878819892.562648,
-          "value": 653089,
+          "value": 653261,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1200206164.3113904,
-          "value": 272278,
+          "value": 272350,
           "project": "base"
         }
       ]
@@ -1019,21 +1019,21 @@
     {
       "symbol": "kibshi",
       "coingeckoId": "kiboshib",
-      "marketCap": 30084486,
+      "marketCap": 29872071,
       "circulatingSupply": 1000000000000,
       "address": "ethereum:0x02e7f808990638e9e67e1f00313037ede2362361",
-      "missingValue": 900598,
+      "missingValue": 895796,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 9299676498.080286,
-          "value": 279083,
+          "value": 277595,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 20710275198.09742,
-          "value": 621515,
+          "value": 618201,
           "project": "base"
         }
       ]
@@ -1041,15 +1041,15 @@
     {
       "symbol": "t",
       "coingeckoId": "threshold-network-token",
-      "marketCap": 309980340,
+      "marketCap": 313332712,
       "circulatingSupply": 10040293394.8759,
       "address": "ethereum:0xcdf7028ceab81fa0c6971208e83fa7872994bee5",
-      "missingValue": 834729,
+      "missingValue": 840482,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 571508.7703479616,
-          "value": 17679,
+          "value": 17800,
           "project": "arbitrum"
         },
         {
@@ -1061,19 +1061,19 @@
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 21687044.707733866,
-          "value": 670866,
+          "value": 675490,
           "project": "base"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 177999.3,
-          "value": 5506,
+          "value": 5544,
           "project": "degate3"
         },
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 4547710.742054119,
-          "value": 140678,
+          "value": 141648,
           "project": "optimism"
         },
         {
@@ -1087,21 +1087,21 @@
     {
       "symbol": "quick",
       "coingeckoId": "quickswap",
-      "marketCap": 39698795,
+      "marketCap": 40016144,
       "circulatingSupply": 741541532.369254,
       "address": "ethereum:0xd2ba23de8a19316a638dc1e7a9adda1d74233368",
-      "missingValue": 706975,
+      "missingValue": 710292,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 10609502.51561781,
-          "value": 569730,
+          "value": 572403,
           "project": "astarzkevm"
         },
         {
           "address": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
           "balance": 2555782.7058,
-          "value": 137245,
+          "value": 137889,
           "project": "mantapacific"
         }
       ]
@@ -1109,15 +1109,15 @@
     {
       "symbol": "zyn",
       "coingeckoId": "zyncoin-2",
-      "marketCap": 26071524,
+      "marketCap": 25991784,
       "circulatingSupply": 903820451.875591,
       "address": "ethereum:0x58cb30368ceb2d194740b144eab4c2da8a917dcb",
-      "missingValue": 663452,
+      "missingValue": 663820,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 23124981.678602297,
-          "value": 663452,
+          "value": 663820,
           "project": "base"
         }
       ]
@@ -1125,15 +1125,15 @@
     {
       "symbol": "pre",
       "coingeckoId": "presearch",
-      "marketCap": 10184410,
+      "marketCap": 10188925,
       "circulatingSupply": 590000000,
       "address": "ethereum:0xec213f83defb583af3a000b1c0ada660b1902a0f",
-      "missingValue": 661838,
+      "missingValue": 663155,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 38341445.811945945,
-          "value": 661838,
+          "value": 663155,
           "project": "base"
         }
       ]
@@ -1141,15 +1141,15 @@
     {
       "symbol": "opn",
       "coingeckoId": "open-ticketing-ecosystem",
-      "marketCap": 26227426,
+      "marketCap": 26211497,
       "circulatingSupply": 22926928000,
       "address": "ethereum:0xc28eb2250d1ae32c7e74cfb6d6b86afc9beb6509",
-      "missingValue": 632121,
+      "missingValue": 630763,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 552042166.3834199,
-          "value": 632121,
+          "value": 630763,
           "project": "base"
         }
       ]
@@ -1191,10 +1191,10 @@
     {
       "symbol": "kompete",
       "coingeckoId": "kompete",
-      "marketCap": 12884100,
+      "marketCap": 12907747,
       "circulatingSupply": 676137487,
       "address": "ethereum:0x1e0b2992079b620aa13a7c2e7c88d2e1e18e46e9",
-      "missingValue": 547533,
+      "missingValue": 547877,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -1205,7 +1205,7 @@
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 28728118.716849,
-          "value": 547533,
+          "value": 547877,
           "project": "base"
         }
       ]
@@ -1213,15 +1213,15 @@
     {
       "symbol": "bkn",
       "coingeckoId": "brickken",
-      "marketCap": 36340921,
+      "marketCap": 36488384,
       "circulatingSupply": 75107394.14977726,
       "address": "ethereum:0x0a638f07acc6969abf392bb009f216d22adea36d",
-      "missingValue": 533221,
+      "missingValue": 535034,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1102061.543859685,
-          "value": 533221,
+          "value": 535034,
           "project": "base"
         }
       ]
@@ -1229,27 +1229,27 @@
     {
       "symbol": "wampl",
       "coingeckoId": "wrapped-ampleforth",
-      "marketCap": 20157728,
-      "circulatingSupply": 781511.5490528276,
+      "marketCap": 20178110,
+      "circulatingSupply": 780100.7120270608,
       "address": "ethereum:0xedb171c18ce90b633db442f2a6f72874093b49ef",
-      "missingValue": 525716,
+      "missingValue": 526736,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 5.804255966188123,
-          "value": 149,
+          "value": 150,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 20242.71456499104,
-          "value": 522666,
+          "value": 523679,
           "project": "base"
         },
         {
           "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
           "balance": 112.38719302,
-          "value": 2901,
+          "value": 2907,
           "project": "deversifi"
         }
       ]
@@ -1257,15 +1257,15 @@
     {
       "symbol": "gtc",
       "coingeckoId": "gitcoin",
-      "marketCap": 63079139,
+      "marketCap": 63450519,
       "circulatingSupply": 60863371.560695864,
       "address": "ethereum:0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
-      "missingValue": 511874,
+      "missingValue": 511383,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 306812.16764276754,
-          "value": 320005,
+          "value": 319698,
           "project": "arbitrum"
         },
         {
@@ -1289,7 +1289,7 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 6220.02,
-          "value": 6487,
+          "value": 6481,
           "project": "degate3"
         },
         {
@@ -1313,13 +1313,13 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 169968.01358194734,
-          "value": 177276,
+          "value": 177106,
           "project": "optimism"
         },
         {
           "address": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
           "balance": 5662.71137463,
-          "value": 5906,
+          "value": 5900,
           "project": "publicgoodsnetwork"
         },
         {
@@ -1331,7 +1331,7 @@
         {
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "balance": 1851.4050719620573,
-          "value": 1931,
+          "value": 1929,
           "project": "zksync"
         }
       ]
@@ -1339,10 +1339,10 @@
     {
       "symbol": "scrvusd",
       "coingeckoId": "savings-crvusd",
-      "marketCap": 18755593,
+      "marketCap": 18749531,
       "circulatingSupply": 18429428.02781276,
       "address": "ethereum:0x0655977feb2f289a4ab78af67bab0d17aab84367",
-      "missingValue": 508160,
+      "missingValue": 507162,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -1353,7 +1353,7 @@
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 496828.15248532523,
-          "value": 505771,
+          "value": 504777,
           "project": "base"
         },
         {
@@ -1365,7 +1365,7 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 2173.318761343989,
-          "value": 2212,
+          "value": 2208,
           "project": "optimism"
         },
         {
@@ -1379,21 +1379,21 @@
     {
       "symbol": "waac",
       "coingeckoId": "wrapped-ayeayecoin",
-      "marketCap": 14733003,
+      "marketCap": 15526885,
       "circulatingSupply": 6000000,
       "address": "ethereum:0x30ae41d5f9988d359c733232c6c693c0e645c77e",
-      "missingValue": 440718,
+      "missingValue": 458276,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 1000,
-          "value": 2510,
+          "value": 2610,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 174585,
-          "value": 438208,
+          "value": 455666,
           "project": "base"
         }
       ]
@@ -1401,15 +1401,15 @@
     {
       "symbol": "stfx",
       "coingeckoId": "stfx",
-      "marketCap": 11715623,
+      "marketCap": 11770687,
       "circulatingSupply": 650000000,
       "address": "ethereum:0x9343e24716659a3551eb10aff9472a2dcad5db2d",
-      "missingValue": 395167,
+      "missingValue": 394868,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 21821041.419945598,
-          "value": 395167,
+          "value": 394868,
           "project": "arbitrum"
         }
       ]
@@ -1417,15 +1417,15 @@
     {
       "symbol": "pork",
       "coingeckoId": "pepefork",
-      "marketCap": 42767680,
+      "marketCap": 42825634,
       "circulatingSupply": 330429888448095,
       "address": "ethereum:0xb9f599ce614feb2e1bbe58f180f370d05b39344e",
-      "missingValue": 388896,
+      "missingValue": 388812,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 3002443806471.2026,
-          "value": 388600,
+          "value": 388516,
           "project": "arbitrum"
         },
         {
@@ -1445,45 +1445,45 @@
     {
       "symbol": "trb",
       "coingeckoId": "tellor",
-      "marketCap": 189460521,
+      "marketCap": 189800656,
       "circulatingSupply": 2634518.7409692425,
       "address": "ethereum:0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0",
-      "missingValue": 373190,
+      "missingValue": 373135,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 495.15,
-          "value": 35621,
+          "value": 35616,
           "project": "arbitrum"
         },
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 243,
-          "value": 17481,
+          "value": 17478,
           "project": "astarzkevm"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 77,
-          "value": 5539,
+          "value": 5538,
           "project": "base"
         },
         {
           "address": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
           "balance": 350,
-          "value": 25179,
+          "value": 25175,
           "project": "bob"
         },
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 33,
-          "value": 2374,
+          "value": 2373,
           "project": "cronoszkevm"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 111.40536049288538,
-          "value": 8014,
+          "value": 8013,
           "project": "degate3"
         },
         {
@@ -1501,7 +1501,7 @@
         {
           "address": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
           "balance": 150,
-          "value": 10791,
+          "value": 10789,
           "project": "lisk"
         },
         {
@@ -1513,19 +1513,19 @@
         {
           "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
           "balance": 641.01,
-          "value": 46114,
+          "value": 46107,
           "project": "mantle"
         },
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 2050.0162201241715,
-          "value": 147478,
+          "value": 147457,
           "project": "optimism"
         },
         {
           "address": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
           "balance": 946,
-          "value": 68055,
+          "value": 68045,
           "project": "scroll"
         },
         {
@@ -1539,15 +1539,15 @@
     {
       "symbol": "neiro",
       "coingeckoId": "neiro-3",
-      "marketCap": 684077921,
+      "marketCap": 688633324,
       "circulatingSupply": 420690000000,
       "address": "ethereum:0x812ba41e071c7b7fa4ebcfb62df5f45f6fa853ee",
-      "missingValue": 348948,
+      "missingValue": 350955,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 214610992.17989558,
-          "value": 348948,
+          "value": 350955,
           "project": "base"
         }
       ]
@@ -1555,15 +1555,15 @@
     {
       "symbol": "trade",
       "coingeckoId": "polytrade",
-      "marketCap": 29151799,
+      "marketCap": 29250991,
       "circulatingSupply": 39601392,
       "address": "ethereum:0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1",
-      "missingValue": 335458,
+      "missingValue": 336228,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 455448.998222843,
-          "value": 335438,
+          "value": 336208,
           "project": "arbitrum"
         },
         {
@@ -1583,10 +1583,10 @@
     {
       "symbol": "storj",
       "coingeckoId": "storj",
-      "marketCap": 81260448,
+      "marketCap": 81283476,
       "circulatingSupply": 143787438.7,
       "address": "ethereum:0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
-      "missingValue": 329306,
+      "missingValue": 328676,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -1597,13 +1597,13 @@
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 232911.69566254,
-          "value": 131693,
+          "value": 131441,
           "project": "cronoszkevm"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 10356.78046826,
-          "value": 5855,
+          "value": 5844,
           "project": "degate3"
         },
         {
@@ -1621,7 +1621,7 @@
         {
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "balance": 339141.6318165,
-          "value": 191758,
+          "value": 191391,
           "project": "zksync"
         }
       ]
@@ -1629,27 +1629,27 @@
     {
       "symbol": "cow",
       "coingeckoId": "cow-protocol",
-      "marketCap": 118586356,
+      "marketCap": 119141079,
       "circulatingSupply": 274973134.1915748,
       "address": "ethereum:0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab",
-      "missingValue": 314180,
+      "missingValue": 313917,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 543796.6760046096,
-          "value": 235068,
+          "value": 234871,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 135945.6403519454,
-          "value": 58765,
+          "value": 58716,
           "project": "base"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 47070.8412,
-          "value": 20347,
+          "value": 20330,
           "project": "degate3"
         }
       ]
@@ -1657,21 +1657,21 @@
     {
       "symbol": "foom",
       "coingeckoId": "foom",
-      "marketCap": 12385958,
+      "marketCap": 12432133,
       "circulatingSupply": 175000000000000,
       "address": "ethereum:0xd0d56273290d339aaf1417d9bfa1bb8cfe8a0933",
-      "missingValue": 288338,
+      "missingValue": 289312,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 4061374097302.162,
-          "value": 287366,
+          "value": 288337,
           "project": "arbitrum"
         },
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 13744578071,
-          "value": 972,
+          "value": 975,
           "project": "astarzkevm"
         }
       ]
@@ -1679,21 +1679,21 @@
     {
       "symbol": "smt",
       "coingeckoId": "swarm-markets",
-      "marketCap": 28053387,
+      "marketCap": 27993453,
       "circulatingSupply": 82545900.2312267,
       "address": "ethereum:0xb17548c7b510427baac4e267bea62e800b247173",
-      "missingValue": 219055,
+      "missingValue": 218298,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 6414.116393458728,
-          "value": 2181,
+          "value": 2173,
           "project": "astarzkevm"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 637715.0346039918,
-          "value": 216874,
+          "value": 216125,
           "project": "base"
         }
       ]
@@ -1701,10 +1701,10 @@
     {
       "symbol": "pyusd",
       "coingeckoId": "paypal-usd",
-      "marketCap": 505133625,
+      "marketCap": 505168803,
       "circulatingSupply": 505251569.380113,
       "address": "ethereum:0x6c3ea9036406852006290770bedfcaba0e23a0e8",
-      "missingValue": 201771,
+      "missingValue": 201654,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -1727,7 +1727,7 @@
         {
           "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
           "balance": 201780.171841,
-          "value": 201758,
+          "value": 201641,
           "project": "fraxtal"
         }
       ]
@@ -1735,15 +1735,15 @@
     {
       "symbol": "mln",
       "coingeckoId": "melon",
-      "marketCap": 33614213,
+      "marketCap": 33614481,
       "circulatingSupply": 1453963.5545523514,
       "address": "ethereum:0xec67005c4e498ec7f55e092bd1d35cbc47c91892",
-      "missingValue": 200500,
+      "missingValue": 199980,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 8540.37147537555,
-          "value": 197795,
+          "value": 197282,
           "project": "arbitrum"
         },
         {
@@ -1755,7 +1755,7 @@
         {
           "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
           "balance": 115.80558404,
-          "value": 2682,
+          "value": 2675,
           "project": "deversifi"
         }
       ]
@@ -1763,27 +1763,27 @@
     {
       "symbol": "pnk",
       "coingeckoId": "kleros",
-      "marketCap": 16561095,
+      "marketCap": 16577788,
       "circulatingSupply": 724189581.4548858,
       "address": "ethereum:0x93ed3fbe21207ec2e8f2d3c3de6e058cb73bc04d",
-      "missingValue": 195134,
+      "missingValue": 194840,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 8337563.453025895,
-          "value": 190823,
+          "value": 190535,
           "project": "arbitrum"
         },
         {
           "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
           "balance": 94848.66044153982,
-          "value": 2170,
+          "value": 2167,
           "project": "loopring"
         },
         {
           "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
           "balance": 93571.27213031,
-          "value": 2141,
+          "value": 2138,
           "project": "deversifi"
         }
       ]
@@ -1791,15 +1791,15 @@
     {
       "symbol": "apx",
       "coingeckoId": "astropepex",
-      "marketCap": 11655649,
+      "marketCap": 11676983,
       "circulatingSupply": 65000000000,
       "address": "ethereum:0xed4e879087ebd0e8a77d66870012b5e0dffd0fa4",
-      "missingValue": 190656,
+      "missingValue": 190986,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1063103103.1308267,
-          "value": 190656,
+          "value": 190986,
           "project": "base"
         }
       ]
@@ -1807,10 +1807,10 @@
     {
       "symbol": "apu",
       "coingeckoId": "apu-s-club",
-      "marketCap": 294816930,
+      "marketCap": 295163210,
       "circulatingSupply": 337892257217.1226,
       "address": "ethereum:0x594daad7d77592a2b97b725a7ad59d7e188b5bfa",
-      "missingValue": 184379,
+      "missingValue": 184326,
       "escrows": [
         {
           "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -1833,7 +1833,7 @@
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 211158230.5956044,
-          "value": 184379,
+          "value": 184326,
           "project": "base"
         },
         {
@@ -1913,10 +1913,10 @@
     {
       "symbol": "deusd",
       "coingeckoId": "elixir-deusd",
-      "marketCap": 178121694,
+      "marketCap": 177928154,
       "circulatingSupply": 177985697.79,
       "address": "ethereum:0x15700b564ca08d9439c58ca5053166e8317aa138",
-      "missingValue": 160269,
+      "missingValue": 160061,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -1927,7 +1927,7 @@
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 159814.478023002,
-          "value": 159974,
+          "value": 159766,
           "project": "cronoszkevm"
         }
       ]
@@ -1935,83 +1935,55 @@
     {
       "symbol": "gear",
       "coingeckoId": "gearbox",
-      "marketCap": 110521378,
+      "marketCap": 110729066,
       "circulatingSupply": 10000000000,
       "address": "ethereum:0xba3335588d9403515223f109edc4eb7269a9ab5d",
-      "missingValue": 157472,
+      "missingValue": 157987,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 11258311.527585391,
-          "value": 124256,
+          "value": 124662,
           "project": "arbitrum"
         },
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 3009632,
-          "value": 33216,
+          "value": 33325,
           "project": "optimism"
-        }
-      ]
-    },
-    {
-      "symbol": "farm",
-      "coingeckoId": "harvest-finance",
-      "marketCap": 38459975,
-      "circulatingSupply": 672183.450713,
-      "address": "ethereum:0xa0246c9032bc3a600820415ae600c6388619a14d",
-      "missingValue": 151722,
-      "escrows": [
-        {
-          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 115.96690129544544,
-          "value": 6665,
-          "project": "arbitrum"
-        },
-        {
-          "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 2513.160244882616,
-          "value": 144456,
-          "project": "base"
-        },
-        {
-          "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
-          "balance": 10.47060262,
-          "value": 601,
-          "project": "loopring"
         }
       ]
     },
     {
       "symbol": "gala",
       "coingeckoId": "gala",
-      "marketCap": 2070480259,
+      "marketCap": 2079012248,
       "circulatingSupply": 41879748684.93715,
       "address": "ethereum:0xd1d2eb1b1e90b638588728b4130137d262c87cae",
-      "missingValue": 150757,
+      "missingValue": 151076,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 83209.01648207,
-          "value": 4114,
+          "value": 4122,
           "project": "arbitrum"
         },
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 2784746.59681788,
-          "value": 137687,
+          "value": 137979,
           "project": "astarzkevm"
         },
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 11025.30939531,
-          "value": 545,
+          "value": 546,
           "project": "cronoszkevm"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 170122.63485456,
-          "value": 8411,
+          "value": 8429,
           "project": "degate3"
         },
         {
@@ -2023,17 +1995,45 @@
       ]
     },
     {
+      "symbol": "farm",
+      "coingeckoId": "harvest-finance",
+      "marketCap": 38166859,
+      "circulatingSupply": 672183.450713,
+      "address": "ethereum:0xa0246c9032bc3a600820415ae600c6388619a14d",
+      "missingValue": 150825,
+      "escrows": [
+        {
+          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "balance": 115.96690129544544,
+          "value": 6626,
+          "project": "arbitrum"
+        },
+        {
+          "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+          "balance": 2513.160244882616,
+          "value": 143601,
+          "project": "base"
+        },
+        {
+          "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
+          "balance": 10.47060262,
+          "value": 598,
+          "project": "loopring"
+        }
+      ]
+    },
+    {
       "symbol": "xchng",
       "coingeckoId": "chainge-finance",
-      "marketCap": 24954435,
+      "marketCap": 24983509,
       "circulatingSupply": 494046128.162652,
       "address": "ethereum:0xb712d62fe84258292d1961b5150a19bc4ab49026",
-      "missingValue": 144498,
+      "missingValue": 144604,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 2861238.170476929,
-          "value": 144498,
+          "value": 144604,
           "project": "arbitrum"
         }
       ]
@@ -2041,15 +2041,15 @@
     {
       "symbol": "corgiai",
       "coingeckoId": "corgiai",
-      "marketCap": 368680154,
+      "marketCap": 369208834,
       "circulatingSupply": 343529984355.9779,
       "address": "ethereum:0x6b431b8a964bfcf28191b07c91189ff4403957d0",
-      "missingValue": 139900,
+      "missingValue": 139740,
       "escrows": [
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 130248916.88,
-          "value": 139900,
+          "value": 139740,
           "project": "cronoszkevm"
         }
       ]
@@ -2057,15 +2057,15 @@
     {
       "symbol": "cxt",
       "coingeckoId": "covalent-x-token",
-      "marketCap": 105282324,
+      "marketCap": 105547986,
       "circulatingSupply": 882352445.3408602,
       "address": "ethereum:0x7abc8a5768e6be61a6c693a6e4eacb5b60602c4d",
-      "missingValue": 137670,
+      "missingValue": 137908,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1153946.15,
-          "value": 137670,
+          "value": 137908,
           "project": "base"
         }
       ]
@@ -2073,15 +2073,15 @@
     {
       "symbol": "aria20",
       "coingeckoId": "arianee",
-      "marketCap": 14054492,
+      "marketCap": 14093045,
       "circulatingSupply": 107371812.73626919,
       "address": "ethereum:0xedf6568618a00c6f0908bf7758a16f76b6e04af9",
-      "missingValue": 132094,
+      "missingValue": 132186,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1008211.4146366706,
-          "value": 132094,
+          "value": 132186,
           "project": "base"
         }
       ]
@@ -2089,21 +2089,21 @@
     {
       "symbol": "badger",
       "coingeckoId": "badger-dao",
-      "marketCap": 74026861,
+      "marketCap": 73908036,
       "circulatingSupply": 19930669.912362073,
       "address": "ethereum:0x3472a5a71965499acd81997a54bba8d852c6e53d",
-      "missingValue": 119247,
+      "missingValue": 118606,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 31718.663482899596,
-          "value": 117993,
+          "value": 117359,
           "project": "arbitrum"
         },
         {
           "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "balance": 273.1995676295936,
-          "value": 1016,
+          "value": 1010,
           "project": "linea"
         },
         {
@@ -2115,7 +2115,7 @@
         {
           "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
           "balance": 63.84129824553717,
-          "value": 237,
+          "value": 236,
           "project": "zkswap"
         }
       ]
@@ -2123,15 +2123,15 @@
     {
       "symbol": "spec",
       "coingeckoId": "spectral",
-      "marketCap": 166868329,
+      "marketCap": 167449731,
       "circulatingSupply": 14104696.9,
       "address": "ethereum:0xadf7c35560035944e805d98ff17d58cde2449389",
-      "missingValue": 118400,
+      "missingValue": 118600,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 10000,
-          "value": 118400,
+          "value": 118600,
           "project": "arbitrum"
         }
       ]
@@ -2139,15 +2139,15 @@
     {
       "symbol": "el",
       "coingeckoId": "elysia",
-      "marketCap": 39359553,
+      "marketCap": 39143822,
       "circulatingSupply": 6803300704.688,
       "address": "ethereum:0x2781246fe707bb15cee3e5ea354e2154a2877b16",
-      "missingValue": 106630,
+      "missingValue": 106154,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 18426306.578894127,
-          "value": 106630,
+          "value": 106154,
           "project": "astarzkevm"
         }
       ]
@@ -2155,10 +2155,10 @@
     {
       "symbol": "jasmy",
       "coingeckoId": "jasmycoin",
-      "marketCap": 1993034630,
+      "marketCap": 1991816292,
       "circulatingSupply": 48419999999.3058,
       "address": "ethereum:0x7420b4b9a0110cdc71fb720908340c03f9bc03ec",
-      "missingValue": 97434,
+      "missingValue": 97183,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -2169,7 +2169,7 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 1364188.5572126736,
-          "value": 56146,
+          "value": 56001,
           "project": "degate3"
         },
         {
@@ -2181,7 +2181,7 @@
         {
           "address": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
           "balance": 1001936.77570577,
-          "value": 41236,
+          "value": 41130,
           "project": "myria"
         }
       ]
@@ -2189,15 +2189,15 @@
     {
       "symbol": "wexo",
       "coingeckoId": "wexo",
-      "marketCap": 53498268,
+      "marketCap": 53284502,
       "circulatingSupply": 51968000,
       "address": "ethereum:0xf31698ddad0d11160fe85c500397a470cd3d492e",
-      "missingValue": 72954,
+      "missingValue": 72529,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 70829.9531,
-          "value": 72954,
+          "value": 72529,
           "project": "base"
         }
       ]
@@ -2205,15 +2205,15 @@
     {
       "symbol": "ton",
       "coingeckoId": "tokamak-network",
-      "marketCap": 86521761,
-      "circulatingSupply": 50448275.86477954,
+      "marketCap": 87438335,
+      "circulatingSupply": 50448961.86477954,
       "address": "ethereum:0x2be5e8c109e2197d077d13a82daead6a9b3433c5",
-      "missingValue": 71871,
+      "missingValue": 72289,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 41785.5964342428,
-          "value": 71871,
+          "value": 72289,
           "project": "astarzkevm"
         }
       ]
@@ -2221,15 +2221,15 @@
     {
       "symbol": "bond",
       "coingeckoId": "barnbridge",
-      "marketCap": 12653772,
+      "marketCap": 12593056,
       "circulatingSupply": 9728909.58393487,
       "address": "ethereum:0x0391d2021f89dc339f60fff84546ea23e337750f",
-      "missingValue": 70278,
+      "missingValue": 69738,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 34010.96843842447,
-          "value": 44214,
+          "value": 43874,
           "project": "arbitrum"
         },
         {
@@ -2241,7 +2241,7 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 20039.66585715584,
-          "value": 26051,
+          "value": 25851,
           "project": "optimism"
         },
         {
@@ -2255,15 +2255,15 @@
     {
       "symbol": "ubt",
       "coingeckoId": "unibright",
-      "marketCap": 10897825,
+      "marketCap": 10951459,
       "circulatingSupply": 150000000,
       "address": "ethereum:0x8400d94a5cb0fa0d041a3788e395285d61c9ee5e",
-      "missingValue": 64106,
+      "missingValue": 64394,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 877129.92665256,
-          "value": 63725,
+          "value": 64012,
           "project": "arbitrum"
         },
         {
@@ -2281,7 +2281,7 @@
         {
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "balance": 3434.33000312,
-          "value": 249,
+          "value": 250,
           "project": "zksync"
         }
       ]
@@ -2289,15 +2289,15 @@
     {
       "symbol": "orn",
       "coingeckoId": "orion-protocol",
-      "marketCap": 72704142,
+      "marketCap": 71690708,
       "circulatingSupply": 34433074.41431038,
       "address": "ethereum:0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a",
-      "missingValue": 63273,
+      "missingValue": 62374,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 20001,
-          "value": 42202,
+          "value": 41602,
           "project": "arbitrum"
         },
         {
@@ -2309,7 +2309,7 @@
         {
           "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "balance": 9986.601,
-          "value": 21071,
+          "value": 20772,
           "project": "linea"
         }
       ]
@@ -2317,21 +2317,21 @@
     {
       "symbol": "bobo",
       "coingeckoId": "bobo-coin",
-      "marketCap": 97607328,
+      "marketCap": 97895889,
       "circulatingSupply": 66298444313649,
       "address": "ethereum:0xb90b2a35c65dbc466b04240097ca756ad2005295",
-      "missingValue": 59115,
+      "missingValue": 59518,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 90096833.59581584,
-          "value": 132,
+          "value": 133,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 40125025667.72541,
-          "value": 58983,
+          "value": 59385,
           "project": "base"
         }
       ]
@@ -2339,21 +2339,21 @@
     {
       "symbol": "swell",
       "coingeckoId": "swell-network",
-      "marketCap": 65135348,
+      "marketCap": 65185243,
       "circulatingSupply": 1703423428.6775987,
       "address": "ethereum:0x0a6e7ba5042b38349e437ec6db6214aec7b35676",
-      "missingValue": 57378,
+      "missingValue": 57186,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 746625.6,
-          "value": 28619,
+          "value": 28523,
           "project": "arbitrum"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 750291.4665862259,
-          "value": 28759,
+          "value": 28663,
           "project": "degate3"
         }
       ]
@@ -2361,21 +2361,21 @@
     {
       "symbol": "arc",
       "coingeckoId": "arc",
-      "marketCap": 42683467,
+      "marketCap": 40121338,
       "circulatingSupply": 970093392.315025,
       "address": "ethereum:0xc82e3db60a52cf7529253b4ec688f631aad9e7c2",
-      "missingValue": 55528,
+      "missingValue": 52361,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 10000.607237890887,
-          "value": 440,
+          "value": 415,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1251333.9157555618,
-          "value": 55088,
+          "value": 51946,
           "project": "base"
         }
       ]
@@ -2383,15 +2383,15 @@
     {
       "symbol": "fis",
       "coingeckoId": "stafi",
-      "marketCap": 62628389,
+      "marketCap": 63050571,
       "circulatingSupply": 149578273.3323575,
       "address": "ethereum:0xef3a930e1ffffacd2fc13434ac81bd278b0ecc8d",
-      "missingValue": 52042,
+      "missingValue": 52349,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 88270.58716880149,
-          "value": 36968,
+          "value": 37186,
           "project": "arbitrum"
         },
         {
@@ -2403,7 +2403,7 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 35985.02356957876,
-          "value": 15070,
+          "value": 15159,
           "project": "optimism"
         }
       ]
@@ -2411,15 +2411,15 @@
     {
       "symbol": "spc",
       "coingeckoId": "spacechain-erc-20",
-      "marketCap": 10699094,
+      "marketCap": 10705123,
       "circulatingSupply": 406294238.5051539,
       "address": "ethereum:0x86ed939b500e121c0c5f493f399084db596dad20",
-      "missingValue": 41781,
+      "missingValue": 41790,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 1586638.2685463536,
-          "value": 41781,
+          "value": 41790,
           "project": "base"
         }
       ]
@@ -2427,7 +2427,7 @@
     {
       "symbol": "ondo",
       "coingeckoId": "ondo-finance",
-      "marketCap": 2566087051,
+      "marketCap": 2567695161,
       "circulatingSupply": 1437319741.0074873,
       "address": "ethereum:0xfaba6f8e4a5e8ab82f62fe7c39859fa577269be3",
       "missingValue": 41282,
@@ -2461,15 +2461,15 @@
     {
       "symbol": "stpt",
       "coingeckoId": "stp-network",
-      "marketCap": 100125678,
+      "marketCap": 100398379,
       "circulatingSupply": 1942420283.027067,
       "address": "ethereum:0xde7d85157d9714eadf595045cc12ca4a5f3e2adb",
-      "missingValue": 40999,
+      "missingValue": 41082,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 795500,
-          "value": 40999,
+          "value": 41082,
           "project": "base"
         }
       ]
@@ -2477,15 +2477,15 @@
     {
       "symbol": "strp",
       "coingeckoId": "strips-finance",
-      "marketCap": 23312100,
+      "marketCap": 23312372,
       "circulatingSupply": 30282606.5751297,
       "address": "ethereum:0x97872eafd79940c7b24f7bcc1eadb1457347adc9",
-      "missingValue": 34861,
+      "missingValue": 34833,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 45278.950033823734,
-          "value": 34861,
+          "value": 34833,
           "project": "arbitrum"
         }
       ]
@@ -2493,15 +2493,15 @@
     {
       "symbol": "math",
       "coingeckoId": "math",
-      "marketCap": 60100219,
+      "marketCap": 60134314,
       "circulatingSupply": 180027393.82,
       "address": "ethereum:0x08d967bb0134f2d07f7cfb6e246680c53927dd30",
-      "missingValue": 34601,
+      "missingValue": 34578,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 103598.33129660462,
-          "value": 34601,
+          "value": 34578,
           "project": "arbitrum"
         }
       ]
@@ -2509,7 +2509,7 @@
     {
       "symbol": "rari",
       "coingeckoId": "rarible",
-      "marketCap": 34435869,
+      "marketCap": 34469104,
       "circulatingSupply": 11578869.797242802,
       "address": "ethereum:0xfca59cd816ab1ead66534d82bc21e7515ce441cf",
       "missingValue": 31058,
@@ -2531,15 +2531,15 @@
     {
       "symbol": "nst",
       "coingeckoId": "ninja-squad",
-      "marketCap": 54353192,
+      "marketCap": 53737193,
       "circulatingSupply": 7111274.43,
       "address": "ethereum:0x70bef3bb2f001da2fddb207dae696cd9faff3f5d",
-      "missingValue": 30214,
+      "missingValue": 29820,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 3949.671804878524,
-          "value": 30214,
+          "value": 29820,
           "project": "arbitrum"
         }
       ]
@@ -2547,15 +2547,15 @@
     {
       "symbol": "oseth",
       "coingeckoId": "stakewise-v3-oseth",
-      "marketCap": 168317925,
+      "marketCap": 168434563,
       "circulatingSupply": 43734.5809314,
       "address": "ethereum:0xf1c9acdc66974dfb6decb12aa385b9cd01190e38",
-      "missingValue": 29200,
+      "missingValue": 29181,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 7.583774342680265,
-          "value": 29200,
+          "value": 29181,
           "project": "arbitrum"
         }
       ]
@@ -2563,15 +2563,15 @@
     {
       "symbol": "pola",
       "coingeckoId": "polaris-share",
-      "marketCap": 10953761,
+      "marketCap": 11001739,
       "circulatingSupply": 487180754.7273,
       "address": "ethereum:0xc691bc298a304d591ad9b352c7a8d216de9f2ced",
-      "missingValue": 28357,
+      "missingValue": 28669,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 1259936.9034977944,
-          "value": 28357,
+          "value": 28669,
           "project": "astarzkevm"
         }
       ]
@@ -2579,15 +2579,15 @@
     {
       "symbol": "alpha",
       "coingeckoId": "alpha-finance",
-      "marketCap": 93507453,
+      "marketCap": 93576586,
       "circulatingSupply": 909000000,
       "address": "ethereum:0xa1faa113cbe53436df28ff0aee54275c13b40975",
-      "missingValue": 28245,
+      "missingValue": 28231,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 274454.7475950912,
-          "value": 28233,
+          "value": 28219,
           "project": "arbitrum"
         },
         {
@@ -2601,21 +2601,21 @@
     {
       "symbol": "sweth",
       "coingeckoId": "sweth",
-      "marketCap": 485897453,
+      "marketCap": 486064883,
       "circulatingSupply": 121323.095741077,
       "address": "ethereum:0xf951e335afb289353dc249e82926178eac7ded78",
-      "missingValue": 25305,
+      "missingValue": 25288,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 6.095539001313687,
-          "value": 24415,
+          "value": 24399,
           "project": "arbitrum"
         },
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 0.10764453,
-          "value": 431,
+          "value": 430,
           "project": "astarzkevm"
         },
         {
@@ -2641,15 +2641,15 @@
     {
       "symbol": "cxo",
       "coingeckoId": "cargox",
-      "marketCap": 29963221,
+      "marketCap": 30358572,
       "circulatingSupply": 167160147.72525844,
       "address": "ethereum:0xb6ee9668771a79be7967ee29a63d4184f8097143",
-      "missingValue": 24885,
+      "missingValue": 25211,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 138836.74122222222,
-          "value": 24885,
+          "value": 25211,
           "project": "astarzkevm"
         }
       ]
@@ -2657,15 +2657,15 @@
     {
       "symbol": "wbeth",
       "coingeckoId": "wrapped-beacon-eth",
-      "marketCap": 278731983,
+      "marketCap": 279227862,
       "circulatingSupply": 70938,
       "address": "ethereum:0xa2e3356610840701bdf5611a53974510ae27e2e1",
-      "missingValue": 24335,
+      "missingValue": 24368,
       "escrows": [
         {
           "address": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67",
           "balance": 6.192675986,
-          "value": 24335,
+          "value": 24368,
           "project": "fuel"
         }
       ]
@@ -2673,10 +2673,10 @@
     {
       "symbol": "dusk",
       "coingeckoId": "dusk-network",
-      "marketCap": 119801583,
+      "marketCap": 119684065,
       "circulatingSupply": 466999999.316325,
       "address": "ethereum:0x940a2db1b7008b6c776d4faaca729d6d4a4aa551",
-      "missingValue": 22053,
+      "missingValue": 21956,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -2687,13 +2687,13 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 25434.957,
-          "value": 6525,
+          "value": 6496,
           "project": "degate3"
         },
         {
           "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
           "balance": 60294.62873419,
-          "value": 15467,
+          "value": 15399,
           "project": "deversifi"
         }
       ]
@@ -2701,15 +2701,15 @@
     {
       "symbol": "floki",
       "coingeckoId": "floki",
-      "marketCap": 2240052433,
+      "marketCap": 2245245510,
       "circulatingSupply": 9674685972164,
       "address": "ethereum:0xcf0c122c6b73ff809c693db761e7baebe62b6a2e",
-      "missingValue": 20872,
+      "missingValue": 20907,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 11654519.726428717,
-          "value": 2698,
+          "value": 2703,
           "project": "arbitrum"
         },
         {
@@ -2721,7 +2721,7 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 41042220.958493516,
-          "value": 9504,
+          "value": 9520,
           "project": "degate3"
         },
         {
@@ -2733,13 +2733,13 @@
         {
           "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "balance": 7330286.561737362,
-          "value": 1697,
+          "value": 1700,
           "project": "linea"
         },
         {
           "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
           "balance": 3207605.477725484,
-          "value": 742,
+          "value": 744,
           "project": "mantle"
         },
         {
@@ -2751,7 +2751,7 @@
         {
           "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
           "balance": 24864962.643050045,
-          "value": 5758,
+          "value": 5767,
           "project": "zksync2"
         }
       ]
@@ -2759,15 +2759,15 @@
     {
       "symbol": "vee",
       "coingeckoId": "blockv",
-      "marketCap": 40210469,
+      "marketCap": 40128057,
       "circulatingSupply": 3301394752.7698092,
       "address": "ethereum:0x340d2bde5eb28c1eed91b2f790723e3b160613b7",
-      "missingValue": 20363,
+      "missingValue": 20304,
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 1671913.073325323,
-          "value": 20363,
+          "value": 20304,
           "project": "optimism"
         }
       ]
@@ -2775,21 +2775,21 @@
     {
       "symbol": "mav",
       "coingeckoId": "maverick-protocol",
-      "marketCap": 114287687,
+      "marketCap": 114397021,
       "circulatingSupply": 430057744.01116383,
       "address": "ethereum:0x7448c7456a97769f6cd04f1e83a4a23ccdc46abd",
-      "missingValue": 18012,
+      "missingValue": 17976,
       "escrows": [
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 43034.76506038868,
-          "value": 11444,
+          "value": 11421,
           "project": "cronoszkevm"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 24699.893388838536,
-          "value": 6568,
+          "value": 6555,
           "project": "degate3"
         },
         {
@@ -2803,21 +2803,21 @@
     {
       "symbol": "ath",
       "coingeckoId": "aethir",
-      "marketCap": 404592523,
+      "marketCap": 411037676,
       "circulatingSupply": 5217818110,
       "address": "ethereum:0xbe0ed4138121ecfc5c0e56b40517da27e6c5226b",
-      "missingValue": 17592,
+      "missingValue": 17785,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 135139.7023081538,
-          "value": 10499,
+          "value": 10614,
           "project": "arbitrum"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 91298.33,
-          "value": 7093,
+          "value": 7171,
           "project": "degate3"
         }
       ]
@@ -2825,15 +2825,15 @@
     {
       "symbol": "dia",
       "coingeckoId": "dia-data",
-      "marketCap": 98139042,
+      "marketCap": 98315930,
       "circulatingSupply": 119676104,
       "address": "ethereum:0x84ca8bc7997272c7cfb4d0cd3d55cd942b3c9419",
-      "missingValue": 17437,
+      "missingValue": 17431,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 20971.564819764008,
-          "value": 17202,
+          "value": 17196,
           "project": "arbitrum"
         },
         {
@@ -2853,15 +2853,15 @@
     {
       "symbol": "dka",
       "coingeckoId": "dkargo",
-      "marketCap": 117123186,
+      "marketCap": 117581014,
       "circulatingSupply": 4686666667,
       "address": "ethereum:0x5dc60c4d5e75d22588fa17ffeb90a63e535efce0",
-      "missingValue": 17361,
+      "missingValue": 17334,
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 694723.7234798305,
-          "value": 17361,
+          "value": 17334,
           "project": "astarzkevm"
         }
       ]
@@ -2869,15 +2869,15 @@
     {
       "symbol": "eurs",
       "coingeckoId": "stasis-eurs",
-      "marketCap": 149118512,
+      "marketCap": 147404160,
       "circulatingSupply": 124125940,
       "address": "ethereum:0xdb25f211ab05b1c97d595516f45794528a807ad8",
-      "missingValue": 16584,
+      "missingValue": 16445,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 12795.04,
-          "value": 15354,
+          "value": 15226,
           "project": "arbitrum"
         },
         {
@@ -2889,13 +2889,13 @@
         {
           "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
           "balance": 1000,
-          "value": 1200,
+          "value": 1190,
           "project": "fraxtal"
         },
         {
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "balance": 25,
-          "value": 30,
+          "value": 29,
           "project": "zksync"
         }
       ]
@@ -2903,15 +2903,15 @@
     {
       "symbol": "iotx",
       "coingeckoId": "iotex",
-      "marketCap": 442401790,
+      "marketCap": 445281396,
       "circulatingSupply": 9441369057,
       "address": "ethereum:0x6fb3e0a217407efff7ca062d46c26e5d60a14d69",
-      "missingValue": 16345,
+      "missingValue": 16444,
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
           "balance": 348625.42014789634,
-          "value": 16345,
+          "value": 16444,
           "project": "base"
         },
         {
@@ -2923,34 +2923,12 @@
       ]
     },
     {
-      "symbol": "isp",
-      "coingeckoId": "ispolink",
-      "marketCap": 13165662,
-      "circulatingSupply": 8263754289.190529,
-      "address": "ethereum:0xc8807f0f5ba3fa45ffbdc66928d71c5289249014",
-      "missingValue": 15969,
-      "escrows": [
-        {
-          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 0,
-          "value": 0,
-          "project": "arbitrum"
-        },
-        {
-          "address": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
-          "balance": 10013100,
-          "value": 15969,
-          "project": "mantapacific"
-        }
-      ]
-    },
-    {
       "symbol": "ssv",
       "coingeckoId": "ssv-network",
-      "marketCap": 193033365,
+      "marketCap": 193712526,
       "circulatingSupply": 7085672.647228521,
       "address": "ethereum:0x9d65ff81a3c488d585bbfb0bfe3c7707c7917f54",
-      "missingValue": 15961,
+      "missingValue": 15903,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -2967,29 +2945,51 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 583.045912918587,
-          "value": 15934,
+          "value": 15876,
           "project": "degate3"
+        }
+      ]
+    },
+    {
+      "symbol": "isp",
+      "coingeckoId": "ispolink",
+      "marketCap": 13105011,
+      "circulatingSupply": 8263754289.190529,
+      "address": "ethereum:0xc8807f0f5ba3fa45ffbdc66928d71c5289249014",
+      "missingValue": 15879,
+      "escrows": [
+        {
+          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "balance": 0,
+          "value": 0,
+          "project": "arbitrum"
+        },
+        {
+          "address": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+          "balance": 10013100,
+          "value": 15879,
+          "project": "mantapacific"
         }
       ]
     },
     {
       "symbol": "index",
       "coingeckoId": "index-cooperative",
-      "marketCap": 28840546,
+      "marketCap": 28645874,
       "circulatingSupply": 6726859.191973535,
       "address": "ethereum:0x0954906da0bf32d5479e25f46056d22f08464cab",
-      "missingValue": 15845,
+      "missingValue": 15772,
       "escrows": [
         {
           "address": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
           "balance": 2815.4914207940856,
-          "value": 12078,
+          "value": 12022,
           "project": "loopring"
         },
         {
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "balance": 878.3015300047822,
-          "value": 3767,
+          "value": 3750,
           "project": "zksync"
         }
       ]
@@ -2997,15 +2997,15 @@
     {
       "symbol": "susd",
       "coingeckoId": "nusd",
-      "marketCap": 10488792,
+      "marketCap": 10487539,
       "circulatingSupply": 10480403.71652766,
       "address": "ethereum:0x57ab1ec28d129707052df4df418d58a2d46d5f51",
-      "missingValue": 15633,
+      "missingValue": 15586,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 9912.707982333644,
-          "value": 9952,
+          "value": 9922,
           "project": "arbitrum"
         },
         {
@@ -3017,13 +3017,13 @@
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 1252,
-          "value": 1257,
+          "value": 1253,
           "project": "optimism"
         },
         {
           "address": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "balance": 4406.87057493687,
-          "value": 4424,
+          "value": 4411,
           "project": "zksync"
         }
       ]
@@ -3031,27 +3031,27 @@
     {
       "symbol": "axl",
       "coingeckoId": "axelar",
-      "marketCap": 782012422,
+      "marketCap": 781015338,
       "circulatingSupply": 869955935.3088269,
       "address": "ethereum:0x467719ad09025fcc6cf6f8311755809d45a5e5f3",
-      "missingValue": 15544,
+      "missingValue": 15477,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 589.692059,
-          "value": 530,
+          "value": 528,
           "project": "arbitrum"
         },
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "balance": 132.82,
-          "value": 119,
+          "value": 118,
           "project": "cronoszkevm"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 16562.346894,
-          "value": 14895,
+          "value": 14831,
           "project": "degate3"
         },
         {
@@ -3065,7 +3065,7 @@
     {
       "symbol": "prom",
       "coingeckoId": "prometeus",
-      "marketCap": 117518726,
+      "marketCap": 117750580,
       "circulatingSupply": 18250000,
       "address": "ethereum:0xfc82bb4ba86045af6f327323a46e80412b91b27d",
       "missingValue": 15364,
@@ -3081,8 +3081,8 @@
     {
       "symbol": "usd3",
       "coingeckoId": "web-3-dollar",
-      "marketCap": 32029410,
-      "circulatingSupply": 31267890.59190318,
+      "marketCap": 32031243,
+      "circulatingSupply": 31269680.04668849,
       "address": "ethereum:0x0d86883faf4ffd7aeb116390af37746f45b6f378",
       "missingValue": 15350,
       "escrows": [
@@ -3097,7 +3097,7 @@
     {
       "symbol": "pnp",
       "coingeckoId": "penpie",
-      "marketCap": 16945091,
+      "marketCap": 16935937,
       "circulatingSupply": 5261673.63319968,
       "address": "ethereum:0x7dedbce5a2e31e4c75f87fea60bf796c17718715",
       "missingValue": 15262,
@@ -3113,15 +3113,15 @@
     {
       "symbol": "xsgd",
       "coingeckoId": "xsgd",
-      "marketCap": 39966374,
+      "marketCap": 39899370,
       "circulatingSupply": 53624078.696133,
       "address": "ethereum:0x70e8de73ce538da2beed35d14187f6959a8eca96",
-      "missingValue": 14728,
+      "missingValue": 14711,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 19761.448302,
-          "value": 14728,
+          "value": 14711,
           "project": "arbitrum"
         }
       ]
@@ -3129,7 +3129,7 @@
     {
       "symbol": "byte",
       "coingeckoId": "byte",
-      "marketCap": 10090738,
+      "marketCap": 10086778,
       "circulatingSupply": 964467033476.8313,
       "address": "ethereum:0xde342a3e269056fc3305f9e315f4c40d917ba521",
       "missingValue": 13776,
@@ -3145,49 +3145,15 @@
     {
       "symbol": "ecox",
       "coingeckoId": "ecox",
-      "marketCap": 30787845,
+      "marketCap": 30436959,
       "circulatingSupply": 428788323.4430826,
       "address": "ethereum:0xcccd1ba9f7acd6117834e0d28f25645decb1736a",
-      "missingValue": 13571,
+      "missingValue": 13548,
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
           "balance": 189018,
-          "value": 13571,
-          "project": "optimism"
-        }
-      ]
-    },
-    {
-      "symbol": "gyen",
-      "coingeckoId": "gyen",
-      "marketCap": 10007412,
-      "circulatingSupply": 1586127594.764601,
-      "address": "ethereum:0xc08512927d12348f6620a698105e1baac6ecd911",
-      "missingValue": 12485,
-      "escrows": [
-        {
-          "address": "0xcEe284F754E854890e311e3280b767F80797180d",
-          "balance": 1928878.06964,
-          "value": 12169,
-          "project": "arbitrum"
-        },
-        {
-          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 200,
-          "value": 1,
-          "project": "arbitrum"
-        },
-        {
-          "address": "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
-          "balance": 50000,
-          "value": 315,
-          "project": "omgnetwork"
-        },
-        {
-          "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 101,
-          "value": 0,
+          "value": 13548,
           "project": "optimism"
         }
       ]
@@ -3195,15 +3161,15 @@
     {
       "symbol": "rez",
       "coingeckoId": "renzo",
-      "marketCap": 144816822,
+      "marketCap": 146425567,
       "circulatingSupply": 2923333956.11,
       "address": "ethereum:0x3b50805453023a91a8bf641e279401a0b23fa6f9",
-      "missingValue": 11814,
+      "missingValue": 11861,
       "escrows": [
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 237233.3525,
-          "value": 11814,
+          "value": 11861,
           "project": "degate3"
         }
       ]
@@ -3211,15 +3177,15 @@
     {
       "symbol": "wagmigames",
       "coingeckoId": "wagmi-game-2",
-      "marketCap": 54054338,
+      "marketCap": 54283256,
       "circulatingSupply": 2135677445498.095,
       "address": "ethereum:0x3b604747ad1720c01ded0455728b62c0d2f100f0",
-      "missingValue": 11528,
+      "missingValue": 11606,
       "escrows": [
         {
           "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "balance": 455148489.4356805,
-          "value": 11528,
+          "value": 11606,
           "project": "immutablex"
         }
       ]
@@ -3227,21 +3193,21 @@
     {
       "symbol": "w",
       "coingeckoId": "wormhole",
-      "marketCap": 884214192,
+      "marketCap": 890524806,
       "circulatingSupply": 2767725649,
       "address": "ethereum:0xb0ffa8000886e57f86dd5264b9582b2ad87b2b91",
-      "missingValue": 11187,
+      "missingValue": 11258,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 697.342976,
-          "value": 222,
+          "value": 224,
           "project": "arbitrum"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 34321.501,
-          "value": 10965,
+          "value": 11034,
           "project": "degate3"
         }
       ]
@@ -3249,10 +3215,10 @@
     {
       "symbol": "beam",
       "coingeckoId": "beam-2",
-      "marketCap": 1735832019,
+      "marketCap": 1740179584,
       "circulatingSupply": 52561007898,
       "address": "ethereum:0x62d0a8458ed7719fdaf978fe5929c6d342b0bfce",
-      "missingValue": 10984,
+      "missingValue": 10985,
       "escrows": [
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
@@ -3263,7 +3229,7 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 257715.73891488102,
-          "value": 8523,
+          "value": 8524,
           "project": "degate3"
         },
         {
@@ -3283,21 +3249,21 @@
     {
       "symbol": "zro",
       "coingeckoId": "layerzero",
-      "marketCap": 677415694,
+      "marketCap": 686475588,
       "circulatingSupply": 111152854.20763355,
       "address": "ethereum:0x6985884c4392d348587b19cb9eaaf157f13271cd",
-      "missingValue": 10835,
+      "missingValue": 10942,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 310.77157964722625,
-          "value": 1895,
+          "value": 1914,
           "project": "arbitrum"
         },
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 1465.61,
-          "value": 8940,
+          "value": 9028,
           "project": "degate3"
         },
         {
@@ -3311,10 +3277,10 @@
     {
       "symbol": "meme",
       "coingeckoId": "memecoin-2",
-      "marketCap": 445753001,
+      "marketCap": 446850333,
       "circulatingSupply": 32934916300.4635,
       "address": "ethereum:0xb131f4a55907b10d1f0a50d8ab8fa09ec342cd74",
-      "missingValue": 10802,
+      "missingValue": 10792,
       "escrows": [
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
@@ -3325,7 +3291,7 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 779929.6582936008,
-          "value": 10562,
+          "value": 10552,
           "project": "degate3"
         },
         {
@@ -3351,10 +3317,10 @@
     {
       "symbol": "rdnt",
       "coingeckoId": "radiant-capital",
-      "marketCap": 93699037,
+      "marketCap": 94139077,
       "circulatingSupply": 1187713391,
       "address": "ethereum:0x137ddb47ee24eaa998a535ab00378d6bfa84f893",
-      "missingValue": 10721,
+      "missingValue": 10735,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -3371,7 +3337,7 @@
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
           "balance": 135144.67456029836,
-          "value": 10679,
+          "value": 10693,
           "project": "degate3"
         },
         {
@@ -3385,21 +3351,21 @@
     {
       "symbol": "fort",
       "coingeckoId": "forta",
-      "marketCap": 70802258,
+      "marketCap": 71051620,
       "circulatingSupply": 497450218.0662991,
       "address": "ethereum:0x41545f8b9472d758bb669ed8eaeeecd7a9c4ec29",
-      "missingValue": 10217,
+      "missingValue": 10261,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 1350.5,
-          "value": 192,
+          "value": 193,
           "project": "arbitrum"
         },
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 70314.29248874,
-          "value": 10025,
+          "value": 10068,
           "project": "astarzkevm"
         }
       ]
@@ -3407,15 +3373,15 @@
     {
       "symbol": "usx",
       "coingeckoId": "token-dforce-usd",
-      "marketCap": 14602966,
+      "marketCap": 14591407,
       "circulatingSupply": 14593989.69356428,
       "address": "ethereum:0x0a5e677a6a24b2f1a2bf4f3bffc443231d2fdec8",
-      "missingValue": 10025,
+      "missingValue": 10024,
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "balance": 10025.419,
-          "value": 10025,
+          "value": 10024,
           "project": "arbitrum"
         }
       ]
