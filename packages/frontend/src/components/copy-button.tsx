@@ -9,19 +9,24 @@ import { SatisfiedIcon } from '~/icons/satisfied'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/tooltip'
 
-interface Props {
+interface CopyButtonProps {
   toCopy: string
   className?: string
+  iconClassName?: string
 }
 
-export function CopyButton(props: Props) {
+export function CopyButton({
+  toCopy,
+  className,
+  iconClassName,
+}: CopyButtonProps) {
   const copy = useCopyToClipboard()
   const [copied, setCopied] = useState(false)
 
   useTimeout(() => setCopied(false), copied ? 1400 : null)
 
   function copyToClipboard() {
-    copy(props.toCopy)
+    copy(toCopy)
       .then(() => setCopied(true))
       .catch(() => setCopied(false))
     setCopied(true)
@@ -30,26 +35,19 @@ export function CopyButton(props: Props) {
   return (
     <Tooltip>
       <TooltipTrigger
-        className={props.className}
+        className={cn(className)}
         onClick={(event) => {
           event.preventDefault()
           copyToClipboard()
         }}
       >
-        <div className="relative size-6">
-          <CopyIcon
-            className={cn(
-              'absolute inset-0 size-6 fill-blue-700 transition-opacity duration-200 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550',
-              copied ? 'opacity-0' : 'opacity-100',
-            )}
-          />
+        {copied ? (
           <SatisfiedIcon
-            className={cn(
-              'absolute inset-0 size-6 fill-green-700 transition-opacity duration-200 dark:fill-green-450',
-              copied ? 'opacity-100' : 'opacity-0',
-            )}
+            className={cn('fill-green-700 dark:fill-green-450', iconClassName)}
           />
-        </div>
+        ) : (
+          <CopyIcon className={cn('fill-current', iconClassName)} />
+        )}
       </TooltipTrigger>
       <TooltipContent
         hideWhenDetached

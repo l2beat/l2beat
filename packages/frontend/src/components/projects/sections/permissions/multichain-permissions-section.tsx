@@ -7,7 +7,7 @@ import { type ProjectSectionProps } from '../types'
 
 export interface MultichainPermissionsSectionProps extends ProjectSectionProps {
   permissions: Record<string, TechnologyContract[]>
-  permissionedEntities?: { name: string; href: string }[]
+  permissionedEntities?: { name: string; href: string; key?: string }[]
   dacUsedIn?: UsedInProject
 }
 
@@ -25,7 +25,7 @@ export function MultichainPermissionsSection({
         </h3>
       )}
       {permissionedEntities?.map((entity, i) => (
-        <PermissionedEntityEntry key={i} {...entity} className="my-2" />
+        <PermissionedEntityEntry key={i} entity={entity} className="my-2" />
       ))}
 
       <div className="my-4">
