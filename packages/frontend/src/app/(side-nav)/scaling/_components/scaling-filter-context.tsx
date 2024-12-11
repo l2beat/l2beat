@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
 export type ScalingFilterContextValue = {
@@ -61,7 +61,7 @@ export function useOptionalScalingFilterValues() {
 export function useScalingFilter() {
   const filters = useScalingFilterValues()
   const filter = useCallback(
-    ({ filterable }: CommonScalingEntry) => {
+    ({ filterable }: FilterableScalingEntry) => {
       if (!filterable) {
         // Ethereum
         return true

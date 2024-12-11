@@ -18,6 +18,21 @@ import { getCurrentEntry } from '../utils/get-current-entry'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
+export interface FilterableScalingValues {
+  isRollup: boolean
+  type: string
+  stack: string
+  stage: string
+  purposes: string[]
+  hostChain: string
+  daLayer: string
+  raas: string
+}
+
+export interface FilterableScalingEntry {
+  filterable: FilterableScalingValues | undefined
+}
+
 export interface CommonScalingEntry {
   id: ProjectId
   name: string
@@ -39,18 +54,7 @@ export interface CommonScalingEntry {
   provider: Layer2Provider | undefined
   hostChain: string | undefined
   stage: StageConfig
-  filterable:
-    | {
-        isRollup: boolean
-        type: string
-        stack: string
-        stage: string
-        purposes: string[]
-        hostChain: string
-        daLayer: string
-        raas: string
-      }
-    | undefined
+  filterable: FilterableScalingValues | undefined
 }
 
 interface Params {
