@@ -49,7 +49,7 @@ export class RpcClient2 extends ClientCore implements BlockClient {
   }
 
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
-    const block = await this.getBlock(blockNumber, true)
+    const block = await this.getBlock(blockNumber, false)
 
     assert(
       block.parentBeaconBlockRoot,
