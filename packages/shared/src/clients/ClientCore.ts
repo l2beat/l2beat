@@ -42,7 +42,7 @@ export abstract class ClientCore {
   }
 
   private async _fetch(url: string, init: RequestInit): Promise<json> {
-    this.deps.logger.info('Fetching')
+    this.logger.info('Fetching')
     const response = await this.deps.http.fetch(url, init)
 
     const validationInfo = this.validateResponse(response)
