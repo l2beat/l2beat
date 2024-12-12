@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x90747bde3f6aaaaa8c80c557da40d47060dfef5b
+Generated with discovered.json: 0x94a03248b7c968a9228f4c918b302f081aaa268f
 
-# Diff at Mon, 09 Dec 2024 07:10:25 GMT:
+# Diff at Tue, 10 Dec 2024 11:08:21 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c5ae355544e54d305099ba9e1731927821c805f3 block: 21357589
-- current block number: 21363358
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21357589
+- current block number: 21357589
 
 ## Description
 
-Removed treasure launch monitor (is live) and added validator handlers.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -17,17 +17,75 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21357589 (main branch discovery), not current.
 
 ```diff
-    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
++   Status: CREATED
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66)
     +++ description: None
-      values.treasureThirdBatchTS:
--        1732907795
-      values.treasureValidatorsAdded:
-+        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
-      values.treasureValidatorsRemoved:
-+        []
-      fieldMeta.treasureThirdBatchTS:
--        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
-    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x84b9b6d9912626f624bbec1ed2469d79f770962f

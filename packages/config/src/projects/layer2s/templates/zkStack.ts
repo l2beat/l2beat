@@ -37,7 +37,7 @@ import { ChainConfig } from '../../../common/ChainConfig'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
-import { PROOFS } from '../../other/zk-catalog/common/proofSystems'
+import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import { StageConfig } from '../common/stages/types'
 import {

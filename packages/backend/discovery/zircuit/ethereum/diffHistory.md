@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xf3cc94b95e05fcc954432c345ea9fbac05ea834f
+
+# Diff at Mon, 09 Dec 2024 17:31:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02974be0caac873bba9178e618086aa67aaf0b90 block: 21334344
+- current block number: 21366345
+
+## Description
+
+Moved the zircuit-specific OptiPortal away from the default op stack template as it has custom flow control.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21334344 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal_zircuit"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time."
+    }
+```
+
 Generated with discovered.json: 0x6b1ef83ce197665a204bcae5f0602a71929c06aa
 
 # Diff at Thu, 05 Dec 2024 05:56:44 GMT:

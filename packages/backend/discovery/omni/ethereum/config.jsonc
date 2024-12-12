@@ -42,8 +42,7 @@
       }
     },
     "BridgeGovernance": {
-      "ignoreInWatchMode": ["nonce"],
-      "ignoreRelatives": ["$members"]
+      "ignoreInWatchMode": ["nonce"]
     },
     "GnosisSafe": {
       "ignoreInWatchMode": ["nonce"]

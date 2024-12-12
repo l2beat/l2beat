@@ -1,7 +1,6 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { Block } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { RetryHandler } from '../../tools/RetryHandler'
 import { HttpClient2 } from '../http/HttpClient2'
 import { FuelClient } from './FuelClient'
 import { tai64ToUnix } from './tai64ToUnix'
@@ -110,17 +109,15 @@ describe(FuelClient.name, () => {
 function mockClient(deps: {
   http?: HttpClient2
   url?: string
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
   generateId?: () => string
 }) {
   return new FuelClient({
     url: deps.url ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient2>({}),
-    rateLimiter:
-      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     logger: Logger.SILENT,
+    sourceName: 'test',
   })
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 21279547,
+  "blockNumber": 21370693,
   "configHash": "0x3a54f3ab3aeb854af2a1777b38da8dc8dc9f3879d47ee4eda3de6e36ed655d68",
   "contracts": [
     {
@@ -70,7 +70,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -144,7 +144,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 62,
+        "nonce": 64,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -255,7 +255,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639491",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639492",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -324,10 +324,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 21801600,
-        "latestOutputIndex": 12111,
-        "nextBlockNumber": 21803400,
-        "nextOutputIndex": 12112,
+        "latestBlockNumber": 22350600,
+        "latestOutputIndex": 12416,
+        "nextBlockNumber": 22352400,
+        "nextOutputIndex": 12417,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -385,10 +385,10 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 21100403
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 21363499
         },
-        "paused": false,
+        "paused": true,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.6.0"
       }

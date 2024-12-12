@@ -20,7 +20,6 @@
   },
   "overrides": {
     "SecurityCouncil": {
-      "ignoreRelatives": ["members"], // we abstract members as 1/x each and assume x stays reasonably low (lowest threshold: 1/12 sept2024)
       "fields": {
         "members": {
           "handler": {

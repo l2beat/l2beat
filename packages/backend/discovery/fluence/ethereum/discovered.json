@@ -1,7 +1,7 @@
 {
   "name": "fluence",
   "chain": "ethereum",
-  "blockNumber": 21285836,
+  "blockNumber": 21365584,
   "configHash": "0x9d816d3fa4d275a73ace500776da83a8646aca1f31a7ff61dfa8a3009a826ae6",
   "contracts": [
     {
@@ -27,20 +27,6 @@
       "displayName": "Inbox",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
       "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
         {
           "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
@@ -151,20 +137,6 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
@@ -238,20 +210,6 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
@@ -303,20 +261,6 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
@@ -364,20 +308,6 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
@@ -414,12 +344,12 @@
           "0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"
         ],
         "allowedOutboxList": ["0x50Df2E43aDefee3b6510b637697d30e7dc155e13"],
-        "delayedMessageCount": 187,
+        "delayedMessageCount": 206,
         "nativeToken": "0x236501327e701692a281934230AF0b6BE8Df3353",
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerInbox": "0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0",
-        "sequencerMessageCount": 809,
-        "sequencerReportedSubMessageCount": 2523010
+        "sequencerMessageCount": 930,
+        "sequencerReportedSubMessageCount": 2972788
       }
     },
     {
@@ -433,20 +363,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
         {
           "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
@@ -500,19 +416,13 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": [
-              "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-              "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
-            ]
+            "members": ["0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": [
-          "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
-        ]
+        "executors": ["0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
       }
     },
     {
@@ -527,20 +437,6 @@
       "displayName": "RollupEventInbox",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
       "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
         {
           "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
@@ -709,7 +605,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 13,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -743,20 +639,6 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
@@ -783,7 +665,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 809,
+        "batchCount": 930,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xAec3997252d4F9Cd92Cc49be2e8068e23065665a"],
         "bridge": "0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
@@ -814,7 +696,7 @@
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 187,
+        "totalDelayedMessagesRead": 206,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -838,33 +720,12 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0,
-              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-            }
-          ]
-        },
-        {
-          "permission": "configure",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
               "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
               "delay": 0,
               "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
             }
           ]
         },
@@ -925,12 +786,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 220,
+        "firstUnresolvedNode": 241,
         "inbox": "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
         "isERC20Enabled": false,
         "lastStakeBlock": 20425444,
-        "latestConfirmed": 219,
-        "latestNodeCreated": 231,
+        "latestConfirmed": 240,
+        "latestNodeCreated": 253,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x50Df2E43aDefee3b6510b637697d30e7dc155e13",
@@ -1016,20 +877,6 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-          "via": [
-            {
-              "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-              "delay": 0
-            },
-            {
-              "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790",
-              "delay": 0
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
             {
@@ -1109,100 +956,6 @@
     },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
     { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
-    {
-      "address": "0xBc54708fB6C6C97086e3f6554a517DE5EF16c304",
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [{ "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x284696FB7BF57dB7133Fd8c9EB74f49A76b2485F",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x50Df2E43aDefee3b6510b637697d30e7dc155e13",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x6BCe4c44668C77ff67730C14d2378857103F53C7",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0x89De2771f84b8fd0d09560f75908D6F6a1273A6e",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
-          "via": [{ "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }]
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xEed3cDE012D1F46304dE892186Ad391Ccb994BBd",
-          "via": [
-            { "address": "0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790" },
-            { "address": "0x6BCe4c44668C77ff67730C14d2378857103F53C7" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "target": "0x6BCe4c44668C77ff67730C14d2378857103F53C7"
-        }
-      ]
-    },
     { "address": "0xCEC8A395617593B30BEC7c199a3Ae3Fe40186dB8" },
     { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" }
   ],

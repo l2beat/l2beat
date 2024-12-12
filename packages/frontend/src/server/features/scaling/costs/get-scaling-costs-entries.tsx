@@ -11,16 +11,14 @@ import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
 
 export async function getScalingCostsEntries() {
-  const [tvl, projectsChangeReport, projectsVerificationStatuses] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-    ])
+  const [tvl, projectsChangeReport] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+  ])
   const projects = getCostsProjects()
 
   const entries = projects.map((project) => {
-    const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+    const isVerified = getProjectsVerificationStatuses(project)
     return getScalingCostEntry(project, isVerified, projectsChangeReport)
   })
 

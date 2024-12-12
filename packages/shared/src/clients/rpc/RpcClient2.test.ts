@@ -1,8 +1,7 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { RetryHandler } from '../../tools/RetryHandler'
 import { HttpClient2 } from '../http/HttpClient2'
 import { RpcClient2 } from './RpcClient2'
 
@@ -12,33 +11,6 @@ export const erc20Interface = new utils.Interface([
 ])
 
 describe(RpcClient2.name, () => {
-  describe(RpcClient2.prototype.getBlockWithTransactions.name, () => {
-    it('fetches block from rpc and parsers response', async () => {
-      const http = mockObject<HttpClient2>({
-        fetch: async () => mockResponse(100),
-      })
-      const rpc = mockClient({ http, generateId: () => 'unique-id' })
-
-      const result = await rpc.getBlockWithTransactions(100)
-
-      expect(result).toEqual({
-        transactions: [mockTx('0'), mockTx(undefined)],
-        timestamp: 100,
-        hash: '0xabcdef',
-        number: 100,
-      })
-
-      expect(http.fetch.calls[0].args[1]?.body).toEqual(
-        JSON.stringify({
-          method: 'eth_getBlockByNumber',
-          params: ['0x64', true],
-          id: 'unique-id',
-          jsonrpc: '2.0',
-        }),
-      )
-    })
-  })
-
   describe(RpcClient2.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
       const http = mockObject<HttpClient2>({
@@ -52,7 +24,109 @@ describe(RpcClient2.name, () => {
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
-          params: ['latest', true],
+          params: ['latest', false],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
+  describe(RpcClient2.prototype.getBlock.name, () => {
+    it('include tx bodies', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockWithTransactions(100)
+
+      expect(result).toEqual({
+        transactions: [mockTx('0'), mockTx(undefined)],
+        timestamp: 100,
+        hash: '0xabcdef',
+        number: 100,
+        //@ts-expect-error type issue
+        parentBeaconBlockRoot: '0x123',
+      })
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', true],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+
+    it('do not include tx bodies', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlock(100, false)
+
+      expect(result).toEqual({
+        timestamp: 100,
+        hash: '0xabcdef',
+        number: 100,
+        parentBeaconBlockRoot: '0x123',
+      })
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', false],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
+  describe(RpcClient2.prototype.getTransaction.name, () => {
+    it('fetches tx from rpc and parsers response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: mockRawTx('0x1'),
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getTransaction('0xabcd')
+
+      expect(result).toEqual(mockTx('0x1'))
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getTransactionByHash',
+          params: ['0xabcd'],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
+  describe(RpcClient2.prototype.getTransactionReceipt.name, () => {
+    it('fetches tx receipt from rpc and parsers response', async () => {
+      const http = mockObject<HttpClient2>({
+        fetch: async () => ({
+          result: mockReceipt,
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getTransactionReceipt('0xabcd')
+
+      expect(result).toEqual(mockReceipt)
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getTransactionReceipt',
+          params: ['0xabcd'],
           id: 'unique-id',
           jsonrpc: '2.0',
         }),
@@ -262,17 +336,14 @@ describe(RpcClient2.name, () => {
 function mockClient(deps: {
   http?: HttpClient2
   url?: string
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
   generateId?: () => string
 }) {
   return new RpcClient2({
-    chain: 'chain',
+    sourceName: 'chain',
     url: deps.url ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient2>({}),
-    rateLimiter:
-      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     logger: Logger.SILENT,
     generateId: deps.generateId,
   })
@@ -284,6 +355,7 @@ const mockResponse = (blockNumber: number) => ({
     timestamp: `0x${blockNumber.toString(16)}`,
     hash: '0xabcdef',
     number: `0x${blockNumber.toString(16)}`,
+    parentBeaconBlockRoot: '0x123',
   },
 })
 
@@ -293,6 +365,8 @@ const mockRawTx = (to: string | undefined) => ({
   to,
   input: `0x1`,
   type: '0x2',
+  blockNumber: '0x64',
+  blobVersionedHashes: ['0x1', '0x2'],
 })
 
 const mockTx = (to: string | undefined) => ({
@@ -301,4 +375,10 @@ const mockTx = (to: string | undefined) => ({
   to,
   data: `0x1`,
   type: '2',
+  blockNumber: 100,
+  blobVersionedHashes: ['0x1', '0x2'],
 })
+
+const mockReceipt = {
+  logs: [{ topics: ['0xabcd', '0xdcba'], data: '0x1234' }],
+}

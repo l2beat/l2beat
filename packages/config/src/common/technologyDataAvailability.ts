@@ -2,9 +2,9 @@ import { ScalingProjectRisk } from './ScalingProjectRisk'
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
 const ON_CHAIN_CALLDATA: ScalingProjectTechnologyChoice = {
-  name: 'All data required for proofs is published on chain',
+  name: 'All data required for proofs is published onchain',
   description:
-    'All the data that is used to construct the system state is published on chain in the form of cheap calldata. This ensures that it will always be available when needed.',
+    'All the data that is used to construct the system state is published onchain in the form of cheap calldata. This ensures that it will always be available when needed.',
   risks: [],
   references: [],
 }

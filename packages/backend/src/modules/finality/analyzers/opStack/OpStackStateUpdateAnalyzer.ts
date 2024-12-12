@@ -1,8 +1,8 @@
 import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
-import { providers, utils } from 'ethers'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { RpcClient2 } from '@l2beat/shared'
+import { utils } from 'ethers'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 
@@ -13,11 +13,11 @@ export class OpStackStateUpdateAnalyzer extends BaseAnalyzer {
   private abi: utils.Interface
 
   constructor(
-    provider: RpcClient,
+    provider: RpcClient2,
     db: Database,
     projectId: ProjectId,
     private readonly l2BlockTime: number,
-    private readonly l2Provider: RpcClient,
+    private readonly l2Provider: RpcClient2,
   ) {
     super(provider, db, projectId)
     this.abi = new utils.Interface([PROPOSE_FUNCTION_SIGNATURE])
@@ -63,9 +63,9 @@ export class OpStackStateUpdateAnalyzer extends BaseAnalyzer {
     return result
   }
 
-  async getL2Block(txHash: string): Promise<providers.Block> {
+  async getL2Block(txHash: string) {
     const entireTx = await this.provider.getTransaction(txHash)
     const params = this.abi.decodeFunctionData('proposeL2Output', entireTx.data)
-    return await this.l2Provider.getBlock(Number(params._l2BlockNumber))
+    return await this.l2Provider.getBlock(Number(params._l2BlockNumber), false)
   }
 }

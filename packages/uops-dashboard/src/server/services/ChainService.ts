@@ -1,8 +1,7 @@
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
-import { RateLimiter } from '../../../../backend-tools/dist'
+import { HttpClient2, RpcClient2 } from '@l2beat/shared'
 import { getApiKey, getApiUrl, getScanUrl } from '../clients/apiUrls'
 import { BlockClient } from '../clients/block/BlockClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
@@ -52,13 +51,11 @@ export class ChainService {
       case 'zora': {
         this.client = new RpcClient2({
           url: getApiUrl(chain.id),
-          chain: chain.id,
+          sourceName: chain.id,
           http,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: chain.batchSize * 30, // heuristic
-          }),
+          callsPerMinute: chain.batchSize * 30,
           logger: Logger.SILENT,
-          retryHandler: RetryHandler.RELIABLE_API(Logger.SILENT),
+          retryStrategy: 'RELIABLE',
         })
 
         this.counter = new RpcCounter()

@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x4481d66b3b2a8e9bc49fb1b508992c43956e02ce
+
+# Diff at Tue, 10 Dec 2024 11:30:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21041947
+- current block number: 21041947
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041947 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x19565F4771843467aAD632d6B56c75396785b06C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BobaEscrow1 (0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UsdcEscrow (0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EuraEscrow (0x4Fa745FCCC04555F2AFA8874cd23961636CdF982)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BobaEscrow3 (0x6F537839714761388B6d7ED61Bc09579d5dA2F41)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StoneEscrow (0x7122985656e38BDC0302Db86685bb972b145bD3C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WagmiEscrow (0x92CC36D66e9d739D50673d1f27929a371FB83a67)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Token (0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BobaEscrow2 (0xB0003eB166654f7e57c0463F8D1a438eB238c490)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LinkEscrow (0xEe381e476b4335B8584A2026f3E845edaC2c69de)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x461b7ab44573856f6462740311f04b5bb9800026
 
 # Diff at Fri, 25 Oct 2024 10:11:24 GMT:

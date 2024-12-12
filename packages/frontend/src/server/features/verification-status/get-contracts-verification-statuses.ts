@@ -1,33 +1,31 @@
-import { readFileSync } from 'fs'
-import path from 'path'
 import {
   type Bridge,
   type DaLayer,
   type Layer2,
   type Layer3,
-  getChainNames,
-  getChainNamesForDA,
+  type ScalingProjectContract,
 } from '@l2beat/config'
-import { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import { getManuallyVerifiedContracts } from './get-manually-verified-contracts'
 
 type Project = Layer2 | Layer3 | Bridge | DaLayer
 
 export function getContractsVerificationStatuses(project: Project) {
-  const chainNames =
-    project.type === 'DaLayer'
-      ? getChainNamesForDA(project)
-      : getChainNames(project)
-  const contracts = Object.fromEntries(
-    chainNames.map((chain) => [chain, readContractVerificationStatus(chain)]),
-  )
-  return ContractsVerificationStatuses.parse(contracts)
-}
+  const manual = getManuallyVerifiedContracts(project)
 
-function readContractVerificationStatus(chain: string): unknown {
-  const filePath = path.join(
-    process.cwd(),
-    `../config/src/verification/${chain}/verified.json`,
-  )
-  const contracts = readFileSync(filePath, 'utf8')
-  return JSON.parse(contracts) as unknown
+  const contracts: ScalingProjectContract[] = []
+  if ('contracts' in project) {
+    contracts.push(...(project.contracts?.addresses ?? []))
+  }
+  const result: Record<string, Record<string, boolean>> = {}
+  for (const contract of contracts) {
+    if ('address' in contract) {
+      const chain = contract.chain ?? 'ethereum'
+      result[chain] ??= {}
+      result[chain][contract.address.toString()] =
+        contract.address.toString() in (manual[chain] ?? {}) ||
+        contract.isVerified
+    }
+  }
+
+  return result
 }
