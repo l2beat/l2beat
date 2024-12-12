@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x57f8945c8ee33c1aba2d076d79b3831743b4f458
+
+# Diff at Thu, 12 Dec 2024 12:29:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21142111
+- current block number: 21386417
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract UMAOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24) {
+    +++ description: None
+      values.getCurrentTime:
++        1734006407
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21142111 (main branch discovery), not current.
+
+```diff
+    contract UMAOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24) {
+    +++ description: None
+      values.getCurrentTime:
+-        1731059123
+    }
+```
+
 Generated with discovered.json: 0x6e237fc3e7c6a0dfacdf8c3facadcfce1cd29744
 
 # Diff at Tue, 10 Dec 2024 10:36:39 GMT:

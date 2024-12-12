@@ -119,6 +119,9 @@
         "l2WrappedMatic",
         "maticToken"
       ]
+    },
+    "UMAOptimisticOracle": {
+      "ignoreMethods": ["getCurrentTime"],
     }
   }
 }
