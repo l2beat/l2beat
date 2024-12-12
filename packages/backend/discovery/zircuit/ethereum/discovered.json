@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 21387950,
+  "blockNumber": 21388259,
   "configHash": "0x0698c10cff4e338a0af49513f3885568e3e5af6fd467ba45985135c7f5162b19",
   "contracts": [
     {
@@ -71,7 +71,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 21387868,
+          "prevBlockNum": 21387958,
           "prevTxCount": 1
         },
         "paused": false,
@@ -113,7 +113,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635007",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635008",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -525,10 +525,10 @@
         "finalizationPeriodSeconds": 14400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7043442,
-        "latestOutputIndex": 19296,
-        "nextBlockNumber": 7043443,
-        "nextOutputIndex": 19297,
+        "latestBlockNumber": 7045182,
+        "latestOutputIndex": 19302,
+        "nextBlockNumber": 7045183,
+        "nextOutputIndex": 19303,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,

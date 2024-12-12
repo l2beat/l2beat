@@ -19,7 +19,7 @@
     value: "Native & Canonical"
   }
   exitWindow: {
-    definingMetric: -18000
+    definingMetric: -14400
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
@@ -59,7 +59,7 @@
   stateValidation: {
     definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
-    secondLine: "5h challenge period"
+    secondLine: "4h challenge period"
     sentiment: "bad"
     value: "None"
   }
