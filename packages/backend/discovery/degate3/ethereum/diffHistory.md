@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb5875a416bbdd56d85843d2622665c30797be502
 
 ## Description
 
-New depositContract implmentation. TBC
+Refresh discovery. Contract has not changed.
 
 ## Config/verification related changes
 
