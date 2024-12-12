@@ -110,7 +110,7 @@ function getStageOrder(stage: StageConfig | undefined): number {
   return 0
 }
 
-function getStage(config: StageConfig | undefined) {
+export function getStage(config: StageConfig | undefined) {
   if (!config || config.stage === 'NotApplicable') {
     return 'Not applicable'
   }

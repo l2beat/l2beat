@@ -1,6 +1,7 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { type RosetteValue } from '~/components/rosette/types'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
@@ -70,7 +71,7 @@ function getScalingSummaryEntry(
   const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
   const dataAvailability = getCurrentEntry(project.dataAvailability)
 
-  const common = {
+  return {
     entryType: 'scaling' as const,
     ...getCommonScalingEntry({
       project,
@@ -102,26 +103,26 @@ function getScalingSummaryEntry(
         }
       : undefined,
     tvlOrder: latestTvl?.breakdown.total ?? 0,
+    ...getRisks(project),
   }
+}
 
+export function getRisks(project: Layer2 | Layer3): {
+  risks: RosetteValue[]
+  baseLayerRisks: RosetteValue[] | undefined
+} {
   if (project.type === 'layer2') {
     return {
-      ...common,
       risks: getL2Risks(project.riskView),
       baseLayerRisks: undefined,
-      stackedRisks: undefined,
     }
   }
-
   const baseLayer = layer2s.find((p) => p.id === project.hostChain)
-
   const projectRisks = getL2Risks(project.riskView)
   const baseLayerRisks = baseLayer ? getL2Risks(baseLayer.riskView) : undefined
   const stackedRisks =
     project.type === 'layer3' ? project.stackedRiskView : undefined
-  // L3
   return {
-    ...common,
     risks: stackedRisks ? getL2Risks(stackedRisks) : projectRisks,
     baseLayerRisks,
   }
