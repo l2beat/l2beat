@@ -85,10 +85,10 @@ function createIndexers(
     const sharedEscrow = config.projects
       .find((p) => p.projectId === chain)
       ?.escrows.find(
-        (e) => e.sharedEscrow && e.sharedEscrow.type === 'ElasticChian',
+        (e) => e.sharedEscrow && e.sharedEscrow.type === 'ElasticChain',
       )
     assert(
-      sharedEscrow && sharedEscrow.sharedEscrow?.type === 'ElasticChian',
+      sharedEscrow && sharedEscrow.sharedEscrow?.type === 'ElasticChain',
       `${chain}: Shared escrow not found`,
     )
 
