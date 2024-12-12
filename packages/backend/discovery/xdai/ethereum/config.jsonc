@@ -19,7 +19,8 @@
     "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473": "DaiForeignBridge",
     "0x166124b75c798Cedf1B43655E9B5284eBd5203DB": "SDaiForeignBridge",
     "0x6F6e4785c97885d26466945055d4Ae8931bE6f7a": "GovernorBravoDelegate",
-    "0x6943A218d58135793F1FE619414eD476C37ad65a": "BridgeValidators"
+    "0x6943A218d58135793F1FE619414eD476C37ad65a": "BridgeValidators",
+    "0xBafE01ff935C7305907c33BF824352eE5979B526": "Comptroller",
   },
   "overrides": {
     "DaiForeignBridge": {
@@ -28,7 +29,8 @@
         "totalExecutedPerDay",
         "totalSpentPerDay",
         "withinExecutionLimit",
-        "withinLimit"
+        "withinLimit",
+        "getCurrentDay"
       ],
       "fields": {
         "requiredSignatures": {
@@ -42,12 +44,13 @@
       }
     },
     "SDaiForeignBridge": {
-      "ignoreRelatives": ["compToken", "cDaiToken", "sDaiToken", "erc20token"],
+      "ignoreRelatives": ["compToken", "cDaiToken", "sDaiToken", "erc20token", "daiToken"],
       "ignoreMethods": [
         "totalExecutedPerDay",
         "totalSpentPerDay",
         "withinExecutionLimit",
-        "withinLimit"
+        "withinLimit",
+        "getCurrentDay"
       ],
       "fields": {
         "requiredSignatures": {
@@ -74,6 +77,9 @@
           }
         }
       }
+    },
+    "Comptroller":{
+      "ignoreMethods": ["getBlockNumber"]
     }
   }
 }
