@@ -8,7 +8,7 @@ Generated with discovered.json: 0x860bdd91b712e93082844f19b8044a636e240b15
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Ignored not needed slot value in config.
 
 ## Config/verification related changes
 

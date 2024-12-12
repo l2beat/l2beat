@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc3ec8a2fb401f1d0bf75b6a0515403320dc28246
 
 ## Description
 
-Discovering old ExchangeV3 implemetations.. I believe this is an issue: L2B-8529.
+Discovering old ExchangeV3 implemetations.. I believe this might be a bug: L2B-8529.
 
 ## Config/verification related changes
 

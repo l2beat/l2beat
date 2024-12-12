@@ -1,16 +1,26 @@
-Generated with discovered.json: 0xc22a0c6c233c657115f5134487de8a6759809dbf
+Generated with discovered.json: 0x785a6d56f4b4ce3d1a01216f708d0996e61c6437
 
-# Diff at Wed, 11 Dec 2024 09:57:28 GMT:
+# Diff at Thu, 12 Dec 2024 17:34:47 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@28849b80c374bb8843eff17341701a3084c3bdb9 block: 21366345
-- current block number: 21378512
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21366345
+- current block number: 21387950
 
 ## Description
 
 Changed finalization period from 5 hours to 4.
+Eth withdrawals are halted while ethThrottleWithdrawals.maxAmountPerPeriod is set to 0.
 
 ## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      values.ethThrottleWithdrawals.maxAmountPerPeriod:
+-        "1000000000000000000000"
++        0
+    }
+```
 
 ```diff
     contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
