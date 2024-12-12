@@ -1,4 +1,4 @@
-export const OTHER_REASONS = {
+export const REASON_FOR_BEING_OTHER = {
   NO_PROOFS: {
     value: 'No proofs',
     description:
@@ -25,4 +25,5 @@ export const OTHER_REASONS = {
   },
 } as const
 
-export type OtherReason = (typeof OTHER_REASONS)[keyof typeof OTHER_REASONS]
+export type ReasonForBeingInOther =
+  (typeof REASON_FOR_BEING_OTHER)[keyof typeof REASON_FOR_BEING_OTHER]

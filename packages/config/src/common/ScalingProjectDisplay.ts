@@ -1,6 +1,6 @@
 import { StringWithAutocomplete } from '@l2beat/shared-pure'
 import { WarningWithSentiment } from '../projects'
-import { OtherReason } from './OtherReason'
+import { ReasonForBeingInOther } from './ReasonForBeingInOther'
 import { ScalingProjectCategory } from './ScalingProjectCategory'
 import { ScalingProjectLinks } from './ScalingProjectLinks'
 import { ScalingProjectPurpose } from './ScalingProjectPurpose'
@@ -15,7 +15,7 @@ export type ScalingProjectDisplay = {
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
   /** Reasons why the scaling project is not included in the other categories. If defined - project will be displayed as other */
-  reasonsForBeingOther?: OtherReason[]
+  reasonsForBeingOther?: ReasonForBeingInOther[]
   mainPermissions?: {
     proposer: {
       value: string
