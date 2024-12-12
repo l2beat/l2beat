@@ -1,24 +1,16 @@
-Generated with discovered.json: 0x072db407776d6eba1e34b577dbd7e0908ccc6dca
+Generated with discovered.json: 0xc7414748081f2c9e2bf85e8c9b38dc502ab947ae
 
-# Diff at Thu, 12 Dec 2024 12:33:44 GMT:
+# Diff at Thu, 12 Dec 2024 18:00:37 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21285509
-- current block number: 21386433
+- current block number: 21388078
 
 ## Description
 
 Multisig threshold change, ignored lastProposeAggregateRootAt.
 
 ## Watched changes
-
-```diff
-    contract RelayerProxyHub3 (0xB4F8D176466f5F544bAd53737bffAaeA17185c05) {
-    +++ description: None
-      values.lastProposeAggregateRootAt:
-+        1733992943
-    }
-```
 
 ```diff
     contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b) {

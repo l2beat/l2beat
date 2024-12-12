@@ -1,24 +1,14 @@
-Generated with discovered.json: 0x57f8945c8ee33c1aba2d076d79b3831743b4f458
+Generated with discovered.json: 0x5cf4cef23f0cb03295260afbe5b50fdd11ebf6d1
 
-# Diff at Thu, 12 Dec 2024 12:29:13 GMT:
+# Diff at Thu, 12 Dec 2024 17:59:11 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21142111
-- current block number: 21386417
+- current block number: 21388072
 
 ## Description
 
 Ignored current time value.
-
-## Watched changes
-
-```diff
-    contract UMAOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24) {
-    +++ description: None
-      values.getCurrentTime:
-+        1734006407
-    }
-```
 
 ## Config/verification related changes
 

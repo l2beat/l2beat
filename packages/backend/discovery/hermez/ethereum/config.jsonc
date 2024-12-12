@@ -30,12 +30,10 @@
     "Hermez2": {
       "ignoreMethods": ["unpackBucket"]
     },
-    "HermezAuctionProtocol": 
-    {
+    "HermezAuctionProtocol": {
       "ignoreMethods": ["getCurrentSlotNumber"]
     },
-    "HermezAuctionProtocol2": 
-    {
+    "HermezAuctionProtocol2": {
       "ignoreMethods": ["getCurrentSlotNumber"]
     }
   }

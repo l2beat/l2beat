@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 21387733,
+  "blockNumber": 21388211,
   "configHash": "0xb5ce17cb1c9c00fea8d4213e87c3d8579a04a2db4839ef0f4e2fdd6516de1262",
   "contracts": [
     {
@@ -654,7 +654,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 8360,
+        "globalMessageCount": 8365,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",

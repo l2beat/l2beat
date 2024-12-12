@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 21386433,
-  "configHash": "0x24c82096106b48a634c4af86b3ce296831d3c6d0bb74b597fb00a2d3686ebfe9",
+  "blockNumber": 21388078,
+  "configHash": "0xfb6bc994436e70de3fffa0c12685cc2eccbf57bb251ab2757b2bfee894348a24",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -27,7 +27,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 963336,
+        "getLastCompletedSnapshotId": 963348,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -71,7 +71,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "122301659680540964877165148",
+        "totalSupply": "122306299377179413814361032",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -253,7 +253,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1734006599,
+        "getCurrentTime": 1734026411,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -309,7 +309,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1733994947,
+        "lastSavedAggregateRootTimestamp": 1734024347,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -1145,7 +1145,6 @@
         "keep3r": "0xeb02addCfD8B773A5FFA6B9d1FE99c566f8c44CC",
         "lastFinalizeAt": 0,
         "lastPropagateAt": 1724939759,
-        "lastProposeAggregateRootAt": 1733992943,
         "owner": "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378",
         "propagateCooldown": 1800,
         "proposeAggregateRootCooldown": 1800,
@@ -3473,7 +3472,7 @@
   },
   "usedTemplates": {
     "amarok/Relayer": "0x63e51799ac3fb7cd705bce6f217f47d287e3479046939df47e1119cf0fe070af",
-    "amarok/RelayerProxyHub": "0xe8ceaa47d08e7af86c9c5e43d7f44598b77a5ab34ec473747447481883e2d039",
+    "amarok/RelayerProxyHub": "0x02ec2a805c99a0858133d5e1237846ac6f72cc06deb9b2371e9bb80d3110144c",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

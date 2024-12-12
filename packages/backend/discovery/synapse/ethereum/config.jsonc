@@ -79,7 +79,7 @@
     },
     "Liquidity Pool": {
       "ignoreMethods": ["calculateRemoveLiquidity"],
-      "ignoreInWatchMode": ["getAdminBalance", "getVirtualPrice" ]
+      "ignoreInWatchMode": ["getAdminBalance", "getVirtualPrice"]
     },
     "LPToken": {
       "ignoreMethods": ["totalSupply"]

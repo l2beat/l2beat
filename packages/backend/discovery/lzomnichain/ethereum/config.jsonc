@@ -45,17 +45,20 @@
     "StoneEscrow": {
       "ignoreRelatives": ["token", "minter"],
       "ignoreMethods": ["quota"],
-      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"]
     },
-    "WagmiEscrow": { 
-      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
-    "ignoreRelatives": ["token"] },
-    "LinkEscrow": { 
-      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
-    "ignoreRelatives": ["token"] },
-    "UsdcEscrow": { 
-      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
-    "ignoreRelatives": ["token"] },
+    "WagmiEscrow": {
+      "ignoreInWatchMode": ["circulatingSupply"],
+      "ignoreRelatives": ["token"]
+    },
+    "LinkEscrow": {
+      "ignoreInWatchMode": ["circulatingSupply"],
+      "ignoreRelatives": ["token"]
+    },
+    "UsdcEscrow": {
+      "ignoreInWatchMode": ["circulatingSupply"],
+      "ignoreRelatives": ["token"]
+    },
     "BobaEscrow1": { "ignoreRelatives": ["token"] },
     "BobaEscrow2": { "ignoreRelatives": ["token"] },
     "BobaEscrow3": { "ignoreRelatives": ["token"] },

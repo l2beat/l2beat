@@ -121,7 +121,7 @@
       ]
     },
     "UMAOptimisticOracle": {
-      "ignoreMethods": ["getCurrentTime"],
+      "ignoreMethods": ["getCurrentTime"]
     }
   }
 }

@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 21387719,
-  "configHash": "0x59f99356a347a73ac56b4082e0bff17ab50ec33a603881858f62bdc8dd84b7b0",
+  "blockNumber": 21388117,
+  "configHash": "0x794d62d5d863ba90402c57aa9fac7653edbca0e89d15a1f9ee97dbcb06466b42",
   "contracts": [
     {
       "name": "FPValidator",
@@ -1639,11 +1639,11 @@
       "sourceHashes": [
         "0x7242f25c64a6bc6489c9da3281cf3e61090983ebe87a8859580d74133fd9fdb5"
       ],
-      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+      "ignoreInWatchMode": ["circulatingSupply"],
       "sinceTimestamp": 1665428735,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "30113292370743645",
+        "circulatingSupply": "30123769415715603",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -1918,12 +1918,12 @@
       "sourceHashes": [
         "0x9792608d4255e9f79bcb27779fde9c452f59b73a77a5771491a3816521f79a1f"
       ],
-      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+      "ignoreInWatchMode": ["circulatingSupply"],
       "sinceTimestamp": 1688483015,
       "values": {
         "$immutable": true,
         "cap": "4761000000000000000000000000",
-        "circulatingSupply": "502956608545738841784556178",
+        "circulatingSupply": "502835694215967998418073878",
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "GLOBAL_MAX_TOTAL_SUPPLY": "4761000000000000000000000000",
@@ -2141,7 +2141,7 @@
       "sourceHashes": [
         "0x7242f25c64a6bc6489c9da3281cf3e61090983ebe87a8859580d74133fd9fdb5"
       ],
-      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+      "ignoreInWatchMode": ["circulatingSupply"],
       "sinceTimestamp": 1663802015,
       "values": {
         "$immutable": true,
