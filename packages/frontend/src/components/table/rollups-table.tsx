@@ -1,5 +1,3 @@
-import { type StageConfig } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
 import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
 import { env } from '~/env'
@@ -12,7 +10,7 @@ import {
 } from './basic-table'
 
 interface BasicEntry extends BasicTableEntry {
-  stage: StageConfig
+  stageOrder: number
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
@@ -89,20 +87,17 @@ function getRollupsTableRows<T extends BasicEntry>(table: Table<T>) {
   const rest: Row<T>[] = []
 
   for (const row of rows) {
-    if (row.original.id === ProjectId.ETHEREUM) {
+    if (row.original.stageOrder === 3) {
       ethereumEntry = row
       continue
     }
 
-    if (
-      row.original.stage.stage === 'Stage 2' ||
-      row.original.stage.stage === 'Stage 1'
-    ) {
+    if (row.original.stageOrder === 2) {
       stageTwoAndOne.push(row)
       continue
     }
 
-    if (row.original.stage.stage === 'Stage 0') {
+    if (row.original.stageOrder === 1) {
       stageZero.push(row)
       continue
     }
