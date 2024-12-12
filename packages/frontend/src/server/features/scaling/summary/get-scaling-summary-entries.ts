@@ -83,6 +83,9 @@ function getScalingSummaryEntry(
     }),
     dataAvailability,
     mainPermissions: project.display.mainPermissions,
+    reasonsForBeingOther: project.display.isOther
+      ? project.display.reasonsForBeingOther
+      : undefined,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,

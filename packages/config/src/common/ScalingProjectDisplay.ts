@@ -1,5 +1,6 @@
 import { StringWithAutocomplete } from '@l2beat/shared-pure'
 import { WarningWithSentiment } from '../projects'
+import { OtherReason } from './OtherReason'
 import { ScalingProjectCategory } from './ScalingProjectCategory'
 import { ScalingProjectLinks } from './ScalingProjectLinks'
 import { ScalingProjectPurpose } from './ScalingProjectPurpose'
@@ -14,6 +15,7 @@ export type ScalingProjectDisplay = {
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
   isOther?: boolean
+  reasonsForBeingOther?: OtherReason[]
   mainPermissions?: {
     proposer: {
       value: string
