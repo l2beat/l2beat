@@ -76,7 +76,7 @@ export interface PolygonCDKStackConfig {
   upgradesAndGovernance?: string
   stateValidation?: ScalingProjectStateValidation
   associatedTokens?: string[]
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   additionalPurposes?: ScalingProjectPurpose[]
 }
 
@@ -86,7 +86,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   const rollupManagerContract = shared.getContract('PolygonRollupManager')
   if (daProvider !== undefined) {
     assert(
-      templateVars.badges?.find((b) => badges[b].type === 'DA') !== undefined,
+      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
+        undefined,
       'DA badge is required for external DA',
     )
   }
@@ -611,7 +612,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         Badge.DA.EthereumCalldata,
         Badge.Infra.AggLayer,
       ],
-      templateVars.badges ?? [],
+      templateVars.additionalBadges ?? [],
     ),
   }
 }

@@ -21,12 +21,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
     added: 'cronosValidatorsAdded',
     removed: 'cronosValidatorsRemoved',
   },
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.CustomDA,
-    Badge.Stack.ZKStack,
-    Badge.Infra.ElasticChain,
-  ],
+  additionalBadges: [Badge.DA.CustomDA, Badge.Infra.ElasticChain],
   display: {
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
@@ -95,7 +90,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
       description:
         'Shared bridge for depositing tokens to Cronos zkEVM and other ZK stack chains.',
       sharedEscrow: {
-        type: 'ElasticChian',
+        type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
           '0x309429DE3621992Cb0ab8982A448c9Cc5c38405b',
         ),

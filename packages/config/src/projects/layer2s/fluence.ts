@@ -9,10 +9,8 @@ const discovery = new ProjectDiscovery('fluence')
 export const fluence: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Fluence',
     slug: 'fluence',
     description:

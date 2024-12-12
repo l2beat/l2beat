@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x00664097a7d1c6ccf5f2824f04f0e0b2a9ae3ff2
+
+# Diff at Sun, 08 Dec 2024 11:45:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 23259798
+- current block number: 23434494
+
+## Description
+
+BlobstreamMultisig signer change.
+
+## Watched changes
+
+```diff
+    contract BlobstreamMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
+    +++ description: None
+      values.$members.4:
+-        "0xA3fC931613a4E2440a199d47B0076e8b85F33099"
++        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+    }
+```
+
+Generated with discovered.json: 0xdff17458ff82de3da00478196bff62b936e8b1a3
+
+# Diff at Wed, 04 Dec 2024 10:43:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 22391049
+- current block number: 23259798
+
+## Description
+
+Raise the max commitment size by one order of magnitude to 10000 celestia blocks.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x424268ec553b52a09ec29bc220e95a4dc19def7e459d1cc8a541ee0e2fd578e9"
++        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
+      values.$implementation:
+-        "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"
++        "0x46EbfC399d3913BB9b99E73675722417F9c5d416"
+      values.$pastUpgrades.3:
++        ["2024-12-02T19:09:23.000Z","0x972e1b10b3fd4c52bbd75c6215f12438b15229c9f609ad42273eb3985d8e4767",["0x46EbfC399d3913BB9b99E73675722417F9c5d416"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.DATA_COMMITMENT_MAX:
+-        1000
++        10000
+    }
+```
+
+## Source code changes
+
+```diff
+.../base/{.flat@22391049 => .flat}/Blobstream/SP1Blobstream.sol         | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x547b05a005c5552c4a89ebadd7bc9431733e3279
 
 # Diff at Thu, 28 Nov 2024 11:03:30 GMT:

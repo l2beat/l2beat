@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient as SharedHttpClient } from '@l2beat/shared'
+import { HttpClient2, RpcClient2 } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -32,6 +32,7 @@ export class AllProviders {
     httpClient: HttpClient,
     private discoveryCache: DiscoveryCache,
   ) {
+    const httpClient2 = new HttpClient2()
     for (const config of chainConfigs) {
       const baseProvider = new providers.StaticJsonRpcProvider(
         config.rpcUrl,
@@ -48,14 +49,25 @@ export class AllProviders {
       const etherscanClient = getExplorerClient(httpClient, config.explorer)
       let blobClient: BlobClient | undefined
 
+      const ethereumRpc = new RpcClient2({
+        url: config.rpcUrl,
+        retryStrategy: 'SCRIPT',
+        callsPerMinute: 60,
+        sourceName: 'ethereum',
+        logger: Logger.SILENT,
+        http: httpClient2,
+      })
+
       if (config.beaconApiUrl) {
-        blobClient = new BlobClient(
-          config.beaconApiUrl,
-          config.rpcUrl,
-          httpClient as unknown as SharedHttpClient,
-          Logger.SILENT,
-          { callsPerMinute: undefined, timeout: undefined },
-        )
+        blobClient = new BlobClient({
+          beaconApiUrl: config.beaconApiUrl,
+          logger: Logger.SILENT,
+          rpcClient: ethereumRpc,
+          retryStrategy: 'SCRIPT',
+          sourceName: 'beaconAPI',
+          callsPerMinute: 60,
+          http: httpClient2,
+        })
       }
 
       this.config.set(config.name, {

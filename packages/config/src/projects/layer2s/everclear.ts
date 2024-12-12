@@ -8,13 +8,11 @@ const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
-  badges: [Badge.RaaS.Gelato, Badge.DA.DAC],
+  additionalBadges: [Badge.RaaS.Gelato, Badge.DA.DAC],
   additionalPurposes: ['Interoperability'],
   display: {
     name: 'Everclear Hub',
     slug: 'everclear',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Everclear Hub is an AnyTrust Optimium on Ethereum, built on the Orbit stack. It is used as a liquidity hub (clearing layer) to solve the liquidity fragmentation between modular scaling solutions.',
     links: {

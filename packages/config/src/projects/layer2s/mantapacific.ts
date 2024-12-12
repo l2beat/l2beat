@@ -84,7 +84,7 @@ export const mantapacific: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
+  additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   knowledgeNuggets: [
     {
       title: 'Blobstream and Celestia Architecture',

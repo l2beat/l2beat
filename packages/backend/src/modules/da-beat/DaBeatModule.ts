@@ -27,7 +27,7 @@ export function createDaBeatModule(
 
   const pricesRefresher = new DaBeatPricesRefresher(
     peripherals.database,
-    providers.coingeckoClient,
+    providers.clients.coingecko,
     clock,
     logger,
   )

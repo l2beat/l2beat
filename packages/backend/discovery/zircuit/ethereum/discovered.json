@@ -1,19 +1,19 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20827058,
+  "blockNumber": 21366345,
   "configHash": "0x0698c10cff4e338a0af49513f3885568e3e5af6fd467ba45985135c7f5162b19",
   "contracts": [
     {
       "name": "OptimismPortal",
       "address": "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-      "template": "opstack/OptimismPortal",
+      "template": "opstack/OptimismPortal_zircuit",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
         "0x9388575e8cf83880125e7770a596c83a0ad9c191b71f1990544987cbd0dbd4c0"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -26,7 +26,11 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": [
+        "params",
+        "getEthThrottleDepositsCredits",
+        "getEthThrottleWithdrawalsCredits"
+      ],
       "sinceTimestamp": 1719936491,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
@@ -67,7 +71,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20825616,
+          "prevBlockNum": 21366315,
           "prevTxCount": 1
         },
         "paused": false,
@@ -109,7 +113,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622800",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634866",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -371,7 +375,7 @@
       "address": "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
-        "0x15cce087eeab52950ec9f98df3ec3bb507edb1fac086fa0674aad4994d49049d"
+        "0xa755414175ee27be390c32c78aaacaaf640fea05cd3198de33257a27f282b91f"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -384,7 +388,7 @@
       "sinceTimestamp": 1719936599,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168",
+        "$implementation": "0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e",
         "$pastUpgrades": [
           [
             "2024-07-02T16:13:35.000Z",
@@ -400,10 +404,15 @@
             "2024-08-12T16:32:59.000Z",
             "0x535806593d5f6ff8537efafb51d759ec64c8e93cc4edbde4a5c55f7ef585bacc",
             ["0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"]
+          ],
+          [
+            "2024-12-04T15:21:23.000Z",
+            "0xa77ba9edb866b52cd4f676f0ff60cc38e85987d4cee650fc232a2a9d13c00dc6",
+            ["0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e"]
           ]
         ],
-        "$upgradeCount": 3,
-        "version": "0c13cfbb19b823f524a346e7ff5b352e24b8d79b"
+        "$upgradeCount": 4,
+        "version": "c3131379c4bf618f2135c29547049b46923f7dca"
       },
       "derivedName": "Verifier"
     },
@@ -516,10 +525,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3661348,
-        "latestOutputIndex": 9374,
-        "nextBlockNumber": 3661349,
-        "nextOutputIndex": 9375,
+        "latestBlockNumber": 6913103,
+        "latestOutputIndex": 18876,
+        "nextBlockNumber": 6913104,
+        "nextOutputIndex": 18877,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -617,7 +626,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -658,7 +667,6 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x0C13CFBB19b823f524a346e7fF5B352e24b8d79B" },
     { "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb" },
     { "address": "0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec" },
     { "address": "0x38809210f69ed6204E276d2Be6b15cd530698679" },
@@ -676,6 +684,7 @@
       ]
     },
     { "address": "0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966" },
+    { "address": "0xc3131379C4bf618f2135c29547049B46923F7Dca" },
     { "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4" },
     {
       "address": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
@@ -690,9 +699,6 @@
     { "address": "0xFF00000000000000000000000000000000048900" }
   ],
   "abis": {
-    "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168": [
-      "function version() view returns (string)"
-    ],
     "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -942,6 +948,9 @@
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() view returns (string)"
     ],
+    "0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e": [
+      "function version() view returns (string)"
+    ],
     "0xA47314C96ab9572af656788e15143B459F99AE0f": [
       "constructor()",
       "error AccessControlBadConfirmation()",
@@ -1141,7 +1150,7 @@
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
-    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/OptimismPortal_zircuit": "0x6eee351872c977a3e6da44161da5cd9d7ee870df03d9b7053780ae3b30acb89b",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

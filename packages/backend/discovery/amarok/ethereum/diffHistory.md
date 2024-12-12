@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x98b4f5e84bbaff9188ce66e71b18ab07b6613d18
+
+# Diff at Tue, 10 Dec 2024 10:36:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21285509
+- current block number: 21285509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285509 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Relayer3 (0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer10 (0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub1 (0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer5 (0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer1 (0xaBcC9b596420A9E9172FD5938620E265a0f9Df92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub3 (0xB4F8D176466f5F544bAd53737bffAaeA17185c05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub2 (0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer7 (0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer11 (0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x08be3bca758a6a558eaa261af2e07743cd31e7ae
 
 # Diff at Thu, 28 Nov 2024 10:09:41 GMT:

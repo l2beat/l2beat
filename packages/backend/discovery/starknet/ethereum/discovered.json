@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21285629,
-  "configHash": "0xf3c12a7fb062c9f51ba1804ed1ff8937014de2cd3665be9978642c9a970c4e23",
+  "blockNumber": 21358044,
+  "configHash": "0xe10e1699237ec9e48dd13199558b1c0c9ee5e38d7579c50297557fc865985ae5",
   "contracts": [
     {
       "name": "BridgeMultisig",
@@ -71,7 +71,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 18,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -100,6 +100,25 @@
       "sinceTimestamp": 1652101038,
       "values": { "$immutable": true },
       "derivedName": "L1Escrow"
+    },
+    {
+      "name": "MakerDAO Governance",
+      "address": "0x0a3f6849f78076aefaDf113F5BED87720274dDC0",
+      "sourceHashes": [
+        "0xffbc8b3f73b148f6d02e80f3073c89ae0516c7153d42af25f1dff2b3cc7eda26"
+      ],
+      "sinceTimestamp": 1606311083,
+      "values": {
+        "$immutable": true,
+        "authority": "0x0a3f6849f78076aefaDf113F5BED87720274dDC0",
+        "GOV": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "hat": "0x329Feb1E300d6bf54d4969Df5089ff7bC79694B6",
+        "IOU": "0xA618E54de493ec29432EbD2CA7f14eFbF6Ac17F7",
+        "live": true,
+        "MAX_YAYS": 5,
+        "owner": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "DSChief"
     },
     {
       "name": "StarkgateManager",
@@ -835,7 +854,10 @@
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+            "members": [
+              "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+            ]
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
@@ -952,7 +974,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1664958,
+        "l1ToL2MessageNonce": 1665651,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -973,9 +995,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2472951903233413474393209880999741635290585574856009720295690060179847488859",
-        "stateBlockNumber": 936608,
-        "stateRoot": "2152939398087551806928321603143318340716878164124490406242747815475882394892",
+        "stateBlockHash": "1056395405225300033822588509253111531155560988587865970140304448212914872135",
+        "stateBlockNumber": 963991,
+        "stateRoot": "1887121850864535397794302504503140808182883796550598460059461085546835242654",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1749,6 +1771,44 @@
       "function deny(address usr)",
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
+    ],
+    "0x0a3f6849f78076aefaDf113F5BED87720274dDC0": [
+      "constructor(address GOV, address IOU, uint256 MAX_YAYS)",
+      "event Etch(bytes32 indexed slate)",
+      "event LogNote(bytes4 indexed sig, address indexed guy, bytes32 indexed foo, bytes32 indexed bar, uint256 wad, bytes fax) anonymous",
+      "event LogSetAuthority(address indexed authority)",
+      "event LogSetOwner(address indexed owner)",
+      "function GOV() view returns (address)",
+      "function IOU() view returns (address)",
+      "function MAX_YAYS() view returns (uint256)",
+      "function approvals(address) view returns (uint256)",
+      "function authority() view returns (address)",
+      "function canCall(address caller, address code, bytes4 sig) view returns (bool)",
+      "function deposits(address) view returns (uint256)",
+      "function etch(address[] yays) returns (bytes32 slate)",
+      "function free(uint256 wad)",
+      "function getCapabilityRoles(address code, bytes4 sig) view returns (bytes32)",
+      "function getUserRoles(address who) view returns (bytes32)",
+      "function hasUserRole(address who, uint8 role) view returns (bool)",
+      "function hat() view returns (address)",
+      "function isCapabilityPublic(address code, bytes4 sig) view returns (bool)",
+      "function isUserRoot(address who) view returns (bool)",
+      "function last(address) view returns (uint256)",
+      "function launch()",
+      "function lift(address whom)",
+      "function live() view returns (bool)",
+      "function lock(uint256 wad)",
+      "function owner() view returns (address)",
+      "function setAuthority(address authority_)",
+      "function setOwner(address owner_)",
+      "function setPublicCapability(address code, bytes4 sig, bool enabled)",
+      "function setRoleCapability(uint8 role, address code, bytes4 sig, bool enabled)",
+      "function setRootUser(address who, bool enabled)",
+      "function setUserRole(address who, uint8 role, bool enabled)",
+      "function slates(bytes32, uint256) view returns (address)",
+      "function vote(bytes32 slate)",
+      "function vote(address[] yays) returns (bytes32)",
+      "function votes(address) view returns (bytes32)"
     ],
     "0x0c5aE94f8939182F2D06097025324D1E537d5B60": [
       "constructor(uint256 upgradeActivationDelay)",

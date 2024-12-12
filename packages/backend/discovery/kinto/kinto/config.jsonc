@@ -5,7 +5,6 @@
   "initialAddresses": [
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
-    "0x87f0eE85bF3198654900a422832157abBba30828", // KintoWallet beacon
     "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d", // bundleBulker
     "0x340487b92808B84c2bd97C87B590EE81267E04a7", // L2GatewayRouter
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd", // SponsorPaymaster
@@ -16,18 +15,131 @@
   "names": {
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry",
     "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID",
-    "0x87f0eE85bF3198654900a422832157abBba30828": "KintoWalletBeacon",
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "KintoAdminMultisig",
     "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": "KintoWalletFactory",
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": "SponsorPaymaster",
-    "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C": "KintoWalletBeacon_implemention",
     "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "Faucet",
     "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": "RewardsDistributor",
     "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": "BridgedKinto",
     "0x793500709506652Fcc61F0d2D0fDa605638D4293": "Treasury",
-    "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": "Socket"
+    "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": "Socket",
+    "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": "AccessManager",
+    "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": "NioGovernor",
+    "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": "NioGuardians"
+  },
+  "types": {
+    "RoleName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "ADMIN_ROLE",
+        "18446744073709551615": "PUBLIC_ROLE",
+        "1635978423191113331": "NIO_GOVERNOR_ROLE",
+        "8663528507529876195": "UPGRADER_ROLE"
+      }
+    }
   },
   "overrides": {
+    "KintoAdminMultisig": {
+      "ignoreMethods": ["owners"],
+      "ignoreInWatchMode": ["getNonce"]
+    },
+    "NioGovernor": {
+      "ignoreMethods": [
+        "proposalDeadline",
+        "proposalEta",
+        "proposalExecutionPlan",
+        "proposalNeedsQueuing",
+        "proposalProposer",
+        "proposalSnapshot",
+        "proposalVotes",
+        "quorum"
+      ],
+      "ignoreInWatchMode": ["clock"]
+    },
+    "NioGuardians": {
+      "ignoreMethods": ["exists", "getPastTotalSupply"],
+      "ignoreInWatchMode": ["clock"]
+    },
+    "AccessManager": {
+      "fields": {
+        "RoleGuardianChanged": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RoleGuardianChanged",
+            "returnParams": ["roleId", "guardian"],
+            "groupBy": "roleId"
+          }
+        },
+        "RoleAdminChanged": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RoleAdminChanged",
+            "returnParams": ["roleId", "admin"],
+            "groupBy": "roleId"
+          }
+        },
+        "RoleGrantDelayChanged": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RoleGrantDelayChanged",
+            "returnParams": ["roleId", "delay", "since"],
+            "groupBy": "roleId"
+          }
+        },
+        "TargetAdminDelayUpdated": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "TargetAdminDelayUpdated",
+            "returnParams": ["target", "delay", "since"],
+            "groupBy": "target"
+          }
+        },
+        "TargetFunctionRoleUpdated": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "TargetFunctionRoleUpdated",
+            "returnParams": ["target", "selector", "roleId"],
+            "groupBy": "target"
+          }
+        },
+        "OperationScheduled": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OperationScheduled",
+            "returnParams": [
+              "operationId",
+              "nonce",
+              "schedule",
+              "caller",
+              "target",
+              "data"
+            ]
+          }
+        },
+        "AdditionalRoles": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RoleLabel",
+            "returnParams": ["roleId", "label"]
+          }
+        },
+        "RolesGranted": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RoleGranted",
+            "returnParams": [
+              "roleId",
+              "account",
+              "delay",
+              "since",
+              "newMember"
+            ],
+            "groupBy": "roleId"
+          }
+        }
+      }
+    },
     "Socket": {
       "ignoreInWatchMode": ["globalMessageCount"]
     },
@@ -50,17 +162,14 @@
     "Faucet": {
       "ignoreMethods": ["proxiableUUID"]
     },
-    "KintoWalletBeacon_implemention": {
-      "description": "Implementation for all KintoWallets, managed by a beacon proxy.",
-      "ignoreMethods": ["getAccessPoint"]
-    },
     "SponsorPaymaster": {
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["getDeposit"]
     },
     "KintoWalletFactory": {
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["totalWallets"]
+      "ignoreInWatchMode": ["totalWallets"],
+      "ignoreRelatives": ["beacon"]
     },
     "KintoID": {
       "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",

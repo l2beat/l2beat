@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xbe6d1bd6cdf06c3266e47df316adae1127543239
+
+# Diff at Fri, 06 Dec 2024 21:11:41 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21235656
+- current block number: 21346059
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235656 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.isL2beatStillAnOwner:
++        true
+    }
+```
+
 Generated with discovered.json: 0x6074bd9f8045463b77dc64eb7ce10714e5f3774e
 
 # Diff at Tue, 19 Nov 2024 13:44:31 GMT:

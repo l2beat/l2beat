@@ -23,14 +23,18 @@ const daResolveWindow = formatSeconds(
 export const gmnetwork: Layer2 = opStackL2({
   createdAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
-  badges: [Badge.DA.CustomDA, Badge.Infra.Superchain, Badge.RaaS.AltLayer],
+  additionalBadges: [
+    Badge.DA.CustomDA,
+    Badge.Infra.Superchain,
+    Badge.RaaS.AltLayer,
+  ],
   additionalPurposes: ['AI'],
   display: {
     name: 'GM Network',
     slug: 'gmnetwork',
     architectureImage: 'opstack-dachallenge',
     description:
-      'GM Network is an OP stack L2 in alt-DA mode aiming to to deepen the integration of smart, connected devices within everyday human activities by blending Artificial Intelligence and the Internet of Things.',
+      'GM Network is an OP stack L2 in alt-DA mode aiming to deepen the integration of smart, connected devices within everyday human activities by blending Artificial Intelligence and the Internet of Things.',
     links: {
       websites: ['https://gmnetwork.ai/'],
       apps: ['https://bridge.gmnetwork.ai/'],

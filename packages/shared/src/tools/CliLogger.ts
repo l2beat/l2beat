@@ -8,6 +8,9 @@ const CLEAR_SCREEN: string = '\x1b[J'
 
 export type StatusLineHandle = string
 
+const getWindowSize: (() => [number, number]) | undefined =
+  process.stdout.getWindowSize
+
 export class CliLogger {
   private readonly REDRAW_DELAY: number = 1000 / 30 // 30fps
   private readonly statusLines: Map<string, string> = new Map()
@@ -16,7 +19,9 @@ export class CliLogger {
   private lastLines: number = 0
   private lastRedraw: number = 0
   private drawTimeoutId?: ReturnType<typeof setTimeout>
-  private termWidth: number = process.stdout.getWindowSize()[0]
+  private termWidth: number = getWindowSize
+    ? process.stdout.getWindowSize()[0]
+    : 80
 
   logLine(input: string) {
     this.logs.push(input + '\n')

@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('rss3')
 
 export const rss3: Layer2 = opStackL2({
   createdAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
-  badges: [Badge.DA.NearDA],
+  additionalBadges: [Badge.DA.NearDA],
   daProvider: {
     layer: DA_LAYERS.NEAR_DA,
     riskView: {

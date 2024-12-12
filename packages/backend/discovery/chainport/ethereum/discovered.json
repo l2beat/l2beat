@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 21279513,
+  "blockNumber": 21357562,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
   "contracts": [
     {
@@ -183,7 +183,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 205,
+        "nonce": 206,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -199,7 +199,7 @@
         "$immutable": true,
         "getMembersRegistry": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
         "name": "ChainportCongress",
-        "proposalCount": 61
+        "proposalCount": 62
       },
       "fieldMeta": {
         "proposalCount": {

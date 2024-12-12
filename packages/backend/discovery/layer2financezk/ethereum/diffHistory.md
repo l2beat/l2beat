@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x9f8c2ff0705b615b79e639a61b500debf3e08fbc
+
+# Diff at Wed, 04 Dec 2024 14:14:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5ce1f4558272638b4ce9e4501463a3fa3ee115cb block: 19825376
+- current block number: 19825376
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825376 (main branch discovery), not current.
+
+```diff
+    contract Committee (0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9) {
+    +++ description: None
+      name:
+-        ""
++        "Committee"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StrategyCompound (0x5b000954F70B0410685193B0afd3074B744B5C97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Comp (0xc00e94Cb662C3520282E6f5717214004A7f26888)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x97311829fba2addaf36879b5132f3914016d29a4
 
 # Diff at Mon, 21 Oct 2024 11:07:00 GMT:
