@@ -18,17 +18,17 @@ export function RecategorizedTvlChartHover(props: Props) {
     {
       title: 'Rollups',
       value: props.rollups,
-      className: 'bg-[#FC49C2]',
+      className: 'bg-n-pink-400',
     },
     {
       title: 'Validiums and Optimiums',
       value: props.validiumsAndOptimiums,
-      className: 'bg-[#1C8BA4]',
+      className: 'bg-n-cyan-600',
     },
     {
       title: 'Others',
       value: props.others,
-      className: 'bg-[#B7A12F]',
+      className: 'bg-n-yellow-700',
     },
   ]
   return (

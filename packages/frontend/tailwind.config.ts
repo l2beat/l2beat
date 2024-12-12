@@ -118,6 +118,9 @@ const config: Config = {
         800: '#B94DDF',
         900: '#AB3BD2',
       },
+      'n-pink': {
+        400: '#FC49C2',
+      },
       green: {
         200: '#B0FFAA',
         300: '#4EAB58',
@@ -168,6 +171,9 @@ const config: Config = {
       },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
       fuchsia: { 700: '#860CB0' },
+      'n-cyan': {
+        600: '#1C8BA4',
+      },
 
       // New colors
       primary: {
