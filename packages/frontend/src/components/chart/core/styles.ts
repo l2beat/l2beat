@@ -119,4 +119,16 @@ export const LINE_STYLES = {
     gradient.addColorStop(1, 'rgba(238, 44, 1')
     return { light: gradient, dark: gradient }
   },
+  'teal gradient': (ctx: CanvasRenderingContext2D) => {
+    const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
+    gradient.addColorStop(0, 'rgba(54, 163, 163')
+    gradient.addColorStop(1, 'rgba(17, 130, 164')
+    return { light: gradient, dark: gradient }
+  },
+  'yellow gradient': (ctx: CanvasRenderingContext2D) => {
+    const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
+    gradient.addColorStop(0, 'rgba(204, 158, 65')
+    gradient.addColorStop(1, 'rgba(163, 184, 46')
+    return { light: gradient, dark: gradient }
+  },
 }

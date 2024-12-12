@@ -74,15 +74,15 @@ export function useRecategorizedTvlChartRenderParams({
   const valuesStyle: SeriesStyle[] = useMemo(
     () => [
       {
-        line: 'purple',
+        line: 'signature gradient',
         point: 'circle',
       },
       {
-        line: 'yellow',
+        line: 'teal gradient',
         point: 'circle',
       },
       {
-        line: 'pink',
+        line: 'yellow gradient',
         point: 'circle',
       },
     ],

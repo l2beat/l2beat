@@ -12,7 +12,7 @@ import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
-import { StackedRecategorizedTvlChartHover } from './recategorized-tvl-chart-hover'
+import { RecategorizedTvlChartHover } from './recategorized-tvl-chart-hover'
 import { useRecategorizedTvlChartRenderParams } from './use-recategorized-tvl-chart-render-params'
 
 export function ScalingSummaryTvlChart({
@@ -35,9 +35,7 @@ export function ScalingSummaryTvlChart({
       formatYAxisLabel={formatYAxisLabel}
       range={timeRange}
       isLoading={isLoading}
-      renderHoverContents={(data) => (
-        <StackedRecategorizedTvlChartHover {...data} />
-      )}
+      renderHoverContents={(data) => <RecategorizedTvlChartHover {...data} />}
     >
       <section className="flex flex-col gap-4">
         <Header

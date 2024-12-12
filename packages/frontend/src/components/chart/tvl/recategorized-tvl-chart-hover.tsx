@@ -9,7 +9,7 @@ interface Props {
   others: number
 }
 
-export function StackedRecategorizedTvlChartHover(props: Props) {
+export function RecategorizedTvlChartHover(props: Props) {
   const total = formatCurrency(
     (props.rollups + props.validiumsAndOptimiums + props.others) / 100,
     'usd',
@@ -18,21 +18,21 @@ export function StackedRecategorizedTvlChartHover(props: Props) {
     {
       title: 'Rollups',
       value: props.rollups,
-      className: 'bg-purple-100 dark:bg-purple-100',
+      className: 'bg-[#FC49C2]',
     },
     {
       title: 'Validiums and Optimiums',
       value: props.validiumsAndOptimiums,
-      className: 'bg-yellow-200 dark:bg-yellow-200',
+      className: 'bg-[#1C8BA4]',
     },
     {
       title: 'Others',
       value: props.others,
-      className: 'bg-pink-100 dark:bg-pink-100',
+      className: 'bg-[#B7A12F]',
     },
   ]
   return (
-    <div className="flex w-36 flex-col gap-1 xs:!w-52">
+    <div className="flex w-56 flex-col gap-1 xs:!w-64">
       <div>
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',
@@ -54,7 +54,7 @@ export function StackedRecategorizedTvlChartHover(props: Props) {
             v.value > 0 && (
               <div
                 key={i}
-                className="flex items-center justify-between gap-x-6"
+                className="flex items-center justify-between gap-x-2"
               >
                 <span className="flex items-center gap-1">
                   <div
