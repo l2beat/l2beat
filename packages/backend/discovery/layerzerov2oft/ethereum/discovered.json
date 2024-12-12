@@ -1,7 +1,7 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 21334435,
+  "blockNumber": 21387348,
   "configHash": "0x7fda11b24b5eed1d80b7cd4d4072385ee8cff7a3cc6537727d204842c13b9d88",
   "contracts": [
     {
@@ -647,7 +647,7 @@
         "oApp": "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xc031C368b51c28266396273b0C6ce2489b00969d",
+        "owner": "0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
