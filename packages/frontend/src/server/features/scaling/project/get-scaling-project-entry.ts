@@ -127,7 +127,7 @@ async function getHeader(project: ScalingProject) {
     description: project.display.description,
     warning: project.display.headerWarning,
     category: project.display.category,
-    isOther: project.display.isOther,
+    isOther: !!project.display.reasonsForBeingOther,
     purposes: project.display.purposes,
     activity: activityProjectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),

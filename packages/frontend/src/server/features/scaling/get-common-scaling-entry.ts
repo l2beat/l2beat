@@ -102,7 +102,7 @@ export function getCommonScalingEntry(
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
-    isOther: !!project.display.isOther,
+    isOther: !!project.display.reasonsForBeingOther,
     isVerified,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: isAnySectionUnderReview(project),
