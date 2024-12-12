@@ -44,11 +44,18 @@
   "overrides": {
     "StoneEscrow": {
       "ignoreRelatives": ["token", "minter"],
-      "ignoreMethods": ["quota"]
+      "ignoreMethods": ["quota"],
+      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
     },
-    "WagmiEscrow": { "ignoreRelatives": ["token"] },
-    "LinkEscrow": { "ignoreRelatives": ["token"] },
-    "UsdcEscrow": { "ignoreRelatives": ["token"] },
+    "WagmiEscrow": { 
+      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+    "ignoreRelatives": ["token"] },
+    "LinkEscrow": { 
+      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+    "ignoreRelatives": ["token"] },
+    "UsdcEscrow": { 
+      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+    "ignoreRelatives": ["token"] },
     "BobaEscrow1": { "ignoreRelatives": ["token"] },
     "BobaEscrow2": { "ignoreRelatives": ["token"] },
     "BobaEscrow3": { "ignoreRelatives": ["token"] },
