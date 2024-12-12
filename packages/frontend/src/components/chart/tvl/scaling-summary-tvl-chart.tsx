@@ -1,32 +1,96 @@
 'use client'
 
+import { sum } from 'lodash'
 import Link from 'next/link'
+import { useCallback, useMemo } from 'react'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
 import { ChevronIcon } from '~/icons/chevron'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { useChartLoading } from '../core/chart-loading-context'
+import { type SeriesStyle } from '../core/styles'
 import type { ChartUnit } from '../types'
-import { TvlChartHover } from './tvl-chart-hover'
-import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
+import { TvlChartHover2 } from './tvl-chart-hover-2'
 
 export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
-  const { data, isLoading } = api.tvl.chart.useQuery({
+  const { data, isLoading } = api.tvl.chartV2.useQuery({
     range: timeRange,
     excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
   })
 
-  const { formatYAxisLabel, valuesStyle, columns, change, total } =
-    useTvlChartRenderParams({ data, unit: unit, milestones: [] })
+  const formatYAxisLabel = useCallback(
+    (value: number) => formatCurrency(value, unit),
+    [unit],
+  )
+
+  const columns = useMemo(
+    () =>
+      data?.map((dataPoint) => {
+        const { values, data } = getChartValues(dataPoint, unit)
+
+        return {
+          values,
+          data,
+        }
+      }) ?? [],
+    [data, unit],
+  )
+
+  const total = useMemo(() => {
+    const lastColumn = columns.at(-1)
+    if (!lastColumn) {
+      return undefined
+    }
+    return {
+      usd:
+        lastColumn.data.rollups.usd +
+        lastColumn.data.validiumAndOptimiums.usd +
+        lastColumn.data.others.usd,
+      eth:
+        lastColumn.data.rollups.eth +
+        lastColumn.data.validiumAndOptimiums.eth +
+        lastColumn.data.others.eth,
+    }
+  }, [columns])
+
+  const firstValue = useMemo(
+    () => sum(columns[0]?.values.map((value) => value.value)),
+    [columns],
+  )
+  const lastValue = useMemo(
+    () => sum(columns[columns.length - 1]?.values.map((value) => value.value)),
+    [columns],
+  )
+  const change = useMemo(
+    () => (lastValue && firstValue ? lastValue / firstValue - 1 : 0),
+    [firstValue, lastValue],
+  )
+
+  const valuesStyle: SeriesStyle[] = useMemo(
+    () => [
+      {
+        line: 'blue',
+        point: 'circle',
+      },
+      {
+        line: 'yellow',
+      },
+      {
+        line: 'pink',
+      },
+    ],
+    [],
+  )
 
   return (
     <ChartProvider
@@ -35,7 +99,7 @@ export function ScalingSummaryTvlChart({
       formatYAxisLabel={formatYAxisLabel}
       range={timeRange}
       isLoading={isLoading}
-      renderHoverContents={(data) => <TvlChartHover data={data} />}
+      renderHoverContents={(data) => <TvlChartHover2 data={data} />}
     >
       <section className="flex flex-col gap-4">
         <Header
@@ -101,4 +165,48 @@ function Header({ total, unit, change, timeRange }: Props) {
       </div>
     </div>
   )
+}
+
+type TvlDataPoint = readonly [number, number, number, number, number]
+
+function getChartValues(dataPoint: TvlDataPoint, unit: CostsUnit) {
+  const [timestamp, rollups, validiumAndOptimiums, others, ethPrice] = dataPoint
+  const rollupsUsd = rollups / 100
+  const rollupsEth = rollupsUsd / ethPrice
+
+  const validiumAndOptimiumsUsd = validiumAndOptimiums / 100
+  const validiumAndOptimiumsEth = validiumAndOptimiumsUsd / ethPrice
+
+  const othersUsd = others / 100
+  const othersEth = othersUsd / ethPrice
+
+  return {
+    values:
+      unit === 'usd'
+        ? [
+            { value: rollupsUsd },
+            { value: validiumAndOptimiumsUsd },
+            { value: othersUsd },
+          ]
+        : [
+            { value: rollupsEth },
+            { value: validiumAndOptimiumsEth },
+            { value: othersEth },
+          ],
+    data: {
+      timestamp,
+      rollups: {
+        usd: rollupsUsd,
+        eth: rollupsEth,
+      },
+      validiumAndOptimiums: {
+        usd: validiumAndOptimiumsUsd,
+        eth: validiumAndOptimiumsEth,
+      },
+      others: {
+        usd: othersUsd,
+        eth: othersEth,
+      },
+    },
+  }
 }
