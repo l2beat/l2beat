@@ -19,7 +19,6 @@ interface Dependencies extends ClientCoreDependencies {
   apiKey: string | undefined
 }
 
-// todo: move to clients
 export class CoingeckoClient extends ClientCore {
   private readonly timeoutMs = 10_000
 

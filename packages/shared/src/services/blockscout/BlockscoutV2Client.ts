@@ -6,7 +6,6 @@ import {
   BlockscoutInternalTransaction,
 } from './model'
 
-// todo: data pipeline refactor
 export class BlockscoutV2Client {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,

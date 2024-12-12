@@ -44,7 +44,6 @@ export class BlockscoutClient implements IEtherscanClient {
     this.logger = logger.for(this)
   }
 
-  // todo: remove static methods and providers
   static create(
     services: { httpClient: HttpClient; logger: Logger },
     options: {
