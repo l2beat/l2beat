@@ -24,49 +24,22 @@ import {
 const MIN_MARKET_CAP = 10_000_000
 const MIN_MISSING_VALUE = 10_000
 
-interface ChainConfig {
-  rpcEnvKey: string
-  etherscanUrl: string
-  etherscanEnvKey: string
-  callsPerMinute: number
-}
-
-const CHAIN_CONFIG: Record<string, ChainConfig> = {
-  ethereum: {
-    rpcEnvKey: 'ETHEREUM_RPC_URL',
-    etherscanUrl: 'https://api.etherscan.io/api',
-    etherscanEnvKey: 'ETHEREUM_ETHERSCAN_API_KEY',
-    callsPerMinute: 120,
-  },
-  arbitrum: {
-    rpcEnvKey: 'ARBITRUM_RPC_URL',
-    etherscanUrl: 'https://api.arbiscan.io/api',
-    etherscanEnvKey: 'ARBITRUM_ETHERSCAN_API_KEY',
-    callsPerMinute: 120,
-  },
-  optimism: {
-    rpcEnvKey: 'OPTIMISM_RPC_URL',
-    etherscanUrl: 'https://api-optimistic.etherscan.io/api',
-    etherscanEnvKey: 'OPTIMISM_ETHERSCAN_API_KEY',
-    callsPerMinute: 120,
-  },
-  base: {
-    rpcEnvKey: 'BASE_RPC_URL',
-    etherscanUrl: 'https://api.basescan.org/api',
-    etherscanEnvKey: 'BASE_ETHERSCAN_API_KEY',
-    callsPerMinute: 120,
-  },
-}
-
 async function main() {
+  const escrowsByChain = groupBy(
+    [...layer2s, ...layer3s]
+      .flatMap((p) =>
+        p.config.escrows.flatMap((e) => ({ ...e, projectId: p.id })),
+      )
+      .filter((e) => e.chain !== 'mantle' && e.chain !== 'nova'),
+    'chain',
+  )
+  const chainsToSupport = Object.keys(escrowsByChain)
+
   const providers = new Map(
-    Object.keys(CHAIN_CONFIG).map((chain) => [chain, getProvider(chain)]),
+    chainsToSupport.map((chain) => [chain, getProvider(chain)]),
   )
   const etherscanClients = new Map(
-    Object.keys(CHAIN_CONFIG).map((chain) => [
-      chain,
-      getEtherscanClient(chain),
-    ]),
+    chainsToSupport.map((chain) => [chain, getEtherscanClient(chain)]),
   )
   const coingeckoClient = getCoingeckoClient()
   const chainConverter = new ChainConverter(
@@ -74,15 +47,6 @@ async function main() {
       chainId: ChainId(c.chainId),
       name: c.name,
     })),
-  )
-
-  const escrowsByChain = groupBy(
-    [...layer2s, ...layer3s]
-      .flatMap((layer2) =>
-        layer2.config.escrows.flatMap((e) => ({ ...e, projectId: layer2.id })),
-      )
-      .filter((e) => e.chain !== 'ethereum'),
-    'chain',
   )
 
   const coingeckoTokens = await coingeckoClient.getCoinList({
@@ -145,7 +109,7 @@ async function main() {
   )
 
   for (const [chain, chainEscrows] of Object.entries(escrowsByChain)) {
-    if (!CHAIN_CONFIG[chain]) {
+    if (!providers.has(chain) || !etherscanClients.has(chain)) {
       console.log(chalk.red(`Skipping unsupported chain: ${chain}`))
       continue
     }
@@ -269,7 +233,7 @@ async function main() {
     { marketCap: number; price: number; circulatingSupply: number }
   >()
 
-  // Get market data including circulating supply
+  // Get market data for tokens
   for (const chunk of chunks) {
     const coingeckoIds = chunk
       .map((t) => t.coingeckoId)
@@ -354,15 +318,17 @@ main().then(() => {
 
 function getProvider(chain: string) {
   const env = getEnv()
-  const config = CHAIN_CONFIG[chain]
-  if (!config) {
-    throw new Error(`Unsupported chain: ${chain}`)
-  }
+  const config = chains.find((c) => c.name === chain)
+  assert(config, `Unsupported chain: ${chain}`)
 
-  const rpcUrl = env.string([config.rpcEnvKey])
+  const rpcUrl = env.string([`${config.name.toUpperCase()}_RPC_URL`])
+  const callsPerMinute = env.integer(
+    [`${config.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`],
+    60,
+  )
   const rateLimitedProvider = new RateLimitedProvider(
     new providers.JsonRpcProvider(rpcUrl),
-    4000,
+    callsPerMinute,
   )
   return rateLimitedProvider
 }
@@ -384,20 +350,32 @@ function getCoingeckoClient() {
 
 function getEtherscanClient(chain: string) {
   const env = getEnv()
-  const config = CHAIN_CONFIG[chain]
-  if (!config) {
-    throw new Error(`Unsupported chain: ${chain}`)
+  const config = chains.find((c) => c.name === chain)
+
+  assert(config?.explorerApi)
+  const chainConfig = config.explorerApi
+    ? config.explorerApi.type === 'etherscan'
+      ? {
+          type: config.explorerApi.type,
+          apiKey: env.string([
+            `${config.name.toUpperCase()}_ETHERSCAN_API_KEY`,
+          ]),
+          url: config.explorerApi.url,
+        }
+      : {
+          type: config.explorerApi.type,
+          url: config.explorerApi.url,
+        }
+    : undefined
+
+  if (!chainConfig) {
+    return undefined
   }
 
   return new BlockIndexerClient(
     new HttpClient(),
-    new RateLimiter({ callsPerMinute: config.callsPerMinute }),
-    {
-      type: 'etherscan',
-      chain,
-      url: config.etherscanUrl,
-      apiKey: env.string(config.etherscanEnvKey),
-    },
+    new RateLimiter({ callsPerMinute: 120 }),
+    { chain, ...chainConfig },
   )
 }
 
@@ -425,7 +403,8 @@ async function getAllLogs(
       e instanceof Error &&
       (e.message.includes('Log response size exceeded') ||
         e.message.includes('query exceeds max block range 100000') ||
-        e.message.includes('eth_getLogs is limited to a 10,000 range'))
+        e.message.includes('eth_getLogs is limited to a 10,000 range') ||
+        e.message.includes('returned more than 10000'))
     ) {
       const midPoint = fromBlock + Math.floor((toBlock - fromBlock) / 2)
       const [a, b] = await Promise.all([
