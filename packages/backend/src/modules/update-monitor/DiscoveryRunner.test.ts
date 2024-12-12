@@ -9,7 +9,7 @@ import {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { ProviderStats } from '@l2beat/discovery/dist/discovery/provider/Stats'
+import { ProviderStats } from '@l2beat/discovery'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 const ADDRESS = EthereumAddress.random()

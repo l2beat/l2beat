@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 import { assert, json } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { RpcClient2 } from '../rpc/RpcClient2'
+import { RpcClient } from '../rpc/RpcClient'
 import { BeaconChainError, Blob, BlockSidecarSchema } from './types'
 
 export type Blob = z.infer<typeof Blob>
@@ -14,7 +14,7 @@ export interface BlobsInBlock {
 
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string
-  rpcClient: RpcClient2
+  rpcClient: RpcClient
   timeout?: number
   generateId?: () => string
 }
