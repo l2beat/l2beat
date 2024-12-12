@@ -9,7 +9,6 @@ import {
 import { range } from 'lodash'
 import React from 'react'
 import { cn } from '~/utils/cn'
-import { type UnderReviewStatus } from '~/utils/project/under-review'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
   Table,
@@ -27,17 +26,9 @@ import {
   getRowTypeClassNames,
   getRowTypeClassNamesWithoutOpacity,
 } from './utils/row-type'
+import { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 
-export interface BasicTableEntry {
-  id: ProjectId | string
-  slug: string
-  isVerified?: boolean
-  redWarning?: string | undefined
-  underReviewStatus?: UnderReviewStatus
-  href?: string
-}
-
-export interface BasicTableProps<T extends BasicTableEntry> {
+export interface BasicTableProps<T extends CommonProjectEntry> {
   table: TanstackTable<T>
   children?: React.ReactNode
   /**
@@ -55,7 +46,7 @@ export interface BasicTableProps<T extends BasicTableEntry> {
   rowColoringMode?: 'default' | 'ethereum-only'
 }
 
-export function BasicTable<T extends BasicTableEntry>(
+export function BasicTable<T extends CommonProjectEntry>(
   props: BasicTableProps<T>,
 ) {
   if (props.table.getRowCount() === 0) {
@@ -176,7 +167,7 @@ export function BasicTable<T extends BasicTableEntry>(
   )
 }
 
-export function BasicTableRow<T extends BasicTableEntry>({
+export function BasicTableRow<T extends CommonProjectEntry>({
   row,
   className,
   ...props
