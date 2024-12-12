@@ -39,7 +39,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             <TooltipTrigger>
               <ShieldIcon className="relative -top-px size-3.5 fill-red-300 md:size-4" />
             </TooltipTrigger>
-            <TooltipContent>{project.statuses?.redWarning}</TooltipContent>
+            <TooltipContent>{project.statuses.redWarning}</TooltipContent>
           </Tooltip>
         )}
         {project.statuses?.underReview && (
@@ -59,7 +59,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             </TooltipTrigger>
             <TooltipContent>
               <Markdown inline ignoreGlossary>
-                {project.statuses?.yellowWarning}
+                {project.statuses.yellowWarning}
               </Markdown>
             </TooltipContent>
           </Tooltip>
