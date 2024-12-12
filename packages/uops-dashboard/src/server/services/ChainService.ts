@@ -1,7 +1,7 @@
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient2, RpcClient2 } from '@l2beat/shared'
+import { HttpClient2, RpcClient } from '@l2beat/shared'
 import { getApiKey, getApiUrl, getScanUrl } from '../clients/apiUrls'
 import { BlockClient } from '../clients/block/BlockClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
@@ -49,7 +49,7 @@ export class ChainService {
       case 'zircuit':
       case 'zksync-era':
       case 'zora': {
-        this.client = new RpcClient2({
+        this.client = new RpcClient({
           url: getApiUrl(chain.id),
           sourceName: chain.id,
           http,
