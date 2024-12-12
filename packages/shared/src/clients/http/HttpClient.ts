@@ -1,6 +1,6 @@
 import fetch, { RequestInit } from 'node-fetch'
 
-export class HttpClient2 {
+export class HttpClient {
   /**
    * Sends request to the provided url with init params.
    * Use this method only when you expect server to return valid JSON.

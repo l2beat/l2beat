@@ -1,6 +1,6 @@
 export * from './blockIndexer/BlockIndexerClient'
 export * from './blockIndexer/types'
-export * from './http/HttpClient2'
+export * from './http/HttpClient'
 export * from './rpc/RpcClient'
 export * from './rpc/types'
 export * from './zksynclite/ZksyncLiteClient'
