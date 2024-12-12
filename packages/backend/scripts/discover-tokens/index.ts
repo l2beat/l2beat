@@ -6,7 +6,6 @@ import {
   CoingeckoClient,
   HttpClient,
   HttpClient2,
-  RetryHandler,
 } from '@l2beat/shared'
 import { assert, ChainConverter, ChainId } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -262,6 +261,7 @@ async function main() {
     `Filtering out tokens with market cap < ${MIN_MARKET_CAP} or missing value < ${MIN_MISSING_VALUE}...`,
   )
   const sortedTokens = Array.from(allFoundTokens.entries())
+    .filter(([address]) => !tokenListAddresses.has(address))
     .map(([address, data]) => {
       assert(data.coingeckoId, `Missing coingeckoId for token ${address}`)
       const marketData = tokenMarketData.get(data.coingeckoId)
@@ -337,13 +337,13 @@ function getCoingeckoClient() {
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
   const http = new HttpClient2()
-  const rateLimiter = RateLimiter.COINGECKO(coingeckoApiKey)
   const coingeckoClient = new CoingeckoClient({
-    http,
-    rateLimiter,
     apiKey: coingeckoApiKey,
-    retryHandler: RetryHandler.SCRIPT,
-    logger: Logger.WARN,
+    http,
+    callsPerMinute: coingeckoApiKey ? 400 : 10,
+    logger: Logger.SILENT,
+    retryStrategy: 'SCRIPT',
+    sourceName: 'coingeckoAPI',
   })
   return coingeckoClient
 }
