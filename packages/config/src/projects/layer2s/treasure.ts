@@ -23,17 +23,22 @@ export const treasure: Layer2 = zkStackL2({
   createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   display: {
-    name: 'Treasure Chain',
+    name: 'Treasure',
     slug: 'treasure',
     description:
-      'Treasure Chain is a gaming-specific L2 built on the ZK Stack. The Treasure Platform powers end-to-end gaming and game-builder needs including but not limited to Identity, Marketplace, AMM Payments, Analytics and LiveOps.',
+      'Treasure is a gaming-specific L2 built on ZKsync, the Elastic Network. Treasure offers an end-to-end tech stack for developers and consumer apps to build the next generation of gaming.',
     links: {
       websites: ['https://treasure.lol/'],
       apps: ['https://app.treasure.lol'],
       documentation: ['https://docs.treasure.lol'],
       explorers: ['https://treasurescan.io'],
       repositories: ['https://github.com/TreasureProject'],
-      socialMedia: ['https://x.com/Treasure_DAO'],
+      socialMedia: [
+        'https://x.com/Treasure_DAO', 
+        'https://discord.gg/treasuredao',
+        'https://www.youtube.com/@PlayOnTreasure',
+        'https://t.me/playontreasure'
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },
@@ -42,7 +47,7 @@ export const treasure: Layer2 = zkStackL2({
   chainConfig: {
     name: 'treasure',
     chainId: 61166,
-    explorerUrl: 'http://treasurescan.io',
+    explorerUrl: 'https://treasurescan.io',
     minTimestampForTvl: new UnixTime(1732617294),
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
