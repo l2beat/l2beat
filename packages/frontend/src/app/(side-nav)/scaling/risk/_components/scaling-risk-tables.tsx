@@ -8,12 +8,12 @@ import {
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingRiskTable } from './table/scaling-risk-table'
 
-type Props = CategorisedScalingEntries<ScalingRiskEntry>
+type Props = TabbedScalingEntries<ScalingRiskEntry>
 
 export function ScalingRiskTables(props: Props) {
   const includeFilters = useScalingFilter()

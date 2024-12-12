@@ -1,7 +1,6 @@
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { BlockTag } from '../rpcclient/types'
 import { MulticallClient } from './MulticallClient'
 import {
   decodeMulticallV1,
@@ -45,12 +44,12 @@ describe(MulticallClient.name, () => {
   interface Call {
     to?: EthereumAddress
     data?: Bytes
-    blockTag: BlockTag
+    blockTag: number | 'latest'
   }
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<RpcClient2>({
+    const ethereumClient = mockObject<RpcClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return parameters.data ?? Bytes.EMPTY
@@ -85,7 +84,7 @@ describe(MulticallClient.name, () => {
 
   it('uses v1 for blocks without v2', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<RpcClient2>({
+    const ethereumClient = mockObject<RpcClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return Bytes.fromHex(
@@ -132,7 +131,7 @@ describe(MulticallClient.name, () => {
 
   it('uses v2 for new blocks', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<RpcClient2>({
+    const ethereumClient = mockObject<RpcClient>({
       async call(parameters, blockTag) {
         calls.push({ to: parameters.to, data: parameters.data, blockTag })
         return Bytes.fromHex(
@@ -181,7 +180,7 @@ describe(MulticallClient.name, () => {
 
   it(`batches calls`, async () => {
     const calls: number[] = []
-    const ethereumClient = mockObject<RpcClient2>({
+    const ethereumClient = mockObject<RpcClient>({
       async call(parameters) {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
@@ -214,7 +213,7 @@ describe(MulticallClient.name, () => {
   })
 
   it('returns multicall address based on block number', () => {
-    const ethereumClient = mockObject<RpcClient2>()
+    const ethereumClient = mockObject<RpcClient>()
     const multicallClient = new MulticallClient(
       ethereumClient,
       TEST_MULTICALL_CONFIG,
@@ -241,7 +240,7 @@ describe(MulticallClient.name, () => {
         isNativeBalanceSupported: false,
       }),
     ]
-    const ethereumClient = mockObject<RpcClient2>()
+    const ethereumClient = mockObject<RpcClient>()
     const multicallClient = new MulticallClient(ethereumClient, [...entries])
 
     const address = multicallClient.getMulticallAddressAt(3)

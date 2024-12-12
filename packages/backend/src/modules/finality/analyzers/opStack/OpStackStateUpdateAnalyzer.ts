@@ -1,7 +1,7 @@
 import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { utils } from 'ethers'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
@@ -13,11 +13,11 @@ export class OpStackStateUpdateAnalyzer extends BaseAnalyzer {
   private abi: utils.Interface
 
   constructor(
-    provider: RpcClient2,
+    provider: RpcClient,
     db: Database,
     projectId: ProjectId,
     private readonly l2BlockTime: number,
-    private readonly l2Provider: RpcClient2,
+    private readonly l2Provider: RpcClient,
   ) {
     super(provider, db, projectId)
     this.abi = new utils.Interface([PROPOSE_FUNCTION_SIGNATURE])

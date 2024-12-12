@@ -8,12 +8,12 @@ import {
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingDataAvailabilityTable } from './table/scaling-da-table'
 
-type Props = CategorisedScalingEntries<ScalingDataAvailabilityEntry>
+type Props = TabbedScalingEntries<ScalingDataAvailabilityEntry>
 
 export function ScalingDaTables(props: Props) {
   const includeFilters = useScalingFilter()

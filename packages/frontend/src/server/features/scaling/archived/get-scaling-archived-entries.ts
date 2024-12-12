@@ -1,17 +1,17 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
   type LatestTvl,
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingArchivedEntries() {
   const [projectsChangeReport, tvl] = await Promise.all([
@@ -30,11 +30,7 @@ export async function getScalingArchivedEntries() {
     ),
   )
 
-  // Use data we already pulled instead of fetching it again
-  const remappedForOrdering = Object.fromEntries(
-    Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
-  )
-  return groupByMainCategories(orderByTvl(entries, remappedForOrdering))
+  return groupByTabs(entries.sort(compareTvl))
 }
 
 export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>
@@ -55,8 +51,13 @@ function getScalingArchivedEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: undefined,
     }),
+    category: project.display.category,
+    purposes: project.display.purposes,
+    provider: project.display.provider,
     risks: project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
     totalTvl: latestTvl?.breakdown.total,
+    tvlOrder: latestTvl?.breakdown.total ?? 0,
   }
 }

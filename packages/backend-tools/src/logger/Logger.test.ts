@@ -223,6 +223,28 @@ describe(Logger.name, () => {
       )
     })
 
+    it('source', () => {
+      const { transport, baseLogger } = setup(new LogFormatterEcs())
+
+      const logger = baseLogger.tag({
+        source: 'source',
+      })
+
+      logger.info('hello')
+
+      expect(transport.log).toHaveBeenOnlyCalledWith(
+        JSON.stringify({
+          '@timestamp': '1970-01-01T00:00:00.000Z',
+          log: { level: 'INFO' },
+          service: {},
+          labels: {
+            source: 'source',
+          },
+          message: 'hello',
+        }),
+      )
+    })
+
     it('service tag', () => {
       const { transport, baseLogger } = setup(new LogFormatterEcs())
 
@@ -329,6 +351,7 @@ describe(Logger.name, () => {
         module: undefined,
         chain: undefined,
         project: undefined,
+        source: undefined,
         message: 'foo',
         parameters: undefined,
         error: undefined,
@@ -342,6 +365,7 @@ describe(Logger.name, () => {
         module: undefined,
         chain: undefined,
         project: undefined,
+        source: undefined,
         message: 'bar',
         parameters: undefined,
         error: undefined,
@@ -361,6 +385,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: 'message',
             parameters: undefined,
             error: undefined,
@@ -377,6 +402,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: undefined,
             parameters: undefined,
             error: new Error('message'),
@@ -397,6 +423,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: 'foo',
             parameters: undefined,
             error: new Error('bar'),
@@ -417,6 +444,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: undefined,
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -433,6 +461,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: 'message',
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -449,6 +478,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: 'message',
             parameters: { x: 1, y: 2 },
             error: undefined,
@@ -465,6 +495,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: undefined,
             parameters: { x: 1, y: 2, message: true },
             error: undefined,
@@ -481,6 +512,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: undefined,
             project: undefined,
+            source: undefined,
             message: 'bar',
             parameters: { x: 1, y: 2 },
             error: new Error('foo'),
@@ -509,6 +541,7 @@ describe(Logger.name, () => {
             module: undefined,
             chain: 'chain',
             project: 'project',
+            source: undefined,
             message: 'message',
             parameters: { x: 4, y: 5 },
             error: undefined,
