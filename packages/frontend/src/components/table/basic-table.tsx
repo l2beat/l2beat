@@ -1,4 +1,4 @@
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import {
   type Column,
   type Header,
@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-table'
 import { range } from 'lodash'
 import React from 'react'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
@@ -26,7 +27,6 @@ import {
   getRowTypeClassNames,
   getRowTypeClassNamesWithoutOpacity,
 } from './utils/row-type'
-import { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 
 export interface BasicTableProps<T extends CommonProjectEntry> {
   table: TanstackTable<T>

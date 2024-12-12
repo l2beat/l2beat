@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { type BasicTableProps } from '../basic-table'
-import { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 
 export type RowType = ReturnType<typeof getRowType>
 export function getRowType(
