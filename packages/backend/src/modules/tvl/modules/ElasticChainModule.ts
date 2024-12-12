@@ -82,10 +82,15 @@ function createIndexers(
 
     const rpcClient = dependencies.clients.getRpcClient(chain)
 
-    const bridgeAddress = elasticChainAmountEntries.find(
-      (e) => e.type === 'elasticChainL2Token',
-    )?.l2BridgeAddress
-    assert(bridgeAddress, 'Bridge address not found')
+    const sharedEscrow = config.projects
+      .find((p) => p.projectId === chain)
+      ?.escrows.find(
+        (e) => e.sharedEscrow && e.sharedEscrow.type === 'ElasticChain',
+      )
+    assert(
+      sharedEscrow && sharedEscrow.sharedEscrow?.type === 'ElasticChain',
+      `${chain}: Shared escrow not found`,
+    )
 
     const elasticChainService = new ElasticChainService({
       rpcClient: rpcClient,
@@ -93,7 +98,7 @@ function createIndexers(
         rpcClient,
         chainConfig.config.multicallConfig,
       ),
-      bridgeAddress,
+      bridgeAddress: sharedEscrow.sharedEscrow.l2BridgeAddress,
     })
 
     const blockTimestampIndexer =
