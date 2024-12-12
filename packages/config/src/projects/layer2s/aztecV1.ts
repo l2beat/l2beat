@@ -286,8 +286,12 @@ export const aztecV1: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description:
         FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-        `The private key of one of the permissioned operators is public (first anvil address), therefore anyone can in principle resume regular operations. No funds need to be deposited to that address since submitting signatures is enough. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which any address can propose new blocks.`,
+        `The private key of one of the permissioned operators is public (first Anvil address), therefore anyone can in principle resume regular operations. No funds need to be deposited to that address since submitting signatures is enough. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which any address can propose new blocks.`,
       references: [
+        {
+          text: 'Anvil - a local testnet node toolchain',
+          href: 'https://book.getfoundry.sh/anvil/',
+        },
         {
           text: 'RollupProcessor.sol#L347 - Etherscan source code',
           href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
