@@ -17,6 +17,7 @@ import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 
 interface Props {
   project: ScalingProjectEntry
@@ -25,7 +26,9 @@ interface Props {
 
 export function ScalingProjectStats({ project, className }: Props) {
   const isOther =
-    env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.header.isOther
+    env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
+    PROJECT_COUNTDOWNS.otherMigration.hasExpired() &&
+    project.header.isOther
   return (
     <div
       className={cn(

@@ -1,3 +1,4 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/common/projectCountdowns'
 import { partition } from 'lodash'
 import { env } from '~/env'
 
@@ -8,7 +9,10 @@ export type CategorisedScalingEntries<
 export function groupByMainCategories<
   T extends { category: string | undefined; isOther?: boolean },
 >(projects: T[]) {
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS === true) {
+  if (
+    env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
+    PROJECT_COUNTDOWNS.otherMigration.hasExpired()
+  ) {
     const [others, rest] = partition(projects, (project) => project.isOther)
     const [rollups, validiumsAndOptimiums] = partition(
       rest,
