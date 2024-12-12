@@ -1,11 +1,13 @@
 'use client'
 import { CountBadge } from '~/components/badge/count-badge'
+import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { MainPageCard } from '~/components/main-page-card'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
@@ -58,17 +60,36 @@ export function ScalingTvlTables(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            <MainPageCard>
+              <ScalingStackedTvlChart
+                // TODO: Add milestones
+                milestones={[]}
+                entries={props.rollups}
+              />
+            </MainPageCard>
             <ScalingTvlTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiums-and-optimiums">
+            <MainPageCard>
+              <ScalingStackedTvlChart
+                milestones={[]}
+                entries={props.validiumsAndOptimiums}
+              />
+            </MainPageCard>
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
+              <MainPageCard>
+                <ScalingStackedTvlChart
+                  milestones={[]}
+                  entries={props.others ?? []}
+                />
+              </MainPageCard>
               <ScalingTvlTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>
