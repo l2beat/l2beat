@@ -57,7 +57,7 @@
       }
     },
     "StakeLogic": {
-      "ignoreMethods": ["getInterval", "intervals"],
+      "ignoreMethods": ["getInterval", "intervals", "currentIntervalIndex", "getToBeDistributed", "toBeDistributed"],
       "ignoreRelatives": [
         "tokens",
         "getTokens",
