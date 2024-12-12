@@ -19,21 +19,19 @@ export async function getScalingTvlEntries() {
     (project) => !project.isUpcoming && !project.isArchived,
   )
 
-  const [projectsChangeReport, projectsVerificationStatuses, tvl] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-      get7dTvlBreakdown(),
-      api.tvl.chart.prefetch({
-        filter: { type: 'layer2' },
-        range: '1y',
-        excludeAssociatedTokens: false,
-      }),
-    ])
+  const [projectsChangeReport, tvl] = await Promise.all([
+    getProjectsChangeReport(),
+    get7dTvlBreakdown(),
+    api.tvl.chart.prefetch({
+      filter: { type: 'layer2' },
+      range: '1y',
+      excludeAssociatedTokens: false,
+    }),
+  ])
 
   const entries = projects
     .map((project) => {
-      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+      const isVerified = getProjectsVerificationStatuses(project)
       const latestTvl = tvl.projects[project.id.toString()]
 
       return getScalingTvlEntry(

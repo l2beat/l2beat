@@ -22,12 +22,10 @@ import {
 import { getDestination } from './get-destination'
 
 export async function getBridgeRiskEntries() {
-  const [tvl, projectsVerificationStatuses, projectsChangeReport] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsVerificationStatuses(),
-      getProjectsChangeReport(),
-    ])
+  const [tvl, projectsChangeReport] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+  ])
 
   const included = bridges.filter(
     (project) => !project.isUpcoming && !project.isArchived,
@@ -35,7 +33,7 @@ export async function getBridgeRiskEntries() {
 
   const entries = included
     .map((project) => {
-      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+      const isVerified = getProjectsVerificationStatuses(project)
 
       return getBridgesRiskEntry(project, projectsChangeReport, isVerified, tvl)
     })

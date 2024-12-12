@@ -24,18 +24,16 @@ import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
 import { getLivenessProjects } from './utils/get-liveness-projects'
 
 export async function getScalingLivenessEntries() {
-  const [tvl, projectsVerificationStatuses, projectsChangeReport, liveness] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsVerificationStatuses(),
-      getProjectsChangeReport(),
-      getLiveness(),
-    ])
+  const [tvl, projectsChangeReport, liveness] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+    getLiveness(),
+  ])
   const activeProjects = getLivenessProjects()
 
   const entries = activeProjects
     .map((project) => {
-      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+      const isVerified = getProjectsVerificationStatuses(project)
       const projectLiveness = liveness[project.id.toString()]
       if (!projectLiveness) {
         return undefined

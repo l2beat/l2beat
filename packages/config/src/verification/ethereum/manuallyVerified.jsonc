@@ -1,10 +1,6 @@
 /**
  * Manually verified contracts
  * In case a contract is not verified on Etherscan, but is verified by other means, it can be added here.
- *
- * NOTE: If any entry is added/removed from this file:
- *  On adding a new entry, run `pnpm check-verified-contracts` to ensure the new entry is added to the verified contracts list.
- *  On removing an entry, please manually remove the entry from the verified contracts list (packages/config/src/verified.json) and run `pnpm check-verified-contracts` again.
  */
 {
   "$schema": "../manuallyVerifiedContracts.schema.json",

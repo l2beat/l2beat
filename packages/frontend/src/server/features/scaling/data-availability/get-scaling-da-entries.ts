@@ -15,16 +15,14 @@ export async function getScalingDaEntries() {
   const activeProjects = [...layer2s, ...layer3s].filter(
     (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
-  const [tvl, projectsVerificationStatuses, projectsChangeReport] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsVerificationStatuses(),
-      getProjectsChangeReport(),
-    ])
+  const [tvl, projectsChangeReport] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+  ])
 
   const entries = activeProjects
     .map((p) => {
-      const isVerified = !!projectsVerificationStatuses[p.id.toString()]
+      const isVerified = getProjectsVerificationStatuses(p)
       return getScalingDataAvailabilityEntry(
         p,
         projectsChangeReport,

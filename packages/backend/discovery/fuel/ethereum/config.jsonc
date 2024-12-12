@@ -24,9 +24,6 @@
         }
       }
     },
-    "FuelMultisig": {
-      "ignoreRelatives": ["$members"]
-    },
     "FuelMessagePortal": {
       "ignoreMethods": ["proxiableUUID", "messageSender"],
       "ignoreInWatchMode": [

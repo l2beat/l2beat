@@ -30,10 +30,10 @@ export function initPriceModule(
 }
 
 function createPriceIndexers(config: TvlConfig, dependencies: TvlDependencies) {
-  const indexerService = dependencies.getIndexerService()
-  const syncOptimizer = dependencies.getSyncOptimizer()
-  const priceService = dependencies.getPriceService()
-  const hourlyIndexer = dependencies.getHourlyIndexer()
+  const indexerService = dependencies.indexerService
+  const syncOptimizer = dependencies.syncOptimizer
+  const priceService = dependencies.priceService
+  const hourlyIndexer = dependencies.hourlyIndexer
   const logger = dependencies.logger.tag({ module: 'price' })
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)

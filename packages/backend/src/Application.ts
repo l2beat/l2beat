@@ -59,7 +59,7 @@ export class Application {
       createFinalityModule(
         config,
         logger,
-        peripherals,
+        database,
         providers,
         trackedTxsModule?.indexer,
       ),

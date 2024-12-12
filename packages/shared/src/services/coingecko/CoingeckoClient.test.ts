@@ -1,14 +1,12 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 import { HttpClient2 } from '../../clients'
-import { RetryHandler } from '../../tools'
 import { CoingeckoClient } from './CoingeckoClient'
 import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './model'
 
 describe(CoingeckoClient.name, () => {
-  const rateLimiter = new RateLimiter({ callsPerMinute: 100_000 })
   const logger = Logger.SILENT
 
   describe(CoingeckoClient.prototype.getCoinMarketChartRange.name, () => {
@@ -46,13 +44,7 @@ describe(CoingeckoClient.name, () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => MOCK_PARSED_DATA,
       })
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
+      const coingeckoClient = getMockClient(http, logger)
       const result = await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
         'usd',
@@ -73,13 +65,8 @@ describe(CoingeckoClient.name, () => {
         },
       })
 
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
+      const coingeckoClient = getMockClient(http, logger)
+
       await coingeckoClient.getCoinMarketChartRange(
         CoingeckoId('ethereum'),
         'usd',
@@ -97,13 +84,8 @@ describe(CoingeckoClient.name, () => {
           { id: 'foobar', symbol: 'FBR', name: 'Foobar coin' },
         ],
       })
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
+      const coingeckoClient = getMockClient(http, logger)
+
       const result = await coingeckoClient.getCoinList()
       expect(result).toEqual([
         { id: CoingeckoId('asd'), symbol: 'ASD', name: 'A Sad Dime' },
@@ -131,13 +113,8 @@ describe(CoingeckoClient.name, () => {
           },
         ],
       })
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
+      const coingeckoClient = getMockClient(http, logger)
+
       const result = await coingeckoClient.getCoinList({
         includePlatform: true,
       })
@@ -172,13 +149,8 @@ describe(CoingeckoClient.name, () => {
         },
       })
 
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
+      const coingeckoClient = getMockClient(http, logger)
+
       await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
     })
 
@@ -192,13 +164,9 @@ describe(CoingeckoClient.name, () => {
         },
       })
 
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: 'myapikey',
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
+      const apiKey = 'myapikey'
+      const coingeckoClient = getMockClient(http, logger, apiKey)
+
       await coingeckoClient.query('/a/b', { foo: 'bar', baz: '123' })
     })
 
@@ -210,14 +178,20 @@ describe(CoingeckoClient.name, () => {
         },
       })
 
-      const coingeckoClient = new CoingeckoClient({
-        http,
-        apiKey: undefined,
-        retryHandler: RetryHandler.TEST,
-        logger,
-        rateLimiter,
-      })
+      const coingeckoClient = getMockClient(http, logger)
+
       await coingeckoClient.query('/a/b', {})
     })
   })
 })
+
+function getMockClient(http: HttpClient2, logger: Logger, apiKey?: string) {
+  return new CoingeckoClient({
+    http,
+    apiKey: apiKey,
+    retryStrategy: 'TEST',
+    logger,
+    callsPerMinute: 100000,
+    sourceName: 'test',
+  })
+}

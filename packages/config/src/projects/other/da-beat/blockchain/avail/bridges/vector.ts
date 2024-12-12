@@ -44,19 +44,14 @@ export const vector = {
   contracts: {
     addresses: {
       ethereum: [
-        {
-          name: 'Vector',
-          address: EthereumAddress(
-            '0x02993cdC11213985b9B13224f3aF289F03bf298d',
-          ),
-          description:
-            'The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
-        },
-        {
-          name: 'VectorSP1Verifier',
-          address: EthereumAddress(SP1Verifier),
-          description: `Verifier contract for the header range [latestBlock, targetBlock] proof.`,
-        },
+        discovery.getContractDetails(
+          'Vector',
+          'The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
+        ),
+        discovery.getContractDetails(
+          SP1Verifier,
+          'Verifier contract for the header range [latestBlock, targetBlock] proof.',
+        ),
         discovery.getContractDetails('SuccinctGatewaySP1', {
           description: `This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
         `,

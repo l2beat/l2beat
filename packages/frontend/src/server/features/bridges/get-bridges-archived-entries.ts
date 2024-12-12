@@ -23,16 +23,14 @@ export async function getBridgesArchivedEntries(): Promise<
   BridgesArchivedEntry[]
 > {
   const archivedBridges = bridges.filter((bridge) => bridge.isArchived)
-  const [tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses] =
-    await Promise.all([
-      get7dTokenBreakdown({ type: 'bridge' }),
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-    ])
+  const [tvl7dBreakdown, projectsChangeReport] = await Promise.all([
+    get7dTokenBreakdown({ type: 'bridge' }),
+    getProjectsChangeReport(),
+  ])
 
   const entries = archivedBridges.map((bridge) => {
     const tvl = tvl7dBreakdown.projects[bridge.id.toString()]
-    const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
+    const isVerified = getProjectsVerificationStatuses(bridge)
     const hasImplementationChanged =
       projectsChangeReport.hasImplementationChanged(bridge.id.toString())
     const hasHighSeverityFieldChanged =

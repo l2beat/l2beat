@@ -4,7 +4,6 @@ import {
   type WarningWithSentiment,
   bridges,
 } from '@l2beat/config'
-import { type ProjectsVerificationStatuses } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import {
   type ProjectsChangeReport,
@@ -23,17 +22,14 @@ import {
 } from './get-common-bridges-entry'
 
 export async function getBridgesSummaryEntries() {
-  const [tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses] =
-    await Promise.all([
-      get7dTokenBreakdown({ type: 'bridge' }),
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-    ])
+  const [tvl7dBreakdown, projectsChangeReport] = await Promise.all([
+    get7dTokenBreakdown({ type: 'bridge' }),
+    getProjectsChangeReport(),
+  ])
 
   return getBridges({
     tvl7dBreakdown,
     projectsChangeReport,
-    projectsVerificationStatuses,
   })
 }
 
@@ -62,12 +58,10 @@ export interface BridgesSummaryEntry extends CommonBridgesEntry {
 interface Params {
   tvl7dBreakdown: LatestTvl
   projectsChangeReport: ProjectsChangeReport
-  projectsVerificationStatuses: ProjectsVerificationStatuses
 }
 
-function getBridges(params: Params): BridgesSummaryEntry[] {
-  const { tvl7dBreakdown, projectsChangeReport, projectsVerificationStatuses } =
-    params
+function getBridges(params: Params) {
+  const { tvl7dBreakdown, projectsChangeReport } = params
   const activeBridges = bridges.filter(
     (bridge) => !bridge.isArchived && !bridge.isUpcoming,
   )
@@ -84,7 +78,7 @@ function getBridges(params: Params): BridgesSummaryEntry[] {
           })
         : undefined
 
-    const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
+    const isVerified = getProjectsVerificationStatuses(bridge)
     const hasImplementationChanged =
       projectsChangeReport.hasImplementationChanged(bridge.id.toString())
     const hasHighSeverityFieldChanged =

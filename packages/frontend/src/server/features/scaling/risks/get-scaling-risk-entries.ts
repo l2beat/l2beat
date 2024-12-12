@@ -16,12 +16,10 @@ export type ScalingRiskEntries = Awaited<
   ReturnType<typeof getScalingRiskEntries>
 >
 export async function getScalingRiskEntries() {
-  const [tvl, projectsChangeReport, projectsVerificationStatuses] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-    ])
+  const [tvl, projectsChangeReport] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+  ])
 
   const includedProjects = [...layer2s, ...layer3s].filter(
     (p) => !p.isUpcoming && !p.isArchived,
@@ -31,7 +29,7 @@ export async function getScalingRiskEntries() {
     .map((project) =>
       getScalingRiskEntry(
         project,
-        !!projectsVerificationStatuses[project.id.toString()],
+        getProjectsVerificationStatuses(project),
         projectsChangeReport,
         tvl,
       ),

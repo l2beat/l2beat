@@ -23,19 +23,17 @@ export type ScalingFinalityEntries = Awaited<
 >
 export async function getScalingFinalityEntries() {
   const configurations = getFinalityConfigurations()
-  const [finality, tvl, projectsChangeReport, projectsVerificationStatuses] =
-    await Promise.all([
-      getFinality(configurations),
-      getProjectsLatestTvlUsd(),
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-    ])
+  const [finality, tvl, projectsChangeReport] = await Promise.all([
+    getFinality(configurations),
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+  ])
 
   const includedProjects = getIncludedProjects(layer2s, finality)
 
   const entries = includedProjects
     .map((project) => {
-      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+      const isVerified = getProjectsVerificationStatuses(project)
 
       return getScalingFinalityEntry(
         project,

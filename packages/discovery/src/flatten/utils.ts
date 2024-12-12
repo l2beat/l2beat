@@ -64,8 +64,14 @@ export function flatteningHash(source: ContractSource): string | undefined {
     }))
     .filter((e) => e.path.endsWith('.sol'))
 
-  const flat = flattenStartingFrom(source.name, input, source.remappings)
-  return sha2_256bit(formatIntoHashable(flat))
+  const content =
+    input.length === 0
+      ? Object.values(source.files).join('\n')
+      : formatIntoHashable(
+          flattenStartingFrom(source.name, input, source.remappings),
+        )
+
+  return sha2_256bit(content)
 }
 
 export function formatIntoHashable(source: string) {

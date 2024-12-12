@@ -1,5 +1,5 @@
-import { daLayers, getDaProjectKey } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { daLayers } from '@l2beat/config'
+import { getDaBridgeVerification } from '../../verification-status/get-projects-verification-statuses'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
@@ -12,12 +12,10 @@ import { type DaEntryRisk } from '../utils/types'
 
 export async function getDaRiskEntries() {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
-  const [economicSecurity, projectsVerificationStatuses, tvlPerProject] =
-    await Promise.all([
-      getDaProjectsEconomicSecurity(),
-      getProjectsVerificationStatuses(),
-      getDaProjectsTvl(uniqueProjectsInUse),
-    ])
+  const [economicSecurity, tvlPerProject] = await Promise.all([
+    getDaProjectsEconomicSecurity(),
+    getDaProjectsTvl(uniqueProjectsInUse),
+  ])
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
   const entries = daLayers
@@ -35,8 +33,7 @@ export async function getDaRiskEntries() {
             href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
             warning: daBridge.display.warning,
             redWarning: daBridge.display.redWarning,
-            isVerified:
-              projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)],
+            isVerified: getDaBridgeVerification(daLayer, daBridge),
             risks: getDaRisks(
               daLayer,
               daBridge,

@@ -1,10 +1,8 @@
-import { RateLimiter } from '@l2beat/backend-tools'
 import {
   AGGLAYER_L2BRIDGE_ADDRESS,
   ConfigMapping,
   createAmountId,
 } from '@l2beat/config'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
 import {
   assert,
   AggLayerL2Token,
@@ -64,9 +62,9 @@ function createIndexers(
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ) {
   const logger = dependencies.logger.tag({ module: 'aggLayer' })
-  const indexerService = dependencies.getIndexerService()
-  const syncOptimizer = dependencies.getSyncOptimizer()
-  const valueService = dependencies.getValueService()
+  const indexerService = dependencies.indexerService
+  const syncOptimizer = dependencies.syncOptimizer
+  const valueService = dependencies.valueService
 
   const dataIndexers: AggLayerIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -89,16 +87,7 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = new RpcClient2({
-      chain: chainConfig.chain,
-      url: chainConfig.config.providerUrl,
-      rateLimiter: new RateLimiter({
-        callsPerMinute: chainConfig.config.providerCallsPerMinute,
-      }),
-      http: new HttpClient2(),
-      logger,
-      retryHandler: RetryHandler.RELIABLE_API(logger),
-    })
+    const rpcClient = dependencies.clients.getRpcClient(chain)
 
     const aggLayerService = new AggLayerService({
       rpcClient: rpcClient,

@@ -1,4 +1,7 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useTerminalStore } from '../panel-terminal/store'
 import { useMultiViewStore } from './store'
 
 function Keys(props: { keys: string[] }) {
@@ -17,11 +20,14 @@ function Keys(props: { keys: string[] }) {
 }
 
 export function BottomBar() {
+  const queryClient = useQueryClient()
+  const { project } = useParams()
   const [hintOpen, setHintOpen] = useState(false)
   const loadLayout = useMultiViewStore((state) => state.loadLayout)
   const addPanel = useMultiViewStore((state) => state.addPanel)
   const removePanel = useMultiViewStore((state) => state.removePanel)
   const toggleFullScren = useMultiViewStore((state) => state.toggleFullScren)
+  const discover = useTerminalStore((state) => state.discover)
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -41,6 +47,15 @@ export function BottomBar() {
       }
       if (e.code === 'KeyF' && e.altKey) {
         toggleFullScren()
+      }
+      if (e.code === 'KeyR' && e.altKey) {
+        if (project === undefined) {
+          return
+        }
+
+        discover(project).then(() => {
+          queryClient.invalidateQueries({ queryKey: ['projects', project] })
+        })
       }
     }
 
@@ -81,6 +96,10 @@ export function BottomBar() {
             </li>
             <li>
               <Keys keys={[altKey, 'Enter']} /> - Add panel
+            </li>
+            <hr className="my-1" />
+            <li>
+              <Keys keys={[altKey, 'R']} /> - Rediscover
             </li>
           </ul>
         </div>

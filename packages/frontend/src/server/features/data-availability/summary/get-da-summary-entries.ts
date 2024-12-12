@@ -1,7 +1,7 @@
-import { daLayers, ethereumDaLayer, getDaProjectKey } from '@l2beat/config'
+import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { type ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getDaBridgeVerification } from '../../verification-status/get-projects-verification-statuses'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
@@ -13,23 +13,19 @@ import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
-  const [economicSecurity, projectsVerificationStatuses, tvlPerProject] =
-    await Promise.all([
-      getDaProjectsEconomicSecurity(),
-      getProjectsVerificationStatuses(),
-      getDaProjectsTvl(uniqueProjectsInUse),
-    ])
+  const [economicSecurity, tvlPerProject] = await Promise.all([
+    getDaProjectsEconomicSecurity(),
+    getDaProjectsTvl(uniqueProjectsInUse),
+  ])
   const getTvlSumFor = pickTvlForProjects(tvlPerProject)
 
   const entries = getEntries({
     economicSecurity,
-    projectsVerificationStatuses,
     getTvlSumFor,
   })
 
   const ethereumEntry = getEthereumEntry({
     economicSecurity,
-    projectsVerificationStatuses,
     getTvlSumFor,
   })
 
@@ -38,18 +34,11 @@ export async function getDaSummaryEntries() {
 
 type Dependencies = {
   economicSecurity: Awaited<ReturnType<typeof getDaProjectsEconomicSecurity>>
-  projectsVerificationStatuses: Awaited<
-    ReturnType<typeof getProjectsVerificationStatuses>
-  >
   getTvlSumFor: (projectIds: ProjectId[]) => number
 }
 
 // Regular entries
-function getEntries({
-  economicSecurity,
-  projectsVerificationStatuses,
-  getTvlSumFor,
-}: Dependencies) {
+function getEntries({ economicSecurity, getTvlSumFor }: Dependencies) {
   return (
     daLayers
       // Calculate total TVS and organize bridges per DA layer
@@ -68,10 +57,7 @@ function getEntries({
               href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
               risks: getDaBridgeRisks(daBridge),
               isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
-              isVerified:
-                !!projectsVerificationStatuses[
-                  getDaProjectKey(daLayer, daBridge)
-                ],
+              isVerified: getDaBridgeVerification(daLayer, daBridge),
               warning: daBridge.display.warning,
               redWarning: daBridge.display.redWarning,
               tvs,
