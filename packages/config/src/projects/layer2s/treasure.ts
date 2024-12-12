@@ -53,7 +53,7 @@ export const treasure: Layer2 = zkStackL2({
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
       sharedEscrow: {
-        type: 'ElasticChian',
+        type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
           '0xfC1d5dCD080121DaAF366625581ad490414EF294',
         ),
