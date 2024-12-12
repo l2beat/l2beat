@@ -44,7 +44,8 @@ export class QuickNodeClient {
     stateId: 'head' | 'gensis' | 'finalized' | 'justified' | 'slot' | Hex
     status?: string[]
   }) {
-    const response = await this.httpClient.fetch(
+    // todo: raw fetch
+    const response = await this.httpClient.fetchRaw(
       `${
         this.url
       }/eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams({

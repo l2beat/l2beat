@@ -6,7 +6,6 @@ import {
   CoingeckoClient,
   FuelClient,
   HttpClient,
-  HttpClient2,
   LoopringClient,
   RpcClient,
   StarkexClient,
@@ -30,7 +29,6 @@ export interface Clients {
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
-  const http2 = new HttpClient2()
 
   let starkexClient: StarkexClient | undefined
   let loopringClient: LoopringClient | undefined
@@ -62,7 +60,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           const rpcClient = new RpcClient({
             sourceName: chain.name,
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -79,7 +77,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           const zksyncLiteClient = new ZksyncLiteClient({
             sourceName: 'zksynclite',
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -92,7 +90,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           const client = new StarknetClient({
             sourceName: 'starknet',
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -107,7 +105,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             sourceName: blockApi.type,
             url: blockApi.url,
             type: blockApi.type,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -122,7 +120,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           const fuelClient = new FuelClient({
             sourceName: 'fuel',
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -134,7 +132,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           starkexClient = new StarkexClient({
             sourceName: 'starkex',
             apiKey: blockApi.apiKey,
-            http: http2,
+            http,
             retryStrategy: blockApi.retryStrategy,
             logger,
             callsPerMinute: blockApi.callsPerMinute,
@@ -150,7 +148,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
-    http: http2,
+    http,
     logger,
     callsPerMinute: config.coingeckoApiKey ? 400 : 10,
     retryStrategy: 'RELIABLE',
@@ -162,7 +160,7 @@ export function initClients(config: Config, logger: Logger): Clients {
       beaconApiUrl: config.beaconApi.url,
       rpcClient: ethereumClient,
       logger,
-      http: http2,
+      http,
       callsPerMinute: config.beaconApi.callsPerMinute,
       timeout: config.beaconApi.timeout,
       retryStrategy: 'RELIABLE',
