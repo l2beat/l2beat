@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa5e30f673d2943249bc7c11c9beca0ea83e3b4da
 
 ## Description
 
-Ignoring not needed escrow values.
+Ignoring not needed escrow values. Multisig member change.
 
 ## Watched changes
 
