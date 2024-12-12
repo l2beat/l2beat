@@ -25,6 +25,7 @@ export interface LoggerOptions {
   module?: string
   chain?: string
   project?: string
+  source?: string
   utc: boolean
   cwd: string
   getTime: () => Date
@@ -40,6 +41,7 @@ export interface LogEntry {
   module?: string
   chain?: string
   project?: string
+  source?: string
   message?: string
   error?: Error
   resolvedError?: ResolvedError
