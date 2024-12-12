@@ -9,6 +9,7 @@
   },
   "overrides": {
     "HotShotLightClient": {
+      "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "ignoreMethods": [
         "proxiableUUID",
         "getHotShotCommitment",
@@ -18,7 +19,29 @@
         "stateHistoryFirstIndex",
         "getStateHistoryCount",
         "finalizedState"
-      ]
+      ],
+      "fields": {
+        "permissionedProver": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can call newFinalizedState() to prove the latest HotShot state."
+              }
+            ]
+          }
+        },
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
+              }
+            ]
+          }
+        }
+      }
     }
   }
 }

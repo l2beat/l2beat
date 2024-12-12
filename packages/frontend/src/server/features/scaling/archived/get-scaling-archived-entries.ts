@@ -14,19 +14,17 @@ import {
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingArchivedEntries() {
-  const [projectsChangeReport, projectsVerificationStatuses, tvl] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-      get7dTokenBreakdown({ type: 'layer2' }),
-    ])
+  const [projectsChangeReport, tvl] = await Promise.all([
+    getProjectsChangeReport(),
+    get7dTokenBreakdown({ type: 'layer2' }),
+  ])
 
   const projects = [...layer2s, ...layer3s].filter((p) => p.isArchived)
 
   const entries = projects.map((project) =>
     getScalingArchivedEntry(
       project,
-      !!projectsVerificationStatuses[project.id.toString()],
+      getProjectsVerificationStatuses(project),
       projectsChangeReport,
       tvl.projects[project.id.toString()],
     ),

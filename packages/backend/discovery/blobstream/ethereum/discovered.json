@@ -5,7 +5,7 @@
   "configHash": "0xa39ac1040446a137f22fde9298f1a7eaaf37dfd82716e8bd0ec1ee69c61c977e",
   "contracts": [
     {
-      "name": "FunctionVerifier",
+      "name": "nextHeaderVerifier",
       "address": "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
@@ -15,7 +15,8 @@
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
         "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
-      }
+      },
+      "derivedName": "FunctionVerifier"
     },
     {
       "name": "SP1Verifier",
@@ -355,11 +356,12 @@
       }
     },
     {
-      "name": "",
+      "name": "headerRangeVerifier",
       "address": "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E",
       "unverified": true,
       "sinceTimestamp": 1717613795,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     }
   ],
   "eoas": [

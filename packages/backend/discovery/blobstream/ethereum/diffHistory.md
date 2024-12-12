@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x85891d13cac61c36d4c35c721761d680923179d0
+Generated with discovered.json: 0x6711f52bb7c3e867fca16392ebea36c7eb4152f6
 
-# Diff at Mon, 09 Dec 2024 10:07:46 GMT:
+# Diff at Tue, 10 Dec 2024 10:37:03 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@89e8982b383eef3a5fbd1d40b993ff7d9b8230e3 block: 21357513
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21357513
 - current block number: 21357513
 
 ## Description
@@ -17,28 +17,20 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21357513 (main branch discovery), not current.
 
 ```diff
-    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
-    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
-      description:
-+        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
-      issuedPermissions:
-+        [{"permission":"configure","target":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","via":[]},{"permission":"configure","target":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","via":[]}]
+    contract nextHeaderVerifier (0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "nextHeaderVerifier"
     }
 ```
 
 ```diff
-    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    contract headerRangeVerifier (0xF33a22dFf8017813b95E5a05c9a97BaFE693001E) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge"}]
-    }
-```
-
-```diff
-    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+      name:
+-        ""
++        "headerRangeVerifier"
     }
 ```
 
@@ -608,8 +600,7 @@ Generated with discovered.json: 0xe304a4299d879d9d83a90949b26d2781cd131aad
 - Verifier program verification key is now stored in the Blobstream contract and it is used in the verifier for proof verification. It can be updated by the Guardian.
 - CommitHeaderRange has now a permissioned mode, due to onlyApprovedRelayer modifier. Guardian can approve authorised relayers and toggle the permissioned mode through checkRelayer updates (true for permissioned, false for permissionless).
 
-- SP1VerifierGateway:  contract that verifies proofs by routing to the correct verifier based on the verifier selector contained in the first 4 bytes of the proof. It additionally checks that to see that the verifier route is not frozen. The owner of the contract can add and freeze routes.
-
+- SP1VerifierGateway: contract that verifies proofs by routing to the correct verifier based on the verifier selector contained in the first 4 bytes of the proof. It additionally checks that to see that the verifier route is not frozen. The owner of the contract can add and freeze routes.
 
 ## Watched changes
 

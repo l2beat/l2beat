@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xc1ff6521f89449f133d26ac1f28ed97afae5a4d5
+
+# Diff at Tue, 10 Dec 2024 10:37:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21041827
+- current block number: 21041827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041827 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AztecFeeDistributor (0x4cf32670a53657596E641DFCC6d40f01e4d64927)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa1ec9af4eeae57032afb3dfc89bf2faf162aad87
 
 # Diff at Thu, 28 Nov 2024 11:02:01 GMT:

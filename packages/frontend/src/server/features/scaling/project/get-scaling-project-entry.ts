@@ -27,20 +27,18 @@ export type ScalingProjectEntry = Awaited<
 
 export async function getScalingProjectEntry(project: ScalingProject) {
   const [
-    projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     projectsChangeReport,
     header,
   ] = await Promise.all([
-    getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
     getProjectsChangeReport(),
     getHeader(project),
   ])
 
-  const isVerified = !!projectsVerificationStatuses[project.id]
+  const isVerified = getProjectsVerificationStatuses(project)
   const hasImplementationChanged =
     projectsChangeReport.hasImplementationChanged(project.id)
   const hasHighSeverityFieldChanged =
@@ -89,7 +87,8 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   const stackedRosetteValues = project.stackedRiskView
     ? getScalingRosetteValues(project.stackedRiskView)
     : undefined
-  const isHostChainVerified = !!projectsVerificationStatuses[project.hostChain]
+  const isHostChainVerified =
+    hostChain === undefined ? false : getProjectsVerificationStatuses(hostChain)
 
   const projectDetails = await getL3ProjectDetails({
     project,

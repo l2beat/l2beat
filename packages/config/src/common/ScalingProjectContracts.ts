@@ -25,6 +25,8 @@ export type ScalingProjectContract =
 export interface ScalingProjectContractSingleAddress {
   /** Address of the contract */
   address: EthereumAddress
+  /** Verification status of the contract */
+  isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain?: string
   /** Solidity name of the contract */

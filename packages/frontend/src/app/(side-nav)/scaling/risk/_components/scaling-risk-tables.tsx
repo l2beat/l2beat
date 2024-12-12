@@ -38,6 +38,7 @@ export function ScalingRiskTables(props: Props) {
           ...filteredEntries.others,
         ]}
         className="max-md:mt-4"
+        showHostChainFilter
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
