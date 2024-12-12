@@ -44,7 +44,6 @@ export class QuickNodeClient {
     stateId: 'head' | 'gensis' | 'finalized' | 'justified' | 'slot' | Hex
     status?: string[]
   }) {
-    // todo: raw fetch
     const response = await this.httpClient.fetchRaw(
       `${
         this.url
