@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 282615739,
-  "configHash": "0xab0e37d6f810708912186eef52cd99afe4f13ecea58acb93ee7e0837da84bf97",
+  "configHash": "0xf7da14440596e53cf10f520bb824d3711b5e16aafc6ab29f03deda0e791f00e4",
   "contracts": [
     {
       "name": "SP1Verifier",
@@ -281,7 +281,7 @@
         {
           "permission": "configure",
           "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge"
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -709,6 +709,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succinct/SP1SuccinctGateway": "0x8e07a550d79ad9636ecd48aaf27eed662a4513dbc69cc53361ca27e5ac7640c9"
+    "succinct/SP1SuccinctGateway": "0x18694f6423ec326c2bd8f23ab1b294917189dfe1cc39224fd4334ce622713068"
   }
 }

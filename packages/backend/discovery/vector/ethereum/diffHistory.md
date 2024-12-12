@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2f47c9791ff59b6a7f2c0d94260acd45991c003e
+Generated with discovered.json: 0xeff7003c5e5d66bc6348530bda45a1434f054fdd
 
-# Diff at Thu, 12 Dec 2024 11:33:22 GMT:
+# Diff at Thu, 12 Dec 2024 11:43:15 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21184939
@@ -52,7 +52,7 @@ discovery. Values are for block 21184939 (main branch discovery), not current.
     contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge"}]
++        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."}]
     }
 ```
 
