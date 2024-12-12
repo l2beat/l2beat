@@ -4,7 +4,7 @@ import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 import { HttpClient } from '../../clients'
 import { CoingeckoClient } from './CoingeckoClient'
-import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './model'
+import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './types'
 
 describe(CoingeckoClient.name, () => {
   const logger = Logger.SILENT
