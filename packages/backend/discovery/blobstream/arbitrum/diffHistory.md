@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x9407322cdfc2f31ca9810d1579f2dcc501b6b803
+Generated with discovered.json: 0xd39227606f84756fb081b73d26ca8508301b491e
 
-# Diff at Thu, 12 Dec 2024 11:43:16 GMT:
+# Diff at Thu, 12 Dec 2024 15:07:34 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 282615739
+- comparing to: main@675c2fed2e6fd64977d53add75705c1380efedb2 block: 282615739
 - current block number: 282615739
 
 ## Description
@@ -17,6 +17,12 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 282615739 (main branch discovery), not current.
 
 ```diff
+-   Status: DELETED
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d)
+    +++ description: None
+```
+
+```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
     +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
       description:
@@ -24,6 +30,24 @@ discovery. Values are for block 282615739 (main branch discovery), not current.
       issuedPermissions:
 +        [{"permission":"configure","target":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","via":[]},{"permission":"configure","target":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","via":[]}]
     }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB)
+    +++ description: None
 ```
 
 ```diff
