@@ -9,7 +9,7 @@ Generated with discovered.json: 0xe28dc8a373f6a6e9c1c5f56db7248039a2e48164
 ## Description
 
 Changed finalization period from 5 hours to 4.
-Eth withdrawals are halted while ethThrottleWithdrawals.maxAmountPerPeriod is set to 0.
+Throttling checks are disabled since ethThrottleWithdrawals.maxAmountPerPeriod is set to 0.
 
 ## Watched changes
 
