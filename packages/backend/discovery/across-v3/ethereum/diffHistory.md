@@ -8,7 +8,7 @@ Generated with discovered.json: 0x57f8945c8ee33c1aba2d076d79b3831743b4f458
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Ignored current time value.
 
 ## Watched changes
 
