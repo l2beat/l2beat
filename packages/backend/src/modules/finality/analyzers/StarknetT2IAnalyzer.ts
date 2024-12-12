@@ -3,7 +3,7 @@ import { BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
 import { Database } from '@l2beat/database'
-import { RpcClient2, StarknetClient } from '@l2beat/shared'
+import { RpcClient, StarknetClient } from '@l2beat/shared'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
@@ -16,7 +16,7 @@ type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 
 export class StarknetT2IAnalyzer extends BaseAnalyzer {
   constructor(
-    provider: RpcClient2,
+    provider: RpcClient,
     db: Database,
     projectId: ProjectId,
     private readonly l2Provider: StarknetClient,
