@@ -3,7 +3,7 @@ import { type CommonScalingEntry } from '~/server/features/scaling/get-common-sc
 export type TabbedScalingEntries<T extends CommonScalingEntry> = {
   rollups: T[]
   validiumsAndOptimiums: T[]
-  others: T[] | undefined
+  others: T[]
 }
 
 export function groupByTabs<T extends CommonScalingEntry>(
