@@ -7,7 +7,10 @@ import {
 } from '@l2beat/config'
 import { type RosetteValue } from '~/components/rosette/types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
-import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import {
+  type ProjectChanges,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { getStage } from '../get-common-scaling-entry'
 import {
   type LatestTvl,
@@ -59,8 +62,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
       const latestTvl = tvl.projects[project.id.toString()]
       return getScalingApiEntry(
         project,
-        projectsChangeReport.hasImplementationChanged(project.id),
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+        projectsChangeReport.getChanges(project.id),
         latestTvl,
       )
     })
@@ -69,8 +71,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
 
 function getScalingApiEntry(
   project: Layer2 | Layer3,
-  hasImplementationChanged: boolean,
-  hasHighSeverityFieldChanged: boolean,
+  changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
 ): ScalingApiEntry {
   return {
@@ -87,8 +88,8 @@ function getScalingApiEntry(
     isUpcoming: false,
     isUnderReview: !!getUnderReviewStatus({
       isUnderReview: isAnySectionUnderReview(project),
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
+      implementationChanged: changes.implementationChanged,
+      highSeverityFieldChanged: changes.highSeverityFieldChanged,
     }),
     badges:
       project.badges?.map((x) => ({

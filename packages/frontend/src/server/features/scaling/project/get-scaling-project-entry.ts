@@ -39,10 +39,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   ])
 
   const isVerified = getProjectsVerificationStatuses(project)
-  const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChanged(project.id)
-  const hasHighSeverityFieldChanged =
-    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
+  const changes = projectsChangeReport.getChanges(project.id)
 
   const common = {
     type: project.type,
@@ -50,8 +47,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     slug: project.display.slug,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.isUnderReview,
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
+      ...changes,
     }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,

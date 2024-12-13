@@ -18,10 +18,22 @@ export async function getProjectsChangeReport() {
 export type ProjectsChangeReport = Awaited<
   ReturnType<typeof getProjectsChangeReportWithFns>
 >
+
+export interface ProjectChanges {
+  implementationChanged: boolean
+  highSeverityFieldChanged: boolean
+}
+
 async function getProjectsChangeReportWithFns() {
   const result = await getCachedProjectsChangeReport()
   return {
     projects: result,
+    getChanges: function (projectId: string): ProjectChanges {
+      return {
+        implementationChanged: this.hasImplementationChanged(projectId),
+        highSeverityFieldChanged: this.hasHighSeverityFieldChanged(projectId),
+      }
+    },
     hasImplementationChanged: function (projectId: string) {
       const chainChanges = this.projects[projectId]
       if (!chainChanges) {
@@ -148,6 +160,10 @@ const getCachedProjectsChangeReport = cache(
 function getProjectsChangeReportMock(): ProjectsChangeReport {
   return {
     projects: {},
+    getChanges: () => ({
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
+    }),
     hasImplementationChanged: () => false,
     hasHighSeverityFieldChanged: () => false,
   }

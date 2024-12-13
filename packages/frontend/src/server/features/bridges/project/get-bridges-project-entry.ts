@@ -28,10 +28,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
   ])
 
   const isVerified = getProjectsVerificationStatuses(project)
-  const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChanged(project.id.toString())
-  const hasHighSeverityFieldChanged =
-    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
+  const changes = projectsChangeReport.getChanges(project.id)
 
   return {
     type: project.type,
@@ -39,8 +36,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
     slug: project.display.slug,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.isUnderReview,
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
+      ...changes,
     }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
