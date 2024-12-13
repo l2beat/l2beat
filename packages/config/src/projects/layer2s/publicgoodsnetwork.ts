@@ -49,6 +49,13 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
+      name: 'PGN pauses the bridge',
+      link: 'https://app.blocksec.com/explorer/tx/eth/0xaf8648b0e0a28902f7cfcc544d520a45d8df8217bba016c4a2f01aaf2bf39556',
+      date: '2024-12-10T00:00:00.00Z',
+      description: 'PGN starts sunset process.',
+      type: 'incident',
+    },
+    {
       name: 'Public Goods Network Launch',
       link: 'https://twitter.com/pgn_eth/status/1676972199423668228',
       date: '2023-07-06T00:00:00.00Z',
