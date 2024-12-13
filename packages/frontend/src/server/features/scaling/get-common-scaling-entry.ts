@@ -11,10 +11,7 @@ import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
-import {
-  type ProjectCountdownsWithContext,
-  getCountdowns,
-} from './utils/get-countdowns'
+import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
@@ -38,7 +35,6 @@ export interface CommonScalingEntry extends CommonProjectEntry {
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
   filterable: FilterableScalingValues | undefined
-  countdowns: ProjectCountdownsWithContext | undefined
 }
 
 interface Params {
@@ -83,6 +79,7 @@ export function getCommonScalingEntry({
               },
             )}.`
           : undefined,
+      countdowns: getCountdowns(project),
     },
     tab:
       env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
@@ -103,7 +100,6 @@ export function getCommonScalingEntry({
         getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
     },
-    countdowns: getCountdowns(project),
   }
 }
 

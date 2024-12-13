@@ -9,7 +9,6 @@ import { env } from '~/env'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
-import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { isInPast } from '~/server/features/utils/is-in-past'
 import { getUnderReviewText } from '~/utils/project/under-review'
@@ -18,15 +17,10 @@ import { PrimaryValueCell } from './primary-value-cell'
 
 export interface ProjectCellProps {
   project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
-  countdowns?: ProjectCountdownsWithContext
   className?: string
 }
 
-export function ProjectNameCell({
-  project,
-  countdowns,
-  className,
-}: ProjectCellProps) {
+export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
@@ -77,9 +71,11 @@ export function ProjectNameCell({
           <NotSyncedIcon content={project.statuses.syncStatusInfo} />
         )}
         {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-          countdowns?.otherMigration &&
-          !isInPast(countdowns.otherMigration.expiresAt) && (
-            <OtherMigrationTooltip {...countdowns.otherMigration} />
+          project.statuses?.countdowns?.otherMigration &&
+          !isInPast(project.statuses.countdowns.otherMigration.expiresAt) && (
+            <OtherMigrationTooltip
+              {...project.statuses.countdowns.otherMigration}
+            />
           )}
       </div>
       {project.nameSecondLine && (
