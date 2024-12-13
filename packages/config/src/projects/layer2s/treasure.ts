@@ -34,10 +34,10 @@ export const treasure: Layer2 = zkStackL2({
       explorers: ['https://treasurescan.io'],
       repositories: ['https://github.com/TreasureProject'],
       socialMedia: [
-        'https://x.com/Treasure_DAO', 
+        'https://x.com/Treasure_DAO',
         'https://discord.gg/treasuredao',
         'https://www.youtube.com/@PlayOnTreasure',
-        'https://t.me/playontreasure'
+        'https://t.me/playontreasure',
       ],
     },
     activityDataSource: 'Blockchain RPC',
