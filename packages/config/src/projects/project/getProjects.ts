@@ -5,7 +5,9 @@ import { layer3s } from '../layer3s'
 import { daLayers } from '../other'
 import { refactored } from '../refactored'
 import { Project } from './Project'
-import { isUnderReview } from './isUnderReview'
+import { getCurrentEntry } from './utils/getCurrentEntry'
+import { getStage } from './utils/getStage'
+import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): Project[] {
   const projects: Project[] = [...refactored]
@@ -22,12 +24,22 @@ export function getProjects(): Project[] {
         yellowWarning: p.display.headerWarning,
         redWarning: p.display.redWarning,
       },
-      proofVerification: p.stateValidation?.proofVerification,
+      scalingBasicInfo: {
+        type: p.display.category,
+        isOther: !!p.display.reasonsForBeingOther,
+        hostChain: '',
+        stack: '',
+        raas: '',
+        daLayer: getCurrentEntry(p.dataAvailability)?.layer.value ?? 'Unknown',
+        stage: getStage(p.stage),
+        purposes: p.display.purposes,
+      },
       scalingRisks: {
         self: p.riskView,
         host: undefined,
         stacked: undefined,
       },
+      proofVerification: p.stateValidation?.proofVerification,
       // tags
       isScaling: true,
       isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,

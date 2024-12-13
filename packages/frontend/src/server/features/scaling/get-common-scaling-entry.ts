@@ -4,6 +4,7 @@ import {
   type Layer3,
   type StageConfig,
   badges,
+  getCurrentEntry,
   getProjectsVerificationStatuses,
   isUnderReview,
 } from '@l2beat/config'
@@ -13,7 +14,6 @@ import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
-import { getCurrentEntry } from '../utils/get-current-entry'
 import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
 
