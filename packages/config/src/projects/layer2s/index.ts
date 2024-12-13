@@ -107,6 +107,7 @@ import { optimism } from './optimism'
 import { optopia } from './optopia'
 import { orderly } from './orderly'
 import { palm } from './palm'
+import { pandasea } from './pandasea'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
@@ -293,6 +294,7 @@ export const layer2s: Layer2[] = [
   optopia,
   orderly,
   palm,
+  pandasea,
   paradex,
   parallel,
   patex,
