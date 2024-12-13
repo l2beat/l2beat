@@ -157,7 +157,7 @@ export const scalingSummaryOthersColumns = [
           {reasons.map((reason) => (
             <Tooltip key={reason.label}>
               <TooltipTrigger>
-                <Badge type="brand" className="uppercase">
+                <Badge type="error" className="uppercase">
                   {reason.label}
                 </Badge>
               </TooltipTrigger>
