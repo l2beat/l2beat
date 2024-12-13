@@ -501,12 +501,27 @@ export const starknet: Layer2 = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1710625271),
-          untilTimestamp: new UnixTime(1724856227), // https://app.blocksec.com/explorer/tx/eth/0x3b5c41b3abb8e265b8d58ec3dde79790d4f0ee050de97f8bd0fe68048c070bdd
+          untilTimestamp: new UnixTime(1715783986), // 15.05.2024 https://app.blocksec.com/explorer/tx/eth/0x3b5c41b3abb8e265b8d58ec3dde79790d4f0ee050de97f8bd0fe68048c070bdd
           programHashes: [
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
         },
         _hackCostMultiplier: 0.65,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1715783986),
+          untilTimestamp: new UnixTime(1724856227), 
+          programHashes: [
+            '3383082961563516565935611087683915026448707331436034043529592588079494402084',
+          ],
+        },
+        _hackCostMultiplier: 0.20,
       },
       {
         uses: [
@@ -521,7 +536,7 @@ export const starknet: Layer2 = {
             '853638403225561750106379562222782223909906501242604214771127703946595519856', // Starknet OS
           ],
         },
-        _hackCostMultiplier: 0.65,
+        _hackCostMultiplier: 0.20,
       },
       {
         uses: [
@@ -536,7 +551,7 @@ export const starknet: Layer2 = {
             '1161178844461337253856226043908368523817098764221830529880464854589141231910', // old Aggregator
           ],
         },
-        _hackCostMultiplier: 0.65,
+        _hackCostMultiplier: 0.20,
       },
       {
         uses: [
@@ -550,7 +565,7 @@ export const starknet: Layer2 = {
             '2397984267054479079853548842566103781972463965746662494980785692480538410509', // Starknet OS
           ],
         },
-        _hackCostMultiplier: 0.65,
+        _hackCostMultiplier: 0.05,
       },
       {
         uses: [
@@ -564,7 +579,7 @@ export const starknet: Layer2 = {
             '15787695375210609250491147414005894154890873413229882671403677761527504080', // Aggregator (since Starknet v0.13.3)
           ],
         },
-        _hackCostMultiplier: 0.65,
+        _hackCostMultiplier: 0.05,
       },
       {
         uses: [
@@ -714,9 +729,24 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
           sinceTimestamp: new UnixTime(1710342000),
-          untilTimestamp: new UnixTime(1722197315),
+          untilTimestamp: new UnixTime(1715783986), //15.05.2024
         },
         _hackCostMultiplier: 0.65,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }], //same config as above but different multiplier
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb',
+          ),
+          selector: '0xe85a6a28', 
+          functionSignature:
+            'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
+          sinceTimestamp: new UnixTime(1715783986), //15.05.2024
+          untilTimestamp: new UnixTime(1722197315), //28.07.2024
+        },
+        _hackCostMultiplier: 0.20,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -728,9 +758,24 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestamp: new UnixTime(1722197315),
+          sinceTimestamp: new UnixTime(1722197315), 
+          untilTimestamp: new UnixTime(1732665600) //27.11
         },
-        _hackCostMultiplier: 0.65,
+        _hackCostMultiplier: 0.20,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400',
+          ),
+          selector: '0xe85a6a28',
+          functionSignature:
+            'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
+          sinceTimestamp: new UnixTime(1732665600), 
+        },
+        _hackCostMultiplier: 0.05,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -758,9 +803,24 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
           sinceTimestamp: new UnixTime(1710342000),
-          untilTimestamp: new UnixTime(1722197315),
+          untilTimestamp: new UnixTime(1715783986),
         },
         _hackCostMultiplier: 0.65,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x634DCf4f1421Fc4D95A968A559a450ad0245804c',
+          ),
+          selector: '0x3fe317a6',
+          functionSignature:
+            'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
+          sinceTimestamp: new UnixTime(1715783986),
+          untilTimestamp: new UnixTime(1722197315),
+        },
+        _hackCostMultiplier: 0.20,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -773,8 +833,23 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
           sinceTimestamp: new UnixTime(1722197315),
+          untilTimestamp: new UnixTime(1732665600) //27.11 please confirm
         },
-        _hackCostMultiplier: 0.65,
+        _hackCostMultiplier: 0.20,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd',
+          ),
+          selector: '0x3fe317a6',
+          functionSignature:
+            'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
+          sinceTimestamp: new UnixTime(1732665600)
+        },
+        _hackCostMultiplier: 0.05,
       },
     ],
   },
