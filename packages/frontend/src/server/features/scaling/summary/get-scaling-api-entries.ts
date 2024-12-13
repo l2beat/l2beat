@@ -2,6 +2,7 @@ import {
   type Layer2,
   type Layer3,
   badges,
+  isUnderReview,
   layer2s,
   layer3s,
 } from '@l2beat/config'
@@ -17,7 +18,6 @@ import {
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
 import { getHostChain } from '../utils/get-host-chain'
-import { isAnySectionUnderReview } from '../utils/is-any-section-under-review'
 import { getRisks } from './get-scaling-summary-entries'
 
 export interface ScalingApiEntry {
@@ -87,7 +87,7 @@ function getScalingApiEntry(
     isArchived: false,
     isUpcoming: false,
     isUnderReview: !!getUnderReviewStatus({
-      isUnderReview: isAnySectionUnderReview(project),
+      isUnderReview: isUnderReview(project),
       implementationChanged: changes.implementationChanged,
       highSeverityFieldChanged: changes.highSeverityFieldChanged,
     }),

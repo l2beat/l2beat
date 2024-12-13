@@ -5,6 +5,7 @@ import {
   type StageConfig,
   badges,
   getProjectsVerificationStatuses,
+  isUnderReview,
 } from '@l2beat/config'
 import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
@@ -15,7 +16,6 @@ import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
 import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export interface FilterableScalingValues {
   isRollup: boolean
@@ -63,7 +63,7 @@ export function getCommonScalingEntry({
       redWarning: project.display.redWarning,
       verificationWarning: !getProjectsVerificationStatuses(project),
       underReview: getUnderReviewStatus({
-        isUnderReview: isAnySectionUnderReview(project),
+        isUnderReview: isUnderReview(project),
         highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
         implementationChanged: !!changes?.implementationChanged,
       }),

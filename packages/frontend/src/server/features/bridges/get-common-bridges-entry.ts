@@ -1,7 +1,10 @@
-import { type Bridge, getProjectsVerificationStatuses } from '@l2beat/config'
+import {
+  type Bridge,
+  getProjectsVerificationStatuses,
+  isUnderReview,
+} from '@l2beat/config'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
-import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 
 interface Params {
@@ -35,7 +38,7 @@ export function getCommonBridgesEntry({
       yellowWarning: bridge.display.warning,
       verificationWarning: !getProjectsVerificationStatuses(bridge),
       underReview: getUnderReviewStatus({
-        isUnderReview: isAnySectionUnderReview(bridge),
+        isUnderReview: isUnderReview(bridge),
         ...changes,
       }),
     },
