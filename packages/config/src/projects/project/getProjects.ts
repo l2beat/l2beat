@@ -5,6 +5,7 @@ import { layer3s } from '../layer3s'
 import { daLayers } from '../other'
 import { refactored } from '../refactored'
 import { Project } from './Project'
+import { isUnderReview } from './isUnderReview'
 
 export function getProjects(): Project[] {
   const projects: Project[] = [...refactored]
@@ -27,7 +28,7 @@ export function getProjects(): Project[] {
       isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
       isLayer2: true,
       isArchived: p.isArchived ? true : undefined,
-      isUnderReview: p.isUnderReview ? true : undefined,
+      isUnderReview: isUnderReview(p) ? true : undefined,
       isUpcoming: p.isUpcoming ? true : undefined,
     })
   }
@@ -50,7 +51,7 @@ export function getProjects(): Project[] {
       isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
       isLayer3: true,
       isArchived: p.isArchived ? true : undefined,
-      isUnderReview: p.isUnderReview ? true : undefined,
+      isUnderReview: isUnderReview(p) ? true : undefined,
       isUpcoming: p.isUpcoming ? true : undefined,
     })
   }
@@ -64,7 +65,7 @@ export function getProjects(): Project[] {
       // tags
       isBridge: true,
       isArchived: p.isArchived ? true : undefined,
-      isUnderReview: p.isUnderReview ? true : undefined,
+      isUnderReview: isUnderReview(p) ? true : undefined,
       isUpcoming: p.isUpcoming ? true : undefined,
     })
   }
@@ -79,6 +80,8 @@ export function getProjects(): Project[] {
       daBridges: p.bridges,
       // tags
       isDaLayer: true,
+      isUnderReview: p.isUnderReview ? true : undefined,
+      isUpcoming: p.isUpcoming ? true : undefined,
     })
   }
 
