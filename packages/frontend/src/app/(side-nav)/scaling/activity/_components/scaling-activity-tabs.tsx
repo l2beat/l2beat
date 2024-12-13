@@ -8,7 +8,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
-import { MainPageCard } from '~/components/main-page-card'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { env } from '~/env'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
@@ -70,24 +70,29 @@ export function ScalingActivityTabs({
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups">
+          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
             {useOthers && (
-              <MainPageCard className="p-0">
+              <>
                 <ActivityChart milestones={milestones} entries={rollups} />
-              </MainPageCard>
+                <HorizontalSeparator className="mb-2 mt-6" />
+              </>
             )}
             <ScalingActivityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
+          <DirectoryTabsContent
+            value="validiums-and-optimiums"
+            className="main-page-card pt-5"
+          >
             {useOthers && (
-              <MainPageCard className="p-0">
+              <>
                 <ActivityChart
                   milestones={milestones}
                   entries={validiumsAndOptimiums}
                 />
-              </MainPageCard>
+                <HorizontalSeparator className="mb-2 mt-6" />
+              </>
             )}
             <ScalingActivityTable
               entries={filteredEntries.validiumsAndOptimiums}
@@ -96,14 +101,18 @@ export function ScalingActivityTabs({
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
+            <DirectoryTabsContent
+              value="others"
+              className="main-page-card pt-5"
+            >
               {useOthers && (
-                <MainPageCard className="p-0">
+                <>
                   <ActivityChart
                     milestones={milestones}
                     entries={others ?? []}
                   />
-                </MainPageCard>
+                  <HorizontalSeparator className="mb-2 mt-6" />
+                </>
               )}
               <ScalingActivityTable entries={filteredEntries.others} />
             </DirectoryTabsContent>

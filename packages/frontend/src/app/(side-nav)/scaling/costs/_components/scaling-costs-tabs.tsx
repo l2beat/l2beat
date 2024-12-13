@@ -8,7 +8,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
-import { MainPageCard } from '~/components/main-page-card'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { env } from '~/env'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
@@ -61,28 +61,33 @@ export function ScalingCostsTabs(props: Props) {
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups">
+          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
             {useOthers && (
-              <MainPageCard className="p-0">
+              <>
                 <ScalingCostsChart
                   entries={props.rollups}
                   milestones={props.milestones}
                 />
-              </MainPageCard>
+                <HorizontalSeparator className="mb-2 mt-6" />
+              </>
             )}
             <ScalingCostsTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
+            <DirectoryTabsContent
+              value="others"
+              className="main-page-card pt-5"
+            >
               {useOthers && (
-                <MainPageCard className="p-0">
+                <>
                   <ScalingCostsChart
                     entries={props.others ?? []}
                     milestones={props.milestones}
                   />
-                </MainPageCard>
+                  <HorizontalSeparator className="mb-2 mt-6" />
+                </>
               )}
               <ScalingCostsTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
