@@ -143,7 +143,7 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
 ]
 
 export const scalingSummaryOthersColumns = [
-  ...scalingSummaryColumns.slice(0, 5),
+  ...scalingSummaryColumns.slice(0, 4),
   columnHelper.display({
     id: 'why-am-i-here',
     header: 'Why am I here?',
