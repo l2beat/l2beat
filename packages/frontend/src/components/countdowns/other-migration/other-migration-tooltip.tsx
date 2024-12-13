@@ -36,7 +36,7 @@ export function OtherMigrationTooltip({
         {reasons.map((reason) => {
           return (
             <Callout
-              key={reason.shortName}
+              key={reason.label}
               color="red"
               body={reason.shortDescription}
               className="px-6 py-3 text-xs font-bold text-red-600"

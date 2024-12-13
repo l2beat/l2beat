@@ -22,7 +22,7 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
       </p>
       <div className="space-y-6">
         {reasons.map((reason) => (
-          <div key={reason.shortName}>
+          <div key={reason.label}>
             <Callout
               body={reason.shortDescription}
               color="red"
