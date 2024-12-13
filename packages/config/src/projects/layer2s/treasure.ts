@@ -36,7 +36,7 @@ export const treasure: Layer2 = zkStackL2({
       socialMedia: [
         'https://x.com/Treasure_DAO',
         'https://discord.gg/treasuredao',
-        'https://www.youtube.com/@PlayOnTreasure',
+        'https://youtube.com/@PlayOnTreasure',
         'https://t.me/playontreasure',
       ],
     },
