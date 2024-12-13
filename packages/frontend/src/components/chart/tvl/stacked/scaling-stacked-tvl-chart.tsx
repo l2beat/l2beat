@@ -73,7 +73,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
         <StackedTvlChartHover {...data} unit={unit} />
       )}
     >
-      <section className="flex flex-col gap-4">
+      <section className="relative z-1 flex flex-col gap-4">
         <TvlChartHeader
           unit={unit}
           value={total?.[unit]}

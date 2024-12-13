@@ -93,7 +93,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       )}
       useLogScale={scale === 'log'}
     >
-      <section className="flex flex-col gap-4">
+      <section className="relative z-1 flex flex-col gap-4">
         <ActivityChartHeader stats={stats} range={chartRange} />
         <Chart />
         <Controls
