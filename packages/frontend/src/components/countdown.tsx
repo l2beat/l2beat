@@ -31,17 +31,13 @@ export function Countdown({ expiresAt, size = 'md', className }: Props) {
       <MemoizedTimePart suffix="d" size={size}>
         {days}
       </MemoizedTimePart>
-      <MemoizedTimePart suffix="hr" size={size}>
+      <MemoizedTimePart suffix="h" size={size}>
         {hours}
       </MemoizedTimePart>
       <MemoizedTimePart suffix="m" size={size}>
         {minutes}
       </MemoizedTimePart>
-      <MemoizedTimePart
-        suffix="s"
-        size={size}
-        className={cn(size === 'md' && 'w-[67px]', size === 'sm' && 'w-[54px]')}
-      >
+      <MemoizedTimePart suffix="s" size={size}>
         {seconds}
       </MemoizedTimePart>
     </div>
@@ -69,7 +65,7 @@ function TimePart({
         className,
       )}
     >
-      <span>{children}</span>
+      <span className="tabular-nums">{children}</span>
       <span
         className={cn(
           'ml-0.5',
@@ -88,5 +84,14 @@ function getTimeParts(timeLeft: number) {
   const hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60))
   const minutes = Math.floor((timeLeft % (60 * 60)) / 60)
   const seconds = Math.floor(timeLeft % 60)
-  return { days, hours, minutes, seconds }
+
+  const format = (value: number) =>
+    Math.max(0, value).toString().padStart(2, '0')
+
+  return {
+    days: format(days),
+    hours: format(hours),
+    minutes: format(minutes),
+    seconds: format(seconds),
+  }
 }
