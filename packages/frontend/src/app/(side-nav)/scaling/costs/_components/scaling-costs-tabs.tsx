@@ -1,12 +1,16 @@
 'use client'
+import { type Milestone } from '@l2beat/config'
 import { CountBadge } from '~/components/badge/count-badge'
+import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { MainPageCard } from '~/components/main-page-card'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { env } from '~/env'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -16,9 +20,13 @@ import { useCostsTimeRangeContext } from './costs-time-range-context'
 import { CostsMetricControls } from './costs-type-controls'
 import { ScalingCostsTable } from './table/scaling-costs-table'
 
-type Props = TabbedScalingEntries<ScalingCostsEntry>
+type Props = TabbedScalingEntries<ScalingCostsEntry> & {
+  milestones: Milestone[]
+}
 
-export function ScalingCostsTables(props: Props) {
+export function ScalingCostsTabs(props: Props) {
+  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
+
   const includeFilters = useScalingFilter()
 
   const filteredEntries = {
@@ -54,12 +62,28 @@ export function ScalingCostsTables(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            {useOthers && (
+              <MainPageCard className="p-0">
+                <ScalingCostsChart
+                  entries={props.rollups}
+                  milestones={props.milestones}
+                />
+              </MainPageCard>
+            )}
             <ScalingCostsTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
+              {useOthers && (
+                <MainPageCard className="p-0">
+                  <ScalingCostsChart
+                    entries={props.others ?? []}
+                    milestones={props.milestones}
+                  />
+                </MainPageCard>
+              )}
               <ScalingCostsTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>
