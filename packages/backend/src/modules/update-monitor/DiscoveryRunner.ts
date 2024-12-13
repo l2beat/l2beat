@@ -11,6 +11,7 @@ import {
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   AllProviderStats,
+  ProviderMeasurement,
   ProviderStats,
 } from '@l2beat/discovery/dist/discovery/provider/Stats'
 import { assert } from '@l2beat/shared-pure'
@@ -144,36 +145,74 @@ export class DiscoveryRunner {
 }
 
 function setDiscoveryMetrics(stats: AllProviderStats, chain: string) {
-  setProviderGauge(lowLevelProviderGauge, stats.lowLevelCounts, chain)
-  setProviderGauge(cacheProviderGauge, stats.cacheCounts, chain)
-  setProviderGauge(highLevelProviderGauge, stats.highLevelCounts, chain)
+  setProviderGauge(
+    lowLevelProviderCountGauge,
+    lowLevelProviderDurationGauge,
+    stats.lowLevelMeasurements,
+    chain,
+  )
+  setProviderGauge(
+    cacheProviderCountGauge,
+    cacheProviderDurationGauge,
+    stats.cacheMeasurements,
+    chain,
+  )
+  setProviderGauge(
+    highLevelProviderCountGauge,
+    highLevelProviderDurationGauge,
+    stats.highLevelMeasurements,
+    chain,
+  )
 }
 
 function setProviderGauge(
-  gauge: ProviderGauge,
+  countGauge: ProviderGauge,
+  durationGauge: ProviderGauge,
   stats: ProviderStats,
   chain: string,
 ) {
-  for (const key of Object.keys(stats)) {
-    gauge.set({ chain: chain, method: key }, stats[key as keyof ProviderStats])
+  for (const [key, index] of Object.entries(ProviderMeasurement)) {
+    const entry = stats.get(index)
+    let avg = 0
+    if (entry.durations.length > 0) {
+      avg = entry.durations.reduce((acc, v) => acc + v) / entry.durations.length
+    }
+
+    countGauge.set({ chain: chain, method: key }, entry.count)
+    durationGauge.set({ chain: chain, method: key }, avg)
   }
 }
 
 type ProviderGauge = Gauge<'chain' | 'method'>
-const lowLevelProviderGauge: ProviderGauge = new Gauge({
+const lowLevelProviderCountGauge: ProviderGauge = new Gauge({
   name: 'update_monitor_low_level_provider_stats',
   help: 'Low level provider calls done during discovery',
   labelNames: ['chain', 'method'],
 })
+const lowLevelProviderDurationGauge: ProviderGauge = new Gauge({
+  name: 'update_monitor_low_level_provider_duration_stats',
+  help: 'Average duration of methods in low level provider calls done during discovery',
+  labelNames: ['chain', 'method'],
+})
 
-const cacheProviderGauge: ProviderGauge = new Gauge({
+const cacheProviderCountGauge: ProviderGauge = new Gauge({
   name: 'update_monitor_cache_provider_stats',
   help: 'Cache hit counts done during discovery',
   labelNames: ['chain', 'method'],
 })
+const cacheProviderDurationGauge: ProviderGauge = new Gauge({
+  name: 'update_monitor_cache_provider_duration_stats',
+  help: 'Average duration of methods when a cache hit occurs during discovery',
+  labelNames: ['chain', 'method'],
+})
 
-const highLevelProviderGauge: ProviderGauge = new Gauge({
+const highLevelProviderCountGauge: ProviderGauge = new Gauge({
   name: 'update_monitor_high_level_provider_stats',
   help: 'High level provider calls done during discovery',
+  labelNames: ['chain', 'method'],
+})
+const highLevelProviderDurationGauge: ProviderGauge = new Gauge({
+  name: 'update_monitor_high_level_provider_duration_stats',
+  help: 'Average duration of methods in high level provider calls done during discovery',
   labelNames: ['chain', 'method'],
 })

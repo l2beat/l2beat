@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { HttpClient2 } from '../http/HttpClient2'
-import { RpcClient2 } from '../rpc/RpcClient2'
+import { RpcClient } from '../rpc/RpcClient'
 import { BlobClient } from './BlobClient'
 
 function generateKzgCommitment(): string {
@@ -17,7 +17,7 @@ function generateKzgCommitment(): string {
 describe(BlobClient.name, () => {
   describe(BlobClient.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().returns({
           type: '0x2',
           blockNumber: 1,
@@ -43,7 +43,7 @@ describe(BlobClient.name, () => {
         data: 'blob2',
       }
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().returns({
           type: '0x3',
           blockNumber: 1,
@@ -66,7 +66,7 @@ describe(BlobClient.name, () => {
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().returns({
           type: '0x3',
           blockNumber: 1,
@@ -95,7 +95,7 @@ describe(BlobClient.name, () => {
           data: expected,
         }),
       })
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getBlockParentBeaconRoot: async () => 'root',
       })
       const client = mockClient({
@@ -162,13 +162,13 @@ describe(BlobClient.name, () => {
 function mockClient(deps: {
   http?: HttpClient2
   beaconApiUrl?: string
-  rpcClient?: RpcClient2
+  rpcClient?: RpcClient
   generateId?: () => string
   timeout?: number
 }) {
   return new BlobClient({
     beaconApiUrl: deps.beaconApiUrl ?? 'BEACON_API_URL',
-    rpcClient: deps.rpcClient ?? mockObject<RpcClient2>({}),
+    rpcClient: deps.rpcClient ?? mockObject<RpcClient>({}),
     http: deps.http ?? mockObject<HttpClient2>({}),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',

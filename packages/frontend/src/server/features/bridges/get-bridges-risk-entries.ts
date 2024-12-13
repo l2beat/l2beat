@@ -1,14 +1,24 @@
-import { type Bridge, bridges } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
-import { getUnderReviewStatus } from '~/utils/project/under-review'
+import {
+  type Bridge,
+  type BridgeDisplay,
+  type BridgeRiskView,
+  bridges,
+} from '@l2beat/config'
+import { type ValueWithSentiment, notUndefined } from '@l2beat/shared-pure'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../projects-change-report/get-projects-change-report'
-import { getProjectsLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
-import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
+import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
+import {
+  type ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../scaling/tvl/utils/get-latest-tvl-usd'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import {
+  type CommonBridgesEntry,
+  getCommonBridgesEntry,
+} from './get-common-bridges-entry'
 import { getDestination } from './get-destination'
 
 export async function getBridgeRiskEntries() {
@@ -25,48 +35,45 @@ export async function getBridgeRiskEntries() {
     .map((project) => {
       const isVerified = getProjectsVerificationStatuses(project)
 
-      return getBridgesRiskEntry(project, projectsChangeReport, isVerified)
+      return getBridgesRiskEntry(project, projectsChangeReport, isVerified, tvl)
     })
     .filter(notUndefined)
 
-  return orderByTvl(entries, tvl)
+  return entries.sort(compareTvl)
+}
+
+export interface BridgesRiskEntry extends CommonBridgesEntry {
+  type: BridgeDisplay['category']
+  destination: ValueWithSentiment<string>
+  tvlOrder: number
+  riskView: BridgeRiskView
 }
 
 function getBridgesRiskEntry(
-  project: Bridge,
+  bridge: Bridge,
   projectsChangeReport: ProjectsChangeReport,
   isVerified: boolean,
+  tvl: ProjectsLatestTvlUsd,
 ) {
   const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChanged(project.id.toString())
+    projectsChangeReport.hasImplementationChanged(bridge.id.toString())
   const hasHighSeverityFieldChanged =
-    projectsChangeReport.hasHighSeverityFieldChanged(project.id.toString())
+    projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
 
   return {
-    id: project.id,
-    href: `/bridges/projects/${project.display.slug}`,
-    type: project.type,
-    name: project.display.name,
-    shortName: project.display.shortName,
-    slug: project.display.slug,
-    warning: project.display.warning,
-    isArchived: project.isArchived,
-    underReviewStatus: getUnderReviewStatus({
-      isUnderReview: isAnySectionUnderReview(project),
+    ...getCommonBridgesEntry({
+      bridge,
+      isVerified,
       hasImplementationChanged,
       hasHighSeverityFieldChanged,
     }),
-    isVerified,
-    category: project.display.category,
+    type: bridge.display.category,
     destination: getDestination(
-      project.type === 'bridge'
-        ? project.technology.destination
-        : [project.display.name],
+      bridge.type === 'bridge'
+        ? bridge.technology.destination
+        : [bridge.display.name],
     ),
-    ...project.riskView,
+    tvlOrder: tvl[bridge.id] ?? 0,
+    riskView: bridge.riskView,
   }
 }
-
-export type BridgesRiskEntry = Awaited<
-  ReturnType<typeof getBridgeRiskEntries>
->[number]

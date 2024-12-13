@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x53bf656cb3e16e506d5d5788ac81e19d0e034b8f
+
+# Diff at Thu, 12 Dec 2024 18:44:40 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@7ee1eeff66f101a0fdb632c7f8a847f7231b20b7 block: 21235652
+- current block number: 21388295
+
+## Description
+
+Upgraded to new config version with 400m gas limit.
+Gas limit goes against current OP Stack gas limit specification, which states the gas limit may not be set to a value larger than 200m (https://specs.optimism.io/protocol/system-config.html#gaslimit-uint64).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
++        "0x1fdf490a723dc133305fa86c7ce08d98470bf7c9de74ece4ef8bc280d2355d50"
+      values.$implementation:
+-        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
++        "0x45C4e267aE21E90f72C8AbF43ddB5941c953482F"
+      values.$pastUpgrades.5:
++        ["2024-12-11T23:00:59.000Z","0x1fdbb2443b479fedc7a6e43400a5f09c883aa00d3e7b40bc7238a08e43625294",["0x45C4e267aE21E90f72C8AbF43ddB5941c953482F"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.maximumGasLimit:
+-        200000000
++        400000000
+      values.version:
+-        "2.2.0"
++        "2.2.0+max-gas-limit-400M"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21235652 => .flat}/SystemConfig/SystemConfig.sol         | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0xc322ae7a01d53cc98b9f8e28ad3ac6c78adc9bfd
 
 # Diff at Tue, 19 Nov 2024 12:58:27 GMT:

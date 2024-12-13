@@ -8,7 +8,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { type CostsMetric, useCostsMetricContext } from './costs-metric-context'
@@ -16,7 +16,7 @@ import { useCostsTimeRangeContext } from './costs-time-range-context'
 import { CostsMetricControls } from './costs-type-controls'
 import { ScalingCostsTable } from './table/scaling-costs-table'
 
-type Props = CategorisedScalingEntries<ScalingCostsEntry>
+type Props = TabbedScalingEntries<ScalingCostsEntry>
 
 export function ScalingCostsTables(props: Props) {
   const includeFilters = useScalingFilter()

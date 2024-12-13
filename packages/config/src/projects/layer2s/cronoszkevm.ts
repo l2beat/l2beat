@@ -21,7 +21,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
     added: 'cronosValidatorsAdded',
     removed: 'cronosValidatorsRemoved',
   },
-  additionalBadges: [Badge.DA.CustomDA, Badge.Infra.ElasticChain],
+  additionalBadges: [Badge.DA.CustomDA],
   display: {
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',

@@ -2,7 +2,7 @@ import { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
@@ -17,10 +17,10 @@ const iface = new utils.Interface([calldataFn, blobFn])
 
 export class LineaT2IAnalyzer extends BaseAnalyzer {
   constructor(
-    provider: RpcClient2,
+    provider: RpcClient,
     db: Database,
     projectId: ProjectId,
-    private readonly l2Provider: RpcClient2,
+    private readonly l2Provider: RpcClient,
   ) {
     super(provider, db, projectId)
   }

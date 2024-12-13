@@ -2,14 +2,14 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
-import { LoopringClient, RpcClient2 } from '@l2beat/shared'
+import { LoopringClient, RpcClient } from '@l2beat/shared'
 import { LoopringT2IAnalyzer } from './LoopringT2IAnalyzer'
 
 describe(LoopringT2IAnalyzer.name, () => {
   describe(LoopringT2IAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const projectId = ProjectId('loopring')
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getTransactionReceipt: mockFn().resolvesTo({
           logs: MOCK_DATA.logs,
         }),

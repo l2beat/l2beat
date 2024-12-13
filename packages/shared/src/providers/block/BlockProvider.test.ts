@@ -1,12 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { BlockClient, RpcClient2 } from '../../clients'
+import { BlockClient, RpcClient } from '../../clients'
 import { BlockProvider } from './BlockProvider'
 
 describe(BlockProvider.name, () => {
   describe(BlockProvider.prototype.getBlockWithTransactions.name, () => {
     it('returns block', async () => {
-      const rpc = mockObject<RpcClient2>({
+      const rpc = mockObject<RpcClient>({
         getBlockWithTransactions: async () => block(1),
       })
       const provider = new BlockProvider('chain', [rpc])
@@ -18,13 +18,13 @@ describe(BlockProvider.name, () => {
     })
 
     it('calls other client when there are errors', async () => {
-      const rpc_one = mockObject<RpcClient2>({
+      const rpc_one = mockObject<RpcClient>({
         getBlockWithTransactions: mockFn().rejectsWith(new Error()),
       })
-      const rpc_two = mockObject<RpcClient2>({
+      const rpc_two = mockObject<RpcClient>({
         getBlockWithTransactions: mockFn().rejectsWith(new Error()),
       })
-      const rpc_three = mockObject<RpcClient2>({
+      const rpc_three = mockObject<RpcClient>({
         getBlockWithTransactions: async () => block(1),
       })
 
@@ -40,13 +40,13 @@ describe(BlockProvider.name, () => {
     })
 
     it('throws when ran out of fallbacks', async () => {
-      const rpc_one = mockObject<RpcClient2>({
+      const rpc_one = mockObject<RpcClient>({
         getBlockWithTransactions: mockFn().rejectsWith(new Error()),
       })
-      const rpc_two = mockObject<RpcClient2>({
+      const rpc_two = mockObject<RpcClient>({
         getBlockWithTransactions: mockFn().rejectsWith(new Error()),
       })
-      const rpc_three = mockObject<RpcClient2>({
+      const rpc_three = mockObject<RpcClient>({
         getBlockWithTransactions: mockFn().rejectsWith(new Error('ERROR')),
       })
 

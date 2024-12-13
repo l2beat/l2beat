@@ -1,19 +1,15 @@
 import {
   type BadgeId,
-  type BadgeType,
   type Layer2,
-  type Layer2Provider,
   type Layer3,
-  type ScalingProjectCategory,
-  type ScalingProjectPurpose,
   type StageConfig,
   badges,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
-import {
-  type UnderReviewStatus,
-  getUnderReviewStatus,
-} from '~/utils/project/under-review'
+import { env } from '~/env'
+import { type SyncStatus } from '~/types/sync-status'
+import { formatTimestamp } from '~/utils/dates'
+import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
@@ -33,27 +29,10 @@ export interface FilterableScalingEntry {
   filterable: FilterableScalingValues | undefined
 }
 
-export interface CommonScalingEntry {
-  id: ProjectId
-  name: string
-  shortName: string | undefined
-  slug: string
-  href: string | undefined
-  category: ScalingProjectCategory | undefined
-  isOther: boolean | undefined
-  isVerified: boolean
-  underReviewStatus: UnderReviewStatus
-  isArchived: boolean
-  isUpcoming: boolean
-  warning: string | undefined
-  headerWarning: string | undefined
-  redWarning: string | undefined
-  purposes: ScalingProjectPurpose[]
-  badges: { badge: BadgeId; kind: BadgeType }[]
-  type: 'layer2' | 'layer3' | undefined
-  provider: Layer2Provider | undefined
-  hostChain: string | undefined
-  stage: StageConfig
+export interface CommonScalingEntry extends CommonProjectEntry {
+  tab: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+  /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
+  stageOrder: number
   filterable: FilterableScalingValues | undefined
 }
 
@@ -62,68 +41,51 @@ interface Params {
   isVerified: boolean
   hasImplementationChanged: boolean
   hasHighSeverityFieldChanged: boolean
+  syncStatus: SyncStatus | undefined
 }
 
-export function getCommonScalingEntry(
-  params: Params | { project: 'ethereum' },
-): CommonScalingEntry {
-  if (params.project === 'ethereum') {
-    return {
-      id: ProjectId.ETHEREUM,
-      name: 'Ethereum',
-      shortName: undefined,
-      slug: 'ethereum',
-      type: undefined,
-      category: undefined,
-      isOther: undefined,
-      provider: undefined,
-      purposes: [],
-      warning: undefined,
-      headerWarning: undefined,
-      redWarning: undefined,
-      isVerified: true,
-      isArchived: false,
-      hostChain: undefined,
-      href: undefined,
-      isUpcoming: false,
-      underReviewStatus: undefined,
-      stage: { stage: 'NotApplicable' as const },
-      badges: [],
-      filterable: undefined,
-    }
-  }
-
-  const { project, isVerified } = params
-
+export function getCommonScalingEntry({
+  project,
+  isVerified,
+  hasImplementationChanged,
+  hasHighSeverityFieldChanged,
+  syncStatus,
+}: Params): CommonScalingEntry {
   return {
     id: project.id,
-    name: project.display.name,
-    href: `/scaling/projects/${project.display.slug}`,
-    shortName: project.display.shortName,
     slug: project.display.slug,
-    category: project.display.category,
-    isOther: !!project.display.isOther,
-    isVerified,
-    underReviewStatus: getUnderReviewStatus({
-      isUnderReview: isAnySectionUnderReview(project),
-      hasImplementationChanged: params.hasImplementationChanged,
-      hasHighSeverityFieldChanged: params.hasHighSeverityFieldChanged,
-    }),
-    isArchived: !!project.isArchived,
-    isUpcoming: !!project.isUpcoming,
-    warning: project.display.warning,
-    headerWarning: project.display.headerWarning,
-    redWarning: project.display.redWarning,
-    purposes: project.display.purposes,
-    badges:
-      project.badges?.map((badge) => ({
-        badge,
-        kind: badges[badge].type,
-      })) ?? [],
-    type: project.type,
-    provider: project.display.provider,
-    hostChain: project.type === 'layer2' ? undefined : getHostChain(project),
-    stage: project.stage ?? ({ stage: 'NotApplicable' } satisfies StageConfig),
+    name: project.display.name,
+    nameSecondLine:
+      project.type === 'layer2' ? undefined : `L3 on ${getHostChain(project)}`,
+    shortName: project.display.shortName,
+    href: `/scaling/projects/${project.display.slug}`,
+    statuses: {
+      yellowWarning: project.display.headerWarning,
+      redWarning: project.display.redWarning,
+      verificationWarning: !isVerified,
+      underReview: getUnderReviewStatus({
+        isUnderReview: isAnySectionUnderReview(project),
+        hasImplementationChanged,
+        hasHighSeverityFieldChanged,
+      }),
+      syncStatusInfo:
+        syncStatus?.isSynced === false
+          ? `The data for this item is not synced since ${formatTimestamp(
+              syncStatus.syncedUntil,
+              {
+                mode: 'datetime',
+                longMonthName: true,
+              },
+            )}.`
+          : undefined,
+    },
+    tab:
+      env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.display.isOther
+        ? 'Others'
+        : project.display.category.includes('Rollup')
+          ? 'Rollups'
+          : 'ValidiumsAndOptimiums',
+    stageOrder: getStageOrder(project.stage),
     filterable: {
       isRollup: project.display.category.includes('Rollup'),
       type: project.display.category,
@@ -138,7 +100,17 @@ export function getCommonScalingEntry(
   }
 }
 
-function getStage(config: StageConfig | undefined) {
+function getStageOrder(stage: StageConfig | undefined): number {
+  if (stage?.stage === 'Stage 2' || stage?.stage === 'Stage 1') {
+    return 2
+  }
+  if (stage?.stage === 'Stage 0') {
+    return 1
+  }
+  return 0
+}
+
+export function getStage(config: StageConfig | undefined) {
   if (!config || config.stage === 'NotApplicable') {
     return 'Not applicable'
   }

@@ -72,7 +72,6 @@ export function DaProjectStats({ project }: Props) {
         />
       )}
       <ProjectStat
-        // className={cn(!project.header.numberOfOperators && 'md:col-span-2')}
         title="Used by"
         value={
           <ProjectsUsedIn

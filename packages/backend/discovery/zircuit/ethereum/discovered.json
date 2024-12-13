@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 21366345,
+  "blockNumber": 21388259,
   "configHash": "0x0698c10cff4e338a0af49513f3885568e3e5af6fd467ba45985135c7f5162b19",
   "contracts": [
     {
@@ -59,19 +59,19 @@
           "maxAmountTotal": 0
         },
         "ethThrottleWithdrawals": {
-          "maxAmountPerPeriod": "1000000000000000000000",
+          "maxAmountPerPeriod": 0,
           "periodLength": 3600,
           "maxAmountTotal": 0
         },
         "getEthThrottleDepositsCredits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "getEthThrottleWithdrawalsCredits": "1000000000000000000000",
+        "getEthThrottleWithdrawalsCredits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "guardian": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "l2Oracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 21366315,
+          "prevBlockNum": 21387958,
           "prevTxCount": 1
         },
         "paused": false,
@@ -113,7 +113,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634866",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635008",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -163,7 +163,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -521,14 +521,14 @@
         "challenger": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "deletedOutputs": [],
-        "FINALIZATION_PERIOD_SECONDS": 18000,
-        "finalizationPeriodSeconds": 18000,
+        "FINALIZATION_PERIOD_SECONDS": 14400,
+        "finalizationPeriodSeconds": 14400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6913103,
-        "latestOutputIndex": 18876,
-        "nextBlockNumber": 6913104,
-        "nextOutputIndex": 18877,
+        "latestBlockNumber": 7045182,
+        "latestOutputIndex": 19302,
+        "nextBlockNumber": 7045183,
+        "nextOutputIndex": 19303,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -626,7 +626,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

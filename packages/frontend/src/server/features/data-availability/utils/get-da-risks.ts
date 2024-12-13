@@ -42,6 +42,7 @@ export function getDaLayerRisks(
 
 export function getDaBridgeRisks(daBridge: Bridge) {
   return {
+    isNoBridge: daBridge.type === 'NoBridge',
     relayerFailure: daBridge.risks.relayerFailure,
     upgradeability: daBridge.risks.upgradeability,
     committeeSecurity: daBridge.risks.committeeSecurity,

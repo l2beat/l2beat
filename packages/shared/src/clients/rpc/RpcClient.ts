@@ -30,7 +30,7 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
 }
 
-export class RpcClient2 extends ClientCore implements BlockClient {
+export class RpcClient extends ClientCore implements BlockClient {
   constructor(private readonly $: Dependencies) {
     super($)
   }

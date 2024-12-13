@@ -1,13 +1,13 @@
-import { type ScalingProjectRiskViewEntry } from '@l2beat/config'
+import { type ValueWithSentiment } from '@l2beat/shared-pure'
 
 export function getDestination(
   destinations: string[],
-): ScalingProjectRiskViewEntry {
+): ValueWithSentiment<string> {
   if (destinations.length === 0) {
     throw new Error('Invalid destination')
   }
   if (destinations.length === 1) {
-    return { value: destinations[0]!, description: '', sentiment: 'neutral' }
+    return { value: destinations[0]!, sentiment: 'neutral' }
   }
 
   return {

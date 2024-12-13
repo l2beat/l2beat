@@ -2,17 +2,20 @@ import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import {
+  type ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../tvl/utils/get-latest-tvl-usd'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
 
 export type ScalingFinalityEntries = Awaited<
@@ -37,11 +40,13 @@ export async function getScalingFinalityEntries() {
         finality[project.id.toString()],
         isVerified,
         projectsChangeReport,
+        tvl,
       )
     })
     .filter(notUndefined)
+    .sort(compareStageAndTvl)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(entries)
 }
 
 function getFinalityData(
@@ -99,8 +104,10 @@ function getScalingFinalityEntry(
   finalityProjectData: FinalityProjectData | undefined,
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
+  tvl: ProjectsLatestTvlUsd,
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
+  const data = getFinalityData(finalityProjectData, project)
   return {
     entryType: 'finality' as const,
     ...getCommonScalingEntry({
@@ -111,9 +118,13 @@ function getScalingFinalityEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: data?.syncStatus,
     }),
+    category: project.display.category,
+    provider: project.display.provider,
     dataAvailabilityMode: dataAvailability?.mode,
-    data: getFinalityData(finalityProjectData, project),
+    data,
     finalizationPeriod: project.display.finality?.finalizationPeriod,
+    tvlOrder: tvl[project.id] ?? 0,
   }
 }
