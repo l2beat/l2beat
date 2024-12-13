@@ -154,7 +154,7 @@ function getEthereumEntry(
   return {
     slug: ethereumDaLayer.display.slug,
     name: ethereumDaLayer.display.name,
-    nameSecondLine: ethereumDaLayer.kind,
+    nameSecondLine: kindToType(ethereumDaLayer.kind),
     href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
     usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),

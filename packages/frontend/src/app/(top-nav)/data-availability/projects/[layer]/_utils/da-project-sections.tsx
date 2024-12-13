@@ -1,4 +1,12 @@
-import { type DaBridge, type DaLayer } from '@l2beat/config'
+import {
+  type BlockchainDaLayer,
+  type DacBridge,
+  type DacDaLayer,
+  type EnshrinedBridge,
+  type EthereumDaLayer,
+  type NoDaBridge,
+  type OnChainDaBridge,
+} from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
   type ManuallyVerifiedContracts,
@@ -13,67 +21,56 @@ import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-ris
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getPermissionedEntities } from './get-permissioned-entities'
-interface Params {
-  daLayer: DaLayer
-  daBridge: DaBridge
+
+type RegularDetailsParams = {
+  daLayer: BlockchainDaLayer | DacDaLayer
+  daBridge: OnChainDaBridge | DacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   projectsChangeReport: ProjectsChangeReport
-  grissiniValues: RosetteValue[]
+  evaluatedGrissiniValues: RosetteValue[]
 }
 
-export function getProjectDetails(params: Params) {
-  const isEthereum = params.daLayer.id === 'ethereum'
-  if (isEthereum) {
-    return getEthereumDetails(params)
-  }
-  return getRegularDetails(params)
-}
-
-function getRegularDetails({
+export function getRegularDaProjectSections({
   daLayer,
   daBridge,
   isVerified,
   contractsVerificationStatuses,
   manuallyVerifiedContracts,
   projectsChangeReport,
-  grissiniValues,
-}: Params) {
+  evaluatedGrissiniValues,
+}: RegularDetailsParams) {
   const relatedScalingProject =
     daBridge.type === 'DAC' && daBridge.usedIn.length === 1
       ? daBridge.usedIn[0]
       : undefined
 
-  const permissionsSection =
-    daBridge.type !== 'Enshrined' &&
-    getMultichainPermissionsSection(
-      {
-        id: daLayer.id,
-        bridge: daBridge,
-        isUnderReview: !!daLayer.isUnderReview,
-        permissions: daBridge.permissions,
-        dacUsedIn: relatedScalingProject,
-      },
-      contractsVerificationStatuses,
-      manuallyVerifiedContracts,
-    )
+  const permissionsSection = getMultichainPermissionsSection(
+    {
+      id: daLayer.id,
+      bridge: daBridge,
+      isUnderReview: !!daLayer.isUnderReview,
+      permissions: daBridge.permissions,
+      dacUsedIn: relatedScalingProject,
+    },
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+  )
 
-  const contractsSection =
-    daBridge.type !== 'Enshrined' &&
-    getMultiChainContractsSection(
-      {
-        id: daBridge.id,
-        isVerified,
-        slug: daBridge.display.slug,
-        contracts: daBridge.contracts,
-        isUnderReview: daLayer.isUnderReview,
-        dacUsedIn: relatedScalingProject,
-      },
-      contractsVerificationStatuses,
-      manuallyVerifiedContracts,
-      projectsChangeReport,
-    )
+  const contractsSection = getMultiChainContractsSection(
+    {
+      id: daBridge.id,
+      isVerified,
+      slug: daBridge.display.slug,
+      contracts: daBridge.contracts,
+      isUnderReview: daLayer.isUnderReview,
+      dacUsedIn: relatedScalingProject,
+    },
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+    projectsChangeReport,
+  )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
@@ -95,7 +92,7 @@ function getRegularDetails({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues,
+      grissiniValues: evaluatedGrissiniValues,
     },
   })
 
@@ -223,12 +220,19 @@ function getRegularDetails({
   return items
 }
 
-function getEthereumDetails({
+type EthereumDetailsParams = {
+  daLayer: EthereumDaLayer
+  daBridge: EnshrinedBridge
+  isVerified: boolean
+  evaluatedGrissiniValues: RosetteValue[]
+}
+
+export function getEthereumDaProjectSections({
   daLayer,
   daBridge,
   isVerified,
-  grissiniValues,
-}: Params) {
+  evaluatedGrissiniValues,
+}: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
     daBridge,
@@ -258,7 +262,7 @@ function getEthereumDetails({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues,
+      grissiniValues: evaluatedGrissiniValues,
       description: daLayer.display.description,
     },
   })

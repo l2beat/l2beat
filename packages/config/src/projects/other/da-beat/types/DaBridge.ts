@@ -40,6 +40,7 @@ export type NoDaBridge = CommonDaBridge & {
 export type EnshrinedBridge = CommonDaBridge & {
   type: 'Enshrined'
   risks: EthereumDaBridgeRisks
+  callout: string
 }
 
 export type OnChainDaBridge = CommonDaBridge & {
