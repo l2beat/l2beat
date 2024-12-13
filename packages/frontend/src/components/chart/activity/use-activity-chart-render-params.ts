@@ -71,7 +71,7 @@ export function useActivityChartRenderParams({
             {
               fill: 'signature gradient',
               line: 'signature gradient',
-              point: 'redCircle',
+              point: 'pinkCircle',
             },
             {
               fill: 'blue gradient',

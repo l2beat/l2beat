@@ -33,7 +33,7 @@ export function ActivityChartHover(props: Props) {
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
-          <div className="relative inline-block size-3 rounded-full bg-red-300"></div>
+          <div className="relative inline-block size-3 rounded-full bg-n-pink-400"></div>
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
@@ -69,7 +69,7 @@ export function ActivityChartHover(props: Props) {
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
-          <div className="relative inline-block size-3 rounded bg-red-300"></div>
+          <div className="relative inline-block size-3 rounded-full bg-n-pink-400"></div>
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">

@@ -32,7 +32,7 @@ export function RecategorizedTvlChartHover(props: Props) {
     },
   ]
   return (
-    <div className="flex w-56 flex-col gap-1 xs:!w-64">
+    <div className="flex w-[158px] flex-col gap-1 xs:!w-48">
       <div>
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',
@@ -52,19 +52,16 @@ export function RecategorizedTvlChartHover(props: Props) {
         {values.map(
           (v, i) =>
             v.value > 0 && (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-x-2"
-              >
-                <span className="flex items-center gap-1">
+              <div key={i} className="flex items-start justify-between gap-x-1">
+                <span className="flex items-start gap-1">
                   <div
                     role="img"
                     aria-label="Square icon"
-                    className={cn('size-3 rounded', v.className)}
+                    className={cn('mt-0.5 size-3 rounded', v.className)}
                   ></div>
-                  <span>{v.title}</span>
+                  <span className="max-w-24">{v.title}</span>
                 </span>
-                <span className="font-medium">
+                <span className="whitespace-nowrap font-medium">
                   {formatCurrency(v.value / 100, 'usd')}
                 </span>
               </div>
