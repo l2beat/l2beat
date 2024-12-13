@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6b4f83f590589a8fad6455c56a077d49c47f8058
+Generated with discovered.json: 0x6c31d7012ac6a6f2e93565687c3188ce01664396
 
-# Diff at Wed, 11 Dec 2024 09:16:43 GMT:
+# Diff at Thu, 12 Dec 2024 15:07:33 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@28849b80c374bb8843eff17341701a3084c3bdb9 block: 21357513
-- current block number: 21378313
+- comparing to: main@675c2fed2e6fd64977d53add75705c1380efedb2 block: 21357513
+- current block number: 21357513
 
 ## Description
 
@@ -17,52 +17,44 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21357513 (main branch discovery), not current.
 
 ```diff
+-   Status: DELETED
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d)
+    +++ description: None
+```
+
+```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
-    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the on-chain verifier contract.
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
       description:
-+        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the on-chain verifier contract."
++        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
       issuedPermissions:
 +        [{"permission":"configure","target":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","via":[]},{"permission":"configure","target":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","via":[]}]
     }
 ```
 
 ```diff
-    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
-    +++ description: Users can interact with this contract to request proofs on-chain, emitting a RequestCall event for off-chain provers to consume.
-      description:
-+        "Users can interact with this contract to request proofs on-chain, emitting a RequestCall event for off-chain provers to consume."
-    }
-```
-
-```diff
-    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
-    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.
-      values.accessControl:
--        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]},"TIMELOCK_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]},"GUARDIAN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]}}
-      values.admins:
-+        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
-      values.guardians:
-+        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
-      description:
-+        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
-      issuedPermissions:
-+        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
-    }
-```
-
-```diff
-    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+-   Status: DELETED
+    contract SP1Verifier (0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3)
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"can freeze the bridge contract and update the list of authorized relayers."}]
-    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB)
+    +++ description: None
 ```
 
 ```diff
     contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"admin of the contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge."}]
++        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."}]
     }
 ```
 
@@ -70,16 +62,43 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
     contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"Verifier contract for the header range [latestBlock, targetBlock] proof. The proof is generated by an off-chain prover and submitted by a relayer."}]
++        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+    }
+```
+
+Generated with discovered.json: 0x6711f52bb7c3e867fca16392ebea36c7eb4152f6
+
+# Diff at Tue, 10 Dec 2024 10:37:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21357513
+- current block number: 21357513
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21357513 (main branch discovery), not current.
+
+```diff
+    contract nextHeaderVerifier (0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "nextHeaderVerifier"
     }
 ```
 
 ```diff
-    contract HeaderRangeVerifier (0xF33a22dFf8017813b95E5a05c9a97BaFE693001E) {
+    contract headerRangeVerifier (0xF33a22dFf8017813b95E5a05c9a97BaFE693001E) {
     +++ description: None
       name:
 -        ""
-+        "HeaderRangeVerifier"
++        "headerRangeVerifier"
     }
 ```
 

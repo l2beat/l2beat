@@ -4,14 +4,14 @@ import {
   badgesCompareFn,
   layer2s,
 } from '@l2beat/config'
+import { getContractsVerificationStatuses } from '@l2beat/config'
+import { getManuallyVerifiedContracts } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
-import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvlProjectStats } from '../tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
@@ -27,20 +27,18 @@ export type ScalingProjectEntry = Awaited<
 
 export async function getScalingProjectEntry(project: ScalingProject) {
   const [
-    projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     projectsChangeReport,
     header,
   ] = await Promise.all([
-    getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
     getProjectsChangeReport(),
     getHeader(project),
   ])
 
-  const isVerified = !!projectsVerificationStatuses[project.id]
+  const isVerified = getProjectsVerificationStatuses(project)
   const hasImplementationChanged =
     projectsChangeReport.hasImplementationChanged(project.id)
   const hasHighSeverityFieldChanged =
@@ -89,7 +87,8 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   const stackedRosetteValues = project.stackedRiskView
     ? getScalingRosetteValues(project.stackedRiskView)
     : undefined
-  const isHostChainVerified = !!projectsVerificationStatuses[project.hostChain]
+  const isHostChainVerified =
+    hostChain === undefined ? false : getProjectsVerificationStatuses(hostChain)
 
   const projectDetails = await getL3ProjectDetails({
     project,

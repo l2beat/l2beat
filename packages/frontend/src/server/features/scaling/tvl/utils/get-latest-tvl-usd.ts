@@ -18,7 +18,7 @@ export async function getProjectsLatestTvlUsd() {
   return getCachedProjectsLatestTvlUsd()
 }
 
-type ProjectsLatestTvlUsd = Record<ProjectId, number>
+export type ProjectsLatestTvlUsd = Record<ProjectId, number>
 const getCachedProjectsLatestTvlUsd = cache(
   async (): Promise<Record<ProjectId, number>> => {
     const db = getDb()

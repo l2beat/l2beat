@@ -1,11 +1,11 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 21378313,
-  "configHash": "0xde26137d19eb80fe4b3bab42cd138c784c92bd9b039972cdef3daa5cdc374d6f",
+  "blockNumber": 21357513,
+  "configHash": "0x1f0d28610562593c3008b0ab3349ea8f6b5208a46fa9fb5e661c81c21a02dfdb",
   "contracts": [
     {
-      "name": "FunctionVerifier",
+      "name": "nextHeaderVerifier",
       "address": "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
@@ -15,20 +15,8 @@
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
         "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
-      }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
-      "sourceHashes": [
-        "0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"
-      ],
-      "sinceTimestamp": 1726276235,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x4aca240a3e5296e6a565f98dc728c6f48f8de4792a8fa365038c3b86952176f5",
-        "VERSION": "v2.0.0"
-      }
+      },
+      "derivedName": "FunctionVerifier"
     },
     {
       "name": "SuccinctFeeVault",
@@ -49,7 +37,7 @@
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
-      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the on-chain verifier contract.",
+      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -92,38 +80,11 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
-      "name": "SP1Verifier",
-      "address": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
-      "sourceHashes": [
-        "0x0f6f590ac4c542e7f927f783929cb0bf126657b5207b3c796f77ac9d01433fb5"
-      ],
-      "sinceTimestamp": 1729727375,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x090690902a12d1d02c07a1ad25aa76bded5f6499e12a11ba127669501b553998",
-        "VERSION": "v3.0.0"
-      }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
-      "sourceHashes": [
-        "0xabb95b2d66749481071b7a258a3305198760dbaf12d7411cfaba5e4c26cc3a65"
-      ],
-      "sinceTimestamp": 1725472175,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xc865c1b60c05baa44075f37d6d88f2e18c64effb9113740b47cdf12b711b8aa4",
-        "VERSION": "v1.2.0"
-      }
-    },
-    {
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
       ],
-      "description": "Users can interact with this contract to request proofs on-chain, emitting a RequestCall event for off-chain provers to consume.",
       "sinceTimestamp": 1706575991,
       "values": {
         "$immutable": true,
@@ -168,19 +129,6 @@
         "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
-      "issuedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
-          "via": []
-        },
-        {
-          "permission": "configure",
-          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1717615307,
       "values": {
@@ -204,7 +152,20 @@
           ]
         ],
         "$upgradeCount": 3,
-        "admins": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+          },
+          "TIMELOCK_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+          },
+          "GUARDIAN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+          }
+        },
         "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 10000,
@@ -212,13 +173,12 @@
         "frozen": false,
         "gateway_deprecated": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "guardians": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2984400,
+        "latestBlock": 2962800,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 1536,
+        "state_proofNonce": 1512,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -234,13 +194,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "can freeze the bridge contract and update the list of authorized relayers."
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1717613015,
       "values": {
@@ -265,19 +218,6 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "SP1Verifier",
-      "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
-      "sourceHashes": [
-        "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
-      ],
-      "sinceTimestamp": 1722645791,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
-        "VERSION": "v1.1.0"
-      }
-    },
-    {
       "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "template": "GnosisSafe",
@@ -290,7 +230,7 @@
         {
           "permission": "configure",
           "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "admin of the contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge."
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -353,7 +293,7 @@
         {
           "permission": "configure",
           "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "Verifier contract for the header range [latestBlock, targetBlock] proof. The proof is generated by an off-chain prover and submitted by a relayer."
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
         }
       ],
       "sinceTimestamp": 1729727135,
@@ -364,7 +304,7 @@
       }
     },
     {
-      "name": "HeaderRangeVerifier",
+      "name": "headerRangeVerifier",
       "address": "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E",
       "unverified": true,
       "sinceTimestamp": 1717613795,
@@ -386,16 +326,7 @@
     { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
     { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
     { "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D" },
-    {
-      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "can call commitHeaderRange() to commit block ranges."
-        }
-      ]
-    },
+    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
     { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
     { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
@@ -411,15 +342,6 @@
       "function verificationKeyHash() pure returns (bytes32)",
       "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
       "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
-    ],
-    "0x1764C29FBd94865198588f10FC75D4f6636d158d": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x296666e937b270193B960a7cEC526B351F353166": [
       "error FailedToSendNative(uint256 amount)",
@@ -521,28 +443,6 @@
       "function verifier() view returns (address)",
       "function verifyAttestation(uint256 _proofNonce, tuple(uint256 height, bytes32 dataRoot) _tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) _proof) view returns (bool)"
     ],
-    "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
-    "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": [
       "error CallFailed(address callbackAddress, bytes callbackData)",
       "error CallbackFailed(bytes4 callbackSelector, bytes output, bytes context)",
@@ -612,15 +512,6 @@
     "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": [
       "constructor(address _singleton)"
     ],
-    "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
@@ -688,7 +579,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0x430f33e4829711a009d088dfea3bc6b36a3d98ff176efb9a342431b656ccf953",
-    "succinct/SP1SuccinctGateway": "0xf63c74ee0338f890cd25ab792940b98a815868369cedb31129277e1b191b1e4b"
+    "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
+    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
   }
 }

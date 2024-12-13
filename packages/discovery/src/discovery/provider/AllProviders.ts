@@ -1,5 +1,5 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient2, RpcClient } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -11,7 +11,7 @@ import { HighLevelProvider } from './HighLevelProvider'
 import { IProvider, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
 import { DiscoveryCache, ReorgAwareCache } from './ReorgAwareCache'
-import { AllProviderStats, addStats, getZeroStats } from './Stats'
+import { AllProviderStats, ProviderStats } from './Stats'
 import { getBlockNumberTwoProviders } from './getBlockNumberTwoProviders'
 import { MulticallClient } from './multicall/MulticallClient'
 
@@ -49,13 +49,11 @@ export class AllProviders {
       const etherscanClient = getExplorerClient(httpClient, config.explorer)
       let blobClient: BlobClient | undefined
 
-      const ethereumRpc = new RpcClient2({
+      const ethereumRpc = new RpcClient({
         url: config.rpcUrl,
-        retryHandler: RetryHandler.SCRIPT,
-        rateLimiter: new RateLimiter({
-          callsPerMinute: 60,
-        }),
-        chain: 'ethereum',
+        retryStrategy: 'SCRIPT',
+        callsPerMinute: 60,
+        sourceName: 'ethereum',
         logger: Logger.SILENT,
         http: httpClient2,
       })
@@ -65,10 +63,9 @@ export class AllProviders {
           beaconApiUrl: config.beaconApiUrl,
           logger: Logger.SILENT,
           rpcClient: ethereumRpc,
-          retryHandler: RetryHandler.SCRIPT,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: 60,
-          }),
+          retryStrategy: 'SCRIPT',
+          sourceName: 'beaconAPI',
+          callsPerMinute: 60,
           http: httpClient2,
         })
       }
@@ -146,17 +143,20 @@ export class AllProviders {
   }
 
   getStats(chain: string): AllProviderStats {
-    const highLevelCounts = [...this.highLevelProviders.keys()]
+    const highLevelMeasurements = [...this.highLevelProviders.keys()]
       .filter((key) => key.startsWith(chain))
-      .map((key) => this.highLevelProviders.get(key)?.stats ?? getZeroStats())
-      .reduce((a, b) => addStats(a, b), getZeroStats())
+      .map(
+        (key) => this.highLevelProviders.get(key)?.stats ?? new ProviderStats(),
+      )
+      .reduce((a, b) => ProviderStats.add(a, b), new ProviderStats())
 
     return {
-      highLevelCounts: highLevelCounts,
-      cacheCounts:
-        this.batchingAndCachingProviders.get(chain)?.stats ?? getZeroStats(),
-      lowLevelCounts:
-        this.lowLevelProviders.get(chain)?.stats ?? getZeroStats(),
+      highLevelMeasurements,
+      cacheMeasurements:
+        this.batchingAndCachingProviders.get(chain)?.stats ??
+        new ProviderStats(),
+      lowLevelMeasurements:
+        this.lowLevelProviders.get(chain)?.stats ?? new ProviderStats(),
     }
   }
 }

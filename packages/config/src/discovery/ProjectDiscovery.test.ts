@@ -110,6 +110,7 @@ describe(ProjectDiscovery.name, () => {
           address: EthereumAddress(
             '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
           ),
+          isVerified: true,
           description:
             'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
           name: 'L2OutputOracle',
@@ -130,6 +131,7 @@ describe(ProjectDiscovery.name, () => {
           address: EthereumAddress(
             '0x0a2CCDbBD00f61724C485518B940Ab25abe832aA',
           ),
+          isVerified: true,
           description:
             'The MockPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
           name: 'MockPortal',
@@ -150,6 +152,7 @@ describe(ProjectDiscovery.name, () => {
           address: EthereumAddress(
             '0x6Dda3a70B9946fA8C015904d9E2BEC86ecE4E745',
           ),
+          isVerified: true,
           description:
             'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
           name: 'SystemConfig',
@@ -170,6 +173,7 @@ describe(ProjectDiscovery.name, () => {
           address: EthereumAddress(
             '0x17bFa0561d9Ae73e05EcEAEB6663aDc85fA1d3E2',
           ),
+          isVerified: true,
           description:
             "The L1CrossDomainMessenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
           name: 'L1CrossDomainMessenger',
@@ -188,6 +192,7 @@ describe(ProjectDiscovery.name, () => {
           address: EthereumAddress(
             '0xeBec795c9c8bBD61FFc14A6662944748F299cAcf',
           ),
+          isVerified: true,
           description:
             'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
           name: 'L1StandardBridge',

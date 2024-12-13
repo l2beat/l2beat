@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x67450b31edfaadab300dc80a39f10000188eee25
+
+# Diff at Tue, 03 Dec 2024 13:12:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@62514a3ae1e0d198a488f9c1029dd57ab15c60f6 block: 21071443
+- current block number: 21071443
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071443 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x800925fe243370aecbf94f1313ff3237591234ee
 
 # Diff at Tue, 29 Oct 2024 12:59:25 GMT:

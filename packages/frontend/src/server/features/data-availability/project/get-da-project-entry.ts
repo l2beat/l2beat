@@ -1,4 +1,7 @@
-import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
+import { type DaBridge, type DaLayer } from '@l2beat/config'
+import { getContractsVerificationStatuses } from '@l2beat/config'
+import { getManuallyVerifiedContracts } from '@l2beat/config'
+import { getDaBridgeVerification } from '@l2beat/config'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
@@ -8,9 +11,6 @@ import { getProjectDetails } from '~/app/(top-nav)/data-availability/projects/[l
 import { type RosetteValue } from '~/components/rosette/types'
 import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
-import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
@@ -33,14 +33,12 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const [
     economicSecurity,
     tvlPerProject,
-    projectsVerificationStatuses,
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     projectsChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
     getDaProjectsTvl(uniqueProjectsInUse),
-    getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(daLayer),
     getManuallyVerifiedContracts(daLayer),
     getProjectsChangeReport(),
@@ -50,8 +48,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  const isVerified =
-    !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
+  const isVerified = getDaBridgeVerification(daLayer, daBridge)
   const grissiniValues = mapLayerRisksToRosetteValues(
     getDaRisks(daLayer, daBridge, layerTvs, economicSecurity),
   )

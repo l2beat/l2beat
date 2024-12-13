@@ -44,6 +44,7 @@ export const redstoneDABridge = {
           name: 'DA Bridge (EOA)',
           description:
             'This DA bridge address is used to store transaction batch hashes as data availability commitments.',
+          isVerified: true,
         },
         discovery.getContractDetails('ProxyAdmin', {
           description:
