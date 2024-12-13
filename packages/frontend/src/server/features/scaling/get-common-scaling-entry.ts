@@ -4,19 +4,21 @@ import {
   type Layer2,
   type Layer2Provider,
   type Layer3,
-  PROJECT_COUNTDOWNS,
   type ScalingProjectCategory,
   type ScalingProjectPurpose,
   type StageConfig,
   badges,
 } from '@l2beat/config'
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 import { ProjectId } from '@l2beat/shared-pure'
 import {
   type UnderReviewStatus,
   getUnderReviewStatus,
 } from '~/utils/project/under-review'
 import { getCurrentEntry } from '../utils/get-current-entry'
+import {
+  type ProjectCountdownsWithContext,
+  getCountdowns,
+} from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
@@ -33,16 +35,6 @@ export interface FilterableScalingValues {
 
 export interface FilterableScalingEntry {
   filterable: FilterableScalingValues | undefined
-}
-
-export interface ProjectCountdownsWithContext {
-  otherMigration?: {
-    expiresAt: number
-    context: {
-      pretendingToBe: ScalingProjectCategory
-      reasons: ReasonForBeingInOther[]
-    }
-  }
 }
 
 export interface CommonScalingEntry {
@@ -108,8 +100,6 @@ export function getCommonScalingEntry(
   }
 
   const { project, isVerified } = params
-  const otherMigrationContext =
-    PROJECT_COUNTDOWNS.otherMigration.getContext(project)
 
   return {
     id: project.id,
@@ -151,18 +141,7 @@ export function getCommonScalingEntry(
         getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
     },
-    countdowns: {
-      otherMigration: otherMigrationContext
-        ? {
-            expiresAt:
-              PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber() * 1000,
-            context: {
-              pretendingToBe: project.display.category,
-              reasons: otherMigrationContext.reasonsForBeingOther,
-            },
-          }
-        : undefined,
-    },
+    countdowns: getCountdowns(project),
   }
 }
 

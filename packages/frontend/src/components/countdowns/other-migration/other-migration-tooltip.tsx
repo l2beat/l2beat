@@ -1,15 +1,19 @@
 import { StopwatchIcon } from '~/icons/stopwatch'
-import { type ProjectCountdownsWithContext } from '~/server/features/scaling/get-common-scaling-entry'
-import { Callout } from '../callout'
+import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
+import { Callout } from '../../callout'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '../core/tooltip/tooltip'
-import { Countdown } from '../countdown'
+} from '../../core/tooltip/tooltip'
+import { Countdown } from '../../countdown'
 
 type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>
-export function OtherMigrationTooltip({ context, expiresAt }: Props) {
+export function OtherMigrationTooltip({
+  expiresAt,
+  pretendingToBe,
+  reasons,
+}: Props) {
   return (
     <Tooltip>
       <TooltipTrigger>
@@ -26,16 +30,15 @@ export function OtherMigrationTooltip({ context, expiresAt }: Props) {
         </p>
         <p className="text-[13px]">
           Items missing for being considered{' '}
-          {context.pretendingToBe.startsWith('O') ? 'an' : 'a'}{' '}
-          {context.pretendingToBe}:
+          {pretendingToBe.startsWith('O') ? 'an' : 'a'} {pretendingToBe}:
         </p>
-        {context.reasons.map((reason) => {
+        {reasons.map((reason) => {
           return (
             <Callout
               key={reason.shortName}
               color="red"
               body={reason.shortDescription}
-              className="p-2 text-xs font-bold text-red-600"
+              className="px-6 py-3 text-xs font-bold text-red-600"
               icon={undefined}
             />
           )

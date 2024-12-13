@@ -15,6 +15,7 @@ import { getProjectsVerificationStatuses } from '../../verification-status/get-p
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvlProjectStats } from '../tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
+import { getCountdowns } from '../utils/get-countdowns'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
@@ -56,6 +57,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
     header,
+    countdowns: getCountdowns(project),
   }
 
   const rosetteValues = getScalingRosetteValues(project.riskView)

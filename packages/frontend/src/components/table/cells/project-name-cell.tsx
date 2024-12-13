@@ -3,13 +3,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/other-migration-tooltip'
 import { Markdown } from '~/components/markdown/markdown'
-import { OtherMigrationTooltip } from '~/components/other-migration/other-migration-tooltip'
 import { env } from '~/env'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
-import { type ProjectCountdownsWithContext } from '~/server/features/scaling/get-common-scaling-entry'
+import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 import { type SyncStatus } from '~/types/sync-status'
 import {
   type UnderReviewStatus,

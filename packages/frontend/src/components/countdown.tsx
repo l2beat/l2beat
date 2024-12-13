@@ -1,25 +1,36 @@
 'use client'
+import { UnixTime } from '@l2beat/shared-pure'
 import { memo, useState } from 'react'
 import { useEffect } from 'react'
 import { cn } from '~/utils/cn'
 
-export function Countdown({
-  expiresAt,
-  size,
-}: { expiresAt: number; size?: 'md' | 'sm' }) {
-  const [timeLeft, setTimeLeft] = useState(expiresAt - Date.now())
+interface Props {
+  expiresAt: number
+  size?: 'md' | 'sm'
+  className?: string
+}
+
+export function Countdown({ expiresAt, size = 'md', className }: Props) {
+  const [secondsLeft, setSecondsLeft] = useState(
+    expiresAt - UnixTime.now().toNumber(),
+  )
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft((timeLeft) => timeLeft - 1000)
+      setSecondsLeft((timeLeft) => timeLeft - 1)
     }, 1000)
     return () => clearInterval(interval)
   }, [expiresAt])
 
-  const { months, days, hours, minutes, seconds } = getTimeParts(timeLeft)
+  const { months, days, hours, minutes, seconds } = getTimeParts(secondsLeft)
 
   return (
-    <div className="flex w-max gap-x-1 rounded-lg border border-divider bg-surface-secondary p-2">
+    <div
+      className={cn(
+        'flex w-max gap-x-1 rounded-lg border border-divider bg-surface-secondary p-2',
+        className,
+      )}
+    >
       {months > 0 && (
         <MemoizedTimePart suffix="mo" size={size}>
           {months}
@@ -34,13 +45,18 @@ export function Countdown({
       <MemoizedTimePart suffix="m" size={size}>
         {minutes}
       </MemoizedTimePart>
-      <MemoizedTimePart
-        suffix="s"
-        size={size}
-        className={cn(size === 'md' && 'w-[67px]', size === 'sm' && 'w-[54px]')}
-      >
-        {seconds}
-      </MemoizedTimePart>
+      {months === 0 && (
+        <MemoizedTimePart
+          suffix="s"
+          size={size}
+          className={cn(
+            size === 'md' && 'w-[67px]',
+            size === 'sm' && 'w-[54px]',
+          )}
+        >
+          {seconds}
+        </MemoizedTimePart>
+      )}
     </div>
   )
 }
@@ -60,7 +76,7 @@ function TimePart({
   return (
     <div
       className={cn(
-        'rounded bg-brand px-3 py-2 text-center text-[28px] font-bold text-primary-invert',
+        'rounded bg-brand px-3 py-2 text-center font-bold text-primary-invert',
         size === 'md' && 'text-[28px]',
         size === 'sm' && 'text-[18px]',
         className,
@@ -69,9 +85,9 @@ function TimePart({
       <span>{children}</span>
       <span
         className={cn(
-          'ml-0.5 leading-none',
-          size === 'md' && 'text-lg',
-          size === 'sm' && 'text-xs',
+          'ml-0.5',
+          size === 'md' && 'text-lg leading-none',
+          size === 'sm' && 'text-xs leading-none',
         )}
       >
         {suffix}
@@ -81,14 +97,10 @@ function TimePart({
 }
 
 function getTimeParts(timeLeft: number) {
-  const months = Math.floor(timeLeft / (1000 * 60 * 60 * 24 * 30))
-  const days = Math.floor(
-    (timeLeft % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24),
-  )
-  const hours = Math.floor(
-    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-  )
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))
-  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000)
+  const months = Math.floor(timeLeft / (60 * 60 * 24 * 30))
+  const days = Math.floor((timeLeft % (60 * 60 * 24 * 30)) / (60 * 60 * 24))
+  const hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60))
+  const minutes = Math.floor((timeLeft % (60 * 60)) / 60)
+  const seconds = Math.floor(timeLeft % 60)
   return { months, days, hours, minutes, seconds }
 }
