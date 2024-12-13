@@ -107,6 +107,7 @@
   "fuse": true,
   "galxegravity": true,
   "galxegravity-dac-layer-galxegravity-dac-bridge": true,
+  "geist": true,
   "gluon": true,
   "gmnetwork": true,
   "gmnetwork-da-gmnetworkDABridge": true,

@@ -15,6 +15,7 @@ import { dodochain } from './dodochain'
 import { donatuz } from './donatuz'
 import { educhain } from './educhain'
 import { fiefdom } from './fiefdom'
+import { geist } from './geist'
 import { ham } from './ham'
 import { hook } from './hook'
 import { inevm } from './inevm'
@@ -65,6 +66,7 @@ export const layer3s: Layer3[] = [
   donatuz,
   educhain,
   fiefdom,
+  geist,
   inevm,
   ham,
   hook,
