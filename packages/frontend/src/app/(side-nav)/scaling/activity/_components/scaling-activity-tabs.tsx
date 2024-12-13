@@ -1,25 +1,33 @@
 'use client'
+import { type Milestone } from '@l2beat/config'
 import { CountBadge } from '~/components/badge/count-badge'
+import { ActivityChart } from '~/components/chart/activity/activity-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { MainPageCard } from '~/components/main-page-card'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { env } from '~/env'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
-type Props = TabbedScalingEntries<ScalingActivityEntry>
+type Props = TabbedScalingEntries<ScalingActivityEntry> & {
+  milestones: Milestone[]
+}
 
-export function ScalingActivityTables({
+export function ScalingActivityTabs({
   rollups,
   validiumsAndOptimiums,
   others,
+  milestones,
 }: Props) {
+  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
   const includeFilters = useScalingFilter()
 
   const filteredEntries = {
@@ -63,11 +71,24 @@ export function ScalingActivityTables({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            {useOthers && (
+              <MainPageCard className="p-0">
+                <ActivityChart milestones={milestones} entries={rollups} />
+              </MainPageCard>
+            )}
             <ScalingActivityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiums-and-optimiums">
+            {useOthers && (
+              <MainPageCard className="p-0">
+                <ActivityChart
+                  milestones={milestones}
+                  entries={validiumsAndOptimiums}
+                />
+              </MainPageCard>
+            )}
             <ScalingActivityTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -76,6 +97,14 @@ export function ScalingActivityTables({
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
+              {useOthers && (
+                <MainPageCard className="p-0">
+                  <ActivityChart
+                    milestones={milestones}
+                    entries={others ?? []}
+                  />
+                </MainPageCard>
+              )}
               <ScalingActivityTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>
