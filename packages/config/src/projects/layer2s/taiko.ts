@@ -12,7 +12,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
