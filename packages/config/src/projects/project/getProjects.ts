@@ -14,9 +14,14 @@ export function getProjects(): Project[] {
     projects.push({
       id: p.id,
       slug: p.display.slug,
-      name: p.display.name,
       addedAt: p.createdAt,
       // data
+      title: {
+        name: p.display.name,
+        shortName: p.display.shortName,
+        yellowWarning: p.display.headerWarning,
+        redWarning: p.display.redWarning,
+      },
       proofVerification: p.stateValidation?.proofVerification,
       scalingRisks: {
         self: p.riskView,
@@ -37,9 +42,14 @@ export function getProjects(): Project[] {
     projects.push({
       id: p.id,
       slug: p.display.slug,
-      name: p.display.name,
       addedAt: p.createdAt,
       // data
+      title: {
+        name: p.display.name,
+        shortName: p.display.shortName,
+        yellowWarning: p.display.headerWarning,
+        redWarning: p.display.redWarning,
+      },
       proofVerification: p.stateValidation?.proofVerification,
       scalingRisks: {
         self: p.riskView,
@@ -60,8 +70,14 @@ export function getProjects(): Project[] {
     projects.push({
       id: p.id,
       slug: p.display.slug,
-      name: p.display.name,
       addedAt: p.createdAt,
+      // data
+      title: {
+        name: p.display.name,
+        shortName: p.display.shortName,
+        yellowWarning: p.display.warning,
+        redWarning: undefined,
+      },
       // tags
       isBridge: true,
       isArchived: p.isArchived ? true : undefined,
@@ -74,9 +90,14 @@ export function getProjects(): Project[] {
     projects.push({
       id: ProjectId(`${p.id}-da-layer`),
       slug: p.display.slug,
-      name: p.display.name,
       addedAt: UnixTime.ZERO,
       // data
+      title: {
+        name: p.display.name,
+        shortName: undefined,
+        yellowWarning: undefined,
+        redWarning: undefined,
+      },
       daBridges: p.bridges,
       // tags
       isDaLayer: true,

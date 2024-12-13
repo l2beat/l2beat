@@ -2,7 +2,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Project } from './Project'
 import { getProjects } from './getProjects'
 
-type BasicKeys = 'id' | 'slug' | 'name' | 'addedAt'
+type BasicKeys = 'id' | 'slug' | 'addedAt'
 type Key = Exclude<keyof Project, BasicKeys>
 type NonOptionalProject = {
   [K in Key]: Exclude<Project[K], undefined>

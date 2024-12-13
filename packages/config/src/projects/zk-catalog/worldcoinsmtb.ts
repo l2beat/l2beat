@@ -11,11 +11,16 @@ import { PROOFS } from './common/proofSystems'
 export const worldcoinsmtb: Project = {
   id: ProjectId('worldcoinsmtb'),
   slug: 'worldcoin-smtb',
-  name: 'Worldcoin SMTB',
   addedAt: UnixTime.fromDate(new Date('2024-05-23')),
   // tags
   isZkCatalog: true,
   // data
+  title: {
+    name: 'Worldcoin SMTB',
+    shortName: undefined,
+    yellowWarning: undefined,
+    redWarning: undefined,
+  },
   proofVerification: {
     shortDescription:
       'ZK program to add or delete users from the Worldcoin anonymity set.',

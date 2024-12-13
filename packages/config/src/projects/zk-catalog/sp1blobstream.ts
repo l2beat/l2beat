@@ -10,11 +10,16 @@ import { PROOFS } from './common/proofSystems'
 export const sp1blobstream: Project = {
   id: ProjectId('sp1blobstream'),
   slug: 'SP1Blobstream', // TODO: lowercase + redirect
-  name: 'SP1Blobstream',
   addedAt: UnixTime.fromDate(new Date('2024-09-04')),
   // tags
   isZkCatalog: true,
   // data
+  title: {
+    name: 'SP1Blobstream',
+    shortName: undefined,
+    yellowWarning: undefined,
+    redWarning: undefined,
+  },
   proofVerification: {
     shortDescription: 'Celestia ZK light client implementation.',
     aggregation: true,

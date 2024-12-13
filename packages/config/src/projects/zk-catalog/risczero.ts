@@ -10,11 +10,16 @@ import { PROOFS } from './common/proofSystems'
 export const risczero: Project = {
   id: ProjectId('riskzero'),
   slug: 'risczero',
-  name: 'RISC Zero',
   addedAt: UnixTime.fromDate(new Date('2024-07-24')),
   // tags
   isZkCatalog: true,
   // data
+  title: {
+    name: 'RISC Zero',
+    shortName: undefined,
+    yellowWarning: undefined,
+    redWarning: undefined,
+  },
   proofVerification: {
     shortDescription: 'ZK verifier for RISC-V programs.',
     aggregation: true,

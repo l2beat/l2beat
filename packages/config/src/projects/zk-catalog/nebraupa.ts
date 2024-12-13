@@ -10,11 +10,16 @@ import { PROOFS } from './common/proofSystems'
 export const nebraupa: Project = {
   id: ProjectId('nebra-upa'),
   slug: 'nebra-upa',
-  name: 'Nebra UPA',
   addedAt: UnixTime.fromDate(new Date('2024-09-02')),
   // tags
   isZkCatalog: true,
   // data
+  title: {
+    name: 'Nebra UPA',
+    shortName: undefined,
+    yellowWarning: undefined,
+    redWarning: undefined,
+  },
   proofVerification: {
     aggregation: true,
     verifiers: [

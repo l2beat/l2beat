@@ -8,12 +8,12 @@ export const ZK_CATALOG_ASK_FOR_VERIFICATION_LINK =
   'https://l2beat.notion.site/ZK-Catalog-Verification-94e940aa2bff4287bb15a19f66e3cead?pvs=25'
 
 export function getZkCatalogView(
-  projects: ProjectWith<'proofVerification'>[],
+  projects: ProjectWith<'title' | 'proofVerification'>[],
   verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogViewProps {
   return {
     items: projects
-      .sort((a, b) => a.name.localeCompare(b.name))
+      .sort((a, b) => a.title.name.localeCompare(b.title.name))
       .map((project) => {
         const proofVerification = getProofVerification(
           project,
@@ -21,7 +21,7 @@ export function getZkCatalogView(
         )
 
         return {
-          name: project.name,
+          name: project.title.name,
           slug: project.slug,
           trustedSetup: getTrustedSetup(proofVerification.verifiers),
           ...proofVerification,

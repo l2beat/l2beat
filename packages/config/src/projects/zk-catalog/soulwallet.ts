@@ -10,11 +10,16 @@ import { PROOFS } from './common/proofSystems'
 export const soulwallet: Project = {
   id: ProjectId('soulwallet'),
   slug: 'soulwallet',
-  name: 'Soul Wallet',
   addedAt: UnixTime.fromDate(new Date('2024-08-14')),
   // tags
   isZkCatalog: true,
   // data
+  title: {
+    name: 'Soul Wallet',
+    shortName: undefined,
+    yellowWarning: undefined,
+    redWarning: undefined,
+  },
   proofVerification: {
     shortDescription:
       'Smart contract wallet supporting guardians and email recovery with ZK.',

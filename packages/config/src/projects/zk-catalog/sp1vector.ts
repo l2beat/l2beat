@@ -10,11 +10,16 @@ import { PROOFS } from './common/proofSystems'
 export const sp1vector: Project = {
   id: ProjectId('sp1vector'),
   slug: 'SP1Vector', // TODO: lowercase + redirect
-  name: 'SP1Vector',
   addedAt: UnixTime.fromDate(new Date('2024-09-12')),
   // tags
   isZkCatalog: true,
   // data
+  title: {
+    name: 'SP1Vector',
+    shortName: undefined,
+    yellowWarning: undefined,
+    redWarning: undefined,
+  },
   proofVerification: {
     shortDescription: 'Avail ZK light client implementation.',
     aggregation: true,

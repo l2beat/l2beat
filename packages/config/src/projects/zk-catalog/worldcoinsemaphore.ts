@@ -11,11 +11,16 @@ import { PROOFS } from './common/proofSystems'
 export const worldcoinsemaphore: Project = {
   id: ProjectId('worldcoinsemaphore'),
   slug: 'worldcoin-semaphore',
-  name: 'Worldcoin Semaphore',
   addedAt: UnixTime.fromDate(new Date('2024-06-04')),
   // tags
   isZkCatalog: true,
   // data
+  title: {
+    name: 'Worldcoin Semaphore',
+    shortName: undefined,
+    yellowWarning: undefined,
+    redWarning: undefined,
+  },
   proofVerification: {
     shortDescription:
       'Anonymity set inclusion checker for the Worldcoin network.',

@@ -11,11 +11,12 @@ import { ProofVerification } from '../types'
 export interface Project {
   id: ProjectId
   slug: string
-  name: string
   addedAt: UnixTime
   // data
-  proofVerification?: ProofVerification
+  title?: ProjectTitle
+  scalingBasicInfo?: ProjectScalingBasicInfo
   scalingRisks?: ProjectScalingRisks
+  proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
   // tags
   isBridge?: true
@@ -27,6 +28,25 @@ export interface Project {
   isUpcoming?: true
   isUnderReview?: true
   isArchived?: true
+}
+
+export interface ProjectTitle {
+  name: string
+  shortName: string | undefined
+  yellowWarning: string | undefined
+  redWarning: string | undefined
+}
+
+export interface ProjectScalingBasicInfo {
+  type: string
+  /** In the future this will be reflected as `type === 'Other'` */
+  isOther: boolean
+  hostChain: string
+  stack: string
+  raas: string
+  daLayer: string
+  stage: string
+  purposes: string[]
 }
 
 export interface ProjectScalingRisks {

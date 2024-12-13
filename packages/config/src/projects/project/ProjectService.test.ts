@@ -8,7 +8,6 @@ describe(ProjectService.name, () => {
     {
       id: ProjectId('foo'),
       slug: 'foochain',
-      name: 'Foo Chain',
       addedAt: UnixTime.ZERO,
       isLayer2: true,
       isArchived: true,
@@ -16,7 +15,6 @@ describe(ProjectService.name, () => {
     {
       id: ProjectId('bar'),
       slug: 'barnetwork',
-      name: 'Bar Network',
       addedAt: UnixTime.ZERO,
       isLayer2: true,
     },
@@ -31,7 +29,6 @@ describe(ProjectService.name, () => {
     expect(result).toEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
-      name: 'Foo Chain',
       addedAt: UnixTime.ZERO,
     })
   })
@@ -54,7 +51,6 @@ describe(ProjectService.name, () => {
     expect(result).toEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
-      name: 'Foo Chain',
       addedAt: UnixTime.ZERO,
       isLayer2: true,
       isLayer3: undefined,
@@ -72,7 +68,6 @@ describe(ProjectService.name, () => {
       {
         id: ProjectId('foo'),
         slug: 'foochain',
-        name: 'Foo Chain',
         addedAt: UnixTime.ZERO,
         isLayer2: true,
         isLayer3: undefined,
@@ -81,7 +76,6 @@ describe(ProjectService.name, () => {
       {
         id: ProjectId('bar'),
         slug: 'barnetwork',
-        name: 'Bar Network',
         addedAt: UnixTime.ZERO,
         isLayer2: true,
         isLayer3: undefined,
