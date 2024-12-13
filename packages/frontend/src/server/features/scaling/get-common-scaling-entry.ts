@@ -2,11 +2,10 @@ import {
   type BadgeId,
   type Layer2,
   type Layer3,
-  PROJECT_COUNTDOWNS,
   type StageConfig,
   badges,
 } from '@l2beat/config'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -15,7 +14,6 @@ import { getCurrentEntry } from '../utils/get-current-entry'
 import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { isInPast } from '../utils/is-in-past'
 
 export interface FilterableScalingValues {
   isRollup: boolean
@@ -84,9 +82,9 @@ export function getCommonScalingEntry({
       countdowns: getCountdowns(project),
     },
     tab:
-      env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-      !!project.display.reasonsForBeingOther &&
-      isInPast(PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber())
+      featureFlags.showOthers &&
+      featureFlags.othersMigrated &&
+      !!project.display.reasonsForBeingOther
         ? 'Others'
         : project.display.category.includes('Rollup')
           ? 'Rollups'

@@ -4,7 +4,7 @@ import {
   type ScalingProjectDisplay,
 } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
-import { env } from 'process'
+import { featureFlags } from '~/consts/feature-flags'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
@@ -110,7 +110,7 @@ function compareActivityEntry(
   a: ScalingActivityEntry,
   b: ScalingActivityEntry,
 ) {
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+  if (featureFlags.stageSorting) {
     const stageDiff = b.stageOrder - a.stageOrder
     if (stageDiff !== 0) {
       return stageDiff

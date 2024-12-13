@@ -5,12 +5,11 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/other-migration-tooltip'
 import { Markdown } from '~/components/markdown/markdown'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
-import { isInPast } from '~/server/features/utils/is-in-past'
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { NotSyncedIcon } from '../../badge/not-synced-badge'
 import { PrimaryValueCell } from './primary-value-cell'
@@ -70,9 +69,9 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         {project.statuses?.syncStatusInfo && (
           <NotSyncedIcon content={project.statuses.syncStatusInfo} />
         )}
-        {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
+        {featureFlags.showOthers &&
           project.statuses?.countdowns?.otherMigration &&
-          !isInPast(project.statuses.countdowns.otherMigration.expiresAt) && (
+          !featureFlags.othersMigrated && (
             <OtherMigrationTooltip
               {...project.statuses.countdowns.otherMigration}
             />

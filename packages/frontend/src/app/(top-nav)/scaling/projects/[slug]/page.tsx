@@ -6,9 +6,9 @@ import { DesktopProjectNavigation } from '~/components/projects/navigation/deskt
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
+import { featureFlags } from '~/consts/feature-flags'
 import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { isInPast } from '~/server/features/utils/is-in-past'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
@@ -87,9 +87,9 @@ export default async function Page(props: Props) {
             />
           </div>
           <div className="w-full">
-            {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
+            {featureFlags.showOthers &&
               projectEntry.countdowns.otherMigration &&
-              !isInPast(projectEntry.countdowns.otherMigration.expiresAt) && (
+              !featureFlags.othersMigrated && (
                 <OtherMigrationNotice
                   {...projectEntry.countdowns.otherMigration}
                 />
