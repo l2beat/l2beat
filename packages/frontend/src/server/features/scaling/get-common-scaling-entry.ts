@@ -6,13 +6,14 @@ import {
   badges,
   getProjectsVerificationStatuses,
 } from '@l2beat/config'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
+import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
@@ -76,9 +77,12 @@ export function getCommonScalingEntry({
               },
             )}.`
           : undefined,
+      countdowns: getCountdowns(project),
     },
     tab:
-      env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.display.isOther
+      featureFlags.showOthers &&
+      featureFlags.othersMigrated() &&
+      !!project.display.reasonsForBeingOther
         ? 'Others'
         : project.display.category.includes('Rollup')
           ? 'Rollups'

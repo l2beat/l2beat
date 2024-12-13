@@ -150,14 +150,4 @@ describe('layer3s', () => {
       })
     }
   })
-
-  describe('Other category projects have other details', () => {
-    for (const layer3 of layer3s) {
-      if (layer3.display.isOther) {
-        it(layer3.display.name, () => {
-          expect(layer3.display.mainPermissions).not.toEqual(undefined)
-        })
-      }
-    }
-  })
 })

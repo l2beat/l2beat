@@ -1,6 +1,6 @@
 import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
 import { BasicTable, type BasicTableProps, BasicTableRow } from './basic-table'
@@ -10,7 +10,7 @@ interface BasicEntry extends CommonProjectEntry {
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
-  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+  if (!featureFlags.stageSorting) {
     return <BasicTable {...props} />
   }
 

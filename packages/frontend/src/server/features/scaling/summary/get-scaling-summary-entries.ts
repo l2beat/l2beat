@@ -72,6 +72,7 @@ function getScalingSummaryEntry(
     provider: project.display.provider,
     dataAvailability,
     mainPermissions: project.display.mainPermissions,
+    reasonsForBeingOther: project.display.reasonsForBeingOther,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,

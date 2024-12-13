@@ -1,4 +1,4 @@
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { compareTvl } from '../tvl/utils/compare-tvl'
 
 interface StageTvlComparable {
@@ -11,7 +11,7 @@ export function compareStageAndTvl(
   a: StageTvlComparable,
   b: StageTvlComparable,
 ) {
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+  if (featureFlags.stageSorting) {
     const stageDiff = b.stageOrder - a.stageOrder
     if (stageDiff !== 0) {
       return stageDiff
