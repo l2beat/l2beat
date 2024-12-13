@@ -4,9 +4,12 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { Markdown } from '~/components/markdown/markdown'
+import { OtherMigrationTooltip } from '~/components/other-migration/other-migration-tooltip'
+import { env } from '~/env'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
+import { type ProjectCountdownsWithContext } from '~/server/features/scaling/get-common-scaling-entry'
 import { type SyncStatus } from '~/types/sync-status'
 import {
   type UnderReviewStatus,
@@ -25,6 +28,7 @@ export interface ProjectCellProps {
     underReviewStatus?: UnderReviewStatus
     data?: { syncStatus?: SyncStatus }
     hostChain?: string
+    countdowns?: ProjectCountdownsWithContext
   }
   className?: string
 }
@@ -79,6 +83,10 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         {project.data?.syncStatus?.isSynced === false && (
           <NotSyncedIcon syncedUntil={project.data?.syncStatus.syncedUntil} />
         )}
+        {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
+          project.countdowns?.otherMigration && (
+            <OtherMigrationTooltip {...project.countdowns.otherMigration} />
+          )}
       </div>
       {project.hostChain && (
         <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">

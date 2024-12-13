@@ -4,11 +4,13 @@ import {
   type Layer2,
   type Layer2Provider,
   type Layer3,
+  PROJECT_COUNTDOWNS,
   type ScalingProjectCategory,
   type ScalingProjectPurpose,
   type StageConfig,
   badges,
 } from '@l2beat/config'
+import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 import { ProjectId } from '@l2beat/shared-pure'
 import {
   type UnderReviewStatus,
@@ -33,6 +35,16 @@ export interface FilterableScalingEntry {
   filterable: FilterableScalingValues | undefined
 }
 
+export interface ProjectCountdownsWithContext {
+  otherMigration?: {
+    expiresAt: number
+    context: {
+      pretendingToBe: ScalingProjectCategory
+      reasons: ReasonForBeingInOther[]
+    }
+  }
+}
+
 export interface CommonScalingEntry {
   id: ProjectId
   name: string
@@ -55,6 +67,7 @@ export interface CommonScalingEntry {
   hostChain: string | undefined
   stage: StageConfig
   filterable: FilterableScalingValues | undefined
+  countdowns: ProjectCountdownsWithContext | undefined
 }
 
 interface Params {
@@ -90,10 +103,13 @@ export function getCommonScalingEntry(
       stage: { stage: 'NotApplicable' as const },
       badges: [],
       filterable: undefined,
+      countdowns: undefined,
     }
   }
 
   const { project, isVerified } = params
+  const otherMigrationContext =
+    PROJECT_COUNTDOWNS.otherMigration.getContext(project)
 
   return {
     id: project.id,
@@ -134,6 +150,18 @@ export function getCommonScalingEntry(
       daLayer:
         getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
+    },
+    countdowns: {
+      otherMigration: otherMigrationContext
+        ? {
+            expiresAt:
+              PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber() * 1000,
+            context: {
+              pretendingToBe: project.display.category,
+              reasons: otherMigrationContext.reasonsForBeingOther,
+            },
+          }
+        : undefined,
     },
   }
 }
