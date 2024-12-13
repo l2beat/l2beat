@@ -81,7 +81,7 @@ export function getCommonScalingEntry({
     },
     tab:
       featureFlags.showOthers &&
-      featureFlags.othersMigrated &&
+      featureFlags.othersMigrated() &&
       !!project.display.reasonsForBeingOther
         ? 'Others'
         : project.display.category.includes('Rollup')

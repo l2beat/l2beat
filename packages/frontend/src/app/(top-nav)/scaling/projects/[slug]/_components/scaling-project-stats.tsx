@@ -26,7 +26,7 @@ interface Props {
 export function ScalingProjectStats({ project, className }: Props) {
   const isOther =
     featureFlags.showOthers &&
-    featureFlags.othersMigrated &&
+    featureFlags.othersMigrated() &&
     project.header.isOther
   return (
     <div
