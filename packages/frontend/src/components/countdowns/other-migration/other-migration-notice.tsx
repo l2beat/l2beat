@@ -1,18 +1,21 @@
+'use client'
 import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { CloseIcon } from '~/icons/close'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 
 type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>
 export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'mobile'
   return (
-    <div className="mt-10 border-2 border-brand bg-gradient-to-b from-[#EDD6FF] to-[37%] p-8 max-md:border-x-0 md:rounded-lg">
+    <div className="mt-10 border-2 border-brand p-8 max-md:border-x-0 md:rounded-lg">
       <div className="flex flex-wrap items-center justify-center gap-4">
         <h2 className="mr-auto text-2xl font-bold md:text-3xl">
           Recategorisation
         </h2>
-        <Countdown expiresAt={expiresAt} className="max-md:hidden" />
-        <Countdown expiresAt={expiresAt} size="sm" className="md:hidden" />
+        <Countdown expiresAt={expiresAt} size={isMobile ? 'sm' : 'md'} />
       </div>
       <p className="mb-4 mt-6 text-lg font-bold">
         The project will move to Others because:

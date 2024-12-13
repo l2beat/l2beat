@@ -1,7 +1,4 @@
-import { PROJECT_COUNTDOWNS } from '@l2beat/config'
-import { env } from '~/env'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
-import { isInPast } from '~/server/features/utils/is-in-past'
 
 export type TabbedScalingEntries<T extends CommonScalingEntry> = {
   rollups: T[]
@@ -17,10 +14,6 @@ export function groupByTabs<T extends CommonScalingEntry>(
     validiumsAndOptimiums: projects.filter(
       (p) => p.tab === 'ValidiumsAndOptimiums',
     ),
-    others:
-      env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-      isInPast(PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber())
-        ? projects.filter((p) => p.tab === 'Others')
-        : undefined,
+    others: projects.filter((p) => p.tab === 'Others'),
   }
 }

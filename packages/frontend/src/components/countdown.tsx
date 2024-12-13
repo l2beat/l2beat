@@ -1,7 +1,7 @@
 'use client'
 import { UnixTime } from '@l2beat/shared-pure'
 import { memo, useState } from 'react'
-import { useEffect } from 'react'
+import { useInterval } from '~/hooks/use-interval'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -15,14 +15,11 @@ export function Countdown({ expiresAt, size = 'md', className }: Props) {
     expiresAt - UnixTime.now().toNumber(),
   )
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSecondsLeft((timeLeft) => timeLeft - 1)
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [expiresAt])
+  useInterval(() => {
+    setSecondsLeft((timeLeft) => timeLeft - 1)
+  }, 1000)
 
-  const { months, days, hours, minutes, seconds } = getTimeParts(secondsLeft)
+  const { days, hours, minutes, seconds } = getTimeParts(secondsLeft)
 
   return (
     <div
@@ -31,11 +28,6 @@ export function Countdown({ expiresAt, size = 'md', className }: Props) {
         className,
       )}
     >
-      {months > 0 && (
-        <MemoizedTimePart suffix="mo" size={size}>
-          {months}
-        </MemoizedTimePart>
-      )}
       <MemoizedTimePart suffix="d" size={size}>
         {days}
       </MemoizedTimePart>
@@ -45,18 +37,13 @@ export function Countdown({ expiresAt, size = 'md', className }: Props) {
       <MemoizedTimePart suffix="m" size={size}>
         {minutes}
       </MemoizedTimePart>
-      {months === 0 && (
-        <MemoizedTimePart
-          suffix="s"
-          size={size}
-          className={cn(
-            size === 'md' && 'w-[67px]',
-            size === 'sm' && 'w-[54px]',
-          )}
-        >
-          {seconds}
-        </MemoizedTimePart>
-      )}
+      <MemoizedTimePart
+        suffix="s"
+        size={size}
+        className={cn(size === 'md' && 'w-[67px]', size === 'sm' && 'w-[54px]')}
+      >
+        {seconds}
+      </MemoizedTimePart>
     </div>
   )
 }
@@ -97,10 +84,9 @@ function TimePart({
 }
 
 function getTimeParts(timeLeft: number) {
-  const months = Math.floor(timeLeft / (60 * 60 * 24 * 30))
-  const days = Math.floor((timeLeft % (60 * 60 * 24 * 30)) / (60 * 60 * 24))
+  const days = Math.floor(timeLeft / (60 * 60 * 24))
   const hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60))
   const minutes = Math.floor((timeLeft % (60 * 60)) / 60)
   const seconds = Math.floor(timeLeft % 60)
-  return { months, days, hours, minutes, seconds }
+  return { days, hours, minutes, seconds }
 }
