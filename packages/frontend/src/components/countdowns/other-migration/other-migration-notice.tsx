@@ -30,10 +30,12 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
             <Callout
               body={reason.shortDescription}
               color="red"
-              className="p-4 text-lg font-bold text-primary"
-              icon={<CloseIcon className="mt-1 size-5 fill-negative" />}
+              className="px-3 py-2 text-xs font-bold text-primary md:p-4 md:text-lg"
+              icon={
+                <CloseIcon className="mt-[3px] size-3.5 fill-negative md:mt-1 md:size-5" />
+              }
             />
-            <p className="mt-3 gap-1">
+            <p className="mt-3 gap-1 max-md:text-xs">
               <strong>Consequence: </strong>
               {lowercaseFirstLetter(reason.description)}
             </p>
