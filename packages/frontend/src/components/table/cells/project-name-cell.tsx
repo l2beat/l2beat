@@ -86,7 +86,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         )}
         {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
           project.countdowns?.otherMigration &&
-          isInPast(project.countdowns.otherMigration.expiresAt) && (
+          !isInPast(project.countdowns.otherMigration.expiresAt) && (
             <OtherMigrationTooltip {...project.countdowns.otherMigration} />
           )}
       </div>

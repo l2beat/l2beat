@@ -1,3 +1,4 @@
+import { CloseIcon } from '~/icons/close'
 import { StopwatchIcon } from '~/icons/stopwatch'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 import { Callout } from '../../callout'
@@ -39,7 +40,7 @@ export function OtherMigrationTooltip({
               color="red"
               body={reason.shortDescription}
               className="px-6 py-3 text-xs font-bold text-red-600"
-              icon={undefined}
+              icon={<CloseIcon className="mt-1 size-3 fill-red-600" />}
             />
           )
         })}
