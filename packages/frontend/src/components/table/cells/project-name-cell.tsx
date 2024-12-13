@@ -71,7 +71,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         )}
         {featureFlags.showOthers &&
           project.statuses?.countdowns?.otherMigration &&
-          !featureFlags.othersMigrated && (
+          !featureFlags.othersMigrated() && (
             <OtherMigrationTooltip
               {...project.statuses.countdowns.otherMigration}
             />
