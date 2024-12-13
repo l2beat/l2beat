@@ -1,3 +1,230 @@
+Generated with discovered.json: 0xd07657a7efe80de98aacc05d5d6db3594e98803b
+
+# Diff at Fri, 13 Dec 2024 08:32:39 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d0ac5e3d218d468dd76822eb613adee92bda9db4 block: 282642841
+- current block number: 284265708
+
+## Description
+
+New node licences (v9) with a new supply of keys to be minted. Several minor changes in rewards calculation and distribution.
+
+## Watched changes
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: This is the contract where Xai Sentry Keys to run a node are minted.
+      sourceHashes.1:
+-        "0xc408ffd6d9b25f5dccbe9efa0caca71b711c95f903420227c41605fc4672a46c"
++        "0x4452616144970be938dfc9501b0c76d5bcfcc4ed06a15727e6e2eab84eb8cf99"
+      values.$implementation:
+-        "0xE6E5356423516C9b75d4Dfb1fCa3973c5B695be8"
++        "0x14e6e53dc0E4d0d02644a96F4bC1798A7876db49"
+      values.$pastUpgrades.10:
++        ["2024-12-13T01:28:49.000Z","0x2076fd7a582c2de1357c834161c5e856568af154e7101ede7f363eab012df090",["0x14e6e53dc0E4d0d02644a96F4bC1798A7876db49"]]
+      values.$pastUpgrades.9:
++        ["2024-12-10T15:27:38.000Z","0x2b7d573f6a4f5b1d188483697b9767e34ea3e2dcf6e534785bb2b764a4de2428",["0xC6BccA5297Cd4511250E2D3241bEd586631E2aA0"]]
+      values.$upgradeCount:
+-        9
++        11
+      values.maxSupply:
+-        50000
++        5000000
+      values.ADMIN_MINT_ROLE:
++        "0x507caaa5b2a5a027bc340a5334d9220583b7d60d846ee2aabc76e37d69a7253b"
+      values.AIRDROP_ADMIN_ROLE:
++        "0x786fcfa0099ab9aba15d4b2ccc7ffa9994e7c522c9b340b95e584749e47fcfb9"
+      values.esXaiAddress:
++        "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c"
+      values.mintingPaused:
++        true
+      values.refereeAddress:
++        "0xfD41041180571C5D371BEA3D9550E55653671198"
+      values.refereeCalculationsAddress:
++        "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F"
+      values.TRANSFER_ROLE:
++        "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+      values.usdcAddress:
++        "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+      values.xaiAddress:
++        "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
+      derivedName:
+-        "NodeLicense7"
++        "NodeLicense8"
+    }
+```
+
+```diff
+    contract RefereeCalculations (0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x84fc1ee0b022c330db75d04b71a06523524388e6db61a159b2bd3b5d02bccf28"
++        "0xc9c19fb4d016fe3bcc74ab045b2d6a2231e661f4d86cbb0cac0dc5d1301fb49a"
+      values.$implementation:
+-        "0x5A195953555A11d2a4b654DCa3aE4f9f19eBC3E2"
++        "0x1488598b22Cc196Aa547894493BC2313a8A00C1e"
+      values.$pastUpgrades.1:
++        ["2024-12-10T17:38:10.000Z","0x20e602e4c1899b6cb255bb9db60aebb18a0a89f0087ad8ffc50492d6e89302b7",["0x1488598b22Cc196Aa547894493BC2313a8A00C1e"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
+    +++ description: None
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","target":"0xfD41041180571C5D371BEA3D9550E55653671198"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","target":"0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5"}
+      directlyReceivedPermissions.5.target:
+-        "0xfD41041180571C5D371BEA3D9550E55653671198"
++        "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F"
+      directlyReceivedPermissions.4.target:
+-        "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5"
++        "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66"
+      directlyReceivedPermissions.3.target:
+-        "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F"
++        "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97"
+      directlyReceivedPermissions.2.target:
+-        "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66"
++        "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD"
+      directlyReceivedPermissions.1.target:
+-        "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97"
++        "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
+      directlyReceivedPermissions.0.target:
+-        "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD"
++        "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c"
+    }
+```
+
+```diff
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
+    +++ description: The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.
+      sourceHashes.1:
+-        "0x317ab76b0d59c8c31385b5239fb1bdfff324c9629c5e8d74b82808349fbb169a"
++        "0xb1dc1eab10d7816b187decc6aad7585d6483e7e226c2b4a4b8495b34ca1bd22d"
+      values.$implementation:
+-        "0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E"
++        "0xec287a91Ac0b72Ba7f249c08a2c64dA317eF9715"
+      values.$pastUpgrades.2:
++        ["2024-12-13T00:36:48.000Z","0x869e99caece9b22a813fc83475c90e783b6ac2e37aa192780fcfb7491770e79d",["0xec287a91Ac0b72Ba7f249c08a2c64dA317eF9715"]]
+      values.$pastUpgrades.1:
++        ["2024-12-10T15:27:48.000Z","0x719feb67c546cad4f43b5e741590f7b2258e896049163656eccb2f598515adc4",["0x5bfd44421b5E0405F8cfcc17463522AF6b9e1Ab3"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.STAKE_KEYS_ADMIN_ROLE:
++        "0x4744ee11e24f5fc5de82fa6dba03b134899d8fd3405c7e9a26e120c89c8d9c28"
+      derivedName:
+-        "PoolFactory"
++        "PoolFactory2"
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+      sourceHashes.1:
+-        "0x049618a11ae7ca2b4087908a6cb43e2102853e1798710e66a169be6fd6d4ed99"
++        "0xdb8be4e98a5ddd21b5684841ce56badcb95c66fbeda8119acb2f9a5a6f3763bc"
+      values.$implementation:
+-        "0xfCa2657FC4456Ac256A78A31aAB1128F5e1d2D40"
++        "0x1f122B41D6740F5dE2Df93b8b00013e84227955e"
+      values.$pastUpgrades.10:
++        ["2024-12-13T00:36:38.000Z","0x58b76b23b8bb0f3ba0bf4d2807f545b1838c527e3a71d18fe2369ee7bf6c12ca",["0x1f122B41D6740F5dE2Df93b8b00013e84227955e"]]
+      values.$pastUpgrades.9:
++        ["2024-12-10T15:27:05.000Z","0x7de66eae5bdbc8b25d8c61bc496b8022ca928b709de3dd72e7de1951fab33ecd",["0x119B21e962B6C5e57340a3CCeCFC3a90385A70dC"]]
+      values.$upgradeCount:
+-        9
++        11
+      values.maxKeysPerPool:
+-        1000
++        100000
+      values.maxStakeAmountPerLicense:
+-        "20000000000000000000000"
++        "200000000000000000000"
+      derivedName:
+-        "Referee9"
++        "Referee10"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x1F941F7Fb552215af81e6bE87F59578C18783483)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract esXai3 (0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Xai (0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (0x8aFf09e2259cacbF4Fc4e3E53F3bf799EfEEab36)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BucketTracker (0x8D694C40a0AA3c4E729222643eb92EFA6B4F1AF5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FiatTokenV2_2 (0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingPool2 (0xd471C63C24F5e59aFB5Bf67892A6F3B3dB9C495A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BucketTracker (0xDD92680287c3B2CA08Cb31d3ED075485Bfc3F80E)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../BeaconProxy.p.sol                              |  620 +++++
+ .../BucketTracker.sol                              |  623 ++++++
+ .../BeaconProxy.p.sol                              |  620 +++++
+ .../BucketTracker.sol                              |  623 ++++++
+ .../.flat/FiatTokenV2_2/FiatTokenProxy.p.sol       |  417 ++++
+ .../arbitrum/.flat/FiatTokenV2_2/FiatTokenV2_2.sol | 2357 ++++++++++++++++++++
+ .../arbitrum/.flat/GnosisSafeL2/GnosisSafeL2.sol   | 1032 +++++++++
+ .../.flat/GnosisSafeL2/GnosisSafeProxy.p.sol       |   35 +
+ .../xai/arbitrum/.flat/MasterMinter.sol            |  454 ++++
+ .../NodeLicenseRegistry/NodeLicense8.sol}          |  755 +++++--
+ .../PoolFactory/PoolFactory2.sol}                  |  754 +++++--
+ .../RefereeCalculations/RefereeCalculations.sol    |   41 +
+ .../SentryReferee/Referee10.sol}                   |  674 ++++--
+ .../arbitrum/.flat/StakingPool2/BeaconProxy.p.sol  |  620 +++++
+ .../arbitrum/.flat/StakingPool2/StakingPool2.sol   | 1714 ++++++++++++++
+ .../.flat/Xai/TransparentUpgradeableProxy.p.sol    |  695 ++++++
+ .../xai/arbitrum/.flat/Xai/Xai.sol                 | 1664 ++++++++++++++
+ .../.flat/esXai3/TransparentUpgradeableProxy.p.sol |  695 ++++++
+ .../xai/arbitrum/.flat/esXai3/esXai3.sol           | 2324 +++++++++++++++++++
+ 19 files changed, 16140 insertions(+), 577 deletions(-)
+```
+
 Generated with discovered.json: 0x7066c482913892a0d5497dd83af41388af955677
 
 # Diff at Sun, 08 Dec 2024 13:29:13 GMT:

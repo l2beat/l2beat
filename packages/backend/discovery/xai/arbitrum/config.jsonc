@@ -59,7 +59,10 @@
         "getAverageCost",
         "getMintTimestamp",
         "ownerOf",
-        "tokenURI"
+        "tokenURI",
+        "_averageCost",
+        "_mintTimestamps",
+        "ethToXai"
       ],
       "ignoreInWatchMode": ["totalSupply"]
     }
