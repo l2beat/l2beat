@@ -3,6 +3,7 @@ import {
   type Layer3,
   type ScalingProjectDisplay,
 } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { env } from 'process'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -10,7 +11,6 @@ import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,

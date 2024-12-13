@@ -1,10 +1,10 @@
 import { type Layer2 } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
