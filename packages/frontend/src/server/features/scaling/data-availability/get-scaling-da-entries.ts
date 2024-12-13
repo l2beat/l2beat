@@ -1,4 +1,5 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
@@ -6,7 +7,6 @@ import {
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'

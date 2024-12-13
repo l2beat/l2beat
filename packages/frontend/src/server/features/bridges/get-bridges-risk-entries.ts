@@ -4,6 +4,7 @@ import {
   type BridgeRiskView,
   bridges,
 } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { type ValueWithSentiment, notUndefined } from '@l2beat/shared-pure'
 import {
   type ProjectsChangeReport,
@@ -14,7 +15,6 @@ import {
   type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../scaling/tvl/utils/get-latest-tvl-usd'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import {
   type CommonBridgesEntry,
   getCommonBridgesEntry,

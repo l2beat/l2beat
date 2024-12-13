@@ -4,6 +4,7 @@ import {
   type WarningWithSentiment,
   bridges,
 } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { compact } from 'lodash'
 import {
   type ProjectsChangeReport,
@@ -15,7 +16,6 @@ import {
   get7dTokenBreakdown,
 } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvl/utils/get-associated-token-warning'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import {
   type CommonBridgesEntry,
   getCommonBridgesEntry,

@@ -9,13 +9,13 @@ import {
   daLayers,
   ethereumDaLayer,
 } from '@l2beat/config'
+import { getDaBridgeVerification } from '@l2beat/config'
 import { type DaChallengeMechanism } from '@l2beat/config/build/src/projects/other/da-beat/types/DaChallengeMechanism'
 import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import { ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
-import { getDaBridgeVerification } from '../../verification-status/get-projects-verification-statuses'
 import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'

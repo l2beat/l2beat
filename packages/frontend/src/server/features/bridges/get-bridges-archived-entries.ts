@@ -3,10 +3,10 @@ import {
   type BridgeRiskView,
   bridges,
 } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import { get7dTokenBreakdown } from '../scaling/tvl/utils/get-7d-token-breakdown'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import {
   type CommonBridgesEntry,
   getCommonBridgesEntry,

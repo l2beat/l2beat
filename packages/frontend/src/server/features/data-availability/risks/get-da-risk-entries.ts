@@ -7,10 +7,10 @@ import {
   type DacDaLayer,
   daLayers,
 } from '@l2beat/config'
+import { getDaBridgeVerification } from '@l2beat/config'
 import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
-import { getDaBridgeVerification } from '../../verification-status/get-projects-verification-statuses'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import {
   getDaProjectsTvl,

@@ -1,15 +1,10 @@
-import {
-  type Bridge,
-  type DaLayer,
-  type Layer2,
-  type Layer3,
-  type ScalingProjectContract,
-} from '@l2beat/config'
-import { getManuallyVerifiedContracts } from './get-manually-verified-contracts'
+import { ScalingProjectContract } from '../../common'
+import { Bridge, DaLayer, Layer2, Layer3 } from '../../projects'
+import { getManuallyVerifiedContracts } from './getManuallyVerifiedContracts'
 
-type Project = Layer2 | Layer3 | Bridge | DaLayer
-
-export function getContractsVerificationStatuses(project: Project) {
+export function getContractsVerificationStatuses(
+  project: Layer2 | Layer3 | Bridge | DaLayer,
+) {
   const manual = getManuallyVerifiedContracts(project)
 
   const contracts: ScalingProjectContract[] = []
