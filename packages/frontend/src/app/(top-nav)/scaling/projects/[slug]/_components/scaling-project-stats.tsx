@@ -14,10 +14,10 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { isInPast } from '~/server/features/utils/is-in-past'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
-import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 
 interface Props {
   project: ScalingProjectEntry
@@ -27,7 +27,8 @@ interface Props {
 export function ScalingProjectStats({ project, className }: Props) {
   const isOther =
     env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-    PROJECT_COUNTDOWNS.otherMigration.hasExpired() &&
+    project.countdowns.otherMigration &&
+    isInPast(project.countdowns.otherMigration.expiresAt) &&
     project.header.isOther
   return (
     <div

@@ -8,6 +8,7 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/project-details'
 import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { isInPast } from '~/server/features/utils/is-in-past'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
@@ -86,11 +87,13 @@ export default async function Page(props: Props) {
             />
           </div>
           <div className="w-full">
-            {projectEntry.countdowns.otherMigration && (
-              <OtherMigrationNotice
-                {...projectEntry.countdowns.otherMigration}
-              />
-            )}
+            {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
+              projectEntry.countdowns.otherMigration &&
+              !isInPast(projectEntry.countdowns.otherMigration.expiresAt) && (
+                <OtherMigrationNotice
+                  {...projectEntry.countdowns.otherMigration}
+                />
+              )}
             <HighlightableLinkContextProvider>
               <ProjectDetails items={projectEntry.projectDetails} />
             </HighlightableLinkContextProvider>

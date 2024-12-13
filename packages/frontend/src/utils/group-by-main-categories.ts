@@ -1,6 +1,7 @@
 import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/common/projectCountdowns'
 import { partition } from 'lodash'
 import { env } from '~/env'
+import { isInPast } from '~/server/features/utils/is-in-past'
 
 export type CategorisedScalingEntries<
   T extends { category: string | undefined; isOther?: boolean },
@@ -11,7 +12,7 @@ export function groupByMainCategories<
 >(projects: T[]) {
   if (
     env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-    PROJECT_COUNTDOWNS.otherMigration.hasExpired()
+    isInPast(PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber())
   ) {
     const [others, rest] = partition(projects, (project) => project.isOther)
     const [rollups, validiumsAndOptimiums] = partition(

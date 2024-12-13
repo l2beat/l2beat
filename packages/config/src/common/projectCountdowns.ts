@@ -18,8 +18,5 @@ export const PROJECT_COUNTDOWNS = {
         reasonsForBeingOther: project.display.reasonsForBeingOther,
       }
     },
-    hasExpired: function () {
-      return this.expiresAt.lt(UnixTime.now())
-    },
   },
 } as const

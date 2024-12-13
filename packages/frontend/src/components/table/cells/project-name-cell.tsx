@@ -10,6 +10,7 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
+import { isInPast } from '~/server/features/utils/is-in-past'
 import { type SyncStatus } from '~/types/sync-status'
 import {
   type UnderReviewStatus,
@@ -84,7 +85,8 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
           <NotSyncedIcon syncedUntil={project.data?.syncStatus.syncedUntil} />
         )}
         {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-          project.countdowns?.otherMigration && (
+          project.countdowns?.otherMigration &&
+          isInPast(project.countdowns.otherMigration.expiresAt) && (
             <OtherMigrationTooltip {...project.countdowns.otherMigration} />
           )}
       </div>
