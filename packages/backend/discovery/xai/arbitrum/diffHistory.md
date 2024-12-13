@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd07657a7efe80de98aacc05d5d6db3594e98803b
+Generated with discovered.json: 0x0be62eec891ffb84df7cda6fba539641e30639a2
 
-# Diff at Fri, 13 Dec 2024 08:32:39 GMT:
+# Diff at Fri, 13 Dec 2024 09:13:33 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@d0ac5e3d218d468dd76822eb613adee92bda9db4 block: 282642841
-- current block number: 284265708
+- current block number: 284275508
 
 ## Description
 
@@ -160,8 +160,8 @@ New node licences (v9) with a new supply of keys to be minted. Several minor cha
 
 ```diff
 +   Status: CREATED
-    contract esXai3 (0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c)
-    +++ description: None
+    contract esXaiToken (0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c)
+    +++ description: The esXAI token is the native token of the Xai Sentry protocol.
 ```
 
 ```diff
@@ -178,36 +178,14 @@ New node licences (v9) with a new supply of keys to be minted. Several minor cha
 
 ```diff
 +   Status: CREATED
-    contract BucketTracker (0x8D694C40a0AA3c4E729222643eb92EFA6B4F1AF5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract FiatTokenV2_2 (0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract StakingPool2 (0xd471C63C24F5e59aFB5Bf67892A6F3B3dB9C495A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BucketTracker (0xDD92680287c3B2CA08Cb31d3ED075485Bfc3F80E)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../BeaconProxy.p.sol                              |  620 +++++
- .../BucketTracker.sol                              |  623 ++++++
- .../BeaconProxy.p.sol                              |  620 +++++
- .../BucketTracker.sol                              |  623 ++++++
- .../.flat/FiatTokenV2_2/FiatTokenProxy.p.sol       |  417 ++++
+.../.flat/FiatTokenV2_2/FiatTokenProxy.p.sol       |  417 ++++
  .../arbitrum/.flat/FiatTokenV2_2/FiatTokenV2_2.sol | 2357 ++++++++++++++++++++
  .../arbitrum/.flat/GnosisSafeL2/GnosisSafeL2.sol   | 1032 +++++++++
  .../.flat/GnosisSafeL2/GnosisSafeProxy.p.sol       |   35 +
@@ -216,13 +194,11 @@ New node licences (v9) with a new supply of keys to be minted. Several minor cha
  .../PoolFactory/PoolFactory2.sol}                  |  754 +++++--
  .../RefereeCalculations/RefereeCalculations.sol    |   41 +
  .../SentryReferee/Referee10.sol}                   |  674 ++++--
- .../arbitrum/.flat/StakingPool2/BeaconProxy.p.sol  |  620 +++++
- .../arbitrum/.flat/StakingPool2/StakingPool2.sol   | 1714 ++++++++++++++
  .../.flat/Xai/TransparentUpgradeableProxy.p.sol    |  695 ++++++
  .../xai/arbitrum/.flat/Xai/Xai.sol                 | 1664 ++++++++++++++
- .../.flat/esXai3/TransparentUpgradeableProxy.p.sol |  695 ++++++
- .../xai/arbitrum/.flat/esXai3/esXai3.sol           | 2324 +++++++++++++++++++
- 19 files changed, 16140 insertions(+), 577 deletions(-)
+ .../esXaiToken/TransparentUpgradeableProxy.p.sol   |  695 ++++++
+ .../xai/arbitrum/.flat/esXaiToken/esXai3.sol       | 2324 +++++++++++++++++++
+ 13 files changed, 11320 insertions(+), 577 deletions(-)
 ```
 
 Generated with discovered.json: 0x7066c482913892a0d5497dd83af41388af955677

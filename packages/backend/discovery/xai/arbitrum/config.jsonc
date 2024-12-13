@@ -14,8 +14,10 @@
     "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry",
     "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5": "PoolFactory",
     "0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool",
+    "0xd471C63C24F5e59aFB5Bf67892A6F3B3dB9C495A": "StakingPool2",
     "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878": "XaiFundsReiceiverMultisig",
-    "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD": "PoolProxyDeployer"
+    "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD": "PoolProxyDeployer",
+    "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c": "esXaiToken"
   },
   "overrides": {
     "PoolProxyDeployer": {
@@ -62,9 +64,18 @@
         "tokenURI",
         "_averageCost",
         "_mintTimestamps",
-        "ethToXai"
+        "ethToXai",
+        "getWhitelistedAddressAtIndex"
       ],
       "ignoreInWatchMode": ["totalSupply"]
+    },
+    "StakingPool2": {
+      "description": "Staking pool for staking esXAI (and / or Sentry Keys) in pools.",
+      "ignoreMethods": ["keyIdIndex", "socials", "stakedKeysIndices"]
+    },
+    "esXaiToken": {
+      "description": "The esXAI token is the native token of the Xai Sentry protocol.",
+      "ignoreMethods": ["getWhitelistedAddressAtIndex"]
     }
   }
 }
