@@ -24,6 +24,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -92,6 +93,7 @@ export const linea: Layer2 = {
       'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     links: {
       websites: ['https://linea.build/'],
       apps: ['https://bridge.linea.build/'],
