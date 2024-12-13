@@ -1,10 +1,9 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { api } from '~/trpc/server'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
@@ -30,17 +29,13 @@ export async function getScalingTvlEntries() {
   ])
 
   const entries = projects
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-      const latestTvl = tvl.projects[project.id.toString()]
-
-      return getScalingTvlEntry(
+    .map((project) =>
+      getScalingTvlEntry(
         project,
-        isVerified,
-        projectsChangeReport,
-        latestTvl,
-      )
-    })
+        projectsChangeReport.getChanges(project.id),
+        tvl.projects[project.id.toString()],
+      ),
+    )
     .filter((entry) => entry.tvl.data)
     .sort(compareStageAndTvl)
 
@@ -50,23 +45,12 @@ export async function getScalingTvlEntries() {
 export type ScalingTvlEntry = Awaited<ReturnType<typeof getScalingTvlEntry>>
 function getScalingTvlEntry(
   project: Layer2 | Layer3,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
+  changes: ProjectChanges,
   latestTvl: SevenDayTvlBreakdown['projects'][string] | undefined,
 ) {
   return {
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      syncStatus: undefined,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
-    entryType: 'scaling' as const,
     tvl: {
       data: latestTvl && {
         total: latestTvl.total,
