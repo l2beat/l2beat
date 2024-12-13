@@ -1,19 +1,18 @@
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
-import {
-  type Bridge,
-  type DaLayer,
-  type Layer2,
-  type Layer3,
-  getChainNames,
-  getChainNamesForDA,
-  parseManuallyVerifiedContracts,
-} from '@l2beat/config'
 import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
+import { Bridge, DaLayer, Layer2, Layer3 } from '../../projects'
+import { getChainNames, getChainNamesForDA } from '../../utils/chains'
+import { parseManuallyVerifiedContracts } from '../manuallyVerifiedContracts'
 
-type Project = Layer2 | Layer3 | Bridge | DaLayer
+let cache: ManuallyVerifiedContracts | undefined
+export function getManuallyVerifiedContracts(
+  project: Layer2 | Layer3 | Bridge | DaLayer,
+): ManuallyVerifiedContracts {
+  if (cache) {
+    return cache
+  }
 
-export function getManuallyVerifiedContracts(project: Project) {
   const chainNames =
     project.type === 'DaLayer'
       ? getChainNamesForDA(project)
@@ -31,5 +30,6 @@ export function getManuallyVerifiedContracts(project: Project) {
     contracts[chain] = parseManuallyVerifiedContracts(data)
   }
 
+  cache = contracts
   return contracts
 }

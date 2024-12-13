@@ -7,13 +7,13 @@ import {
 import { getLiveness } from './get-liveness'
 import { type LivenessProject } from './types'
 
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
   type ProjectsLatestTvlUsd,

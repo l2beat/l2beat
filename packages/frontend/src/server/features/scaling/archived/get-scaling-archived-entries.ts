@@ -1,11 +1,11 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
