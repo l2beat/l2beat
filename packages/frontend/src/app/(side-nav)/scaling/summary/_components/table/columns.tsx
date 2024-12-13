@@ -155,10 +155,10 @@ export const scalingSummaryOthersColumns = [
       return (
         <div className="flex gap-1">
           {reasons.map((reason) => (
-            <Tooltip key={reason.value}>
+            <Tooltip key={reason.shortName}>
               <TooltipTrigger>
-                <Badge key={reason.value} type="brand" className="uppercase">
-                  {reason.value}
+                <Badge type="brand" className="uppercase">
+                  {reason.shortName}
                 </Badge>
               </TooltipTrigger>
               <TooltipContent>
