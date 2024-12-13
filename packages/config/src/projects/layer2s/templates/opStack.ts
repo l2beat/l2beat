@@ -94,6 +94,7 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
@@ -154,10 +155,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 
 function opStackCommon(
   templateVars: OpStackConfigCommon,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
@@ -205,6 +203,7 @@ function opStackCommon(
   }
 
   return {
+    isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
