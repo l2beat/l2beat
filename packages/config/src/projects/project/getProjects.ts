@@ -17,6 +17,11 @@ export function getProjects(): Project[] {
       addedAt: p.createdAt,
       // data
       proofVerification: p.stateValidation?.proofVerification,
+      scalingRisks: {
+        self: p.riskView,
+        host: undefined,
+        stacked: undefined,
+      },
       // tags
       isScaling: true,
       isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
@@ -35,6 +40,11 @@ export function getProjects(): Project[] {
       addedAt: p.createdAt,
       // data
       proofVerification: p.stateValidation?.proofVerification,
+      scalingRisks: {
+        self: p.riskView,
+        host: layer2s.find((x) => x.id === p.hostChain)?.riskView,
+        stacked: p.stackedRiskView,
+      },
       // tags
       isScaling: true,
       isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,

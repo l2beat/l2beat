@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ScalingProjectRiskView } from '../../common'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -14,6 +15,7 @@ export interface Project {
   addedAt: UnixTime
   // data
   proofVerification?: ProofVerification
+  scalingRisks?: ProjectScalingRisks
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
   // tags
   isBridge?: true
@@ -25,4 +27,10 @@ export interface Project {
   isUpcoming?: true
   isUnderReview?: true
   isArchived?: true
+}
+
+export interface ProjectScalingRisks {
+  self: ScalingProjectRiskView
+  host: ScalingProjectRiskView | undefined
+  stacked: ScalingProjectRiskView | undefined
 }
