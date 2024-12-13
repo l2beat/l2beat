@@ -2,10 +2,9 @@ import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
@@ -24,8 +23,7 @@ export async function getScalingArchivedEntries() {
   const entries = projects.map((project) =>
     getScalingArchivedEntry(
       project,
-      getProjectsVerificationStatuses(project),
-      projectsChangeReport,
+      projectsChangeReport.getChanges(project.id),
       tvl.projects[project.id.toString()],
     ),
   )
@@ -37,22 +35,11 @@ export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>
 
 function getScalingArchivedEntry(
   project: Layer2 | Layer3,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
+  changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
 ) {
   return {
-    entryType: 'archived' as const,
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      syncStatus: undefined,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     category: project.display.category,
     purposes: project.display.purposes,
     provider: project.display.provider,

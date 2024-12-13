@@ -3,14 +3,13 @@ import {
   type Layer3,
   type ScalingProjectDisplay,
 } from '@l2beat/config'
-import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from 'process'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
@@ -20,8 +19,6 @@ import {
   getActivityTable,
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
-
-type ActivityProject = Layer2 | Layer3
 
 export async function getScalingActivityEntries() {
   const projects = getActivityProjects()
@@ -34,20 +31,14 @@ export async function getScalingActivityEntries() {
   assert(ethereumData !== undefined, 'Ethereum data not found')
 
   const entries = projects
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-      const data = activityData[project.id]
-      if (!data) {
-        return undefined
-      }
-      return getScalingProjectActivityEntry(
+    .map((project) =>
+      getScalingProjectActivityEntry(
         project,
-        data,
-        isVerified,
-        projectsChangeReport,
-      )
-    })
-    .filter(notUndefined)
+        projectsChangeReport.getChanges(project.id),
+        activityData[project.id],
+      ),
+    )
+    .filter((entry) => entry !== undefined)
     .concat(
       getEthereumEntry(ethereumData, 'Rollups'),
       getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
@@ -64,22 +55,15 @@ export interface ScalingActivityEntry extends CommonScalingEntry {
 }
 
 function getScalingProjectActivityEntry(
-  project: ActivityProject,
-  data: ActivityProjectTableData,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
-): ScalingActivityEntry {
+  project: Layer2 | Layer3,
+  changes: ProjectChanges,
+  data: ActivityProjectTableData | undefined,
+): ScalingActivityEntry | undefined {
+  if (!data) {
+    return undefined
+  }
   return {
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      syncStatus: data.syncStatus,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncStatus: data.syncStatus }),
     href: `/scaling/projects/${project.display.slug}#activity`,
     dataSource: project.display.activityDataSource,
     data,

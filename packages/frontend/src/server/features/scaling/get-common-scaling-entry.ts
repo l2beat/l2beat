@@ -4,11 +4,13 @@ import {
   type Layer3,
   type StageConfig,
   badges,
+  getProjectsVerificationStatuses,
 } from '@l2beat/config'
 import { env } from '~/env'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
 import { getHostChain } from './utils/get-host-chain'
@@ -38,17 +40,13 @@ export interface CommonScalingEntry extends CommonProjectEntry {
 
 interface Params {
   project: Layer2 | Layer3
-  isVerified: boolean
-  hasImplementationChanged: boolean
-  hasHighSeverityFieldChanged: boolean
+  changes: ProjectChanges | undefined
   syncStatus: SyncStatus | undefined
 }
 
 export function getCommonScalingEntry({
   project,
-  isVerified,
-  hasImplementationChanged,
-  hasHighSeverityFieldChanged,
+  changes,
   syncStatus,
 }: Params): CommonScalingEntry {
   return {
@@ -62,11 +60,11 @@ export function getCommonScalingEntry({
     statuses: {
       yellowWarning: project.display.headerWarning,
       redWarning: project.display.redWarning,
-      verificationWarning: !isVerified,
+      verificationWarning: !getProjectsVerificationStatuses(project),
       underReview: getUnderReviewStatus({
         isUnderReview: isAnySectionUnderReview(project),
-        hasImplementationChanged,
-        hasHighSeverityFieldChanged,
+        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
+        implementationChanged: !!changes?.implementationChanged,
       }),
       syncStatusInfo:
         syncStatus?.isSynced === false

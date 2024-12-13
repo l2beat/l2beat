@@ -207,7 +207,10 @@ describe('discovery config.jsonc', () => {
               for (const [key, value] of Object.entries(
                 override.fields ?? {},
               )) {
-                if (value.handler?.type === 'accessControl') {
+                if (
+                  value.handler?.type === 'accessControl' &&
+                  value.handler.pickRoleMembers === undefined
+                ) {
                   expect(key).toEqual('accessControl')
                 }
               }

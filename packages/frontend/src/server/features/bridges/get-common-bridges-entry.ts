@@ -1,13 +1,12 @@
-import { type Bridge } from '@l2beat/config'
+import { type Bridge, getProjectsVerificationStatuses } from '@l2beat/config'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 
 interface Params {
   bridge: Bridge
-  isVerified: boolean
-  hasImplementationChanged: boolean
-  hasHighSeverityFieldChanged: boolean
+  changes: ProjectChanges
 }
 
 export interface CommonBridgesEntry extends CommonProjectEntry {
@@ -19,9 +18,7 @@ export interface CommonBridgesEntry extends CommonProjectEntry {
 
 export function getCommonBridgesEntry({
   bridge,
-  isVerified,
-  hasImplementationChanged,
-  hasHighSeverityFieldChanged,
+  changes,
 }: Params): CommonBridgesEntry {
   return {
     id: bridge.id,
@@ -36,11 +33,10 @@ export function getCommonBridgesEntry({
     statuses: {
       // TODO: Check if this is correct
       yellowWarning: bridge.display.warning,
-      verificationWarning: !isVerified,
+      verificationWarning: !getProjectsVerificationStatuses(bridge),
       underReview: getUnderReviewStatus({
         isUnderReview: isAnySectionUnderReview(bridge),
-        hasImplementationChanged,
-        hasHighSeverityFieldChanged,
+        ...changes,
       }),
     },
   }

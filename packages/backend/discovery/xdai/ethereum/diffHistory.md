@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x227de913d600b776722a499b77bc8ba64c111766
+
+# Diff at Thu, 12 Dec 2024 17:29:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21322860
+- current block number: 21387924
+
+## Description
+
+Ignored not needed values in config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21322860 (main branch discovery), not current.
+
+```diff
+    contract SDaiForeignBridge (0x166124b75c798Cedf1B43655E9B5284eBd5203DB) {
+    +++ description: None
+      values.getCurrentDay:
+-        20060
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Dai (0x6B175474E89094C44Da98b954EedeAC495271d0F)
+    +++ description: None
+```
+
+```diff
+    contract Comptroller (0xBafE01ff935C7305907c33BF824352eE5979B526) {
+    +++ description: None
+      values.getBlockNumber:
+-        21322860
+    }
+```
+
+```diff
+    contract DaiForeignBridge (0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473) {
+    +++ description: None
+      values.getCurrentDay:
+-        20060
+    }
+```
+
 Generated with discovered.json: 0x7e2a76a2b707f8d16d1b9e334b34309d5e86b767
 
 # Diff at Tue, 03 Dec 2024 15:42:49 GMT:
