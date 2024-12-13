@@ -131,14 +131,15 @@ function getCategory(
   if (p.type === 'bridge') {
     return undefined
   }
-  if (p.display.category.endsWith('Rollup') && !p.display.isOther) {
-    return 'Rollups'
-  } else if (
-    (p.display.category === 'Validium' || p.display.category === 'Optimium') &&
-    !p.display.isOther
-  ) {
-    return 'ValidiumOrOptimiums'
-  } else if (p.display.isOther) {
-    return 'Others'
+
+  switch (true) {
+    case p.display.isOther:
+      return 'Others'
+    case p.display.category.endsWith('Rollup'):
+      return 'Rollups'
+    case p.display.category === 'Validium' || p.display.category === 'Optimium':
+      return 'ValidiumOrOptimiums'
+    default:
+      return undefined
   }
 }
