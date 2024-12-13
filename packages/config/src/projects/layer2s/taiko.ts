@@ -303,8 +303,6 @@ export const taiko: Layer2 = {
       sentiment: 'good',
       value: 'Self propose',
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   stage: getStage(
     {

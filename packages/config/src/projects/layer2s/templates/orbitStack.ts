@@ -628,12 +628,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
       secondLine: formatDelay(challengePeriodSeconds + validatorAfkTimeSeconds),
     },
-    validatedBy:
-      templateVars.nonTemplateRiskView?.validatedBy ??
-      RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
-    destinationToken:
-      templateVars.nonTemplateRiskView?.destinationToken ??
-      RISK_VIEW.NATIVE_AND_CANONICAL(),
   }
 
   const getStackedRisks = () => {
@@ -667,11 +661,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           baseChain.riskView.proposerFailure,
           RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
         ),
-      validatedBy:
-        templateVars.stackedRiskView?.validatedBy ?? riskView.validatedBy,
-      destinationToken:
-        templateVars.stackedRiskView?.destinationToken ??
-        riskView.destinationToken,
     }
   }
 
@@ -992,12 +981,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           challengePeriodSeconds + validatorAfkTimeSeconds,
         ),
       },
-      validatedBy:
-        templateVars.nonTemplateRiskView?.validatedBy ??
-        RISK_VIEW.VALIDATED_BY_ETHEREUM,
-      destinationToken:
-        templateVars.nonTemplateRiskView?.destinationToken ??
-        RISK_VIEW.NATIVE_AND_CANONICAL(),
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
