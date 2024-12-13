@@ -10,8 +10,8 @@
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1",
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
     "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": "BlobstreamMultisig",
-    "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E": "headerRangeVerifier",
-    "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06": "nextHeaderVerifier"
+    "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E": "HeaderRangeVerifier",
+    "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06": "NextHeaderVerifier"
   },
   "overrides": {
     "Blobstream": {

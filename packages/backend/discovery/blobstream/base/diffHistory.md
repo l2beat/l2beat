@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xbfd176257a724ddb061f138b19f5594ca8fd79b3
+Generated with discovered.json: 0xc201c8cb80c651452d751c0205920dd490a5dc81
 
-# Diff at Fri, 13 Dec 2024 10:38:59 GMT:
+# Diff at Fri, 13 Dec 2024 10:43:24 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@afd2cd921fa674c944f000dbbe39e4abac3b7fdd block: 23434494
@@ -35,6 +35,24 @@ discovery. Values are for block 23434494 (main branch discovery), not current.
 +        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
       issuedPermissions:
 +        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6","via":[]}]
+    }
+```
+
+```diff
+    contract NextHeaderVerifier (0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "NextHeaderVerifier"
+    }
+```
+
+```diff
+    contract HeaderRangeVerifier (0xF2415C44F47983F7dD22003B46A034B1F1d04e44) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "HeaderRangeVerifier"
     }
 ```
 

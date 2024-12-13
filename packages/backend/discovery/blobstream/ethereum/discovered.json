@@ -2,10 +2,10 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21357513,
-  "configHash": "0x8e4b370a7ba0626184fe0b3ff23d990c06dfca1d0c2b7b5a2861192782306b64",
+  "configHash": "0xfef1b6fceab3b9ccbd74ffcffbb80c4812f380f7290b173560cb0c2b49940a0e",
   "contracts": [
     {
-      "name": "nextHeaderVerifier",
+      "name": "NextHeaderVerifier",
       "address": "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
@@ -326,7 +326,7 @@
       }
     },
     {
-      "name": "headerRangeVerifier",
+      "name": "HeaderRangeVerifier",
       "address": "0xF33a22dFf8017813b95E5a05c9a97BaFE693001E",
       "unverified": true,
       "sinceTimestamp": 1717613795,

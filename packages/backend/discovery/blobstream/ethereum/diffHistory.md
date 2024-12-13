@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf5e44daa58c327235627eaf47b904d4486c1a56d
+Generated with discovered.json: 0x969c265b6ae8a78a54a0eb37087ca18c56296ff0
 
-# Diff at Fri, 13 Dec 2024 10:38:58 GMT:
+# Diff at Fri, 13 Dec 2024 10:43:23 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@afd2cd921fa674c944f000dbbe39e4abac3b7fdd block: 21357513
@@ -15,6 +15,15 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21357513 (main branch discovery), not current.
+
+```diff
+    contract NextHeaderVerifier (0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06) {
+    +++ description: None
+      name:
+-        "nextHeaderVerifier"
++        "NextHeaderVerifier"
+    }
+```
 
 ```diff
     contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
@@ -35,6 +44,15 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
     +++ description: None
       receivedPermissions:
 +        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"can freeze the bridge contract and update the list of authorized relayers."}]
+    }
+```
+
+```diff
+    contract HeaderRangeVerifier (0xF33a22dFf8017813b95E5a05c9a97BaFE693001E) {
+    +++ description: None
+      name:
+-        "headerRangeVerifier"
++        "HeaderRangeVerifier"
     }
 ```
 
