@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21357513,
-  "configHash": "0x1f0d28610562593c3008b0ab3349ea8f6b5208a46fa9fb5e661c81c21a02dfdb",
+  "configHash": "0x8e4b370a7ba0626184fe0b3ff23d990c06dfca1d0c2b7b5a2861192782306b64",
   "contracts": [
     {
       "name": "nextHeaderVerifier",
@@ -129,6 +129,19 @@
         "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1717615307,
       "values": {
@@ -166,6 +179,7 @@
             "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
           }
         },
+        "admins": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 10000,
@@ -173,6 +187,7 @@
         "frozen": false,
         "gateway_deprecated": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
+        "guardians": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
         "latestBlock": 2962800,
@@ -194,6 +209,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1717613015,
       "values": {
@@ -326,7 +348,16 @@
     { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
     { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
     { "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D" },
-    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
+    {
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "description": "can call commitHeaderRange() to commit block ranges."
+        }
+      ]
+    },
     { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
     { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
@@ -579,7 +610,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
+    "succinct/SP1Blobstream": "0xb0728acddadb17268564989a4ed4c663c6d7ada64298ab276ba96c945c411d7b",
     "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
   }
 }

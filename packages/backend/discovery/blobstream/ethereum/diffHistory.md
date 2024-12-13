@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xf5e44daa58c327235627eaf47b904d4486c1a56d
+
+# Diff at Fri, 13 Dec 2024 10:38:58 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@afd2cd921fa674c944f000dbbe39e4abac3b7fdd block: 21357513
+- current block number: 21357513
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21357513 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.
+      values.admins:
++        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+      values.guardians:
++        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+      description:
++        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"can freeze the bridge contract and update the list of authorized relayers."}]
+    }
+```
+
 Generated with discovered.json: 0x6c31d7012ac6a6f2e93565687c3188ce01664396
 
 # Diff at Thu, 12 Dec 2024 15:07:33 GMT:
