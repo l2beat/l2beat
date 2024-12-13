@@ -25,6 +25,9 @@ type PointShapeDefinition =
 interface PointClassNames {
   circle: PointShapeDefinition
   redCircle: PointShapeDefinition
+  pinkCircle: PointShapeDefinition
+  cyanCircle: PointShapeDefinition
+  yellowCircle: PointShapeDefinition
   blueSquare: PointShapeDefinition
   roundedPurpleSquare: PointShapeDefinition
   roundedBlueSquare: PointShapeDefinition
@@ -44,6 +47,18 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   redCircle: {
     type: 'div',
     className: 'size-2 rounded-full border-2 border-current bg-red-300',
+  },
+  pinkCircle: {
+    type: 'div',
+    className: 'size-2 rounded-full border-2 border-current bg-n-pink-400',
+  },
+  cyanCircle: {
+    type: 'div',
+    className: 'size-2 rounded-full border-2 border-current bg-n-cyan-600',
+  },
+  yellowCircle: {
+    type: 'div',
+    className: 'size-2 rounded-full border-2 border-current bg-n-yellow-700',
   },
   blueSquare: {
     type: 'div',
@@ -119,7 +134,7 @@ export const LINE_STYLES = {
     gradient.addColorStop(1, 'rgba(238, 44, 1')
     return { light: gradient, dark: gradient }
   },
-  'teal gradient': (ctx: CanvasRenderingContext2D) => {
+  'cyan gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(54, 163, 163')
     gradient.addColorStop(1, 'rgba(17, 130, 164')
