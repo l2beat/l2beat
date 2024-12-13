@@ -25,7 +25,7 @@ export function OtherMigrationTooltip({
           Recategorisation
         </p>
         <p className="text-[13px]">The project will be moved to Others in:</p>
-        <Countdown expiresAt={expiresAt} size="sm" className="mx-auto" />
+        <Countdown expiresAt={expiresAt} size="sm" className="mx-auto w-full" />
         <p className="!mt-4 text-base font-bold leading-none text-primary">
           Reasons
         </p>
@@ -39,8 +39,8 @@ export function OtherMigrationTooltip({
               key={reason.label}
               color="red"
               body={reason.shortDescription}
-              className="px-6 py-3 text-xs font-bold text-red-600"
-              icon={<CloseIcon className="mt-1 size-3 fill-red-600" />}
+              className="px-4 py-2 text-xs font-bold text-negative"
+              icon={<CloseIcon className="mt-1 size-3 fill-negative" />}
             />
           )
         })}

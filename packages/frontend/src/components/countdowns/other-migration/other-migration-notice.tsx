@@ -26,8 +26,8 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
             <Callout
               body={reason.shortDescription}
               color="red"
-              className="p-4 text-lg font-bold text-red-600"
-              icon={<CloseIcon className="mt-1 size-5 fill-red-600" />}
+              className="p-4 text-lg font-bold text-negative"
+              icon={<CloseIcon className="mt-1 size-5 fill-negative" />}
             />
             <p className="mt-3 gap-1">
               <strong>Consequence: </strong>

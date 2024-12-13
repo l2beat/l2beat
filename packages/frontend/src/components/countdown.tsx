@@ -24,7 +24,7 @@ export function Countdown({ expiresAt, size = 'md', className }: Props) {
   return (
     <div
       className={cn(
-        'flex w-max gap-x-1 rounded-lg border border-divider bg-surface-secondary p-2',
+        'flex w-max items-center justify-center gap-x-1 rounded-lg border border-divider bg-surface-secondary p-2',
         className,
       )}
     >
