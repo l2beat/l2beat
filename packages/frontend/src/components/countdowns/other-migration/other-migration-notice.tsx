@@ -30,7 +30,7 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
             <Callout
               body={reason.shortDescription}
               color="red"
-              className="p-4 text-lg font-bold"
+              className="p-4 text-lg font-bold text-primary"
               icon={<CloseIcon className="mt-1 size-5 fill-negative" />}
             />
             <p className="mt-3 gap-1">

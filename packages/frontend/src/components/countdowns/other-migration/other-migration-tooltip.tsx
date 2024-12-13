@@ -44,7 +44,7 @@ export function OtherMigrationTooltip({
               key={reason.label}
               color="red"
               body={reason.shortDescription}
-              className="px-4 py-2 text-xs font-bold"
+              className="px-4 py-2 text-xs font-bold text-primary"
               icon={<CloseIcon className="mt-1 size-3 fill-negative" />}
             />
           )
