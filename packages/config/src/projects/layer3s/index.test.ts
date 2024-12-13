@@ -31,8 +31,9 @@ describe('layer3s', () => {
       }
     })
   })
-  it('every layer3 has a valid host chain except those with Multiple', () => {
-    for (const layer3 of layer3s.filter((x) => x.hostChain !== 'Multiple')) {
+
+  it('every layer3 has a valid host chain', () => {
+    for (const layer3 of layer3s) {
       expect(layer3.hostChain).not.toBeNullish()
       const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
       expect(hostChain).not.toBeNullish()
