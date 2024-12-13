@@ -1,10 +1,12 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import {
+  type ProjectChanges,
+  getProjectsChangeReport,
+} from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
 import {
   type ActivityLatestUopsData,
@@ -32,20 +34,14 @@ export async function getScalingSummaryEntries() {
   ])
 
   const entries = projects
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-      const latestTvl = tvl.projects[project.id.toString()]
-      const activity = projectsActivity[project.id.toString()]
-
-      return getScalingSummaryEntry(
+    .map((project) =>
+      getScalingSummaryEntry(
         project,
-        isVerified,
-        projectsChangeReport.hasImplementationChanged(project.id),
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-        latestTvl,
-        activity,
-      )
-    })
+        projectsChangeReport.getChanges(project.id),
+        tvl.projects[project.id.toString()],
+        projectsActivity[project.id.toString()],
+      ),
+    )
     .sort(compareStageAndTvl)
 
   return groupByTabs(entries)
@@ -53,9 +49,7 @@ export async function getScalingSummaryEntries() {
 
 function getScalingSummaryEntry(
   project: Layer2 | Layer3,
-  isVerified: boolean,
-  hasImplementationChanged: boolean,
-  hasHighSeverityFieldChanged: boolean,
+  changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
   activity: ActivityLatestUopsData[string] | undefined,
 ) {
@@ -72,19 +66,13 @@ function getScalingSummaryEntry(
   const dataAvailability = getCurrentEntry(project.dataAvailability)
 
   return {
-    entryType: 'scaling' as const,
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
-      syncStatus: undefined,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     stage: project.stage ?? { stage: 'NotApplicable' },
     category: project.display.category,
     provider: project.display.provider,
     dataAvailability,
     mainPermissions: project.display.mainPermissions,
+    reasonsForBeingOther: project.display.reasonsForBeingOther,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,

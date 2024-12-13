@@ -4,13 +4,16 @@ import {
   type Layer3,
   type StageConfig,
   badges,
+  getProjectsVerificationStatuses,
 } from '@l2beat/config'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCurrentEntry } from '../utils/get-current-entry'
+import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
@@ -38,17 +41,13 @@ export interface CommonScalingEntry extends CommonProjectEntry {
 
 interface Params {
   project: Layer2 | Layer3
-  isVerified: boolean
-  hasImplementationChanged: boolean
-  hasHighSeverityFieldChanged: boolean
+  changes: ProjectChanges | undefined
   syncStatus: SyncStatus | undefined
 }
 
 export function getCommonScalingEntry({
   project,
-  isVerified,
-  hasImplementationChanged,
-  hasHighSeverityFieldChanged,
+  changes,
   syncStatus,
 }: Params): CommonScalingEntry {
   return {
@@ -62,11 +61,11 @@ export function getCommonScalingEntry({
     statuses: {
       yellowWarning: project.display.headerWarning,
       redWarning: project.display.redWarning,
-      verificationWarning: !isVerified,
+      verificationWarning: !getProjectsVerificationStatuses(project),
       underReview: getUnderReviewStatus({
         isUnderReview: isAnySectionUnderReview(project),
-        hasImplementationChanged,
-        hasHighSeverityFieldChanged,
+        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
+        implementationChanged: !!changes?.implementationChanged,
       }),
       syncStatusInfo:
         syncStatus?.isSynced === false
@@ -78,9 +77,12 @@ export function getCommonScalingEntry({
               },
             )}.`
           : undefined,
+      countdowns: getCountdowns(project),
     },
     tab:
-      env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.display.isOther
+      featureFlags.showOthers &&
+      featureFlags.othersMigrated() &&
+      !!project.display.reasonsForBeingOther
         ? 'Others'
         : project.display.category.includes('Rollup')
           ? 'Rollups'
