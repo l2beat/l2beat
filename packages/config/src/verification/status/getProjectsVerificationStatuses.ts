@@ -1,7 +1,9 @@
-import { type DaBridge, type DaLayer, type Project } from '@l2beat/config'
-import { getManuallyVerifiedContracts } from './get-manually-verified-contracts'
+import { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../../projects'
+import { getManuallyVerifiedContracts } from './getManuallyVerifiedContracts'
 
-export function getProjectsVerificationStatuses(project: Project): boolean {
+export function getProjectsVerificationStatuses(
+  project: Layer2 | Layer3 | Bridge,
+): boolean {
   const manual = getManuallyVerifiedContracts(project)
   const contractsVerification =
     project.contracts?.addresses.every(

@@ -15,7 +15,6 @@ import {
   get7dTokenBreakdown,
 } from '../scaling/tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvl/utils/get-associated-token-warning'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import {
   type CommonBridgesEntry,
   getCommonBridgesEntry,
@@ -78,19 +77,9 @@ function getBridges(params: Params) {
           })
         : undefined
 
-    const isVerified = getProjectsVerificationStatuses(bridge)
-    const hasImplementationChanged =
-      projectsChangeReport.hasImplementationChanged(bridge.id.toString())
-    const hasHighSeverityFieldChanged =
-      projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
-
+    const changes = projectsChangeReport.getChanges(bridge.id)
     return {
-      ...getCommonBridgesEntry({
-        bridge,
-        isVerified,
-        hasImplementationChanged,
-        hasHighSeverityFieldChanged,
-      }),
+      ...getCommonBridgesEntry({ bridge, changes }),
       type: bridge.display.category,
       tvl: {
         breakdown: bridgeTvl?.breakdown,

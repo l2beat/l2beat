@@ -4,14 +4,14 @@ import {
   badgesCompareFn,
   layer2s,
 } from '@l2beat/config'
+import { getContractsVerificationStatuses } from '@l2beat/config'
+import { getManuallyVerifiedContracts } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
-import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvlProjectStats } from '../tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
@@ -40,10 +40,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   ])
 
   const isVerified = getProjectsVerificationStatuses(project)
-  const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChanged(project.id)
-  const hasHighSeverityFieldChanged =
-    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
+  const changes = projectsChangeReport.getChanges(project.id)
 
   const common = {
     type: project.type,
@@ -51,8 +48,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     slug: project.display.slug,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.isUnderReview,
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
+      ...changes,
     }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,

@@ -1,6 +1,5 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
   type ProjectsLatestTvlUsd,
@@ -11,7 +10,7 @@ import { type FinalityData, type FinalityProjectData } from './schema'
 
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
@@ -32,17 +31,14 @@ export async function getScalingFinalityEntries() {
   const includedProjects = getIncludedProjects(layer2s, finality)
 
   const entries = includedProjects
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-
-      return getScalingFinalityEntry(
+    .map((project) =>
+      getScalingFinalityEntry(
         project,
+        projectsChangeReport.getChanges(project.id),
         finality[project.id.toString()],
-        isVerified,
-        projectsChangeReport,
         tvl,
-      )
-    })
+      ),
+    )
     .filter(notUndefined)
     .sort(compareStageAndTvl)
 
@@ -101,23 +97,16 @@ function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
 export type ScalingFinalityEntry = ReturnType<typeof getScalingFinalityEntry>
 function getScalingFinalityEntry(
   project: Layer2,
+  changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
   tvl: ProjectsLatestTvlUsd,
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
   const data = getFinalityData(finalityProjectData, project)
   return {
-    entryType: 'finality' as const,
     ...getCommonScalingEntry({
       project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      changes,
       syncStatus: data?.syncStatus,
     }),
     category: project.display.category,
