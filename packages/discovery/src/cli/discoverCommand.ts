@@ -45,6 +45,12 @@ export const DiscoverCommandArgs = {
     short: 'c',
     description: 'show the count of calls to external RPCs',
   }),
+  printTemplatization: flag({
+    type: boolean,
+    long: 'templatization',
+    short: 't',
+    description: 'show the count of calls to external RPCs',
+  }),
   saveSources: flag({
     type: boolean,
     long: 'save-sources',

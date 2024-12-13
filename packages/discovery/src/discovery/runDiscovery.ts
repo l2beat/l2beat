@@ -9,6 +9,7 @@ import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
+import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { SQLiteCache } from './provider/SQLiteCache'
@@ -57,7 +58,10 @@ export async function runDiscovery(
   }
 
   if (config.printStats) {
-    printProviderStats(providerStats)
+    printProviderStats(logger, providerStats)
+  }
+  if (config.printTemplatization) {
+    printTemplatization(logger, result)
   }
 }
 
