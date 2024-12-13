@@ -542,10 +542,6 @@ function orbitStackCommon(
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
-  assert(
-    templateVars.hostChain !== 'Multiple',
-    'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-  )
   const layer2s = require('..').layer2s as Layer2[]
 
   const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)

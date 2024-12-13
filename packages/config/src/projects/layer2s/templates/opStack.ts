@@ -766,10 +766,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
     return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,
