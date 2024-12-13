@@ -25,7 +25,7 @@ export async function getScalingTvlEntries() {
   const [projectsChangeReport, tvl] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvlBreakdown(),
-    useOthers &&
+    !useOthers &&
       api.tvl.chart.prefetch({
         filter: { type: 'layer2' },
         range: '1y',
