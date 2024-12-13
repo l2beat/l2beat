@@ -7458,6 +7458,20 @@
       }
     },
     {
+      "name": "Rewardable",
+      "coingeckoId": "rewardable",
+      "address": "0x1986Cc18D8eC757447254310D2604f85741aA732",
+      "symbol": "REWARD",
+      "decimals": 18,
+      "deploymentTimestamp": 1727685937,
+      "coingeckoListingTimestamp": 1732899895,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52274/large/reward-token-icon-200x200.png?1732888312",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Satoshi AI agent by Virtuals",
       "coingeckoId": "satoshi-ai-agent-by-virtuals",
       "address": "0x7588880d9c78E81FAde7b7e8DC0781E95995a792",

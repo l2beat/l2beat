@@ -2792,6 +2792,12 @@
   ],
   "base": [
     {
+      "symbol": "REWARD",
+      "address": "0x1986Cc18D8eC757447254310D2604f85741aA732",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
