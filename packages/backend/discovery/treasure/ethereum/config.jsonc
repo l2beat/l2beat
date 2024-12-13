@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "treasure",
+  "initialAddresses": ["0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"],
+  "names": {
+    "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879": "TreasureZkEvm",
+    "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871": "TreasureZkEvmAdmin",
+    "0x282370D1e925ee897CB29Cb3beC13aAe0743067C": "TreasureChainAdminMultisig"
+  },
+  "sharedModules": {
+    "bleppo": "shared-zk-stack"
+  },
+  "overrides": {
+    "TreasureZkEvmAdmin": {
+      "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xdf8b4c520ffe197c5343c6f5aec59570151ef9a492f2c624fd45ddde6135ec42": "ADMIN",
+              "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8": "ORACLE",
+              "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c": "UPGRADER",
+              "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e": "FEE_ADMIN"
+            }
+          }
+        }
+      }
+    },
+    "TreasureZkEvm": {
+      "ignoreRelatives": ["getBaseToken"],
+      "ignoreMethods": [
+        "l2LogsRootHash",
+        "storedBlockHash",
+        "storedBatchHash",
+        "getName",
+        "priorityQueueFrontOperation"
+      ],
+      "ignoreInWatchMode": [
+        "getPriorityQueueSize",
+        "getTotalBlocksCommitted",
+        "getTotalBlocksExecuted",
+        "getTotalBlocksVerified",
+        "getTotalBatchesExecuted",
+        "getTotalBatchesVerified",
+        "getTotalBatchesCommitted",
+        "getTotalPriorityTxs",
+        "getFirstUnprocessedPriorityTx"
+      ],
+      "fields": {
+        "txFilterer": {
+          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "NewTransactionFilterer",
+            "returnParams": ["oldTransactionFilterer", "newTransactionFilterer"]
+          }
+        },
+        "validators": {
+          "handler": {
+            "type": "zksynceraValidators"
+          }
+        },
+        "getProtocolVersion": {
+          "description": "Protocol version, increments with each protocol change",
+          "severity": "MEDIUM"
+        },
+        "getVerifierParams": {
+          "description": "Verifier parameters used for proving batches",
+          "severity": "LOW"
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        },
+        "daMode": {
+          "description": "0 = rollup; 1 = Validium",
+          "handler": {
+            "type": "storage",
+            "slot": 38,
+            "offset": 0,
+            "returnType": "uint8"
+          }
+        }
+      }
+    }
+  }
+}

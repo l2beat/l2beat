@@ -10,38 +10,30 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { isInPast } from '~/server/features/utils/is-in-past'
-import { type SyncStatus } from '~/types/sync-status'
-import {
-  type UnderReviewStatus,
-  getUnderReviewText,
-} from '~/utils/project/under-review'
+import { getUnderReviewText } from '~/utils/project/under-review'
 import { NotSyncedIcon } from '../../badge/not-synced-badge'
 import { PrimaryValueCell } from './primary-value-cell'
 
 export interface ProjectCellProps {
-  project: {
-    name: string
-    shortName?: string
-    isVerified?: boolean
-    headerWarning?: string
-    redWarning?: string
-    underReviewStatus?: UnderReviewStatus
-    data?: { syncStatus?: SyncStatus }
-    hostChain?: string
-    countdowns?: ProjectCountdownsWithContext
-  }
+  project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
+  countdowns?: ProjectCountdownsWithContext
   className?: string
 }
 
-export function ProjectNameCell({ project, className }: ProjectCellProps) {
+export function ProjectNameCell({
+  project,
+  countdowns,
+  className,
+}: ProjectCellProps) {
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
         <PrimaryValueCell className="font-bold !leading-none">
           {project.shortName ?? project.name}
         </PrimaryValueCell>
-        {project.isVerified === false && (
+        {project.statuses?.verificationWarning === true && (
           <Tooltip>
             <TooltipTrigger>
               <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
@@ -51,48 +43,48 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             </TooltipContent>
           </Tooltip>
         )}
-        {project.redWarning && (
+        {project.statuses?.redWarning && (
           <Tooltip>
             <TooltipTrigger>
               <ShieldIcon className="relative -top-px size-3.5 fill-red-300 md:size-4" />
             </TooltipTrigger>
-            <TooltipContent>{project.redWarning}</TooltipContent>
+            <TooltipContent>{project.statuses.redWarning}</TooltipContent>
           </Tooltip>
         )}
-        {project.underReviewStatus && (
+        {project.statuses?.underReview && (
           <Tooltip>
             <TooltipTrigger>
               <UnderReviewIcon className="size-3.5 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
-              {getUnderReviewText(project.underReviewStatus)}
+              {getUnderReviewText(project.statuses.underReview)}
             </TooltipContent>
           </Tooltip>
         )}
-        {project.headerWarning && (
+        {project.statuses?.yellowWarning && (
           <Tooltip>
             <TooltipTrigger>
               <ShieldIcon className="relative -top-px size-3.5 fill-yellow-700 dark:fill-yellow-300 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>
               <Markdown inline ignoreGlossary>
-                {project.headerWarning}
+                {project.statuses.yellowWarning}
               </Markdown>
             </TooltipContent>
           </Tooltip>
         )}
-        {project.data?.syncStatus?.isSynced === false && (
-          <NotSyncedIcon syncedUntil={project.data?.syncStatus.syncedUntil} />
+        {project.statuses?.syncStatusInfo && (
+          <NotSyncedIcon content={project.statuses.syncStatusInfo} />
         )}
         {env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS &&
-          project.countdowns?.otherMigration &&
-          !isInPast(project.countdowns.otherMigration.expiresAt) && (
-            <OtherMigrationTooltip {...project.countdowns.otherMigration} />
+          countdowns?.otherMigration &&
+          !isInPast(countdowns.otherMigration.expiresAt) && (
+            <OtherMigrationTooltip {...countdowns.otherMigration} />
           )}
       </div>
-      {project.hostChain && (
+      {project.nameSecondLine && (
         <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
-          L3 on {project.hostChain}
+          {project.nameSecondLine}
         </span>
       )}
     </div>

@@ -1,13 +1,16 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectsChangeReport,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import {
+  type ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../tvl/utils/get-latest-tvl-usd'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export type ScalingRiskEntries = Awaited<
   ReturnType<typeof getScalingRiskEntries>
@@ -22,15 +25,18 @@ export async function getScalingRiskEntries() {
     (p) => !p.isUpcoming && !p.isArchived,
   )
 
-  const entries = includedProjects.map((project) =>
-    getScalingRiskEntry(
-      project,
-      getProjectsVerificationStatuses(project),
-      projectsChangeReport,
-    ),
-  )
+  const entries = includedProjects
+    .map((project) =>
+      getScalingRiskEntry(
+        project,
+        getProjectsVerificationStatuses(project),
+        projectsChangeReport,
+        tvl,
+      ),
+    )
+    .sort(compareStageAndTvl)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(entries)
 }
 
 export type ScalingRiskEntry = ReturnType<typeof getScalingRiskEntry>
@@ -38,6 +44,7 @@ function getScalingRiskEntry(
   project: Layer2 | Layer3,
   isVerified: boolean,
   projectsChangeReport: ProjectsChangeReport,
+  tvl: ProjectsLatestTvlUsd,
 ) {
   const riskView =
     project.type === 'layer3' ? project.stackedRiskView : project.riskView
@@ -51,7 +58,9 @@ function getScalingRiskEntry(
       ),
       hasHighSeverityFieldChanged:
         projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      syncStatus: undefined,
     }),
     risks: riskView,
+    tvlOrder: tvl[project.id] ?? 0,
   }
 }

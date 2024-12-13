@@ -1,5 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import {
   Bytes,
   ElasticChainL2Token,
@@ -25,7 +25,7 @@ export type Config<T extends ElasticChainAmountConfig['type']> =
   ElasticChainAmountConfig & { type: T } & { id: string }
 
 export interface ElasticChainServiceDependencies {
-  readonly rpcClient: RpcClient2
+  readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
   readonly bridgeAddress: EthereumAddress
 }

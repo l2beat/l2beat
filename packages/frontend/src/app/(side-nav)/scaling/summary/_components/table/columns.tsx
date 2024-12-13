@@ -29,7 +29,7 @@ export const scalingSummaryColumns = [
     cell: (ctx) => (
       <PizzaRosetteCell
         values={ctx.row.original.risks}
-        isUnderReview={ctx.row.original.underReviewStatus === 'config'}
+        isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
       />
     ),
     meta: {
