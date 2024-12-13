@@ -176,7 +176,7 @@ const config: Config = {
       },
       secondary: 'var(--secondary)',
       negative: 'hsl(var(--negative))',
-      brand: 'var(--brand)',
+      brand: 'hsl(var(--brand))',
       background: 'var(--background)',
       'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',

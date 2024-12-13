@@ -8,9 +8,15 @@ interface Props {
   expiresAt: number
   size?: 'md' | 'sm'
   className?: string
+  withBackground?: boolean
 }
 
-export function Countdown({ expiresAt, size = 'md', className }: Props) {
+export function Countdown({
+  expiresAt,
+  size = 'md',
+  className,
+  withBackground = false,
+}: Props) {
   const [secondsLeft, setSecondsLeft] = useState(
     expiresAt - UnixTime.now().toNumber(),
   )
@@ -24,7 +30,9 @@ export function Countdown({ expiresAt, size = 'md', className }: Props) {
   return (
     <div
       className={cn(
-        'flex w-max items-center justify-center gap-x-1 rounded-lg border border-divider bg-surface-secondary p-2',
+        'flex w-max items-center justify-center gap-x-1',
+        withBackground &&
+          'rounded-lg border border-divider bg-surface-secondary p-2',
         className,
       )}
     >
