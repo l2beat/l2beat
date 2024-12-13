@@ -14,7 +14,7 @@ export type ScalingProjectDisplay = {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
-  /** Reasons why the scaling project is not included in the other categories. If defined - project will be displayed as other */
+  /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
   mainPermissions?: {
     proposer: {
