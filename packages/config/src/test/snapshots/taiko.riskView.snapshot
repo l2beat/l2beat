@@ -7,11 +7,6 @@
     sentiment: "good"
     value: "Onchain"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable."
     sentiment: "bad"
@@ -32,10 +27,5 @@
     secondLine: "4h challenge period"
     sentiment: "bad"
     value: "Multi-proofs"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

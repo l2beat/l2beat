@@ -378,8 +378,6 @@ export const optimism: Layer2 = {
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   technology: {
     stateCorrectness: {

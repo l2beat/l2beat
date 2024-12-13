@@ -15,11 +15,6 @@
     ]
     value: "Onchain"
   }
-  destinationToken: {
-    description: "Tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Canonical"
-  }
   exitWindow: {
     definingMetric: Infinity
     description: "Users can exit funds at any time because contracts are not upgradeable."
@@ -43,10 +38,5 @@
     description: "Currently the system permits invalid state roots. More details in project overview."
     sentiment: "bad"
     value: "None"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

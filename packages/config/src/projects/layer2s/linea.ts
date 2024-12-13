@@ -339,8 +339,6 @@ export const linea: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage({
     stage0: {
