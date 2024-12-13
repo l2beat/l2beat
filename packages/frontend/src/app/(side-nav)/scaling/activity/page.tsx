@@ -9,7 +9,7 @@ import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { ActivityMetricContextProvider } from './_components/activity-metric-context'
 import { ActivityTimeRangeContextProvider } from './_components/activity-time-range-context'
-import { ScalingActivityTabs } from './_components/scaling-activity-tables'
+import { ScalingActivityTabs } from './_components/scaling-activity-tabs'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
