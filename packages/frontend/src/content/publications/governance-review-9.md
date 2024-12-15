@@ -49,7 +49,7 @@ The [Snapshot vote](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x57a
 
 Djinn [submitted a proposal for the creation of a Gaming Catalyst Program](https://forum.arbitrum.foundation/t/catalyze-gaming-ecosystem-growth-on-arbitrum/22368) on behalf of the gaming working group. The Gaming Catalyst Program (GCP) is a model to rapidly accelerate Arbitrum’s support for game builders and also strategically allocate resources towards vetted experts to accelerate the onboarding and go-to-market of the best builders in the gaming industry. The proposal asks the DAO to earmark 200m ARB to develop the gaming ecosystem on Arbitrum and establish the network as the top choice for game builders across the landscape.
 
-The funding will be allocated towards the following initiatives throughout a two year period:
+The funding will be allocated towards the following initiatives throughout a two-year period:
 
 1. Builder Onboarding & Growth - 160m ARB
 2. Infrastructure Bounties - 40m ARB
