@@ -50,6 +50,9 @@ export function getCommonScalingEntry({
   changes,
   syncStatus,
 }: Params): CommonScalingEntry {
+  const stage = isProjectOther(project)
+    ? { stage: 'NotApplicable' as const }
+    : project.stage
   return {
     id: project.id,
     slug: project.display.slug,
@@ -84,12 +87,12 @@ export function getCommonScalingEntry({
       : project.display.category.includes('Rollup')
         ? 'Rollups'
         : 'ValidiumsAndOptimiums',
-    stageOrder: getStageOrder(project.stage),
+    stageOrder: getStageOrder(stage),
     filterable: {
       isRollup: project.display.category.includes('Rollup'),
-      type: project.display.category,
+      type: isProjectOther(project) ? 'Other' : project.display.category,
       stack: project.display.provider ?? 'No stack',
-      stage: getStage(project.stage),
+      stage: getStage(stage),
       purposes: project.display.purposes,
       hostChain: project.type === 'layer2' ? 'Ethereum' : getHostChain(project),
       daLayer:
