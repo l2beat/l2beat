@@ -10,7 +10,8 @@
     --primary: #131215;
     --primary-invert: #fafafa;
     --secondary: #5f6470;
-    --brand: #ab3bd2;
+    --negative: 0 100% 42%;
+    --brand: 285 63% 53%;
     --background: #e6e7ec;
     --surface-primary: #fafafa;
     --surface-secondary: #e6e7ec;
@@ -25,7 +26,8 @@
     --primary: #fafafa;
     --primary-invert: #131215;
     --secondary: #868b98;
-    --brand: #db8bf7;
+    --negative: 0 100% 50%;
+    --brand: 284 87% 76%;
     --background: #000000;
     --surface-primary: #17191f;
     --surface-secondary: #393c43;

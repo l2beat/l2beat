@@ -4,10 +4,9 @@ import {
   type BridgeRiskView,
   bridges,
 } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '@l2beat/config'
-import { type ValueWithSentiment, notUndefined } from '@l2beat/shared-pure'
+import { type ValueWithSentiment } from '@l2beat/shared-pure'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../projects-change-report/get-projects-change-report'
 import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
@@ -27,19 +26,17 @@ export async function getBridgeRiskEntries() {
     getProjectsChangeReport(),
   ])
 
-  const included = bridges.filter(
-    (project) => !project.isUpcoming && !project.isArchived,
-  )
-
-  const entries = included
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-
-      return getBridgesRiskEntry(project, projectsChangeReport, isVerified, tvl)
-    })
-    .filter(notUndefined)
-
-  return entries.sort(compareTvl)
+  return bridges
+    .filter((project) => !project.isUpcoming && !project.isArchived)
+    .map((project) =>
+      getBridgesRiskEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+        tvl,
+      ),
+    )
+    .filter((entry) => entry !== undefined)
+    .sort(compareTvl)
 }
 
 export interface BridgesRiskEntry extends CommonBridgesEntry {
@@ -51,22 +48,11 @@ export interface BridgesRiskEntry extends CommonBridgesEntry {
 
 function getBridgesRiskEntry(
   bridge: Bridge,
-  projectsChangeReport: ProjectsChangeReport,
-  isVerified: boolean,
+  changes: ProjectChanges,
   tvl: ProjectsLatestTvlUsd,
 ) {
-  const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChanged(bridge.id.toString())
-  const hasHighSeverityFieldChanged =
-    projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
-
   return {
-    ...getCommonBridgesEntry({
-      bridge,
-      isVerified,
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
-    }),
+    ...getCommonBridgesEntry({ bridge, changes }),
     type: bridge.display.category,
     destination: getDestination(
       bridge.type === 'bridge'

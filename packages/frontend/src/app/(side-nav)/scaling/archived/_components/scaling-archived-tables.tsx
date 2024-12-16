@@ -22,7 +22,7 @@ export function ScalingArchivedTables({
   const filteredEntries = {
     rollups: entries.rollups.filter(includeFilters),
     validiumsAndOptimiums: entries.validiumsAndOptimiums.filter(includeFilters),
-    others: entries.others?.filter(includeFilters) ?? [],
+    others: entries.others.filter(includeFilters),
   }
 
   const initialSort = {

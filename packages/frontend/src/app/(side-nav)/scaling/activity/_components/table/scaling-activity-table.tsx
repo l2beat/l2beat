@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import {
@@ -34,7 +34,7 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
 
   const table = useTable({
     columns: getScalingActivityColumns(metric, {
-      activity: env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
+      activity: featureFlags.stageSorting,
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),

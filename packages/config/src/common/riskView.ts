@@ -295,8 +295,6 @@ export const UPCOMING_RISK_VIEW: ScalingProjectRiskView = {
   exitWindow: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
   proposerFailure: UPCOMING_RISK,
-  destinationToken: UPCOMING_RISK,
-  validatedBy: UPCOMING_RISK,
 }
 
 export const UNDER_REVIEW_RISK: ScalingProjectRiskViewEntry = {
@@ -311,8 +309,6 @@ export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView = {
   exitWindow: UNDER_REVIEW_RISK,
   sequencerFailure: UNDER_REVIEW_RISK,
   proposerFailure: UNDER_REVIEW_RISK,
-  destinationToken: UNDER_REVIEW_RISK,
-  validatedBy: UNDER_REVIEW_RISK,
 }
 
 // SEQUENCER COLUMN

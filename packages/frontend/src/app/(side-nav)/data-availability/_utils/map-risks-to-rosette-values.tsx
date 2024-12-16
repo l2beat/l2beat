@@ -1,68 +1,75 @@
-import { type DaBridgeRisks, type DaLayerRisks } from '@l2beat/config'
-import {
-  type Sentiment,
-  type ValueWithSentiment,
-  type WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
+import { type DaBridge, type DaLayer } from '@l2beat/config'
 import { type RosetteValue } from '~/components/rosette/types'
 
 export function mapLayerRisksToRosetteValues(
-  risks: Record<
-    keyof DaLayerRisks,
-    ValueWithSentiment<string, Sentiment> & {
-      description?: string
-      warning?: WarningValueWithSentiment
-    }
-  >,
+  risks: DaLayer['risks'],
 ): RosetteValue[] {
+  if (!('economicSecurity' in risks)) {
+    return [
+      {
+        name: 'DA Layer',
+        value: risks.value,
+        sentiment: risks.sentiment,
+        description: risks.description,
+        warning: undefined,
+      },
+    ]
+  }
+
   return [
     {
       name: 'Economic security',
       value: risks.economicSecurity.value,
       sentiment: risks.economicSecurity.sentiment,
       description: risks.economicSecurity.description,
-      warning: risks.economicSecurity.warning,
+      warning: undefined,
     },
     {
       name: 'Fraud detection',
       value: risks.fraudDetection.value,
       sentiment: risks.fraudDetection.sentiment,
       description: risks.fraudDetection.description,
-      warning: risks.fraudDetection.warning,
+      warning: undefined,
     },
   ]
 }
 
 export function mapBridgeRisksToRosetteValues(
-  risks: Record<
-    keyof DaBridgeRisks,
-    ValueWithSentiment<string, Sentiment> & {
-      description?: string
-      warning?: WarningValueWithSentiment
-    }
-  >,
+  risks: DaBridge['risks'],
 ): RosetteValue[] {
+  if (!('committeeSecurity' in risks)) {
+    return [
+      {
+        name: 'DA Bridge',
+        value: risks.value,
+        sentiment: risks.sentiment,
+        description: risks.description,
+        warning: undefined,
+      },
+    ]
+  }
+
   return [
     {
       name: 'Committee security',
       value: risks.committeeSecurity.value,
       sentiment: risks.committeeSecurity.sentiment,
       description: risks.committeeSecurity.description,
-      warning: risks.committeeSecurity.warning,
+      warning: undefined,
     },
     {
       name: 'Upgradeability',
       value: risks.upgradeability.value,
       sentiment: risks.upgradeability.sentiment,
       description: risks.upgradeability.description,
-      warning: risks.upgradeability.warning,
+      warning: undefined,
     },
     {
       name: 'Relayer failure',
       value: risks.relayerFailure.value,
       sentiment: risks.relayerFailure.sentiment,
       description: risks.relayerFailure.description,
-      warning: risks.relayerFailure.warning,
+      warning: undefined,
     },
   ]
 }

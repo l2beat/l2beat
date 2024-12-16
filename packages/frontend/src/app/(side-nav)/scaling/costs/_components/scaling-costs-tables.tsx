@@ -24,7 +24,7 @@ export function ScalingCostsTables(props: Props) {
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others?.filter(includeFilters) ?? [],
+    others: props.others.filter(includeFilters),
   }
 
   const initialSort = {

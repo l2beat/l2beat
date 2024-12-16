@@ -385,8 +385,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           },
         ],
       },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     },
     stage:
       daProvider !== undefined

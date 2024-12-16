@@ -13,6 +13,7 @@ interface Props {
   className?: string
   maxProjects?: number
   noTooltip?: boolean
+  noLink?: boolean
 }
 
 export function ProjectsUsedIn({
@@ -20,6 +21,7 @@ export function ProjectsUsedIn({
   className,
   maxProjects = 5,
   noTooltip,
+  noLink,
 }: Props) {
   if (usedIn.length === 0) {
     return (
@@ -65,10 +67,7 @@ export function ProjectsUsedIn({
       {cappedProjects.map((project) => {
         return (
           <Tooltip key={project.slug}>
-            <LinkWithOnHoverPrefetch
-              href={`/scaling/projects/${project.slug}`}
-              className="size-5"
-            >
+            {noLink ? (
               <TooltipTrigger>
                 <Image
                   width={20}
@@ -77,7 +76,21 @@ export function ProjectsUsedIn({
                   alt={`${project.name} logo`}
                 />
               </TooltipTrigger>
-            </LinkWithOnHoverPrefetch>
+            ) : (
+              <LinkWithOnHoverPrefetch
+                href={`/scaling/projects/${project.slug}`}
+                className="size-5"
+              >
+                <TooltipTrigger>
+                  <Image
+                    width={20}
+                    height={20}
+                    src={`/icons/${project.slug}.png`}
+                    alt={`${project.name} logo`}
+                  />
+                </TooltipTrigger>
+              </LinkWithOnHoverPrefetch>
+            )}
             <TooltipContent>{project.name}</TooltipContent>
           </Tooltip>
         )

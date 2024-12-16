@@ -25,7 +25,7 @@ export function ScalingActivityTables({
   const filteredEntries = {
     rollups: rollups.filter(includeFilters),
     validiumsAndOptimiums: validiumsAndOptimiums.filter(includeFilters),
-    others: others?.filter(includeFilters) ?? [],
+    others: others.filter(includeFilters),
   }
 
   const initialSort = {
@@ -73,7 +73,8 @@ export function ScalingActivityTables({
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
+        {/* Greater than one because we always have the Ethereum entry */}
+        {filteredEntries.others.length > 1 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <ScalingActivityTable entries={filteredEntries.others} />
