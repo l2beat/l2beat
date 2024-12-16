@@ -10,6 +10,7 @@ import {
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
+import { Checkbox } from '~/components/core/checkbox'
 import { featureFlags } from '~/consts/feature-flags'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
@@ -30,7 +31,8 @@ interface Props {
 }
 
 export function ScalingStackedTvlChart({ milestones, entries }: Props) {
-  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+  const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
+    useScalingAssociatedTokensContext()
   const { showOthers } = featureFlags
 
   const filters = useScalingFilterValues()
@@ -83,7 +85,18 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
         />
         <Chart />
         <ChartControlsWrapper>
-          <TvlChartUnitControls unit={unit} setUnit={setUnit} />
+          <TvlChartUnitControls unit={unit} setUnit={setUnit}>
+            {showOthers && (
+              <Checkbox
+                checked={excludeAssociatedTokens}
+                onCheckedChange={(checked) =>
+                  setExcludeAssociatedTokens(!!checked)
+                }
+              >
+                Exclude associated tokens
+              </Checkbox>
+            )}
+          </TvlChartUnitControls>
           <TvlChartTimeRangeControls
             timeRange={timeRange}
             setTimeRange={setTimeRange}
