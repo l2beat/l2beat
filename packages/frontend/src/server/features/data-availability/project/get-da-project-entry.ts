@@ -1,7 +1,10 @@
-import { type DaBridge, type DaLayer } from '@l2beat/config'
-import { getContractsVerificationStatuses } from '@l2beat/config'
-import { getManuallyVerifiedContracts } from '@l2beat/config'
-import { getDaBridgeVerification } from '@l2beat/config'
+import {
+  type DaBridge,
+  type DaLayer,
+  getContractsVerificationStatuses,
+  getManuallyVerifiedContracts,
+  isDaBridgeVerified,
+} from '@l2beat/config'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
@@ -48,7 +51,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  const isVerified = getDaBridgeVerification(daLayer, daBridge)
+  const isVerified = isDaBridgeVerified(daLayer, daBridge)
   const grissiniValues = mapLayerRisksToRosetteValues(
     getDaRisks(daLayer, daBridge, layerTvs, economicSecurity),
   )

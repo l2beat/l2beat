@@ -2,11 +2,11 @@ import {
   type Layer2,
   type Layer3,
   badgesCompareFn,
+  getContractsVerificationStatuses,
+  getManuallyVerifiedContracts,
+  isVerified,
   layer2s,
 } from '@l2beat/config'
-import { getContractsVerificationStatuses } from '@l2beat/config'
-import { getManuallyVerifiedContracts } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -39,7 +39,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     getHeader(project),
   ])
 
-  const isVerified = getProjectsVerificationStatuses(project)
   const changes = projectsChangeReport.getChanges(project.id)
 
   const common = {
@@ -57,11 +56,12 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   }
 
   const rosetteValues = getScalingRosetteValues(project.riskView)
+  const isProjectVerified = isVerified(project)
 
   if (project.type === 'layer2') {
     const projectDetails = await getL2ProjectDetails({
       project,
-      isVerified,
+      isVerified: isProjectVerified,
       contractsVerificationStatuses,
       manuallyVerifiedContracts,
       projectsChangeReport,
@@ -86,12 +86,12 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     ? getScalingRosetteValues(project.stackedRiskView)
     : undefined
   const isHostChainVerified =
-    hostChain === undefined ? false : getProjectsVerificationStatuses(hostChain)
+    hostChain === undefined ? false : isVerified(hostChain)
 
   const projectDetails = await getL3ProjectDetails({
     project,
     hostChain,
-    isVerified,
+    isVerified: isProjectVerified,
     rosetteValues,
     isHostChainVerified,
     manuallyVerifiedContracts,

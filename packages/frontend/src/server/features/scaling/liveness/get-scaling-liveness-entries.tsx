@@ -1,4 +1,4 @@
-import { type Layer2 } from '@l2beat/config'
+import { type Layer2, getCurrentEntry } from '@l2beat/config'
 import {
   TrackedTxsConfigSubtypeValues,
   UnixTime,
@@ -9,7 +9,6 @@ import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
   type ProjectsLatestTvlUsd,
