@@ -18,6 +18,7 @@ import {
   type AmountConfigEntry,
   type ProjectId,
   UnixTime,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
@@ -133,14 +134,20 @@ function getCategory(
   }
 
   const { category, reasonsForBeingOther } = p.display
-  switch (true) {
-    case reasonsForBeingOther && reasonsForBeingOther.length > 0:
-      return 'Others'
-    case category.endsWith('Rollup'):
-      return 'Rollups'
-    case category === 'Validium' || category === 'Optimium':
+  if (reasonsForBeingOther && reasonsForBeingOther.length > 0) {
+    return 'Others'
+  }
+
+  switch (category) {
+    case 'Validium':
+    case 'Optimium':
       return 'ValidiumOrOptimiums'
-    default:
+    case 'Optimistic Rollup':
+    case 'ZK Rollup':
+      return 'Rollups'
+    case 'Plasma':
       return undefined
+    default:
+      assertUnreachable(category)
   }
 }
