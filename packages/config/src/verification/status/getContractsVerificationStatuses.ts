@@ -5,7 +5,7 @@ import { getManuallyVerifiedContracts } from './getManuallyVerifiedContracts'
 export function getContractsVerificationStatuses(
   project: Layer2 | Layer3 | Bridge | DaLayer,
 ) {
-  const manual = getManuallyVerifiedContracts(project)
+  const manual = getManuallyVerifiedContracts()
 
   const contracts: ScalingProjectContract[] = []
   if ('contracts' in project) {
