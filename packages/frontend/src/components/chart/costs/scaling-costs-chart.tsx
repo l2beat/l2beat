@@ -6,7 +6,12 @@ import {
   useScalingFilter,
   useScalingFilterValues,
 } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import {
+  type CostsMetric,
+  useCostsMetricContext,
+} from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
 import { useCostsTimeRangeContext } from '~/app/(side-nav)/scaling/costs/_components/costs-time-range-context'
+import { CostsMetricControls } from '~/app/(side-nav)/scaling/costs/_components/costs-type-controls'
 import { useCostsUnitContext } from '~/app/(side-nav)/scaling/costs/_components/costs-unit-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
@@ -36,6 +41,14 @@ interface Props {
 export function ScalingCostsChart({ milestones, entries }: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
+  const { metric, setMetric } = useCostsMetricContext()
+
+  const onMetricChange = (metric: CostsMetric) => {
+    setMetric(metric)
+    if (metric === 'per-l2-tx' && (range === '1d' || range === '7d')) {
+      setRange('30d')
+    }
+  }
 
   const includeFilters = useScalingFilter()
   const filters = useScalingFilterValues()
@@ -86,7 +99,15 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
         <Header resolution={resolution} chartRange={chartRange} />
         <Chart />
         <ChartControlsWrapper>
-          <UnitControls unit={unit} setUnit={setUnit} />
+          <div className="flex flex-wrap gap-1">
+            <UnitControls unit={unit} setUnit={setUnit} />
+            {showOthers && (
+              <CostsMetricControls
+                value={metric}
+                onValueChange={onMetricChange}
+              />
+            )}
+          </div>
           <CostsChartTimeRangeControls
             timeRange={range}
             setTimeRange={setRange}

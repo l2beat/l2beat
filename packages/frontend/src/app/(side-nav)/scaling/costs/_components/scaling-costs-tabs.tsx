@@ -102,6 +102,7 @@ function Controls({
 }: {
   entries: ScalingCostsEntry[]
 }) {
+  const { showOthers } = featureFlags
   const { metric, setMetric } = useCostsMetricContext()
   const { range, setRange } = useCostsTimeRangeContext()
 
@@ -115,11 +116,13 @@ function Controls({
   return (
     <div className="mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between">
       <ScalingFilters items={entries} />
-      <CostsMetricControls
-        value={metric}
-        onValueChange={onMetricChange}
-        className="max-md:ml-4"
-      />
+      {!showOthers && (
+        <CostsMetricControls
+          value={metric}
+          onValueChange={onMetricChange}
+          className="max-md:ml-4"
+        />
+      )}
     </div>
   )
 }
