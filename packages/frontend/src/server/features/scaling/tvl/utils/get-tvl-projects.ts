@@ -133,21 +133,18 @@ function getCategory(
     return undefined
   }
 
-  const { category, reasonsForBeingOther } = p.display
-  if (reasonsForBeingOther && reasonsForBeingOther.length > 0) {
-    return 'Others'
-  }
-
-  switch (category) {
+  switch (p.display.category) {
     case 'Validium':
     case 'Optimium':
       return 'ValidiumOrOptimiums'
     case 'Optimistic Rollup':
     case 'ZK Rollup':
       return 'Rollups'
+    case 'Other':
+      return 'Others'
     case 'Plasma':
       return undefined
     default:
-      assertUnreachable(category)
+      assertUnreachable(p.display.category)
   }
 }
