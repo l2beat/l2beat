@@ -100,7 +100,7 @@ export function DesktopProjectNavigation({
                   router.push(value)
                 }}
               >
-                <SelectTrigger className="bg-surface-secondary">
+                <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

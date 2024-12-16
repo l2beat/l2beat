@@ -70,15 +70,6 @@
    It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
    Temporary solution until project page is redesigned to new colors.
   */
-
-  body:has(.sidebar.main-page-card) [data-role="select-content"] {
-    @apply bg-surface-primary;
-  }
-  body:has(.sidebar.main-page-card)
-    [data-role="select-content"]
-    [role="option"] {
-    @apply focus:bg-surface-secondary;
-  }
 }
 
 @layer utilities {

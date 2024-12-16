@@ -111,7 +111,7 @@ export function RegularDaProjectSummary({ project }: Props) {
               <div className="flex flex-row items-end gap-10 py-8 max-md:pt-6 md:mb-10 md:py-0">
                 {/* Left side (table with title and banner) */}
                 <div className="flex flex-1 flex-col gap-4">
-                  <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
+                  <div className="whitespace-pre text-xs uppercase text-secondary">
                     Select a bridge
                   </div>
                   <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-medium text-blue-700 dark:text-blue-700 md:flex lg:px-6">
@@ -119,8 +119,8 @@ export function RegularDaProjectSummary({ project }: Props) {
                     Please select one of the available DA bridges to view its
                     risks and detailed analysis.
                   </div>
-                  <div className="flex flex-col bg-surface-primary lg:h-[278px]">
-                    <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary md:flex md:border-b">
+                  <div className="flex flex-col rounded-lg bg-surface-primary lg:h-[278px]">
+                    <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-tertiary/75 px-4 py-2 text-xs font-semibold uppercase text-secondary md:flex md:border-b">
                       <div className="w-12"></div>
                       <div className="flex-1">DA Bridge</div>
                       <div className="flex-1 text-center">DA Risks</div>
@@ -132,7 +132,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                         <div
                           key={bridge.id}
                           className={cn(
-                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b',
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider px-4 py-2 md:rounded-none md:border-b',
                             index === project.bridges.length - 1 &&
                               'md:border-b-0',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)

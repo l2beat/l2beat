@@ -15,9 +15,16 @@ interface Props {
   options: string[]
   value: string | undefined
   onValueChange: (option: string | undefined) => void
+  insidePrimaryCard?: boolean
 }
 
-export function TableFilter({ title, options, value, onValueChange }: Props) {
+export function TableFilter({
+  title,
+  options,
+  value,
+  onValueChange,
+  insidePrimaryCard = false,
+}: Props) {
   const onClick = useCallback(
     (e: MouseEvent) => {
       if (value !== undefined) {
@@ -55,7 +62,11 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
       disabled={options.length < 2 && !value}
     >
       <SelectTrigger
-        className={cn(value !== undefined && 'text-brand')}
+        className={cn(
+          value !== undefined && 'text-brand',
+          insidePrimaryCard &&
+            'bg-surface-secondary data-[state=open]:hover:bg-surface-tertiary',
+        )}
         icon={
           value !== undefined ? (
             <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
@@ -69,9 +80,19 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
       >
         <SelectValue placeholder={title} />
       </SelectTrigger>
-      <SelectContent className="flex flex-col" align="start">
+      <SelectContent
+        className={cn(
+          'flex flex-col',
+          insidePrimaryCard && 'bg-surface-secondary',
+        )}
+        align="start"
+      >
         {options.map((option) => (
-          <SelectItem key={option} value={option}>
+          <SelectItem
+            key={option}
+            value={option}
+            className={cn(insidePrimaryCard && 'focus:bg-surface-tertiary')}
+          >
             {option}
           </SelectItem>
         ))}
