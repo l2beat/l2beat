@@ -21,7 +21,6 @@ const TIME_RANGE = '30d'
 const UNIT = 'usd'
 
 export default async function Page() {
-  const { showOthers } = featureFlags
   const entries = await getScalingSummaryEntries()
 
   const chartParams = {
@@ -31,7 +30,7 @@ export default async function Page() {
   } as const
 
   await Promise.all([
-    showOthers
+    featureFlags.showOthers
       ? api.tvl.recategorizedChart.prefetch(chartParams)
       : api.tvl.chart.prefetch(chartParams),
     api.activity.chart.prefetch({
