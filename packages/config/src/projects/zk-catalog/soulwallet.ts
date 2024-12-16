@@ -10,15 +10,17 @@ import { PROOFS } from './common/proofSystems'
 export const soulwallet: Project = {
   id: ProjectId('soulwallet'),
   slug: 'soulwallet',
+  name: 'Soul Wallet',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-08-14')),
   // tags
   isZkCatalog: true,
   // data
-  title: {
-    name: 'Soul Wallet',
-    shortName: undefined,
+  statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
   },
   proofVerification: {
     shortDescription:

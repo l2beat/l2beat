@@ -11,15 +11,17 @@ import { PROOFS } from './common/proofSystems'
 export const worldcoinsmtb: Project = {
   id: ProjectId('worldcoinsmtb'),
   slug: 'worldcoin-smtb',
+  name: 'Worldcoin SMTB',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-05-23')),
   // tags
   isZkCatalog: true,
   // data
-  title: {
-    name: 'Worldcoin SMTB',
-    shortName: undefined,
+  statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
   },
   proofVerification: {
     shortDescription:

@@ -2,7 +2,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Project } from './Project'
 import { getProjects } from './getProjects'
 
-type BasicKeys = 'id' | 'slug' | 'addedAt'
+type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
 type Key = Exclude<keyof Project, BasicKeys>
 type NonOptionalProject = {
   [K in Key]: Exclude<Project[K], undefined>
@@ -90,6 +90,7 @@ function createMap<K extends Key, O extends Key>(query: {
     'id',
     'slug',
     'name',
+    'shortName',
     'addedAt',
     ...(query.select ?? []),
     ...(query.optional ?? []),
