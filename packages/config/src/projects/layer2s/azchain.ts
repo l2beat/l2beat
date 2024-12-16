@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import type { Layer2 } from './types'
 
-export const happychain: Layer2 = upcomingL2({
-  id: 'happy-chain',
+export const azchain: Layer2 = upcomingL2({
+  id: 'azchain',
   createdAt: new UnixTime(1727519160), // 2024-09-27T17:09:00Z
   display: {
     name: 'AZ Chain',
