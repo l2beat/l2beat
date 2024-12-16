@@ -6,7 +6,7 @@ import { withSentryConfig } from '@sentry/nextjs'
 const nextConfig = {
   experimental: {
     optimizePackageImports: [
-      '@l2beat/config',
+      // '@l2beat/config',
       '@l2beat/database',
       '@l2beat/discovery',
       '@l2beat/discovery-types',
