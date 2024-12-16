@@ -6,7 +6,7 @@ import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { ChevronIcon } from '~/icons/chevron'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
@@ -22,9 +22,9 @@ export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
-  const useRecategorized = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
+  const { showOthers } = featureFlags
 
-  if (useRecategorized) {
+  if (showOthers) {
     return <RecategorizedChart unit={unit} timeRange={timeRange} />
   } else {
     return <TvlChart unit={unit} timeRange={timeRange} />
