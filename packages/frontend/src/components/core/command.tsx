@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from './dialog'
 const Command = ({
   ref,
   className,
-  sidebar,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive> & {
   sidebar?: boolean
@@ -20,8 +19,7 @@ const Command = ({
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md',
-      sidebar ? 'sidebar bg-surface-secondary' : 'bg-gray-200 dark:bg-zinc-700',
+      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md bg-surface-secondary',
       className,
     )}
     {...props}
