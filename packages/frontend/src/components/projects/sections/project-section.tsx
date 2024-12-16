@@ -25,9 +25,10 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
   return (
     <Component
       id={props.id}
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       className={cn(
         'mt-10',
-        !isMobile && 'primary-card bg-surface-primary rounded-lg p-8',
+        !isMobile && 'primary-card rounded-lg bg-surface-primary p-8',
         props.nested && 'mt-10 md:p-0',
         props.className,
       )}

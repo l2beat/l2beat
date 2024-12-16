@@ -16,7 +16,7 @@ const Checkbox = ({
     <div
       className={cn(
         'flex h-8 w-max select-none items-center space-x-2 rounded-lg py-1 pl-2 pr-3',
-        'primary-card:bg-surface-secondary bg-surface-primary',
+        'bg-surface-primary primary-card:bg-surface-secondary',
         className,
       )}
     >
@@ -34,7 +34,7 @@ const Checkbox = ({
           <CheckIcon
             className={cn(
               'size-5 stroke-[1.8px]',
-              'primary-card!stroke-surface-secondary !stroke-surface-primary',
+              '!stroke-surface-primary primary-card:!stroke-surface-secondary',
             )}
           />
         </CheckboxPrimitive.Indicator>

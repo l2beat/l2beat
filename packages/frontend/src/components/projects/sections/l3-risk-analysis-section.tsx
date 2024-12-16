@@ -171,7 +171,7 @@ function CombinedRiskTable(props: {
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             <HeaderCell className="rounded-tl">
               <span className="text-sm font-medium">{props.l2.name}</span>
-              <div className="text-[13px] font-normal text-secondary leading-none">
+              <div className="text-[13px] font-normal leading-none text-secondary">
                 L2
               </div>
             </HeaderCell>
@@ -182,7 +182,7 @@ function CombinedRiskTable(props: {
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             <HeaderCell>
               <span className="text-xs font-medium">{props.l3.name}</span>
-              <div className="text-[13px] font-normal text-secondary leading-none">
+              <div className="text-[13px] font-normal leading-none text-secondary">
                 L3 • Individual
               </div>
             </HeaderCell>
@@ -193,7 +193,7 @@ function CombinedRiskTable(props: {
           <tr className="border-zinc-700 dark:border-zinc-300 [&>td:not(:last-child)]:border-r-0 [&>td]:border-t-2">
             <HeaderCell className="rounded-bl border-t-zinc-700 dark:border-t-zinc-300">
               <span className="text-xs font-medium">{props.l3.name}</span>
-              <div className="whitespace-nowrap text-[13px] font-normal text-secondary leading-none">
+              <div className="whitespace-nowrap text-[13px] font-normal leading-none text-secondary">
                 L3 • Combined
               </div>
             </HeaderCell>
