@@ -13,13 +13,12 @@ export interface ClientCoreDependencies {
 }
 
 export abstract class ClientCore {
-  private rateLimiter: RateLimiter
-  private retryHandler: RetryHandler
-  private logger: Logger
+  rateLimiter: RateLimiter
+  retryHandler: RetryHandler
 
   constructor(private readonly deps: ClientCoreDependencies) {
-    this.logger = deps.logger.for(this).tag({ source: deps.sourceName })
-    this.retryHandler = RetryHandler.create(deps.retryStrategy, this.logger)
+    const logger = deps.logger.tag({ source: deps.sourceName })
+    this.retryHandler = RetryHandler.create(deps.retryStrategy, logger)
     this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
   }
 
@@ -42,7 +41,6 @@ export abstract class ClientCore {
   }
 
   private async _fetch(url: string, init: RequestInit): Promise<json> {
-    this.logger.info('Fetching')
     const response = await this.deps.http.fetch(url, init)
 
     const validationInfo = this.validateResponse(response)
