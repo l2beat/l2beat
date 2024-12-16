@@ -46,6 +46,7 @@ interface Params {
   syncStatus: SyncStatus | undefined
 }
 
+// TODO: Once this is the only version being used remove the 2 and the old one
 export function getCommonScalingEntry2({
   project,
   changes,
