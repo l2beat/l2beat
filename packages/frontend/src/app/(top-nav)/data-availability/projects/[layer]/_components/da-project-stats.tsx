@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { round } from 'lodash'
-import { type ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
@@ -30,14 +30,14 @@ export function DaProjectStats({ stats }: Props) {
         const isLastGroup = i === partitionedByThree.length - 1
 
         return (
-          <>
+          <Fragment key={i}>
             {statGroup.map((stat) => (
               <ProjectStat key={stat.title} {...stat} />
             ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
             )}
-          </>
+          </Fragment>
         )
       })}
     </div>
