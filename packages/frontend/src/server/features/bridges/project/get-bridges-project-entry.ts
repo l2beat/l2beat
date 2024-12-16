@@ -25,7 +25,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
     header,
   ] = await Promise.all([
     getContractsVerificationStatuses(project),
-    getManuallyVerifiedContracts(project),
+    getManuallyVerifiedContracts(),
     getProjectsChangeReport(),
     getHeader(project),
   ])

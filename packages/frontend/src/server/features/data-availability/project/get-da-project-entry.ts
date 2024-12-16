@@ -133,7 +133,7 @@ export async function getDaProjectEntry(
     getDaProjectEconomicSecurity(daLayer),
     getDaProjectsTvl(uniqueProjectsInUse),
     getContractsVerificationStatuses(daLayer),
-    getManuallyVerifiedContracts(daLayer),
+    getManuallyVerifiedContracts(),
     getProjectsChangeReport(),
   ])
 
