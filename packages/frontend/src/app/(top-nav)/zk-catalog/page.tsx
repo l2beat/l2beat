@@ -17,7 +17,7 @@ export const metadata: Metadata = getDefaultMetadata({
 export default async function Page() {
   const verifiers = await getVerifiers()
   const projects = await ProjectService.STATIC.getProjects({
-    select: ['title', 'proofVerification'],
+    select: ['proofVerification'],
     whereNot: ['isArchived'],
   })
   const view = getZkCatalogView(projects, verifiers)

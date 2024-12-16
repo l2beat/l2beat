@@ -3,13 +3,11 @@ import { type SearchBarProject } from './search-bar-entry'
 
 export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
   const projects = await ProjectService.STATIC.getProjects({
-    select: ['title'],
     optional: [
+      'scalingInfo',
       'daBridges',
       'isZkCatalog',
       'isScaling',
-      'isLayer2',
-      'isLayer3',
       'isBridge',
       'isDaLayer',
       'isUpcoming',
@@ -21,7 +19,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
     const common = {
       type: 'project',
       id: p.id,
-      name: p.title.name,
+      name: p.name,
       kind: getKind(p),
       isUpcoming: !!p.isUpcoming,
       iconUrl: `/icons/${p.slug}.png`,
@@ -59,10 +57,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
         results.push({
           ...common,
           id: `${p.id}-${b.id}`,
-          name:
-            b.type === 'DAC'
-              ? p.title.name
-              : `${p.title.name} with ${b.display.name}`,
+          name: b.type === 'DAC' ? p.name : `${p.name} with ${b.display.name}`,
           href: `/data-availability/projects/${p.slug}/${b.display.slug}`,
           category: 'da',
           tags: [p.slug, b.display.slug],
@@ -78,11 +73,11 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
 function getKind(
   p: ProjectWith<
     never,
-    'isLayer2' | 'isLayer3' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
+    'scalingInfo' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
   >,
 ): SearchBarProject['kind'] {
-  if (p.isLayer2) return 'layer2'
-  if (p.isLayer3) return 'layer3'
+  if (p.scalingInfo?.layer === 'layer2') return 'layer2'
+  if (p.scalingInfo?.layer === 'layer3') return 'layer3'
   if (p.isBridge) return 'bridge'
   if (p.isZkCatalog) return 'zkCatalog'
   if (p.isDaLayer) return 'da'

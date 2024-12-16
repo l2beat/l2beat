@@ -6,7 +6,7 @@ import { getTrustedSetup } from '../../_utils/get-trusted-setup'
 import { type ZkCatalogProjectDetails } from '../_components/zk-catalog-project-page'
 
 export function getZkCatalogProjectDetails(
-  project: ProjectWith<'title' | 'proofVerification', 'isScaling'>,
+  project: ProjectWith<'proofVerification', 'isScaling'>,
   verifiersStatues: VerifiersStatuses,
 ): ZkCatalogProjectDetails {
   const descriptionEntry = getCollectionEntry(
@@ -17,7 +17,7 @@ export function getZkCatalogProjectDetails(
   const proofVerification = getProofVerification(project, verifiersStatues)
 
   return {
-    title: project.title.name,
+    title: project.name,
     icon: `/icons/${project.slug}.png`,
     linkToMainProjectDetails: project.isScaling
       ? `/scaling/projects/${project.slug}`

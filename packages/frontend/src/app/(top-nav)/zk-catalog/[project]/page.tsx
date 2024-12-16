@@ -30,7 +30,6 @@ export async function generateMetadata(props: Props): Promise<Metadata | null> {
   const params = await props.params
   const project = await ProjectService.STATIC.getProject({
     slug: params.project,
-    select: ['title'],
     where: ['proofVerification'],
     whereNot: ['isArchived'],
   })
@@ -38,7 +37,7 @@ export async function generateMetadata(props: Props): Promise<Metadata | null> {
     return null
   }
   return getDefaultMetadata({
-    title: `${project.title.name} - ZK Catalog`,
+    title: `${project.name} - ZK Catalog`,
   })
 }
 
@@ -46,7 +45,7 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = await ProjectService.STATIC.getProject({
     slug: params.project,
-    select: ['title', 'proofVerification'],
+    select: ['proofVerification'],
     optional: ['isScaling'],
     whereNot: ['isArchived'],
   })
