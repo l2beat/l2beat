@@ -132,8 +132,6 @@ export const fuel: Layer2 = {
     },
   },
   riskView: {
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       secondLine: formatChallengePeriod(challengePeriod),

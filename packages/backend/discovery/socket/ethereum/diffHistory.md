@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x14dd41929a299910e18622e57318631aefcd6b63
+
+# Diff at Fri, 13 Dec 2024 14:51:52 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@057a0310a9622d3c37d8b5e224c59b5dbd3a0507 block: 21388211
+- current block number: 21394305
+
+## Description
+
+New socket, unverified.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.137:
++        "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93"
+    }
+```
+
+Generated with discovered.json: 0x78fb2ab272ee12498d40aeb036dff44dff969d4b
+
+# Diff at Thu, 12 Dec 2024 18:27:06 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21358014
+- current block number: 21388211
+
+## Description
+
+New plugs (SolvBTC, SolvBTC.BNN).
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.136:
++        "0xA2bE759B86CeA53372C3e9a882047cdC3884D568"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.135:
++        "0x94104d7801f30d2f9069118C65Fe63A3A11515B1"
+    }
+```
+
 Generated with discovered.json: 0xf3fa224072fe364832c2eb794cce180e0b0147d8
 
 # Diff at Sun, 08 Dec 2024 13:17:33 GMT:

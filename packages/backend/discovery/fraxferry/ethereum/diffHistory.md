@@ -1,3 +1,717 @@
+Generated with discovered.json: 0xcaeffb06be67727b8aa900a63c53e504ab5c0670
+
+# Diff at Thu, 12 Dec 2024 18:07:50 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 19697870
+- current block number: 21388115
+
+## Description
+
+Ignored not needed values in ferry template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19697870 (main branch discovery), not current.
+
+```diff
+    contract sfrxETH Ferry Bridge (Optimism) (0x04ba20D2Cc47C63bce1166C2864F0241e4D0a0CC) {
+    +++ description: None
+      values.executeIndex:
+-        43
+      values.noBatches:
+-        44
+      values.noTransactions:
+-        111
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Optimism) (0x06Fa869caa1160754C6a0B744Da6454c5EA325d4) {
+    +++ description: None
+      values.executeIndex:
+-        98
+      values.noBatches:
+-        98
+      values.noTransactions:
+-        109
+    }
+```
+
+```diff
+    contract FPI Ferry Bridge (ZKsync) (0x0F6136F9aBB7A0c21FbE076771625b39C544BDf5) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        1
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (Fantom) (0x1313d143BE1ac25aCACEFF39Bf31877bccDb9622) {
+    +++ description: None
+      values.executeIndex:
+-        59
+      values.noBatches:
+-        59
+      values.noTransactions:
+-        87
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Moonriver) (0x15ADa72A3B52A88E25DdD2CC2bA1120234e34bb0) {
+    +++ description: None
+      values.executeIndex:
+-        210
+      values.noBatches:
+-        210
+      values.noTransactions:
+-        110
+    }
+```
+
+```diff
+    contract FPIS Ferry Bridge (Avalanche) (0x18A5ca670dC42D0551f00E11A730074f6787f17F) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (Moonbeam) (0x228567c10b7533C88057c10dDeA6349360F122c5) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        2
+    }
+```
+
+```diff
+    contract sFRAX Ferry Bridge (Arbitrum) (0x2453b1FbD17ceA069A31C9D16A27f4F93a85Cc0d) {
+    +++ description: None
+      values.executeIndex:
+-        8
+      values.noBatches:
+-        8
+      values.noTransactions:
+-        41
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (ZKsync) (0x27E97F35D80514D5DD1Caa730e22a292E912a214) {
+    +++ description: None
+      values.executeIndex:
+-        2
+      values.noBatches:
+-        2
+      values.noTransactions:
+-        4
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (ZKsync) (0x29396AaE6198130A15F6Ff982C44BC4a7353Ef37) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        3
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (evmos) (0x2d2261f970F605C813f160E8BAEd455E9004A842) {
+    +++ description: None
+      values.executeIndex:
+-        5
+      values.noBatches:
+-        5
+      values.noTransactions:
+-        1
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (Moonbeam) (0x2De1354c98880889643c4cA8B06FA2Fb8Fc1Fd7A) {
+    +++ description: None
+      values.executeIndex:
+-        22
+      values.noBatches:
+-        22
+      values.noTransactions:
+-        47
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (Optimism) (0x2F08F4645d2fA1fB12D2db8531c0c2EA0268BdE2) {
+    +++ description: None
+      values.executeIndex:
+-        75
+      values.noBatches:
+-        75
+      values.noTransactions:
+-        149
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (ZKsync) (0x32dDf80508cfD8feD8ABe375582FC7cfD20372C4) {
+    +++ description: None
+      values.executeIndex:
+-        5
+      values.noBatches:
+-        5
+      values.noTransactions:
+-        11
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (Polygon zkEVM) (0x3aaB5C43D4e47f71DEea94a7d541E6C07e21B137) {
+    +++ description: None
+      values.executeIndex:
+-        27
+      values.noBatches:
+-        27
+      values.noTransactions:
+-        26
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Boba) (0x3eF1d856EA62A2292B8690855042095a7aC48B4b) {
+    +++ description: None
+      values.executeIndex:
+-        12
+      values.noBatches:
+-        12
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Polygon PoS) (0x43959A388603DCb6B02Ca084A55d4c7f3b442c57) {
+    +++ description: None
+      values.executeIndex:
+-        72
+      values.noBatches:
+-        72
+      values.noTransactions:
+-        92
+    }
+```
+
+```diff
+    contract FPI Ferry Bridge (Polygon zkEVM) (0x45D2d8e4aB0F5af1D29305301A1b31D5d41b3349) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        1
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (Arbitrum) (0x4b8792aF00eaE944484bF572bc33029B2184a50C) {
+    +++ description: None
+      values.executeIndex:
+-        181
+      values.noBatches:
+-        181
+      values.noTransactions:
+-        287
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (Arbitrum) (0x505603e2440b44C1602b44D0Eb8385399b3F7bab) {
+    +++ description: None
+      values.executeIndex:
+-        91
+      values.noBatches:
+-        92
+      values.noTransactions:
+-        207
+    }
+```
+
+```diff
+    contract FPI Ferry Bridge (Arbitrum) (0x5878d03AA50d2c00A921948Ea8Fa5F2d247f6BDB) {
+    +++ description: None
+      values.executeIndex:
+-        11
+      values.noBatches:
+-        11
+      values.noTransactions:
+-        12
+    }
+```
+
+```diff
+    contract sFRAX Ferry Bridge (Avalanche) (0x59ae66FB395893E3FD965aDb06A52d06C49dF8A9) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        1
+    }
+```
+
+```diff
+    contract sFRAX Ferry Bridge (Polygon zkEVM) (0x602cCfee6B4BA8Eb5e35Cf26e05fDEDE379e578E) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        1
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (bsc) (0x621D0e62f26314387f338A2509aFA3Ae3414661A) {
+    +++ description: None
+      values.executeIndex:
+-        49
+      values.noBatches:
+-        49
+      values.noTransactions:
+-        72
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (Optimism) (0x6650D5183C4Cd294a81B1F724c365b0c42f8270a) {
+    +++ description: None
+      values.executeIndex:
+-        71
+      values.noBatches:
+-        71
+      values.noTransactions:
+-        71
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Aurora) (0x6ac96F65156281a9383455D704b58A74ea9C9eC4) {
+    +++ description: None
+      values.executeIndex:
+-        9
+      values.noBatches:
+-        9
+      values.noTransactions:
+-        9
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Arbitrum) (0x85c5f05Ae4CB68190C695a22b292C3bA90696128) {
+    +++ description: None
+      values.executeIndex:
+-        199
+      values.noBatches:
+-        199
+      values.noTransactions:
+-        335
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Polygon zkEVM) (0x86E71075e55F0aaD27D700017E0783458310c98a) {
+    +++ description: None
+      values.executeIndex:
+-        22
+      values.noBatches:
+-        22
+      values.noTransactions:
+-        24
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (Arbitrum) (0x8afd5082E0C24dEcEA39A9eFb14e4ACF4373D7D6) {
+    +++ description: None
+      values.executeIndex:
+-        68
+      values.noBatches:
+-        68
+      values.noTransactions:
+-        146
+    }
+```
+
+```diff
+    contract FPIS Ferry Bridge (Optimism) (0x8Bf7Af56bB721BC3d015111508593Fcb301546F0) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (Polygon PoS) (0x91Ff54EffF7564BA3884A91d0E293502D8E6fF90) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (Avalanche) (0x94ddd112C9ea0fb534e376BE09A50d310F0612b4) {
+    +++ description: None
+      values.executeIndex:
+-        9
+      values.noBatches:
+-        9
+      values.noTransactions:
+-        13
+    }
+```
+
+```diff
+    contract sFRAX Ferry Bridge (Optimism) (0x9694dcF5b6CCF6216B05FE64945f62603e2d2367) {
+    +++ description: None
+      values.executeIndex:
+-        5
+      values.noBatches:
+-        5
+      values.noTransactions:
+-        26
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (Polygon PoS) (0x98f5E4b7D9eDF57A6ED41b334bD40B2eAa6B6e26) {
+    +++ description: None
+      values.executeIndex:
+-        33
+      values.noBatches:
+-        33
+      values.noTransactions:
+-        48
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (Avalanche) (0x9Ab224996D25bfDCB91d838F7f1902698Ac0a742) {
+    +++ description: None
+      values.executeIndex:
+-        36
+      values.noBatches:
+-        36
+      values.noTransactions:
+-        59
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (bsc) (0x9B62402Eb9A755677dEbdaE3639CB531c0Af0E5d) {
+    +++ description: None
+      values.executeIndex:
+-        55
+      values.noBatches:
+-        55
+      values.noTransactions:
+-        73
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (ZKsync) (0x9f76b097Cd95627bFbD8052A583127FF6e7b3Fa9) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        6
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Avalanche) (0xA381d58e96eC3818c825E1fb264099448945CF8b) {
+    +++ description: None
+      values.executeIndex:
+-        61
+      values.noBatches:
+-        62
+      values.noTransactions:
+-        45
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (Fantom) (0xaF4305d05e9B08b1D17894ce1ACE8235528f7EdE) {
+    +++ description: None
+      values.executeIndex:
+-        10
+      values.noBatches:
+-        10
+      values.noTransactions:
+-        15
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (Fantom) (0xB6b0290A39E2F896bBd8fC19cf17FE393e993dE4) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (Polygon zkEVM) (0xb8686Ef9B7ee9e73dE5d1721E4Da580278F8F4d2) {
+    +++ description: None
+      values.executeIndex:
+-        12
+      values.noBatches:
+-        12
+      values.noTransactions:
+-        16
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (polygonzkEVM) (0xBa32Df0b78b1A68F7FA304BbD4Ed7a56A74c525a) {
+    +++ description: None
+      values.executeIndex:
+-        11
+      values.noBatches:
+-        11
+      values.noTransactions:
+-        6
+    }
+```
+
+```diff
+    contract FPI Ferry Bridge (Avalanche) (0xbb6b54F8969a4711527fdF6AB852B6D6cdF368d1) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (Moonbeam) (0xbc3A2bF4FA20bE2056DCE5BFB168970BA657F187) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract FPI Ferry Bridge (Optimism) (0xC05DE1CB258bAdc152d8EAd3F573CA9A2E812B2a) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (Polygon PoS) (0xCa026e80F1E9e44da7ce3eD6aC2E9630260B9276) {
+    +++ description: None
+      values.executeIndex:
+-        28
+      values.noBatches:
+-        28
+      values.noTransactions:
+-        61
+    }
+```
+
+```diff
+    contract FPIS Ferry Bridge (Arbitrum) (0xCd4aa7DB9D8a995a651498E94f6693A4D26e6C9E) {
+    +++ description: None
+      values.executeIndex:
+-        2
+      values.noBatches:
+-        2
+      values.noTransactions:
+-        4
+    }
+```
+
+```diff
+    contract frxETH Ferry Bridge (bsc) (0xce4DbAF3fa72C962Ee1F371694109fc2a80B03f5) {
+    +++ description: None
+      values.executeIndex:
+-        79
+      values.noBatches:
+-        79
+      values.noTransactions:
+-        140
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (bsc) (0xDAe210BfB0cF8c81EDB4b459e2e0bA14D553e2D9) {
+    +++ description: None
+      values.executeIndex:
+-        151
+      values.noBatches:
+-        151
+      values.noTransactions:
+-        221
+    }
+```
+
+```diff
+    contract sFRAX Ferry Bridge (bsc) (0xe3e7F354ac948ceBa925181C81618D7c9b3da8C9) {
+    +++ description: None
+      values.executeIndex:
+-        4
+      values.noBatches:
+-        4
+      values.noTransactions:
+-        7
+    }
+```
+
+```diff
+    contract FPIS Ferry Bridge (bsc) (0xf18B122c3935Ff49f62C8f1f77Dc42A6F85A0bb5) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Moonbeam) (0xF1E1deA8F1053FD9C5F47f72F1f03977E17aF242) {
+    +++ description: None
+      values.executeIndex:
+-        123
+      values.noBatches:
+-        123
+      values.noTransactions:
+-        112
+    }
+```
+
+```diff
+    contract sfrxETH Ferry Bridge (Avalanche) (0xF380200B115Caa22D49e6C115b758d6130377620) {
+    +++ description: None
+      values.executeIndex:
+-        4
+      values.noBatches:
+-        4
+      values.noTransactions:
+-        10
+    }
+```
+
+```diff
+    contract FPIS Ferry Bridge (Polygon zkEVM) (0xF887C4cFAAfB43d1AA7De204344895591016772c) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        1
+    }
+```
+
+```diff
+    contract FRAX Ferry Bridge (Fantom) (0xfB788F9E20ef426a32A67986654750172A6c1788) {
+    +++ description: None
+      values.executeIndex:
+-        143
+      values.noBatches:
+-        143
+      values.noTransactions:
+-        109
+    }
+```
+
+```diff
+    contract FPIS Ferry Bridge (ZKsync) (0xFBC512849D4dcEeeFAa1bfce08B3dC9daD755482) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        1
+    }
+```
+
+```diff
+    contract FPI Ferry Bridge (bsc) (0xfbD33d2f3330f063C87b523Ba80D5F7f296E5393) {
+    +++ description: None
+      values.executeIndex:
+-        0
+      values.noBatches:
+-        0
+      values.noTransactions:
+-        0
+    }
+```
+
+```diff
+    contract FXS Ferry Bridge (Moonriver) (0xFe7ebA20c20C8FF12A337F940Ce7A97c6e2594DE) {
+    +++ description: None
+      values.executeIndex:
+-        2
+      values.noBatches:
+-        2
+      values.noTransactions:
+-        3
+    }
+```
+
 Generated with discovered.json: 0x35813d3714df8c5ffd216b896a66a8f3ad866ec7
 
 # Diff at Tue, 10 Dec 2024 10:38:54 GMT:

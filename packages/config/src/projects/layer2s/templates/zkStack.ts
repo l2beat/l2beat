@@ -282,7 +282,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     badges: mergeBadges(
-      [Badge.Stack.ZKStack, Badge.VM.EVM, Badge.DA.EthereumBlobs],
+      [
+        Badge.Stack.ZKStack,
+        Badge.Infra.ElasticChain,
+        Badge.VM.EVM,
+        Badge.DA.EthereumBlobs,
+      ],
       templateVars.additionalBadges ?? [],
     ),
     display: {
@@ -453,8 +458,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           },
         ],
       },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     },
     stage:
       templateVars.stage ??

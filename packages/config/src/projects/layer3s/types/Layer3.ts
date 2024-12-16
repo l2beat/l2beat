@@ -32,7 +32,7 @@ export interface Layer3 {
   /** Has this layer3 changed and is under review? */
   isUnderReview?: boolean
   /** ProjectId of hostChain */
-  hostChain: ProjectId | 'Multiple'
+  hostChain: ProjectId
   /** Information displayed about the layer3 on the frontend */
   display: Layer3Display
   /** Information required to calculate the stats of the layer3 */

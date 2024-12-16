@@ -7,7 +7,10 @@ import {
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import {
+  type DaBridgeSummaryEntry,
+  type DaSummaryEntry,
+} from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import {
   BasicDaTable,
@@ -63,7 +66,7 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
 function BridgeCells({
   bridge,
 }: {
-  bridge: DaSummaryEntry['bridges'][number]
+  bridge: DaBridgeSummaryEntry
   excludeBridge?: boolean
 }) {
   const bridgeRisks = mapBridgeRisksToRosetteValues(bridge.risks)
@@ -82,7 +85,7 @@ function BridgeCells({
       >
         <GrissiniCell
           values={bridgeRisks}
-          hasNoBridge={bridge.type === 'NoBridge'}
+          hasNoBridge={bridge.risks.isNoBridge}
         />
       </TableCell>
       <TableCell

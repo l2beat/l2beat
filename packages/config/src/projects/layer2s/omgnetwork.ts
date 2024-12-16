@@ -72,8 +72,6 @@ export const omgnetwork: Layer2 = {
         RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP.description +
         ' The details are unknown.',
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('OMG'),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {

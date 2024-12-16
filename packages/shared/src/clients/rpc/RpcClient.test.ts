@@ -3,15 +3,15 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 import { HttpClient2 } from '../http/HttpClient2'
-import { RpcClient2 } from './RpcClient2'
+import { RpcClient } from './RpcClient'
 
 export const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
   'function totalSupply() view returns (uint256)',
 ])
 
-describe(RpcClient2.name, () => {
-  describe(RpcClient2.prototype.getLatestBlockNumber.name, () => {
+describe(RpcClient.name, () => {
+  describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => mockResponse(100),
@@ -32,7 +32,7 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.getBlock.name, () => {
+  describe(RpcClient.prototype.getBlock.name, () => {
     it('include tx bodies', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => mockResponse(100),
@@ -86,7 +86,7 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.getTransaction.name, () => {
+  describe(RpcClient.prototype.getTransaction.name, () => {
     it('fetches tx from rpc and parsers response', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => ({
@@ -110,7 +110,7 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.getTransactionReceipt.name, () => {
+  describe(RpcClient.prototype.getTransactionReceipt.name, () => {
     it('fetches tx receipt from rpc and parsers response', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => ({
@@ -134,7 +134,7 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.getBalance.name, () => {
+  describe(RpcClient.prototype.getBalance.name, () => {
     it('returns balance for given address and block', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => ({ result: '0x7B' }),
@@ -156,7 +156,7 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.call.name, () => {
+  describe(RpcClient.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => ({ result: '0x123abc' }),
@@ -282,7 +282,7 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.query.name, () => {
+  describe(RpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
       const http = mockObject<HttpClient2>({
         fetch: async () => 'data-returned-from-api',
@@ -308,7 +308,7 @@ describe(RpcClient2.name, () => {
     })
   })
 
-  describe(RpcClient2.prototype.validateResponse.name, () => {
+  describe(RpcClient.prototype.validateResponse.name, () => {
     it('returns false when response includes errors', async () => {
       const rpc = mockClient({})
       const validationInfo = rpc.validateResponse({
@@ -338,7 +338,7 @@ function mockClient(deps: {
   url?: string
   generateId?: () => string
 }) {
-  return new RpcClient2({
+  return new RpcClient({
     sourceName: 'chain',
     url: deps.url ?? 'API_URL',
     http: deps.http ?? mockObject<HttpClient2>({}),

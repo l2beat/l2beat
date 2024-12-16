@@ -1,8 +1,8 @@
 {
   "name": "xdai",
   "chain": "ethereum",
-  "blockNumber": 21322860,
-  "configHash": "0x4059aa66bf1ac89eccde61364d7030489396498dd650dd241d21a128892a2ac8",
+  "blockNumber": 21387924,
+  "configHash": "0x33130b3297d176067d15a1d5dee2e145d661c3076c934d171df507e087c28d77",
   "contracts": [
     {
       "name": "SDaiForeignBridge",
@@ -23,7 +23,6 @@
         "gasPrice": 0,
         "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
         "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20060,
         "getTrustedForwarder": "0x0000000000000000000000000000000000000000",
         "isInitialized": false,
         "maxAvailablePerTx": 0,
@@ -162,24 +161,6 @@
       "derivedName": "BridgeValidators"
     },
     {
-      "name": "Dai",
-      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "sourceHashes": [
-        "0x9b792a0d5af6c0a88429413cb318629d76df165fef71bda23764c7f730ce6a70"
-      ],
-      "sinceTimestamp": 1573672677,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7",
-        "name": "Dai Stablecoin",
-        "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
-        "symbol": "DAI",
-        "totalSupply": "3564597511875997876172000028",
-        "version": "1"
-      }
-    },
-    {
       "name": "Timelock",
       "address": "0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
       "sourceHashes": [
@@ -256,7 +237,6 @@
         "compRate": 0,
         "comptrollerImplementation": "0x0000000000000000000000000000000000000000",
         "getAllMarkets": [],
-        "getBlockNumber": 21322860,
         "getCompAddress": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
         "isComptroller": true,
         "liquidationIncentiveMantissa": 0,
@@ -268,7 +248,8 @@
         "proposal65FixExecuted": false,
         "seizeGuardianPaused": false,
         "transferGuardianPaused": false
-      }
+      },
+      "derivedName": "Comptroller"
     },
     {
       "name": "Comp",
@@ -338,7 +319,6 @@
         "gasPrice": 0,
         "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
         "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20060,
         "getTrustedForwarder": "0x0000000000000000000000000000000000000000",
         "isInitialized": false,
         "maxAvailablePerTx": 0,
@@ -501,34 +481,6 @@
       "event ValidatorRemoved(address indexed validator)",
       "event RequiredSignaturesChanged(uint256 requiredSignatures)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
-    ],
-    "0x6B175474E89094C44Da98b954EedeAC495271d0F": [
-      "constructor(uint256 chainId_)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event LogNote(bytes4 indexed sig, address indexed usr, bytes32 indexed arg1, bytes32 indexed arg2, bytes data) anonymous",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address usr, uint256 wad) returns (bool)",
-      "function balanceOf(address) view returns (uint256)",
-      "function burn(address usr, uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function deny(address guy)",
-      "function mint(address usr, uint256 wad)",
-      "function move(address src, address dst, uint256 wad)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address holder, address spender, uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s)",
-      "function pull(address usr, uint256 wad)",
-      "function push(address usr, uint256 wad)",
-      "function rely(address guy)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function version() view returns (string)",
-      "function wards(address) view returns (uint256)"
     ],
     "0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": [
       "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) payable returns (bytes)",

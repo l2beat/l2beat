@@ -1,14 +1,13 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { api } from '~/trpc/server'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import {
   type SevenDayTvlBreakdown,
   get7dTvlBreakdown,
@@ -30,49 +29,28 @@ export async function getScalingTvlEntries() {
   ])
 
   const entries = projects
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-      const latestTvl = tvl.projects[project.id.toString()]
-
-      return getScalingTvlEntry(
+    .map((project) =>
+      getScalingTvlEntry(
         project,
-        isVerified,
-        projectsChangeReport,
-        latestTvl,
-      )
-    })
+        projectsChangeReport.getChanges(project.id),
+        tvl.projects[project.id.toString()],
+      ),
+    )
     .filter((entry) => entry.tvl.data)
+    .sort(compareStageAndTvl)
 
-  // Use data we already pulled instead of fetching it again
-  const remappedForOrdering = Object.fromEntries(
-    Object.entries(tvl.projects).map(([k, v]) => [
-      k,
-      v.breakdown.canonical + v.breakdown.native + v.breakdown.external,
-    ]),
-  )
-
-  return groupByMainCategories(orderByStageAndTvl(entries, remappedForOrdering))
+  return groupByTabs(entries)
 }
 
 export type ScalingTvlEntry = Awaited<ReturnType<typeof getScalingTvlEntry>>
 function getScalingTvlEntry(
   project: Layer2 | Layer3,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
+  changes: ProjectChanges,
   latestTvl: SevenDayTvlBreakdown['projects'][string] | undefined,
 ) {
   return {
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-    }),
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
-    entryType: 'scaling' as const,
     tvl: {
       data: latestTvl && {
         total: latestTvl.total,
@@ -84,5 +62,9 @@ function getScalingTvlEntry(
       associatedTokens: project.config.associatedTokens ?? [],
       warnings: [project.display.tvlWarning].filter(notUndefined),
     },
+    tvlOrder:
+      (latestTvl?.breakdown.canonical ?? 0) +
+      (latestTvl?.breakdown.native ?? 0) +
+      (latestTvl?.breakdown.external ?? 0),
   }
 }

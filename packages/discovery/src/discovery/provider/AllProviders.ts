@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient2, RpcClient2 } from '@l2beat/shared'
+import { HttpClient2, RpcClient } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -49,7 +49,7 @@ export class AllProviders {
       const etherscanClient = getExplorerClient(httpClient, config.explorer)
       let blobClient: BlobClient | undefined
 
-      const ethereumRpc = new RpcClient2({
+      const ethereumRpc = new RpcClient({
         url: config.rpcUrl,
         retryStrategy: 'SCRIPT',
         callsPerMinute: 60,

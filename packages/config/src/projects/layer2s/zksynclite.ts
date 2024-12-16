@@ -246,8 +246,6 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage(
     {

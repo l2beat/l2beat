@@ -8,7 +8,7 @@ import {
   HttpClient,
   HttpClient2,
   LoopringClient,
-  RpcClient2,
+  RpcClient,
   StarkexClient,
   StarknetClient,
   ZksyncLiteClient,
@@ -25,7 +25,7 @@ export interface Clients {
   coingecko: CoingeckoClient
   blob: BlobClient | undefined
   starknet: StarknetClient | undefined
-  getRpcClient: (chain: string) => RpcClient2
+  getRpcClient: (chain: string) => RpcClient
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -35,13 +35,13 @@ export function initClients(config: Config, logger: Logger): Clients {
   let starkexClient: StarkexClient | undefined
   let loopringClient: LoopringClient | undefined
   let degateClient: LoopringClient | undefined
-  let ethereumClient: RpcClient2 | undefined
+  let ethereumClient: RpcClient | undefined
   let blobClient: BlobClient | undefined
   let starknetClient: StarknetClient | undefined
 
   const blockClients: BlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
-  const rpcClients: RpcClient2[] = []
+  const rpcClients: RpcClient[] = []
 
   for (const chain of config.chainConfig) {
     for (const indexerApi of chain.indexerApis) {
@@ -59,7 +59,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     for (const blockApi of chain.blockApis) {
       switch (blockApi.type) {
         case 'rpc': {
-          const rpcClient = new RpcClient2({
+          const rpcClient = new RpcClient({
             sourceName: chain.name,
             url: blockApi.url,
             http: http2,
