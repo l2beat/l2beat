@@ -36,7 +36,7 @@
     --icon-secondary: 222deg 8.21% 40.6%;
     --overlay: 0deg 0% 0% / 60%;
     --divider: 226deg 14.3% 28.8%;
-}
+  }
 }
 
 @layer base {
@@ -70,7 +70,7 @@
    It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
    Temporary solution until project page is redesigned to new colors.
   */
-  
+
   body:has(.sidebar.main-page-card) [data-role="select-content"] {
     @apply bg-surface-primary;
   }
