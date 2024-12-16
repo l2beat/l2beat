@@ -72,7 +72,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
     })
 
   return (
-    <section className="relative z-1 flex flex-col gap-4">
+    <section className="flex flex-col gap-4">
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
