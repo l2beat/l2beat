@@ -4,12 +4,12 @@ import {
   ChainConfig,
   DataAvailabilityHistory,
   KnowledgeNugget,
-  Layer3Provider,
   Milestone,
   ScalingProjectConfig,
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectStack,
   ScalingProjectTransactionApi,
 } from '../../../common'
 import { ScalingProjectRiskView } from '../../../common/ScalingProjectRiskView'
@@ -76,5 +76,5 @@ export interface Layer3Config extends ScalingProjectConfig {
 
 export type Layer3Display = ScalingProjectDisplay & {
   /** Technology provider */
-  provider?: Layer3Provider
+  provider?: ScalingProjectStack
 }

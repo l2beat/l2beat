@@ -26,8 +26,7 @@ export const REASON_FOR_BEING_OTHER = {
       'Projects without a sufficiently decentralized data availability committee rely on few entities to safely attest data availability on Ethereum. A small set of entities can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
   },
   LOW_DAC_THRESHOLD: {
-    label:
-      'The threshold in the data availability committee is not high enough',
+    label: 'Low DAC threshold',
     shortDescription: 'A higher threshold in the data availability committee',
     description:
       'Projects with a low DAC threshold rely on the honesty of few entities to safely attest data availability on Ethereum. These entities can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',

@@ -1,5 +1,6 @@
 import { formatSI } from '@l2beat/shared'
 import { assert, formatAsAsciiTable } from '@l2beat/shared-pure'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 
 export const ProviderMeasurement = {
   CALL: 0,
@@ -74,11 +75,14 @@ export interface AllProviderStats {
   lowLevelMeasurements: ProviderStats
 }
 
-export function printProviderStats({
-  highLevelMeasurements,
-  cacheMeasurements,
-  lowLevelMeasurements,
-}: AllProviderStats): void {
+export function printProviderStats(
+  logger: DiscoveryLogger,
+  {
+    highLevelMeasurements,
+    cacheMeasurements,
+    lowLevelMeasurements,
+  }: AllProviderStats,
+): void {
   const headers = [
     'Operation',
     'High Level',
@@ -116,7 +120,7 @@ export function printProviderStats({
     )
   }
 
-  console.log(formatAsAsciiTable(headers, rows))
+  logger.log(formatAsAsciiTable(headers, rows))
 }
 
 function formatDurations(durations: number[]): string {

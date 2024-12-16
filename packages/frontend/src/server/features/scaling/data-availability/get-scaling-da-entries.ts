@@ -1,10 +1,15 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  getCurrentEntry,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'

@@ -12,10 +12,17 @@ export const payy: Project = {
   id: ProjectId('payy-zk-catalog'),
   slug: 'payy',
   name: 'Payy',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-07-17')),
   // tags
   isZkCatalog: true,
   // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
   proofVerification: {
     shortDescription: 'A privacy-preserving payment system.',
     aggregation: true,
