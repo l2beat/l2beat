@@ -1,13 +1,18 @@
 'use client'
+import { type Milestone } from '@l2beat/config'
 import { CountBadge } from '~/components/badge/count-badge'
+import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
@@ -16,11 +21,12 @@ import { useCostsTimeRangeContext } from './costs-time-range-context'
 import { CostsMetricControls } from './costs-type-controls'
 import { ScalingCostsTable } from './table/scaling-costs-table'
 
-type Props = TabbedScalingEntries<ScalingCostsEntry>
+type Props = TabbedScalingEntries<ScalingCostsEntry> & {
+  milestones: Milestone[]
+}
 
-export function ScalingCostsTables(props: Props) {
+export function ScalingCostsTabs(props: Props) {
   const includeFilters = useScalingFilter()
-
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
@@ -53,13 +59,34 @@ export function ScalingCostsTables(props: Props) {
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups">
+          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
+            {featureFlags.showOthers && (
+              <>
+                <ScalingCostsChart
+                  entries={props.rollups}
+                  milestones={props.milestones}
+                />
+                <HorizontalSeparator className="my-5" />
+              </>
+            )}
             <ScalingCostsTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
+            <DirectoryTabsContent
+              value="others"
+              className="main-page-card pt-5"
+            >
+              {featureFlags.showOthers && (
+                <>
+                  <ScalingCostsChart
+                    entries={props.others ?? []}
+                    milestones={props.milestones}
+                  />
+                  <HorizontalSeparator className="my-5" />
+                </>
+              )}
               <ScalingCostsTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>
@@ -85,13 +112,20 @@ function Controls({
   }
 
   return (
-    <div className="mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between">
+    <div
+      className={cn(
+        'mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between',
+        featureFlags.showOthers && 'mt-5',
+      )}
+    >
       <ScalingFilters items={entries} />
-      <CostsMetricControls
-        value={metric}
-        onValueChange={onMetricChange}
-        className="max-md:ml-4"
-      />
+      {!featureFlags.showOthers && (
+        <CostsMetricControls
+          value={metric}
+          onValueChange={onMetricChange}
+          className="max-md:ml-4"
+        />
+      )}
     </div>
   )
 }

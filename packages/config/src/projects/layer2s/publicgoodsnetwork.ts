@@ -8,8 +8,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
-const isPaused = discovery.getContractValue<boolean>('OptimismPortal', 'paused')
-
 export const publicgoodsnetwork: Layer2 = opStackL2({
   isArchived: true,
   createdAt: new UnixTime(1690446197), // 2023-07-27T08:23:17Z
@@ -24,9 +22,8 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     name: 'Public Goods Network',
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
-    headerWarning: isPaused
-      ? 'The OptimismPortal is paused, withdrawals from the canonical bridge are not possible.'
-      : undefined,
+    headerWarning:
+      'PGN was sunset in June 2024 and the centralized operator stopped their service. The current canonical bridge escrow contracts are modified to allow for [withdrawals of ETH and ERC-20s based on a pre-configured merkle root](https://gov.gitcoin.co/t/updating-pgns-contract-to-make-funds-easier-to-claim/19569).',
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     links: {

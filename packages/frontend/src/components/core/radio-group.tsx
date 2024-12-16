@@ -15,7 +15,7 @@ const RadioGroup = ({
   return (
     <RadioGroupPrimitive.Root
       className={cn(
-        'group/radio-group inline-flex w-max items-center gap-1 rounded-lg p-1 font-medium',
+        'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
         'bg-surface-primary primary-card:bg-surface-secondary',
         className,
       )}
@@ -36,7 +36,7 @@ const RadioGroupItem = ({
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        'rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+        'h-6 rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
         'group-data-[variant=highlighted]/radio-group:data-[state=checked]:bg-gradient-to-r group-data-[variant=highlighted]/radio-group:data-[state=checked]:from-purple-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:to-pink-100 group-data-[variant=highlighted]/radio-group:data-[state=checked]:text-white',
         'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
