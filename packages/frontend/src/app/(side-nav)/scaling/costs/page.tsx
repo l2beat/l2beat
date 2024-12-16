@@ -2,7 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -19,16 +19,15 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
-
+  const { showOthers } = featureFlags
   const [entries, _, __] = await Promise.all([
     getScalingCostsEntries(),
-    !useOthers &&
+    !showOthers &&
       api.costs.chart.prefetch({ range: '30d', filter: { type: 'all' } }),
     api.costs.table.prefetch({ range: '30d' }),
   ])
 
-  if (useOthers) {
+  if (showOthers) {
     const rollupsIds = entries.rollups.map((project) => project.id)
     await api.costs.chart.prefetch({
       range: '30d',
@@ -46,7 +45,7 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
-              {!useOthers && (
+              {!showOthers && (
                 <MainPageCard>
                   <ScalingCostsChart
                     entries={[

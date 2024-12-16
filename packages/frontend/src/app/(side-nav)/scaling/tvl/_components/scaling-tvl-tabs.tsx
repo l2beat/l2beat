@@ -10,7 +10,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -23,7 +23,7 @@ type Props = TabbedScalingEntries<ScalingTvlEntry> & {
 
 export function ScalingTvlTabs(props: Props) {
   const includeFilters = useScalingFilter()
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
+  const { showOthers } = featureFlags
 
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
@@ -65,7 +65,7 @@ export function ScalingTvlTabs(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {useOthers && (
+            {showOthers && (
               <>
                 <ScalingStackedTvlChart
                   milestones={props.milestones}
@@ -82,7 +82,7 @@ export function ScalingTvlTabs(props: Props) {
             value="validiums-and-optimiums"
             className="main-page-card pt-5"
           >
-            {useOthers && (
+            {showOthers && (
               <>
                 <ScalingStackedTvlChart
                   milestones={props.milestones}
@@ -100,7 +100,7 @@ export function ScalingTvlTabs(props: Props) {
               value="others"
               className="main-page-card pt-5"
             >
-              {useOthers && (
+              {showOthers && (
                 <>
                   <ScalingStackedTvlChart
                     milestones={props.milestones}

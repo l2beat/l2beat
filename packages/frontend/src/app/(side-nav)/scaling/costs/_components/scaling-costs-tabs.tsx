@@ -10,7 +10,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -25,8 +25,7 @@ type Props = TabbedScalingEntries<ScalingCostsEntry> & {
 }
 
 export function ScalingCostsTabs(props: Props) {
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
-
+  const { showOthers } = featureFlags
   const includeFilters = useScalingFilter()
 
   const filteredEntries = {
@@ -62,7 +61,7 @@ export function ScalingCostsTabs(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {useOthers && (
+            {showOthers && (
               <>
                 <ScalingCostsChart
                   entries={props.rollups}
@@ -80,7 +79,7 @@ export function ScalingCostsTabs(props: Props) {
               value="others"
               className="main-page-card pt-5"
             >
-              {useOthers && (
+              {showOthers && (
                 <>
                   <ScalingCostsChart
                     entries={props.others ?? []}

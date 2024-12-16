@@ -10,7 +10,7 @@ import {
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
@@ -31,7 +31,7 @@ interface Props {
 
 export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
+  const { showOthers } = featureFlags
 
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
@@ -40,14 +40,14 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
 
   const filter = useMemo<TvlProjectFilter>(() => {
-    if (!useOthers && filters.isEmpty) {
+    if (!showOthers && filters.isEmpty) {
       return { type: 'layer2' }
     }
     return {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, filters, includeFilter, useOthers])
+  }, [entries, filters, includeFilter, showOthers])
 
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,

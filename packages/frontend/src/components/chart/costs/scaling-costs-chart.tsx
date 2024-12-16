@@ -12,7 +12,7 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
@@ -46,10 +46,10 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
     () => entries.filter((item) => includeFilters(item)),
     [entries, includeFilters],
   )
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
+  const { showOthers } = featureFlags
 
   const filter = useMemo<CostsProjectsFilter>(() => {
-    if (filters.isEmpty && !useOthers) {
+    if (filters.isEmpty && !showOthers) {
       return { type: 'all' }
     }
 
@@ -57,7 +57,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
       type: 'projects',
       projectIds: filteredEntries.map((project) => project.id),
     }
-  }, [filteredEntries, filters, useOthers])
+  }, [filteredEntries, filters, showOthers])
 
   const { data, isLoading } = api.costs.chart.useQuery({
     range,

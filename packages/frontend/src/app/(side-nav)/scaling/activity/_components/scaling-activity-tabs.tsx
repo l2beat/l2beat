@@ -10,7 +10,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
@@ -27,7 +27,7 @@ export function ScalingActivityTabs({
   others,
   milestones,
 }: Props) {
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
+  const { showOthers } = featureFlags
   const includeFilters = useScalingFilter()
 
   const filteredEntries = {
@@ -71,7 +71,7 @@ export function ScalingActivityTabs({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {useOthers && (
+            {showOthers && (
               <>
                 <ActivityChart milestones={milestones} entries={rollups} />
                 <HorizontalSeparator className="mb-2 mt-6" />
@@ -85,7 +85,7 @@ export function ScalingActivityTabs({
             value="validiums-and-optimiums"
             className="main-page-card pt-5"
           >
-            {useOthers && (
+            {showOthers && (
               <>
                 <ActivityChart
                   milestones={milestones}
@@ -105,7 +105,7 @@ export function ScalingActivityTabs({
               value="others"
               className="main-page-card pt-5"
             >
-              {useOthers && (
+              {showOthers && (
                 <>
                   <ActivityChart
                     milestones={milestones}

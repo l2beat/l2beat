@@ -13,7 +13,7 @@ import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -48,10 +48,10 @@ export function ActivityChart({ milestones, entries }: Props) {
     'scaling-activity-show-mainnet',
     true,
   )
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
+  const { showOthers } = featureFlags
 
   const filter =
-    !useOthers && filters.isEmpty
+    !showOthers && filters.isEmpty
       ? { type: 'all' as const }
       : {
           type: 'projects' as const,

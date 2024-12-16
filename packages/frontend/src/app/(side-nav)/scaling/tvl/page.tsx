@@ -2,7 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -18,10 +18,9 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingTvlEntries()
+  const { showOthers } = featureFlags
 
-  const useOthers = env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS
-
-  if (useOthers) {
+  if (showOthers) {
     await api.tvl.chart.prefetch({
       filter: {
         type: 'projects',
@@ -37,7 +36,7 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Value Locked</MainPageHeader>
-          {!useOthers && (
+          {!showOthers && (
             <MainPageCard>
               <ScalingStackedTvlChart
                 milestones={HOMEPAGE_MILESTONES}
