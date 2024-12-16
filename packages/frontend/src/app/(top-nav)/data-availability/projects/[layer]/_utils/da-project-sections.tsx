@@ -1,4 +1,12 @@
-import { type DaBridge, type DaLayer } from '@l2beat/config'
+import {
+  type BlockchainDaLayer,
+  type DacBridge,
+  type DacDaLayer,
+  type EnshrinedBridge,
+  type EthereumDaLayer,
+  type NoDaBridge,
+  type OnChainDaBridge,
+} from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
   type ManuallyVerifiedContracts,
@@ -13,61 +21,56 @@ import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-ris
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 import { getPermissionedEntities } from './get-permissioned-entities'
-interface Params {
-  daLayer: DaLayer
-  daBridge: DaBridge
+
+type RegularDetailsParams = {
+  daLayer: BlockchainDaLayer | DacDaLayer
+  daBridge: OnChainDaBridge | DacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   projectsChangeReport: ProjectsChangeReport
-  grissiniValues: RosetteValue[]
+  evaluatedGrissiniValues: RosetteValue[]
 }
 
-export function getProjectDetails({
+export function getRegularDaProjectSections({
   daLayer,
   daBridge,
   isVerified,
   contractsVerificationStatuses,
   manuallyVerifiedContracts,
   projectsChangeReport,
-  grissiniValues,
-}: Params) {
+  evaluatedGrissiniValues,
+}: RegularDetailsParams) {
   const relatedScalingProject =
     daBridge.type === 'DAC' && daBridge.usedIn.length === 1
       ? daBridge.usedIn[0]
       : undefined
 
-  const permissionsSection =
-    daBridge.type !== 'Enshrined'
-      ? getMultichainPermissionsSection(
-          {
-            id: daLayer.id,
-            bridge: daBridge,
-            isUnderReview: !!daLayer.isUnderReview,
-            permissions: daBridge.permissions,
-            dacUsedIn: relatedScalingProject,
-          },
-          contractsVerificationStatuses,
-          manuallyVerifiedContracts,
-        )
-      : undefined
+  const permissionsSection = getMultichainPermissionsSection(
+    {
+      id: daLayer.id,
+      bridge: daBridge,
+      isUnderReview: !!daLayer.isUnderReview,
+      permissions: daBridge.permissions,
+      dacUsedIn: relatedScalingProject,
+    },
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+  )
 
-  const contractsSection =
-    daBridge.type !== 'Enshrined'
-      ? getMultiChainContractsSection(
-          {
-            id: daBridge.id,
-            isVerified,
-            slug: daBridge.display.slug,
-            contracts: daBridge.contracts,
-            isUnderReview: daLayer.isUnderReview,
-            dacUsedIn: relatedScalingProject,
-          },
-          contractsVerificationStatuses,
-          manuallyVerifiedContracts,
-          projectsChangeReport,
-        )
-      : undefined
+  const contractsSection = getMultiChainContractsSection(
+    {
+      id: daBridge.id,
+      isVerified,
+      slug: daBridge.display.slug,
+      contracts: daBridge.contracts,
+      isUnderReview: daLayer.isUnderReview,
+      dacUsedIn: relatedScalingProject,
+    },
+    contractsVerificationStatuses,
+    manuallyVerifiedContracts,
+    projectsChangeReport,
+  )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
@@ -89,7 +92,7 @@ export function getProjectDetails({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues,
+      grissiniValues: evaluatedGrissiniValues,
     },
   })
 
@@ -202,6 +205,94 @@ export function getProjectDetails({
       },
     })
   }
+
+  if (otherConsiderationsSection.items.length > 0) {
+    items.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
+      },
+    })
+  }
+
+  return items
+}
+
+type EthereumDetailsParams = {
+  daLayer: EthereumDaLayer
+  daBridge: EnshrinedBridge
+  isVerified: boolean
+  evaluatedGrissiniValues: RosetteValue[]
+}
+
+export function getEthereumDaProjectSections({
+  daLayer,
+  daBridge,
+  isVerified,
+  evaluatedGrissiniValues,
+}: EthereumDetailsParams) {
+  const riskSummarySection = getDaProjectRiskSummarySection(
+    daLayer,
+    daBridge,
+    isVerified,
+  )
+
+  const items: ProjectDetailsSection[] = []
+
+  if (
+    riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
+      .length > 0
+  ) {
+    items.push({
+      type: 'DaRiskSummarySection',
+      props: {
+        id: 'risk-summary',
+        title: 'Risk summary',
+        ...riskSummarySection,
+      },
+    })
+  }
+
+  items.push({
+    type: 'GrissiniRiskAnalysisSection',
+    props: {
+      id: 'da-layer-risk-analysis',
+      title: 'Risk analysis',
+      isUnderReview: !!daLayer.isUnderReview,
+      isVerified,
+      grissiniValues: evaluatedGrissiniValues,
+      description: daLayer.display.description,
+    },
+  })
+
+  items.push({
+    type: 'MarkdownSection',
+    props: {
+      id: 'da-layer-technology',
+      title: 'Technology',
+      diagram: {
+        type: 'da-layer-technology',
+        slug: daLayer.display.slug,
+      },
+      content: daLayer.technology.description.concat(
+        '\n\n',
+        daBridge.technology.description,
+      ),
+      mdClassName:
+        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      risks: daLayer.technology.risks?.map(toTechnologyRisk),
+      references: daLayer.technology.references?.concat(
+        ...(daBridge.technology.references ?? []),
+      ),
+    },
+  })
+
+  const otherConsiderationsSection = getDaOtherConsiderationsSection(
+    daLayer,
+    daBridge,
+  )
 
   if (otherConsiderationsSection.items.length > 0) {
     items.push({

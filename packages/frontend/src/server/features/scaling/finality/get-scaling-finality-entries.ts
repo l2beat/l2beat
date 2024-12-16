@@ -1,4 +1,4 @@
-import { type Layer2, layer2s } from '@l2beat/config'
+import { type Layer2, getCurrentEntry, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -13,7 +13,6 @@ import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
 

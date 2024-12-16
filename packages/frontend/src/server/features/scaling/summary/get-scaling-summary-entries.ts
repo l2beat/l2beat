@@ -1,4 +1,10 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  getCurrentEntry,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'
@@ -7,7 +13,6 @@ import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 import {
   type ActivityLatestUopsData,
   getActivityLatestUops,
@@ -19,6 +24,7 @@ import {
 } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import { isProjectOther } from '../utils/is-project-other'
 
 export type ScalingSummaryEntry = Awaited<
   ReturnType<typeof getScalingSummaryEntry>
@@ -67,7 +73,12 @@ function getScalingSummaryEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
-    stage: project.stage ?? { stage: 'NotApplicable' },
+    stage:
+      isProjectOther(project) || !project.stage
+        ? {
+            stage: 'NotApplicable' as const,
+          }
+        : project.stage,
     category: project.display.category,
     provider: project.display.provider,
     dataAvailability,

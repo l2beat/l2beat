@@ -1,6 +1,7 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { OtherMigrationNotice } from '~/components/countdowns/other-migration/other-migration-notice'
+import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/why-am-i-here-notice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
@@ -93,6 +94,11 @@ export default async function Page(props: Props) {
                 <OtherMigrationNotice
                   {...projectEntry.countdowns.otherMigration}
                 />
+              )}
+            {projectEntry.header.category === 'Other' &&
+              projectEntry.reasonsForBeingOther &&
+              projectEntry.reasonsForBeingOther.length > 0 && (
+                <WhyAmIHereNotice reasons={projectEntry.reasonsForBeingOther} />
               )}
             <HighlightableLinkContextProvider>
               <ProjectDetails items={projectEntry.projectDetails} />

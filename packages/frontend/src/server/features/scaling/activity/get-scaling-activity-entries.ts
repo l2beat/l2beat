@@ -4,6 +4,7 @@ import {
   type ScalingProjectDisplay,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
 import { featureFlags } from '~/consts/feature-flags'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
@@ -40,9 +41,11 @@ export async function getScalingActivityEntries() {
     )
     .filter((entry) => entry !== undefined)
     .concat(
-      getEthereumEntry(ethereumData, 'Rollups'),
-      getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-      getEthereumEntry(ethereumData, 'Others'),
+      compact([
+        getEthereumEntry(ethereumData, 'Rollups'),
+        getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
+        featureFlags.showOthers && getEthereumEntry(ethereumData, 'Others'),
+      ]),
     )
     .sort(compareActivityEntry)
 
