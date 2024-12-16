@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -20,7 +19,6 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  ScalingProjectPermissionedAccount,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
@@ -40,28 +38,28 @@ const timelockDelay = discovery.getContractValue<number>(
 )
 const timelockDelayString = formatSeconds(timelockDelay)
 
-const upgradesTimelock = {
-  upgradableBy: ['AdminMultisig'],
-  upgradeDelay: timelockDelay === 0 ? 'No delay' : timelockDelayString,
-}
+// const upgradesTimelock = {
+//   upgradableBy: ['AdminMultisig'],
+//   upgradeDelay: timelockDelay === 0 ? 'No delay' : timelockDelayString,
+// }
 
-const upgrades = {
-  upgradableBy: ['AdminMultisig'],
-  upgradeDelay: 'No delay',
-}
+// const upgrades = {
+//   upgradableBy: ['AdminMultisig'],
+//   upgradeDelay: 'No delay',
+// }
 
-const zodiacRoles = discovery.getContractValue<{
-  roles: Record<string, Record<string, boolean>>
-}>('Roles', 'roles')
-const zodiacPauserRole = '1'
-const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
-  zodiacRoles.roles[zodiacPauserRole].members,
-).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
+// const zodiacRoles = discovery.getContractValue<{
+//   roles: Record<string, Record<string, boolean>>
+// }>('Roles', 'roles')
+// const zodiacPauserRole = '1'
+// const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
+//   zodiacRoles.roles[zodiacPauserRole].members,
+// ).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
 
-const isPaused: boolean =
-  discovery.getContractValue<boolean>('zkEVM', 'generalPause') ||
-  discovery.getContractValue<boolean>('zkEVM', 'l1l2Pause') ||
-  discovery.getContractValue<boolean>('zkEVM', 'l2l1Pause')
+// const isPaused: boolean =
+//   discovery.getContractValue<boolean>('zkEVM', 'generalPause') ||
+//   discovery.getContractValue<boolean>('zkEVM', 'l1l2Pause') ||
+//   discovery.getContractValue<boolean>('zkEVM', 'l2l1Pause')
 
 const periodInSeconds = discovery.getContractValue<number>(
   'zkEVM',
@@ -434,80 +432,80 @@ export const linea: Layer2 = {
     ],
   },
   permissions: [
-    ...discovery.getMultisigPermission(
-      'AdminMultisig',
-      'Admin of the Linea rollup. It can upgrade core contracts, bridges, update permissioned actors, and publish blocks by effectively overriding the proof system.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('Roles'),
-      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles.`,
-    ),
-    {
-      accounts: discovery.getAccessControlRolePermission(
-        'zkEVM',
-        'OPERATOR_ROLE',
-      ),
-      name: 'Operators',
-      description:
-        'The operators are allowed to prove blocks and post the corresponding transaction data.',
-    },
-    {
-      accounts: zodiacPausers,
-      name: 'Pauser',
-      description:
-        'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project.',
-    },
-    {
-      accounts: discovery.getAccessControlRolePermission(
-        'zkEVM',
-        'VERIFIER_SETTER_ROLE',
-      ),
-      name: 'Verifier Setters',
-      description:
-        'The verifier setters are allowed to change the verifier address.',
-    },
+    // ...discovery.getMultisigPermission(
+    //   'AdminMultisig',
+    //   'Admin of the Linea rollup. It can upgrade core contracts, bridges, update permissioned actors, and publish blocks by effectively overriding the proof system.',
+    // ),
+    // discovery.contractAsPermissioned(
+    //   discovery.getContract('Roles'),
+    //   `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles.`,
+    // ),
+    // {
+    //   accounts: discovery.getAccessControlRolePermission(
+    //     'zkEVM',
+    //     'OPERATOR_ROLE',
+    //   ),
+    //   name: 'Operators',
+    //   description:
+    //     'The operators are allowed to prove blocks and post the corresponding transaction data.',
+    // },
+    // {
+    //   accounts: zodiacPausers,
+    //   name: 'Pauser',
+    //   description:
+    //     'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project.',
+    // },
+    // {
+    //   accounts: discovery.getAccessControlRolePermission(
+    //     'zkEVM',
+    //     'VERIFIER_SETTER_ROLE',
+    //   ),
+    //   name: 'Verifier Setters',
+    //   description:
+    //     'The verifier setters are allowed to change the verifier address.',
+    // },
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('zkEVM', {
-        description:
-          'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
-        ...upgradesTimelock,
-        pausable: (() => {
-          const addresses = discovery.getAccessControlField(
-            'zkEVM',
-            'PAUSE_MANAGER_ROLE',
-          ).members
-          assert(addresses.length === 1)
-          assert(
-            addresses[0] ===
-              discovery.getPermissionedAccount('ERC20Bridge', 'owner').address,
-          )
-          return { pausableBy: ['AdminMultisig'], paused: isPaused }
-        })(),
-        references: [
-          {
-            text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
-          },
-        ],
-      }),
-      discovery.getContractDetails(
-        'Timelock',
-        `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
-      ),
-      discovery.getContractDetails('VerifierProofType3', {
-        description:
-          'Currently used smart contract verifying the proofs for the Linea zkEVM.',
-      }),
-      discovery.getContractDetails('ERC20Bridge', {
-        description: 'Contract used to bridge ERC20 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('USDCBridge', {
-        description: 'Contract used to bridge USDC tokens.',
-        ...upgrades,
-      }),
+      // discovery.getContractDetails('zkEVM', {
+      //   description:
+      //     'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
+      //   ...upgradesTimelock,
+      //   pausable: (() => {
+      //     const addresses = discovery.getAccessControlField(
+      //       'zkEVM',
+      //       'PAUSE_MANAGER_ROLE',
+      //     ).members
+      //     assert(addresses.length === 1)
+      //     assert(
+      //       addresses[0] ===
+      //         discovery.getPermissionedAccount('ERC20Bridge', 'owner').address,
+      //     )
+      //     return { pausableBy: ['AdminMultisig'], paused: isPaused }
+      //   })(),
+      //   references: [
+      //     {
+      //       text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
+      //       href: 'https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code',
+      //     },
+      //   ],
+      // }),
+      // discovery.getContractDetails(
+      //   'Timelock',
+      //   `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
+      // ),
+      // discovery.getContractDetails('VerifierProofType3', {
+      //   description:
+      //     'Currently used smart contract verifying the proofs for the Linea zkEVM.',
+      // }),
+      // discovery.getContractDetails('ERC20Bridge', {
+      //   description: 'Contract used to bridge ERC20 tokens.',
+      //   ...upgrades,
+      // }),
+      // discovery.getContractDetails('USDCBridge', {
+      //   description: 'Contract used to bridge USDC tokens.',
+      //   ...upgrades,
+      // }),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },
