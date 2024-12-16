@@ -626,8 +626,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           },
         ],
       },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     },
     stage:
       templateVars.stage === undefined
@@ -768,10 +766,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
     return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,

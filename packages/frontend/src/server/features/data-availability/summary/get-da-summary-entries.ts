@@ -7,8 +7,8 @@ import {
   type DataAvailabilityLayer,
   daLayers,
   ethereumDaLayer,
+  isDaBridgeVerified,
 } from '@l2beat/config'
-import { getDaBridgeVerification } from '@l2beat/config'
 import { type DaChallengeMechanism } from '@l2beat/config/build/src/projects/other/da-beat/types/DaChallengeMechanism'
 import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
@@ -87,7 +87,7 @@ function getDaSummaryEntry(
         statuses: {
           yellowWarning: daBridge.display.warning,
           redWarning: daBridge.display.redWarning,
-          verificationWarning: getDaBridgeVerification(daLayer, daBridge)
+          verificationWarning: isDaBridgeVerified(daLayer, daBridge)
             ? undefined
             : true,
           underReview:

@@ -1,9 +1,15 @@
 import { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../../projects'
 import { getManuallyVerifiedContracts } from './getManuallyVerifiedContracts'
 
-export function getProjectsVerificationStatuses(
-  project: Layer2 | Layer3 | Bridge,
+export function isVerified(
+  project: Layer2 | Layer3 | Bridge | DaLayer,
 ): boolean {
+  if (project.type === 'DaLayer') {
+    return project.bridges.every((bridge) =>
+      isDaBridgeVerified(project, bridge),
+    )
+  }
+
   const manual = getManuallyVerifiedContracts(project)
   const contractsVerification =
     project.contracts?.addresses.every(
@@ -20,10 +26,7 @@ export function getProjectsVerificationStatuses(
   return newVerification
 }
 
-export function getDaBridgeVerification(
-  _: DaLayer,
-  daBridge: DaBridge,
-): boolean {
+export function isDaBridgeVerified(_: DaLayer, daBridge: DaBridge): boolean {
   let verification = true
 
   if ('contracts' in daBridge) {

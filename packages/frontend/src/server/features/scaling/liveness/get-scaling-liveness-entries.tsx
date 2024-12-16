@@ -1,25 +1,22 @@
-import { type Layer2 } from '@l2beat/config'
+import { type Layer2, getCurrentEntry } from '@l2beat/config'
 import {
   TrackedTxsConfigSubtypeValues,
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { getLiveness } from './get-liveness'
-import { type LivenessProject } from './types'
-
-import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
   type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import { getLiveness } from './get-liveness'
+import { type LivenessProject } from './types'
 import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
 import { getLivenessProjects } from './utils/get-liveness-projects'
 
@@ -33,7 +30,6 @@ export async function getScalingLivenessEntries() {
 
   const entries = activeProjects
     .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
       const projectLiveness = liveness[project.id.toString()]
       if (!projectLiveness) {
         return undefined
@@ -41,8 +37,7 @@ export async function getScalingLivenessEntries() {
 
       return getScalingLivenessEntry(
         project,
-        projectsChangeReport,
-        isVerified,
+        projectsChangeReport.getChanges(project.id),
         projectLiveness,
         tvl,
       )
@@ -58,8 +53,7 @@ export type ScalingLivenessEntry = Awaited<
 >
 function getScalingLivenessEntry(
   project: Layer2,
-  projectsChangeReport: ProjectsChangeReport,
-  isVerified: boolean,
+  changes: ProjectChanges,
   liveness: LivenessProject,
   tvl: ProjectsLatestTvlUsd,
 ) {
@@ -68,15 +62,9 @@ function getScalingLivenessEntry(
   return {
     ...getCommonScalingEntry({
       project,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      isVerified,
+      changes,
       syncStatus: data?.syncStatus,
     }),
-    entryType: 'liveness' as const,
     category: project.display.category,
     provider: project.display.provider,
     data,

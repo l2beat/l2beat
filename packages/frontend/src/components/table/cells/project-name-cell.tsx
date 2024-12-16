@@ -3,7 +3,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/other-migration-tooltip'
 import { Markdown } from '~/components/markdown/markdown'
+import { featureFlags } from '~/consts/feature-flags'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
@@ -67,6 +69,13 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         {project.statuses?.syncStatusInfo && (
           <NotSyncedIcon content={project.statuses.syncStatusInfo} />
         )}
+        {featureFlags.showOthers &&
+          project.statuses?.countdowns?.otherMigration &&
+          !featureFlags.othersMigrated() && (
+            <OtherMigrationTooltip
+              {...project.statuses.countdowns.otherMigration}
+            />
+          )}
       </div>
       {project.nameSecondLine && (
         <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
