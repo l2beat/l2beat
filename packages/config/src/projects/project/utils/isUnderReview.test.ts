@@ -1,19 +1,15 @@
-import {
-  type Layer2,
-  type Layer2Config,
-  type Layer2Display,
-  type ScalingProjectContracts,
-  type ScalingProjectRiskView,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectTechnology,
-  type StageConfig,
-} from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import {
+  ScalingProjectContracts,
+  ScalingProjectRiskView,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnology,
+} from '../../../common'
+import { Layer2, Layer2Config, Layer2Display, StageConfig } from '../../layer2s'
+import { isUnderReview } from './isUnderReview'
 
-import { isAnySectionUnderReview } from './is-any-section-under-review'
-
-describe(isAnySectionUnderReview.name, () => {
+describe(isUnderReview.name, () => {
   const mockProject: Layer2 = {
     type: 'layer2',
     createdAt: new UnixTime(1234567890),
@@ -31,7 +27,7 @@ describe(isAnySectionUnderReview.name, () => {
   }
 
   it('returns false', () => {
-    expect(isAnySectionUnderReview(mockProject)).toEqual(false)
+    expect(isUnderReview(mockProject)).toEqual(false)
   })
 
   describe('returns true if', () => {
@@ -40,7 +36,7 @@ describe(isAnySectionUnderReview.name, () => {
         ...mockProject,
         isUnderReview: true,
       }
-      expect(isAnySectionUnderReview(mock)).toEqual(true)
+      expect(isUnderReview(mock)).toEqual(true)
     })
 
     it('project.technology.isUnderReview is true', () => {
@@ -51,7 +47,7 @@ describe(isAnySectionUnderReview.name, () => {
           isUnderReview: true,
         },
       }
-      expect(isAnySectionUnderReview(mock)).toEqual(true)
+      expect(isUnderReview(mock)).toEqual(true)
     })
 
     it('project.contracts.isUnderReview is true', () => {
@@ -62,7 +58,7 @@ describe(isAnySectionUnderReview.name, () => {
           isUnderReview: true,
         },
       }
-      expect(isAnySectionUnderReview(mock)).toEqual(true)
+      expect(isUnderReview(mock)).toEqual(true)
     })
 
     it('project.riskView has a underReview risk', () => {
@@ -76,7 +72,7 @@ describe(isAnySectionUnderReview.name, () => {
           },
         },
       }
-      expect(isAnySectionUnderReview(mock)).toEqual(true)
+      expect(isUnderReview(mock)).toEqual(true)
     })
 
     it('project.type is layer2 and project.stage.stage is UnderReview', () => {
@@ -86,7 +82,7 @@ describe(isAnySectionUnderReview.name, () => {
           stage: 'UnderReview' as const,
         },
       }
-      expect(isAnySectionUnderReview(mock)).toEqual(true)
+      expect(isUnderReview(mock)).toEqual(true)
     })
   })
 })

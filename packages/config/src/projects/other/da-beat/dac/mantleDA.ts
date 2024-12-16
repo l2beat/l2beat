@@ -1,7 +1,7 @@
 import { BigNumber, utils } from 'ethers/lib/ethers'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer } from '../types/DaLayer'
+import { DacDaLayer } from '../types/DaLayer'
 import { mantleDABridge } from './bridges/mantleDABridge'
 
 const discovery = new ProjectDiscovery('mantle')
@@ -23,7 +23,7 @@ const requiredStakeFormatted = parseFloat(
   utils.formatEther(requiredStake),
 ).toLocaleString()
 
-export const mantleDA: DaLayer = {
+export const mantleDA: DacDaLayer = {
   id: 'mantle-da',
   type: 'DaLayer',
   kind: 'DAC',
