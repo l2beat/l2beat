@@ -1,3 +1,172 @@
+Generated with discovered.json: 0x79a10d8f4524e9851730c7da27c18d759d229d56
+
+# Diff at Mon, 16 Dec 2024 15:41:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3a99da1f8daebc5ab5be09d95ef4f970422af2f2 block: 21078909
+- current block number: 21416037
+
+## Description
+
+Linea upgrades to [alpha v4](https://docs.linea.build/release-notes#alpha-v4)!
+
+This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds self-proposing/-proving if there weren't any finalized batches by the operator in the previous 6 months, among smaller changes.
+
+
+
+## Watched changes
+
+```diff
+    contract ERC20Bridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x4c5d4e5696bc435eefd0ba909c6a8a7748c4c49260fcb51a360f07af3c38d76f"
++        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
+      values.$implementation:
+-        "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"
++        "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"
+      values.$pastUpgrades.2:
++        ["2024-12-16T13:52:11.000Z","0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",["0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.owner:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.paused:
+-        false
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
+      values.CONTRACT_VERSION:
++        "1.0"
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.PAUSE_ALL_ROLE:
++        "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77"
+      values.PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
+      values.PAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c"
+      values.REMOVE_RESERVED_TOKEN_ROLE:
++        "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35"
+      values.SET_CUSTOM_CONTRACT_ROLE:
++        "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe"
+      values.SET_MESSAGE_SERVICE_ROLE:
++        "0x77974cc9cb5bafc9bb265be792d93fa46355c05701895b82f6d3b4b448c8ce00"
+      values.SET_REMOTE_TOKENBRIDGE_ROLE:
++        "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24"
+      values.SET_RESERVED_TOKEN_ROLE:
++        "0xeaf25fcc6b7d45bda16c56628df3f435e20319ef53b065c11ee4510083f0ae2d"
+      values.UNPAUSE_ALL_ROLE:
++        "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b"
+      values.UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"
+      values.UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
+    }
+```
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x6eace22f38b33b52c0608ca553753365c7aaa2ac2e9efba018e6f2c4864b9e40"
++        "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
+      values.$implementation:
+-        "0x1825242411792536469Cbb5843fd27Ce3e9e583A"
++        "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
+      values.$pastUpgrades.8:
++        ["2024-12-16T13:52:11.000Z","0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",["0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.accessControl.PAUSE_MANAGER_ROLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_MANAGER:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_L1_L2_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_L2_L1_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_L1_L2_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_L2_L1_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_BLOB_SUBMISSION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_BLOB_SUBMISSION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_FINALIZATION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_FINALIZATION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.USED_RATE_LIMIT_RESETTER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.VERIFIER_UNSETTER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.GENERAL_PAUSE_TYPE:
+-        1
+      values.L1_L2_PAUSE_TYPE:
+-        2
+      values.L2_L1_PAUSE_TYPE:
+-        3
+      values.PAUSE_MANAGER_ROLE:
+-        "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26"
+      values.provenCompressedBlocksWithoutProof:
+-        [2242752]
+      values.PROVING_SYSTEM_PAUSE_TYPE:
+-        4
+      values.CONTRACT_VERSION:
++        "6.0"
+      values.fallbackOperator:
++        "0x3697bD0bC6C050135b8321F989a5316eACbF367D"
+      values.PAUSE_ALL_ROLE:
++        "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77"
+      values.PAUSE_BLOB_SUBMISSION_ROLE:
++        "0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77"
+      values.PAUSE_FINALIZATION_ROLE:
++        "0xe37c272ea30e2bb381ad7cf89ae754b49153250609f36d0cbdad8b64c184bb5c"
+      values.PAUSE_L1_L2_ROLE:
++        "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598"
+      values.PAUSE_L2_L1_ROLE:
++        "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6"
+      values.UNPAUSE_ALL_ROLE:
++        "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b"
+      values.UNPAUSE_BLOB_SUBMISSION_ROLE:
++        "0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40"
+      values.UNPAUSE_FINALIZATION_ROLE:
++        "0x1ab87f7458c0e3d07e9881c14ee67f0141703614fd48ea5b15ed987e5f4b030e"
+      values.UNPAUSE_L1_L2_ROLE:
++        "0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc"
+      values.UNPAUSE_L2_L1_ROLE:
++        "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770"
+      values.USED_RATE_LIMIT_RESETTER_ROLE:
++        "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
+      values.VERIFIER_UNSETTER_ROLE:
++        "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a"
+      errors:
++        {"provenCompressedBlocksWithoutProof":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../linea/ethereum/.flat/CallForwardingProxy.sol   |   23 +
+ .../ERC20Bridge/TokenBridge.sol                    | 1798 +++++++++++++---
+ .../zkEVM/LineaRollup.sol                          | 2267 +++++++++++---------
+ 3 files changed, 2743 insertions(+), 1345 deletions(-)
+```
+
 Generated with discovered.json: 0x36a3a62508cac2618869c642a34cd0abe5d19e63
 
 # Diff at Wed, 30 Oct 2024 14:01:12 GMT:
