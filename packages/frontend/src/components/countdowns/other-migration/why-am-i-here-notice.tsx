@@ -11,10 +11,7 @@ export function WhyAmIHereNotice({
       <h2 className="mr-auto text-2xl font-bold md:text-3xl">
         Why is the project listed in others?
       </h2>
-      <p className="mb-4 mt-6 text-lg font-bold">
-        The project is considered &quot;Other&quot; for the following reasons:
-      </p>
-      <div className="space-y-6">
+      <div className="mt-6 space-y-6">
         {reasons.map((reason) => (
           <div key={reason.label}>
             <Callout
