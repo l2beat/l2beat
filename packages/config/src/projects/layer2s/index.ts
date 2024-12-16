@@ -14,6 +14,7 @@ import { arithmic } from './arithmic'
 import { astarzkevm } from './astarzkevm'
 import { automata } from './automata'
 import { axonum } from './axonum'
+import { azchain } from './azchain'
 import { aztecV1 } from './aztecV1'
 import { aztecV2 } from './aztecV2'
 import { aztecconnect } from './aztecconnect'
@@ -197,6 +198,7 @@ export const layer2s: Layer2[] = [
   alienx,
   align,
   axonum,
+  azchain,
   aztecV1,
   aztecconnect,
   aztecV2,
