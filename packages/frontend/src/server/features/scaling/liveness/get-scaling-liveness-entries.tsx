@@ -4,19 +4,20 @@ import {
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { getLiveness } from './get-liveness'
-import { type LivenessProject } from './types'
-
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import { getCurrentEntry } from '../../utils/get-current-entry'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import {
+  type ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../tvl/utils/get-latest-tvl-usd'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import { getLiveness } from './get-liveness'
+import { type LivenessProject } from './types'
 import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
 import { getLivenessProjects } from './utils/get-liveness-projects'
 
@@ -30,7 +31,6 @@ export async function getScalingLivenessEntries() {
 
   const entries = activeProjects
     .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
       const projectLiveness = liveness[project.id.toString()]
       if (!projectLiveness) {
         return undefined
@@ -38,14 +38,15 @@ export async function getScalingLivenessEntries() {
 
       return getScalingLivenessEntry(
         project,
-        projectsChangeReport,
-        isVerified,
+        projectsChangeReport.getChanges(project.id),
         projectLiveness,
+        tvl,
       )
     })
     .filter(notUndefined)
+    .sort(compareStageAndTvl)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(entries)
 }
 
 export type ScalingLivenessEntry = Awaited<
@@ -53,26 +54,25 @@ export type ScalingLivenessEntry = Awaited<
 >
 function getScalingLivenessEntry(
   project: Layer2,
-  projectsChangeReport: ProjectsChangeReport,
-  isVerified: boolean,
+  changes: ProjectChanges,
   liveness: LivenessProject,
+  tvl: ProjectsLatestTvlUsd,
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
+  const data = getLivenessData(liveness, project)
   return {
     ...getCommonScalingEntry({
       project,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      isVerified,
+      changes,
+      syncStatus: data?.syncStatus,
     }),
-    entryType: 'liveness' as const,
-    data: getLivenessData(liveness, project),
+    category: project.display.category,
+    provider: project.display.provider,
+    data,
     explanation: project.display.liveness?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
     dataAvailabilityMode: dataAvailability?.mode,
+    tvlOrder: tvl[project.id] ?? 0,
   }
 }
 

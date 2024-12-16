@@ -41,7 +41,7 @@
           "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
           "tokenName": "Staked USDe",
           "tokenSymbol": "sUSDe",
-          "tvl": 32663021.717006348
+          "tvl": 34646695.78178526
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -56,7 +56,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 776974.843256
+          "tvl": 732718.617368
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -71,7 +71,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 776974.843256
+          "tvl": 732718.617368
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -86,11 +86,41 @@
           "token": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
           "tokenName": "USDe",
           "tokenSymbol": "USDe",
-          "tvl": 231125.54167327203
+          "tvl": 625300.6853863859
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": []
+    },
+    {
+      "address": "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3",
+      "hubOrBridge": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "tokenName": "Tether USD",
+          "tokenSymbol": "USDT",
+          "tvl": 129378.013773
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": ["multiplug"]
+    },
+    {
+      "address": "0x3553c0102684c20e2f8192d6F013c7242710b4b3",
+      "hubOrBridge": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "tokenName": "Tether USD",
+          "tokenSymbol": "USDT",
+          "tvl": 129378.013773
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": ["multiplug"]
     },
     {
       "address": "0x083Add2A9afa97Efb6412b293145ce965eCE3600",
@@ -108,36 +138,6 @@
       "tags": []
     },
     {
-      "address": "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3",
-      "hubOrBridge": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
-      "siblingChainSlug": 957,
-      "tokens": [
-        {
-          "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-          "tokenName": "Tether USD",
-          "tokenSymbol": "USDT",
-          "tvl": 37516.118947
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
-    },
-    {
-      "address": "0x3553c0102684c20e2f8192d6F013c7242710b4b3",
-      "hubOrBridge": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
-      "siblingChainSlug": 957,
-      "tokens": [
-        {
-          "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-          "tokenName": "Tether USD",
-          "tokenSymbol": "USDT",
-          "tvl": 37516.118947
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
-    },
-    {
       "address": "0xa1D11b141bb47eDb2c69B8ced4EFe80f62D1C276",
       "hubOrBridge": "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91",
       "siblingChainSlug": 957,
@@ -146,7 +146,7 @@
           "token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
           "tokenName": "Dai Stablecoin",
           "tokenSymbol": "DAI",
-          "tvl": 23893.128433292324
+          "tvl": 24893.128433701437
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -161,7 +161,7 @@
           "token": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
           "tokenName": "Wrapped eETH",
           "tokenSymbol": "weETH",
-          "tvl": 1842.7469745960343
+          "tvl": 2315.6582395672226
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -176,7 +176,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 1746.0422303018406
+          "tvl": 1343.9886016790158
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -191,7 +191,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 1746.0422303018406
+          "tvl": 1343.9886016790158
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -206,7 +206,7 @@
           "token": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
           "tokenName": "rswETH",
           "tokenSymbol": "rswETH",
-          "tvl": 1143.5363419374546
+          "tvl": 1154.3626431205028
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -221,7 +221,7 @@
           "token": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
           "tokenName": "rsETH",
           "tokenSymbol": "rsETH",
-          "tvl": 293.08738609660105
+          "tvl": 298.86952475603454
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -236,7 +236,7 @@
           "token": "0x8236a87084f8B84306f72007F36F2618A5634494",
           "tokenName": "Lombard Staked BTC",
           "tokenSymbol": "LBTC",
-          "tvl": 223.10023191
+          "tvl": 238.5354728
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -273,51 +273,6 @@
       "tags": ["multiplug"]
     },
     {
-      "address": "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181",
-      "hubOrBridge": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-      "siblingChainSlug": 957,
-      "tokens": [
-        {
-          "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-          "tokenName": "Wrapped BTC",
-          "tokenSymbol": "WBTC",
-          "tvl": 19.42280673
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
-    },
-    {
-      "address": "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
-      "hubOrBridge": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-      "siblingChainSlug": 957,
-      "tokens": [
-        {
-          "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-          "tokenName": "Wrapped BTC",
-          "tokenSymbol": "WBTC",
-          "tvl": 19.42280673
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
-    },
-    {
-      "address": "0x094570E556C8E58119E21f47759F02F50Ae3bB49",
-      "hubOrBridge": "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5",
-      "siblingChainSlug": 957,
-      "tokens": [
-        {
-          "token": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
-          "tokenName": "ether.fi BTC",
-          "tokenSymbol": "eBTC",
-          "tvl": 10.02827819
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": []
-    },
-    {
       "address": "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5",
       "hubOrBridge": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
       "siblingChainSlug": 957,
@@ -326,7 +281,7 @@
           "token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
           "tokenName": "Wrapped liquid staked Ether 2.0",
           "tokenSymbol": "wstETH",
-          "tvl": 0.007770479584463413
+          "tvl": 52.10777047958446
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -341,11 +296,56 @@
           "token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
           "tokenName": "Wrapped liquid staked Ether 2.0",
           "tokenSymbol": "wstETH",
-          "tvl": 0.007770479584463413
+          "tvl": 52.10777047958446
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
+    },
+    {
+      "address": "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181",
+      "hubOrBridge": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+          "tokenName": "Wrapped BTC",
+          "tokenSymbol": "WBTC",
+          "tvl": 27.87948751
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": ["multiplug"]
+    },
+    {
+      "address": "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
+      "hubOrBridge": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+          "tokenName": "Wrapped BTC",
+          "tokenSymbol": "WBTC",
+          "tvl": 27.87948751
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": ["multiplug"]
+    },
+    {
+      "address": "0x094570E556C8E58119E21f47759F02F50Ae3bB49",
+      "hubOrBridge": "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+          "tokenName": "ether.fi BTC",
+          "tokenSymbol": "eBTC",
+          "tvl": 0.02855076
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": []
     },
     {
       "address": "0xBc978f47AD1122bdFE85855fcc40b3afdF4b5df3",
@@ -526,6 +526,51 @@
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": []
+    },
+    {
+      "address": "0x94104d7801f30d2f9069118C65Fe63A3A11515B1",
+      "hubOrBridge": "0x383a4EdB30E896b8d2d044Be87079D45c0EA7065",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+          "tokenName": "Solv BTC",
+          "tokenSymbol": "SolvBTC",
+          "tvl": 0
+        }
+      ],
+      "owner": "0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
+      "tags": []
+    },
+    {
+      "address": "0xA2bE759B86CeA53372C3e9a882047cdC3884D568",
+      "hubOrBridge": "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+          "tokenName": "SolvBTC Babylon",
+          "tokenSymbol": "SolvBTC.BBN",
+          "tvl": 0
+        }
+      ],
+      "owner": "0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
+      "tags": []
+    },
+    {
+      "address": "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93",
+      "hubOrBridge": "0x5bF824C739B7d102D489c7A64Ec1dbDF7A667a61",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0x15700B564Ca08D9439C58cA5053166E8317aa138",
+          "tokenName": "deUSD",
+          "tokenSymbol": "deUSD",
+          "tvl": 0
+        }
+      ],
+      "owner": "0xA82994cc5e9D94FED2916f762e03245FcBE79f23",
+      "tags": []
     }
   ],
   "4665": [
@@ -570,7 +615,7 @@
           "token": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
           "tokenName": "Savings Dai",
           "tokenSymbol": "sDAI",
-          "tvl": 9624613.249115385
+          "tvl": 9660699.846515385
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -585,7 +630,7 @@
           "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
           "tokenName": "Staked USDe",
           "tokenSymbol": "sUSDe",
-          "tvl": 1283371.4723941584
+          "tvl": 1282154.2445766176
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -607,21 +652,6 @@
       "tags": []
     },
     {
-      "address": "0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff",
-      "hubOrBridge": "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
-      "siblingChainSlug": 7887,
-      "tokens": [
-        {
-          "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "tokenName": "USDC",
-          "tokenSymbol": "USDC",
-          "tvl": 111297.314351
-        }
-      ],
-      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-      "tags": []
-    },
-    {
       "address": "0x92469EEf05a071B0e56275b23597b1b701C15a71",
       "hubOrBridge": "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8",
       "siblingChainSlug": 7887,
@@ -634,6 +664,21 @@
         }
       ],
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
+      "tags": []
+    },
+    {
+      "address": "0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff",
+      "hubOrBridge": "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
+      "siblingChainSlug": 7887,
+      "tokens": [
+        {
+          "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "tokenName": "USDC",
+          "tokenSymbol": "USDC",
+          "tvl": 46064.250574
+        }
+      ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -652,21 +697,6 @@
       "tags": []
     },
     {
-      "address": "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96",
-      "hubOrBridge": "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
-      "siblingChainSlug": 7887,
-      "tokens": [
-        {
-          "token": "0x57e114B691Db790C35207b2e685D4A43181e6061",
-          "tokenName": "Ethena",
-          "tokenSymbol": "ENA",
-          "tvl": 31283.64126188277
-        }
-      ],
-      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-      "tags": []
-    },
-    {
       "address": "0xdE9D8c2d465669c661672d7945D4d4f5407d22E2",
       "hubOrBridge": "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
       "siblingChainSlug": 7887,
@@ -676,6 +706,21 @@
           "tokenName": "ether.fi governance token",
           "tokenSymbol": "ETHFI",
           "tvl": 28122.57361922083
+        }
+      ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+      "tags": []
+    },
+    {
+      "address": "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96",
+      "hubOrBridge": "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
+      "siblingChainSlug": 7887,
+      "tokens": [
+        {
+          "token": "0x57e114B691Db790C35207b2e685D4A43181e6061",
+          "tokenName": "Ethena",
+          "tokenSymbol": "ENA",
+          "tvl": 23341.98546188277
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -705,7 +750,7 @@
           "token": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
           "tokenName": "Eigen",
           "tokenSymbol": "EIGEN",
-          "tvl": 10820.914016547687
+          "tvl": 10577.534400660445
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -720,7 +765,7 @@
           "token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
           "tokenName": "Wrapped liquid staked Ether 2.0",
           "tokenSymbol": "wstETH",
-          "tvl": 6763.063762592072
+          "tvl": 6761.567740964406
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -735,7 +780,22 @@
           "token": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "tokenName": "ChainLink Token",
           "tokenSymbol": "LINK",
-          "tvl": 5119.7545
+          "tvl": 5359.7545
+        }
+      ],
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
+      "tags": []
+    },
+    {
+      "address": "0xb9703b625c3B846B58DFdaDBceF77e34a1C59965",
+      "hubOrBridge": "0x1D18263107a138C7fb0De65b4a78d193ff9664c1",
+      "siblingChainSlug": 7887,
+      "tokens": [
+        {
+          "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          "tokenName": "Tether USD",
+          "tokenSymbol": "USDT",
+          "tvl": 4745.350003
         }
       ],
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -750,7 +810,7 @@
           "token": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
           "tokenName": "Wrapped SOL (Wormhole)",
           "tokenSymbol": "SOL",
-          "tvl": 835.672506308
+          "tvl": 852.793722647
         }
       ],
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -765,7 +825,7 @@
           "token": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
           "tokenName": "Wrapped eETH",
           "tokenSymbol": "weETH",
-          "tvl": 721.3546540835889
+          "tvl": 721.1033070374585
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -810,7 +870,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 59.217025996554966
+          "tvl": 48.217882625841135
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -886,21 +946,6 @@
           "tokenName": "Coinbase Wrapped BTC",
           "tokenSymbol": "cbBTC",
           "tvl": 0.00631972
-        }
-      ],
-      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
-      "tags": []
-    },
-    {
-      "address": "0xb9703b625c3B846B58DFdaDBceF77e34a1C59965",
-      "hubOrBridge": "0x1D18263107a138C7fb0De65b4a78d193ff9664c1",
-      "siblingChainSlug": 7887,
-      "tokens": [
-        {
-          "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-          "tokenName": "Tether USD",
-          "tokenSymbol": "USDT",
-          "tvl": 0.000002
         }
       ],
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1245,22 +1290,7 @@
           "token": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0",
           "tokenName": "USD0 Liquid Bond",
           "tokenSymbol": "USD0++",
-          "tvl": 1286737.7467287995
-        }
-      ],
-      "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
-      "tags": []
-    },
-    {
-      "address": "0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5",
-      "hubOrBridge": "0xDE1617Ddb7C8A250A409D986930001985cfad76F",
-      "siblingChainSlug": 8008,
-      "tokens": [
-        {
-          "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "tokenName": "USDC",
-          "tokenSymbol": "USDC",
-          "tvl": 1034501.926318
+          "tvl": 1407453.7369757274
         }
       ],
       "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
@@ -1275,7 +1305,22 @@
           "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
           "tokenName": "Staked USDe",
           "tokenSymbol": "sUSDe",
-          "tvl": 931326.5154465705
+          "tvl": 1144806.9131537857
+        }
+      ],
+      "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
+      "tags": []
+    },
+    {
+      "address": "0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5",
+      "hubOrBridge": "0xDE1617Ddb7C8A250A409D986930001985cfad76F",
+      "siblingChainSlug": 8008,
+      "tokens": [
+        {
+          "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "tokenName": "USDC",
+          "tokenSymbol": "USDC",
+          "tvl": 1034216.901215
         }
       ],
       "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
@@ -1810,7 +1855,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 26645.408409
+          "tvl": 204202.570855
         }
       ],
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",

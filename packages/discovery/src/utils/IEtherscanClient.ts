@@ -23,6 +23,12 @@ interface BlockscoutExplorerConfig {
   unsupported?: EtherscanUnsupportedMethods
 }
 
+export interface Transaction {
+  input: string
+  to: EthereumAddress
+  hash: Hash256
+}
+
 export type ExplorerConfig = EtherscanExplorerConfig | BlockscoutExplorerConfig
 
 export interface ContractSource {
@@ -46,7 +52,7 @@ export interface IEtherscanClient {
   getLast10OutgoingTxs(
     address: EthereumAddress,
     blockNumber: number,
-  ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]>
+  ): Promise<Transaction[]>
 }
 
 export function getExplorerClient(

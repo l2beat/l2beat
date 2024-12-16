@@ -69,10 +69,6 @@ export const hermez: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
-    // NOTE: I have no clue what token are fees paid in. There are fees but
-    // the explorer shows them in USD and there is no documentation around it
-    destinationToken: RISK_VIEW.CANONICAL,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {
