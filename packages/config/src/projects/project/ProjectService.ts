@@ -4,15 +4,17 @@ import { getProjects } from './getProjects'
 
 type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
 type Key = Exclude<keyof Project, BasicKeys>
-type NonOptionalProject = {
-  [K in Key]: Exclude<Project[K], undefined>
-}
+// Black magic: https://stackoverflow.com/a/78872927
+type OptionalToUndefined<T> = { [K in {} & keyof T]: T[K] }
+type Simplify<T> = T extends object ? { [K in keyof T]: T[K] } : T
 
-export type ProjectWith<K extends Key = never, O extends Key = never> = Pick<
-  NonOptionalProject,
-  K
-> &
-  Pick<Project, O | BasicKeys>
+export type ProjectWith<
+  K extends Key = never,
+  O extends Key = never,
+> = Simplify<
+  Pick<Required<Project>, K | BasicKeys> &
+    OptionalToUndefined<Pick<Project, O | BasicKeys>>
+>
 
 export class ProjectService {
   // TODO: In the future this should be removed and the service should be
@@ -98,8 +100,8 @@ function createMap<K extends Key, O extends Key>(query: {
   return function map(project: Project) {
     const result = {} as ProjectWith<K, O>
     for (const key of keys) {
-      // biome-ignore lint/suspicious/noExplicitAny: This is actually correct
-      result[key] = project[key] as any
+      // biome-ignore lint/suspicious/noExplicitAny: Can't index for some reason
+      result[key] = (project as any)[key]
     }
     return result
   }
