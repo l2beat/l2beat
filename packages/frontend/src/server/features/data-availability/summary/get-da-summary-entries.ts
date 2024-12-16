@@ -1,14 +1,15 @@
 import {
+  type BlockchainDaLayer,
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
-  type DaLayer,
   type DaUpgradeabilityRisk,
+  type DacDaLayer,
   type DataAvailabilityLayer,
   daLayers,
   ethereumDaLayer,
+  isDaBridgeVerified,
 } from '@l2beat/config'
-import { getDaBridgeVerification } from '@l2beat/config'
 import { type DaChallengeMechanism } from '@l2beat/config/build/src/projects/other/da-beat/types/DaChallengeMechanism'
 import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
@@ -74,7 +75,7 @@ export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaSummaryEntry(
-  daLayer: DaLayer,
+  daLayer: BlockchainDaLayer | DacDaLayer,
   economicSecurity: EconomicSecurityData | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
@@ -87,7 +88,7 @@ function getDaSummaryEntry(
         statuses: {
           yellowWarning: daBridge.display.warning,
           redWarning: daBridge.display.redWarning,
-          verificationWarning: getDaBridgeVerification(daLayer, daBridge)
+          verificationWarning: isDaBridgeVerified(daLayer, daBridge)
             ? undefined
             : true,
           underReview:
@@ -153,8 +154,8 @@ function getEthereumEntry(
   return {
     slug: ethereumDaLayer.display.slug,
     name: ethereumDaLayer.display.name,
-    nameSecondLine: ethereumDaLayer.kind,
-    href: undefined,
+    nameSecondLine: kindToType(ethereumDaLayer.kind),
+    href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
     usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
     economicSecurity: economicSecurity[ethereumDaLayer.id],

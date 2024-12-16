@@ -22,16 +22,43 @@ import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 import { InfoIcon } from '~/icons/info'
-import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import { type DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { DaProjectStats } from './da-project-stats'
+import {
+  DaProjectStats,
+  type ProjectStat,
+  getCommonDaProjectStats,
+} from './da-project-stats'
 
 interface Props {
-  project: DaProjectEntry
+  project: DaProjectPageEntry
 }
 
-export function DaProjectSummary({ project }: Props) {
+export function RegularDaProjectSummary({ project }: Props) {
+  const stats: ProjectStat[] = [
+    ...getCommonDaProjectStats(project),
+    ...(project.header.numberOfOperators
+      ? [
+          {
+            title: 'Number of operators',
+            value: project.header.numberOfOperators,
+          },
+        ]
+      : []),
+
+    {
+      title: 'Used by',
+      value: (
+        <ProjectsUsedIn
+          usedIn={project.header.usedIn}
+          className="flex-wrap justify-start"
+          maxProjects={5}
+        />
+      ),
+    },
+  ]
+
   return (
     <section
       id="summary"
@@ -40,23 +67,25 @@ export function DaProjectSummary({ project }: Props) {
       <header className="space-y-4 pt-6 max-md:bg-gray-100 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
         <ProjectHeader title={project.name} slug={project.slug} />
       </header>
-      <div className="flex gap-10">
+      <div className="flex w-full gap-10">
         <div className="w-full">
-          {/* Separators */}
-          <div className="hidden flex-row gap-10 md:flex">
-            <HorizontalSeparator className="!mb-6 !mt-3.5 flex-1 max-md:-mx-4 max-md:w-screen" />
-            <HorizontalSeparator className="!mb-6 !mt-3.5 hidden w-[264px] lg:block" />
-          </div>
           {/* Details row */}
           <div className="flex flex-col gap-6 md:gap-10">
-            {/* Left side (links and stats) */}
+            {/* Links and stats */}
             <div className="flex flex-row items-end gap-10">
-              <div className="flex-1">
-                <div className="flex flex-col gap-4">
-                  <div className="max-md:hidden">
-                    <DesktopProjectLinks projectLinks={project.header.links} />
+              <div className="w-full">
+                <div className="!mb-8 !mt-4 hidden md:flex">
+                  <HorizontalSeparator className="max-md:-mx-4 max-md:w-screen" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex flex-col gap-4">
+                    <div className="max-md:hidden">
+                      <DesktopProjectLinks
+                        projectLinks={project.header.links}
+                      />
+                    </div>
+                    <DaProjectStats stats={stats} />
                   </div>
-                  <DaProjectStats project={project} />
                 </div>
               </div>
               {/* Right side (DA Layer Grissini details) */}
@@ -71,9 +100,15 @@ export function DaProjectSummary({ project }: Props) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col-reverse md:flex-col">
+
+            <div className="flex flex-col">
+              <div>
+                <div className="-mx-4 border-y border-gray-200 px-4 dark:border-zinc-700 md:hidden">
+                  <MobileProjectLinks projectLinks={project.header.links} />
+                </div>
+              </div>
               {/* Table row */}
-              <div className="flex flex-row items-end gap-10 py-8 max-md:pt-6 md:py-0">
+              <div className="flex flex-row items-end gap-10 py-8 max-md:pt-6 md:mb-10 md:py-0">
                 {/* Left side (table with title and banner) */}
                 <div className="flex flex-1 flex-col gap-4">
                   <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
@@ -209,6 +244,7 @@ export function DaProjectSummary({ project }: Props) {
                     </div>
                   </div>
                 </div>
+
                 {/* Right side (Grissini details) */}
                 <div className="hidden w-full max-w-[264px] flex-col space-y-4 pt-3 lg:flex">
                   <div className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
@@ -224,17 +260,12 @@ export function DaProjectSummary({ project }: Props) {
                   )}
                 </div>
               </div>
-              <div>
-                <div className="-mx-4 border-y border-gray-200 px-4 dark:border-zinc-700 md:hidden">
-                  <MobileProjectLinks projectLinks={project.header.links} />
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="max-md:hidden">
-        <HorizontalSeparator className="!my-6 flex-1" />
+        <HorizontalSeparator />
       </div>
     </section>
   )
