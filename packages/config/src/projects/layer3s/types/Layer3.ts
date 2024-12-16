@@ -4,12 +4,12 @@ import {
   ChainConfig,
   DataAvailabilityHistory,
   KnowledgeNugget,
-  Layer3Provider,
   Milestone,
   ScalingProjectConfig,
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectStack,
   ScalingProjectTransactionApi,
 } from '../../../common'
 import { ScalingProjectRiskView } from '../../../common/ScalingProjectRiskView'
@@ -32,7 +32,7 @@ export interface Layer3 {
   /** Has this layer3 changed and is under review? */
   isUnderReview?: boolean
   /** ProjectId of hostChain */
-  hostChain: ProjectId | 'Multiple'
+  hostChain: ProjectId
   /** Information displayed about the layer3 on the frontend */
   display: Layer3Display
   /** Information required to calculate the stats of the layer3 */
@@ -76,5 +76,5 @@ export interface Layer3Config extends ScalingProjectConfig {
 
 export type Layer3Display = ScalingProjectDisplay & {
   /** Technology provider */
-  provider?: Layer3Provider
+  provider?: ScalingProjectStack
 }

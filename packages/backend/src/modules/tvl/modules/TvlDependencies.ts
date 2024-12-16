@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { CirculatingSupplyProviders } from '../../../providers/CirculatingSupplyProviders'
+import { Clients } from '../../../providers/Clients'
 import { PriceProviders } from '../../../providers/PriceProviders'
 import { Providers } from '../../../providers/Providers'
 import { Clock } from '../../../tools/Clock'
@@ -13,14 +14,15 @@ import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export class TvlDependencies {
-  private readonly hourlyIndexer: HourlyIndexer
-  private readonly syncOptimizer: SyncOptimizer
-  private readonly indexerService: IndexerService
-  private readonly valueService: ValueService
-  private readonly priceService: PriceService
-  private readonly priceProviders: PriceProviders
-  private readonly circulatingSupplyProviders: CirculatingSupplyProviders
-  private readonly circulatingSupplyService: CirculatingSupplyService
+  readonly hourlyIndexer: HourlyIndexer
+  readonly syncOptimizer: SyncOptimizer
+  readonly indexerService: IndexerService
+  readonly valueService: ValueService
+  readonly priceService: PriceService
+  readonly priceProviders: PriceProviders
+  readonly circulatingSupplyProviders: CirculatingSupplyProviders
+  readonly circulatingSupplyService: CirculatingSupplyService
+  readonly clients: Clients
 
   constructor(
     readonly database: Database,
@@ -43,30 +45,7 @@ export class TvlDependencies {
       circulatingSupplyProvider:
         this.circulatingSupplyProviders.getCirculatingSupplyProvider(),
     })
-  }
-
-  getPriceService() {
-    return this.priceService
-  }
-
-  getCirculatingSupplyService() {
-    return this.circulatingSupplyService
-  }
-
-  getIndexerService() {
-    return this.indexerService
-  }
-
-  getSyncOptimizer() {
-    return this.syncOptimizer
-  }
-
-  getHourlyIndexer() {
-    return this.hourlyIndexer
-  }
-
-  getValueService() {
-    return this.valueService
+    this.clients = providers.clients
   }
 
   getBlockTimestampProvider(chain: string): BlockTimestampProvider {

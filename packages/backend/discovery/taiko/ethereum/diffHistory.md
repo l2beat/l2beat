@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xb743e863628c6723e5473668100ddb074e410ed7
+
+# Diff at Thu, 05 Dec 2024 06:17:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21215436
+- current block number: 21334445
+
+## Description
+
+One TaikoAdmin MS member changed to a sub-safe.
+
+## Watched changes
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.0:
+-        "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268"
++        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../taiko/ethereum/.flat/Safe/Safe.sol             | 1088 ++++++++++++++++++++
+ .../taiko/ethereum/.flat/Safe/SafeProxy.p.sol      |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xea65667fba3c7f9645243f698b73ace7a9ceb06a
 
 # Diff at Mon, 18 Nov 2024 15:16:10 GMT:

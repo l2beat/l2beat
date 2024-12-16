@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xd39227606f84756fb081b73d26ca8508301b491e
+
+# Diff at Thu, 12 Dec 2024 15:07:34 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@675c2fed2e6fd64977d53add75705c1380efedb2 block: 282615739
+- current block number: 282615739
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 282615739 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x1764C29FBd94865198588f10FC75D4f6636d158d)
+    +++ description: None
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      description:
++        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","via":[]},{"permission":"configure","target":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","via":[]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xc350F063C13a3Ca21331610fe159E697a5c9c2FB)
+    +++ description: None
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."}]
+    }
+```
+
+```diff
+    contract  (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+    }
+```
+
+Generated with discovered.json: 0x58b1c233533fe3790d77fb27e2f53ec183202e79
+
+# Diff at Tue, 10 Dec 2024 11:09:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 282615739
+- current block number: 282615739
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 282615739 (main branch discovery), not current.
+
+```diff
+    contract headerRangeVerifier (0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "headerRangeVerifier"
+    }
+```
+
+```diff
+    contract nextHeaderVerifier (0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "nextHeaderVerifier"
+    }
+```
+
+Generated with discovered.json: 0x6e041fc1949d56d85654cf090fe0c5fa96b0cb79
+
+# Diff at Sun, 08 Dec 2024 11:35:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 281224085
+- current block number: 282615739
+
+## Description
+
+BlobstreamMultisig signer change.
+
+## Watched changes
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      values.$members.3:
+-        "0xA3fC931613a4E2440a199d47B0076e8b85F33099"
++        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+    }
+```
+
+Generated with discovered.json: 0x39570decd9dd2f479dc1a9da99602516bacfa3ad
+
+# Diff at Wed, 04 Dec 2024 10:42:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 274315505
+- current block number: 281224085
+
+## Description
+
+Raise the max commitment size by one order of magnitude to 10000 celestia blocks.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x424268ec553b52a09ec29bc220e95a4dc19def7e459d1cc8a541ee0e2fd578e9"
++        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
+      values.$implementation:
+-        "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"
++        "0x46EbfC399d3913BB9b99E73675722417F9c5d416"
+      values.$pastUpgrades.3:
++        ["2024-12-02T19:09:05.000Z","0x07dbff15e24a8c124a927a2881cb4d471ace180488a56a56b43b47d1da68a130",["0x46EbfC399d3913BB9b99E73675722417F9c5d416"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.DATA_COMMITMENT_MAX:
+-        1000
++        10000
+    }
+```
+
+## Source code changes
+
+```diff
+.../arbitrum/{.flat@274315505 => .flat}/Blobstream/SP1Blobstream.sol    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0xbdefc05aef6d5f51d59ef8704453de4bb799375e
 
 # Diff at Thu, 28 Nov 2024 11:03:23 GMT:

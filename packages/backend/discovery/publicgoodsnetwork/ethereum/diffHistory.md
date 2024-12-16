@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x962172660b260c8e4757ea803798cee6b6258bdd
+
+# Diff at Tue, 10 Dec 2024 07:45:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01c69c8d162d3e9a035a25c270d68755988c138 block: 21279547
+- current block number: 21370693
+
+## Description
+
+The OptimismPortal is paused. Added headerWarn.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x460884ac8fa58dba8bbb255ed7bb94bc81022108
 
 # Diff at Wed, 27 Nov 2024 14:00:26 GMT:

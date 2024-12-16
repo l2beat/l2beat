@@ -43,6 +43,7 @@ export const fraxtalDABridge = {
           name: 'SequencerInbox',
           description:
             'This address is used to store transaction batch hashes as data availability commitments.',
+          isVerified: true,
         },
         discovery.getContractDetails('ProxyAdmin', {
           description:

@@ -2,8 +2,7 @@ import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
-import { LoopringClient } from '@l2beat/shared'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { LoopringClient, RpcClient } from '@l2beat/shared'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
@@ -25,10 +24,9 @@ export class LoopringT2IAnalyzer extends BaseAnalyzer {
     _previousTransaction: Transaction,
     { txHash }: Transaction,
   ): Promise<L2Block[]> {
-    const tx = await this.provider.getTransaction(txHash)
-    const { logs } = await tx.wait()
+    const receipt = await this.provider.getTransactionReceipt(txHash)
 
-    const log = logs
+    const log = receipt.logs
       .filter(
         (log) =>
           log.topics[0] ===

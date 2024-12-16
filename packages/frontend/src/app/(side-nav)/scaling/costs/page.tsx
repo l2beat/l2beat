@@ -11,7 +11,6 @@ import { CostsTimeRangeContextProvider } from './_components/costs-time-range-co
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
 import { ScalingCostsTables } from './_components/scaling-costs-tables'
 
-export const revalidate = 600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/costs',
@@ -37,7 +36,7 @@ export default async function Page() {
                   entries={[
                     ...entries.rollups,
                     ...entries.validiumsAndOptimiums,
-                    ...(entries.others ?? []),
+                    ...entries.others,
                   ]}
                   milestones={HOMEPAGE_MILESTONES}
                 />

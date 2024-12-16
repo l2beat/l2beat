@@ -46,6 +46,7 @@ export const automataDABridge = {
           name: 'DA Bridge (EOA)',
           description:
             'This DA bridge address is used to store transaction batch hashes as data availability commitments.',
+          isVerified: true,
         },
         discovery.getContractDetails('ProxyAdmin', {
           description:
@@ -102,7 +103,7 @@ export const automataDABridge = {
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([automata]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

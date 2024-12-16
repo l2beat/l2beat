@@ -34,7 +34,7 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { PROOFS } from '../other/zk-catalog/common/proofSystems'
+import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -750,9 +750,9 @@ export const starknet: Layer2 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
+      mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     }),
   ],
   riskView: {
@@ -799,8 +799,6 @@ export const starknet: Layer2 = {
       ],
     },
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage(
     {

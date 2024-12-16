@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('dbk')
 export const dbk: Layer2 = opStackL2({
   createdAt: new UnixTime(1726825120), // 2024-09-20T09:38:40Z
   discovery,
-  badges: [],
+  additionalBadges: [],
   display: {
     name: 'DeBank Chain',
     slug: 'dbk',

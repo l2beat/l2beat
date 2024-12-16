@@ -1,6 +1,46 @@
 {
   "ethereum": [
     {
+      "symbol": "FFM",
+      "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92"
+    },
+    // { // error when trying to get coingeckoListingTS
+    //   "symbol": "DF",
+    //   "address": "0x431ad2ff6a9C365805eBaD47Ee021148d6f7DBe0"
+    // },
+    {
+      "symbol": "YBR",
+      "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3"
+    },
+    {
+      "symbol": "LOGX",
+      "address": "0xa3F4341C3fEf5963AB04135D2014AC7d68222E19"
+    },
+    {
+      "symbol": "AIUS",
+      "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852"
+    },
+    {
+      "symbol": "FNXAI",
+      "address": "0x939069722D568B5498CcBA4356E800EaefEFD2a5"
+    },
+    {
+      "symbol": "GENOME",
+      "address": "0x7AE4f8885f6cFa41a692cb9DA3789cfa6A83e9f2"
+    },
+    {
+      "symbol": "MORPHO",
+      "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2"
+    },
+    {
+      "symbol": "Mog",
+      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a"
+    },
+    {
+      "symbol": "USD0++",
+      "address": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0"
+    },
+    {
       "symbol": "ZRC",
       "address": "0xfd418e42783382E86Ae91e445406600Ba144D162"
     },
@@ -1714,6 +1754,25 @@
   ],
   "arbitrum": [
     {
+      "symbol": "LINK",
+      "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "TIA.n",
+      "address": "0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (NTT)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "SOL",
       "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
       "coingeckoId": "solana",
@@ -2733,6 +2792,85 @@
   ],
   "base": [
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "CLANKER",
+      "address": "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "SAINT",
+      "address": "0x7588880d9c78E81FAde7b7e8DC0781E95995a792",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "SEKOIA",
+      "address": "0x1185cB5122Edad199BdBC0cbd7a0457E448f23c7",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "VADER",
+      "address": "0x731814e491571A2e9eE3c5b1F7f3b962eE8f4870",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "CONVO",
+      "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "GAME",
+      "address": "0x1C4CcA7C5DB003824208aDDA61Bd749e55F463a3",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "LUNA",
+      "address": "0x55cD6469F597452B5A7536e2CD98fDE4c1247ee4",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "AIXBT",
+      "address": "0x4F9Fd6Be4a90f2620860d680c0d4d5Fb53d1A825",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
       "symbol": "UP",
       "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
       "source": "native",
@@ -3475,6 +3613,12 @@
       "coingeckoId": "foxy"
     },
     {
+      "symbol": "CROAK",
+      "address": "0xacb54d07ca167934f57f829bee2cc665e1a5ebef",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "ZERO",
       "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
       "source": "native",
@@ -3549,6 +3693,12 @@
     }
   ],
   "kroma": [
+    {
+      "symbol": "KRO",
+      "address": "0x25500000d700bbE27104577CCcce8eAbCC96c8ad",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "M-BTC",
       "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
@@ -4722,6 +4872,48 @@
     }
   ],
   "bob": [
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "uniBTC",
+      "address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via bedrock.technology)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "FBTC",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",

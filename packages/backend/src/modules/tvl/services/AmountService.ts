@@ -10,7 +10,7 @@ import {
 import { partition } from 'lodash'
 
 import { AmountRecord } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
@@ -31,7 +31,7 @@ export const erc20Interface = new utils.Interface([
 type Config = ChainAmountConfig & { id: string }
 
 export interface AmountServiceDependencies {
-  readonly rpcClient: RpcClient2
+  readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
   logger: Logger
 }

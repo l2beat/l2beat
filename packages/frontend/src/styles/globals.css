@@ -10,6 +10,7 @@
     --primary: 260deg 7.69% 7.65%;
     --primary-invert: 0deg 0% 98%;
     --secondary: 222deg 8.21% 40.6%;
+    --negative: 0 100% 42%;
     --brand: 285deg 62.7% 52.7%;
     --background: 230deg 13.6% 91.4%;
     --surface-primary: 0deg 0% 98%;
@@ -22,18 +23,19 @@
   }
 
   .dark {
-    --primary: 0deg 0% 98%;
-    --primary-invert: 260deg 7.69% 7.65%;
-    --secondary: 223deg 8.04% 56.1%;
-    --brand: 284deg 87.1% 75.7%;
-    --background: 0deg 0% 0%;
-    --surface-primary: 225deg 14.8% 10.6%;
-    --surface-secondary: 222deg 8.06% 24.3%;
-    --surface-tertiary: 220deg 7.89% 29.8%;
-    --surface-table-group: 222deg 16% 15.9%;
-    --icon-secondary: 222deg 8.21% 40.6%;
-    --overlay: 0deg 0% 0% / 60%;
-    --divider: 226deg 14.3% 28.8%;
+    --primary: #fafafa;
+    --primary-invert: #131215;
+    --secondary: #868b98;
+    --negative: 0 100% 50%;
+    --brand: #db8bf7;
+    --background: #000000;
+    --surface-primary: #17191f;
+    --surface-secondary: #393c43;
+    --surface-tertiary: #464a52;
+    --surface-table-group: #22262f;
+    --icon-secondary: #5f6470;
+    --overlay: #00000099;
+    --divider: #3f4454;
   }
 }
 

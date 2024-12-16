@@ -1,0 +1,11 @@
+{
+  "ignoreRelatives": ["token", "targetToken"],
+  "ignoreMethods": [
+    "batches",
+    "cancelled",
+    "transactions",
+    "executeIndex",
+    "noBatches",
+    "noTransactions"
+  ]
+}

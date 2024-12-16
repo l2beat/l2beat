@@ -6,8 +6,10 @@ import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Events } from './Events'
 import { FetchFlatSources } from './FetchFlatSources'
+import { FindL2 } from './FindL2'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
+import { Init } from './Init'
 import { MatchFlat } from './MatchFlat'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
@@ -33,6 +35,8 @@ export function getSubcommands() {
     Powerdiff,
     SolFmt,
     StarknetProgramHashes,
+    FindL2,
+    Init,
     TVL,
     UI,
   ]

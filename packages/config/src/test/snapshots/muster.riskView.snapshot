@@ -2,39 +2,38 @@
 
 {
   dataAvailability: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
-  destinationToken: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 1
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    sentiment: "bad"
+    value: "External (DAC)"
   }
   exitWindow: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: -86400
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
   }
   proposerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 636216
+    description: "Anyone can become a Proposer after 7d 8h of inactivity from the currently whitelisted Proposers."
+    secondLine: "7d 8h delay"
+    sentiment: "good"
+    value: "Self propose"
   }
   sequencerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 86400
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation."
+    secondLine: "1d delay"
+    sentiment: "good"
+    value: "Self sequence"
   }
   stateValidation: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
-  validatedBy: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 1
+    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1d challenge period."
+    secondLine: "1d challenge period"
+    sentiment: "bad"
+    value: "Fraud proofs (INT)"
   }
 }
 
@@ -42,38 +41,35 @@
 
 {
   dataAvailability: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
-  destinationToken: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 1
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    sentiment: "bad"
+    value: "External (DAC)"
   }
   exitWindow: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: -86400
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
   }
   proposerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 1735848
+    description: "Anyone can become a Proposer after 20d 2h of inactivity from the currently whitelisted Proposers."
+    sentiment: "good"
+    value: "Self propose"
   }
   sequencerFailure: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 172800
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 2d delay on this operation."
+    sentiment: "good"
+    value: "Self sequence"
   }
   stateValidation: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
-  validatedBy: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
+    definingMetric: 1
+    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1d challenge period."
+    secondLine: "1d challenge period"
+    sentiment: "bad"
+    value: "Fraud proofs (INT)"
   }
 }

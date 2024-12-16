@@ -127,14 +127,12 @@ export const metis: Layer2 = {
       ],
     },
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('METIS'),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {
-      name: 'No automatic on-chain fraud proof system',
+      name: 'No automatic onchain fraud proof system',
       description:
-        'For additional security, any staked Validator can challenge invalid state root submitted by the Sequencer. Other Validators will then act as referees in an interactive challenge game. Dishonest Validator majority can push invalid state root on-chain, and potentially slash honest Sequencer.',
+        'For additional security, any staked Validator can challenge invalid state root submitted by the Sequencer. Other Validators will then act as referees in an interactive challenge game. Dishonest Validator majority can push invalid state root onchain, and potentially slash honest Sequencer.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -152,7 +150,7 @@ export const metis: Layer2 = {
     dataAvailability: {
       name: 'Data is recorded off-chain in MEMO',
       description:
-        'Transaction data is not stored on-chain, rather it is recorded in off-chain decentralized storage \
+        'Transaction data is not stored onchain, rather it is recorded in off-chain decentralized storage \
         MEMO from MemoLabs. Data hashes are posted to an EOA address.',
       risks: [
         {
@@ -285,18 +283,9 @@ export const metis: Layer2 = {
         'StateCommitmentChain',
         'The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.',
       ),
-      {
-        name: 'ChainStorageContainer-CTC-batches',
-        address: EthereumAddress('0x38473Feb3A6366757A249dB2cA4fBB2C663416B7'),
-      },
-      {
-        name: 'ChainStorageContainer-CTC-queue',
-        address: EthereumAddress('0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57'),
-      },
-      {
-        name: 'ChainStorageContainer-SCC-batches',
-        address: EthereumAddress('0x10739F09f6e62689c0aA8A1878816de9e166d6f9'),
-      },
+      discovery.getContractDetails('ChainStorageContainer-CTC-batches'),
+      discovery.getContractDetails('ChainStorageContainer-CTC-queue'),
+      discovery.getContractDetails('ChainStorageContainer-SCC-batches'),
       discovery.getContractDetails(
         'BondManager',
         "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",

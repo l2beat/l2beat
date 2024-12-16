@@ -1,9 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import config from './multichain-config.json'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('multichain')
 
 export const multichain: Bridge = {
   type: 'bridge',
@@ -37,7 +40,7 @@ export const multichain: Bridge = {
       description:
         'Multichain (formerly AnySwap) is a Hybrid Bridge that, depending on a token, can act as a Token Bridge or as a Liquidity Network.\
         It uses multiple escrows on a source chain (one per each destination) in addition to tokenized Liquidity Pools (anyToken contracts) - one anyToken contract per token.\
-        It uses an on-chain Router that, depending on the token/destination will choose either TokenBridge or Liquidity Network to bridge assets.',
+        It uses an onchain Router that, depending on the token/destination will choose either TokenBridge or Liquidity Network to bridge assets.',
       references: [],
       risks: [],
     },
@@ -109,16 +112,14 @@ export const multichain: Bridge = {
   contracts: {
     isIncomplete: true,
     addresses: [
-      {
-        address: EthereumAddress('0x6b7a87899490EcE95443e979cA9485CBE7E71522'),
-        name: 'AnyswapV4Router',
-        description: 'Multichain Liquidity Network Router V4.',
-      },
-      {
-        address: EthereumAddress('0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705'),
-        name: 'AnyswapV6Router',
-        description: 'Multichain Liquidity Network Router V6.',
-      },
+      discovery.getContractDetails(
+        'AnyswapV4Router',
+        'Multichain Liquidity Network Router V4.',
+      ),
+      discovery.getContractDetails(
+        'AnyswapV6Router',
+        'Multichain Liquidity Network Router V6.',
+      ),
     ],
     risks: [],
   },

@@ -9,7 +9,11 @@ const discovery = new ProjectDiscovery('molten', 'arbitrum')
 export const molten: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1716471996), // 2024-05-23T13:46:36Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
+  additionalBadges: [
+    Badge.DA.DAC,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Caldera,
+  ],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Molten Network',

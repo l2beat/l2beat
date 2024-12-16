@@ -1,11 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-
-import { BlobClient, LoopringClient, StarknetClient } from '@l2beat/shared'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
-import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
-import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Providers } from '../../providers/Providers'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
@@ -25,7 +22,7 @@ import { FinalityConfig } from './types/FinalityConfig'
 export function createFinalityModule(
   config: Config,
   logger: Logger,
-  peripherals: Peripherals,
+  database: Database,
   providers: Providers,
   trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
@@ -41,28 +38,11 @@ export function createFinalityModule(
     return
   }
 
-  const ethereumClient = peripherals.getClient(RpcClient, {
-    url: config.finality.ethereumProviderUrl,
-    callsPerMinute: config.finality.ethereumProviderCallsPerMinute,
-    chain: 'ethereum',
-  })
-
-  const blobClient = peripherals.getClient(BlobClient, {
-    beaconApiUrl: config.finality.beaconApiUrl,
-    rpcUrl: config.finality.ethereumProviderUrl,
-    callsPerMinute: config.finality.beaconApiCPM,
-    timeout: config.finality.beaconApiTimeout,
-  })
-
   const runtimeConfigurations = initializeConfigurations(
-    ethereumClient,
-    blobClient,
-    logger,
     config.finality.configurations,
-    peripherals,
-    providers.loopringClient,
-    providers.degateClient,
-    providers.starknetClient,
+    providers,
+    database,
+    logger,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -70,7 +50,7 @@ export function createFinalityModule(
       new FinalityIndexer(
         logger,
         trackedTxsIndexer,
-        peripherals.database,
+        database,
         runtimeConfiguration,
       ),
   )
@@ -90,15 +70,25 @@ export function createFinalityModule(
 }
 
 function initializeConfigurations(
-  ethereumRPC: RpcClient,
-  blobClient: BlobClient,
-  logger: Logger,
   configs: FinalityProjectConfig[],
-  peripherals: Peripherals,
-  loopringClient: LoopringClient,
-  degateClient: LoopringClient,
-  starknetClient: StarknetClient,
+  providers: Providers,
+  database: Database,
+  logger: Logger,
 ): FinalityConfig[] {
+  const ethereumClient = providers.clients.getRpcClient('ethereum')
+
+  const loopringClient = providers.clients.loopring
+  assert(loopringClient, 'Loopring client not defined')
+
+  const degateClient = providers.clients.degate
+  assert(degateClient, 'Degate client not defined')
+
+  const starknetClient = providers.clients.starknet
+  assert(starknetClient, 'Starknet client not defined')
+
+  const blobProvider = providers.blob?.getBlobProvider()
+  assert(blobProvider, 'Blob client is required for finality module')
+
   return configs
     .map((configuration): FinalityConfig | undefined => {
       switch (configuration.type) {
@@ -107,10 +97,10 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LineaT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
-                getL2Rpc(configuration, peripherals, RpcClient),
+                providers.clients.getRpcClient(configuration.projectId),
               ),
             },
             minTimestamp: configuration.minTimestamp,
@@ -121,8 +111,8 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new zkSyncEraT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
               ),
             },
@@ -134,10 +124,10 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new OpStackT2IAnalyzer(
-                blobClient,
+                blobProvider,
                 logger,
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
                 {
                   l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
@@ -145,11 +135,11 @@ function initializeConfigurations(
                 },
               ),
               stateUpdate: new OpStackStateUpdateAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
                 configuration.l2BlockTimeSeconds,
-                getL2Rpc(configuration, peripherals, RpcClient),
+                providers.clients.getRpcClient(configuration.projectId),
               ),
             },
             minTimestamp: configuration.minTimestamp,
@@ -160,10 +150,10 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ArbitrumT2IAnalyzer(
-                blobClient,
+                blobProvider,
                 logger,
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
               ),
             },
@@ -175,8 +165,8 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ScrollT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
               ),
             },
@@ -188,8 +178,8 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new ZkSyncLiteT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
               ),
             },
@@ -201,8 +191,8 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new StarknetT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
                 starknetClient,
               ),
@@ -215,8 +205,8 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LoopringT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
                 loopringClient,
               ),
@@ -229,8 +219,8 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LoopringT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
                 degateClient,
               ),
@@ -243,10 +233,10 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new PolygonZkEvmT2IAnalyzer(
-                ethereumRPC,
-                peripherals.database,
+                ethereumClient,
+                database,
                 configuration.projectId,
-                getL2Rpc(configuration, peripherals, RpcClient),
+                providers.clients.getRpcClient(configuration.projectId),
               ),
             },
             minTimestamp: configuration.minTimestamp,
@@ -257,20 +247,4 @@ function initializeConfigurations(
       }
     })
     .filter(notUndefined)
-}
-
-function getL2Rpc<Client, Options>(
-  configuration: FinalityProjectConfig,
-  peripherals: Peripherals,
-  clientClass: ClientClass<Client, Options>,
-) {
-  assert(
-    configuration.url,
-    `${configuration.projectId.toString()}: L2 provider URL is not defined`,
-  )
-
-  return peripherals.getClient(clientClass, {
-    url: configuration.url,
-    callsPerMinute: configuration.callsPerMinute,
-  } as Options)
 }

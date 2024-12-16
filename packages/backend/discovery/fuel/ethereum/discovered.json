@@ -2,7 +2,7 @@
   "name": "fuel",
   "chain": "ethereum",
   "blockNumber": 21242136,
-  "configHash": "0x806b6e12987328e4566d178ecc15cff1171dd77d8a81e748ea34b478960b3f10",
+  "configHash": "0x7ee2ae0e7ba0d97eafbf9768cea8a382c341485e3e89653ce61b973f1e0afac0",
   "contracts": [
     {
       "name": "FuelMultisig",
@@ -42,6 +42,33 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "Safe",
+      "address": "0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1727798099,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x698F7A879197Dd834c3203b470ddBadD6616A8bF",
+          "0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xde6c521519782e013f0e2739f4b38da331b0170a4405c8a1bdded28188b680da",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      }
     },
     {
       "name": "FuelERC20Gateway",
@@ -266,13 +293,22 @@
         }
       ]
     },
+    { "address": "0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD" },
     { "address": "0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e" },
+    { "address": "0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d" },
+    { "address": "0x5F5e0C904153789a9E978c286180b4191950d886" },
+    { "address": "0x698F7A879197Dd834c3203b470ddBadD6616A8bF" },
+    { "address": "0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306" },
     { "address": "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd" },
+    { "address": "0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4" },
     { "address": "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6" },
     { "address": "0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF" },
+    { "address": "0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F" },
     { "address": "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7" },
     { "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0" },
+    { "address": "0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8" },
     { "address": "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2" },
+    { "address": "0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09" },
     { "address": "0xe7d56c84cEA9b58569fdfe8863085207F9a14881" },
     { "address": "0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e" },
     {
@@ -360,6 +396,57 @@
       "function withdrawalsPaused() view returns (bool)"
     ],
     "0x32da601374b38154f05904B16F44A1911Aa6f314": [
+      "constructor(address _singleton)"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc": [
       "constructor(address _singleton)"
     ],
     "0x725B2b1a15D818E1f25c68be77816802e6036559": [

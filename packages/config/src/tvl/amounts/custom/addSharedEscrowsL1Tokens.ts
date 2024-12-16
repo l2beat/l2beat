@@ -36,7 +36,7 @@ function projectHasL1Tokens(project: BackendProject): boolean {
 function escrowHasL1Tokens(escrow: BackendProject['escrows'][number]): boolean {
   const { sharedEscrow } = escrow
   return (
-    ['AggLayer', 'ElasticChian'].includes(sharedEscrow?.type as string) &&
+    ['AggLayer', 'ElasticChain'].includes(sharedEscrow?.type as string) &&
     (sharedEscrow?.tokensToAssignFromL1?.length ?? 0) > 0
   )
 }

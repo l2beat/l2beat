@@ -42,7 +42,7 @@ export const getCachedCostsTableData = cache(
   },
   ['costs-table-data'],
   {
-    revalidate: 10 * UnixTime.MINUTE,
+    tags: ['costs'],
   },
 )
 

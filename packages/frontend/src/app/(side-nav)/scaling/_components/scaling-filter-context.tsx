@@ -1,42 +1,23 @@
 'use client'
 
 import {
-  type BadgeId,
-  type Layer2Provider,
-  type Layer3Provider,
-  type ScalingProjectCategory,
-  type ScalingProjectPurpose,
-  type StageConfig,
-} from '@l2beat/config'
-import { ProjectId, notUndefined } from '@l2beat/shared-pure'
-import {
   createContext,
   useCallback,
   useContext,
   useMemo,
   useState,
 } from 'react'
-import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
-import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
-import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { getDaLayerValue } from '../data-availability/_components/scaling-da-filters'
+import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
-  category?: ScalingProjectCategory
-  stack?: Layer2Provider | Layer3Provider | 'No stack'
-  stage?: StageConfig['stage']
-  purpose?: ScalingProjectPurpose
+  type?: string
+  stack?: string
+  stage?: string
+  purpose?: string
   hostChain?: string
   daLayer?: string
-  badgeRaaS?: BadgeId
+  raas?: string
 }
 
 type MutableScalingFilterContextValue = ScalingFilterContextValue & {
@@ -51,14 +32,13 @@ const ScalingFilterContext = createContext<
 
 const defaultValues: ScalingFilterContextValue = {
   rollupsOnly: false,
-  category: undefined,
+  type: undefined,
   stack: undefined,
   stage: undefined,
   purpose: undefined,
   hostChain: undefined,
   daLayer: undefined,
-  // badges
-  badgeRaaS: undefined,
+  raas: undefined,
 }
 
 export function useScalingFilterValues() {
@@ -68,7 +48,6 @@ export function useScalingFilterValues() {
       'useScalingFilterContext must be used within a ScalingFilterContextProvider',
     )
   }
-
   return context
 }
 
@@ -77,99 +56,27 @@ export function useOptionalScalingFilterValues() {
   return context
 }
 
-type ScalingEntry =
-  | ScalingRiskEntry
-  | ScalingFinalityEntry
-  | ScalingDataAvailabilityEntry
-  | ScalingSummaryEntry
-  | ScalingCostsEntry
-  | ScalingTvlEntry
-  | ScalingLivenessEntry
-  | ScalingActivityEntry
-  | ScalingArchivedEntry
 export function useScalingFilter() {
-  const scalingFilters = useScalingFilterValues()
+  const filters = useScalingFilterValues()
   const filter = useCallback(
-    (entry: ScalingEntry) => {
-      if (entry.id === ProjectId.ETHEREUM) {
+    ({ filterable }: FilterableScalingEntry) => {
+      if (!filterable) {
+        // Ethereum
         return true
       }
-
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? entry.category?.includes('Rollup')
-          : undefined,
-        scalingFilters.category !== undefined
-          ? entry.category === scalingFilters.category
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider ===
-            (scalingFilters.stack === 'No stack'
-              ? undefined
-              : scalingFilters.stack)
-          : undefined,
-        scalingFilters.stage !== undefined
-          ? entry.stage?.stage === scalingFilters.stage
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes?.some(
-              (purpose) => purpose === scalingFilters.purpose,
-            )
-          : undefined,
-        scalingFilters.hostChain !== undefined
-          ? scalingFilters.hostChain === 'Ethereum'
-            ? entry.type === 'layer2'
-            : entry.type === 'layer3' &&
-              entry.hostChain === scalingFilters.hostChain
-          : undefined,
-        scalingFilters.daLayer !== undefined
-          ? 'dataAvailability' in entry &&
-            entry.dataAvailability &&
-            'layer' in entry.dataAvailability &&
-            entry.dataAvailability.layer
-            ? getDaLayerValue(entry.dataAvailability.layer) ===
-              scalingFilters.daLayer
-            : false
-          : undefined,
-        // Badges
-        scalingFilters.badgeRaaS
-          ? entry.badges?.some(
-              (badge) => badge.badge === scalingFilters.badgeRaaS,
-            )
-          : undefined,
-      ].filter(notUndefined)
-      return checks.length === 0 || checks.every(Boolean)
+      return (
+        (!filters.rollupsOnly || filterable.isRollup) &&
+        (!filters.type || filters.type === filterable.type) &&
+        (!filters.stack || filters.stack === filterable.stack) &&
+        (!filters.stage || filters.stage === filterable.stage) &&
+        (!filters.purpose || filterable.purposes.includes(filters.purpose)) &&
+        (!filters.hostChain || filters.hostChain === filterable.hostChain) &&
+        (!filters.daLayer || filters.daLayer === filterable.daLayer) &&
+        (!filters.raas || filters.raas === filterable.raas)
+      )
     },
-    [scalingFilters],
+    [filters],
   )
-
-  return filter
-}
-
-export function useScalingUpcomingFilter() {
-  const scalingFilters = useScalingFilterValues()
-
-  const filter = useCallback(
-    (entry: ScalingUpcomingEntry) => {
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? entry.category?.includes('Rollup')
-          : undefined,
-        scalingFilters.category !== undefined
-          ? entry.category === scalingFilters.category
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-      ].filter(notUndefined)
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [scalingFilters],
-  )
-
   return filter
 }
 

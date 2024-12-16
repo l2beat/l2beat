@@ -138,6 +138,7 @@ export const kroma: Layer2 = {
   chainConfig: {
     name: 'kroma',
     chainId: 255,
+    coingeckoPlatform: 'kroma',
     explorerUrl: 'https://kromascan.com',
     explorerApi: {
       url: 'https://api.kromascan.com/api',
@@ -147,6 +148,7 @@ export const kroma: Layer2 = {
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
   config: {
+    associatedTokens: ['KRO'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x31F648572b67e60Ec6eb8E197E1848CC5F5558de'),
@@ -222,7 +224,7 @@ export const kroma: Layer2 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.TRANSACTION_DATA,
     }),
@@ -282,8 +284,6 @@ export const kroma: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage(
     {

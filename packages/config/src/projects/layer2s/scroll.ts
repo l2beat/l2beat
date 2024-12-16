@@ -24,7 +24,7 @@ import { ESCROW } from '../../common/escrow'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { PROOFS } from '../other/zk-catalog/common/proofSystems'
+import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -321,7 +321,7 @@ export const scroll: Layer2 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
     }),
@@ -389,8 +389,6 @@ export const scroll: Layer2 = {
         },
       ],
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   technology: {
     newCryptography: {

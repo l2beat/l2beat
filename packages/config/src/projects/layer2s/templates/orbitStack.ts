@@ -135,7 +135,7 @@ interface OrbitStackConfigCommon {
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
@@ -145,6 +145,7 @@ interface OrbitStackConfigCommon {
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
+  isArchived?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -310,10 +311,7 @@ function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
   blockNumberOpcodeTimeSeconds: number,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -344,7 +342,8 @@ function orbitStackCommon(
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
-      templateVars.badges?.find((b) => badges[b].type === 'DA') !== undefined,
+      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
+        undefined,
       'DA badge is required for external DA',
     )
   }
@@ -392,6 +391,7 @@ function orbitStackCommon(
   return {
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
+    isArchived: templateVars.isArchived ?? undefined,
     contracts: {
       addresses:
         templateVars.discoveryDrivenData === true
@@ -535,17 +535,13 @@ function orbitStackCommon(
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
-      templateVars.badges ?? [],
+      templateVars.additionalBadges ?? [],
     ),
     discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
-  assert(
-    templateVars.hostChain !== 'Multiple',
-    'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-  )
   const layer2s = require('..').layer2s as Layer2[]
 
   const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
@@ -628,12 +624,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
       secondLine: formatDelay(challengePeriodSeconds + validatorAfkTimeSeconds),
     },
-    validatedBy:
-      templateVars.nonTemplateRiskView?.validatedBy ??
-      RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
-    destinationToken:
-      templateVars.nonTemplateRiskView?.destinationToken ??
-      RISK_VIEW.NATIVE_AND_CANONICAL(),
   }
 
   const getStackedRisks = () => {
@@ -667,11 +657,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           baseChain.riskView.proposerFailure,
           RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
         ),
-      validatedBy:
-        templateVars.stackedRiskView?.validatedBy ?? riskView.validatedBy,
-      destinationToken:
-        templateVars.stackedRiskView?.destinationToken ??
-        riskView.destinationToken,
     }
   }
 
@@ -947,7 +932,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         : addSentimentToDataAvailability({
             layers: [
               usesBlobs
-                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],
             bridge: DA_BRIDGES.ENSHRINED,
@@ -992,12 +977,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           challengePeriodSeconds + validatorAfkTimeSeconds,
         ),
       },
-      validatedBy:
-        templateVars.nonTemplateRiskView?.validatedBy ??
-        RISK_VIEW.VALIDATED_BY_ETHEREUM,
-      destinationToken:
-        templateVars.nonTemplateRiskView?.destinationToken ??
-        RISK_VIEW.NATIVE_AND_CANONICAL(),
     },
     config: {
       associatedTokens: templateVars.associatedTokens,

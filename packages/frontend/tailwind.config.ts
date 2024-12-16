@@ -175,6 +175,7 @@ const config: Config = {
         invert: 'hsl(var(--primary-invert))',
       },
       secondary: 'hsl(var(--secondary))',
+      negative: 'hsl(var(--negative))',
       brand: 'hsl(var(--brand))',
       background: 'hsl(var(--background))',
       'surface-primary': 'hsl(var(--surface-primary))',

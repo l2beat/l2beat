@@ -8,12 +8,12 @@ import {
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
-import { BaseScalingFilters } from '../../_components/base-scaling-filters'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
+import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingFinalityTable } from './table/scaling-finality-table'
 
-type Props = CategorisedScalingEntries<ScalingFinalityEntry>
+type Props = TabbedScalingEntries<ScalingFinalityEntry>
 
 export function ScalingFinalityTables(props: Props) {
   const includeFilters = useScalingFilter()
@@ -21,7 +21,7 @@ export function ScalingFinalityTables(props: Props) {
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others?.filter(includeFilters) ?? [],
+    others: props.others.filter(includeFilters),
   }
 
   const initialSort = {
@@ -31,7 +31,7 @@ export function ScalingFinalityTables(props: Props) {
 
   return (
     <>
-      <BaseScalingFilters
+      <ScalingFilters
         items={[
           ...filteredEntries.rollups,
           ...filteredEntries.validiumsAndOptimiums,

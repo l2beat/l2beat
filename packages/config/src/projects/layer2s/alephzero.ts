@@ -9,11 +9,9 @@ const discovery = new ProjectDiscovery('alephzero')
 export const alephzero: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:

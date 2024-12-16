@@ -94,6 +94,7 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
@@ -132,7 +133,7 @@ interface OpStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
 }
@@ -154,10 +155,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 
 function opStackCommon(
   templateVars: OpStackConfigCommon,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
@@ -188,7 +186,9 @@ function opStackCommon(
   }
 
   if (daBadge === undefined) {
-    daBadge = templateVars.badges?.find((b) => badges[b].type === 'DA')
+    daBadge = templateVars.additionalBadges?.find(
+      (b) => badges[b].type === 'DA',
+    )
   }
   assert(daBadge !== undefined, 'DA badge must be defined')
 
@@ -203,6 +203,7 @@ function opStackCommon(
   }
 
   return {
+    isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
@@ -388,7 +389,7 @@ function opStackCommon(
     ],
     badges: mergeBadges(
       [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.badges ?? [],
+      templateVars.additionalBadges ?? [],
     ),
     discoveryDrivenData: templateVars.discoveryDrivenData,
   }
@@ -572,7 +573,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         : addSentimentToDataAvailability({
             layers: [
               usesBlobs
-                ? DA_LAYERS.ETH_BLOBS_OR_CALLLDATA
+                ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
                 : DA_LAYERS.ETH_CALLDATA,
             ],
             bridge: DA_BRIDGES.ENSHRINED,
@@ -625,8 +626,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           },
         ],
       },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     },
     stage:
       templateVars.stage === undefined
@@ -767,10 +766,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
     return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,

@@ -3,8 +3,7 @@ import { BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
 import { Database } from '@l2beat/database'
-import { StarknetClient } from '@l2beat/shared'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { RpcClient, StarknetClient } from '@l2beat/shared'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 

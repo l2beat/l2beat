@@ -3,6 +3,7 @@ import { ChecklistTemplate } from './types'
 
 interface GetStageOptions {
   rollupNodeLink?: string
+  securityCouncilReference?: string
 }
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
@@ -79,7 +80,11 @@ const getBlueprint = (opts?: GetStageOptions) =>
             'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
         },
         securityCouncilProperlySetUp: {
-          positive: 'The Security Council is properly set up.',
+          positive:
+            'The Security Council is properly set up' +
+            (opts?.securityCouncilReference
+              ? ` [(List of members)](${opts.securityCouncilReference}).`
+              : '.'),
           negative: 'The Security Council is not properly set up.',
         },
       },
@@ -94,14 +99,14 @@ const getBlueprint = (opts?: GetStageOptions) =>
         },
         delayWith30DExitWindow: {
           positive:
-            'Upgrades unrelated to on-chain provable bugs provide at least 30d to exit.',
+            'Upgrades unrelated to onchain provable bugs provide at least 30d to exit.',
           negative:
-            'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
+            'Upgrades unrelated to onchain provable bugs provide less than 30d to exit.',
         },
         proofSystemOverriddenOnlyInCaseOfABug: {
           positive:
-            'The Security Council is limited to acting solely on on-chain provable bugs.',
-          negative: `The Security Council's actions are not confined to on-chain provable bugs.`,
+            'The Security Council is limited to acting solely on onchain provable bugs.',
+          negative: `The Security Council's actions are not confined to onchain provable bugs.`,
         },
       },
     },

@@ -12,7 +12,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -133,7 +132,7 @@ export const taiko: Layer2 = {
   createdAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLLDATA],
+      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.TRANSACTION_DATA,
     }),
@@ -303,8 +302,6 @@ export const taiko: Layer2 = {
       sentiment: 'good',
       value: 'Self propose',
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   stage: getStage(
     {

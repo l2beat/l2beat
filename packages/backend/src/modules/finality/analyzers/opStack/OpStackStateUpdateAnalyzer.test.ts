@@ -3,7 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { RpcClient } from '@l2beat/shared'
 import { OpStackStateUpdateAnalyzer } from './OpStackStateUpdateAnalyzer'
 
 describe(OpStackStateUpdateAnalyzer.name, () => {

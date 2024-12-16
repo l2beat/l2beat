@@ -1,49 +1,46 @@
 import { type Layer2 } from '@l2beat/config'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import {
+  type ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../tvl/utils/get-latest-tvl-usd'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export async function getScalingCostsEntries() {
-  const [tvl, projectsChangeReport, projectsVerificationStatuses] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-    ])
+  const [tvl, projectsChangeReport] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+  ])
   const projects = getCostsProjects()
 
-  const entries = projects.map((project) => {
-    const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-    return getScalingCostEntry(project, isVerified, projectsChangeReport)
-  })
-
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  const entries = projects
+    .map((project) =>
+      getScalingCostEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+        tvl,
+      ),
+    )
+    .sort(compareStageAndTvl)
+  return groupByTabs(entries)
 }
 
 export type ScalingCostsEntry = ReturnType<typeof getScalingCostEntry>
 function getScalingCostEntry(
   project: Layer2,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
+  changes: ProjectChanges,
+  tvl: ProjectsLatestTvlUsd,
 ) {
   return {
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-    }),
-    entryType: 'costs' as const,
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    href: `/scaling/projects/${project.display.slug}#onchain-costs`,
     costsWarning: project.display.costsWarning,
+    tvlOrder: tvl[project.id] ?? 0,
   }
 }

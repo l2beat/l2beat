@@ -1,5 +1,7 @@
 import { HttpClient } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
+import { Response } from 'node-fetch'
+
 import { DiscordClient } from './DiscordClient'
 
 describe(DiscordClient.name, () => {

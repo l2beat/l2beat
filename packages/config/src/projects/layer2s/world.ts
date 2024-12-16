@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('worldchain')
 
 export const world: Layer2 = opStackL2({
   createdAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
-  badges: [Badge.RaaS.Alchemy, Badge.Infra.Superchain],
+  additionalBadges: [Badge.RaaS.Alchemy, Badge.Infra.Superchain],
   additionalPurposes: ['Identity'],
   display: {
     name: 'World Chain',

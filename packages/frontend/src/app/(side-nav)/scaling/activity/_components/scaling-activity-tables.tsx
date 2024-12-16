@@ -6,15 +6,14 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
-import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
-type Props = CategorisedScalingEntries<ScalingActivityEntry>
+type Props = TabbedScalingEntries<ScalingActivityEntry>
 
 export function ScalingActivityTables({
   rollups,
@@ -26,7 +25,7 @@ export function ScalingActivityTables({
   const filteredEntries = {
     rollups: rollups.filter(includeFilters),
     validiumsAndOptimiums: validiumsAndOptimiums.filter(includeFilters),
-    others: others?.filter(includeFilters) ?? [],
+    others: others.filter(includeFilters),
   }
 
   const initialSort = {
@@ -64,28 +63,21 @@ export function ScalingActivityTables({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
-            <ScalingActivityTable
-              entries={filteredEntries.rollups}
-              rollups
-              customSortedRowModel={getStageSortedRowModel()}
-            />
+            <ScalingActivityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiums-and-optimiums">
             <ScalingActivityTable
               entries={filteredEntries.validiumsAndOptimiums}
-              customSortedRowModel={getStageSortedRowModel()}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
+        {/* Greater than one because we always have the Ethereum entry */}
+        {filteredEntries.others.length > 1 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
-              <ScalingActivityTable
-                entries={filteredEntries.others}
-                customSortedRowModel={getStageSortedRowModel()}
-              />
+              <ScalingActivityTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

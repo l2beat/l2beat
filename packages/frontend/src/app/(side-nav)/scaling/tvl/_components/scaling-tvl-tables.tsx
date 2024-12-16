@@ -8,12 +8,12 @@ import {
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
 import { ScalingTvlTable } from './table/scaling-tvl-table'
 
-type Props = CategorisedScalingEntries<ScalingTvlEntry>
+type Props = TabbedScalingEntries<ScalingTvlEntry>
 
 export function ScalingTvlTables(props: Props) {
   const includeFilters = useScalingFilter()
@@ -21,7 +21,7 @@ export function ScalingTvlTables(props: Props) {
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others?.filter(includeFilters) ?? [],
+    others: props.others.filter(includeFilters),
   }
 
   const initialSort = {

@@ -1,12 +1,7 @@
 import { chains } from '@l2beat/config'
 import { type FieldDiff, diffDiscovery } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
-import {
-  assert,
-  ChainId,
-  type EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, ChainId, type EthereumAddress } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -23,10 +18,22 @@ export async function getProjectsChangeReport() {
 export type ProjectsChangeReport = Awaited<
   ReturnType<typeof getProjectsChangeReportWithFns>
 >
+
+export interface ProjectChanges {
+  implementationChanged: boolean
+  highSeverityFieldChanged: boolean
+}
+
 async function getProjectsChangeReportWithFns() {
   const result = await getCachedProjectsChangeReport()
   return {
     projects: result,
+    getChanges: function (projectId: string): ProjectChanges {
+      return {
+        implementationChanged: this.hasImplementationChanged(projectId),
+        highSeverityFieldChanged: this.hasHighSeverityFieldChanged(projectId),
+      }
+    },
     hasImplementationChanged: function (projectId: string) {
       const chainChanges = this.projects[projectId]
       if (!chainChanges) {
@@ -147,12 +154,16 @@ const getCachedProjectsChangeReport = cache(
     return result
   },
   [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
-  { revalidate: UnixTime.HOUR },
+  { tags: ['update-monitor'] },
 )
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {
   return {
     projects: {},
+    getChanges: () => ({
+      implementationChanged: false,
+      highSeverityFieldChanged: false,
+    }),
     hasImplementationChanged: () => false,
     hasHighSeverityFieldChanged: () => false,
   }

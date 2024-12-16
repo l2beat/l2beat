@@ -90,7 +90,7 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.uses.l2costs &&
     config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
   ) {
-    const coingeckoClient = providers.coingeckoClient
+    const coingeckoClient = providers.clients.coingecko
     const coingeckoQueryService = new CoingeckoQueryService(
       coingeckoClient,
       logger.tag({ tag: 'trackedTxs' }),
@@ -102,7 +102,7 @@ export function createTrackedTxsModule(
       parents: [hourlyIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
-      logger,
+      logger: logger.tag({ feature: 'costs' }),
     })
 
     l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer({
@@ -110,7 +110,7 @@ export function createTrackedTxsModule(
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
-      logger,
+      logger: logger.tag({ feature: 'costs' }),
       projects: config.projects,
     })
   }
@@ -125,7 +125,7 @@ export function createTrackedTxsModule(
       parents: [trackedTxsIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
-      logger,
+      logger: logger.tag({ feature: 'liveness' }),
     })
 
     anomaliesIndexer = new AnomaliesIndexer({
@@ -134,7 +134,7 @@ export function createTrackedTxsModule(
       parents: [trackedTxsIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
-      logger,
+      logger: logger.tag({ feature: 'liveness' }),
     })
   }
 

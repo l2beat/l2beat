@@ -175,8 +175,6 @@ export const termstructure: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, expirationPeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(expirationPeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage({
     stage0: {

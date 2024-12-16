@@ -52,9 +52,7 @@ const publisher = discovery.getContractValue<string>(
   'publisher',
 )
 
-const daOracle = discovery.getContractValue<string>('ChainOracle', 'daOracle')
-
-/* Initally added as L2, commented out sections are from the original file. */
+/* Initially added as L2, commented out sections are from the original file. */
 
 const CHALLENGE_WINDOW_SECONDS = discovery.getContractValue<number>(
   'Challenge',
@@ -215,12 +213,6 @@ export const lightlink: Bridge = {
           'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
         ...upgradesLightLink,
       }),
-      {
-        name: 'DaOracle',
-        address: EthereumAddress(daOracle),
-        description:
-          'The DABridge contract used to verify shares inclusion in the ChainOracle provideShares() function. If not set, data shares cannot be verified and stored in the ChainOracle contract.',
-      },
     ],
     risks: [],
   },

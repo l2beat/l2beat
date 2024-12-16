@@ -1,5 +1,5 @@
-import { type Layer2Provider, type Layer3Provider } from '@l2beat/config'
-
+import { type ScalingProjectStack } from '@l2beat/config'
+import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
 import { LoopringIcon } from '~/icons/providers/loopring-icon'
@@ -18,12 +18,10 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 
-import type { JSX } from 'react'
-
 export interface TypeCellProps {
   children: string | undefined
   disableColors?: boolean
-  provider?: Layer2Provider | Layer3Provider
+  provider?: ScalingProjectStack
 }
 
 export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
@@ -56,7 +54,7 @@ interface ProviderProps {
 }
 
 export const providerMap: Record<
-  Layer2Provider | Layer3Provider,
+  ScalingProjectStack,
   ProviderProps | undefined
 > = {
   StarkEx: {
@@ -100,7 +98,6 @@ export const providerMap: Record<
     text: "This project is based on Taiko's code base.",
   },
   'Cartesi Rollups': undefined,
-  'zkLink Nexus': undefined,
 }
 
 interface TypeTooltipProps {

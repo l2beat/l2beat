@@ -8,6 +8,7 @@ import { Layer3 } from './types'
 export const hook: Layer3 = underReviewL3({
   id: 'hook',
   createdAt: new UnixTime(1719928126), // 2024-07-02T13:48:46Z
+  isArchived: true,
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Hook',
@@ -16,6 +17,8 @@ export const hook: Layer3 = underReviewL3({
     provider: 'Arbitrum',
     description:
       'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
+    headerWarning:
+      'Hook has been [wound down and withdrawals to EOAs have been executed](https://hook.xyz/).',
     purposes: ['Universal', 'NFT', 'Exchange'],
     links: {
       websites: ['https://hook.xyz/'],

@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
@@ -10,12 +10,6 @@ const discovery = new ProjectDiscovery('vector')
 
 const chainName = 'Ethereum'
 const updateInterval = 1.5 // hours
-const relayers = discovery.getContractValue<string[]>('Vector', 'relayers')
-
-const SP1Verifier = discovery.getContractValue<string>(
-  'SuccinctGatewaySP1',
-  'verifier',
-)[0]
 
 const validation = {
   type: 'zk-proof',
@@ -43,25 +37,7 @@ export const vector = {
   validation: validation,
   contracts: {
     addresses: {
-      ethereum: [
-        {
-          name: 'Vector',
-          address: EthereumAddress(
-            '0x02993cdC11213985b9B13224f3aF289F03bf298d',
-          ),
-          description:
-            'The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.',
-        },
-        {
-          name: 'VectorSP1Verifier',
-          address: EthereumAddress(SP1Verifier),
-          description: `Verifier contract for the header range [latestBlock, targetBlock] proof.`,
-        },
-        discovery.getContractDetails('SuccinctGatewaySP1', {
-          description: `This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the on-chain verifier contract.
-        `,
-        }),
-      ],
+      ethereum: discovery.getDiscoveredContracts(),
     },
     risks: [
       {
@@ -105,37 +81,12 @@ export const vector = {
       },
       {
         category: 'Funds can be frozen if',
-        text: 'the permissioned relayers are unable to submit DA commitments to the Vector contract.',
+        text: 'excluding L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the Vector contract.',
       },
     ],
   },
   permissions: {
-    ethereum: [
-      ...discovery.getMultisigPermission(
-        'AvailMultisig',
-        'This multisig is the admin and guardian of the Vector contract. It holds the power to change the contract state and upgrade the bridge.',
-      ),
-      ...discovery.getMultisigPermission(
-        'SuccinctGatewaySP1Multisig',
-        'This multisig is the admin of the SuccinctGatewaySP1 contract. As the manager of router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
-      ),
-      {
-        name: 'Relayers',
-        description: `List of prover (relayer) addresses that are allowed to call commitHeaderRange() to commit block ranges to the Vector contract.`,
-        accounts: relayers.map((relayer) => ({
-          address: EthereumAddress(relayer),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'Guardians',
-        description: `The Vector guardians hold the power to freeze the bridge contract, update the SuccinctGateway contract and update the list of authorized relayers.`,
-        accounts: discovery.getAccessControlRolePermission(
-          'Vector',
-          'GUARDIAN_ROLE',
-        ),
-      },
-    ],
+    ethereum: discovery.getDiscoveredPermissions(),
   },
   usedIn: [],
   risks: {

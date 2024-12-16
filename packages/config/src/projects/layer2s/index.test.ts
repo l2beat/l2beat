@@ -619,16 +619,6 @@ describe('layer2s', () => {
       })
     }
   })
-
-  describe('Other category projects have other details', () => {
-    for (const layer2 of layer2s) {
-      if (layer2.display.isOther) {
-        it(layer2.display.name, () => {
-          expect(layer2.display.mainPermissions).not.toEqual(undefined)
-        })
-      }
-    }
-  })
 })
 
 function getAddressFromReferences(references: ScalingProjectReference[] = []) {

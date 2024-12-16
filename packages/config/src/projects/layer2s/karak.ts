@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('karak')
 export const karak: Layer2 = opStackL2({
   createdAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
+  additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   discovery,
   display: {
     name: 'K2',

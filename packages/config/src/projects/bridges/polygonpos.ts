@@ -180,7 +180,7 @@ export const polygonpos: Bridge = {
       ),
       discovery.getContractDetails('SlashingManager', {
         description:
-          'A contract priviliged to slash validators in StakeManager via slash() method.',
+          'A contract privileged to slash validators in StakeManager via slash() method.',
         ...upgrades,
       }),
       discovery.getContractDetails('Registry', {

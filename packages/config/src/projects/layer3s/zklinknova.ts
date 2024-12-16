@@ -106,7 +106,6 @@ export const zklinknova: Layer3 = {
       'zkLink Nova is a Layer 3 zkEVM Validium network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
     purposes: ['Universal', 'Interoperability'],
     category: 'Validium',
-    provider: 'zkLink Nexus',
     links: {
       websites: ['https://zklink.io', 'https://zk.link'],
       apps: [
@@ -401,8 +400,6 @@ export const zklinknova: Layer3 = {
     ],
   },
   riskView: {
-    validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('linea')),
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
       sources: [
@@ -433,8 +430,6 @@ export const zklinknova: Layer3 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stackedRiskView: {
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: RISK_VIEW.STATE_ZKP_L3('Linea'),
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_L3,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0), // TODO(donnoh): something smarter if things change. should be (min(zklink, linea), sum(zklink, linea))

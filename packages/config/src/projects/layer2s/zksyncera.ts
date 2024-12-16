@@ -63,13 +63,7 @@ export const zksyncera: Layer2 = zkStackL2({
     added: `zksyncValidatorsAdded`,
     removed: 'zksyncValidatorsRemoved',
   },
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.ZKStack,
-    Badge.Other.L3HostChain,
-    Badge.Infra.ElasticChain,
-  ],
+  additionalBadges: [Badge.Other.L3HostChain],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -126,7 +120,7 @@ export const zksyncera: Layer2 = zkStackL2({
       description:
         'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',
       sharedEscrow: {
-        type: 'ElasticChian',
+        type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
           '0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102',
         ),

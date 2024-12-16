@@ -45,6 +45,7 @@ export const xterioDABridge = {
           name: 'DA Bridge (EOA)',
           description:
             'This DA bridge address is used to store transaction batch hashes as data availability commitments.',
+          isVerified: true,
         },
         discovery.getContractDetails('ProxyAdmin', {
           description:
@@ -101,7 +102,7 @@ export const xterioDABridge = {
   transactionDataType: DacTransactionDataType.TransactionData,
   usedIn: toUsedInProject([xterio]),
   risks: {
-    committeeSecurity: DaCommitteeSecurityRisk.NoCommiteeSecurity(),
+    committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },

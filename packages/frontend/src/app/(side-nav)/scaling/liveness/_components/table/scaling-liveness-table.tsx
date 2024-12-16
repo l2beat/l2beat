@@ -4,7 +4,6 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
-import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
@@ -30,7 +29,7 @@ export function ScalingLivenessTable({ entries, rollups }: Props) {
     data: tableEntries,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: rollups ? getStageSortedRowModel() : getSortedRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     state: {
       sorting,

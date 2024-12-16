@@ -10,7 +10,6 @@ import { ActivityMetricContextProvider } from './_components/activity-metric-con
 import { ActivityTimeRangeContextProvider } from './_components/activity-time-range-context'
 import { ScalingActivityTables } from './_components/scaling-activity-tables'
 
-export const revalidate = 3600
 export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/activity',
@@ -40,7 +39,7 @@ export default async function Page() {
                 entries={[
                   ...entries.rollups,
                   ...entries.validiumsAndOptimiums,
-                  ...(entries.others ?? []),
+                  ...entries.others,
                 ]}
               />
             </MainPageCard>

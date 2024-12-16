@@ -104,8 +104,10 @@ export class ProjectDiscovery {
       }
       descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
+
     return {
       name: contract.name,
+      isVerified: contract.unverified !== true,
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
@@ -369,9 +371,8 @@ export class ProjectDiscovery {
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
-      `This is a Gnosis Safe with ${this.getMultisigStats(
-        identifier,
-      )} threshold. ` + fullModulesDescription,
+      `A Gnosis Safe with ${this.getMultisigStats(identifier)} threshold. ` +
+        fullModulesDescription,
     ]
   }
 
@@ -571,6 +572,7 @@ export class ProjectDiscovery {
     }
     return {
       address: contract.address,
+      isVerified: contract.unverified !== true,
       name: contract.name,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
@@ -807,12 +809,12 @@ export class ProjectDiscovery {
       configure: 'Can change the configuration of',
       upgrade: 'Can upgrade the implementation of',
       act: undefined,
-      guard: 'Is a Guardian',
-      challenge: 'Is a Challenger',
-      propose: 'Is a Proposer',
-      sequence: 'Is a Sequencer',
-      validate: 'Is a Validator',
-      fastconfirm: 'Is a FastConfirmer',
+      guard: 'A Guardian',
+      challenge: 'A Challenger',
+      propose: 'A Proposer',
+      sequence: 'A Sequencer',
+      validate: 'A Validator',
+      fastconfirm: 'A FastConfirmer',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>

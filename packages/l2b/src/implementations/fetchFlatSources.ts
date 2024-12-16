@@ -1,21 +1,53 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
 import path from 'path'
-import { CliLogger, HttpClient } from '@l2beat/shared'
-import { FlatSourcesApiResponse } from '@l2beat/shared-pure'
+import { CliLogger, HttpClient, formatSI } from '@l2beat/shared'
+import { FlatSourcesApiResponse, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { ProgressEvent, ResponseProgress } from './common/ResponseProgress'
+import { colorMap } from './compare-flat-sources/output'
 
 const ENDPOINT = '/api/flat-sources'
 
 export async function fetchFlatSources(
+  logger: CliLogger,
   backendUrl: string,
 ): Promise<FlatSourcesApiResponse> {
   const httpClient = new HttpClient()
   const response = await httpClient.fetch(`${backendUrl}${ENDPOINT}`, {
-    headers: {
-      'Accept-Encoding': 'gzip, deflate, br',
-    },
+    compress: true,
   })
+
+  const progress = new ResponseProgress(response)
+  progress.on('progress', (p) => printProgress(logger, p))
+  progress.on('finish', (p) => {
+    printProgress(logger, p)
+    finishProgress(logger, p)
+  })
+
   return FlatSourcesApiResponse.parse(await response.json())
+}
+
+function printProgress(logger: CliLogger, progress: ProgressEvent) {
+  const done = formatSI(progress.done, 'B')
+  const rate = chalk.magenta(formatSI(progress.rate, 'B/s'))
+
+  if (progress.total === 0) {
+    logger.updateStatus('lineDownloaded', `Downloaded ${done} [${rate}]`)
+    return
+  }
+
+  const prog = colorMap(progress.progress * 100, 100)
+  const total = formatSI(progress.total, 'B')
+  const eta = formatSeconds(progress.eta)
+  logger.updateStatus(
+    'lineDownloaded',
+    `Downloaded ${prog} % (${done} of ${total}) [${rate} in ~${eta}]`,
+  )
+}
+
+function finishProgress(logger: CliLogger, progress: ProgressEvent) {
+  printProgress(logger, progress)
+  logger.removeStatus('lineDownloaded')
 }
 
 export function saveIntoDirectory(

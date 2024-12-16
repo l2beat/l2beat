@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "orbiter",
+  "initialAddresses": [
+    // NOTE(radomski): All addresses below this comment were added into the
+    // initialAddresses automatically during the process of removing the
+    // check-verified-contracts. When going over this project again please bear in
+    // mind that these addresses could not be used by the project anymore. Decide
+    // for yourself whether keep them here or should they be removed or fetched
+    // from some fields of other contracts.
+    "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc"
+  ],
+  "names": {},
+  "overrides": {}
+}

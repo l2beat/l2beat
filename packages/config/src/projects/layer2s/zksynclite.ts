@@ -246,8 +246,6 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage(
     {
@@ -262,10 +260,7 @@ export const zksynclite: Layer2 = {
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: [
-          true,
-          'The Security Council, even though it has a threshold below the recommended 75% (currently 9/15), is considered properly set up since it has been created before the Stages requirement specification and the protocol is extremely ossified. Moreover, the threshold and list of members are hardcoded and not updateable without a contract upgrade.',
-        ],
+        securityCouncilProperlySetUp: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

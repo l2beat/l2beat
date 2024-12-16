@@ -22,7 +22,7 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { PROOFS } from '../other/zk-catalog/common/proofSystems'
+import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -40,7 +40,7 @@ const forcedWithdrawalFee = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: ['ProxyOwner'],
+  upgradableBy: ['LoopringMultisig'],
   upgradeDelay: 'No delay',
 }
 
@@ -205,8 +205,6 @@ export const loopring: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('LRC'),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage(
     {
@@ -331,7 +329,7 @@ export const loopring: Layer2 = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'ProxyOwner',
+      'LoopringMultisig',
       'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee, change the Verifier address and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
     ),
     {

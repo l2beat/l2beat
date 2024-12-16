@@ -18,7 +18,15 @@
     "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
     "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
     "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-    "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+    "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+
+    // NOTE(radomski): All addresses below this comment were added into the
+    // initialAddresses automatically during the process of removing the
+    // check-verified-contracts. When going over this project again please bear in
+    // mind that these addresses could not be used by the project anymore. Decide
+    // for yourself whether keep them here or should they be removed or fetched
+    // from some fields of other contracts.
+    "0x0a3f6849f78076aefaDf113F5BED87720274dDC0"
   ],
   "names": {
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": "DAIBridge",
@@ -44,7 +52,8 @@
     "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "MultiBridge", // this is a multi-token bridge: We currently only track EKUBO in the .ts
     "0x0c5aE94f8939182F2D06097025324D1E537d5B60": "StarkgateManager",
     "0x1268cc171c54F2000402DfF20E93E60DF4c96812": "StarkgateRegistry",
-    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "StarkgateETHSecurityAgentMultisig"
+    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "StarkgateETHSecurityAgentMultisig",
+    "0x0a3f6849f78076aefaDf113F5BED87720274dDC0": "MakerDAO Governance"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "shared-sharp-verifier"
@@ -220,6 +229,10 @@
           }
         }
       }
+    },
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
+      // lido dao agent
+      "ignoreDiscovery": true
     },
     "wstETHBridge": {
       "fields": {
@@ -521,6 +534,9 @@
           }
         }
       }
+    },
+    "MakerDAO Governance": {
+      "ignoreRelatives": ["IOU", "GOV", "hat", "authority"]
     }
   }
 }
