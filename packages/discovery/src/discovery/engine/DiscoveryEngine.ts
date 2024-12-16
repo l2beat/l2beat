@@ -16,10 +16,15 @@ import { shouldSkip } from './shouldSkip'
 
 export class DiscoveryEngine {
   private objectCount: number = 0
+
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
     private readonly logger: DiscoveryLogger,
   ) {}
+
+  reset() {
+    this.objectCount = 0
+  }
 
   async discover(
     provider: IProvider,
@@ -133,6 +138,8 @@ export class DiscoveryEngine {
 
     const result = Object.values(resolved)
     this.checkErrors(result)
+    this.reset()
+
     return result
   }
 

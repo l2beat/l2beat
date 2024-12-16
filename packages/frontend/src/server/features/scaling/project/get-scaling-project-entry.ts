@@ -34,7 +34,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     header,
   ] = await Promise.all([
     getContractsVerificationStatuses(project),
-    getManuallyVerifiedContracts(project),
+    getManuallyVerifiedContracts(),
     getProjectsChangeReport(),
     getHeader(project),
   ])
