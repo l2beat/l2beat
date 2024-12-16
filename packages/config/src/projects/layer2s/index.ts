@@ -153,6 +153,7 @@ import { superlumio } from './superlumio'
 import { superseed } from './superseed'
 import { swan } from './swan'
 import { swell } from './swell'
+import { swellchain } from './swellchain'
 import { sxnetwork } from './sxnetwork'
 import { sxt } from './sxt'
 import { t1 } from './t1'
@@ -345,6 +346,7 @@ export const layer2s: Layer2[] = [
   superseed,
   swan,
   swell,
+  swellchain,
   sxt,
   t1,
   sxnetwork,
