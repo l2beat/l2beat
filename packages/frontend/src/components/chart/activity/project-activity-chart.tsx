@@ -75,7 +75,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
         </ChartControlsWrapper>
         <Chart />
         <div className="flex justify-between gap-4">
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <ActivityMetricControls
               value={metric}
               onValueChange={setMetric}

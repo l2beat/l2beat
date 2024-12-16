@@ -132,7 +132,7 @@ function Controls({
   const isClient = useIsClient()
   return (
     <ChartControlsWrapper>
-      <div className="flex gap-2 md:gap-4">
+      <div className="flex gap-1">
         {isClient ? (
           <RadioGroup
             value={scale}
