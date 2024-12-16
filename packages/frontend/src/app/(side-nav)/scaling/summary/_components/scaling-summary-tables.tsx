@@ -76,7 +76,7 @@ export function ScalingSummaryTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
-            {filteredEntries.others.length > 0 ? (
+            {featureFlags.showOthers && filteredEntries.others.length > 0 ? (
               <ScalingSummaryOthersTable entries={filteredEntries.others} />
             ) : (
               <OthersComingSoonNotice />
