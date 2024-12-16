@@ -1,6 +1,6 @@
-import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
+import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
 import { parseManuallyVerifiedContracts } from '../manuallyVerifiedContracts'
 
 let cache: ManuallyVerifiedContracts | undefined
