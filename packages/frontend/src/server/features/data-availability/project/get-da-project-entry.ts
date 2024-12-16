@@ -7,10 +7,10 @@ import {
   type EthereumDaLayer,
   type NoDaBridge,
   type OnChainDaBridge,
+  isDaBridgeVerified,
 } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
 import { getManuallyVerifiedContracts } from '@l2beat/config'
-import { getDaBridgeVerification } from '@l2beat/config'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
@@ -101,7 +101,7 @@ export async function getCommonDaProjectPageEntry(
   daLayer: DaLayer,
   daBridge: DaBridge,
 ): Promise<CommonDaProjectPageEntry> {
-  const isVerified = getDaBridgeVerification(daLayer, daBridge)
+  const isVerified = isDaBridgeVerified(daLayer, daBridge)
 
   return {
     isVerified,

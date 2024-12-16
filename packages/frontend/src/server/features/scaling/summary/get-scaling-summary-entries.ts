@@ -1,4 +1,10 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  getCurrentEntry,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'
@@ -7,7 +13,6 @@ import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
 import {
   type ActivityLatestUopsData,
   getActivityLatestUops,

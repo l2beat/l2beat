@@ -11,10 +11,17 @@ export const soulwallet: Project = {
   id: ProjectId('soulwallet'),
   slug: 'soulwallet',
   name: 'Soul Wallet',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-08-14')),
   // tags
   isZkCatalog: true,
   // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
   proofVerification: {
     shortDescription:
       'Smart contract wallet supporting guardians and email recovery with ZK.',
