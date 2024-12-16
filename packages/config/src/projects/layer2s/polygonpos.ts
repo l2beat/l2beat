@@ -15,6 +15,7 @@ import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Layer2 } from './types'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -52,6 +53,7 @@ export const polygonpos: Layer2 = {
     slug: 'polygon-pos',
     purposes: ['Universal'],
     category: 'Other',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
