@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, statSync } from 'fs'
+import { existsSync, readFileSync, readdirSync, statSync } from 'fs'
 import path from 'path'
 import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
 import { parseManuallyVerifiedContracts } from '../manuallyVerifiedContracts'
