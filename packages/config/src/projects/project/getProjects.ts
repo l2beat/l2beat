@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
 import { isVerified } from '../../verification'
-import { BadgeId, badges } from '../badges'
 import { Bridge, bridges } from '../bridges'
 import { Layer2, layer2s } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
@@ -9,6 +8,8 @@ import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
 import { Project } from './Project'
 import { getCurrentEntry } from './utils/getCurrentEntry'
+import { getHostChain } from './utils/getHostChain'
+import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
 
@@ -110,28 +111,4 @@ function daLayerToProject(p: DaLayer): Project {
     isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
-}
-
-function getHostChain(id: ProjectId) {
-  if (id === ProjectId.ETHEREUM) {
-    return { id, slug: 'ethereum', name: 'Ethereum', shortName: undefined }
-  }
-  const host = layer2s.find((x) => x.id)
-  if (!host) {
-    throw new Error(`Invalid host chain: ${host}`)
-  }
-  return {
-    id,
-    slug: host.display.slug,
-    name: host.display.name,
-    shortName: host.display.shortName,
-  }
-}
-
-function getRaas(projectBadges: BadgeId[] | undefined) {
-  const badge = projectBadges?.find((id) => badges[id].type === 'RaaS')
-  if (!badge) {
-    return undefined
-  }
-  return badges[badge].display.name
 }
