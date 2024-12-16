@@ -1,5 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ScalingProjectRiskView } from '../../common'
+import {
+  ScalingProjectCategory,
+  ScalingProjectRiskView,
+  ScalingProjectStack,
+} from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
 import {
   DacBridge,
@@ -40,8 +44,7 @@ export interface ProjectStatuses {
 
 export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
-  /** e.g. Optimistic Rollup */
-  type: string
+  type: ScalingProjectCategory
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
   hostChain: {
@@ -50,12 +53,19 @@ export interface ProjectScalingInfo {
     name: string
     shortName: string | undefined
   }
-  stack: string | undefined
+  stack: ScalingProjectStack | undefined
   raas: string | undefined
   daLayer: string
-  stage: string
+  stage: ScalingProjectStage
   purposes: string[]
 }
+
+export type ScalingProjectStage =
+  | 'Not applicable'
+  | 'Under review'
+  | 'Stage 0'
+  | 'Stage 1'
+  | 'Stage 2'
 
 export interface ProjectScalingRisks {
   self: ScalingProjectRiskView
@@ -66,7 +76,7 @@ export interface ProjectScalingRisks {
 export interface ProjectCountdowns {
   otherMigration?: {
     expiresAt: number
-    pretendingToBe: string
+    pretendingToBe: ScalingProjectCategory
     reasons: ReasonForBeingInOther[]
   }
 }

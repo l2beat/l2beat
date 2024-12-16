@@ -1,10 +1,15 @@
-import { type Layer2, type Layer3, PROJECT_COUNTDOWNS } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  PROJECT_COUNTDOWNS,
+  type ScalingProjectCategory,
+} from '@l2beat/config'
 import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 
 export interface ProjectCountdownsWithContext {
   otherMigration?: {
     expiresAt: number
-    pretendingToBe: string
+    pretendingToBe: ScalingProjectCategory
     reasons: ReasonForBeingInOther[]
   }
 }
