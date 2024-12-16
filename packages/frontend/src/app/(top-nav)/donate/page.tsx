@@ -161,7 +161,7 @@ async function Header(props: HeaderProps) {
 function DonateFundingSources() {
   return (
     <section id="funding-sources" className="mt-16 md:mt-20">
-      <div className="rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900">
+      <div className="rounded-lg md:bg-surface-primary md:p-8">
         <a
           className="mb-6 text-2xl font-bold md:text-3xl md:leading-normal"
           href="#funding-sources"
@@ -194,7 +194,7 @@ function DonateFundingSources() {
       <div className="mt-4 overflow-x-auto pb-3">
         <table>
           <thead>
-            <tr className="h-14 border-b border-b-gray-200 text-left text-sm text-gray-50 dark:border-b-gray-800">
+            <tr className="h-14 border-b border-divider text-left text-sm text-secondary">
               <th className="min-w-[300px] md:pl-4">Source / Project</th>
               <th className="md:pl-4">Tier</th>
               <th className="md:pl-4">Description</th>
@@ -204,7 +204,7 @@ function DonateFundingSources() {
             {fundingSources.map((item) => {
               return (
                 <tr
-                  className="h-14 border-b border-b-gray-200 text-base last:border-b-0 dark:border-b-gray-800"
+                  className="h-14 border-b border-divider text-base last:border-b-0"
                   key={item.source}
                 >
                   <td className="pr-4 md:px-4">{item.source}</td>

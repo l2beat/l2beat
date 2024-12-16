@@ -21,7 +21,7 @@ export function LegacyNavbar({
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
 
   return (
-    <div className="hidden h-[4.25rem] border-b border-divider text-base lg:block">
+    <div className="hidden h-[4.25rem] border-b border-divider bg-surface-primary text-base lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">
