@@ -5,8 +5,8 @@ import {
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
-} from '../../common'
-import { Layer2, Layer2Config, Layer2Display, StageConfig } from '../layer2s'
+} from '../../../common'
+import { Layer2, Layer2Config, Layer2Display, StageConfig } from '../../layer2s'
 import { isUnderReview } from './isUnderReview'
 
 describe(isUnderReview.name, () => {
