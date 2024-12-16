@@ -132,12 +132,13 @@ function getCategory(
     return undefined
   }
 
+  const { category, reasonsForBeingOther } = p.display
   switch (true) {
-    case p.display.isOther:
+    case reasonsForBeingOther && reasonsForBeingOther.length > 0:
       return 'Others'
-    case p.display.category.endsWith('Rollup'):
+    case category.endsWith('Rollup'):
       return 'Rollups'
-    case p.display.category === 'Validium' || p.display.category === 'Optimium':
+    case category === 'Validium' || category === 'Optimium':
       return 'ValidiumOrOptimiums'
     default:
       return undefined
