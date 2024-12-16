@@ -33,7 +33,6 @@ interface Props {
 export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
-  const { showOthers } = featureFlags
 
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
@@ -42,14 +41,14 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
 
   const filter = useMemo<TvlProjectFilter>(() => {
-    if (!showOthers && filters.isEmpty) {
+    if (!featureFlags.showOthers && filters.isEmpty) {
       return { type: 'layer2' }
     }
     return {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, filters, includeFilter, showOthers])
+  }, [entries, filters, includeFilter])
 
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
@@ -86,7 +85,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
         <Chart />
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
-            {showOthers && (
+            {featureFlags.showOthers && (
               <Checkbox
                 checked={excludeAssociatedTokens}
                 onCheckedChange={(checked) =>

@@ -59,10 +59,9 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
     () => entries.filter((item) => includeFilters(item)),
     [entries, includeFilters],
   )
-  const { showOthers } = featureFlags
 
   const filter = useMemo<CostsProjectsFilter>(() => {
-    if (filters.isEmpty && !showOthers) {
+    if (filters.isEmpty && !featureFlags.showOthers) {
       return { type: 'all' }
     }
 
@@ -70,7 +69,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
       type: 'projects',
       projectIds: filteredEntries.map((project) => project.id),
     }
-  }, [filteredEntries, filters, showOthers])
+  }, [filteredEntries, filters])
 
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
@@ -101,7 +100,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
         <ChartControlsWrapper>
           <div className="flex flex-wrap gap-1">
             <UnitControls unit={unit} setUnit={setUnit} />
-            {showOthers && (
+            {featureFlags.showOthers && (
               <CostsMetricControls
                 value={metric}
                 onValueChange={onMetricChange}

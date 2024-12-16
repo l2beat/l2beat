@@ -20,15 +20,14 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const { showOthers } = featureFlags
-  const [entries, _, __] = await Promise.all([
+  const [entries] = await Promise.all([
     getScalingCostsEntries(),
-    !showOthers &&
+    !featureFlags.showOthers &&
       api.costs.chart.prefetch({ range: '30d', filter: { type: 'all' } }),
     api.costs.table.prefetch({ range: '30d' }),
   ])
 
-  if (showOthers) {
+  if (featureFlags.showOthers) {
     const rollupsIds = entries.rollups.map((project) => project.id)
     await api.costs.chart.prefetch({
       range: '30d',
@@ -46,8 +45,10 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
-              {showOthers && <HorizontalSeparator className="max-lg:hidden" />}
-              {!showOthers && (
+              {featureFlags.showOthers && (
+                <HorizontalSeparator className="max-lg:hidden" />
+              )}
+              {!featureFlags.showOthers && (
                 <MainPageCard>
                   <ScalingCostsChart
                     entries={[

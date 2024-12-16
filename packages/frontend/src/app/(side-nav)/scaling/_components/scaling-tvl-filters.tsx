@@ -18,7 +18,6 @@ export function ScalingTvlFilters({
   className,
   showRollupsOnly,
 }: Props) {
-  const { showOthers } = featureFlags
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
@@ -34,7 +33,7 @@ export function ScalingTvlFilters({
         showRollupsFilter={showRollupsOnly}
         showHostChainFilter
       />
-      {!showOthers && (
+      {!featureFlags.showOthers && (
         <Checkbox
           checked={excludeAssociatedTokens}
           onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}

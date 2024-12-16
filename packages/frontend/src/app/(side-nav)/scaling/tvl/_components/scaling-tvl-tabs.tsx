@@ -24,8 +24,6 @@ type Props = TabbedScalingEntries<ScalingTvlEntry> & {
 
 export function ScalingTvlTabs(props: Props) {
   const includeFilters = useScalingFilter()
-  const { showOthers } = featureFlags
-
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
@@ -45,7 +43,7 @@ export function ScalingTvlTabs(props: Props) {
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', showOthers && 'mt-5')}
+        className={cn('mt-4', featureFlags.showOthers && 'mt-5')}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -66,7 +64,7 @@ export function ScalingTvlTabs(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {showOthers && (
+            {featureFlags.showOthers && (
               <>
                 <ScalingStackedTvlChart
                   milestones={props.milestones}
@@ -83,7 +81,7 @@ export function ScalingTvlTabs(props: Props) {
             value="validiums-and-optimiums"
             className="main-page-card pt-5"
           >
-            {showOthers && (
+            {featureFlags.showOthers && (
               <>
                 <ScalingStackedTvlChart
                   milestones={props.milestones}
@@ -101,7 +99,7 @@ export function ScalingTvlTabs(props: Props) {
               value="others"
               className="main-page-card pt-5"
             >
-              {showOthers && (
+              {featureFlags.showOthers && (
                 <>
                   <ScalingStackedTvlChart
                     milestones={props.milestones}

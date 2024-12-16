@@ -53,10 +53,9 @@ export function ActivityChart({
     'scaling-activity-show-mainnet',
     true,
   )
-  const { showOthers } = featureFlags
 
   const filter =
-    !showOthers && filters.isEmpty
+    !featureFlags.showOthers && filters.isEmpty
       ? { type: 'all' as const }
       : {
           type: 'projects' as const,

@@ -19,22 +19,20 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const { showOthers } = featureFlags
-
-  const [entries, _, __] = await Promise.all([
+  const [entries] = await Promise.all([
     getScalingActivityEntries(),
-    !showOthers &&
+    !featureFlags.showOthers &&
       api.activity.chart.prefetch({
         range: '30d',
         filter: { type: 'all' },
       }),
-    !showOthers &&
+    !featureFlags.showOthers &&
       api.activity.chartStats.prefetch({
         filter: { type: 'all' },
       }),
   ])
 
-  if (showOthers) {
+  if (featureFlags.showOthers) {
     const rollupsIds = entries.rollups.map((project) => project.id)
     await Promise.all([
       api.activity.chart.prefetch({
@@ -56,8 +54,10 @@ export default async function Page() {
         <ActivityTimeRangeContextProvider>
           <ActivityMetricContextProvider>
             <MainPageHeader>Activity</MainPageHeader>
-            {showOthers && <HorizontalSeparator className="max-lg:hidden" />}
-            {!showOthers && (
+            {featureFlags.showOthers && (
+              <HorizontalSeparator className="max-lg:hidden" />
+            )}
+            {!featureFlags.showOthers && (
               <MainPageCard>
                 <ActivityChart
                   milestones={HOMEPAGE_MILESTONES}

@@ -28,7 +28,6 @@ export function ScalingActivityTabs({
   others,
   milestones,
 }: Props) {
-  const { showOthers } = featureFlags
   const includeFilters = useScalingFilter()
 
   const filteredEntries = {
@@ -50,7 +49,7 @@ export function ScalingActivityTabs({
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', showOthers && 'mt-5')}
+        className={cn('mt-4', featureFlags.showOthers && 'mt-5')}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -72,7 +71,7 @@ export function ScalingActivityTabs({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {showOthers && (
+            {featureFlags.showOthers && (
               <>
                 <ActivityChart milestones={milestones} entries={rollups} />
                 <HorizontalSeparator className="mb-3 mt-5" />
@@ -86,7 +85,7 @@ export function ScalingActivityTabs({
             value="validiums-and-optimiums"
             className="main-page-card pt-5"
           >
-            {showOthers && (
+            {featureFlags.showOthers && (
               <>
                 <ActivityChart
                   milestones={milestones}
@@ -107,7 +106,7 @@ export function ScalingActivityTabs({
               value="others"
               className="main-page-card pt-5"
             >
-              {showOthers && (
+              {featureFlags.showOthers && (
                 <>
                   <ActivityChart
                     milestones={milestones}

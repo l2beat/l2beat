@@ -19,9 +19,8 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingTvlEntries()
-  const { showOthers } = featureFlags
 
-  if (showOthers) {
+  if (featureFlags.showOthers) {
     await api.tvl.chart.prefetch({
       filter: {
         type: 'projects',
@@ -37,8 +36,10 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Value Locked</MainPageHeader>
-          {showOthers && <HorizontalSeparator className="max-lg:hidden" />}
-          {!showOthers && (
+          {featureFlags.showOthers && (
+            <HorizontalSeparator className="max-lg:hidden" />
+          )}
+          {!featureFlags.showOthers && (
             <MainPageCard>
               <ScalingStackedTvlChart
                 milestones={HOMEPAGE_MILESTONES}

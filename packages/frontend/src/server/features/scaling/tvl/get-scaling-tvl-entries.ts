@@ -15,8 +15,6 @@ import {
 } from './utils/get-7d-tvl-breakdown'
 
 export async function getScalingTvlEntries() {
-  const { showOthers } = featureFlags
-
   const projects = [...layer2s, ...layer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,
   )
@@ -24,7 +22,7 @@ export async function getScalingTvlEntries() {
   const [projectsChangeReport, tvl] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvlBreakdown(),
-    !showOthers &&
+    !featureFlags.showOthers &&
       api.tvl.chart.prefetch({
         filter: { type: 'layer2' },
         range: '1y',

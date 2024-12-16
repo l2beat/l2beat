@@ -26,9 +26,7 @@ type Props = TabbedScalingEntries<ScalingCostsEntry> & {
 }
 
 export function ScalingCostsTabs(props: Props) {
-  const { showOthers } = featureFlags
   const includeFilters = useScalingFilter()
-
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
@@ -62,7 +60,7 @@ export function ScalingCostsTabs(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {showOthers && (
+            {featureFlags.showOthers && (
               <>
                 <ScalingCostsChart
                   entries={props.rollups}
@@ -80,7 +78,7 @@ export function ScalingCostsTabs(props: Props) {
               value="others"
               className="main-page-card pt-5"
             >
-              {showOthers && (
+              {featureFlags.showOthers && (
                 <>
                   <ScalingCostsChart
                     entries={props.others ?? []}
@@ -103,7 +101,6 @@ function Controls({
 }: {
   entries: ScalingCostsEntry[]
 }) {
-  const { showOthers } = featureFlags
   const { metric, setMetric } = useCostsMetricContext()
   const { range, setRange } = useCostsTimeRangeContext()
 
@@ -118,11 +115,11 @@ function Controls({
     <div
       className={cn(
         'mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between',
-        showOthers && 'mt-5',
+        featureFlags.showOthers && 'mt-5',
       )}
     >
       <ScalingFilters items={entries} />
-      {!showOthers && (
+      {!featureFlags.showOthers && (
         <CostsMetricControls
           value={metric}
           onValueChange={onMetricChange}
