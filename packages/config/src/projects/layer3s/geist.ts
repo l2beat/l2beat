@@ -3,7 +3,7 @@ import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const geist: Layer3 = upcomingL3({
-  id: 'mvchain',
+  id: 'geist',
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: ProjectId('base'),
   display: {
@@ -15,7 +15,7 @@ export const geist: Layer3 = upcomingL3({
     category: 'Optimium',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.playongeist.com/'],
+      websites: ['https://playongeist.com/'],
       apps: [],
       documentation: ['https://docs.playongeist.com/'],
       explorers: [],
