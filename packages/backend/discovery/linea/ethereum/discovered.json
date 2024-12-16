@@ -1,17 +1,19 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 21416037,
-  "configHash": "0x662643b938e5eec82dd83a02389fd5e96ce033ad36f2b1a31bdfafe9f86e8251",
+  "blockNumber": 21417565,
+  "configHash": "0xcb60824a4c5bb17e3b06511e935eaf46e853967ae798618f52c421cd82f7e6a5",
   "contracts": [
     {
-      "name": "ERC20Bridge",
+      "name": "TokenBridge",
       "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+      "template": "linea/TokenBridge",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge and escrow ERC-20 tokens.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -46,6 +48,56 @@
           ]
         ],
         "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_CUSTOM_CONTRACT_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "REMOVE_RESERVED_TOKEN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_MESSAGE_SERVICE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_REMOTE_TOKENBRIDGE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_RESERVED_TOKEN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          }
+        },
         "CONTRACT_VERSION": "1.0",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -64,8 +116,7 @@
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd",
         "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
-      },
-      "derivedName": "TokenBridge"
+      }
     },
     {
       "name": "CallForwardingProxy",
@@ -235,13 +286,15 @@
       "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
     },
     {
-      "name": "zkEVM",
+      "name": "LineaRollup",
       "address": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "template": "linea/LineaRollup",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -391,15 +444,20 @@
         "currentFinalizedState": "0xf1f4360b36e18083a1a37844f3227438cb24e76ce8aeda317497490edef30406",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "61497905880000000000",
+        "currentPeriodAmountInWei": "61633905880000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
-        "generalPause": false,
         "GENESIS_SHNARF": "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f",
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
-        "l1l2Pause": false,
-        "l2l1Pause": false,
+        "isPaused_BLOB_SUBMISSION": false,
+        "isPaused_CALLDATA_SUBMISSION": false,
+        "isPaused_COMPLETE_TOKEN_BRIDGING": false,
+        "isPaused_FINALIZATION": false,
+        "isPaused_GENERAL": false,
+        "isPaused_INITIATE_TOKEN_BRIDGING": false,
+        "isPaused_L1_L2": false,
+        "isPaused_L2_L1": false,
         "limitInWei": "18750000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "OUTBOX_STATUS_RECEIVED": 2,
@@ -432,18 +490,24 @@
           "0x1111111111111111111111111111111111111111",
           "0x1111111111111111111111111111111111111111",
           "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000"
         ]
-      },
-      "errors": {
-        "provenCompressedBlocksWithoutProof": "Processing error occurred."
       },
       "fieldMeta": {
         "verifiers": {
           "description": "Mapping of proof type to ZK Plonk Verifier contract"
         }
-      },
-      "derivedName": "LineaRollup"
+      }
     },
     {
       "name": "Timelock",
@@ -1135,6 +1199,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "linea/LineaRollup": "0x2f20e28d3868cf97a163fd003abbaa10af0c73c66039bd0c4e1871f15bfc7c04",
+    "linea/TokenBridge": "0xc7f437cd95670bba903eb5000ed21ebe4bd697a425d8392364aad7253a2d60fb"
   }
 }

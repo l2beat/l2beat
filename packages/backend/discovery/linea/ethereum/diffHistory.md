@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x79a10d8f4524e9851730c7da27c18d759d229d56
+Generated with discovered.json: 0x7ef837f6d805cdadbed4718ae3dbe02e23989b8c
 
-# Diff at Mon, 16 Dec 2024 15:41:10 GMT:
+# Diff at Mon, 16 Dec 2024 21:05:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3a99da1f8daebc5ab5be09d95ef4f970422af2f2 block: 21078909
-- current block number: 21416037
+- current block number: 21417565
 
 ## Description
 
@@ -12,13 +12,11 @@ Linea upgrades to [alpha v4](https://docs.linea.build/release-notes#alpha-v4)!
 
 This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds self-proposing/-proving if there weren't any finalized batches by the operator in the previous 6 months, among smaller changes.
 
-
-
 ## Watched changes
 
 ```diff
-    contract ERC20Bridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
-    +++ description: None
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
       sourceHashes.1:
 -        "0x4c5d4e5696bc435eefd0ba909c6a8a7748c4c49260fcb51a360f07af3c38d76f"
 +        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
@@ -30,6 +28,30 @@ This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds se
       values.$upgradeCount:
 -        2
 +        3
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_CUSTOM_CONTRACT_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.REMOVE_RESERVED_TOKEN_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_MESSAGE_SERVICE_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_REMOTE_TOKENBRIDGE_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_RESERVED_TOKEN_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
       values.owner:
 -        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       values.paused:
@@ -66,8 +88,8 @@ This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds se
 ```
 
 ```diff
-    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
-    +++ description: None
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
       sourceHashes.1:
 -        "0x6eace22f38b33b52c0608ca553753365c7aaa2ac2e9efba018e6f2c4864b9e40"
 +        "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
@@ -115,8 +137,6 @@ This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds se
 -        3
       values.PAUSE_MANAGER_ROLE:
 -        "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26"
-      values.provenCompressedBlocksWithoutProof:
--        [2242752]
       values.PROVING_SYSTEM_PAUSE_TYPE:
 -        4
       values.CONTRACT_VERSION:
@@ -147,8 +167,6 @@ This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds se
 +        "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
       values.VERIFIER_UNSETTER_ROLE:
 +        "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a"
-      errors:
-+        {"provenCompressedBlocksWithoutProof":"Processing error occurred."}
     }
 ```
 
@@ -162,9 +180,97 @@ This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds se
 
 ```diff
 .../linea/ethereum/.flat/CallForwardingProxy.sol   |   23 +
- .../ERC20Bridge/TokenBridge.sol                    | 1798 +++++++++++++---
- .../zkEVM/LineaRollup.sol                          | 2267 +++++++++++---------
+ .../LineaRollup/LineaRollup.sol                    | 2267 +++++++++++---------
+ .../TokenBridge/TokenBridge.sol                    | 1798 +++++++++++++---
  3 files changed, 2743 insertions(+), 1345 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078909 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      name:
+-        "ERC20Bridge"
++        "TokenBridge"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      template:
++        "linea/TokenBridge"
+      description:
++        "Contract used to bridge and escrow ERC-20 tokens."
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      name:
+-        "zkEVM"
++        "LineaRollup"
+      values.generalPause:
+-        false
+      values.l1l2Pause:
+-        false
+      values.l2l1Pause:
+-        false
+      values.provenCompressedBlocksWithoutProof:
+-        [2242752]
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.19:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.18:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.17:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.16:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.15:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.14:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.13:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.12:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.11:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.10:
++        "0x0000000000000000000000000000000000000000"
+      values.isPaused_BLOB_SUBMISSION:
++        false
+      values.isPaused_CALLDATA_SUBMISSION:
++        false
+      values.isPaused_COMPLETE_TOKEN_BRIDGING:
++        false
+      values.isPaused_FINALIZATION:
++        false
+      values.isPaused_GENERAL:
++        false
+      values.isPaused_INITIATE_TOKEN_BRIDGING:
++        false
+      values.isPaused_L1_L2:
++        false
+      values.isPaused_L2_L1:
++        false
+      template:
++        "linea/LineaRollup"
+      description:
++        "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2."
+    }
 ```
 
 Generated with discovered.json: 0x36a3a62508cac2618869c642a34cd0abe5d19e63
