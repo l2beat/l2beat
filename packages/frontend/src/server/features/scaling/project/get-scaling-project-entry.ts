@@ -16,6 +16,7 @@ import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTvlProjectStats } from '../tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { getCountdowns } from '../utils/get-countdowns'
+import { isProjectOther } from '../utils/is-project-other'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
@@ -52,6 +53,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
     header,
+    reasonsForBeingOther: project.display.reasonsForBeingOther,
     countdowns: getCountdowns(project),
   }
 
@@ -71,7 +73,11 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     return {
       ...common,
       type: project.type,
-      stageConfig: project.stage,
+      stageConfig: isProjectOther(project)
+        ? {
+            stage: 'NotApplicable' as const,
+          }
+        : project.stage,
       projectDetails,
       header,
     }
@@ -124,8 +130,7 @@ async function getHeader(project: ScalingProject) {
   return {
     description: project.display.description,
     warning: project.display.headerWarning,
-    category: project.display.category,
-    isOther: !!project.display.reasonsForBeingOther,
+    category: isProjectOther(project) ? 'Other' : project.display.category,
     purposes: project.display.purposes,
     activity: activityProjectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),

@@ -11,7 +11,6 @@ import {
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { featureFlags } from '~/consts/feature-flags'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
@@ -24,10 +23,6 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
-  const isOther =
-    featureFlags.showOthers &&
-    featureFlags.othersMigrated() &&
-    project.header.isOther
   return (
     <div
       className={cn(
@@ -48,7 +43,8 @@ export function ScalingProjectStats({ project, className }: Props) {
           project.header.activity ? (
             <ValueWithPercentageChange
               change={project.header.activity.uopsWeeklyChange}
-              changeClassName="text-base font-medium"
+              className="font-medium !leading-none md:text-xl md:font-bold"
+              changeClassName="md:text-base md:font-medium !leading-none"
             >
               {project.header.activity.lastDayUops.toFixed(2)}
             </ValueWithPercentageChange>
@@ -68,7 +64,7 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
-      {project.stageConfig.stage !== 'NotApplicable' && !isOther ? (
+      {project.stageConfig.stage !== 'NotApplicable' ? (
         <ProjectStat
           title="Stage"
           value={
@@ -90,9 +86,7 @@ export function ScalingProjectStats({ project, className }: Props) {
       ) : null}
       <ProjectStat
         title="Type"
-        value={
-          <TypeCell>{isOther ? 'Other' : project.header.category}</TypeCell>
-        }
+        value={<TypeCell>{project.header.category}</TypeCell>}
       />
       <ProjectStat
         title={pluralize(project.header.purposes.length, 'Purpose')}

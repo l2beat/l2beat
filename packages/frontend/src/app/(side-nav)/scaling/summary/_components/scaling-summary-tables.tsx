@@ -8,6 +8,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -56,7 +57,7 @@ export function ScalingSummaryTables(props: Props) {
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
             Others
-            {filteredEntries.others.length > 0 && (
+            {featureFlags.showOthers && (
               <CountBadge>{filteredEntries.others.length}</CountBadge>
             )}
           </DirectoryTabsTrigger>
@@ -75,7 +76,7 @@ export function ScalingSummaryTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
-            {filteredEntries.others.length > 0 ? (
+            {featureFlags.showOthers && filteredEntries.others.length > 0 ? (
               <ScalingSummaryOthersTable entries={filteredEntries.others} />
             ) : (
               <OthersComingSoonNotice />

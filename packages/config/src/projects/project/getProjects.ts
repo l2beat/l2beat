@@ -38,7 +38,10 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
-      isOther: !!p.display.reasonsForBeingOther,
+      isOther:
+        PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
+        !!p.display.reasonsForBeingOther &&
+        p.display.reasonsForBeingOther.length > 0,
       hostChain: getHostChain(
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),

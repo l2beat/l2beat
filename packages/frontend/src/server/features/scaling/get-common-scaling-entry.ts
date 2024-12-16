@@ -17,6 +17,7 @@ import { type ProjectChanges } from '../projects-change-report/get-projects-chan
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
 import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
+import { isProjectOther } from './utils/is-project-other'
 
 export interface FilterableScalingValues {
   isRollup: boolean
@@ -56,6 +57,9 @@ export function getCommonScalingEntry2({
   changes: ProjectChanges | undefined
   syncStatus: SyncStatus | undefined
 }): CommonScalingEntry {
+  const isRollup =
+    project.scalingInfo.type === 'Optimistic Rollup' ||
+    project.scalingInfo.type === 'ZK Rollup'
   return {
     id: project.id,
     slug: project.slug,
@@ -88,16 +92,14 @@ export function getCommonScalingEntry2({
       countdowns: project.countdowns,
     },
     tab:
-      featureFlags.showOthers &&
-      featureFlags.othersMigrated() &&
-      !!project.scalingInfo.isOther
+      featureFlags.showOthers && project.scalingInfo.isOther
         ? 'Others'
-        : project.scalingInfo.type.includes('Rollup')
+        : isRollup
           ? 'Rollups'
           : 'ValidiumsAndOptimiums',
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: {
-      isRollup: project.scalingInfo.type.includes('Rollup'),
+      isRollup,
       type: project.scalingInfo.type,
       stack: project.scalingInfo.stack ?? 'No stack',
       stage: project.scalingInfo.stage,
@@ -114,6 +116,12 @@ export function getCommonScalingEntry({
   changes,
   syncStatus,
 }: Params): CommonScalingEntry {
+  const isRollup =
+    project.display.category === 'Optimistic Rollup' ||
+    project.display.category === 'ZK Rollup'
+  const stage = isProjectOther(project)
+    ? { stage: 'NotApplicable' as const }
+    : project.stage
   return {
     id: project.id,
     slug: project.display.slug,
@@ -143,20 +151,17 @@ export function getCommonScalingEntry({
           : undefined,
       countdowns: getCountdowns(project),
     },
-    tab:
-      featureFlags.showOthers &&
-      featureFlags.othersMigrated() &&
-      !!project.display.reasonsForBeingOther
-        ? 'Others'
-        : project.display.category.includes('Rollup')
-          ? 'Rollups'
-          : 'ValidiumsAndOptimiums',
-    stageOrder: getStageOrder(project.stage?.stage),
+    tab: isProjectOther(project)
+      ? 'Others'
+      : isRollup
+        ? 'Rollups'
+        : 'ValidiumsAndOptimiums',
+    stageOrder: getStageOrder(stage?.stage),
     filterable: {
-      isRollup: project.display.category.includes('Rollup'),
-      type: project.display.category,
+      isRollup,
+      type: isProjectOther(project) ? 'Other' : project.display.category,
       stack: project.display.provider ?? 'No stack',
-      stage: getStage(project.stage),
+      stage: getStage(stage),
       purposes: project.display.purposes,
       hostChain: project.type === 'layer2' ? 'Ethereum' : getHostChain(project),
       daLayer:
