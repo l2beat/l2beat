@@ -1,9 +1,10 @@
 import {
+  type BlockchainDaLayer,
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
-  type DaLayer,
   type DaUpgradeabilityRisk,
+  type DacDaLayer,
   daLayers,
   isDaBridgeVerified,
 } from '@l2beat/config'
@@ -47,7 +48,7 @@ export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaRiskEntry(
-  daLayer: DaLayer,
+  daLayer: BlockchainDaLayer | DacDaLayer,
   getTvs: (projects: ProjectId[]) => number,
 ): DaRiskEntry {
   const bridges = daLayer.bridges

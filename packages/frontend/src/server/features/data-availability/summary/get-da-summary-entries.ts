@@ -1,9 +1,10 @@
 import {
+  type BlockchainDaLayer,
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
-  type DaLayer,
   type DaUpgradeabilityRisk,
+  type DacDaLayer,
   type DataAvailabilityLayer,
   daLayers,
   ethereumDaLayer,
@@ -74,7 +75,7 @@ export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaSummaryEntry(
-  daLayer: DaLayer,
+  daLayer: BlockchainDaLayer | DacDaLayer,
   economicSecurity: EconomicSecurityData | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
@@ -153,8 +154,8 @@ function getEthereumEntry(
   return {
     slug: ethereumDaLayer.display.slug,
     name: ethereumDaLayer.display.name,
-    nameSecondLine: ethereumDaLayer.kind,
-    href: undefined,
+    nameSecondLine: kindToType(ethereumDaLayer.kind),
+    href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
     usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
     economicSecurity: economicSecurity[ethereumDaLayer.id],
