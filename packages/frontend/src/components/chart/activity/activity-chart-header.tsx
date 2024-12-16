@@ -37,6 +37,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
               <ActivityMetricControls
                 value={metric}
                 onValueChange={setMetric}
+                className="h-9"
               />
               <SwitchInfoTooltip />
             </div>
