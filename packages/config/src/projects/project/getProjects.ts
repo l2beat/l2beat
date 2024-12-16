@@ -37,7 +37,9 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       layer: p.type,
       type: p.display.category,
       isOther: !!p.display.reasonsForBeingOther,
-      hostChain: 'Ethereum', // TODO: layer3 host chain
+      hostChain: getHostChain(
+        p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
+      ),
       stack: p.display.provider,
       raas: getRaas(p.badges),
       daLayer: getCurrentEntry(p.dataAvailability)?.layer.value ?? 'Unknown',
@@ -97,6 +99,22 @@ function daLayerToProject(p: DaLayer): Project {
     // tags
     isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,
+  }
+}
+
+function getHostChain(id: ProjectId) {
+  if (id === ProjectId.ETHEREUM) {
+    return { id, slug: 'ethereum', name: 'Ethereum', shortName: undefined }
+  }
+  const host = layer2s.find((x) => x.id)
+  if (!host) {
+    throw new Error(`Invalid host chain: ${host}`)
+  }
+  return {
+    id,
+    slug: host.display.slug,
+    name: host.display.name,
+    shortName: host.display.shortName,
   }
 }
 

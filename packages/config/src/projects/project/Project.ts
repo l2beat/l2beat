@@ -42,7 +42,12 @@ export interface ProjectScalingInfo {
   type: string
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
-  hostChain: string
+  hostChain: {
+    id: ProjectId
+    slug: string
+    name: string
+    shortName: string | undefined
+  }
   stack: string | undefined
   raas: string | undefined
   daLayer: string
