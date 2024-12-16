@@ -6,15 +6,15 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   DA_MODES,
   NUGGETS,
+  addSentimentToDataAvailability,
 } from '../../common'
+import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { RISK_VIEW, DA_LAYERS } from '../../common'
-import { Layer2 } from './types'
 import { Badge } from '../badges'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -48,11 +48,10 @@ export const polygonpos: Layer2 = {
   createdAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
   display: {
-    isOther: true,
     name: 'Polygon PoS',
     slug: 'polygon-pos',
     purposes: ['Universal'],
-    category: 'Validium',
+    category: 'Other',
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
