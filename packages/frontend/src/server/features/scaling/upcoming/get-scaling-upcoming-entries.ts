@@ -24,9 +24,7 @@ function getScalingUpcomingEntry(project: Layer2 | Layer3) {
   return {
     ...getCommonScalingEntry({
       project,
-      isVerified: true,
-      hasImplementationChanged: false,
-      hasHighSeverityFieldChanged: false,
+      changes: undefined,
       syncStatus: undefined,
     }),
     category: project.display.category,

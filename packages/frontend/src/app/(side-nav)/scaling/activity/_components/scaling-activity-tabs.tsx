@@ -33,7 +33,7 @@ export function ScalingActivityTabs({
   const filteredEntries = {
     rollups: rollups.filter(includeFilters),
     validiumsAndOptimiums: validiumsAndOptimiums.filter(includeFilters),
-    others: others?.filter(includeFilters) ?? [],
+    others: others.filter(includeFilters),
   }
 
   const initialSort = {

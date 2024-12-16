@@ -62,7 +62,7 @@ export default async function Page() {
                   entries={[
                     ...entries.rollups,
                     ...entries.validiumsAndOptimiums,
-                    ...(entries.others ?? []),
+                    ...entries.others,
                   ]}
                 />
               </MainPageCard>

@@ -1,13 +1,13 @@
 import { type Bridge, type ScalingProjectRiskViewEntry } from '@l2beat/config'
+import { getContractsVerificationStatuses } from '@l2beat/config'
+import { getManuallyVerifiedContracts } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getTvlProjectStats } from '../../scaling/tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../../scaling/tvl/utils/get-associated-token-warning'
-import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
-import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getBridgeProjectDetails } from './utils/get-bridge-project-details'
 
 export type BridgesProjectEntry = Awaited<
@@ -28,10 +28,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
   ])
 
   const isVerified = getProjectsVerificationStatuses(project)
-  const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChanged(project.id.toString())
-  const hasHighSeverityFieldChanged =
-    projectsChangeReport.hasHighSeverityFieldChanged(project.id)
+  const changes = projectsChangeReport.getChanges(project.id)
 
   return {
     type: project.type,
@@ -39,8 +36,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
     slug: project.display.slug,
     underReviewStatus: getUnderReviewStatus({
       isUnderReview: !!project.isUnderReview,
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
+      ...changes,
     }),
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,

@@ -1,10 +1,9 @@
 import { type Layer2 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -21,10 +20,13 @@ export async function getScalingCostsEntries() {
   const projects = getCostsProjects()
 
   const entries = projects
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-      return getScalingCostEntry(project, tvl, isVerified, projectsChangeReport)
-    })
+    .map((project) =>
+      getScalingCostEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+        tvl,
+      ),
+    )
     .sort(compareStageAndTvl)
   return groupByTabs(entries)
 }
@@ -32,22 +34,11 @@ export async function getScalingCostsEntries() {
 export type ScalingCostsEntry = ReturnType<typeof getScalingCostEntry>
 function getScalingCostEntry(
   project: Layer2,
+  changes: ProjectChanges,
   tvl: ProjectsLatestTvlUsd,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
 ) {
   return {
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      syncStatus: undefined,
-    }),
-    entryType: 'costs' as const,
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     href: `/scaling/projects/${project.display.slug}#onchain-costs`,
     costsWarning: project.display.costsWarning,
     tvlOrder: tvl[project.id] ?? 0,

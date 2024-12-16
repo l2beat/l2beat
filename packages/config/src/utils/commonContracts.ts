@@ -43,7 +43,7 @@ export function getCommonContractsIn(project: Params) {
     return findCommonContractsMemoized(bridges)
   }
 
-  if (project.type === 'layer3' && project.hostChain !== 'Multiple') {
+  if (project.type === 'layer3') {
     const projects = layer3s.filter((l3) => l3.hostChain === project.hostChain)
     return findCommonContractsMemoized(projects, project.hostChain as string)
   }

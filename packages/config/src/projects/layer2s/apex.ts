@@ -216,8 +216,6 @@ export const apex: Layer2 = {
       secondLine: formatDelay(minFreezeGracePeriod),
     },
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.CANONICAL_USDC,
   },
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7066c482913892a0d5497dd83af41388af955677
 
 ## Description
 
-Nodelicense that reverts in the the mint() function and prevents minting of new node licenses.
+Nodelicense that reverts in the mint() function and prevents minting of new node licenses.
 
 ## Watched changes
 
