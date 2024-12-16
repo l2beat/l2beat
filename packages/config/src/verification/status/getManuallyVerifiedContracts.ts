@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync, statSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
 import { parseManuallyVerifiedContracts } from '../manuallyVerifiedContracts'
@@ -9,24 +9,18 @@ export function getManuallyVerifiedContracts(): ManuallyVerifiedContracts {
     return cache
   }
 
+  const chains = ['ethereum']
   const contracts: ManuallyVerifiedContracts = {}
-  const verificationPath = path.join(
-    process.cwd(),
-    '../config/src/verification/',
-  )
-  const entries = readdirSync(verificationPath)
-  for (const entry of entries) {
-    const chainPath = path.join(verificationPath, entry)
-    if (!statSync(chainPath).isDirectory) {
-      continue
-    }
-
-    const filePath = path.join(chainPath, `manuallyVerified.jsonc`)
+  for (const chain of chains) {
+    const filePath = path.join(
+      process.cwd(),
+      `../config/src/verification/${chain}/manuallyVerified.jsonc`,
+    )
     if (!existsSync(filePath)) {
       continue
     }
     const data = readFileSync(filePath, 'utf8')
-    contracts[entry] = parseManuallyVerifiedContracts(data)
+    contracts[chain] = parseManuallyVerifiedContracts(data)
   }
 
   cache = contracts
