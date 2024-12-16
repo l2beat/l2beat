@@ -5,8 +5,8 @@ import {
   type StageConfig,
   badges,
   getCurrentEntry,
-  getProjectsVerificationStatuses,
   isUnderReview,
+  isVerified,
 } from '@l2beat/config'
 import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
@@ -61,7 +61,7 @@ export function getCommonScalingEntry({
     statuses: {
       yellowWarning: project.display.headerWarning,
       redWarning: project.display.redWarning,
-      verificationWarning: !getProjectsVerificationStatuses(project),
+      verificationWarning: !isVerified(project),
       underReview: getUnderReviewStatus({
         isUnderReview: isUnderReview(project),
         highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,

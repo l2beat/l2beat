@@ -1,4 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { isVerified } from '../../verification'
+import { BadgeId, badges } from '../badges'
 import { Bridge, bridges } from '../bridges'
 import { Layer2, layer2s } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
@@ -29,7 +31,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
       isUnderReview: isUnderReview(p),
-      isUnverified: false, // TODO: this
+      isUnverified: !isVerified(p),
     },
     scalingInfo: {
       layer: p.type,
@@ -37,7 +39,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       isOther: !!p.display.reasonsForBeingOther,
       hostChain: 'Ethereum', // TODO: layer3 host chain
       stack: p.display.provider,
-      raas: '', // TODO: this
+      raas: getRaas(p.badges),
       daLayer: getCurrentEntry(p.dataAvailability)?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
@@ -68,7 +70,7 @@ function bridgeToProject(p: Bridge): Project {
       yellowWarning: p.display.warning,
       redWarning: undefined,
       isUnderReview: isUnderReview(p),
-      isUnverified: false, // TODO: this
+      isUnverified: !isVerified(p),
     },
     // tags
     isBridge: true,
@@ -89,11 +91,19 @@ function daLayerToProject(p: DaLayer): Project {
       yellowWarning: undefined,
       redWarning: undefined,
       isUnderReview: !!p.isUnderReview,
-      isUnverified: false, // TODO: this
+      isUnverified: !isVerified(p),
     },
     daBridges: p.bridges,
     // tags
     isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
+}
+
+function getRaas(projectBadges: BadgeId[] | undefined) {
+  const badge = projectBadges?.find((id) => badges[id].type === 'RaaS')
+  if (!badge) {
+    return undefined
+  }
+  return badges[badge].display.name
 }

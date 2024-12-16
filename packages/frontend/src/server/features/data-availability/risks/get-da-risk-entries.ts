@@ -5,8 +5,8 @@ import {
   type DaLayer,
   type DaUpgradeabilityRisk,
   daLayers,
+  isDaBridgeVerified,
 } from '@l2beat/config'
-import { getDaBridgeVerification } from '@l2beat/config'
 import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
@@ -61,7 +61,7 @@ function getDaRiskEntry(
         statuses: {
           yellowWarning: daBridge.display.warning,
           redWarning: daBridge.display.redWarning,
-          verificationWarning: getDaBridgeVerification(daLayer, daBridge)
+          verificationWarning: isDaBridgeVerified(daLayer, daBridge)
             ? undefined
             : true,
         },
