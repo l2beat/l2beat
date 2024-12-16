@@ -10,7 +10,7 @@ export function isVerified(
     )
   }
 
-  const manual = getManuallyVerifiedContracts(project)
+  const manual = getManuallyVerifiedContracts()
   const contractsVerification =
     project.contracts?.addresses.every(
       (c) =>
