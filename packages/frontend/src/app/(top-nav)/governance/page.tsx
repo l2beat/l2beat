@@ -45,7 +45,7 @@ export default function Page() {
       <Header />
       <ContentWrapper className="md:px-6 lg:px-12" asChild>
         <main>
-          <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
+          <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-surface-primary">
             <RecentPublicationsSection
               publications={publicationEntries}
               className="lg:col-span-5"
