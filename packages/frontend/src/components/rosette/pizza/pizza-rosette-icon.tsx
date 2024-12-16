@@ -68,12 +68,7 @@ export function PizzaRosetteIcon({
 
       <g clipPath="url(#outer-clip)">
         {background && (
-          <circle
-            cx="90"
-            cy="90"
-            r="90"
-            className="fill-gray-100 dark:fill-neutral-700"
-          />
+          <circle cx="90" cy="90" r="90" className="fill-surface-primary" />
         )}
         <g clipPath="url(#inner-clip)">
           <path

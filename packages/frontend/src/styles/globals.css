@@ -60,11 +60,7 @@
   }
 
   body {
-    @apply bg-white dark:bg-neutral-900 text-base text-primary md:text-lg font-sans transition-colors selection:bg-[#ab3bd24c] dark:selection:bg-[#db8bf780];
-  }
-
-  body:has(.sidebar) {
-    @apply bg-background;
+    @apply bg-background text-base text-primary md:text-lg font-sans transition-colors selection:bg-[#ab3bd24c] dark:selection:bg-[#db8bf780];
   }
 
   /* 
@@ -72,12 +68,7 @@
    It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
    Temporary solution until project page is redesigned to new colors.
   */
-  body:has(.sidebar) [data-role="select-content"] {
-    @apply bg-surface-secondary;
-  }
-  body:has(.sidebar) [data-role="select-content"] [role="option"] {
-    @apply focus:bg-surface-tertiary;
-  }
+  
   body:has(.sidebar.main-page-card) [data-role="select-content"] {
     @apply bg-surface-primary;
   }

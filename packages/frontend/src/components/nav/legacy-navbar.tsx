@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
+import { VerticalSeparator } from '../core/vertical-separator'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SmallSearchBarButton } from '../search-bar/search-bar-button'
@@ -20,7 +21,7 @@ export function LegacyNavbar({
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
 
   return (
-    <div className="hidden h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 lg:block">
+    <div className="hidden h-[4.25rem] border-b border-divider text-base lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">
@@ -57,7 +58,7 @@ export function LegacyNavbar({
           <ul className="hidden items-center gap-4 xl:flex">
             <SocialLinks />
           </ul>
-          <div className="hidden h-8 w-px bg-gray-300 dark:bg-gray-700 xl:block" />
+          <VerticalSeparator className="hidden h-8 xl:block" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavLink title="Forum" href={externalLinks.forum} />
             <LegacyNavLink title="Donate" href="/donate" />
@@ -69,7 +70,7 @@ export function LegacyNavbar({
             </LegacyNavLink>
             <LegacyNavLink title="FAQ" href="/faq" />
           </ul>
-          <div className="h-8 w-px bg-gray-300 dark:bg-gray-700" />
+          <VerticalSeparator className="h-8" />
           <div className="flex gap-4">
             <DarkThemeToggle />
             <SmallSearchBarButton />

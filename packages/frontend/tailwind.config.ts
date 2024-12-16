@@ -206,6 +206,9 @@ const config: Config = {
       999: '999', // Mobile side menu
     },
     extend: {
+      boxShadow: {
+        popover: '0px 4px 12px 0px rgba(0, 0, 0, 0.55)',
+      },
       keyframes: {
         beat: {
           '0%': {
@@ -291,7 +294,7 @@ const config: Config = {
       creator.addVariant('sidebar', '.sidebar &')
     }),
     plugin((creator) => {
-      creator.addVariant('main-page-card', '.main-page-card &')
+      creator.addVariant('primary-card', '.primary-card &')
     }),
     tailwindcssAnimate,
     containerQueries,

@@ -27,7 +27,7 @@ export function BridgesProjectStats({ project }: Props) {
   )
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-4 md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg bg-surface-primary md:grid-cols-4 md:px-6 md:py-5">
       <ProjectStat
         title="Total value locked"
         tooltip="Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."

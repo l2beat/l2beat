@@ -35,7 +35,7 @@ export function DaProjectStats({ project }: Props) {
         }
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg bg-surface-primary md:grid-cols-3 md:px-6 md:py-5">
       <ProjectStat title="Type" value={project.type} />
       <ProjectStat
         title="Total value secured"

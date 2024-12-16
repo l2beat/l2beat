@@ -88,7 +88,7 @@ export function ChartHover() {
           'absolute z-50 rounded-lg px-3 py-2 text-2xs md:px-4 md:py-3 md:text-xs',
           'bg-white dark:bg-neutral-700',
           'pointer-events-none select-none',
-          'shadow-md animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
+          'shadow-popover animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
           'transition-duration-50 transition-[bottom]',
         )}
       >

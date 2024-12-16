@@ -1,5 +1,7 @@
+'use client'
 import { type ReactNode } from 'react'
 
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import { type ProjectSectionId } from './types'
@@ -18,11 +20,14 @@ export interface ExtendedProjectSectionProps {
 
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'mobile'
   return (
     <Component
       id={props.id}
       className={cn(
-        'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
+        'mt-10',
+        !isMobile && 'primary-card bg-surface-primary rounded-lg p-8',
         props.nested && 'mt-10 md:p-0',
         props.className,
       )}
@@ -71,7 +76,7 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       {props.sectionOrder && (
         <div
           className={cn(
-            'hidden size-10 items-center justify-center rounded bg-gray-200 px-3 text-[26px] font-bold tabular-nums text-gray-700 dark:bg-zinc-700 dark:text-zinc-500 md:flex',
+            'hidden size-10 items-center justify-center rounded bg-surface-secondary px-3 text-[26px] font-bold tabular-nums text-secondary md:flex',
             props.nested && 'h-8 w-11 text-xl',
           )}
         >
