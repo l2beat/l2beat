@@ -7,7 +7,7 @@ export const azchain: Layer2 = upcomingL2({
   createdAt: new UnixTime(1727519160), // 2024-09-27T17:09:00Z
   display: {
     name: 'AZ Chain',
-    slug: 'az-chain',
+    slug: 'azchain',
     description:
       'AZ Chain is an Ethereum L2 chain designed to enhance gaming performance and scalability.',
     purposes: ['Universal', 'Gaming'],
