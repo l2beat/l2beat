@@ -60,9 +60,8 @@ export async function runDiscovery(
   if (config.printStats) {
     printProviderStats(logger, providerStats)
   }
-  if (config.printTemplatization) {
-    printTemplatization(logger, result)
-  }
+
+  printTemplatization(logger, result, !!config.verboseTemplatization)
 }
 
 export async function dryRunDiscovery(

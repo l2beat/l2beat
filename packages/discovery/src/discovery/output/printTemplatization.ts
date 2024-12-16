@@ -7,6 +7,7 @@ import { Analysis } from '../analysis/AddressAnalyzer'
 export function printTemplatization(
   logger: DiscoveryLogger,
   analyses: Analysis[],
+  verbose: boolean,
 ) {
   const contracts = analyses.filter((a) => a.type === 'Contract')
   const [templatized, untemplatized] = partition(
@@ -29,19 +30,21 @@ export function printTemplatization(
   }
 
   const logs = []
-  logs.push(chalk.greenBright(chalk.bold('Templatized')))
-  for (const [i, contract] of templatized.entries()) {
-    const prefix = i === templatized.length - 1 ? `└─` : `├─`
-    const indent = ' '.repeat(2)
-    const name = chalk.blue(contract.name)
-    const template = `${contract.extendedTemplate?.template} ${contract.extendedTemplate?.reason}`
-    const templateColor =
-      contract.extendedTemplate?.reason === 'byShapeMatch'
-        ? chalk.green(template)
-        : chalk.yellow(template)
+  if (verbose) {
+    logs.push(chalk.greenBright(chalk.bold('Templatized')))
+    for (const [i, contract] of templatized.entries()) {
+      const prefix = i === templatized.length - 1 ? `└─` : `├─`
+      const indent = ' '.repeat(2)
+      const name = chalk.blue(contract.name)
+      const template = `${contract.extendedTemplate?.template} ${contract.extendedTemplate?.reason}`
+      const templateColor =
+        contract.extendedTemplate?.reason === 'byShapeMatch'
+          ? chalk.green(template)
+          : chalk.yellow(template)
 
-    const log = `${contract.address} ${name} [${templateColor}]`
-    logs.push(`${indent}${chalk.gray(prefix)} ${log}`)
+      const log = `${contract.address} ${name} [${templateColor}]`
+      logs.push(`${indent}${chalk.gray(prefix)} ${log}`)
+    }
   }
 
   logs.push(chalk.redBright(chalk.bold('Untemplatized')))
