@@ -2,6 +2,7 @@ import {
   type BadgeId,
   type Layer2,
   type Layer3,
+  type ProjectWith,
   type StageConfig,
   badges,
   getCurrentEntry,
@@ -43,6 +44,68 @@ interface Params {
   project: Layer2 | Layer3
   changes: ProjectChanges | undefined
   syncStatus: SyncStatus | undefined
+}
+
+export function getCommonScalingEntry2({
+  project,
+  changes,
+  syncStatus,
+}: {
+  project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>
+  changes: ProjectChanges | undefined
+  syncStatus: SyncStatus | undefined
+}): CommonScalingEntry {
+  return {
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    nameSecondLine:
+      project.scalingInfo.layer === 'layer2'
+        ? undefined
+        : `L3 on ${project.scalingInfo.hostChain.shortName ?? project.scalingInfo.hostChain.name}`,
+    shortName: project.shortName,
+    href: `/scaling/projects/${project.slug}`,
+    statuses: {
+      yellowWarning: project.statuses.yellowWarning,
+      redWarning: project.statuses.redWarning,
+      verificationWarning: project.statuses.isUnverified,
+      underReview: getUnderReviewStatus({
+        isUnderReview: project.statuses.isUnderReview,
+        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
+        implementationChanged: !!changes?.implementationChanged,
+      }),
+      syncStatusInfo:
+        syncStatus?.isSynced === false
+          ? `The data for this item is not synced since ${formatTimestamp(
+              syncStatus.syncedUntil,
+              {
+                mode: 'datetime',
+                longMonthName: true,
+              },
+            )}.`
+          : undefined,
+      countdowns: project.countdowns,
+    },
+    tab:
+      featureFlags.showOthers &&
+      featureFlags.othersMigrated() &&
+      !!project.scalingInfo.isOther
+        ? 'Others'
+        : project.scalingInfo.type.includes('Rollup')
+          ? 'Rollups'
+          : 'ValidiumsAndOptimiums',
+    stageOrder: getStageOrder(project.scalingInfo.stage),
+    filterable: {
+      isRollup: project.scalingInfo.type.includes('Rollup'),
+      type: project.scalingInfo.type,
+      stack: project.scalingInfo.stack ?? 'No stack',
+      stage: project.scalingInfo.stage,
+      purposes: project.scalingInfo.purposes,
+      hostChain: project.scalingInfo.hostChain.name,
+      daLayer: project.scalingInfo.daLayer,
+      raas: project.scalingInfo.raas ?? 'No RaaS',
+    },
+  }
 }
 
 export function getCommonScalingEntry({
@@ -87,7 +150,7 @@ export function getCommonScalingEntry({
         : project.display.category.includes('Rollup')
           ? 'Rollups'
           : 'ValidiumsAndOptimiums',
-    stageOrder: getStageOrder(project.stage),
+    stageOrder: getStageOrder(project.stage?.stage),
     filterable: {
       isRollup: project.display.category.includes('Rollup'),
       type: project.display.category,
@@ -102,11 +165,11 @@ export function getCommonScalingEntry({
   }
 }
 
-function getStageOrder(stage: StageConfig | undefined): number {
-  if (stage?.stage === 'Stage 2' || stage?.stage === 'Stage 1') {
+function getStageOrder(stage: string | undefined): number {
+  if (stage === 'Stage 2' || stage === 'Stage 1') {
     return 2
   }
-  if (stage?.stage === 'Stage 0') {
+  if (stage === 'Stage 0') {
     return 1
   }
   return 0

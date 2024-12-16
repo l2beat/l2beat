@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ScalingProjectRiskView } from '../../common'
+import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -20,6 +21,7 @@ export interface Project {
   scalingRisks?: ProjectScalingRisks
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
+  countdowns?: ProjectCountdowns
   // tags
   isBridge?: true
   isScaling?: true
@@ -59,4 +61,12 @@ export interface ProjectScalingRisks {
   self: ScalingProjectRiskView
   host: ScalingProjectRiskView | undefined
   stacked: ScalingProjectRiskView | undefined
+}
+
+export interface ProjectCountdowns {
+  otherMigration?: {
+    expiresAt: number
+    pretendingToBe: string
+    reasons: ReasonForBeingInOther[]
+  }
 }

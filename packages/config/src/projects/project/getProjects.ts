@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { PROJECT_COUNTDOWNS } from '../../common'
 import { isVerified } from '../../verification'
 import { BadgeId, badges } from '../badges'
 import { Bridge, bridges } from '../bridges'
@@ -52,6 +53,15 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       stacked: undefined,
     },
     proofVerification: p.stateValidation?.proofVerification,
+    countdowns: p.display.reasonsForBeingOther
+      ? {
+          otherMigration: {
+            expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
+            pretendingToBe: p.display.category,
+            reasons: p.display.reasonsForBeingOther,
+          },
+        }
+      : undefined,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
