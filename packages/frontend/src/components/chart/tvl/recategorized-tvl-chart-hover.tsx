@@ -57,7 +57,7 @@ export function RecategorizedTvlChartHover(props: Props) {
                   <div
                     role="img"
                     aria-label="Square icon"
-                    className={cn('mt-0.5 size-3 rounded', v.className)}
+                    className={cn('mt-1 size-3 rounded', v.className)}
                   ></div>
                   <span className="max-w-24">{v.title}</span>
                 </span>
