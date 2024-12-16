@@ -1,8 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  BlockchainDaLayer,
   DaEconomicSecurityType,
-  DaLayer,
   daLayers,
   ethereumDaLayer,
 } from '@l2beat/config'
@@ -42,7 +40,11 @@ export class DaBeatStakeRefresher {
         ...new Set(
           compact(
             [...daLayers, ethereumDaLayer]
-              .filter(this.isBlockchainDaLayer)
+              .filter(
+                (layer) =>
+                  layer.kind === 'EthereumDaLayer' ||
+                  layer.kind === 'PublicBlockchain',
+              )
               .map((layer) => layer.economicSecurity?.type),
           ),
         ),
@@ -135,9 +137,5 @@ export class DaBeatStakeRefresher {
   start() {
     this.clock.onNewDay(() => this.refreshQueue.addIfEmpty())
     this.refreshQueue.addIfEmpty()
-  }
-
-  private isBlockchainDaLayer(layer: DaLayer): layer is BlockchainDaLayer {
-    return layer.kind === 'PublicBlockchain'
   }
 }
