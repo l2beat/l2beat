@@ -55,7 +55,7 @@ export function ChartMilestones() {
   )
 
   return (
-    <div ref={ref} className="absolute bottom-0 z-40 w-full">
+    <div ref={ref} className="absolute bottom-0 w-full">
       {!loading && isClient
         ? chartContext.columns.map(
             (c, i) =>
