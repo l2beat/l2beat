@@ -6,7 +6,6 @@ import {
   badges,
   getProjectsVerificationStatuses,
 } from '@l2beat/config'
-import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -16,6 +15,7 @@ import { getCurrentEntry } from '../utils/get-current-entry'
 import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
+import { isProjectOther } from './utils/is-project-other'
 
 export interface FilterableScalingValues {
   isRollup: boolean
@@ -79,14 +79,11 @@ export function getCommonScalingEntry({
           : undefined,
       countdowns: getCountdowns(project),
     },
-    tab:
-      featureFlags.showOthers &&
-      featureFlags.othersMigrated() &&
-      !!project.display.reasonsForBeingOther
-        ? 'Others'
-        : project.display.category.includes('Rollup')
-          ? 'Rollups'
-          : 'ValidiumsAndOptimiums',
+    tab: isProjectOther(project)
+      ? 'Others'
+      : project.display.category.includes('Rollup')
+        ? 'Rollups'
+        : 'ValidiumsAndOptimiums',
     stageOrder: getStageOrder(project.stage),
     filterable: {
       isRollup: project.display.category.includes('Rollup'),
