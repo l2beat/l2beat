@@ -32,9 +32,14 @@ import { useActivityChartRenderParams } from './use-activity-chart-render-params
 interface Props {
   milestones: Milestone[]
   entries: ScalingActivityEntry[]
+  hideScalingFactor?: boolean
 }
 
-export function ActivityChart({ milestones, entries }: Props) {
+export function ActivityChart({
+  milestones,
+  entries,
+  hideScalingFactor,
+}: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
   const filters = useScalingFilterValues()
@@ -94,7 +99,11 @@ export function ActivityChart({ milestones, entries }: Props) {
       useLogScale={scale === 'log'}
     >
       <section className="flex flex-col gap-4">
-        <ActivityChartHeader stats={stats} range={chartRange} />
+        <ActivityChartHeader
+          stats={stats}
+          range={chartRange}
+          hideScalingFactor={hideScalingFactor}
+        />
         <Chart />
         <Controls
           scale={scale}

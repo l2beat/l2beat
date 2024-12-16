@@ -90,6 +90,7 @@ export function ScalingActivityTabs({
                 <ActivityChart
                   milestones={milestones}
                   entries={validiumsAndOptimiums}
+                  hideScalingFactor
                 />
                 <HorizontalSeparator className="mb-3 mt-5" />
               </>
@@ -110,6 +111,7 @@ export function ScalingActivityTabs({
                   <ActivityChart
                     milestones={milestones}
                     entries={others ?? []}
+                    hideScalingFactor
                   />
                   <HorizontalSeparator className="mb-3 mt-5" />
                 </>
