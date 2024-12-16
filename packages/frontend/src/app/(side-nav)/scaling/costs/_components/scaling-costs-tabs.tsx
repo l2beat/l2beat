@@ -12,6 +12,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
@@ -114,7 +115,12 @@ function Controls({
   }
 
   return (
-    <div className="mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between">
+    <div
+      className={cn(
+        'mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between',
+        showOthers && 'mt-5',
+      )}
+    >
       <ScalingFilters items={entries} />
       {!showOthers && (
         <CostsMetricControls

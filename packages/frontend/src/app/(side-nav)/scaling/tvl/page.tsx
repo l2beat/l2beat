@@ -1,5 +1,6 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { featureFlags } from '~/consts/feature-flags'
@@ -36,6 +37,7 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Value Locked</MainPageHeader>
+          {showOthers && <HorizontalSeparator className="max-lg:hidden" />}
           {!showOthers && (
             <MainPageCard>
               <ScalingStackedTvlChart

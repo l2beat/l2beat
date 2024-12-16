@@ -12,6 +12,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -49,7 +50,7 @@ export function ScalingActivityTabs({
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className="mt-4"
+        className={cn('mt-4', showOthers && 'mt-5')}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

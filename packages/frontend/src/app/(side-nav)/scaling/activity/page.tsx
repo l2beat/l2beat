@@ -1,5 +1,6 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ActivityChart } from '~/components/chart/activity/activity-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { featureFlags } from '~/consts/feature-flags'
@@ -55,6 +56,7 @@ export default async function Page() {
         <ActivityTimeRangeContextProvider>
           <ActivityMetricContextProvider>
             <MainPageHeader>Activity</MainPageHeader>
+            {showOthers && <HorizontalSeparator className="max-lg:hidden" />}
             {!showOthers && (
               <MainPageCard>
                 <ActivityChart

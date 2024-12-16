@@ -12,6 +12,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
+import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
@@ -44,7 +45,7 @@ export function ScalingTvlTabs(props: Props) {
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className="mt-4"
+        className={cn('mt-4', showOthers && 'mt-5')}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
