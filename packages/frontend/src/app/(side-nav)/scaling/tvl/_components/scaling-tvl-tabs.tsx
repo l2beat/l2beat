@@ -71,7 +71,7 @@ export function ScalingTvlTabs(props: Props) {
                   milestones={props.milestones}
                   entries={props.rollups}
                 />
-                <HorizontalSeparator className="mb-2 mt-6" />
+                <HorizontalSeparator className="my-5" />
               </>
             )}
             <ScalingTvlTable entries={filteredEntries.rollups} rollups />
@@ -88,7 +88,7 @@ export function ScalingTvlTabs(props: Props) {
                   milestones={props.milestones}
                   entries={props.validiumsAndOptimiums}
                 />
-                <HorizontalSeparator className="mb-2 mt-6" />
+                <HorizontalSeparator className="my-5" />
               </>
             )}
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
@@ -106,7 +106,7 @@ export function ScalingTvlTabs(props: Props) {
                     milestones={props.milestones}
                     entries={props.others ?? []}
                   />
-                  <HorizontalSeparator className="mb-2 mt-6" />
+                  <HorizontalSeparator className="my-5" />
                 </>
               )}
               <ScalingTvlTable entries={filteredEntries.others} />

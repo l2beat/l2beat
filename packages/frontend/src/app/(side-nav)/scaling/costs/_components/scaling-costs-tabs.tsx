@@ -67,7 +67,7 @@ export function ScalingCostsTabs(props: Props) {
                   entries={props.rollups}
                   milestones={props.milestones}
                 />
-                <HorizontalSeparator className="mb-2 mt-6" />
+                <HorizontalSeparator className="my-5" />
               </>
             )}
             <ScalingCostsTable entries={filteredEntries.rollups} rollups />
@@ -85,7 +85,7 @@ export function ScalingCostsTabs(props: Props) {
                     entries={props.others ?? []}
                     milestones={props.milestones}
                   />
-                  <HorizontalSeparator className="mb-2 mt-6" />
+                  <HorizontalSeparator className="my-5" />
                 </>
               )}
               <ScalingCostsTable entries={filteredEntries.others} />

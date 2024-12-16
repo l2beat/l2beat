@@ -74,7 +74,7 @@ export function ScalingActivityTabs({
             {showOthers && (
               <>
                 <ActivityChart milestones={milestones} entries={rollups} />
-                <HorizontalSeparator className="mb-2 mt-6" />
+                <HorizontalSeparator className="mb-3 mt-5" />
               </>
             )}
             <ScalingActivityTable entries={filteredEntries.rollups} rollups />
@@ -91,7 +91,7 @@ export function ScalingActivityTabs({
                   milestones={milestones}
                   entries={validiumsAndOptimiums}
                 />
-                <HorizontalSeparator className="mb-2 mt-6" />
+                <HorizontalSeparator className="mb-3 mt-5" />
               </>
             )}
             <ScalingActivityTable
@@ -111,7 +111,7 @@ export function ScalingActivityTabs({
                     milestones={milestones}
                     entries={others ?? []}
                   />
-                  <HorizontalSeparator className="mb-2 mt-6" />
+                  <HorizontalSeparator className="mb-3 mt-5" />
                 </>
               )}
               <ScalingActivityTable entries={filteredEntries.others} />
