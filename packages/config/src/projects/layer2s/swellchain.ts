@@ -122,7 +122,7 @@ import {
   export const swellchain: Layer2 = {
     type: 'layer2',
     id: ProjectId('swellchain'),
-    createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+    createdAt: new UnixTime(1734346061), // 2024-12-16T10:47:41+00:00
     badges: [
       Badge.VM.EVM,
       Badge.DA.EthereumBlobs,
@@ -136,7 +136,7 @@ import {
       category: 'Optimistic Rollup',
       provider: 'OP Stack',
       description:
-        'Swellchain is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
+        'Swellchain operates as a restaking-powered Layer 2 network built on the OP Stack. The network extends Ethereum security through EigenLayer restaking mechanism while leveraging Optimism proven infrastructure for transaction processing and scalability.',
       purposes: ['Universal', 'Restaking'],
       links: {
         websites: ['https://swellnetwork.io/'],
@@ -170,17 +170,17 @@ import {
       escrows: [
         discovery.getEscrowDetails({
           // OptimismPortal
-          address: EthereumAddress('0x49048044D57e1C92A77f79988d21Fa8fAF74E97e'),
+          address: EthereumAddress('0x758E0EE66102816F5C3Ec9ECc1188860fbb87812'),
           tokens: ['ETH'],
         }),
         discovery.getEscrowDetails({
           // L1StandardBridge
-          address: EthereumAddress('0x3154Cf16ccdb4C6d922629664174b904d80F2C35'),
+          address: EthereumAddress('0x7aA4960908B13D104bf056B23E2C76B43c5AACc8'),
           tokens: '*',
           excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
         }),
         discovery.getEscrowDetails({
-          address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
+          address: EthereumAddress('0xecf3376512EDAcA4FBB63d2c67d12a0397d24121'),
           tokens: ['wstETH'],
           ...ESCROW.CANONICAL_EXTERNAL,
           description:
@@ -248,17 +248,17 @@ import {
       ],
     },
     chainConfig: {
-      name: 'base',
-      blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
-      chainId: 8453,
-      explorerUrl: 'https://basescan.org',
+      name: 'swellchain',
+      blockscoutV2ApiUrl: 'https://explorer.swellnetwork.io/api/v2/',
+      chainId: 1923,
+      explorerUrl: 'https://explorer.swellnetwork.io',
       explorerApi: {
-        url: 'https://api.basescan.org/api',
-        type: 'etherscan',
+        url: 'https://explorer.swellnetwork.io/api/v2/',
+        type: 'blockscout',
       },
-      // ~ Timestamp of block number 0 on Base
-      // https://basescan.org/block/0
-      minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+      // ~ Timestamp of block number 0 on swellchain
+      // https://explorer.swellnetwork.io/block/0
+      minTimestampForTvl: UnixTime.fromDate(new Date('2024-11-27T08:38:23Z')),
       multicallContracts: [
         {
           address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -267,7 +267,7 @@ import {
           version: '3',
         },
       ],
-      coingeckoPlatform: 'base',
+      coingeckoPlatform: 'swell',
     },
     dataAvailability: [
       addSentimentToDataAvailability({
