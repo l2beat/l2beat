@@ -104,6 +104,7 @@ export const sophon: Layer2 = zkStackL2({
     discovery.getEscrowDetails({
       address: discovery.getContract('L1USDCBridge').address,
       tokens: ['USDC'],
+      source: 'external',
       description:
         'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
