@@ -462,13 +462,13 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ScalingProjectRiskViewEntry = {
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: ScalingProjectRiskViewEntry =
-{
-  ...PROPOSER_USE_ESCAPE_HATCH_MP,
-  description:
-    PROPOSER_USE_ESCAPE_HATCH_MP.description +
-    ' Positions will be closed using the average price from the last batch state update.',
-  definingMetric: Infinity,
-}
+  {
+    ...PROPOSER_USE_ESCAPE_HATCH_MP,
+    description:
+      PROPOSER_USE_ESCAPE_HATCH_MP.description +
+      ' Positions will be closed using the average price from the last batch state update.',
+    definingMetric: Infinity,
+  }
 
 export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
   delay: number,
@@ -540,10 +540,10 @@ export function EXIT_WINDOW(
     (windowText === 'None'
       ? `There is no window for users to exit in case of an unwanted regular upgrade${instantlyUpgradable}.`
       : `Users have ${windowText} to exit funds in case of an unwanted regular upgrade. There is a ${formatSeconds(
-        upgradeDelay,
-      )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
-        exitDelay,
-      )} to be processed.`) +
+          upgradeDelay,
+        )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
+          exitDelay,
+        )} to be processed.`) +
     (options.existsBlocklist
       ? ' Users can be explicitly censored from withdrawing (Blocklist on L1).'
       : '')
