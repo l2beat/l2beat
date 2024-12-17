@@ -48,6 +48,7 @@ function Publication({ publication }: PublicationProps) {
           {publication.publishedOn}
         </p>
       }
+      className="bg-surface-primary md:bg-surface-secondary"
       title={publication.shortTitle ?? publication.title}
       description={publication.description ?? publication.excerpt}
     />
