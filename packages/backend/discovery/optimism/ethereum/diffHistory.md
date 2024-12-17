@@ -1227,7 +1227,7 @@ Generated with discovered.json: 0xe0aaeba96a6b157035d409db6ad8520899fb43b6
 
 ## Description
 
-The deposits on the main Lido escrow for Optimism are paused by the Lido EmergencyBrake Multisig following [an upgrade proposal](https://research.lido.fi/t/steth-on-optimism-upgrade-announcement-and-action-plan/8474) for rebasing L2 stETH. This is a scheduled action and deposits should be reenabled im 2024/10/10.
+The deposits on the main Lido escrow for Optimism are paused by the Lido EmergencyBrake Multisig following [an upgrade proposal](https://research.lido.fi/t/steth-on-optimism-upgrade-announcement-and-action-plan/8474) for rebasing L2 stETH. This is a scheduled action and deposits should be re-enabled im 2024/10/10.
 
 Config related: Move to discovery driven data.
 

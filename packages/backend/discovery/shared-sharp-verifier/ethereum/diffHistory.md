@@ -1897,7 +1897,7 @@ Generated with discovered.json: 0xaff8a6ad66c53b2303b9c9c77d308de4890151ad
 
 ## Description
 
-Updated the names and references to new SHARP verfier contracts.
+Updated the names and references to new SHARP verifier contracts.
 
 ## Config/verification related changes
 

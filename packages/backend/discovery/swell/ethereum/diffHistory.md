@@ -18,11 +18,11 @@ discovery. Values are for block 20985756 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       descriptions:
--        ["Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"]
+-        ["Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem"]
       description:
-+        "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"
++        "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem"
     }
 ```
 
@@ -42,7 +42,7 @@ Generated with discovered.json: 0x3548a172928f0df4e9b68a8a9ed5bc2ac911e55e
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       values.$members.6:
 -        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
       values.$members.5:
@@ -73,7 +73,7 @@ One new signer added to SwellMultisig.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       values.$members.6:
 +        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
       values.$members.5:
@@ -120,7 +120,7 @@ discovery. Values are for block 20016207 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       sourceHashes:
 +        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
     }
@@ -170,7 +170,7 @@ discovery. Values are for block 20016207 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       values.$multisigThreshold:
 -        "4 of 6 (67%)"
       values.getOwners:
@@ -206,7 +206,7 @@ discovery. Values are for block 20016207 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       fieldMeta:
 +        {"nonce":{"severity":"MEDIUM","description":"Watch out for txs concerning the prelaunch vault and swell L2 launch"}}
     }
@@ -228,7 +228,7 @@ A timelock transaction is queued by the SwellMultisig to support the Lyra-associ
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
 +++ description: Watch out for txs concerning the prelaunch vault and swell L2 launch
 +++ severity: MEDIUM
       values.nonce:
@@ -284,7 +284,7 @@ A timelock transaction is queued to whitelist (`supportToken(address,(bool,bool)
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
 +++ description: Watch out for txs concerning the prelaunch vault and swell L2 launch
 +++ severity: MEDIUM
       values.nonce:

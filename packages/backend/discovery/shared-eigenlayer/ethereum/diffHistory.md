@@ -4050,7 +4050,7 @@ Escrow smart contract that is the withdrawal address / credentials for ETH nativ
 Now only needed for withdrawals that are unrelated to shares (which in turn are managed by the DelegationManager):
 
 - Consensus rewards
-- ETH or tokens sent to the EigenPod directly (/ accidently)
+- ETH or tokens sent to the EigenPod directly (/ accidentally)
 
 Maximum delay is raised from 7d to 30d.
 

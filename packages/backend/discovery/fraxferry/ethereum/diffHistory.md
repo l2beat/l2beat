@@ -1382,7 +1382,7 @@ Generated with discovered.json: 0x26a1cf6926ad6177aed37b5d7137c132e16081a7
 
 ### Fee change on Fraxtal FPI bridge
 
-The fees of the FPI bridge to / from Fraxtal are lowered. The 0.1% fee is removed and the flat fee is reduced to 1 token (FPI). Other fraxferry bridges and (inlcuding other FPI bridges) have their fees unchanged.
+The fees of the FPI bridge to / from Fraxtal are lowered. The 0.1% fee is removed and the flat fee is reduced to 1 token (FPI). Other fraxferry bridges and (including other FPI bridges) have their fees unchanged.
 
 ## Watched changes
 

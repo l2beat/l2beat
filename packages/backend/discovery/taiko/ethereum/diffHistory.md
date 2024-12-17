@@ -2294,7 +2294,7 @@ Generated with discovered.json: 0x6ea276c960b8bccf9d9d8ae744307cada936d2e3
 
 ## Description
 
-- L1RollupAddressManager.sol: changed harcoded B_TIER_ROUTER address.
+- L1RollupAddressManager.sol: changed hardcoded B_TIER_ROUTER address.
 - Bridge.sol: small change in retryMessage logic.
 - TaikoL1.sol: changes in block verification. assignedProver and hookCalls now DEPRECATED. assignedProver is now msg.sender of proposeBlock tx. New getters (getLastVerifiedBlock, getLastSyncedBlock), and decreased liveness bond to 125 TAIKO. Block proposers can now bribe the Ethereum block builder. Move some functions into libraries.
 - TaikoToken.sol: can now call batchTransfer for multiple recipients and amounts.
@@ -2999,7 +2999,7 @@ Generated with discovered.json: 0xc7cd32149b27868b3a50016ee3970759f8e9aa0d
 
 Two contracts implementation changed, TaikoL1.sol, and Bridge.sol.
 - TaikoL1.sol: introduced B_TIER_ROUTER = bytes32("tier_router") to replace B_TIER_PROVIDER
-- Bridge.sol: Added a max proof size for a message to be processable by a relayer, an insufficent gas check, and added the B_TIER_ROUTER variable support.
+- Bridge.sol: Added a max proof size for a message to be processable by a relayer, an insufficient gas check, and added the B_TIER_ROUTER variable support.
 
 ## Watched changes
 

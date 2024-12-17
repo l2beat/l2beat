@@ -916,7 +916,7 @@ Generated with discovered.json: 0xf601728a00dd36fda7e9e790618e91b1f1b4b7a2
 ## Description
 
 Deleted two verifiers at `proofType = [6, 7]`. Both of them are identical and
-only differ in the intial setup parameters.
+only differ in the initial setup parameters.
 
 ## Watched changes
 

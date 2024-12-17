@@ -10945,7 +10945,7 @@ Generated with discovered.json: 0x98bca27d8f15e7eb491b21bbda22a60aa8152474
 
 ## Description
 
-All signers of the ManyChainMultiSig are moved from group 0 threshold 4 to group 1 with treshold 4. Group 1 has group 0 (threshold 1) as a parent so currently there is no change to the net threshold / permissions. See this explanation of the group structure below:
+All signers of the ManyChainMultiSig are moved from group 0 threshold 4 to group 1 with threshold 4. Group 1 has group 0 (threshold 1) as a parent so currently there is no change to the net threshold / permissions. See this explanation of the group structure below:
 copied from the contract source:
 ```
     // Signing groups are arranged in a tree. Each group is an interior node and has its own quorum.

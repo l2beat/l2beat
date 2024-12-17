@@ -2426,7 +2426,7 @@ Generated with discovered.json: 0x9499a161dab92924ef2ab20a6556f1aa1fc54d83
 
 ## Description
 
-The implementation of SequencerInbox was upgraded to a differenct contract with identical code.
+The implementation of SequencerInbox was upgraded to a different contract with identical code.
 This was done to change the immutable boolean `isUsingFeeToken` to false. This immutable should indeed be false on ethereum mainnet as it signifies the base L1 using a custom fee token. (Used as a check for `submitBatchSpendingReport()` function that is needed for fee sequencer fee reimbursement)
 
 ## Watched changes
@@ -2479,7 +2479,7 @@ In general most updates are EIP-4844 related, also the new role `batchPosterMana
 - new `addSequencerL2BatchFromOrigin()` (with added `prevMessageCount, newMessageCount` in sig, old signature without them is now deprecated), `addSequencerL2BatchFromBlobs()`
 - Gas refunds fetch blob price from Reader4844
 - Rollup owner can update rollup address
-- SequencerInbox contructor reverts if host chain is Arbitrum because blobs are not supported there
+- SequencerInbox constructor reverts if host chain is Arbitrum because blobs are not supported there
   - Checks for fee token usage and reverts if the native token is not ETH
 - `forceInclusion()` now does not change the sequencer message count
 - IBridge interface is introduced to use the vars TimeBounds and BatchDataLocation

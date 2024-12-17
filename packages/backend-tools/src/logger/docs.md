@@ -143,7 +143,7 @@ Below is an example log output:
 
 ```
 12:34:56.001 INFO [ PriceService:USD ] Fetched prices
-    { entries: 42, upToDate: true }
+    { entries: 42, up-to-date: true }
 
 12:34:56.002 ERROR [ PriceService:USD ] Error fetching prices
     {
@@ -165,7 +165,7 @@ In this format every message is logged on a single line as a single JSON object.
 Below is an example log output:
 
 ```
-{"time":"2023-01-02T12:34:56.001Z","level":"INFO","service":"PriceService:USD","message":"Fetched prices","parameters":{"entries":42,"upToDate":true}}
+{"time":"2023-01-02T12:34:56.001Z","level":"INFO","service":"PriceService:USD","message":"Fetched prices","parameters":{"entries":42,"up-to-date":true}}
 {"time":"2023-01-02T12:34:56.002Z","level":"ERROR","service":"PriceService:USD","message":"Error fetching prices","error":{"name":"Error","error":"429: You have been rate limited!","stack":["PriceService.fetchPrices (src/PriceService.ts:12:34)","TaxService.computeTaxes (src/TaxService.ts:56:78)"]}}
 ```
 
