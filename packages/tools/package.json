@@ -1,5 +1,5 @@
 {
-  "name": "@l2beat/tx-decoder",
+  "name": "@l2beat/tools",
   "version": "0.1.0",
   "private": true,
   "sideEffects": false,
