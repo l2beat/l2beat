@@ -6,9 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { RISK_VIEW } from '../../common/riskView'
+import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { addSentimentToDataAvailability } from '../../common'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -117,6 +119,13 @@ export const lightlink: Layer2 = {
       startBlock: 1,
     }
   },
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.CELESTIA],
+      bridge: DA_BRIDGES.NONE,
+      mode: DA_MODES.TRANSACTION_DATA
+    })
+  ],
   // chainConfig: {
   //   name: 'lightlink',
   //   chainId: 1890,
