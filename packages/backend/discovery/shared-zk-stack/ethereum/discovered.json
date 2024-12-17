@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21386218,
+  "blockNumber": 21421036,
   "configHash": "0xa25551c44b45705357b49bfa42e1c5ba88292bdf03753ba9f7423b62f86983f1",
   "contracts": [
     {
@@ -449,7 +449,6 @@
         "grvtThirdBatchTS": 1733327159,
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "Project__ThirdBatchTS": 0,
         "revertedBlocks": [],
         "sophonValidatorsAdded": [
           "0x4cc87B0A504047967CeD9A955431B3229237e7de",
