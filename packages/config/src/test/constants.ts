@@ -26,6 +26,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'hychain',
   'immutablex',
   'kroma',
+  'lightlink',
   'linea',
   'loopring',
   'metis',
