@@ -23,8 +23,8 @@ export interface Clients {
   degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   blob: BlobClient | undefined
-  starknet: StarknetClient | undefined
   getRpcClient: (chain: string) => RpcClient
+  getStarknetClient: (chain: string) => StarknetClient
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -35,8 +35,8 @@ export function initClients(config: Config, logger: Logger): Clients {
   let degateClient: LoopringClient | undefined
   let ethereumClient: RpcClient | undefined
   let blobClient: BlobClient | undefined
-  let starknetClient: StarknetClient | undefined
 
+  const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
   const rpcClients: RpcClient[] = []
@@ -88,7 +88,7 @@ export function initClients(config: Config, logger: Logger): Clients {
 
         case 'starknet': {
           const client = new StarknetClient({
-            sourceName: 'starknet',
+            sourceName: chain.name,
             url: blockApi.url,
             http,
             callsPerMinute: blockApi.callsPerMinute,
@@ -96,7 +96,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             logger,
           })
           blockClients.push(client)
-          starknetClient = client
+          starknetClients.push(client)
           break
         }
         case 'loopring':
@@ -173,6 +173,12 @@ export function initClients(config: Config, logger: Logger): Clients {
     return client
   }
 
+  const getStarknetClient = (chain: string) => {
+    const client = starknetClients.find((r) => r.chain === chain)
+    assert(client, `${chain}: Starknet client not found`)
+    return client
+  }
+
   return {
     block: blockClients,
     indexer: indexerClients,
@@ -181,7 +187,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     degate: degateClient,
     coingecko: coingeckoClient,
     blob: blobClient,
-    starknet: starknetClient,
+    getStarknetClient,
     getRpcClient,
   }
 }
