@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { NavLink, Outlet } from 'react-router'
+import { Link, NavLink, Outlet } from 'react-router'
 
 export function Layout() {
   return (
@@ -28,6 +28,27 @@ export function Layout() {
             >
               /simulator
             </NavLink>
+          </li>
+          <li>
+            <Link
+              className="font-mono underline"
+              to="https://fe-staging.l2beat.com/tools/logo-generator"
+            >
+              /logo-generator
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="font-mono underline"
+              to="https://protocolbeat.l2beat.com/"
+            >
+              /protocol-beat
+            </Link>
+          </li>
+          <li>
+            <Link className="font-mono underline" to="https://uops.l2beat.com/">
+              /uops-analyzer
+            </Link>
           </li>
         </ul>
       </div>
