@@ -1,4 +1,5 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -26,6 +27,7 @@ export const xterio: Layer2 = opStackL2({
   additionalBadges: [Badge.DA.CustomDA, Badge.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     architectureImage: 'opstack-dachallenge',
     name: 'Xterio Chain',
     slug: 'xterio',

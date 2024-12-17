@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -31,6 +32,7 @@ export const cyber: Layer2 = opStackL2({
   ],
   additionalPurposes: ['Social'],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Cyber',
     slug: 'cyber',
     architectureImage: 'opstack-dachallenge',
