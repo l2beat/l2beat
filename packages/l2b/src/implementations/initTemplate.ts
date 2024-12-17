@@ -5,6 +5,7 @@ import { readConfig } from '../config/readConfig'
 
 export function initTempalte(name: string) {
   const config = readConfig()
+  assert(config.projectRootPath, '.l2b file not found')
   assert(config.discoveryPath, '.l2b does not specify the discovery path')
 
   const templateDir = path.join(config.discoveryPath, '_templates', name)
@@ -13,13 +14,18 @@ export function initTempalte(name: string) {
   const templatePath = path.join(templateDir, 'template.jsonc')
   assert(!existsSync(templatePath), 'Template already exists')
 
-  const splitPaths = name.split('/')
-  const nestingLevel = splitPaths.length
-  const upDir = Array(nestingLevel).fill('..').join('/')
-  const displayName = splitPaths.pop()
+  const displayName = path.basename(name)
+  const schemaPath = path.join(
+    config.projectRootPath,
+    'packages',
+    'discovery',
+    'schemas',
+    'contract.v2.schema.json',
+  )
+  const relativeSchemaPath = path.relative(templateDir, schemaPath)
 
   const content = {
-    $schema: `${upDir}/../../../discovery/schemas/contract.v2.schema.json`,
+    $schema: relativeSchemaPath,
     displayName,
   }
   const json = JSON.stringify(content, null, 2)
