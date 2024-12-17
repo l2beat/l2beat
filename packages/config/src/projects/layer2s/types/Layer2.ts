@@ -111,7 +111,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** Configuration for getting liveness data */
   liveness?: Layer2LivenessConfig
   /** Configuration for getting finality data */
-  finality?: Layer2FinalityConfig | 'coming soon'
+  finality?: Layer2FinalityConfig
 }
 
 export interface WarningWithSentiment {
