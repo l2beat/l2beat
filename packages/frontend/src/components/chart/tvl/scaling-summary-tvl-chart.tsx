@@ -11,6 +11,7 @@ import { ChevronIcon } from '~/icons/chevron'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { ChartLegend } from '../core/chart-legend'
 import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
 import { RecategorizedTvlChartHover } from './recategorized-tvl-chart-hover'
@@ -96,6 +97,22 @@ function RecategorizedChart({
           timeRange={timeRange}
         />
         <Chart disableMilestones />
+        <ChartLegend
+          elements={[
+            {
+              name: 'Rollups',
+              color: 'bg-n-pink-500',
+            },
+            {
+              name: 'Validiums & Optimiums',
+              color: 'bg-n-teal-500',
+            },
+            {
+              name: 'Others',
+              color: 'bg-n-yellow-700',
+            },
+          ]}
+        />
       </section>
     </ChartProvider>
   )

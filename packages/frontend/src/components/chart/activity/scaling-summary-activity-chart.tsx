@@ -10,6 +10,7 @@ import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils
 import { api } from '~/trpc/react'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { Chart } from '../core/chart'
+import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
 import { ScalingFactorTooltip } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
@@ -51,6 +52,18 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       <section className="flex flex-col gap-4">
         <Header stats={stats} />
         <Chart disableMilestones />
+        <ChartLegend
+          elements={[
+            {
+              name: 'Projects',
+              color: 'bg-n-pink-500',
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-n-blue-700',
+            },
+          ]}
+        />
       </section>
     </ChartProvider>
   )

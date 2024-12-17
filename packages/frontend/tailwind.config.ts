@@ -120,6 +120,7 @@ const config: Config = {
       },
       'n-pink': {
         400: '#FC49C2',
+        500: '#EF43B4',
       },
       green: {
         200: '#B0FFAA',
@@ -158,6 +159,9 @@ const config: Config = {
         900: '#112944',
         950: '#152A4B',
       },
+      'n-blue': {
+        700: '#2A5BD8',
+      },
       slate: {
         600: '#525C6A',
       },
@@ -168,6 +172,9 @@ const config: Config = {
       teal: {
         400: '#2EC4B6',
         500: '#27AC9F',
+      },
+      'n-teal': {
+        500: '#36A3A3',
       },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
       fuchsia: { 700: '#860CB0' },
