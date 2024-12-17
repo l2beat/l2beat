@@ -266,7 +266,7 @@ export const layer2s: Layer2[] = [
   layer2financezk,
   lens,
   lightlink,
-  linea,  
+  linea,
   lisk,
   loopring,
   lumia,

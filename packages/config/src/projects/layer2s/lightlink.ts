@@ -5,12 +5,12 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { RISK_VIEW } from '../../common/riskView'
 import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
+import { addSentimentToDataAvailability } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { addSentimentToDataAvailability } from '../../common'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -79,9 +79,12 @@ export const lightlink: Layer2 = {
     name: 'LightLink',
     slug: 'lightlink',
     description:
-      'LightLink is a sidechain that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
+      'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
     category: 'Other',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
@@ -97,6 +100,9 @@ export const lightlink: Layer2 = {
       ],
     },
     activityDataSource: 'Blockchain RPC',
+  },
+  stage: {
+    stage: 'NotApplicable',
   },
   config: {
     associatedTokens: ['LL'],
@@ -117,14 +123,14 @@ export const lightlink: Layer2 = {
       defaultUrl: 'https://replicator.phoenix.lightlink.io/rpc/v1',
       defaultCallsPerMinute: 1500,
       startBlock: 1,
-    }
+    },
   },
   dataAvailability: [
     addSentimentToDataAvailability({
       layers: [DA_LAYERS.CELESTIA],
       bridge: DA_BRIDGES.NONE,
-      mode: DA_MODES.TRANSACTION_DATA
-    })
+      mode: DA_MODES.TRANSACTION_DATA,
+    }),
   ],
   // chainConfig: {
   //   name: 'lightlink',
@@ -137,17 +143,20 @@ export const lightlink: Layer2 = {
   //   minTimestampForTvl: new UnixTime(1692181067),
   // },
   riskView: {
-    validatedBy: {
-      value: 'Third Party',
-      description: `${validatorThresholdPercentage}% of Signers Voting Power`,
-      sentiment: 'bad',
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      description:
+        RISK_VIEW.STATE_NONE.description +
+        ` State updates must be signed by at leat ${validatorThresholdPercentage}% of validators, which corresponds to a minimum of ${minValidatorsForConsensus} validators.`,
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, CHALLENGE_WINDOW_SECONDS),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
-    destination: ['LightLink'],
-    principleOfOperation: {
-      name: 'Principle of Operation',
+    stateCorrectness: {
+      name: 'No state validation',
       description: `
       LightLink chain state roots are periodically posted to Ethereum through a CanonicalStateChain contract on L1. After the challenge window of ${formatSeconds(
         CHALLENGE_WINDOW_SECONDS,
@@ -161,13 +170,6 @@ export const lightlink: Layer2 = {
       Users can withdraw their funds by submitting a withdraw() transaction to the L2ERC20Predicate contract, which will burn the tokens on the LightLink chain. To then unlock tokens from the bridge on L1, a validator multisig needs to validate the withdrawal based on off-chain validity checks. 
       Users can exit the network once enough validators have signed off on the withdrawal.
       Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
-      references: [],
-      risks: [],
-    },
-    validation: {
-      name: 'Validation By Signers',
-      description: `For deposits, messages are verified by a permissioned set of signers on the LightLink network, which monitors emitted DepositToken events on L1 and provides signatures to authorize syncDeposit() transactions execution on LightLink.
-         In the same way for withdrawals, the set of signers provides signatures to authorize the withdrawal transactions releasing tokens from the bridge.`,
       references: [
         {
           text: 'LightLink L2 syncDeposit() - L2ERC20Predicate.sol',
@@ -193,23 +195,25 @@ export const lightlink: Layer2 = {
         },
       ],
     },
-    destinationToken: {
-      name: 'Destination tokens are upgradable',
-      description:
-        'Tokens on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
-      references: [
-        {
-          text: 'Token Implementation - requireMultisig()',
-          href: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
-        },
-      ],
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'destination token contract is maliciously upgraded.',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'Destination tokens are upgradable',
+        description:
+          'Tokens on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
+        references: [
+          {
+            text: 'Token Implementation - requireMultisig()',
+            href: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'destination token contract is maliciously upgraded.',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: [
