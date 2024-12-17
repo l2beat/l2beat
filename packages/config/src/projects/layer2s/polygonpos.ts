@@ -121,8 +121,8 @@ export const polygonpos: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://polygon.llamarpc.com',
       defaultCallsPerMinute: 1500,
-      startBlock: 5000000
-    }
+      startBlock: 5000000,
+    },
   },
   dataAvailability: [
     addSentimentToDataAvailability({
