@@ -19,10 +19,7 @@ export const degenlayer: Layer2 = upcomingL2({
       documentation: ['https://docs.degenlayer.wtf'],
       explorers: ['https://scan-test.degenlayer.wtf/'],
       repositories: ['https://github.com/coti-io'],
-      socialMedia: [
-        'https://x.com/degenlayer',
-        'https://t.me/delayedfrens',
-      ],
+      socialMedia: ['https://x.com/degenlayer', 'https://t.me/delayedfrens'],
     },
   },
 })
