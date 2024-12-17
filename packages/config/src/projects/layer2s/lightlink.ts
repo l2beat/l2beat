@@ -94,6 +94,7 @@ export const lightlink: Layer2 = {
         'https://linkedin.com/company/lightlinkchain',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     associatedTokens: ['LL'],
@@ -109,6 +110,12 @@ export const lightlink: Layer2 = {
         tokens: '*',
       }),
     ],
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://replicator.phoenix.lightlink.io/rpc/v1',
+      defaultCallsPerMinute: 1500,
+      startBlock: 1,
+    }
   },
   // chainConfig: {
   //   name: 'lightlink',
