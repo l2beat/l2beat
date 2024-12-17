@@ -35,8 +35,9 @@ export function OtherMigrationTooltip({
           Reasons
         </p>
         <p className="text-[13px]">
-          Items missing for being considered{' '}
-          {pretendingToBe.startsWith('O') ? 'an' : 'a'} {pretendingToBe}:
+          The project will no longer be considered{' '}
+          {pretendingToBe.startsWith('O') ? 'an' : 'a'} {pretendingToBe}{' '}
+          because:
         </p>
         {reasons.map((reason) => {
           return (
