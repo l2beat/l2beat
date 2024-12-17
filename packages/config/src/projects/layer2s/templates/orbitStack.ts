@@ -1016,7 +1016,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,
-      finality: templateVars.finality ?? 'coming soon',
+      finality: templateVars.finality,
     },
   }
 }
