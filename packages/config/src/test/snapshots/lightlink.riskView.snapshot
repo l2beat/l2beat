@@ -26,7 +26,7 @@
   }
   stateValidation: {
     definingMetric: -Infinity
-    description: "Currently the system permits invalid state roots. More details in project overview. State updates must be signed by at leat 50.00% of validators, which corresponds to a minimum of 2 validators."
+    description: "Currently the system permits invalid state roots. More details in project overview. State updates must be signed by at least 50.00% of validators, which corresponds to a minimum of 2 validators."
     sentiment: "bad"
     value: "None"
   }
