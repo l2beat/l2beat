@@ -7,7 +7,7 @@ import {
 import { utils } from 'ethers'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Bridge } from './types'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -68,8 +68,8 @@ const CHALLENGE_FEE = utils.formatEther(
   discovery.getContractValue<number>('Challenge', 'challengeFee'),
 )
 
-export const lightlink: Bridge = {
-  type: 'bridge',
+export const lightlink: Layer2 = {
+  type: 'layer2',
   id: ProjectId('lightlink'),
   createdAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
   display: {
@@ -77,7 +77,8 @@ export const lightlink: Bridge = {
     slug: 'lightlink',
     description:
       'LightLink is a sidechain that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
-    category: 'Token Bridge',
+    category: 'Other',
+    purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
       apps: ['https://phoenix.lightlink.io/apps'],
