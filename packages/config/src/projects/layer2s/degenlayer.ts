@@ -18,7 +18,7 @@ export const degenlayer: Layer2 = upcomingL2({
       apps: ['https://bridge-test.degenlayer.wtf/bridge/degenlayer'],
       documentation: ['https://docs.degenlayer.wtf'],
       explorers: ['https://scan-test.degenlayer.wtf/'],
-      repositories: ['https://github.com/coti-io'],
+      repositories: [''],
       socialMedia: ['https://x.com/degenlayer', 'https://t.me/delayedfrens'],
     },
   },
