@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { HttpClient2 } from '../http/HttpClient2'
+import { HttpClient } from '../http/HttpClient'
 import { ZksyncLiteClient } from './ZksyncLiteClient'
 
 describe(ZksyncLiteClient.name, () => {
@@ -9,7 +9,7 @@ describe(ZksyncLiteClient.name, () => {
     it('returns transactions array', async () => {
       const transactions = Array.from({ length: 69 }, () => fakeTransaction())
 
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: { list: transactions, pagination: { count: 69 } },
         }),
@@ -27,7 +27,7 @@ describe(ZksyncLiteClient.name, () => {
       const transactions1 = Array.from({ length: 100 }, () => fakeTransaction())
       const transactions2 = Array.from({ length: 69 }, () => fakeTransaction())
 
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: mockFn()
           .resolvesToOnce({
             result: { list: transactions1, pagination: { count: 169 } },
@@ -55,7 +55,7 @@ describe(ZksyncLiteClient.name, () => {
       const transactions2 = Array.from({ length: 68 }, () => fakeTransaction())
       transactions2.unshift(fakeTransaction('not-tx-hash'))
 
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: mockFn()
           .resolvesToOnce({
             result: { list: transactions1, pagination: { count: 169 } },
@@ -79,7 +79,7 @@ describe(ZksyncLiteClient.name, () => {
 
   describe(ZksyncLiteClient.prototype.getLatestBlockNumber.name, () => {
     it('gets latest block', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: { blockNumber: 42 } }),
       })
       const zksyncClient = mockClient({ http })
@@ -91,7 +91,7 @@ describe(ZksyncLiteClient.name, () => {
 
   describe(ZksyncLiteClient.prototype.query.name, () => {
     it('calls with correct params and returns response', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: 'success' }),
       })
       const zksyncClient = mockClient({ http })
@@ -127,13 +127,13 @@ describe(ZksyncLiteClient.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
+  http?: HttpClient
   url?: string
   generateId?: () => string
 }) {
   return new ZksyncLiteClient({
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient2>({}),
+    http: deps.http ?? mockObject<HttpClient>({}),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

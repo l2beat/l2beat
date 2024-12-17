@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256, stringAs } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, json, stringAs } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>
@@ -19,20 +19,19 @@ const EtherscanResponse = z.union([
   EtherscanErrorResponse,
 ])
 
-export function parseEtherscanResponse(value: string): EtherscanResponse {
+export function parseEtherscanResponse(response: json): EtherscanResponse {
   try {
-    const json: unknown = JSON.parse(value)
-    return EtherscanResponse.parse(json)
+    return EtherscanResponse.parse(response)
   } catch {
     throw new TypeError('Invalid Etherscan response')
   }
 }
 
 export function tryParseEtherscanResponse(
-  text: string,
+  response: json,
 ): EtherscanResponse | undefined {
   try {
-    return parseEtherscanResponse(text)
+    return parseEtherscanResponse(response)
   } catch {
     return undefined
   }

@@ -34,6 +34,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'nova',
   'optimism',
   'paradex',
+  'polygon-pos',
   'polygonzkevm',
   'reya',
   'deversifi',

@@ -2,6 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
+import { featureFlags } from '~/consts/feature-flags'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -9,7 +10,7 @@ import { ScalingFilterContextProvider } from '../_components/scaling-filter-cont
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
-import { ScalingCostsTables } from './_components/scaling-costs-tables'
+import { ScalingCostsTabs } from './_components/scaling-costs-tabs'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -18,11 +19,23 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const [entries, _, __] = await Promise.all([
+  const [entries] = await Promise.all([
     getScalingCostsEntries(),
-    api.costs.chart.prefetch({ range: '30d', filter: { type: 'all' } }),
+    !featureFlags.showOthers &&
+      api.costs.chart.prefetch({ range: '30d', filter: { type: 'all' } }),
     api.costs.table.prefetch({ range: '30d' }),
   ])
+
+  if (featureFlags.showOthers) {
+    const rollupsIds = entries.rollups.map((project) => project.id)
+    await api.costs.chart.prefetch({
+      range: '30d',
+      filter: {
+        type: 'projects',
+        projectIds: rollupsIds,
+      },
+    })
+  }
 
   return (
     <HydrateClient>
@@ -31,17 +44,19 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
-              <MainPageCard>
-                <ScalingCostsChart
-                  entries={[
-                    ...entries.rollups,
-                    ...entries.validiumsAndOptimiums,
-                    ...entries.others,
-                  ]}
-                  milestones={HOMEPAGE_MILESTONES}
-                />
-              </MainPageCard>
-              <ScalingCostsTables {...entries} />
+              {!featureFlags.showOthers && (
+                <MainPageCard>
+                  <ScalingCostsChart
+                    entries={[
+                      ...entries.rollups,
+                      ...entries.validiumsAndOptimiums,
+                      ...entries.others,
+                    ]}
+                    milestones={HOMEPAGE_MILESTONES}
+                  />
+                </MainPageCard>
+              )}
+              <ScalingCostsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>
         </CostsTimeRangeContextProvider>

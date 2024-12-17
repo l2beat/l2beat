@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Decoded } from './Decoded'
 
-export function App() {
+export function DecoderApp() {
   const [encoded, setEncoded] = useState('')
   const [toDecode, setToDecode] = useState('')
 
@@ -20,6 +20,7 @@ export function App() {
         className="mb-4 block w-full rounded-sm bg-zinc-800 px-2.5 py-1 font-mono text-sm shadow-inner"
         rows={5}
         value={encoded}
+        placeholder="Hex encoded transaction data. e.g. 0x1337dead..."
         onChange={(e) => onChange(e.target.value)}
       />
       <button
