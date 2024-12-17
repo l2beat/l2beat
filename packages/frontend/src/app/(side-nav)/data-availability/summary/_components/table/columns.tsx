@@ -71,7 +71,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
   ),
   meta: {
     tooltip:
-      'Total values secured (TVS) is the sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVL of sovereign rollups.',
+      'Total value secured (TVS) is the sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVL of sovereign rollups.',
     align: 'right',
   },
 })
