@@ -10,7 +10,7 @@ import {
   CoinMetadata,
   CoingeckoError,
   CoinsMarketResultData,
-} from './model'
+} from './types'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
 const PRO_API_URL = 'https://pro-api.coingecko.com/api/v3'

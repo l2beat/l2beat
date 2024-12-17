@@ -1,11 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  ConfigReader,
-  HttpClient as DiscoveryHttpClient,
-  DiscoveryLogger,
-} from '@l2beat/discovery'
+import { ConfigReader, DiscoveryLogger } from '@l2beat/discovery'
 import { ChainConverter } from '@l2beat/shared-pure'
 
+import { HttpClient } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
@@ -45,12 +42,12 @@ export function createUpdateMonitorModule(
   )
 
   // TODO: get rid of that once we achieve full library separation
-  const discoveryHttpClient = new DiscoveryHttpClient()
+  const http = new HttpClient()
 
   const { chains, enableCache } = config.updateMonitor
   const runners = chains.map((chainConfig) =>
     createDiscoveryRunner(
-      discoveryHttpClient,
+      http,
       configReader,
       peripherals,
       DiscoveryLogger.SILENT,

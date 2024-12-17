@@ -1,6 +1,6 @@
+import { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { DiscoveryChainConfig } from '../config/types'
-import { HttpClient } from '../utils/HttpClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { AddressAnalyzer } from './analysis/AddressAnalyzer'
 import { TemplateService } from './analysis/TemplateService'

@@ -1,6 +1,6 @@
 import fetch, { RequestInit } from 'node-fetch'
 
-export class HttpClient2 {
+export class HttpClient {
   /**
    * Sends request to the provided url with init params.
    * Use this method only when you expect server to return valid JSON.
@@ -17,5 +17,12 @@ export class HttpClient2 {
     }
 
     return res.json()
+  }
+
+  async fetchRaw(url: string, init: RequestInit & { timeout?: number }) {
+    return await fetch(url, {
+      ...init,
+      timeout: init.timeout ?? 10_000,
+    })
   }
 }

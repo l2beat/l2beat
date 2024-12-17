@@ -2,11 +2,11 @@ import {
   ConfigReader,
   DiscoveryChainConfig,
   DiscoveryLogger,
-  HttpClient,
   DiscoveryCache as IDiscoveryCache,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
+import { HttpClient } from '@l2beat/shared'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'

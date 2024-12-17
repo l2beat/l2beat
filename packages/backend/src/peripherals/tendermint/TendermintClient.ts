@@ -43,6 +43,7 @@ export class TendermintClient {
         page: page.toString(),
         per_page: perPage.toString(),
       }).toString()}`,
+      {},
     )
 
     assert(
@@ -50,7 +51,6 @@ export class TendermintClient {
       `Tendermint getValidators request failed with status: ${response.status}`,
     )
 
-    return TendermintValidatorsResponseBodySchema.parse(await response.json())
-      .result
+    return TendermintValidatorsResponseBodySchema.parse(response).result
   }
 }
