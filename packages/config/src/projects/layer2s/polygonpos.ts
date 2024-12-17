@@ -117,6 +117,12 @@ export const polygonpos: Layer2 = {
         tokens: ['ETH'],
       }),
     ],
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://polygon.llamarpc.com',
+      defaultCallsPerMinute: 1500,
+      startBlock: 5000000
+    }
   },
   dataAvailability: [
     addSentimentToDataAvailability({
