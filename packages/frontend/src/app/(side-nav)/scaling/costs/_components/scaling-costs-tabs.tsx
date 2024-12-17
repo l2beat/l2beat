@@ -115,7 +115,7 @@ function Controls({
     <div
       className={cn(
         'mt-4 flex flex-col gap-2 lg:flex-row lg:justify-between',
-        featureFlags.showOthers && 'mt-5',
+        featureFlags.showOthers && 'md:mt-0',
       )}
     >
       <ScalingFilters items={entries} />

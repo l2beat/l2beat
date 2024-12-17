@@ -43,7 +43,7 @@ export function ScalingTvlTabs(props: Props) {
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', featureFlags.showOthers && 'mt-5')}
+        className={cn('mt-4', featureFlags.showOthers && 'md:mt-0')}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
