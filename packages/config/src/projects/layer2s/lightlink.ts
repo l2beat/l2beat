@@ -147,7 +147,7 @@ export const lightlink: Layer2 = {
       ...RISK_VIEW.STATE_NONE,
       description:
         RISK_VIEW.STATE_NONE.description +
-        ` State updates must be signed by at leat ${validatorThresholdPercentage}% of validators, which corresponds to a minimum of ${minValidatorsForConsensus} validators.`,
+        ` State updates must be signed by at least ${validatorThresholdPercentage}% of validators, which corresponds to a minimum of ${minValidatorsForConsensus} validators.`,
     },
     dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, CHALLENGE_WINDOW_SECONDS),
