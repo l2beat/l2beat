@@ -206,6 +206,22 @@ function getOtherChains(env: Env): ChainApi[] {
     })
   }
 
+  const paradexRpc = env.optionalString('PARADEX_RPC_URL')
+  if (paradexRpc) {
+    chains.push({
+      name: 'paradex',
+      indexerApis: [],
+      blockApis: [
+        {
+          type: 'starknet',
+          url: paradexRpc,
+          callsPerMinute: env.integer('PARADEX_RPC_CALLS_PER_MINUTE', 60),
+          retryStrategy: 'RELIABLE',
+        },
+      ],
+    })
+  }
+
   const starkexApiKey = env.optionalString('STARKEX_API_KEY')
   if (starkexApiKey) {
     chains.push({
