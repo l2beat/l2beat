@@ -111,6 +111,7 @@ export const getCachedTokenTvlChartData = cache(
   ['token-tvl-chart'],
   {
     tags: ['tvl'],
+    revalidate: UnixTime.HOUR,
   },
 )
 
