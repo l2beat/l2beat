@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const ink: Layer2 = upcomingL2({
+export const pandasea: Layer2 = upcomingL2({
   id: 'pandasea',
   createdAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
   display: {
