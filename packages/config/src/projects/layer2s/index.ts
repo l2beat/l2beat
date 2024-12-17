@@ -79,6 +79,7 @@ import { layer2financezk } from './layer2financezk'
 import { layerai } from './layerai'
 import { leaf } from './leaf'
 import { lens } from './lens'
+import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
@@ -266,6 +267,7 @@ export const layer2s: Layer2[] = [
   layer2finance,
   layer2financezk,
   lens,
+  lightlink,
   linea,
   lisk,
   loopring,

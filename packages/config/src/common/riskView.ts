@@ -404,10 +404,10 @@ export function SEQUENCER_ENQUEUE_VIA(
 }
 
 export function SEQUENCER_NO_MECHANISM(
-  disabled?: boolean,
+  isItThereButJustDisabled?: boolean,
 ): ScalingProjectRiskViewEntry {
   const additional =
-    disabled === true
+    isItThereButJustDisabled === true
       ? ' Although the functionality exists in the code, it is currently disabled.'
       : ''
   return {

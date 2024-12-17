@@ -18,7 +18,6 @@ import { hop } from './hop'
 import { hyphen } from './hyphen'
 import { immutablezkevm } from './immutablezkevm'
 import { layerzerov2oft } from './layerzerov2oft'
-import { lightlink } from './lightlink'
 import { lzOmnichain } from './lzOmnichain'
 import { multichain } from './multichain'
 import { near } from './near'
@@ -70,7 +69,6 @@ export const bridges: Bridge[] = [
   immutablezkevm,
   lzOmnichain,
   layerzerov2oft,
-  lightlink,
   multichain,
   near,
   fraxferry,
