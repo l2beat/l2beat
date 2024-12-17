@@ -2,7 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "sophon",
-  "initialAddresses": ["0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"],
+  "initialAddresses": [
+    "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3", // SophonZkEvm
+    "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987" // L1USDCBridge
+  ],
   "names": {
     "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "SophonZkEvm",
     "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "SophonZkEvmAdmin",

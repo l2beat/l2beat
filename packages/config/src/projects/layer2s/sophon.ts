@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { RISK_VIEW } from '../../common'
+import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
@@ -19,12 +19,7 @@ export const sophon: Layer2 = zkStackL2({
     added: 'sophonValidatorsAdded',
     removed: 'sophonValidatorsRemoved',
   },
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.CustomDA,
-    Badge.Stack.ZKStack,
-    Badge.Infra.ElasticChain,
-  ],
+  additionalBadges: [Badge.DA.CustomDA],
   createdAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
   display: {
     name: 'Sophon',
@@ -35,7 +30,7 @@ export const sophon: Layer2 = zkStackL2({
       websites: ['https://sophon.xyz/'],
       apps: ['https://portal.sophon.xyz/', 'https://farm.sophon.xyz/'],
       documentation: ['https://docs.sophon.xyz/sophon'],
-      explorers: [],
+      explorers: ['https://explorer.sophon.xyz/'],
       repositories: ['https://github.com/sophon-org'],
       socialMedia: [
         'https://x.com/sophon',
@@ -56,10 +51,8 @@ export const sophon: Layer2 = zkStackL2({
   },
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {
-    name: 'External',
-    bridge: {
-      type: 'None',
-    },
+    layer: DA_LAYERS.EXTERNAL,
+    bridge: DA_BRIDGES.NONE,
     riskView: {
       ...RISK_VIEW.DATA_EXTERNAL,
       sources: [
@@ -74,7 +67,7 @@ export const sophon: Layer2 = zkStackL2({
     technology: {
       name: 'Data is not stored on chain',
       description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted on-chain by the centralized Sequencer.',
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the centralized Sequencer.',
       risks: [
         {
           category: 'Funds can be lost if',
@@ -93,20 +86,26 @@ export const sophon: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: [],
+      tokens: [], // 'SOPH' not on CG yet
       description:
-        'Shared bridge for depositing tokens to Sophon and other ZK stack chains.',
+        'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
       sharedEscrow: {
-        type: 'ElasticChian',
+        type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
-          '0x309429DE3621992Cb0ab8982A448c9Cc5c38405b',
+          '0x954ba8223a6BFEC1Cc3867139243A02BA0Bc66e4',
         ),
         l2EtherAddress: EthereumAddress(
-          '0x898b3560affd6d955b1574d87ee09e46669c60ea',
+          '0x72af9F169B619D85A47Dfa8fefbCD39dE55c567D',
         ),
-        tokensToAssignFromL1: [],
+        tokensToAssignFromL1: [], // 'SOPH' not on CG yet
       },
       ...zkStackUpgrades,
+    }),
+    discovery.getEscrowDetails({
+      address: discovery.getContract('L1USDCBridge').address,
+      tokens: ['USDC'],
+      description:
+        'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
   ],
   nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
