@@ -1,3 +1,164 @@
+Generated with discovered.json: 0x61bb2abc25873ee5cbc6fd74a69cf3ea384a4f54
+
+# Diff at Mon, 16 Dec 2024 13:50:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33537d5b381f743921fc5e40006feb3f31e39a6 block: 628196
+- current block number: 673467
+
+## Description
+
+Minor upgrade of RewardsDistributor, which disables the claim of KINTO for all new users and limits claims to actors that can provide a valid merkle proof.
+
+## Watched changes
+
+```diff
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd15c713ccbe36c94f3701cc26df68875ded4c439ee290c429fd64be35c66d8ad"
++        "0xc84bc54272227a1f3a6c1edaf40ac11aeaf8651129538971e06e0fefa48c99bc"
+      values.$implementation:
+-        "0x5b4D3f7d5876a68107F755BE97cDef36091A336F"
++        "0xF3D955B4cF3489A37027f0F3484E87328dBdBB39"
+      values.$pastUpgrades.7:
++        ["2024-12-13T23:57:35.000Z","0xc25ca9b0d2a50eba7cec62481c5c83f9222786f3c29479977ff1182a2871c768",["0xF3D955B4cF3489A37027f0F3484E87328dBdBB39"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.NEW_USER_REWARD_END_TIMESTAMP:
++        1734133547
+    }
+```
+
+## Source code changes
+
+```diff
+.../RewardsDistributor/RewardsDistributor.sol      | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 628196 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
+Generated with discovered.json: 0xd84106a81a6dc6efcdb8dc2e7a535d8d7075456b
+
+# Diff at Wed, 11 Dec 2024 11:55:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7435bec50d51aed22dfa02f78d9c82e72a840fed block: 628196
+- current block number: 628196
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 628196 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
++        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
+    }
+```
+
+Generated with discovered.json: 0x18e112597e752f06c69d3c1745181823b7fe811b
+
+# Diff at Wed, 11 Dec 2024 05:59:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0e3b4aa609891cbfaf2ac16c5eae6839e5be9f68 block: 619744
+- current block number: 628196
+
+## Description
+
+Minor upgrade that adds a `EXIT_WINDOW_PERIOD` of 10d (from the most recent sanction) to KintoID during which `add-/removeSanction()` reverts. This prevents resetting of sanctionedAt[account] TS to the latest block number, which would re-sanction a user even in the case of SC not confirming.
+
+No changes to the permissions / roles yet.
+
+## Watched changes
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.
+      sourceHashes.1:
+-        "0x3fa7283c94fa2072438a07fb3069ce98694353a7a07f32585e2baa41a856fca9"
++        "0xdd266bc2e9cb84472ebc0a2583f1b1cbeb143cedb0763780f10d151ddff8f8ec"
+      values.$implementation:
+-        "0x7CFe474936fA50181ae7c2C43EeB8806e25bc983"
++        "0xaa0726829d41E3C70B84Bc5390cce82afC56871A"
+      values.$pastUpgrades.8:
++        ["2024-12-10T20:00:17.000Z","0x9fa20142e6e04305e74314e6670ecbf65477f470a9251ec55dc52ddcd34940b1",["0xaa0726829d41E3C70B84Bc5390cce82afC56871A"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.EXIT_WINDOW_PERIOD:
++        864000
+      values.SANCTION_EXPIRY_PERIOD:
++        259200
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@619744 => .flat}/KintoID/KintoID.sol    | 38 ++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0x80336ac049b71f83160acf036068f4f3f1f599d7
+
+# Diff at Tue, 10 Dec 2024 07:40:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01c69c8d162d3e9a035a25c270d68755988c138 block: 612370
+- current block number: 619744
+
+## Description
+
+Config related: rediscover after beaconProxy detector fix.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 612370 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      values.owners:
+-        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x94561e98DD5E55271f91A103e4979aa6C493745E"]
+    }
+```
+
 Generated with discovered.json: 0x62043f19ddff2ce218871d32e98be9601fbe58bb
 
 # Diff at Mon, 09 Dec 2024 11:27:23 GMT:

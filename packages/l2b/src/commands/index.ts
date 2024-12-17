@@ -9,6 +9,8 @@ import { FetchFlatSources } from './FetchFlatSources'
 import { FindL2 } from './FindL2'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
+import { Init } from './Init'
+import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
@@ -35,6 +37,8 @@ export function getSubcommands() {
     SolFmt,
     StarknetProgramHashes,
     FindL2,
+    Init,
+    InitTemplate,
     TVL,
     UI,
   ]

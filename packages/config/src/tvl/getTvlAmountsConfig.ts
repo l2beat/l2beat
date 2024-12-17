@@ -47,7 +47,7 @@ export function getTvlAmountsConfig(
   const elasticChainIncludedL1Tokens = projects.flatMap((p) =>
     p.escrows.flatMap(
       (e) =>
-        (e.sharedEscrow?.type === 'ElasticChian' &&
+        (e.sharedEscrow?.type === 'ElasticChain' &&
           e.sharedEscrow?.tokensToAssignFromL1) ||
         [],
     ),
@@ -65,7 +65,7 @@ export function getTvlAmountsConfig(
           entries.push(...aggLayerEntries)
           break
         }
-        case 'ElasticChian': {
+        case 'ElasticChain': {
           const elasticChainEntries = elasticChainEscrowToEntries(
             escrow,
             project,
@@ -136,7 +136,7 @@ export function getTvlAmountsConfigForProject(
         entries.push(...aggLayerEntries)
         break
       }
-      case 'ElasticChian': {
+      case 'ElasticChain': {
         const elasticChainEntries = elasticChainEscrowToEntries(
           escrow,
           project,

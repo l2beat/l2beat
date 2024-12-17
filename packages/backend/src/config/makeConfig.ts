@@ -129,35 +129,6 @@ export function makeConfig(
       },
     },
     finality: flags.isEnabled('finality') && {
-      ethereumProviderUrl: env.string([
-        'ETHEREUM_RPC_URL_FOR_FINALITY',
-        'ETHEREUM_RPC_URL',
-      ]),
-      ethereumProviderCallsPerMinute: env.integer(
-        [
-          'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_FINALITY',
-          'ETHEREUM_RPC_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      beaconApiUrl: env.string([
-        'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
-        'ETHEREUM_BEACON_API_URL',
-      ]),
-      beaconApiCPM: env.integer(
-        [
-          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE_FOR_FINALITY',
-          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      beaconApiTimeout: env.integer(
-        [
-          'ETHEREUM_BEACON_API_TIMEOUT_FOR_FINALITY',
-          'ETHEREUM_BEACON_API_TIMEOUT',
-        ],
-        10000,
-      ),
       configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
@@ -236,6 +207,26 @@ export function makeConfig(
       ),
     },
     chainConfig: getChainConfig(env),
+    beaconApi: {
+      url: env.optionalString([
+        'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
+        'ETHEREUM_BEACON_API_URL',
+      ]),
+      callsPerMinute: env.integer(
+        [
+          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE_FOR_FINALITY',
+          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+      timeout: env.integer(
+        [
+          'ETHEREUM_BEACON_API_TIMEOUT_FOR_FINALITY',
+          'ETHEREUM_BEACON_API_TIMEOUT',
+        ],
+        10000,
+      ),
+    },
     // Must be last
     flags: flags.getResolved(),
   }

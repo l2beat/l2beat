@@ -1,22 +1,16 @@
-import { type StageConfig } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
 import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
-import {
-  BasicTable,
-  type BasicTableEntry,
-  type BasicTableProps,
-  BasicTableRow,
-} from './basic-table'
+import { BasicTable, type BasicTableProps, BasicTableRow } from './basic-table'
 
-interface BasicEntry extends BasicTableEntry {
-  stage: StageConfig
+interface BasicEntry extends CommonProjectEntry {
+  stageOrder: number
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
-  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+  if (!featureFlags.stageSorting) {
     return <BasicTable {...props} />
   }
 
@@ -89,20 +83,17 @@ function getRollupsTableRows<T extends BasicEntry>(table: Table<T>) {
   const rest: Row<T>[] = []
 
   for (const row of rows) {
-    if (row.original.id === ProjectId.ETHEREUM) {
+    if (row.original.stageOrder === 3) {
       ethereumEntry = row
       continue
     }
 
-    if (
-      row.original.stage.stage === 'Stage 2' ||
-      row.original.stage.stage === 'Stage 1'
-    ) {
+    if (row.original.stageOrder === 2) {
       stageTwoAndOne.push(row)
       continue
     }
 
-    if (row.original.stage.stage === 'Stage 0') {
+    if (row.original.stageOrder === 1) {
       stageZero.push(row)
       continue
     }

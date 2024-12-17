@@ -3,7 +3,6 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
-import { getStageSortedRowModel } from '~/components/table/sorting/get-stage-sorting-row-model'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
@@ -33,7 +32,7 @@ export function ScalingTvlTable({ entries, rollups }: Props) {
     data: allProjects,
     columns: scalingTvlColumns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: rollups ? getStageSortedRowModel() : getSortedRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
     state: {
       sorting,

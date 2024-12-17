@@ -15,7 +15,7 @@ export function ChartLabels({ className }: Props) {
   return (
     <div
       className={cn(
-        'pointer-events-none relative z-25 flex h-full flex-col-reverse justify-between pt-5',
+        'pointer-events-none relative flex h-full flex-col-reverse justify-between pt-5',
         columns.length <= 1 && !isLoading && 'chart-fade-out-to-bottom',
         className,
       )}

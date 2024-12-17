@@ -136,6 +136,14 @@ export const DA_LAYERS = {
     fallbackDescription: undefined,
     secondLine: undefined,
   },
+  POLYGON_POS_DA: {
+    value: 'Polygon PoS DA',
+    sentiment: 'warning',
+    description:
+      'The data is guaranteed to be available by Polygon proof of stake validators. On Ethereum, the data is indirectly referenced in the signed block header.',
+    fallbackDescription: undefined,
+    secondLine: undefined,
+  },
 } as const satisfies Record<
   string,
   ValueWithSentiment<string> & {

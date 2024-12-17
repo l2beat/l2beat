@@ -94,7 +94,7 @@ function getConfiguredChains() {
       c.config.escrows.some(
         (e) =>
           e.sharedEscrow?.type === 'AggLayer' ||
-          e.sharedEscrow?.type === 'ElasticChian',
+          e.sharedEscrow?.type === 'ElasticChain',
       ),
     )
     .map((l) => l.id)
@@ -200,6 +200,22 @@ function getOtherChains(env: Env): ChainApi[] {
           type: 'starknet',
           url: starknetRpc,
           callsPerMinute: env.integer('STARKNET_RPC_CALLS_PER_MINUTE', 60),
+          retryStrategy: 'RELIABLE',
+        },
+      ],
+    })
+  }
+
+  const paradexRpc = env.optionalString('PARADEX_RPC_URL')
+  if (paradexRpc) {
+    chains.push({
+      name: 'paradex',
+      indexerApis: [],
+      blockApis: [
+        {
+          type: 'starknet',
+          url: paradexRpc,
+          callsPerMinute: env.integer('PARADEX_RPC_CALLS_PER_MINUTE', 60),
           retryStrategy: 'RELIABLE',
         },
       ],

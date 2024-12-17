@@ -1,3 +1,70 @@
+Generated with discovered.json: 0xe28dc8a373f6a6e9c1c5f56db7248039a2e48164
+
+# Diff at Thu, 12 Dec 2024 18:36:42 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21366345
+- current block number: 21388259
+
+## Description
+
+Changed finalization period from 5 hours to 4.
+Throttling checks are disabled since ethThrottleWithdrawals.maxAmountPerPeriod is set to 0.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      values.ethThrottleWithdrawals.maxAmountPerPeriod:
+-        "1000000000000000000000"
++        0
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
++++ description: Challenge period (Number of seconds until a state root is finalized).
+      values.FINALIZATION_PERIOD_SECONDS:
+-        18000
++        14400
+      values.finalizationPeriodSeconds:
+-        18000
++        14400
+    }
+```
+
+Generated with discovered.json: 0xf3cc94b95e05fcc954432c345ea9fbac05ea834f
+
+# Diff at Mon, 09 Dec 2024 17:31:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02974be0caac873bba9178e618086aa67aaf0b90 block: 21334344
+- current block number: 21366345
+
+## Description
+
+Moved the zircuit-specific OptiPortal away from the default op stack template as it has custom flow control.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21334344 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal_zircuit"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time."
+    }
+```
+
 Generated with discovered.json: 0x6b1ef83ce197665a204bcae5f0602a71929c06aa
 
 # Diff at Thu, 05 Dec 2024 05:56:44 GMT:

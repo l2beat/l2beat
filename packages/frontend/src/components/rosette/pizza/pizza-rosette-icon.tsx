@@ -24,20 +24,16 @@ export function PizzaRosetteIcon({
   const svgRef = useRef(null)
 
   const [first, second, third, fourth, fifth] = values
-  const setContent = context?.setContent
-  const content = context?.content
+  const setSelectedRisk = context?.setSelectedRisk
+  const selectedRisk = context?.selectedRisk
 
-  useOnClickOutside(svgRef, () => setContent?.(undefined))
-  useEventListener('scroll', () => setContent?.(undefined))
+  useOnClickOutside(svgRef, () => setSelectedRisk?.(undefined))
+  useEventListener('scroll', () => setSelectedRisk?.(undefined))
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
-  const selectRisk = (risk: RosetteValue, side: 'top' | 'bottom') => {
-    setContent?.({
-      risk,
-      side: side,
-      sideOffset: side === 'top' ? -65 : -50,
-    })
+  const selectRisk = (risk: RosetteValue) => {
+    setSelectedRisk?.(risk)
   }
 
   return (
@@ -47,7 +43,7 @@ export function PizzaRosetteIcon({
       viewBox="0 0 180 180"
       alt-text="Rosette showing risk summary"
       ref={svgRef}
-      onMouseLeave={() => setContent?.(undefined)}
+      onMouseLeave={() => setSelectedRisk?.(undefined)}
       className={className}
     >
       <defs>
@@ -82,10 +78,10 @@ export function PizzaRosetteIcon({
               'transition-opacity',
               sentimentToFillColor(first.sentiment),
               isUnderReview && sentimentToFillColor('UnderReview'),
-              content && content.risk.name !== first.name && 'opacity-20',
+              selectedRisk && selectedRisk.name !== first.name && 'opacity-20',
             )}
-            onMouseEnter={() => selectRisk(first, 'top')}
-            onTouchStart={() => selectRisk(first, 'top')}
+            onMouseEnter={() => selectRisk(first)}
+            onTouchStart={() => selectRisk(first)}
           />
 
           <path
@@ -94,10 +90,10 @@ export function PizzaRosetteIcon({
               'transition-opacity',
               sentimentToFillColor(second.sentiment),
               isUnderReview && sentimentToFillColor('UnderReview'),
-              content && content.risk.name !== second.name && 'opacity-20',
+              selectedRisk && selectedRisk.name !== second.name && 'opacity-20',
             )}
-            onMouseEnter={() => selectRisk(second, 'bottom')}
-            onTouchStart={() => selectRisk(second, 'bottom')}
+            onMouseEnter={() => selectRisk(second)}
+            onTouchStart={() => selectRisk(second)}
           />
 
           <path
@@ -106,10 +102,10 @@ export function PizzaRosetteIcon({
               'transition-opacity',
               sentimentToFillColor(third.sentiment),
               isUnderReview && sentimentToFillColor('UnderReview'),
-              content && content.risk.name !== third.name && 'opacity-20',
+              selectedRisk && selectedRisk.name !== third.name && 'opacity-20',
             )}
-            onMouseEnter={() => selectRisk(third, 'bottom')}
-            onTouchStart={() => selectRisk(third, 'bottom')}
+            onMouseEnter={() => selectRisk(third)}
+            onTouchStart={() => selectRisk(third)}
           />
 
           <path
@@ -118,10 +114,10 @@ export function PizzaRosetteIcon({
               'transition-opacity',
               sentimentToFillColor(fourth.sentiment),
               isUnderReview && sentimentToFillColor('UnderReview'),
-              content && content.risk.name !== fourth.name && 'opacity-20',
+              selectedRisk && selectedRisk.name !== fourth.name && 'opacity-20',
             )}
-            onMouseEnter={() => selectRisk(fourth, 'bottom')}
-            onTouchStart={() => selectRisk(fourth, 'bottom')}
+            onMouseEnter={() => selectRisk(fourth)}
+            onTouchStart={() => selectRisk(fourth)}
           />
 
           <path
@@ -130,10 +126,10 @@ export function PizzaRosetteIcon({
               'transition-opacity',
               sentimentToFillColor(fifth.sentiment),
               isUnderReview && sentimentToFillColor('UnderReview'),
-              content && content.risk.name !== fifth.name && 'opacity-20',
+              selectedRisk && selectedRisk.name !== fifth.name && 'opacity-20',
             )}
-            onMouseEnter={() => selectRisk(fifth, 'top')}
-            onTouchStart={() => selectRisk(fifth, 'top')}
+            onMouseEnter={() => selectRisk(fifth)}
+            onTouchStart={() => selectRisk(fifth)}
           />
 
           {isUnderReview ? (

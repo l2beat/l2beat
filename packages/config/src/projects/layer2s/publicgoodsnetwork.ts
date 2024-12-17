@@ -9,6 +9,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
+  isArchived: true,
   createdAt: new UnixTime(1690446197), // 2023-07-27T08:23:17Z
   additionalBadges: [
     Badge.DA.Celestia,
@@ -21,6 +22,8 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     name: 'Public Goods Network',
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
+    headerWarning:
+      'PGN was sunset in June 2024 and the centralized operator stopped their service. The current canonical bridge escrow contracts are modified to allow for [withdrawals of ETH and ERC-20s based on a pre-configured merkle root](https://gov.gitcoin.co/t/updating-pgns-contract-to-make-funds-easier-to-claim/19569).',
     description:
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     links: {
@@ -37,13 +40,18 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       ],
       socialMedia: ['https://twitter.com/pgn_eth'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://rpc.publicgoods.network',
   genesisTimestamp: new UnixTime(1689108083),
   stateDerivation: DERIVATION.OPSTACK('PGN'),
   isNodeAvailable: true,
   milestones: [
+    {
+      name: 'PGN pauses the bridge',
+      link: 'https://app.blocksec.com/explorer/tx/eth/0xaf8648b0e0a28902f7cfcc544d520a45d8df8217bba016c4a2f01aaf2bf39556',
+      date: '2024-12-10T00:00:00.00Z',
+      description: 'PGN starts sunset process.',
+      type: 'incident',
+    },
     {
       name: 'Public Goods Network Launch',
       link: 'https://twitter.com/pgn_eth/status/1676972199423668228',

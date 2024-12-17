@@ -20,7 +20,6 @@
   },
   "overrides": {
     "SecurityCouncil": {
-      "ignoreRelatives": ["members"], // we abstract members as 1/x each and assume x stays reasonably low (lowest threshold: 1/12 sept2024)
       "fields": {
         "members": {
           "handler": {
@@ -262,6 +261,24 @@
             "argValue": "50104"
           }
         },
+        "treasureValidatorsAdded": {
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "ValidatorAdded",
+            "valueKey": "_addedValidator",
+            "arg": "_chainId",
+            "argValue": "61166"
+          }
+        },
+        "treasureValidatorsRemoved": {
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "ValidatorRemoved",
+            "valueKey": "_removedValidator",
+            "arg": "_chainId",
+            "argValue": "61166"
+          }
+        },
         "abstractThirdBatchTS": {
           "description": "If non-zero, the third batch has been posted (launch monitor).",
           "severity": "MEDIUM",
@@ -278,15 +295,6 @@
             "type": "call",
             "method": "getCommittedBatchTimestamp",
             "args": [325, 3]
-          }
-        },
-        "treasureThirdBatchTS": {
-          "description": "If non-zero, the third batch has been posted (launch monitor).",
-          "severity": "MEDIUM",
-          "handler": {
-            "type": "call",
-            "method": "getCommittedBatchTimestamp",
-            "args": [61166, 3]
           }
         },
         "revertedBlocks": {

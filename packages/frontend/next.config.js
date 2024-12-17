@@ -4,6 +4,16 @@ import { withSentryConfig } from '@sentry/nextjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      // Do not put @l2beat/backend or @l2beat/config here!
+      '@l2beat/database',
+      '@l2beat/discovery',
+      '@l2beat/discovery-types',
+      '@l2beat/shared-pure',
+      '@l2beat/shared',
+    ],
+  },
   images: {
     domains: [
       'assets.coingecko.com',

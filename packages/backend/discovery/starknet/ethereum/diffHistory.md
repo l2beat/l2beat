@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xb5d9d9dcd9618d5c0084c17afd27719d7febec40
+
+# Diff at Tue, 10 Dec 2024 11:08:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21358044
+- current block number: 21358044
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21358044 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract MakerDAO Governance (0x0a3f6849f78076aefaDf113F5BED87720274dDC0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe7ea72fdb3d4832eb7aa5b7eceb44fe8b6271e08
 
 # Diff at Sun, 08 Dec 2024 13:23:21 GMT:

@@ -104,8 +104,10 @@ export class ProjectDiscovery {
       }
       descriptionOrOptions.description = descriptions.filter(isString).join(' ')
     }
+
     return {
       name: contract.name,
+      isVerified: contract.unverified !== true,
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
@@ -570,6 +572,7 @@ export class ProjectDiscovery {
     }
     return {
       address: contract.address,
+      isVerified: contract.unverified !== true,
       name: contract.name,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,

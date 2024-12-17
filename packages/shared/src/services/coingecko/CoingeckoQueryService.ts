@@ -8,8 +8,8 @@ import {
 import { zip } from 'lodash'
 
 import { Logger } from '@l2beat/backend-tools'
-import { CoingeckoClient } from './CoingeckoClient'
-import { CoinMarketChartRangeData } from './model'
+import { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
+import { CoinMarketChartRangeData } from '../../clients/coingecko/types'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
 const SECONDS_IN_DAY = 24 * 60 * 60

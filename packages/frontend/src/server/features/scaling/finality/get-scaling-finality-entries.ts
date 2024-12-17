@@ -1,18 +1,19 @@
-import { type Layer2, layer2s } from '@l2beat/config'
+import { type Layer2, getCurrentEntry, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import {
+  type ProjectsLatestTvlUsd,
+  getProjectsLatestTvlUsd,
+} from '../tvl/utils/get-latest-tvl-usd'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
+import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
 
 export type ScalingFinalityEntries = Awaited<
@@ -20,30 +21,27 @@ export type ScalingFinalityEntries = Awaited<
 >
 export async function getScalingFinalityEntries() {
   const configurations = getFinalityConfigurations()
-  const [finality, tvl, projectsChangeReport, projectsVerificationStatuses] =
-    await Promise.all([
-      getFinality(configurations),
-      getProjectsLatestTvlUsd(),
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-    ])
+  const [finality, tvl, projectsChangeReport] = await Promise.all([
+    getFinality(configurations),
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+  ])
 
   const includedProjects = getIncludedProjects(layer2s, finality)
 
   const entries = includedProjects
-    .map((project) => {
-      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-
-      return getScalingFinalityEntry(
+    .map((project) =>
+      getScalingFinalityEntry(
         project,
+        projectsChangeReport.getChanges(project.id),
         finality[project.id.toString()],
-        isVerified,
-        projectsChangeReport,
-      )
-    })
+        tvl,
+      ),
+    )
     .filter(notUndefined)
+    .sort(compareStageAndTvl)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(entries)
 }
 
 function getFinalityData(
@@ -98,24 +96,23 @@ function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
 export type ScalingFinalityEntry = ReturnType<typeof getScalingFinalityEntry>
 function getScalingFinalityEntry(
   project: Layer2,
+  changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
+  tvl: ProjectsLatestTvlUsd,
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
+  const data = getFinalityData(finalityProjectData, project)
   return {
-    entryType: 'finality' as const,
     ...getCommonScalingEntry({
       project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
+      changes,
+      syncStatus: data?.syncStatus,
     }),
+    category: project.display.category,
+    provider: project.display.provider,
     dataAvailabilityMode: dataAvailability?.mode,
-    data: getFinalityData(finalityProjectData, project),
+    data,
     finalizationPeriod: project.display.finality?.finalizationPeriod,
+    tvlOrder: tvl[project.id] ?? 0,
   }
 }

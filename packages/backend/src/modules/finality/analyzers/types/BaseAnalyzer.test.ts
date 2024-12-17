@@ -6,9 +6,8 @@ import {
   IndexerConfigurationRecord,
   LivenessRecord,
 } from '@l2beat/database'
-import { createTrackedTxId } from '@l2beat/shared'
+import { RpcClient, createTrackedTxId } from '@l2beat/shared'
 import { mean } from 'lodash'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import {
   BaseAnalyzer,
   Batch,

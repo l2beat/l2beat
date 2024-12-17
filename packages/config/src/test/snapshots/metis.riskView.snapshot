@@ -7,11 +7,6 @@
     sentiment: "bad"
     value: "External (MEMO)"
   }
-  destinationToken: {
-    description: "METIS transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
@@ -26,7 +21,7 @@
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone."
+    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
     sentiment: "warning"
     sources: [
       {
@@ -44,10 +39,5 @@
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

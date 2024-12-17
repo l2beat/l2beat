@@ -8,9 +8,9 @@ import {
 import { chunk } from 'lodash'
 
 import { Database } from '@l2beat/database'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 
+import { RpcClient } from '@l2beat/shared'
 export type Transaction = {
   txHash: string
   timestamp: UnixTime

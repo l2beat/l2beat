@@ -49,8 +49,7 @@
             "addEvent": "LpAdded",
             "addKey": "lp",
             "removeEvent": "LpRemoved",
-            "removeKey": "lp",
-            "ignoreRelative": true
+            "removeKey": "lp"
           }
         }
       }

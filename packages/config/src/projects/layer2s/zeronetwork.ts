@@ -18,7 +18,7 @@ export const zeronetwork: Layer2 = zkStackL2({
     added: 'zeronetworkValidatorsAdded',
     removed: 'zeronetworkValidatorsRemoved',
   },
-  additionalBadges: [Badge.Infra.ElasticChain, Badge.RaaS.Caldera],
+  additionalBadges: [Badge.RaaS.Caldera],
   createdAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
     name: 'ZERO Network',
@@ -105,7 +105,7 @@ export const zeronetwork: Layer2 = zkStackL2({
       description:
         'Shared bridge for depositing tokens to ZERϴ and other ZK stack chains.',
       sharedEscrow: {
-        type: 'ElasticChian',
+        type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
           '0x954ba8223a6BFEC1Cc3867139243A02BA0Bc66e4',
         ),

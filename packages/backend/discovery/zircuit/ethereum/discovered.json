@@ -1,19 +1,19 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 21334344,
+  "blockNumber": 21388259,
   "configHash": "0x0698c10cff4e338a0af49513f3885568e3e5af6fd467ba45985135c7f5162b19",
   "contracts": [
     {
       "name": "OptimismPortal",
       "address": "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-      "template": "opstack/OptimismPortal",
+      "template": "opstack/OptimismPortal_zircuit",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
         "0x9388575e8cf83880125e7770a596c83a0ad9c191b71f1990544987cbd0dbd4c0"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -26,7 +26,11 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": [
+        "params",
+        "getEthThrottleDepositsCredits",
+        "getEthThrottleWithdrawalsCredits"
+      ],
       "sinceTimestamp": 1719936491,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
@@ -55,19 +59,19 @@
           "maxAmountTotal": 0
         },
         "ethThrottleWithdrawals": {
-          "maxAmountPerPeriod": "1000000000000000000000",
+          "maxAmountPerPeriod": 0,
           "periodLength": 3600,
           "maxAmountTotal": 0
         },
         "getEthThrottleDepositsCredits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "getEthThrottleWithdrawalsCredits": "1000000000000000000000",
+        "getEthThrottleWithdrawalsCredits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "guardian": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "l2Oracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 21334322,
+          "prevBlockNum": 21387958,
           "prevTxCount": 1
         },
         "paused": false,
@@ -109,7 +113,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634435",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635008",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -159,7 +163,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -517,14 +521,14 @@
         "challenger": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "deletedOutputs": [],
-        "FINALIZATION_PERIOD_SECONDS": 18000,
-        "finalizationPeriodSeconds": 18000,
+        "FINALIZATION_PERIOD_SECONDS": 14400,
+        "finalizationPeriodSeconds": 14400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6719934,
-        "latestOutputIndex": 18258,
-        "nextBlockNumber": 6719935,
-        "nextOutputIndex": 18259,
+        "latestBlockNumber": 7045182,
+        "latestOutputIndex": 19302,
+        "nextBlockNumber": 7045183,
+        "nextOutputIndex": 19303,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -622,7 +626,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1146,7 +1150,7 @@
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
-    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/OptimismPortal_zircuit": "0x6eee351872c977a3e6da44161da5cd9d7ee870df03d9b7053780ae3b30acb89b",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

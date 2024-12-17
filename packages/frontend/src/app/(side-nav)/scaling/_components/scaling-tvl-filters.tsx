@@ -1,16 +1,14 @@
 'use client'
 
-import { uniq } from 'lodash'
 import { Checkbox } from '~/components/core/checkbox'
-import { TableFilter } from '~/components/table/filters/table-filter'
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { featureFlags } from '~/consts/feature-flags'
+import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
-import { BaseScalingFilters } from './base-scaling-filters'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
-import { useScalingFilterValues } from './scaling-filter-context'
+import { ScalingFilters } from './scaling-filters'
 
 interface Props {
-  items: CommonScalingEntry[]
+  items: FilterableScalingEntry[]
   className?: string
   showRollupsOnly?: boolean
 }
@@ -22,25 +20,6 @@ export function ScalingTvlFilters({
 }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
-  const state = useScalingFilterValues()
-
-  const hostChainOptions = uniq(
-    items.map((item) => item.hostChain ?? 'Ethereum'),
-  )
-    .sort()
-    .map((value) => ({
-      label: value,
-      value,
-    }))
-
-  const hostChainFilter = (
-    <TableFilter
-      title="Host Chain"
-      options={hostChainOptions}
-      value={state.hostChain}
-      onValueChange={(value) => state.set({ hostChain: value })}
-    />
-  )
 
   return (
     <div
@@ -49,18 +28,20 @@ export function ScalingTvlFilters({
         className,
       )}
     >
-      <BaseScalingFilters
+      <ScalingFilters
         items={items}
-        additionalFilters={hostChainFilter}
-        showRollupsOnly={showRollupsOnly}
+        showRollupsFilter={showRollupsOnly}
+        showHostChainFilter
       />
-      <Checkbox
-        checked={excludeAssociatedTokens}
-        onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
-        className="max-md:ml-4"
-      >
-        Exclude associated tokens
-      </Checkbox>
+      {!featureFlags.showOthers && (
+        <Checkbox
+          checked={excludeAssociatedTokens}
+          onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
+          className="max-md:ml-4"
+        >
+          Exclude associated tokens
+        </Checkbox>
+      )}
     </div>
   )
 }

@@ -58,6 +58,7 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { mergeBadges } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
@@ -94,9 +95,11 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
+  additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -154,10 +157,16 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 
 function opStackCommon(
   templateVars: OpStackConfigCommon,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+  const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
+  const discoveryDrivenSections = templateVars.discoveryDrivenData
+    ? generateDiscoveryDrivenSections(
+        templateVars.discovery,
+        nativeContractRisks,
+        templateVars.additionalDiscoveries,
+      )
+    : undefined
+
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
@@ -205,6 +214,7 @@ function opStackCommon(
   }
 
   return {
+    isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
@@ -342,33 +352,31 @@ function opStackCommon(
         },
       ],
     },
-    permissions:
-      templateVars.discoveryDrivenData === true
-        ? templateVars.discovery.getDiscoveredPermissions()
-        : [
-            ...templateVars.discovery.getOpStackPermissions({
-              batcherHash: 'Sequencer',
-              PROPOSER: 'Proposer',
-              GUARDIAN: 'Guardian',
-              CHALLENGER: 'Challenger',
-              ...(templateVars.roleOverrides ?? {}),
-            }),
-            ...(templateVars.nonTemplatePermissions ?? []),
+    permissions: discoveryDrivenSections
+      ? discoveryDrivenSections.permissions
+      : [
+          ...templateVars.discovery.getOpStackPermissions({
+            batcherHash: 'Sequencer',
+            PROPOSER: 'Proposer',
+            GUARDIAN: 'Guardian',
+            CHALLENGER: 'Challenger',
+            ...(templateVars.roleOverrides ?? {}),
+          }),
+          ...(templateVars.nonTemplatePermissions ?? []),
+        ],
+    nativePermissions: discoveryDrivenSections
+      ? discoveryDrivenSections.nativePermissions
+      : templateVars.nonTemplateNativePermissions,
+    contracts: discoveryDrivenSections
+      ? discoveryDrivenSections.contracts
+      : {
+          addresses: [
+            ...templateVars.discovery.getOpStackContractDetails(upgradeability),
+            ...(templateVars.nonTemplateContracts ?? []),
           ],
-    nativePermissions: templateVars.nonTemplateNativePermissions,
-    contracts: {
-      addresses:
-        templateVars.discoveryDrivenData === true
-          ? templateVars.discovery.getDiscoveredContracts()
-          : [
-              ...templateVars.discovery.getOpStackContractDetails(
-                upgradeability,
-              ),
-              ...(templateVars.nonTemplateContracts ?? []),
-            ],
-      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-      nativeAddresses: templateVars.nonTemplateNativeContracts,
-    },
+          risks: nativeContractRisks,
+          nativeAddresses: templateVars.nonTemplateNativeContracts,
+        },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),
@@ -627,8 +635,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           },
         ],
       },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     },
     stage:
       templateVars.stage === undefined
@@ -769,10 +775,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
     return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,

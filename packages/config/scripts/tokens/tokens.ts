@@ -1,9 +1,8 @@
-import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
+import { Logger, getEnv } from '@l2beat/backend-tools'
 import {
   CoinListPlatformEntry,
   CoingeckoClient,
-  HttpClient2,
-  RetryHandler,
+  HttpClient,
 } from '@l2beat/shared'
 import {
   AssetId,
@@ -171,13 +170,13 @@ async function main() {
 function getCoingeckoClient() {
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const http = new HttpClient2()
-  const rateLimiter = RateLimiter.COINGECKO(coingeckoApiKey)
+  const http = new HttpClient()
   const coingeckoClient = new CoingeckoClient({
     http,
-    rateLimiter,
+    retryStrategy: 'SCRIPT',
+    callsPerMinute: coingeckoApiKey ? 400 : 10,
+    sourceName: 'coingeckoAPI',
     apiKey: coingeckoApiKey,
-    retryHandler: RetryHandler.SCRIPT,
     logger: Logger.WARN,
   })
   return coingeckoClient

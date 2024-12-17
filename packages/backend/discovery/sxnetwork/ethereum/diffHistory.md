@@ -1,3 +1,159 @@
+Generated with discovered.json: 0xa0cbd576d49f5d8fede952bead51c254a76cdaaf
+
+# Diff at Mon, 09 Dec 2024 14:39:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02974be0caac873bba9178e618086aa67aaf0b90 block: 21285828
+- current block number: 21365599
+
+## Description
+
+Replace Upgrader EOA with Gelato Multisig.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.6:
+-        {"permission":"validate","target":"0x9C56265ef2989138d264b30fBbA2043902daBdf8","via":[{"address":"0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]}
+      issuedPermissions.5:
+-        {"permission":"validate","target":"0x9C56265ef2989138d264b30fBbA2043902daBdf8","via":[]}
+      issuedPermissions.4.permission:
+-        "upgrade"
++        "validate"
+      issuedPermissions.4.target:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
+      issuedPermissions.4.via.0.address:
+-        "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"
++        "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
+      issuedPermissions.4.via.0.description:
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "validate"
+      issuedPermissions.3.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
+      issuedPermissions.3.via.0:
+-        {"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0}
+      issuedPermissions.2.permission:
+-        "fastconfirm"
++        "upgrade"
+      issuedPermissions.2.target:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.2.via.0.address:
+-        "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
++        "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"
+      issuedPermissions.2.via.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.1.permission:
+-        "configure"
++        "fastconfirm"
+      issuedPermissions.1.target:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
+      issuedPermissions.1.via.0.address:
+-        "0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"
++        "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
+      issuedPermissions.1.via.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.0.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.executors.1:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.executors.0:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x73cfa0F6ae141212115657ad91Ad918E5d34d882) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract ERC20Bridge (0xa104C0426e95a5538e89131DbB4163d230C35f86) {
+    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract ERC20Outbox (0xB360b2f57c645E847148d7C479b7468AbF6F707d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.2:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      issuedPermissions.1.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract ERC20Inbox (0xEa83E8907C89Bc0D9517632f0ba081972E328631) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a","delay":0},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xa9d1C9D877F235C21d803e4a0b81F8ca6C4c83AC"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
 Generated with discovered.json: 0xe2b7ebca757717a1a23ddc8e17f38f8d1756dc28
 
 # Diff at Thu, 05 Dec 2024 11:52:28 GMT:

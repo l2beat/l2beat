@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -30,6 +31,7 @@ export const blast: Layer2 = opStackL2({
       content: 'The TVL does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   },
   nonTemplateTechnology: {
     exitMechanisms: [

@@ -20,14 +20,12 @@
     "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault"
   },
   "sharedModules": {
-    "EigenLayerOperationsMultisig": "shared-eigenlayer",
-    "EigenLayerExecutorMultisig": "shared-eigenlayer",
-    "EigenLayerCommunityMultisig": "shared-eigenlayer",
-    "EigenPodManager": "shared-eigenlayer",
-    "DepositContract": "shared-eigenlayer",
-    "EigenLayerBeaconOracle": "shared-eigenlayer"
+    "bloppi": "shared-eigenlayer"
   },
   "overrides": {
+    "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {
+      "extends": "eigenlayer/Strategy" // temporary manual override until the proxy is verified and the shape fits
+    },
     "EigenDAServiceManager": {
       "ignoreRelatives": ["getRestakeableStrategies"], // strategies are already tracked in eigenLayer
       "ignoreInWatchMode": ["batchId", "taskNumber"],

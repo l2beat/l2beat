@@ -1,6 +1,12 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
+import { Badge } from '~/components/badge/badge'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/tooltip'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
@@ -23,7 +29,7 @@ export const scalingSummaryColumns = [
     cell: (ctx) => (
       <PizzaRosetteCell
         values={ctx.row.original.risks}
-        isUnderReview={ctx.row.original.underReviewStatus === 'config'}
+        isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
       />
     ),
     meta: {
@@ -137,63 +143,32 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
 ]
 
 export const scalingSummaryOthersColumns = [
-  ...scalingSummaryColumns.slice(0, 5),
+  ...scalingSummaryColumns.slice(0, 4),
   columnHelper.display({
-    id: 'proposer',
-    header: 'Proposer',
+    id: 'why-am-i-here',
+    header: 'Why am I here?',
     cell: (ctx) => {
-      const value = ctx.row.original.mainPermissions?.proposer
-      if (!value) {
+      const reasons = ctx.row.original.reasonsForBeingOther
+      if (!reasons) {
         return <NoDataBadge />
       }
-
       return (
-        <TwoRowCell>
-          <TwoRowCell.First>{value.value}</TwoRowCell.First>
-          {value.secondLine && (
-            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
+        <div className="flex gap-1">
+          {reasons.map((reason) => (
+            <Tooltip key={reason.label}>
+              <TooltipTrigger>
+                <Badge type="error" className="uppercase">
+                  {reason.label}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{reason.description}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
+        </div>
       )
     },
   }),
-  columnHelper.display({
-    id: 'challenger',
-    header: 'Challenger',
-    cell: (ctx) => {
-      const value = ctx.row.original.mainPermissions?.challenger
-      if (!value) {
-        return <NoDataBadge />
-      }
-
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>{value.value}</TwoRowCell.First>
-          {value.secondLine && (
-            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
-  }),
-  columnHelper.display({
-    id: 'upgrader',
-    header: 'Upgrader',
-    cell: (ctx) => {
-      const value = ctx.row.original.mainPermissions?.upgrader
-      if (!value) {
-        return <NoDataBadge />
-      }
-
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>{value.value}</TwoRowCell.First>
-          {value.secondLine && (
-            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
-  }),
-  ...scalingSummaryColumns.slice(6),
+  ...scalingSummaryValidiumAndOptimiumsColumns.slice(5),
 ]
