@@ -8,6 +8,7 @@ import { utils } from 'ethers'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -78,6 +79,7 @@ export const lightlink: Layer2 = {
     description:
       'LightLink is a sidechain that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
     category: 'Other',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
