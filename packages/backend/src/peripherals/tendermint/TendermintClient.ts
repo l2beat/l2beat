@@ -1,6 +1,5 @@
 import { RateLimiter } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
 import { TendermintValidatorsResponseBodySchema } from './schemas'
 
 interface TendermintClientOpts {
@@ -44,11 +43,6 @@ export class TendermintClient {
         per_page: perPage.toString(),
       }).toString()}`,
       {},
-    )
-
-    assert(
-      response.ok,
-      `Tendermint getValidators request failed with status: ${response.status}`,
     )
 
     return TendermintValidatorsResponseBodySchema.parse(response).result
