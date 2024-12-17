@@ -100,17 +100,32 @@ export const FILL_STYLES = {
   'light-yellow': () => ({ light: '#FFA336', dark: '#FFDD28' }),
   purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
   blue: () => ({ light: '#2670FF', dark: '#0074FD' }),
-  'blue gradient': (ctx: CanvasRenderingContext2D) => {
-    const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
-    gradient.addColorStop(0, 'rgba(42, 91, 216, 0.3)')
-    gradient.addColorStop(1, 'rgba(83, 162, 255, 0.3)')
+  'blue gradient': (ctx: CanvasRenderingContext2D, minY: number) => {
+    const gradient = ctx.createLinearGradient(0, minY, 0, ctx.canvas.height)
+    gradient.addColorStop(0, 'rgba(28, 103, 224, 1)')
+    gradient.addColorStop(0.5, 'rgba(28, 103, 224, 0.4)')
+    gradient.addColorStop(1, 'rgba(28, 103, 224, 0)')
     return { light: gradient, dark: gradient }
   },
-  'signature gradient': (ctx: CanvasRenderingContext2D) => {
-    const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
-    gradient.addColorStop(0, 'rgba(126, 65, 204, 0.4)')
-    gradient.addColorStop(0.5, 'rgba(216, 61, 164, 0.4)')
-    gradient.addColorStop(1, 'rgba(238, 44, 1, 0.4)')
+  'signature gradient': (ctx: CanvasRenderingContext2D, minY: number) => {
+    const gradient = ctx.createLinearGradient(0, minY, 0, ctx.canvas.height)
+    gradient.addColorStop(0, 'rgba(255, 95, 251, 1)')
+    gradient.addColorStop(0.5, 'rgba(255, 95, 251, 0.4)')
+    gradient.addColorStop(1, 'rgba(255, 95, 251, 0)')
+    return { light: gradient, dark: gradient }
+  },
+  'cyan gradient': (ctx: CanvasRenderingContext2D, minY: number) => {
+    const gradient = ctx.createLinearGradient(0, minY, 0, ctx.canvas.height)
+    gradient.addColorStop(0, 'rgba(58, 197, 225, 1)')
+    gradient.addColorStop(0.5, 'rgba(58, 197, 225, 0.4)')
+    gradient.addColorStop(1, 'rgba(58, 197, 225, 0)')
+    return { light: gradient, dark: gradient }
+  },
+  'yellow gradient': (ctx: CanvasRenderingContext2D, minY: number) => {
+    const gradient = ctx.createLinearGradient(0, minY, 0, ctx.canvas.height)
+    gradient.addColorStop(0, 'rgba(223, 207, 67, 1)')
+    gradient.addColorStop(0.5, 'rgba(223, 207, 67, 0.4)')
+    gradient.addColorStop(1, 'rgba(223, 207, 67, 0)')
     return { light: gradient, dark: gradient }
   },
 }
@@ -130,20 +145,19 @@ export const LINE_STYLES = {
   'signature gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(126, 65, 204')
-    gradient.addColorStop(0.5, 'rgba(216, 61, 164')
-    gradient.addColorStop(1, 'rgba(238, 44, 1')
+    gradient.addColorStop(1, 'rgba(239, 67, 179')
     return { light: gradient, dark: gradient }
   },
   'cyan gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(54, 163, 163')
-    gradient.addColorStop(1, 'rgba(17, 130, 164')
+    gradient.addColorStop(1, 'rgba(28, 139, 164')
     return { light: gradient, dark: gradient }
   },
   'yellow gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
-    gradient.addColorStop(0, 'rgba(204, 158, 65')
-    gradient.addColorStop(1, 'rgba(163, 184, 46')
+    gradient.addColorStop(0, 'rgba(171, 128, 0')
+    gradient.addColorStop(1, 'rgba(184, 145, 46')
     return { light: gradient, dark: gradient }
   },
 }

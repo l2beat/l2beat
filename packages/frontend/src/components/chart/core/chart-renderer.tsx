@@ -41,7 +41,7 @@ export function ChartRenderer() {
       for (const { style, paths } of renderPaths) {
         if (style.fill) {
           for (const path of paths) {
-            ctx.fillStyle = getFillStyle(ctx, style.fill, theme)
+            ctx.fillStyle = getFillStyle(ctx, style.fill, theme, path.minY)
             const fillPath = new Path2D(path.path)
             fillPath.lineTo(path.lastX, chart.height)
             fillPath.lineTo(path.startX ?? 0, chart.height)

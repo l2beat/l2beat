@@ -75,14 +75,17 @@ export function useRecategorizedTvlChartRenderParams({
     () => [
       {
         line: 'signature gradient',
+        fill: 'signature gradient',
         point: 'pinkCircle',
       },
       {
         line: 'cyan gradient',
+        fill: 'cyan gradient',
         point: 'cyanCircle',
       },
       {
         line: 'yellow gradient',
+        fill: 'yellow gradient',
         point: 'yellowCircle',
       },
     ],
