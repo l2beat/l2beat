@@ -135,8 +135,19 @@ export const sophon: Layer2 = zkStackL2({
       ],
       description: 'Can set the conversion factor for SOPH deposits to Sophon.',
     },
+    ...discovery.getMultisigPermission(
+      'SophonUSDCEscrowMultisig',
+      'Can upgrade the implementation of the external USDC escrow and potentially steal all funds locked therein.',
+    ),
   ],
   milestones: [
+    {
+      name: 'Mainnet public launch',
+      link: 'https://x.com/sophon/status/1861771965284896996',
+      date: '2024-12-18T00:00:00Z',
+      description: 'Sophon Mainnet is now open for all users.',
+      type: 'general',
+    },
     {
       name: 'Mainnet private launch',
       link: 'https://blog.sophon.xyz/the-road-to-mainnet/',

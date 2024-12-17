@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7fb64dd711b2c392a695e254a8426f9212225be3
+Generated with discovered.json: 0x71f166a5c91fcd46b0fec02e380196fac8467e70
 
-# Diff at Tue, 17 Dec 2024 09:49:04 GMT:
+# Diff at Tue, 17 Dec 2024 09:58:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21421451
+- current block number: 21421507
 
 ## Description
 
@@ -19,7 +19,7 @@ Initial discovery of a ZK stack Validium sharing the standard implementations an
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x478a303CCe3c62CE52A8D66885b9D04F2733F3b6)
+    contract SophonUSDCEscrowMultisig (0x478a303CCe3c62CE52A8D66885b9D04F2733F3b6)
     +++ description: None
 ```
 

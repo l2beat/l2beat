@@ -1,8 +1,8 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 21421451,
-  "configHash": "0xaed3d8f77e979ba5b6459d63c6b8b3767077e802c1d0bbf26ab1b7997f9144b8",
+  "blockNumber": 21421507,
+  "configHash": "0x63482a33516812a44ebfcf64dc6b72fe94d8f20704029ff4af4cc7ca3812b439",
   "contracts": [
     {
       "name": "SophonZkEvm",
@@ -199,7 +199,7 @@
       "derivedName": "DiamondProxy"
     },
     {
-      "name": "GnosisSafe",
+      "name": "SophonUSDCEscrowMultisig",
       "address": "0x478a303CCe3c62CE52A8D66885b9D04F2733F3b6",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -231,7 +231,8 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 104,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Verifier",
@@ -317,11 +318,6 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x299174d47c243B5381c6062aBEFbfF915B601D85",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
           "target": "0x478a303CCe3c62CE52A8D66885b9D04F2733F3b6",
           "via": []
         }
@@ -353,15 +349,7 @@
     { "address": "0x02266d7404AF55F39605Ea1D2b6bfff6DF74157d" },
     { "address": "0x14574dfC6B7aF658c5033BA95673864947956521" },
     { "address": "0x20719Abd2E63518e68D30a295388cAd6B542dCEf" },
-    {
-      "address": "0x299174d47c243B5381c6062aBEFbfF915B601D85",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
-        }
-      ]
-    },
+    { "address": "0x299174d47c243B5381c6062aBEFbfF915B601D85" },
     { "address": "0x355458F230cBD78674e54BCA0Dd2B36017cF9b41" },
     { "address": "0x3b6036d410cA018661324766680674921a8b2d89" },
     { "address": "0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336" },
@@ -657,6 +645,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce",
-    "shared-zk-stack/L1USDCBridge": "0x67190369bbfbdc3e0228bec5252aeff3840e6c28c05b8bb294c5ebc57fe27f47"
+    "shared-zk-stack/L1USDCBridge": "0x399ee312da0d9adfcb26ebd7d25a527f0db9c2af4890258d5b3a4d04d1baf055"
   }
 }

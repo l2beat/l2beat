@@ -41,6 +41,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'deversifi',
   'scroll',
   'silicon',
+  'sophon',
   'sorare',
   'starknet',
   'taiko',
