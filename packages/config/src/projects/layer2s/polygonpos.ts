@@ -221,10 +221,6 @@ export const polygonpos: Layer2 = {
         description:
           'Maintains the addresses of the contracts used in the system.',
       }),
-      discovery.getContractDetails(
-        'StateSender',
-        'Smart contract containing the logic for syncing the state of registered bridges to the other chain.',
-      ),
       discovery.getContractDetails('DepositManager', {
         description:
           'Contract to deposit and escrow ETH, ERC20 or ERC721 tokens. Currently only used for POL.',
