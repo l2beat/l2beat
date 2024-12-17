@@ -13,9 +13,7 @@ const Command = ({
   ref,
   className,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive> & {
-  sidebar?: boolean
-}) => (
+}: React.ComponentProps<typeof CommandPrimitive>) => (
   <CommandPrimitive
     ref={ref}
     className={cn(
