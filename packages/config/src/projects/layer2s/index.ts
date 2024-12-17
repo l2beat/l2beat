@@ -134,6 +134,7 @@ import { shape } from './shape'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
 import { socialnetwork } from './socialnetwork'
+import { solo } from './solo'
 import { soneium } from './soneium'
 import { soon } from './soon'
 import { sophon } from './sophon'
@@ -319,6 +320,7 @@ export const layer2s: Layer2[] = [
   sophon,
   soneium,
   socialnetwork,
+  solo,
   soon,
   sorare,
   specular,
