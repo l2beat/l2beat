@@ -62,9 +62,9 @@ export function RegularDaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="border-gray-200 dark:border-zinc-700 max-md:border-b max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="border-divider max-md:border-b max-md:bg-surface-primary max-md:px-4"
     >
-      <header className="space-y-4 pt-6 max-md:bg-gray-100 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
+      <header className="space-y-4 pt-6 max-md:pb-4 md:space-y-3">
         <ProjectHeader title={project.name} slug={project.slug} />
       </header>
       <div className="flex w-full gap-10">
@@ -132,7 +132,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                         <div
                           key={bridge.id}
                           className={cn(
-                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider px-4 py-2 md:rounded-none md:border-b',
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider px-4 py-2 max-md:bg-surface-secondary md:rounded-none md:border-b',
                             index === project.bridges.length - 1 &&
                               'md:border-b-0',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)

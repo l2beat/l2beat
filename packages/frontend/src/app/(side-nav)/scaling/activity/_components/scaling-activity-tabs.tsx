@@ -70,7 +70,7 @@ export function ScalingActivityTabs({
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
+          <DirectoryTabsContent value="rollups" className="primary-card pt-5">
             {featureFlags.showOthers && (
               <>
                 <ActivityChart milestones={milestones} entries={rollups} />
@@ -83,7 +83,7 @@ export function ScalingActivityTabs({
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent
             value="validiums-and-optimiums"
-            className="main-page-card pt-5"
+            className="primary-card pt-5"
           >
             {featureFlags.showOthers && (
               <>
@@ -103,10 +103,7 @@ export function ScalingActivityTabs({
         {/* Greater than one because we always have the Ethereum entry */}
         {filteredEntries.others.length > 1 && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent
-              value="others"
-              className="main-page-card pt-5"
-            >
+            <DirectoryTabsContent value="others" className="primary-card pt-5">
               {featureFlags.showOthers && (
                 <>
                   <ActivityChart

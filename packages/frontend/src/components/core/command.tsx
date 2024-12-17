@@ -19,7 +19,7 @@ const Command = ({
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md bg-surface-secondary',
+      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md bg-surface-primary primary-card:bg-surface-secondary',
       className,
     )}
     {...props}
@@ -165,7 +165,7 @@ const CommandItem = ({
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-surface-tertiary data-[disabled=true]:opacity-50",
+      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-surface-secondary data-[disabled=true]:opacity-50 primary-card:data-[selected=true]:bg-surface-tertiary',
       className,
     )}
     {...props}

@@ -20,7 +20,7 @@ export function MobileProjectLinks({
         <AccordionTrigger className="py-4">
           <span className="font-bold">
             Links:{' '}
-            <span className="ml-2 font-medium text-gray-600">
+            <span className="ml-2 font-medium text-secondary">
               Website, Docs, etc.
             </span>
           </span>

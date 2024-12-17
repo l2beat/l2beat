@@ -63,7 +63,7 @@ export function ScalingTvlTabs(props: Props) {
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
+          <DirectoryTabsContent value="rollups" className="primary-card pt-5">
             {featureFlags.showOthers && (
               <>
                 <ScalingStackedTvlChart
@@ -79,7 +79,7 @@ export function ScalingTvlTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent
             value="validiums-and-optimiums"
-            className="main-page-card pt-5"
+            className="primary-card pt-5"
           >
             {featureFlags.showOthers && (
               <>
@@ -95,10 +95,7 @@ export function ScalingTvlTabs(props: Props) {
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent
-              value="others"
-              className="main-page-card pt-5"
-            >
+            <DirectoryTabsContent value="others" className="primary-card pt-5">
               {featureFlags.showOthers && (
                 <>
                   <ScalingStackedTvlChart
