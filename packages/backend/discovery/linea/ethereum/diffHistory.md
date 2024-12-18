@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x969b049a961073fe1ebe133ebcb7f361c31833c9
+Generated with discovered.json: 0xcfe84496acf93e755a73a1d39ec3685dfc3972f1
 
-# Diff at Wed, 18 Dec 2024 13:40:00 GMT:
+# Diff at Wed, 18 Dec 2024 15:04:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21078909
-- current block number: 21429772
+- comparing to: main@ba3abe5bc7194f8b3495f894c1b7e7b769bcdbb1 block: 21078909
+- current block number: 21430072
 
 ## Description
 
@@ -197,6 +197,16 @@ discovery. Values are for block 21078909 (main branch discovery), not current.
       name:
 -        "ERC20Bridge"
 +        "TokenBridge"
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","delay":0},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574","delay":0},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.via.1:
++        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
       values.accessControl:
 +        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
       template:
@@ -207,13 +217,28 @@ discovery. Values are for block 21078909 (main branch discovery), not current.
 ```
 
 ```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "AdminMultisig"
++        "LineaAdminMultisig"
+      receivedPermissions:
++        [{"permission":"configure","target":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions in the Timelock."},{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+    }
+```
+
+```diff
     contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
     +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
       name:
 -        "zkEVM"
 +        "LineaRollup"
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","delay":0},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574","delay":0},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
       issuedPermissions.2:
-+        {"permission":"upgrade","target":"0xd6B95c960779c72B8C6752119849318E5d550574","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
++        {"permission":"upgrade","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574","delay":0},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
       issuedPermissions.1:
 +        {"permission":"operateLinea","target":"0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754","via":[]}
       issuedPermissions.0.permission:
@@ -288,14 +313,34 @@ discovery. Values are for block 21078909 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
-    +++ description: the Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A Timelock with currently 0s minimum delay.
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}]
+      values.Canceller:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.delayFormatted:
++        "0s"
+      values.Executor:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.Proposer:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
       template:
-+        "gnosisSafeModules/Roles"
-      displayName:
-+        "RolesModule"
++        "linea/Timelock"
       description:
-+        "the Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe."
++        "A Timelock with currently 0s minimum delay."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","via":[]},{"permission":"configure","target":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","delay":0,"description":"propose transactions in the Timelock."}]}]
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      description:
++        "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe."
+      receivedPermissions:
++        [{"permission":"configure","target":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions in the Timelock.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
     }
 ```
 
