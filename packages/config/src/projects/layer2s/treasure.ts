@@ -25,6 +25,11 @@ export const treasure: Layer2 = zkStackL2({
   display: {
     name: 'Treasure',
     slug: 'treasure',
+    tvlWarning: {
+      content:
+        'The total TVL includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. The L2 escrow of these tokens [can be found here](https://treasurescan.io/address/0x24DF29723B54DE65f5fbC66a610053e90534631d). L2BEAT is working on a fix.',
+      sentiment: 'warning',
+    },
     description:
       'Treasure is a gaming-specific L2 built on ZKsync, the Elastic Network. Treasure offers an end-to-end tech stack for developers and consumer apps to build the next generation of gaming.',
     links: {
