@@ -9,4 +9,5 @@ export const externalLinks = {
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
+  recategorisationArticle: 'https://tobeadded.com',
 } as const

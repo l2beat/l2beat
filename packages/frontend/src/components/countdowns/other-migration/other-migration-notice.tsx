@@ -1,6 +1,8 @@
 'use client'
 import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
+import { OutLink } from '~/components/out-link'
+import { externalLinks } from '~/consts/external-links'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { CloseIcon } from '~/icons/close'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
@@ -42,6 +44,10 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
           </div>
         ))}
       </div>
+      <p className="mt-2.5 text-base font-bold">
+        Learn more about the recategorisation{' '}
+        <OutLink href={externalLinks.recategorisationArticle}>here</OutLink>.
+      </p>
     </div>
   )
 }
