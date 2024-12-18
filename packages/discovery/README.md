@@ -746,7 +746,7 @@ Logic:
 
 ### Constructor args handler
 
-Creates a new field in the result with the value provioded.
+Creates a new field in the result with the value provided.
 
 **Parameters:**
 
@@ -768,7 +768,7 @@ Creates a new field in the result with the value provioded.
 
 ### Hardcoded handler
 
-Creates a new field in the result with the value provioded.
+Creates a new field in the result with the value provided.
 
 **Parameters:**
 
