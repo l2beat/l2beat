@@ -20,7 +20,7 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
         <Countdown expiresAt={expiresAt} size={isMobile ? 'sm' : 'md'} />
       </div>
       <p className="mt-4 text-base font-medium">
-        The project will be classifed as &quot;Other&quot; due to its specific
+        The project will be classified as &quot;Other&quot; due to its specific
         risks that set it apart from the standard classifications.
       </p>
       <p className="mb-4 mt-6 text-lg font-bold">
