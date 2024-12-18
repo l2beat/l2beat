@@ -1,10 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient2, RpcClient } from '@l2beat/shared'
+import { HttpClient, RpcClient } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { DiscoveryChainConfig } from '../../config/types'
-import { HttpClient } from '../../utils/HttpClient'
 import { getExplorerClient } from '../../utils/IEtherscanClient'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import { HighLevelProvider } from './HighLevelProvider'
@@ -29,10 +28,9 @@ export class AllProviders {
 
   constructor(
     chainConfigs: DiscoveryChainConfig[],
-    httpClient: HttpClient,
+    http: HttpClient,
     private discoveryCache: DiscoveryCache,
   ) {
-    const httpClient2 = new HttpClient2()
     for (const config of chainConfigs) {
       const baseProvider = new providers.StaticJsonRpcProvider(
         config.rpcUrl,
@@ -46,7 +44,7 @@ export class AllProviders {
               config.chainId,
             )
 
-      const etherscanClient = getExplorerClient(httpClient, config.explorer)
+      const etherscanClient = getExplorerClient(http, config.explorer)
       let blobClient: BlobClient | undefined
 
       const ethereumRpc = new RpcClient({
@@ -55,7 +53,7 @@ export class AllProviders {
         callsPerMinute: 60,
         sourceName: 'ethereum',
         logger: Logger.SILENT,
-        http: httpClient2,
+        http,
       })
 
       if (config.beaconApiUrl) {
@@ -66,7 +64,7 @@ export class AllProviders {
           retryStrategy: 'SCRIPT',
           sourceName: 'beaconAPI',
           callsPerMinute: 60,
-          http: httpClient2,
+          http,
         })
       }
 

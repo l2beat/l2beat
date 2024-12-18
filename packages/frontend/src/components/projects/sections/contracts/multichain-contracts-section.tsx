@@ -77,9 +77,9 @@ export function MultiChainContractsSection(
                 {chainName}:
               </h3>
               <div className="my-4">
-                {unchangedContracts.map((contract) => (
+                {unchangedContracts.map((contract, i) => (
                   <ContractEntry
-                    key={`${contract.name}-${contract.chain}`}
+                    key={`${contract.name}-${contract.chain}-${i}`}
                     contract={contract}
                     className="my-4"
                     type="contract"

@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 21285509,
-  "configHash": "0x24c82096106b48a634c4af86b3ce296831d3c6d0bb74b597fb00a2d3686ebfe9",
+  "blockNumber": 21388078,
+  "configHash": "0xfb6bc994436e70de3fffa0c12685cc2eccbf57bb251ab2757b2bfee894348a24",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -27,7 +27,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 962660,
+        "getLastCompletedSnapshotId": 963348,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -37,7 +37,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0x90eebf114ae0616b28e3ec3b87456159ce0ef3451f2fc4507bdae651479e4133",
+        "outboundRoot": "0x2e5977a453dcc1960c70c405a3afdd160edee0b8b51d1497f1574bfc3f74b716",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -71,7 +71,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "122179508376968153490732495",
+        "totalSupply": "122306299377179413814361032",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -236,7 +236,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"],
         "multisigThreshold": "7 of 9 (78%)",
-        "nonce": 71,
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -253,7 +253,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1732788563,
+        "getCurrentTime": 1734026411,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -309,7 +309,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1732784147,
+        "lastSavedAggregateRootTimestamp": 1734024347,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -570,7 +570,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 18,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -632,7 +632,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 750,
+        "nonce": 763,
         "VERSION": "1.3.0"
       }
     },
@@ -920,7 +920,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 68715,
+        "nonce": 68806,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -1145,7 +1145,6 @@
         "keep3r": "0xeb02addCfD8B773A5FFA6B9d1FE99c566f8c44CC",
         "lastFinalizeAt": 0,
         "lastPropagateAt": 1724939759,
-        "lastProposeAggregateRootAt": 1732782143,
         "owner": "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378",
         "propagateCooldown": 1800,
         "proposeAggregateRootCooldown": 1800,
@@ -1309,27 +1308,25 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
           "0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0xebD4919C075417a86F19713dADe101852867A04F",
           "0x5aA748326f03C651749E7998D88647e59Ee386Bc",
-          "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
-          "0x6fd2072B961aCC9bd6e188f957a0FB1CEb8632dc",
           "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e",
-          "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "0x40b46a6C2DEFdCFC1b6Cfb667CD0c024F1FfBBA9",
+          "0xf0c1d7d38972c117F899Ea190afd6FeEee04E5fd",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895",
           "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682",
           "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
         ],
-        "$threshold": 6,
+        "$threshold": 5,
         "domainSeparator": "0x51fa071b746fb575ec1d78e1903334d2c675f19b8d2d07b7f66038bef3686401",
         "getChainId": 1,
         "GnosisSafe_modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
-        "multisigThreshold": "6 of 14 (43%)",
-        "nonce": 206,
+        "multisigThreshold": "5 of 12 (42%)",
+        "nonce": 210,
         "VERSION": "1.3.0"
       }
     },
@@ -1468,7 +1465,6 @@
     { "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5" },
     { "address": "0x3d7dF98257E5CEe5f032fd06a0aA510F89A19A2e" },
     { "address": "0x3e11aa01A7eFdD428487ae75F5F4Fe0e5CeCeF06" },
-    { "address": "0x40b46a6C2DEFdCFC1b6Cfb667CD0c024F1FfBBA9" },
     {
       "name": "Relayer8",
       "address": "0x43728A95386D64384C76Afd416Dcc8118869BA6c"
@@ -1492,7 +1488,6 @@
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
     { "address": "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682" },
     { "address": "0x6B44Dba00e92DD035976607CBF62bf1CC6320EC5" },
-    { "address": "0x6fd2072B961aCC9bd6e188f957a0FB1CEb8632dc" },
     { "address": "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598" },
     {
       "address": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
@@ -1522,7 +1517,7 @@
     { "address": "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f" },
     { "address": "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895" },
     { "address": "0xade09131C6f43fe22C2CbABb759636C43cFc181e" },
-    { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     { "address": "0xb71C02f99c42424257745827F1C2beBD7Fa1e936" },
     { "address": "0xBa11aA59645a56031fedBcCF60D4f111534f2502" },
     { "address": "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8" },
@@ -1530,7 +1525,6 @@
     { "address": "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa" },
     { "address": "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef" },
     { "address": "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1" },
-    { "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849" },
     { "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d" },
     { "address": "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b" },
     { "address": "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B" },
@@ -1544,6 +1538,7 @@
     { "address": "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c" },
     { "address": "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e" },
     { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
+    { "address": "0xf0c1d7d38972c117F899Ea190afd6FeEee04E5fd" },
     { "address": "0xF26c772C0fF3a6036bDdAbDAbA22cf65ECa9F97c" },
     { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" },
     { "address": "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754" },
@@ -3477,7 +3472,7 @@
   },
   "usedTemplates": {
     "amarok/Relayer": "0x63e51799ac3fb7cd705bce6f217f47d287e3479046939df47e1119cf0fe070af",
-    "amarok/RelayerProxyHub": "0xe8ceaa47d08e7af86c9c5e43d7f44598b77a5ab34ec473747447481883e2d039",
+    "amarok/RelayerProxyHub": "0x02ec2a805c99a0858133d5e1237846ac6f72cc06deb9b2371e9bb80d3110144c",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

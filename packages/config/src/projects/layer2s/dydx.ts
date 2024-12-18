@@ -181,7 +181,6 @@ export const dydx: Layer2 = {
         },
       },
     ],
-    finality: 'coming soon',
   },
   dataAvailability: [
     addSentimentToDataAvailability({
@@ -245,8 +244,6 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.CANONICAL_USDC,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {

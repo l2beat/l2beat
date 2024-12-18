@@ -1,5 +1,5 @@
 import { bridges, layer2s, layer3s } from '@l2beat/config'
-import { type ProjectId } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, sum } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
@@ -18,7 +18,7 @@ export async function getProjectsLatestTvlUsd() {
   return getCachedProjectsLatestTvlUsd()
 }
 
-type ProjectsLatestTvlUsd = Record<ProjectId, number>
+export type ProjectsLatestTvlUsd = Record<ProjectId, number>
 const getCachedProjectsLatestTvlUsd = cache(
   async (): Promise<Record<ProjectId, number>> => {
     const db = getDb()
@@ -39,6 +39,7 @@ const getCachedProjectsLatestTvlUsd = cache(
   ['latestTvlUsd'],
   {
     tags: ['tvl'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

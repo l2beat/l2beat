@@ -6,23 +6,16 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table'
 import { useTable } from '~/hooks/use-table'
-import { type UnderReviewStatus } from '~/utils/project/under-review'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { BasicTable } from './basic-table'
 import { ProjectNameCell } from './cells/project-name-cell'
 import { getCommonProjectColumns } from './utils/common-project-columns/common-project-columns'
 
-interface StorybookEntry {
-  id: ProjectId
-  slug: string
-  isVerified?: boolean
-  redWarning?: string | undefined
-  underReviewStatus?: UnderReviewStatus
-  href?: string
+interface StorybookEntry extends CommonProjectEntry {
   name: string
   data: {
     a: number
     b: number
-    syncStatus?: never
   }
 }
 
@@ -63,6 +56,8 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('arbitrum'),
     slug: 'arbitrum',
     name: 'Arbitrum One',
+    href: undefined,
+    statuses: undefined,
     data: {
       a: 1,
       b: 2,
@@ -72,6 +67,8 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('optimism'),
     slug: 'optimism',
     name: 'Optimism',
+    href: undefined,
+    statuses: undefined,
     data: {
       a: 3,
       b: 4,
@@ -81,7 +78,10 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('base'),
     slug: 'base',
     name: 'Base',
-    redWarning: 'Some red warning',
+    href: undefined,
+    statuses: {
+      redWarning: 'Some red warning',
+    },
     data: {
       a: 5,
       b: 6,
@@ -91,7 +91,10 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('zksync-era'),
     slug: 'zksync-era',
     name: 'zkSync Era',
-    underReviewStatus: 'config',
+    href: undefined,
+    statuses: {
+      underReview: 'config',
+    },
     data: {
       a: 13,
       b: 11,
@@ -101,7 +104,10 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('starknet'),
     slug: 'starknet',
     name: 'Starknet',
-    isVerified: false,
+    href: undefined,
+    statuses: {
+      verificationWarning: true,
+    },
     data: {
       a: 11,
       b: 13,
@@ -111,6 +117,8 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('scroll'),
     slug: 'scroll',
     name: 'Scroll',
+    href: undefined,
+    statuses: undefined,
     data: {
       a: 22,
       b: 3,
@@ -120,7 +128,10 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('linea'),
     slug: 'linea',
     name: 'Linea',
-    underReviewStatus: 'implementation-change',
+    href: undefined,
+    statuses: {
+      underReview: 'config',
+    },
     data: {
       a: 10,
       b: 33,
@@ -130,6 +141,8 @@ const basicTableData: StorybookEntry[] = [
     id: ProjectId('metis'),
     slug: 'metis',
     name: 'Metis',
+    href: undefined,
+    statuses: undefined,
     data: {
       a: 19,
       b: 32,

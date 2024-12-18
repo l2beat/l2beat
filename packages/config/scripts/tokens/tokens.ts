@@ -2,7 +2,7 @@ import { Logger, getEnv } from '@l2beat/backend-tools'
 import {
   CoinListPlatformEntry,
   CoingeckoClient,
-  HttpClient2,
+  HttpClient,
 } from '@l2beat/shared'
 import {
   AssetId,
@@ -170,7 +170,7 @@ async function main() {
 function getCoingeckoClient() {
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const http = new HttpClient2()
+  const http = new HttpClient()
   const coingeckoClient = new CoingeckoClient({
     http,
     retryStrategy: 'SCRIPT',

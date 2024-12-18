@@ -1,6 +1,7 @@
 'use client'
 
 import { Checkbox } from '~/components/core/checkbox'
+import { featureFlags } from '~/consts/feature-flags'
 import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
@@ -32,13 +33,15 @@ export function ScalingTvlFilters({
         showRollupsFilter={showRollupsOnly}
         showHostChainFilter
       />
-      <Checkbox
-        checked={excludeAssociatedTokens}
-        onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
-        className="max-md:ml-4"
-      >
-        Exclude associated tokens
-      </Checkbox>
+      {!featureFlags.showOthers && (
+        <Checkbox
+          checked={excludeAssociatedTokens}
+          onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
+          className="max-md:ml-4"
+        >
+          Exclude associated tokens
+        </Checkbox>
+      )}
     </div>
   )
 }

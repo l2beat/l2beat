@@ -88,9 +88,6 @@ export function ChartRenderer() {
   })
 
   return (
-    <canvas
-      ref={ref}
-      className="absolute bottom-0 left-0 z-20 block size-full"
-    />
+    <canvas ref={ref} className="absolute bottom-0 left-0 block size-full" />
   )
 }

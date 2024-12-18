@@ -12,14 +12,15 @@
     "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
     "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
     "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473",
-    "0x6943A218d58135793F1FE619414eD476C37ad65a",
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
   ],
   "names": {
     "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473": "DaiForeignBridge",
-    "0x166124b75c798Cedf1B43655E9B5284eBd5203DB": "SDaiForeignBridge",
+    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": "SDaiForeignBridge",
     "0x6F6e4785c97885d26466945055d4Ae8931bE6f7a": "GovernorBravoDelegate",
-    "0x6943A218d58135793F1FE619414eD476C37ad65a": "BridgeValidators"
+    "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": "BridgeValidators",
+    "0xBafE01ff935C7305907c33BF824352eE5979B526": "Comptroller",
+    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "GnosisBridgeGovernanceMultisig"
   },
   "overrides": {
     "DaiForeignBridge": {
@@ -28,7 +29,8 @@
         "totalExecutedPerDay",
         "totalSpentPerDay",
         "withinExecutionLimit",
-        "withinLimit"
+        "withinLimit",
+        "getCurrentDay"
       ],
       "fields": {
         "requiredSignatures": {
@@ -42,38 +44,31 @@
       }
     },
     "SDaiForeignBridge": {
-      "ignoreRelatives": ["compToken", "cDaiToken", "sDaiToken", "erc20token"],
+      "proxyType": "Eternal Storage proxy",
+      "ignoreRelatives": [
+        "compToken",
+        "cDaiToken",
+        "sDaiToken",
+        "erc20token",
+        "daiToken"
+      ],
       "ignoreMethods": [
         "totalExecutedPerDay",
         "totalSpentPerDay",
         "withinExecutionLimit",
-        "withinLimit"
+        "withinLimit",
+        "getCurrentDay"
       ],
-      "fields": {
-        "requiredSignatures": {
-          "handler": {
-            "type": "call",
-            "method": "requiredSignatures",
-            "args": [],
-            "expectRevert": true
-          }
-        }
-      }
+      "ignoreInWatchMode": ["maxAvailablePerTx"]
     },
     "GovernorBravoDelegate": {
       "ignoreMethods": ["getActions", "proposals"]
     },
     "BridgeValidators": {
-      "fields": {
-        "validatorList": {
-          "handler": {
-            "type": "call",
-            "method": "validatorList",
-            "args": [],
-            "expectRevert": true
-          }
-        }
-      }
+      "proxyType": "Eternal Storage proxy"
+    },
+    "Comptroller": {
+      "ignoreMethods": ["getBlockNumber"]
     }
   }
 }

@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
+import { externalLinks } from '~/consts/external-links'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
@@ -166,7 +167,7 @@ export function StageSection({
         })}
       </Accordion>
       <CustomLink
-        href="https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe "
+        href={externalLinks.articles.stages}
         className="mt-3 block text-sm"
       >
         Learn more about Rollup stages

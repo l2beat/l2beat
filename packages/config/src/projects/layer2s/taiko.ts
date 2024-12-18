@@ -12,9 +12,9 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
@@ -140,6 +140,7 @@ export const taiko: Layer2 = {
   ],
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Taiko',
     slug: 'taiko',
     provider: 'Taiko',
@@ -303,8 +304,6 @@ export const taiko: Layer2 = {
       sentiment: 'good',
       value: 'Self propose',
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   stage: getStage(
     {

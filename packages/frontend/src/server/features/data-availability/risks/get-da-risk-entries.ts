@@ -1,73 +1,94 @@
-import { daLayers } from '@l2beat/config'
-import { getDaBridgeVerification } from '../../verification-status/get-projects-verification-statuses'
+import {
+  type BlockchainDaLayer,
+  type DaCommitteeSecurityRisk,
+  type DaEconomicSecurityRisk,
+  type DaFraudDetectionRisk,
+  type DaUpgradeabilityRisk,
+  type DacDaLayer,
+  daLayers,
+  isDaBridgeVerified,
+} from '@l2beat/config'
+import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
+import { ProjectId } from '@l2beat/shared-pure'
+import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
-import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
 } from '../utils/get-da-projects-tvl'
-import { getDaRisks } from '../utils/get-da-risks'
+import { getDaBridgeRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
-import { type DaEntryRisk } from '../utils/types'
 
 export async function getDaRiskEntries() {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
-  const [economicSecurity, tvlPerProject] = await Promise.all([
-    getDaProjectsEconomicSecurity(),
-    getDaProjectsTvl(uniqueProjectsInUse),
-  ])
-  const getSumFor = pickTvlForProjects(tvlPerProject)
-
-  const entries = daLayers
-    // Calculate total TVS for each DA layer and organize bridges per layer
-    .map((daLayer) => {
-      const bridges = daLayer.bridges
-        .map((daBridge) => {
-          const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
-          const economicSecurityData = economicSecurity[daLayer.id]
-
-          return {
-            name: daBridge.display.name,
-            slug: daBridge.display.slug,
-            type: daBridge.type,
-            href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
-            warning: daBridge.display.warning,
-            redWarning: daBridge.display.redWarning,
-            isVerified: getDaBridgeVerification(daLayer, daBridge),
-            risks: getDaRisks(
-              daLayer,
-              daBridge,
-              tvs,
-              economicSecurityData,
-            ) as DaEntryRisk,
-            tvs,
-          }
-        })
-        .sort((a, b) => b.tvs - a.tvs)
-
-      return {
-        name: daLayer.display.name,
-        slug: daLayer.display.slug,
-        kind: daLayer.kind,
-        href: bridges[0]?.href,
-        systemCategory: daLayer.systemCategory,
-        layerType: kindToType(daLayer.kind),
-        risks: {
-          economicSecurity: daLayer.risks.economicSecurity,
-          fraudDetection: daLayer.risks.fraudDetection,
-        },
-        bridges,
-        tvs: getSumFor(
-          daLayer.bridges.flatMap((bridge) =>
-            bridge.usedIn.map((project) => project.id),
-          ),
-        ),
-      }
-    })
-    // Sort by total TVS of DA layers
+  const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
+  const getTvs = pickTvlForProjects(tvlPerProject)
+  return daLayers
+    .map((daLayer) => getDaRiskEntry(daLayer, getTvs))
     .sort((a, b) => b.tvs - a.tvs)
-
-  return entries
 }
 
-export type DaRiskEntry = Awaited<ReturnType<typeof getDaRiskEntries>>[number]
+export interface DaRiskEntry extends CommonProjectEntry {
+  isPublic: boolean
+  tvs: number
+  risks: {
+    economicSecurity: DaEconomicSecurityRisk
+    fraudDetection: DaFraudDetectionRisk
+  }
+  bridges: DaBridgeRiskEntry[]
+}
+
+export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
+  risks: {
+    relayerFailure: DaRelayerFailureRisk
+    upgradeability: DaUpgradeabilityRisk
+    committeeSecurity: DaCommitteeSecurityRisk
+  }
+  tvs: number
+}
+
+function getDaRiskEntry(
+  daLayer: BlockchainDaLayer | DacDaLayer,
+  getTvs: (projects: ProjectId[]) => number,
+): DaRiskEntry {
+  const bridges = daLayer.bridges
+    .map((daBridge): DaBridgeRiskEntry => {
+      const tvs = getTvs(daBridge.usedIn.map((project) => project.id))
+
+      return {
+        name: daBridge.display.name,
+        slug: daBridge.display.slug,
+        href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
+        statuses: {
+          yellowWarning: daBridge.display.warning,
+          redWarning: daBridge.display.redWarning,
+          verificationWarning: isDaBridgeVerified(daLayer, daBridge)
+            ? undefined
+            : true,
+        },
+        risks: getDaBridgeRisks(daBridge),
+        tvs,
+      }
+    })
+    .sort((a, b) => b.tvs - a.tvs)
+
+  return {
+    id: ProjectId(daLayer.id),
+    name: daLayer.display.name,
+    nameSecondLine: kindToType(daLayer.kind),
+    slug: daLayer.display.slug,
+    href: bridges[0]?.href,
+    statuses: {},
+    isPublic: daLayer.systemCategory === 'public',
+    tvs: getTvs(
+      daLayer.bridges.flatMap((bridge) =>
+        bridge.usedIn.map((project) => project.id),
+      ),
+    ),
+    risks: {
+      economicSecurity: daLayer.risks.economicSecurity,
+      fraudDetection: daLayer.risks.fraudDetection,
+    },
+    bridges,
+  }
+}

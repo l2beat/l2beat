@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ScalingProjectTechnologyChoice } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
@@ -41,6 +42,7 @@ export const zircuit: Layer2 = opStackL2({
   createdAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Zircuit',
     slug: 'zircuit',
     description:

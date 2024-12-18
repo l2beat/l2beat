@@ -1,3 +1,177 @@
+Generated with discovered.json: 0xf2c34bb8ea00da0d45419dedffb6de0495deb57f
+
+# Diff at Wed, 18 Dec 2024 10:43:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21415736
+- current block number: 21428894
+
+## Description
+
+OptiPortal unpaused, ready for claims through the BalanceClaimer added in the last upgrade.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.paused:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0x450ab2617c6d7c7826a6f90f48870b03e998d403
+
+# Diff at Mon, 16 Dec 2024 14:40:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33537d5b381f743921fc5e40006feb3f31e39a6 block: 21370693
+- current block number: 21415736
+
+## Description
+
+Upgrade to a new version of OptimismPortal which adds an `IEthBalanceWithdrawer` that allows the `BALANCE_CLAIMER` address to withdraw ETH and bypass the usual OP stack proving of withdrawals.
+
+A similar uprade is made to the L1StandardBridge regarding ERC20 tokens, and referencing the same privileged address which is the following SC:
+
+### BalanceClaimer.sol
+
+Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal tx on the L2.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"}]}
+      receivedPermissions.5.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.4.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      receivedPermissions.3.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      receivedPermissions.2.target:
+-        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal_PGN_withdraw"
+      sourceHashes.1:
+-        "0x8d871731877bb6dfe48e64a821acb08680fe17b500908486a34315093c236d0b"
++        "0x18ba9f08d5c62bddd4131c2df38d760af4011869233e575569a52379ec8eee6a"
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.1.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
+      issuedPermissions.1.via.0:
+-        {"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0}
+      issuedPermissions.0.permission:
+-        "guard"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      values.$implementation:
+-        "0x436e9FC7894e26718637f086d42B4a06439C8ae0"
++        "0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09"
+      values.$pastUpgrades.1:
++        ["2024-12-13T23:16:59.000Z","0x3fe74b8c72f294ff456a997ea43070350485d48cb96da3390ae02837cf626789",["0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.6.0"
++        "1.7.0"
+      values.BALANCE_CLAIMER:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","target":"0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b","description":"upgrading the bridge implementation can give access to all funds escrowed therein."}
+      directlyReceivedPermissions.4.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.3.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      directlyReceivedPermissions.2.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      directlyReceivedPermissions.1.target:
+-        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      template:
+-        "opstack/L1StandardBridge"
++        "opstack/L1StandardBridge_PGN_withdraw"
+      sourceHashes.1:
+-        "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
++        "0x6e17f8c044cb5416af604d756bb7ab831395f1ea7638248701de78a55271e561"
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0,"description":"upgrading the bridge implementation can give access to all funds escrowed therein."}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      issuedPermissions.0.via.0:
+-        {"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0,"description":"upgrading the bridge implementation can give access to all funds escrowed therein."}
+      values.$implementation:
+-        "0x459bA3BD8fb18CCBf557Ae9Fab13ceD2542B0d8E"
++        "0xF5328094aE48F975CF588f361DDCC749F706aAF0"
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+      values.BALANCE_CLAIMER:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BalanceClaimer (0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21)
+    +++ description: Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.
+```
+
+## Source code changes
+
+```diff
+.../.flat/BalanceClaimer/BalanceClaimer.sol        | 437 +++++++++++++++++++++
+ .../ethereum/.flat/BalanceClaimer/Proxy.p.sol      | 211 ++++++++++
+ .../L1StandardBridge/L1StandardBridge.sol          | 145 ++++++-
+ .../OptimismPortal/OptimismPortal.sol              |  45 ++-
+ 4 files changed, 813 insertions(+), 25 deletions(-)
+```
+
 Generated with discovered.json: 0x962172660b260c8e4757ea803798cee6b6258bdd
 
 # Diff at Tue, 10 Dec 2024 07:45:09 GMT:

@@ -8,21 +8,22 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
-import { useScalingUpcomingFilter } from '../../_components/scaling-filter-context'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
 
 export function ScalingUpcomingTables({
   entries,
-}: { entries: CategorisedScalingEntries<ScalingUpcomingEntry> }) {
-  const includeFilters = useScalingUpcomingFilter()
+}: { entries: TabbedScalingEntries<ScalingUpcomingEntry> }) {
+  const includeFilters = useScalingFilter()
 
   const filteredEntries = {
     rollups: entries.rollups.filter(includeFilters),
     validiumsAndOptimiums: entries.validiumsAndOptimiums.filter(includeFilters),
-    others: entries.others?.filter(includeFilters) ?? [],
+    others: entries.others.filter(includeFilters),
   }
 
   const initialSort = {
@@ -51,7 +52,7 @@ export function ScalingUpcomingTables({
               {filteredEntries.validiumsAndOptimiums.length}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {featureFlags.showOthers && filteredEntries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -69,7 +70,7 @@ export function ScalingUpcomingTables({
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
+        {featureFlags.showOthers && filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <ScalingUpcomingTable entries={filteredEntries.others} />

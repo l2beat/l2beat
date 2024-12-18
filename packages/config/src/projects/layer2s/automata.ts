@@ -1,4 +1,5 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -28,6 +29,10 @@ export const automata: Layer2 = opStackL2({
     Badge.RaaS.AltLayer,
   ],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     name: 'Automata',
     slug: 'automata',
     description:

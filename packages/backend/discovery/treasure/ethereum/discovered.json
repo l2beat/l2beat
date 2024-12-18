@@ -1,8 +1,8 @@
 {
   "name": "treasure",
   "chain": "ethereum",
-  "blockNumber": 21386011,
-  "configHash": "0x689befd7204ca2d1c1da2b9c53556251e9fbc284b8116d94b22cdf94aeb90258",
+  "blockNumber": 21429089,
+  "configHash": "0x544b2936cb47784e5e83a75751d34b370dd03a6c3c1d385f6ce028257e6487d2",
   "contracts": [
     {
       "name": "TreasureChainAdminMultisig",
@@ -54,7 +54,9 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx"
+        "getFirstUnprocessedPriorityTx",
+        "baseTokenGasPriceMultiplierNominator",
+        "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1732199087,
       "values": {
@@ -88,8 +90,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "baseTokenGasPriceMultiplierDenominator": 16701,
-        "baseTokenGasPriceMultiplierNominator": 100000000,
+        "baseTokenGasPriceMultiplierDenominator": 861,
+        "baseTokenGasPriceMultiplierNominator": 6250000,
         "daMode": 1,
         "facetAddresses": [
           "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
@@ -181,26 +183,26 @@
         "getBaseToken": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 22,
+        "getFirstUnprocessedPriorityTx": 54,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 14,
+        "getPriorityQueueSize": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 41,
-        "getTotalBatchesExecuted": 38,
-        "getTotalBatchesVerified": 41,
-        "getTotalBlocksCommitted": 41,
-        "getTotalBlocksExecuted": 38,
-        "getTotalBlocksVerified": 41,
-        "getTotalPriorityTxs": 36,
+        "getTotalBatchesCommitted": 65,
+        "getTotalBatchesExecuted": 61,
+        "getTotalBatchesVerified": 64,
+        "getTotalBlocksCommitted": 65,
+        "getTotalBlocksExecuted": 61,
+        "getTotalBlocksVerified": 64,
+        "getTotalPriorityTxs": 54,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
