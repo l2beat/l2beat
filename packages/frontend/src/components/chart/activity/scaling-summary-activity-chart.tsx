@@ -67,18 +67,6 @@ function ActivityChart({
       <section className="flex flex-col gap-4">
         <Header stats={stats} />
         <Chart disableMilestones />
-        <ChartLegend
-          elements={[
-            {
-              name: 'Projects',
-              color: 'bg-n-pink-500',
-            },
-            {
-              name: 'Ethereum',
-              color: 'bg-n-blue-700',
-            },
-          ]}
-        />
       </section>
     </ChartProvider>
   )
