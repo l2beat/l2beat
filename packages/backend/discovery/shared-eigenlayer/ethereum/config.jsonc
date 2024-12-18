@@ -123,6 +123,7 @@
     "EIGEN token": {
       "ignoreMethods": ["getPastTotalSupply", "clock"],
       "ignoreInWatchMode": ["totalSupply"],
+      "description": "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.",
       "fields": {
         "transferRestrictionsDisabledAfter": {
           "description": "Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.",
@@ -171,6 +172,7 @@
       "ignoreInWatchMode": ["avs"]
     },
     "PauserRegistry": {
+      "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.",
       "fields": {
         "pausers": {
           "handler": {
@@ -178,9 +180,22 @@
             "event": "PauserStatusChanged",
             "valueKey": "pauser",
             "flagKey": "canPause"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "act"
+              }
+            ]
           }
         }
       }
+    },
+    "DelegationManager": {
+      "description": "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator."
+    },
+    "StrategyManager": {
+      "description": "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
     }
   }
 }

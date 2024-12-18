@@ -14,11 +14,6 @@ import { toUsedInProject } from '../../utils/to-used-in-project'
 const discovery = new ProjectDiscovery('eigenda')
 const eigenDiscovery = new ProjectDiscovery('shared-eigenlayer')
 
-const upgrades = {
-  upgradableBy: ['EigenDAProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 const EigenTimelockUpgradeDelay = eigenDiscovery.getContractValue<number>(
   'EigenLayer Timelock',
   'delay',
@@ -87,25 +82,25 @@ const operatorSetParamsQuorum2 = discovery.getContractValue<number[]>(
   'operatorSetParamsQuorum2',
 )
 
-const batchConfirmers = discovery.getContractValue<string[]>(
-  'EigenDAServiceManager',
-  'batchConfirmers',
-)
+// const batchConfirmers = discovery.getContractValue<string[]>(
+//   'EigenDAServiceManager',
+//   'batchConfirmers',
+// )
 
-const pausers = eigenDiscovery.getContractValue<string[]>(
-  'PauserRegistry',
-  'pausers',
-)
+// const pausers = eigenDiscovery.getContractValue<string[]>(
+//   'PauserRegistry',
+//   'pausers',
+// )
 
-const churnApprover = discovery.getContractValue<string>(
-  'RegistryCoordinator',
-  'churnApprover',
-)
+// const churnApprover = discovery.getContractValue<string>(
+//   'RegistryCoordinator',
+//   'churnApprover',
+// )
 
-const ejectors = discovery.getContractValue<string[]>(
-  'EjectionManager',
-  'ejectors',
-)
+// const ejectors = discovery.getContractValue<string[]>(
+//   'EjectionManager',
+//   'ejectors',
+// )
 
 const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'RegistryCoordinator',
@@ -135,69 +130,37 @@ export const eigenDAbridge = {
     addresses: {
       ethereum: [
         {
-          ...discovery.getContractDetails('EigenDAServiceManager', {
-            description:
-              'The EigenDAServiceManager contract is the bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.',
-          }),
-          ...upgrades,
+          ...discovery.getContractDetails('EigenDAServiceManager'),
         },
         {
-          ...discovery.getContractDetails('RegistryCoordinator', {
-            description: `Contract used by operators to register with the EigenDA AVS. The coordinator has three registries: a StakeRegistry that keeps track of operators' stakes, a BLSApkRegistry that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, and an IndexRegistry that keeps track of an ordered list of operators for each quorum.`,
-          }),
-          ...upgrades,
+          ...discovery.getContractDetails('RegistryCoordinator'),
         },
         {
-          ...discovery.getContractDetails('StakeRegistry', {
-            description:
-              'The StakeRegistry contract keeps track of the total stake of each operator.',
-          }),
-          ...upgrades,
+          ...discovery.getContractDetails('StakeRegistry'),
         },
         {
-          ...discovery.getContractDetails('BLSApkRegistry', {
-            description:
-              'The BLSApkRegistry contract keeps track of the BLS public keys of each operator and the quorum aggregated keys.',
-          }),
-          ...upgrades,
+          ...discovery.getContractDetails('BLSApkRegistry'),
         },
         {
-          ...discovery.getContractDetails('EjectionManager', {
-            description:
-              'The EjectionManager contract is responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).',
-          }),
-          ...upgrades,
+          ...discovery.getContractDetails('EjectionManager'),
         },
         {
-          ...eigenDiscovery.getContractDetails('PauserRegistry', {
-            description:
-              'Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.',
-          }),
+          ...eigenDiscovery.getContractDetails('PauserRegistry'),
         },
         {
-          ...eigenDiscovery.getContractDetails('DelegationManager', {
-            description: `The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.`,
-          }),
+          ...eigenDiscovery.getContractDetails('DelegationManager'),
           ...eigenLayerUpgrades,
         },
         {
-          ...eigenDiscovery.getContractDetails('StrategyManager', {
-            description:
-              'The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.',
-          }),
+          ...eigenDiscovery.getContractDetails('StrategyManager'),
           ...eigenLayerUpgrades,
         },
         {
-          ...discovery.getContractDetails('EigenStrategy', {
-            description: `The EigenStrategy contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.`,
-          }),
+          ...discovery.getContractDetails('EigenStrategy'),
           ...eigenLayerUpgrades,
         },
         {
-          ...eigenDiscovery.getContractDetails('EIGEN token', {
-            description: `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
-              EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.`,
-          }),
+          ...eigenDiscovery.getContractDetails('EIGEN token'),
           ...EIGENUpgrades,
         },
       ],
@@ -291,40 +254,40 @@ export const eigenDAbridge = {
           },
         ],
       },
-      {
-        name: 'BatchConfirmers',
-        description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
-        accounts: batchConfirmers.map((batchConfirmer) => ({
-          address: EthereumAddress(batchConfirmer),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'Pausers',
-        description: `The list of addresses authorized to pause the EigenDAServiceManager contract.`,
-        accounts: pausers.map((pauser) => ({
-          address: EthereumAddress(pauser),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'ChurnApprover',
-        description: `The address authorized to approve the replacement of churned EigenDA operators from a quorum.`,
-        accounts: [
-          {
-            address: EthereumAddress(churnApprover),
-            type: 'EOA',
-          },
-        ],
-      },
-      {
-        name: 'Ejectors',
-        description: `The list of addresses authorized to eject EigenDA operators from a quorum.`,
-        accounts: ejectors.map((ejectors) => ({
-          address: EthereumAddress(ejectors),
-          type: 'EOA',
-        })),
-      },
+      // {
+      //   name: 'BatchConfirmers',
+      //   description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
+      //   accounts: batchConfirmers.map((batchConfirmer) => ({
+      //     address: EthereumAddress(batchConfirmer),
+      //     type: 'EOA',
+      //   })),
+      // },
+      // {
+      //   name: 'Pausers',
+      //   description: `The list of addresses authorized to pause the EigenDAServiceManager contract.`,
+      //   accounts: pausers.map((pauser) => ({
+      //     address: EthereumAddress(pauser),
+      //     type: 'EOA',
+      //   })),
+      // },
+      // {
+      //   name: 'ChurnApprover',
+      //   description: `The address authorized to approve the replacement of churned EigenDA operators from a quorum.`,
+      //   accounts: [
+      //     {
+      //       address: EthereumAddress(churnApprover),
+      //       type: 'EOA',
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: 'Ejectors',
+      //   description: `The list of addresses authorized to eject EigenDA operators from a quorum.`,
+      //   accounts: ejectors.map((ejectors) => ({
+      //     address: EthereumAddress(ejectors),
+      //     type: 'EOA',
+      //   })),
+      // },
       {
         name: 'EigenLayerProxyAdmin',
         description: `The contract authorized to upgrade the core EigenLayer contracts.`,
