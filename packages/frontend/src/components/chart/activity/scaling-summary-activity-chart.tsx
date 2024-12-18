@@ -13,7 +13,6 @@ import { formatActivityCount } from '~/utils/number-format/format-activity-count
 import { Chart } from '../core/chart'
 import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
-import { ScalingFactorTooltip } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { RecategorizedActivityChartHover } from './recategorized-activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
@@ -162,17 +161,12 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
               )}{' '}
               UOPS
             </div>
-            <div className="flex items-center gap-1">
-              <span className="whitespace-nowrap text-right text-xs text-secondary">
-                Scaling factor: {stats.uops.scalingFactor.toFixed(2)}x
-              </span>
-              <ScalingFactorTooltip className="size-3" />
-            </div>
+            <div className="h-5" />
           </>
         ) : (
           <>
             <Skeleton className="my-[5px] h-5 w-20 md:w-[243px]" />
-            <Skeleton className="my-0.5 h-4 w-[135px]" />
+            <div className="h-5" />
           </>
         )}
       </div>
