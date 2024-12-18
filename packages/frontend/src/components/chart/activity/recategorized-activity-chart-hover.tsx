@@ -18,22 +18,22 @@ export function RecategorizedActivityChartHover(props: Props) {
     {
       title: 'Rollups',
       value: props.rollupsCount,
-      className: 'bg-n-pink-400',
+      className: 'bg-indicator-rollups',
     },
     {
       title: 'Validiums and Optimiums',
       value: props.validiumAndOptimiumsCount,
-      className: 'bg-n-cyan-600',
+      className: 'bg-indicator-validiums-optimiums',
     },
     {
       title: 'Others',
       value: props.othersCount,
-      className: 'bg-n-yellow-700',
+      className: 'bg-indicator-others',
     },
     {
       title: 'Ethereum',
       value: props.ethereumCount,
-      className: 'bg-blue-600',
+      className: 'bg-indicator-ethereum',
     },
   ]
 

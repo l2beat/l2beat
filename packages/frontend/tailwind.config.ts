@@ -198,6 +198,10 @@ const config: Config = {
       'icon-secondary': 'var(--icon-secondary)',
       overlay: 'var(--overlay)',
       divider: 'var(--divider)',
+      'indicator-rollups': 'var(--indicator-rollups)',
+      'indicator-validiums-optimiums': 'var(--indicator-validiums-optimiums)',
+      'indicator-others': 'var(--indicator-others)',
+      'indicator-ethereum': 'var(--indicator-ethereum)',
     },
     screens: {
       xs: '400px',

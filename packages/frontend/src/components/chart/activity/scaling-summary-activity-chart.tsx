@@ -109,19 +109,19 @@ function RecategorizedActivityChart({
           elements={[
             {
               name: 'Rollups',
-              color: 'bg-n-pink-500',
+              color: 'bg-indicator-rollups',
             },
             {
               name: 'Validiums & Optimiums',
-              color: 'bg-n-teal-500',
+              color: 'bg-indicator-validiums-optimiums',
             },
             {
               name: 'Others',
-              color: 'bg-n-yellow-700',
+              color: 'bg-indicator-others',
             },
             {
               name: 'Ethereum',
-              color: 'bg-n-blue-700',
+              color: 'bg-indicator-ethereum',
             },
           ]}
         />
