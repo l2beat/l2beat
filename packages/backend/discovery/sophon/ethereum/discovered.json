@@ -1,7 +1,7 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 21428720,
+  "blockNumber": 21429615,
   "configHash": "0x44fa86ae672b7be5ab690c0a041b5627ee7c81615eabd27aa01a78390fb1ac06",
   "contracts": [
     {
@@ -164,12 +164,12 @@
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 206,
-        "getTotalBatchesExecuted": 147,
-        "getTotalBatchesVerified": 173,
-        "getTotalBlocksCommitted": 206,
-        "getTotalBlocksExecuted": 147,
-        "getTotalBlocksVerified": 173,
+        "getTotalBatchesCommitted": 245,
+        "getTotalBatchesExecuted": 151,
+        "getTotalBatchesVerified": 244,
+        "getTotalBlocksCommitted": 245,
+        "getTotalBlocksExecuted": 151,
+        "getTotalBlocksVerified": 244,
         "getTotalPriorityTxs": 25,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
@@ -304,7 +304,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -340,10 +340,10 @@
         "admin": "0x0000000000000000000000000000000000000000",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "L1_USDC_TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "owner": "0x299174d47c243B5381c6062aBEFbfF915B601D85",
+        "owner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
         "paused": false,
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
-        "pendingOwner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
       }
     }
   ],
@@ -352,7 +352,6 @@
     { "address": "0x02266d7404AF55F39605Ea1D2b6bfff6DF74157d" },
     { "address": "0x14574dfC6B7aF658c5033BA95673864947956521" },
     { "address": "0x20719Abd2E63518e68D30a295388cAd6B542dCEf" },
-    { "address": "0x299174d47c243B5381c6062aBEFbfF915B601D85" },
     { "address": "0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97" },
     { "address": "0x355458F230cBD78674e54BCA0Dd2B36017cF9b41" },
     { "address": "0x3b6036d410cA018661324766680674921a8b2d89" },

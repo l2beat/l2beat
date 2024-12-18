@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x4bfbdaed555919395f05f231fabd4d57d97c1fdd
+Generated with discovered.json: 0x01edddd129ce4880a2833eea307b2095e355ab11
 
-# Diff at Wed, 18 Dec 2024 10:10:26 GMT:
+# Diff at Wed, 18 Dec 2024 13:08:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21421507
-- current block number: 21428720
+- current block number: 21429615
 
 ## Description
 
-USDC escrow governance changed to a new Multisig.
+USDC escrow admin changed to a new Multisig (SophonUSDCEscrowMultisig) and also gets a new owner (SophonChainAdminMultisig).
 
 ## Watched changes
 
@@ -27,6 +27,12 @@ USDC escrow governance changed to a new Multisig.
       values.$admin:
 -        "0x478a303CCe3c62CE52A8D66885b9D04F2733F3b6"
 +        "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD"
+      values.owner:
+-        "0x299174d47c243B5381c6062aBEFbfF915B601D85"
++        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+      values.pendingOwner:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
