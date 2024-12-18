@@ -15,6 +15,7 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
@@ -33,6 +34,7 @@ export const immutablezkevm: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablezkevm'),
   createdAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
+  badges: [Badge.VM.EVM, Badge.DA.CustomDA],
   display: {
     name: 'Immutable zkEVM',
     slug: 'immutablezkevm',
