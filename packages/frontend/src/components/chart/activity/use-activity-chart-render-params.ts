@@ -54,12 +54,12 @@ export function useActivityChartRenderParams({
 
         return {
           values: showMainnet
-            ? [{ value: projectsValue }, { value: ethereumValue }]
+            ? [{ value: ethereumValue }, { value: projectsValue }]
             : [{ value: projectsValue }],
           data: {
             timestamp,
-            count: isTps ? count : uopsCount,
             ethereumCount: isTps ? ethereumCount : ethereumUopsCount,
+            count: isTps ? count : uopsCount,
           },
           milestone,
         }
@@ -73,12 +73,12 @@ export function useActivityChartRenderParams({
     () =>
       showMainnet
         ? [
-            getChartColors(type),
             {
               fill: 'blue gradient',
               line: 'blue gradient',
               point: 'blueSquare',
             },
+            getChartColors(type),
           ]
         : [getChartColors(type)],
     [showMainnet, type],
