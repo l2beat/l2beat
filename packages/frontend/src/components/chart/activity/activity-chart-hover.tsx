@@ -1,8 +1,11 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
+import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
+import { type ActivityChartType } from './use-activity-chart-render-params'
 
 interface Props {
   timestamp: number
@@ -12,6 +15,7 @@ interface Props {
   metric?: ActivityMetric
   singleProject?: boolean
   syncedUntil?: number
+  type?: ActivityChartType
 }
 
 export function ActivityChartHover(props: Props) {
@@ -33,7 +37,12 @@ export function ActivityChartHover(props: Props) {
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
-          <div className="relative inline-block size-3 rounded-full bg-n-pink-400"></div>
+          <div
+            className={cn(
+              'relative inline-block size-3 rounded-full',
+              getColorByType(props.type),
+            )}
+          ></div>
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
@@ -48,7 +57,7 @@ export function ActivityChartHover(props: Props) {
       {props.showEthereum && (
         <div className="flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1">
-            <div className="relative inline-block size-3 rounded bg-blue-600"></div>
+            <div className="relative inline-block size-3 rounded bg-indicator-ethereum"></div>
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
@@ -69,7 +78,12 @@ export function ActivityChartHover(props: Props) {
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
-          <div className="relative inline-block size-3 rounded-full bg-n-pink-400"></div>
+          <div
+            className={cn(
+              'relative inline-block size-3 rounded-full',
+              getColorByType(props.type),
+            )}
+          ></div>
           <span>{props.singleProject ? 'Project' : 'Projects'}</span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
@@ -82,7 +96,7 @@ export function ActivityChartHover(props: Props) {
       {props.showEthereum && (
         <div className="flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1">
-            <div className="relative inline-block size-3 rounded bg-blue-600"></div>
+            <div className="relative inline-block size-3 rounded bg-indicator-ethereum"></div>
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
@@ -92,4 +106,18 @@ export function ActivityChartHover(props: Props) {
       )}
     </div>
   )
+}
+
+function getColorByType(type?: ActivityChartType) {
+  switch (type) {
+    case 'Rollups':
+      return 'bg-indicator-rollups'
+    case 'ValidiumsAndOptimiums':
+      return 'bg-indicator-validiums-optimiums'
+    case 'Others':
+    case undefined:
+      return 'bg-indicator-others'
+    default:
+      assertUnreachable(type)
+  }
 }

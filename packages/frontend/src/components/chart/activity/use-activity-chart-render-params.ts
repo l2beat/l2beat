@@ -9,7 +9,7 @@ import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 
-type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
 interface Params {
   milestones: Milestone[]

@@ -68,6 +68,7 @@ export function ProjectActivityChart({
           singleProject
           syncedUntil={chart?.syncStatus.syncedUntil}
           metric={metric}
+          type={getChartType(category)}
         />
       )}
     >
