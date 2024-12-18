@@ -44,15 +44,18 @@ export function ChartTimeRangeControls<T extends string>({
   if (showSelect) {
     return (
       <Select value={value} onValueChange={setValue}>
-        <SelectTrigger className="z-[0] h-8">
+        <SelectTrigger
+          className={cn('z-[0] h-8 primary-card:bg-surface-secondary')}
+        >
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="primary-card:bg-surface-secondary">
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
               disabled={option.disabled}
+              className="primary-card:focus:bg-surface-tertiary"
             >
               {option.label}
             </SelectItem>

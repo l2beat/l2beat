@@ -11,8 +11,8 @@ type GovernanceCardProps = {
 const governanceCardVariants = cva('rounded-lg', {
   variants: {
     type: {
-      primary: 'bg-gray-100 dark:bg-zinc-900',
-      secondary: 'bg-zinc-300 dark:bg-zinc-800',
+      primary: 'bg-surface-primary',
+      secondary: 'bg-surface-secondary',
       purple: 'bg-purple-100 text-white',
     },
     size: {

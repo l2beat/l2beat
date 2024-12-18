@@ -35,10 +35,9 @@ const SelectGroup = SelectPrimitive.Group
 const SelectValue = SelectPrimitive.Value
 
 const selectTriggerClassnames = cn(
-  'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 shadow-sm disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
-  'bg-gray-200 text-xs font-medium leading-none data-[state=open]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=open]:hover:bg-slate-600 md:text-sm',
+  'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+  'bg-surface-primary text-xs font-medium leading-none data-[state=open]:hover:bg-surface-secondary md:text-sm',
   'ring-offset-background focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand',
-  'sidebar:!bg-surface-primary sidebar:data-[state=open]:hover:!bg-surface-secondary sidebar:main-page-card:!bg-surface-secondary sidebar:main-page-card:data-[state=open]:hover:!bg-surface-tertiary',
   'z-20 transition-colors',
 )
 
@@ -121,32 +120,31 @@ const SelectContent = ({
   position = 'popper',
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      data-role="select-content"
+  <SelectPrimitive.Content
+    ref={ref}
+    data-role="select-content"
+    className={cn(
+      'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-lg bg-surface-primary shadow-popover',
+      'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      position === 'popper' &&
+        'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+      className,
+    )}
+    position={position}
+    {...props}
+  >
+    <SelectScrollUpButton />
+    <SelectPrimitive.Viewport
       className={cn(
-        'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-lg bg-gray-200 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-zinc-700',
+        'p-1',
         position === 'popper' &&
-          'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-        className,
+          'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
       )}
-      position={position}
-      {...props}
     >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
-        className={cn(
-          'p-1',
-          position === 'popper' &&
-            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
-        )}
-      >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
+      {children}
+    </SelectPrimitive.Viewport>
+    <SelectScrollDownButton />
+  </SelectPrimitive.Content>
 )
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
@@ -172,7 +170,7 @@ const SelectItem = ({
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex w-full cursor-pointer select-none items-center rounded-lg px-2.5 py-2 pr-9 text-xs font-medium outline-none transition-colors focus:bg-gray-400 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-800 md:text-sm',
+      'relative flex w-full cursor-pointer select-none items-center rounded-lg px-2.5 py-2 pr-9 text-xs font-medium outline-none transition-colors focus:bg-surface-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 md:text-sm',
       className,
     )}
     {...props}

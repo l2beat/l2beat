@@ -104,7 +104,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
     >
-      <Command shouldFilter={false} sidebar className="rounded-none">
+      <Command shouldFilter={false} className="rounded-none">
         <CommandInput
           ref={inputRef}
           placeholder="Search for projects"

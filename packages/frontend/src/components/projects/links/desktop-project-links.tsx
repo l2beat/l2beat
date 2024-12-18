@@ -44,6 +44,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
           target="_blank"
           className={cn(
             navigationMenuTriggerStyle(),
+            'ring-inset ring-brand focus:ring-2',
             'flex flex-row items-center gap-1.5',
           )}
         >
@@ -61,7 +62,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger>
+      <NavigationMenuTrigger className="ring-inset ring-brand focus:ring-2">
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>
@@ -77,6 +78,7 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
               target="_blank"
               className={cn(
                 navigationMenuTriggerStyle(),
+                'hover:bg-surface-tertiary focus:bg-surface-tertiary',
                 'flex w-full justify-start gap-1.5',
               )}
             >

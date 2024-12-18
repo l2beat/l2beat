@@ -97,7 +97,7 @@ function Header(props: ZkCatalogProjectPageProps) {
         ) : undefined}
       </div>
       <HorizontalSeparator className="mb-5 mt-6 md:hidden" />
-      <div className="flex grid-cols-3 flex-col gap-1 bg-gray-100 dark:bg-zinc-900 md:mt-8 md:grid md:rounded-xl md:p-6">
+      <div className="flex grid-cols-3 flex-col gap-1 bg-surface-primary md:mt-8 md:grid md:rounded-xl md:p-6">
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>

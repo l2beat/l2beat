@@ -45,7 +45,7 @@ export default function Page() {
       <Header />
       <ContentWrapper className="md:px-6 lg:px-12" asChild>
         <main>
-          <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
+          <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-surface-primary">
             <RecentPublicationsSection
               publications={publicationEntries}
               className="lg:col-span-5"
@@ -87,7 +87,7 @@ function Header() {
               {delegatedProjects.map((delegatedProject) => (
                 <CustomLink
                   key={delegatedProject.id}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 text-sm font-medium transition-colors hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:w-max md:px-3 md:py-1"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm font-medium transition-colors hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
                   href={delegatedProject.data.delegateTokensUrl}
                   underline={false}
                 >

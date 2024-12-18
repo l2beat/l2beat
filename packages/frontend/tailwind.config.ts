@@ -171,20 +171,20 @@ const config: Config = {
 
       // New colors
       primary: {
-        DEFAULT: 'var(--primary)',
-        invert: 'var(--primary-invert)',
+        DEFAULT: 'hsl(var(--primary))',
+        invert: 'hsl(var(--primary-invert))',
       },
-      secondary: 'var(--secondary)',
+      secondary: 'hsl(var(--secondary))',
       negative: 'hsl(var(--negative))',
       brand: 'hsl(var(--brand))',
-      background: 'var(--background)',
-      'surface-primary': 'var(--surface-primary)',
-      'surface-secondary': 'var(--surface-secondary)',
-      'surface-tertiary': 'var(--surface-tertiary)',
-      'surface-table-group': 'var(--surface-table-group)',
-      'icon-secondary': 'var(--icon-secondary)',
-      overlay: 'var(--overlay)',
-      divider: 'var(--divider)',
+      background: 'hsl(var(--background))',
+      'surface-primary': 'hsl(var(--surface-primary))',
+      'surface-secondary': 'hsl(var(--surface-secondary))',
+      'surface-tertiary': 'hsl(var(--surface-tertiary))',
+      'surface-table-group': 'hsl(var(--surface-table-group))',
+      'icon-secondary': 'hsl(var(--icon-secondary))',
+      overlay: 'hsl(var(--overlay))',
+      divider: 'hsl(var(--divider))',
     },
     screens: {
       xs: '400px',
@@ -207,6 +207,9 @@ const config: Config = {
       999: '999', // Mobile side menu
     },
     extend: {
+      boxShadow: {
+        popover: '0px 4px 12px 0px rgba(0, 0, 0, 0.55)',
+      },
       keyframes: {
         beat: {
           '0%': {
@@ -292,7 +295,7 @@ const config: Config = {
       creator.addVariant('sidebar', '.sidebar &')
     }),
     plugin((creator) => {
-      creator.addVariant('main-page-card', '.main-page-card &')
+      creator.addVariant('primary-card', '.primary-card &')
     }),
     tailwindcssAnimate,
     containerQueries,
