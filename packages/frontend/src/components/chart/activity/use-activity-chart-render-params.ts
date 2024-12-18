@@ -1,4 +1,5 @@
 import { type Milestone } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { type ActivityChartData } from '~/server/features/scaling/activity/get-activity-chart'
@@ -13,6 +14,7 @@ interface Params {
   chart: ActivityChartData | undefined
   showMainnet: boolean
   metric?: ActivityMetric
+  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 }
 
 export function useActivityChartRenderParams({
@@ -20,6 +22,7 @@ export function useActivityChartRenderParams({
   chart,
   showMainnet,
   metric,
+  type,
 }: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
@@ -68,25 +71,15 @@ export function useActivityChartRenderParams({
     () =>
       showMainnet
         ? [
-            {
-              fill: 'signature gradient',
-              line: 'signature gradient',
-              point: 'pinkCircle',
-            },
+            getChartColors(type),
             {
               fill: 'blue gradient',
               line: 'blue gradient',
               point: 'blueSquare',
             },
           ]
-        : [
-            {
-              fill: 'signature gradient',
-              line: 'signature gradient',
-              point: 'redCircle',
-            },
-          ],
-    [showMainnet],
+        : [getChartColors(type)],
+    [showMainnet, type],
   )
 
   return {
@@ -94,5 +87,33 @@ export function useActivityChartRenderParams({
     columns,
     chartRange,
     valuesStyle,
+  }
+}
+
+function getChartColors(
+  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others',
+): SeriesStyle {
+  switch (type) {
+    case 'Rollups':
+    case undefined:
+      return {
+        fill: 'signature gradient',
+        line: 'signature gradient',
+        point: 'pinkCircle',
+      }
+    case 'ValidiumsAndOptimiums':
+      return {
+        fill: 'cyan gradient',
+        line: 'cyan gradient',
+        point: 'cyanCircle',
+      }
+    case 'Others':
+      return {
+        fill: 'yellow gradient',
+        line: 'yellow gradient',
+        point: 'yellowCircle',
+      }
+    default:
+      assertUnreachable(type)
   }
 }

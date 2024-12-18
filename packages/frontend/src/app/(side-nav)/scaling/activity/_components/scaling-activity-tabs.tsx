@@ -73,7 +73,11 @@ export function ScalingActivityTabs({
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
             {featureFlags.showOthers && (
               <>
-                <ActivityChart milestones={milestones} entries={rollups} />
+                <ActivityChart
+                  milestones={milestones}
+                  entries={rollups}
+                  type="Rollups"
+                />
                 <HorizontalSeparator className="mb-3 mt-5" />
               </>
             )}
@@ -91,6 +95,7 @@ export function ScalingActivityTabs({
                   milestones={milestones}
                   entries={validiumsAndOptimiums}
                   hideScalingFactor
+                  type="ValidiumsAndOptimiums"
                 />
                 <HorizontalSeparator className="mb-3 mt-5" />
               </>
@@ -113,6 +118,7 @@ export function ScalingActivityTabs({
                     milestones={milestones}
                     entries={others ?? []}
                     hideScalingFactor
+                    type="Others"
                   />
                   <HorizontalSeparator className="mb-3 mt-5" />
                 </>

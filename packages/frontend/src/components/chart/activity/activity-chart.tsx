@@ -33,12 +33,14 @@ interface Props {
   milestones: Milestone[]
   entries: ScalingActivityEntry[]
   hideScalingFactor?: boolean
+  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 }
 
 export function ActivityChart({
   milestones,
   entries,
   hideScalingFactor,
+  type,
 }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
@@ -78,6 +80,7 @@ export function ActivityChart({
       chart: data,
       showMainnet,
       metric,
+      type,
     })
 
   return (
