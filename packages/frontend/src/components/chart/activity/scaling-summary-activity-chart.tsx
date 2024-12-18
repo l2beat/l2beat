@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
+import { featureFlags } from '~/consts/feature-flags'
 import { ChevronIcon } from '~/icons/chevron'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
@@ -15,6 +16,7 @@ import { ChartProvider } from '../core/chart-provider'
 import { ScalingFactorTooltip } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import { useRecategorizedActivityChartRenderParams } from './use-recategorized-activity-chart-render-params'
 
 const SHOW_MAINNET = true
 
@@ -23,6 +25,18 @@ interface Props {
 }
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
+  if (featureFlags.showOthers) {
+    return <RecategorizedActivityChart timeRange={timeRange} />
+  } else {
+    return <ActivityChart timeRange={timeRange} />
+  }
+}
+
+function ActivityChart({
+  timeRange,
+}: {
+  timeRange: ActivityTimeRange
+}) {
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'all' },
   })
@@ -47,6 +61,64 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       isLoading={isLoading}
       renderHoverContents={(data) => (
         <ActivityChartHover {...data} showEthereum={SHOW_MAINNET} />
+      )}
+    >
+      <section className="flex flex-col gap-4">
+        <Header stats={stats} />
+        <Chart disableMilestones />
+        <ChartLegend
+          elements={[
+            {
+              name: 'Projects',
+              color: 'bg-n-pink-500',
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-n-blue-700',
+            },
+          ]}
+        />
+      </section>
+    </ChartProvider>
+  )
+}
+
+function RecategorizedActivityChart({
+  timeRange,
+}: {
+  timeRange: ActivityTimeRange
+}) {
+  const { data: stats } = api.activity.chartStats.useQuery({
+    filter: { type: 'all' },
+  })
+  const { data, isLoading } = api.activity.recategorizedChart.useQuery({
+    range: timeRange,
+    filter: { type: 'all' },
+  })
+
+  console.log(data?.data.at(-1))
+
+  const { columns, valuesStyle, formatYAxisLabel } =
+    useRecategorizedActivityChartRenderParams({
+      chart: data,
+      milestones: [],
+    })
+
+  return (
+    <ChartProvider
+      columns={columns}
+      valuesStyle={valuesStyle}
+      formatYAxisLabel={formatYAxisLabel}
+      range={timeRange}
+      isLoading={isLoading}
+      renderHoverContents={(data) => (
+        <ul>
+          <li>{new Date(data.timestamp * 1000).toISOString()}</li>
+          <li>{data.rollupsUops}</li>
+          <li>{data.validiumAndOptimiumsUops}</li>
+          <li>{data.othersUops}</li>
+          <li>{data.ethereumUops}</li>
+        </ul>
       )}
     >
       <section className="flex flex-col gap-4">
