@@ -10,7 +10,6 @@ import { chainport } from './chainport'
 import { connext } from './connext'
 import { davos } from './davos'
 import { debridge } from './debridge'
-import { eclipse } from './eclipse'
 import { fraxferry } from './fraxferry'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
@@ -60,7 +59,6 @@ export const bridges: Bridge[] = [
   connext,
   debridge,
   davos,
-  eclipse,
   gravity,
   harmony,
   chainport,

@@ -4,9 +4,11 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { Bridge } from '.'
-import { CONTRACTS } from '../../common'
+import { addSentimentToDataAvailability, CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Layer2 } from './types'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { add } from 'cheerio/dist/commonjs/api/traversing'
 
 const discovery = new ProjectDiscovery('eclipse')
 
@@ -15,8 +17,8 @@ const withdrawalDelaySeconds = discovery.getContractValue<number>(
   'fraudWindowDuration',
 )
 
-export const eclipse: Bridge = {
-  type: 'bridge',
+export const eclipse: Layer2 = {
+  type: 'layer2',
   id: ProjectId('eclipse'),
   createdAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
   display: {
@@ -24,7 +26,9 @@ export const eclipse: Bridge = {
     slug: 'eclipse',
     description:
       'Eclipse is a sidechain powered by the Solana Virtual Machine (SVM).',
-    category: 'Token Bridge',
+    category: 'Other',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS, REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
+    purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
       apps: [],
@@ -49,8 +53,14 @@ export const eclipse: Bridge = {
       },
     ],
   },
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.CELESTIA],
+      bridge: DA_BRIDGES.NONE,
+      mode: DA_MODES.TRANSACTION_DATA,
+    })
+  ],
   technology: {
-    destination: ['Eclipse'],
     principleOfOperation: {
       name: 'Principle of Operation',
       description:
