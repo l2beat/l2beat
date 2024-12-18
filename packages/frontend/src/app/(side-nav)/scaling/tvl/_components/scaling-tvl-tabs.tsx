@@ -56,7 +56,7 @@ export function ScalingTvlTabs(props: Props) {
               {filteredEntries.validiumsAndOptimiums.length}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {featureFlags.showOthers && filteredEntries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -93,7 +93,7 @@ export function ScalingTvlTabs(props: Props) {
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
+        {featureFlags.showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent
               value="others"
