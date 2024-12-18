@@ -4,10 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
+import { CustomLink } from '~/components/link/custom-link'
 import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
-import { CustomLink } from '../../link/custom-link'
 import { parseSocial } from './parse-social'
 import { type ProjectLink } from './types'
 

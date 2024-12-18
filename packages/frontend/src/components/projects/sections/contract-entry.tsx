@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { CustomLink } from '~/components/link/custom-link'
+import { linkVariants } from '~/components/link/custom-link'
 import { HighlightableLink } from '~/components/link/highlightable/highlightable-link'
 import { Markdown } from '~/components/markdown/markdown'
 import { BulletIcon } from '~/icons/bullet'
@@ -109,9 +109,9 @@ export function ContractEntry({
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((name) => (
-                  <CustomLink key={name} href={`#${name}`}>
+                  <a key={name} className={linkVariants()} href={`#${name}`}>
                     {name}
-                  </CustomLink>
+                  </a>
                 ))}
               </div>
             </div>
