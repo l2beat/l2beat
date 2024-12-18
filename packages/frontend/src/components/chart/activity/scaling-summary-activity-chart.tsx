@@ -136,7 +136,7 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         <div className="flex items-center gap-3">
           <span className="text-xl font-bold">Activity</span>
           <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
             href="/scaling/activity"
           >
             View details
