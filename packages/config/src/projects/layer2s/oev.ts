@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -11,6 +12,10 @@ export const oev: Layer2 = orbitStackL2({
   additionalPurposes: ['Oracles'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'OEV Network',
     slug: 'oev',
     description:

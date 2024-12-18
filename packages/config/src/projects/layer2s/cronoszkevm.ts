@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
@@ -23,6 +24,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   },
   additionalBadges: [Badge.DA.CustomDA],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
     description:

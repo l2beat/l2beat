@@ -5,6 +5,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -92,6 +93,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     ],
   },
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'X Layer',
     slug: 'xlayer',
     description:
