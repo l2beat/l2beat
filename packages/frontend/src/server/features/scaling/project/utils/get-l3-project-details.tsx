@@ -153,6 +153,7 @@ export async function getL3ProjectDetails({
         title: 'Activity',
         projectId: project.id,
         milestones: project.milestones ?? [],
+        category: project.display.category,
       },
     })
   }

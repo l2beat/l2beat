@@ -9,12 +9,14 @@ import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 
+type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+
 interface Params {
   milestones: Milestone[]
   chart: ActivityChartData | undefined
   showMainnet: boolean
   metric?: ActivityMetric
-  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+  type?: ActivityChartType
 }
 
 export function useActivityChartRenderParams({
@@ -90,12 +92,9 @@ export function useActivityChartRenderParams({
   }
 }
 
-function getChartColors(
-  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others',
-): SeriesStyle {
+function getChartColors(type?: ActivityChartType): SeriesStyle {
   switch (type) {
     case 'Rollups':
-    case undefined:
       return {
         fill: 'signature gradient',
         line: 'signature gradient',
@@ -108,6 +107,7 @@ function getChartColors(
         point: 'cyanCircle',
       }
     case 'Others':
+    case undefined:
       return {
         fill: 'yellow gradient',
         line: 'yellow gradient',
