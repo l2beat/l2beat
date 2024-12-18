@@ -7,9 +7,9 @@
     sentiment: "good"
     sources: [
       {
-        contract: "zkEVM"
+        contract: "LineaRollup"
         references: [
-          "https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code"
+          "https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code"
         ]
       }
     ]
@@ -40,9 +40,9 @@
     sentiment: "good"
     sources: [
       {
-        contract: "zkEVM"
+        contract: "LineaRollup"
         references: [
-          "https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code"
+          "https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code"
         ]
       }
     ]
