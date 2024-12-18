@@ -4,11 +4,17 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { addSentimentToDataAvailability, CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
+import {
+  CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  addSentimentToDataAvailability,
+} from '../../common'
+import { RISK_VIEW } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('eclipse')
 
@@ -27,7 +33,10 @@ export const eclipse: Layer2 = {
     description:
       'Eclipse is a sidechain powered by the Solana Virtual Machine (SVM).',
     category: 'Other',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS, REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
@@ -61,7 +70,7 @@ export const eclipse: Layer2 = {
       layers: [DA_LAYERS.CELESTIA],
       bridge: DA_BRIDGES.NONE,
       mode: DA_MODES.TRANSACTION_DATA,
-    })
+    }),
   ],
   riskView: {
     stateValidation: {
@@ -76,8 +85,7 @@ export const eclipse: Layer2 = {
   technology: {
     stateCorrectness: {
       name: 'No state validation',
-      description:
-        `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
+      description: `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
       references: [
         {
           text: 'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
@@ -86,9 +94,10 @@ export const eclipse: Layer2 = {
         {
           text: 'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
           href: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
-        }, {
+        },
+        {
           text: 'Treasury.sol - Etherscan source code, emergencyWithdraw() function',
-          href: 'https://etherscan.io/address/0xa8e15d2b1bf6b0fd3bc9ead06323c0730b67f8d4#code',
+          href: 'https://etherscan.io/address/0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978#code',
         },
       ],
       risks: [

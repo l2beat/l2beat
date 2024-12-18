@@ -276,7 +276,7 @@ export const layer2s: Layer2[] = [
   lyra,
   race,
   ebichain,
-  eclipse, 
+  eclipse,
   mantapacific,
   mantle,
   metal,
