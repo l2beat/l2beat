@@ -13,9 +13,9 @@ import {
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -39,7 +39,10 @@ export const immutablezkevm: Layer2 = {
     description:
       'Immutable zkEVM is a sidechain focused on gaming and powered by Polygon stack. It plans to eventually transition to a ZK Rollup.',
     category: 'Other',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS, REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
