@@ -49,7 +49,7 @@ export function ScalingActivityTabs({
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', featureFlags.showOthers && 'mt-5')}
+        className={cn('mt-4', featureFlags.showOthers && 'md:mt-0')}
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -63,7 +63,7 @@ export function ScalingActivityTabs({
               {filteredEntries.validiumsAndOptimiums.length - 1}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {filteredEntries.others.length > 1 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>

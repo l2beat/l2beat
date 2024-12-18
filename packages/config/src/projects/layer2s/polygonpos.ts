@@ -5,10 +5,17 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import { CONTRACTS, NUGGETS } from '../../common'
+import {
+  CONTRACTS,
+  DA_MODES,
+  NUGGETS,
+  addSentimentToDataAvailability,
+} from '../../common'
+import { DA_LAYERS, RISK_VIEW } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import { Badge } from '../badges'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -21,18 +28,38 @@ const delayString = formatSeconds(
   discovery.getContractValue('Timelock', 'getMinDelay'),
 )
 
-export const polygonpos: Bridge = {
-  type: 'bridge',
+const upgradeDelay = discovery.getContractValue<number>(
+  'Timelock',
+  'getMinDelay',
+)
+
+const currentValidatorSetSize = discovery.getContractValue<number>(
+  'StakeManager',
+  'currentValidatorSetSize',
+)
+
+const currentValidatorSetCap = discovery.getContractValue<number>(
+  'StakeManager',
+  'validatorThreshold',
+)
+
+export const polygonpos: Layer2 = {
+  type: 'layer2',
   id: ProjectId('polygon-pos'),
   createdAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
+  badges: [Badge.VM.EVM, Badge.DA.CustomDA],
   display: {
     name: 'Polygon PoS',
     slug: 'polygon-pos',
+    purposes: ['Universal'],
+    category: 'Other',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
       apps: ['https://wallet.polygon.technology'],
       repositories: ['https://github.com/maticnetwork/'],
+      documentation: ['https://docs.polygon.technology/pos/'],
       socialMedia: [
         'https://twitter.com/0xPolygon',
         'https://forum.polygon.technology/',
@@ -43,9 +70,12 @@ export const polygonpos: Bridge = {
         'https://instagram.com/0xpolygon/',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
     description:
-      'Polygon PoS it the official bridge provided by the Polygon team to bridge assets from Ethereum to Polygon chain. The bridge is validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
-    category: 'Token Bridge',
+      'Polygon PoS is an EVM-compatible, proof of stake sidechain for Ethereum, planning to become a Validium with a state validating bridge. The bridge is currently validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
+  },
+  stage: {
+    stage: 'NotApplicable',
   },
   config: {
     associatedTokens: ['POL', 'MATIC'],
@@ -87,40 +117,45 @@ export const polygonpos: Bridge = {
         tokens: ['ETH'],
       }),
     ],
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://polygon.llamarpc.com',
+      defaultCallsPerMinute: 1500,
+      startBlock: 5000000,
+    },
   },
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.POLYGON_POS_DA],
+      bridge: {
+        value: `${currentValidatorSetSize} validators`,
+        sentiment: 'warning',
+        description:
+          'The bridge verifies that at least 2/3+1 of the Polygon PoS stake has signed off on the checkpoint. The StakeManager contract is the source of truth for the current validator set.',
+      },
+      mode: DA_MODES.TRANSACTION_DATA,
+    }),
+  ],
   riskView: {
-    validatedBy: {
-      value: 'Destination Chain',
+    stateValidation: RISK_VIEW.STATE_NONE,
+    dataAvailability: RISK_VIEW.DATA_POS,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
       description:
-        'Transfers need to be confirmed by 2/3 of Polygon PoS Validators stake.',
-      sentiment: 'warning',
+        RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1').description +
+        ` In Polygon PoS, the sequencers network corresponds to the PoS validators network, which is composed of ${currentValidatorSetSize} members.`,
     },
-    sourceUpgradeability: {
-      value: `Yes`,
-      description: `The bridge can be upgraded by 5/9 MSig.`,
-      sentiment: 'bad',
-    },
-    destinationToken: {
-      ...RISK_VIEW.CANONICAL_OR_WRAPPED,
-      description:
-        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
-        ' Tokens transferred end up as ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_POLYGON_POS(
+      currentValidatorSetSize,
+      currentValidatorSetCap,
+    ),
   },
   technology: {
-    destination: ['Polygon'],
-    canonical: true,
-    principleOfOperation: {
-      name: 'Principle of operation',
+    stateCorrectness: {
+      name: 'No state validation',
       description:
-        'This is a very typical Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the Polygon network. When bridging back to Ethereum tokens are burned on Polygon and then released from the escrow on Ethereum.',
-      references: [],
-      risks: [],
-    },
-    validation: {
-      name: 'Outbound transfers are externally verified, inbound require merkle proof',
-      description:
-        'Validators on the Polygon network watch for events on Ethereum, and when they see that tokens have been locked they mint new tokens on Polygon. Around every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens, users need to present a merkle proof of a burn event that is verified against the checkpoints.',
+        'State updates are settled on Ethereum if signed by at least 2/3+1 of the Polygon PoS validators stake. Contracts on Ethereum do not check whether the state transitions are valid.',
       references: [],
       risks: [
         {
@@ -136,21 +171,26 @@ export const polygonpos: Bridge = {
           text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
         },
       ],
-      isIncomplete: true,
     },
-    destinationToken: {
-      name: 'Destination tokens are upgradeable',
-      description:
-        'Tokens transferred end up as wrapped ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
-      references: [],
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'destination token contract is maliciously upgraded.',
-        },
-      ],
-      isIncomplete: true,
-    },
+    // dataAvailability: {},
+    //operator: {},
+    //forceTransactions: {},
+    //exitMechanisms: [],
+    otherConsiderations: [
+      {
+        name: 'Destination tokens are upgradeable',
+        description:
+          'Tokens transferred end up as wrapped ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
+        references: [],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'destination token contract is maliciously upgraded.',
+          },
+        ],
+        isIncomplete: true,
+      },
+    ],
   },
   contracts: {
     addresses: [
@@ -187,10 +227,6 @@ export const polygonpos: Bridge = {
         description:
           'Maintains the addresses of the contracts used in the system.',
       }),
-      discovery.getContractDetails(
-        'StateSender',
-        'Smart contract containing the logic for syncing the state of registered bridges to the other chain.',
-      ),
       discovery.getContractDetails('DepositManager', {
         description:
           'Contract to deposit and escrow ETH, ERC20 or ERC721 tokens. Currently only used for POL.',

@@ -1,6 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { featureFlags } from '~/consts/feature-flags'
@@ -45,9 +44,6 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
-              {featureFlags.showOthers && (
-                <HorizontalSeparator className="max-lg:hidden" />
-              )}
               {!featureFlags.showOthers && (
                 <MainPageCard>
                   <ScalingCostsChart

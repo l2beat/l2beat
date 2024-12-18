@@ -93,7 +93,9 @@ function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
   )
 }
 
-export type ScalingFinalityEntry = ReturnType<typeof getScalingFinalityEntry>
+export type ScalingFinalityEntry = NonNullable<
+  ReturnType<typeof getScalingFinalityEntry>
+>
 function getScalingFinalityEntry(
   project: Layer2,
   changes: ProjectChanges,
@@ -102,6 +104,9 @@ function getScalingFinalityEntry(
 ) {
   const dataAvailability = getCurrentEntry(project.dataAvailability)
   const data = getFinalityData(finalityProjectData, project)
+  if (!data) {
+    return
+  }
   return {
     ...getCommonScalingEntry({
       project,

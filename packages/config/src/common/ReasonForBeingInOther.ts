@@ -3,20 +3,20 @@ export const REASON_FOR_BEING_OTHER = {
     label: 'No proofs',
     shortDescription: "The proof system isn't fully functional",
     description:
-      'Projects without a proof system fully rely on single entities to safely update the state of the rollup. A malicious proposer can finalize an invalid state, which can cause loss of funds.',
+      'Projects without a proper proof system fully rely on single entities to safely update the state. A malicious proposer can finalize an invalid state, which can cause loss of funds.',
   },
   CLOSED_PROOFS: {
     label: 'Closed proofs',
     shortDescription:
       'There are less than 5 external actors that can submit challenges',
     description:
-      'Projects without a sufficiently decentralized set of challengers rely on few entities to safely update the state of the rollup. A small set of challengers can collude with the proposer to finalize an invalid state, which can cause loss of funds.',
+      'Projects without a sufficiently decentralized set of challengers rely on few entities to safely update the state. A small set of challengers can collude with the proposer to finalize an invalid state, which can cause loss of funds.',
   },
   NO_DA_ORACLE: {
-    label: 'No DA oracle',
-    shortDescription: 'There is no data availability oracle',
+    label: 'No DA bridge',
+    shortDescription: 'There is no data availability bridge',
     description:
-      'Projects without a data availability oracle fully rely on single entities (the sequencer) to honestly rely available data roots on Ethereum. A malicious sequencer can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
+      'Projects without a data availability bridge fully rely on single entities (the sequencer) to honestly rely available data roots on Ethereum. A malicious sequencer can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
   },
   SMALL_DAC: {
     label: 'Small DAC',

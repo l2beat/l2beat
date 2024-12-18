@@ -181,7 +181,6 @@ export const dydx: Layer2 = {
         },
       },
     ],
-    finality: 'coming soon',
   },
   dataAvailability: [
     addSentimentToDataAvailability({

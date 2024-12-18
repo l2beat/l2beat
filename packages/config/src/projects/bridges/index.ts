@@ -18,7 +18,6 @@ import { hop } from './hop'
 import { hyphen } from './hyphen'
 import { immutablezkevm } from './immutablezkevm'
 import { layerzerov2oft } from './layerzerov2oft'
-import { lightlink } from './lightlink'
 import { lzOmnichain } from './lzOmnichain'
 import { multichain } from './multichain'
 import { near } from './near'
@@ -29,7 +28,6 @@ import { opticsV2 } from './opticsV2'
 import { orbit } from './orbit'
 import { orbiter } from './orbiter'
 import { pNetwork } from './pNetwork'
-import { polygonpos } from './polygonpos'
 import { polynetwork } from './polynetwork'
 import { portal } from './portal'
 import { pulseChain } from './pulseChain'
@@ -71,7 +69,6 @@ export const bridges: Bridge[] = [
   immutablezkevm,
   lzOmnichain,
   layerzerov2oft,
-  lightlink,
   multichain,
   near,
   fraxferry,
@@ -81,7 +78,6 @@ export const bridges: Bridge[] = [
   opticsV2,
   orbit,
   orbiter,
-  polygonpos,
   polynetwork,
   pNetwork,
   pulseChain,

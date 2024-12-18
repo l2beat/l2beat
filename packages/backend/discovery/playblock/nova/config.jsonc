@@ -33,7 +33,16 @@
       "ignoreRelatives": ["nativeToken"]
     },
     "SequencerInbox": {
-      "extends": "orbitstack/SequencerInbox"
+      "extends": "orbitstack/SequencerInbox",
+      "fields": {
+        "maxTimeVariation": {
+          "handler": {
+            "type": "call",
+            "method": "function maxTimeVariation() view returns (uint256, uint256, uint256, uint256)",
+            "args": []
+          }
+        }
+      }
     },
     "UpgradeExecutor": {
       "fields": {

@@ -52,7 +52,7 @@ export const zora: Layer2 = opStackL2({
       url: 'https://explorer.zora.energy/api',
       type: 'blockscout',
     },
-    // ~ Timestamp of block number 0 on Mode
+    // ~ Timestamp of block number 0 on Zora
     // The first full hour timestamp that will return the block number
     // https://explorer.zora.energy/block/0
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
