@@ -46,7 +46,7 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
       </div>
       <p className="mt-2.5 text-base font-bold">
         Learn more about the recategorisation{' '}
-        <OutLink href={externalLinks.recategorisationArticle}>here</OutLink>.
+        <OutLink href={externalLinks.articles.recategorisation}>here</OutLink>.
       </p>
     </div>
   )
