@@ -96,6 +96,7 @@ export function ActivityChart({
           showEthereum={showMainnet}
           metric={metric}
           singleProject={filter.projectIds?.length === 1}
+          type={type}
         />
       )}
       useLogScale={scale === 'log'}
