@@ -62,6 +62,7 @@ export default async function Page() {
                     ...entries.validiumsAndOptimiums,
                     ...entries.others,
                   ]}
+                  type="Rollups"
                 />
               </MainPageCard>
             )}

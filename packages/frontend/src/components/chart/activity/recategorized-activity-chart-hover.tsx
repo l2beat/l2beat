@@ -61,7 +61,7 @@ export function RecategorizedActivityChartHover(props: Props) {
           <div className="flex items-start gap-1">
             <div
               className={cn(
-                'relative mt-1 inline-block size-3 rounded',
+                'relative mt-0.5 inline-block size-3 rounded sm:mt-1',
                 v.className,
               )}
             ></div>
@@ -93,7 +93,7 @@ export function RecategorizedActivityChartHover(props: Props) {
           <div className="flex items-start gap-1">
             <div
               className={cn(
-                'relative mt-1 inline-block size-3 rounded',
+                'relative mt-0.5 inline-block size-3 rounded sm:mt-1',
                 v.className,
               )}
             ></div>
