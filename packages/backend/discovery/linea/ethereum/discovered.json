@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 21417565,
-  "configHash": "0xcb60824a4c5bb17e3b06511e935eaf46e853967ae798618f52c421cd82f7e6a5",
+  "blockNumber": 21429772,
+  "configHash": "0xf2dfd0e4f87c64588a0507b4d384bb5c4a3a6c87925ec587b4a661be1e9ca266",
   "contracts": [
     {
       "name": "TokenBridge",
@@ -209,7 +209,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "balance": 27951107176410,
+        "balance": 26151983677759,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -296,6 +296,16 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
       "issuedPermissions": [
+        {
+          "permission": "operateLinea",
+          "target": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+          "via": []
+        },
+        {
+          "permission": "operateLinea",
+          "target": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
@@ -440,11 +450,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x80adf36efabd13cb3a0dea72a629a06387cfd436423878b4a699989daf4e6cd4",
-        "currentFinalizedState": "0xf1f4360b36e18083a1a37844f3227438cb24e76ce8aeda317497490edef30406",
+        "currentFinalizedShnarf": "0xb408988bba7db6e26e397b4f0a517ba0d70daba06296622358744d1e96b4a05a",
+        "currentFinalizedState": "0xcce7cc04c2f8ba178deb02aab4dd37f7cbd24208919274c55e66d7fc5de809fd",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "61633905880000000000",
+        "currentPeriodAmountInWei": "277600000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
         "GENESIS_SHNARF": "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f",
@@ -460,6 +470,10 @@
         "isPaused_L2_L1": false,
         "limitInWei": "18750000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
+        "Operators": [
+          "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+          "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+        ],
         "OUTBOX_STATUS_RECEIVED": 2,
         "OUTBOX_STATUS_SENT": 1,
         "OUTBOX_STATUS_UNKNOWN": 0,
@@ -570,10 +584,13 @@
     {
       "name": "Roles",
       "address": "0xF24f1DC519d88246809B660eb56D94048575d083",
+      "template": "gnosisSafeModules/Roles",
       "sourceHashes": [
         "0x699a67bde09c0d73c29ec9de66133bfee484544494865d954ac01f9736efed30"
       ],
       "proxyType": "gnosis safe zodiac module",
+      "displayName": "RolesModule",
+      "description": "the Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -674,10 +691,26 @@
     { "address": "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE" },
     { "address": "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9" },
     { "address": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8" },
-    { "address": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e" },
+    {
+      "address": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+        }
+      ]
+    },
     { "address": "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB" },
     { "address": "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4" },
-    { "address": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754" },
+    {
+      "address": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+        }
+      ]
+    },
     { "address": "0x5822D8457c00FB82203918ED92907b935B9D40AE" },
     { "address": "0x9376c137AF5124FFc39bD8940A3D88D1cd508992" },
     { "address": "0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A" },
@@ -1200,7 +1233,8 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "linea/LineaRollup": "0x2f20e28d3868cf97a163fd003abbaa10af0c73c66039bd0c4e1871f15bfc7c04",
+    "gnosisSafeModules/Roles": "0x4648651bf3bd92507ead691042ece4e855fc5a15a48f35c1c0ee22893fb7af55",
+    "linea/LineaRollup": "0xef3c5b89a0f59fd674142bd2ca0d7efcc8f0ca2b1698e9c9b9c7b22394a05e8b",
     "linea/TokenBridge": "0xc7f437cd95670bba903eb5000ed21ebe4bd697a425d8392364aad7253a2d60fb"
   }
 }

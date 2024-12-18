@@ -19,6 +19,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  ScalingProjectPermissionedAccount,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'

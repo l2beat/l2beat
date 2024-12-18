@@ -44,7 +44,7 @@
       "target": {
         "permissions": [{ "type": "operateLinea" }]
       }
-    }
+    },
     // enum PauseType {
     // 0  UNUSED,
     // 1  GENERAL,

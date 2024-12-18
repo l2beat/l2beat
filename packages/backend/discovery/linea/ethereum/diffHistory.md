@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7ef837f6d805cdadbed4718ae3dbe02e23989b8c
+Generated with discovered.json: 0x969b049a961073fe1ebe133ebcb7f361c31833c9
 
-# Diff at Mon, 16 Dec 2024 21:05:27 GMT:
+# Diff at Wed, 18 Dec 2024 13:40:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3a99da1f8daebc5ab5be09d95ef4f970422af2f2 block: 21078909
-- current block number: 21417565
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21078909
+- current block number: 21429772
 
 ## Description
 
@@ -212,6 +212,18 @@ discovery. Values are for block 21078909 (main branch discovery), not current.
       name:
 -        "zkEVM"
 +        "LineaRollup"
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0xd6B95c960779c72B8C6752119849318E5d550574","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"operateLinea","target":"0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "operateLinea"
+      issuedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+      issuedPermissions.0.via.0:
+-        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}
       values.generalPause:
 -        false
       values.l1l2Pause:
@@ -266,10 +278,24 @@ discovery. Values are for block 21078909 (main branch discovery), not current.
 +        false
       values.isPaused_L2_L1:
 +        false
+      values.Operators:
++        ["0x46d2F319fd42165D4318F099E143dEA8124E9E3e","0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"]
       template:
 +        "linea/LineaRollup"
       description:
 +        "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2."
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: the Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      template:
++        "gnosisSafeModules/Roles"
+      displayName:
++        "RolesModule"
+      description:
++        "the Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe."
     }
 ```
 
