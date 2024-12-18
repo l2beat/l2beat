@@ -15,6 +15,7 @@ import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
 import { ScalingFactorTooltip } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
+import { RecategorizedActivityChartHover } from './recategorized-activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 import { useRecategorizedActivityChartRenderParams } from './use-recategorized-activity-chart-render-params'
 
@@ -96,8 +97,6 @@ function RecategorizedActivityChart({
     filter: { type: 'all' },
   })
 
-  console.log(data?.data.at(-1))
-
   const { columns, valuesStyle, formatYAxisLabel } =
     useRecategorizedActivityChartRenderParams({
       chart: data,
@@ -112,13 +111,7 @@ function RecategorizedActivityChart({
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <ul>
-          <li>{new Date(data.timestamp * 1000).toISOString()}</li>
-          <li>{data.rollupsUops}</li>
-          <li>{data.validiumAndOptimiumsUops}</li>
-          <li>{data.othersUops}</li>
-          <li>{data.ethereumUops}</li>
-        </ul>
+        <RecategorizedActivityChartHover {...data} />
       )}
     >
       <section className="flex flex-col gap-4">
@@ -127,8 +120,16 @@ function RecategorizedActivityChart({
         <ChartLegend
           elements={[
             {
-              name: 'Projects',
+              name: 'Rollups',
               color: 'bg-n-pink-500',
+            },
+            {
+              name: 'Validiums & Optimiums',
+              color: 'bg-n-teal-500',
+            },
+            {
+              name: 'Others',
+              color: 'bg-n-yellow-700',
             },
             {
               name: 'Ethereum',

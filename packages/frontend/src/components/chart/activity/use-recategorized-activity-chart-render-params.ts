@@ -54,10 +54,10 @@ export function useRecategorizedActivityChartRenderParams({
           ],
           data: {
             timestamp,
-            rollupsUops,
-            validiumAndOptimiumsUops,
-            othersUops,
-            ethereumUops,
+            rollupsCount,
+            validiumAndOptimiumsCount,
+            othersCount,
+            ethereumCount,
           },
           milestone,
         }

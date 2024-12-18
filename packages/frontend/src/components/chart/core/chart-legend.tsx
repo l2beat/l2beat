@@ -11,7 +11,12 @@ interface ChartLegendProps {
 
 export function ChartLegend(props: ChartLegendProps) {
   return (
-    <div className={cn('flex w-full justify-center gap-2', props.className)}>
+    <div
+      className={cn(
+        'flex w-full flex-wrap justify-center gap-2',
+        props.className,
+      )}
+    >
       {props.elements.map((e) => (
         <div key={e.name} className="flex items-center gap-[3px]">
           <div className={cn('size-[10px] rounded-sm', e.color)} />
