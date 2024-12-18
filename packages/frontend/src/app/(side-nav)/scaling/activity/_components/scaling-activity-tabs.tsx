@@ -63,7 +63,7 @@ export function ScalingActivityTabs({
               {filteredEntries.validiumsAndOptimiums.length - 1}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 1 && (
+          {featureFlags.showOthers && filteredEntries.others.length > 1 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -101,7 +101,7 @@ export function ScalingActivityTabs({
           </DirectoryTabsContent>
         </TableSortingProvider>
         {/* Greater than one because we always have the Ethereum entry */}
-        {filteredEntries.others.length > 1 && (
+        {featureFlags.showOthers && filteredEntries.others.length > 1 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent
               value="others"
