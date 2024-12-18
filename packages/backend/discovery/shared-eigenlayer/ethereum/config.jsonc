@@ -190,12 +190,6 @@
           }
         }
       }
-    },
-    "DelegationManager": {
-      "description": "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator."
-    },
-    "StrategyManager": {
-      "description": "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
     }
   }
 }
