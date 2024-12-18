@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { HttpClient2 } from '../http/HttpClient2'
+import { HttpClient } from '../http/HttpClient'
 import { RpcClient } from './RpcClient'
 
 export const erc20Interface = new utils.Interface([
@@ -13,7 +13,7 @@ export const erc20Interface = new utils.Interface([
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -34,7 +34,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getBlock.name, () => {
     it('include tx bodies', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -61,7 +61,7 @@ describe(RpcClient.name, () => {
     })
 
     it('do not include tx bodies', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockResponse(100),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -88,7 +88,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getTransaction.name, () => {
     it('fetches tx from rpc and parsers response', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: mockRawTx('0x1'),
         }),
@@ -112,7 +112,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
     it('fetches tx receipt from rpc and parsers response', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: mockReceipt,
         }),
@@ -136,7 +136,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getBalance.name, () => {
     it('returns balance for given address and block', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x7B' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -158,7 +158,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x123abc' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -195,7 +195,7 @@ describe(RpcClient.name, () => {
     })
 
     it('handles numeric block numbers', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x1' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -229,7 +229,7 @@ describe(RpcClient.name, () => {
     })
 
     it('includes from address if provided', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
@@ -265,7 +265,7 @@ describe(RpcClient.name, () => {
     })
 
     it('handles empty response', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: '0x' }),
       })
       const rpc = mockClient({ http })
@@ -284,7 +284,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => 'data-returned-from-api',
       })
 
@@ -334,14 +334,14 @@ describe(RpcClient.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
+  http?: HttpClient
   url?: string
   generateId?: () => string
 }) {
   return new RpcClient({
     sourceName: 'chain',
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient2>({}),
+    http: deps.http ?? mockObject<HttpClient>({}),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

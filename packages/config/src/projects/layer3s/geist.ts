@@ -10,7 +10,7 @@ export const geist: Layer3 = upcomingL3({
     name: 'Geist',
     slug: 'geist',
     description:
-      'Geist is an upcoming Layer 3 on Base, built on the Orbit stack. It is focused on creating a better gaming- and metaverse experience.',
+      'Geist is an upcoming Layer 3 on Base, built on the Orbit stack. It is focused on creating a better gaming and metaverse experience.',
     purposes: ['Gaming'],
     category: 'Optimium',
     provider: 'Arbitrum',

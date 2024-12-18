@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x61bb2abc25873ee5cbc6fd74a69cf3ea384a4f54
+
+# Diff at Mon, 16 Dec 2024 13:50:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33537d5b381f743921fc5e40006feb3f31e39a6 block: 628196
+- current block number: 673467
+
+## Description
+
+Minor upgrade of RewardsDistributor, which disables the claim of KINTO for all new users and limits claims to actors that can provide a valid merkle proof.
+
+## Watched changes
+
+```diff
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd15c713ccbe36c94f3701cc26df68875ded4c439ee290c429fd64be35c66d8ad"
++        "0xc84bc54272227a1f3a6c1edaf40ac11aeaf8651129538971e06e0fefa48c99bc"
+      values.$implementation:
+-        "0x5b4D3f7d5876a68107F755BE97cDef36091A336F"
++        "0xF3D955B4cF3489A37027f0F3484E87328dBdBB39"
+      values.$pastUpgrades.7:
++        ["2024-12-13T23:57:35.000Z","0xc25ca9b0d2a50eba7cec62481c5c83f9222786f3c29479977ff1182a2871c768",["0xF3D955B4cF3489A37027f0F3484E87328dBdBB39"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.NEW_USER_REWARD_END_TIMESTAMP:
++        1734133547
+    }
+```
+
+## Source code changes
+
+```diff
+.../RewardsDistributor/RewardsDistributor.sol      | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 628196 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
 Generated with discovered.json: 0xd84106a81a6dc6efcdb8dc2e7a535d8d7075456b
 
 # Diff at Wed, 11 Dec 2024 11:55:37 GMT:

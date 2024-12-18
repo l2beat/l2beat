@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -43,6 +43,28 @@ export const zora: Layer2 = opStackL2({
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',
+  },
+  chainConfig: {
+    name: 'zora',
+    chainId: 7777777,
+    explorerUrl: 'https://explorer.zora.energy/',
+    explorerApi: {
+      url: 'https://explorer.zora.energy/api',
+      type: 'blockscout',
+    },
+    // ~ Timestamp of block number 0 on Zora
+    // The first full hour timestamp that will return the block number
+    // https://explorer.zora.energy/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 5882,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'zora',
   },
   genesisTimestamp: new UnixTime(1686695915),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),

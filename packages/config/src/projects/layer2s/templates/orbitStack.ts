@@ -58,6 +58,7 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
@@ -108,6 +109,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 interface OrbitStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
+  additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
@@ -312,6 +314,18 @@ function orbitStackCommon(
   explorerLinkFormat: string,
   blockNumberOpcodeTimeSeconds: number,
 ): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+  const nativeContractRisks = templateVars.nonTemplateContractRisks ?? [
+    CONTRACTS.UPGRADE_NO_DELAY_RISK,
+  ]
+
+  const discoveryDrivenSections = templateVars.discoveryDrivenData
+    ? generateDiscoveryDrivenSections(
+        templateVars.discovery,
+        nativeContractRisks,
+        templateVars.additionalDiscoveries,
+      )
+    : undefined
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -392,23 +406,19 @@ function orbitStackCommon(
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: {
-      addresses:
-        templateVars.discoveryDrivenData === true
-          ? templateVars.discovery.getDiscoveredContracts()
-          : unionBy(
-              [
-                ...(templateVars.nonTemplateContracts ?? []),
-                ...templateVars.discovery.resolveOrbitStackTemplates()
-                  .contracts,
-              ],
-              'address',
-            ),
-      nativeAddresses: templateVars.nativeAddresses,
-      risks: templateVars.nonTemplateContractRisks ?? [
-        CONTRACTS.UPGRADE_NO_DELAY_RISK,
-      ],
-    },
+    contracts: discoveryDrivenSections
+      ? discoveryDrivenSections.contracts
+      : {
+          addresses: unionBy(
+            [
+              ...(templateVars.nonTemplateContracts ?? []),
+              ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
+            ],
+            'address',
+          ),
+          nativeAddresses: templateVars.nativeAddresses,
+          risks: nativeContractRisks,
+        },
     chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness:
@@ -511,16 +521,17 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions:
-      templateVars.discoveryDrivenData === true
-        ? templateVars.discovery.getDiscoveredPermissions()
-        : [
-            sequencers,
-            validators,
-            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-            ...(templateVars.nonTemplatePermissions ?? []),
-          ],
-    nativePermissions: templateVars.nativePermissions,
+    permissions: discoveryDrivenSections
+      ? discoveryDrivenSections.permissions
+      : [
+          sequencers,
+          validators,
+          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
+          ...(templateVars.nonTemplatePermissions ?? []),
+        ],
+    nativePermissions: discoveryDrivenSections
+      ? discoveryDrivenSections.nativePermissions
+      : templateVars.nativePermissions,
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -1005,7 +1016,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,
-      finality: templateVars.finality ?? 'coming soon',
+      finality: templateVars.finality,
     },
   }
 }

@@ -21,7 +21,7 @@
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone."
+    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
     sentiment: "warning"
     sources: [
       {
