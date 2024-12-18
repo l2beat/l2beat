@@ -12,8 +12,8 @@ export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)
   const { setRect } = useChartRect()
   const context = useChartContext()
-  const { theme: rawTheme } = useTheme()
-  const theme = rawTheme === 'light' ? 'light' : 'dark'
+  const { resolvedTheme } = useTheme()
+  const theme = resolvedTheme === 'light' ? 'light' : 'dark'
 
   const setupCanvas = useCallback(() => {
     const chart = ref.current

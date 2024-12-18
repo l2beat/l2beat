@@ -9,7 +9,6 @@ export function getFillStyle(
   ctx: CanvasRenderingContext2D,
   fill: SeriesStyleFill,
   theme: 'dark' | 'light',
-
   minY: number,
 ) {
   const fillStyle = FILL_STYLES[fill](ctx, minY)
