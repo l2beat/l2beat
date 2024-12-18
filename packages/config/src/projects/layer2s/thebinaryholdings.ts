@@ -17,6 +17,8 @@ export const thebinaryholdings: Layer2 = opStackL2({
     name: 'The Binary Holdings',
     slug: 'thebinaryholdings',
     shortName: 'Binary',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement. It uses its own token (BNRY) for gas.',
     links: {

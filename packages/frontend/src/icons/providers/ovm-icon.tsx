@@ -26,7 +26,7 @@ export function OVMIcon(props: SvgIconProps) {
             id={gradientId}
             x1="24"
             y1="3"
-            x2="id6"
+            x2="0"
             y2="21"
             gradientUnits="userSpaceOnUse"
           >

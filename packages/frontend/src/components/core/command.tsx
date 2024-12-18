@@ -170,7 +170,7 @@ const CommandItem = ({
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-gray-400 data-[disabled=true]:opacity-50 sidebar:data-[selected='true']:!bg-surface-tertiary dark:data-[selected='true']:bg-zinc-800",
+      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-gray-400 data-[disabled=true]:opacity-50 sidebar:data-[selected=true]:!bg-surface-tertiary dark:data-[selected=true]:bg-zinc-800',
       className,
     )}
     {...props}
