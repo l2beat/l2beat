@@ -32,7 +32,10 @@ export const cyber: Layer2 = opStackL2({
   ],
   additionalPurposes: ['Social'],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     name: 'Cyber',
     slug: 'cyber',
     architectureImage: 'opstack-dachallenge',
