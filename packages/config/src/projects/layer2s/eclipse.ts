@@ -8,7 +8,7 @@ import { addSentimentToDataAvailability, CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MO
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { add } from 'cheerio/dist/commonjs/api/traversing'
+import { RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('eclipse')
 
@@ -42,6 +42,9 @@ export const eclipse: Layer2 = {
       ],
     },
   },
+  stage: {
+    stage: 'NotApplicable',
+  },
   // rpcUrl: 'https://mainnetbeta-rpc.eclipse.xyz', custom VM, i guess it's different
   config: {
     escrows: [
@@ -60,11 +63,21 @@ export const eclipse: Layer2 = {
       mode: DA_MODES.TRANSACTION_DATA,
     })
   ],
+  riskView: {
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      secondLine: `${formatSeconds(withdrawalDelaySeconds)} challenge period`,
+    },
+    dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
   technology: {
-    principleOfOperation: {
-      name: 'Principle of Operation',
+    stateCorrectness: {
+      name: 'No state validation',
       description:
-        'Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig.',
+        `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
       references: [
         {
           text: 'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
@@ -73,14 +86,11 @@ export const eclipse: Layer2 = {
         {
           text: 'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
           href: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
+        }, {
+          text: 'Treasury.sol - Etherscan source code, emergencyWithdraw() function',
+          href: 'https://etherscan.io/address/0xa8e15d2b1bf6b0fd3bc9ead06323c0730b67f8d4#code',
         },
       ],
-      risks: [],
-    },
-    validation: {
-      name: 'Third party validation',
-      description:
-        'Deposits are processed by the bridge operators on the Eclipse side. There is no mechanism to send messages back to Ethereum.',
       risks: [
         {
           category: 'Users can be censored if',
@@ -91,24 +101,6 @@ export const eclipse: Layer2 = {
           text: 'the Treasury owner decides to transfer the funds locked on L1.',
         },
       ],
-      references: [
-        {
-          text: 'Treasury.sol - Etherscan source code, emergencyWithdraw() function',
-          href: 'https://etherscan.io/address/0xa8e15d2b1bf6b0fd3bc9ead06323c0730b67f8d4#code',
-        },
-      ],
-    },
-  },
-  riskView: {
-    validatedBy: {
-      value: 'Third Party',
-      description: 'Centralized operators control the bridge.',
-      sentiment: 'bad',
-    },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Contracts are instantly upgradable.',
-      sentiment: 'bad',
     },
   },
   contracts: {
