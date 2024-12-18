@@ -50,6 +50,7 @@ function ActivityChart({
       chart: data,
       milestones: [],
       showMainnet: SHOW_MAINNET,
+      type: 'Rollups',
     })
 
   return (
@@ -60,7 +61,11 @@ function ActivityChart({
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <ActivityChartHover {...data} showEthereum={SHOW_MAINNET} />
+        <ActivityChartHover
+          {...data}
+          showEthereum={SHOW_MAINNET}
+          type="Rollups"
+        />
       )}
     >
       <section className="flex flex-col gap-4">
