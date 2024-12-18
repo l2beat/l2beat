@@ -14,6 +14,7 @@ import {
 import { RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('eclipse')
@@ -27,6 +28,7 @@ export const eclipse: Layer2 = {
   type: 'layer2',
   id: ProjectId('eclipse'),
   createdAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
+  badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
   display: {
     name: 'Eclipse',
     slug: 'eclipse',
