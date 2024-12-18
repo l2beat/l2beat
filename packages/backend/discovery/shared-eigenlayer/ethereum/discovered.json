@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 21430819,
-  "configHash": "0x7349334faa0dca5dec981eddc8d41389fb913269c2eb70439b12b99645ddd418",
+  "blockNumber": 21430864,
+  "configHash": "0xce6f3b5c51896f38b5c0cdc0883c6671ae8863381df08602d9701df3925d9628",
   "contracts": [
     {
       "name": "DepositContract",
@@ -14,14 +14,15 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x3ed51b0000000000",
-        "get_deposit_root": "0x1795d51dd40095439b423b716c670a43b86323f4c203280ac235b15666214eb6"
+        "get_deposit_count": "0x5ad51b0000000000",
+        "get_deposit_root": "0xa3f3153422a099dac962b8ba60cb625d0be17a566d5b590b6c37036c62cab8b7"
       },
       "derivedName": "DepositContract"
     },
     {
       "name": "PauserRegistry",
       "address": "0x0c431C66F4dE941d089625E5B423D00707977060",
+      "template": "eigenlayer/PauserRegistry",
       "sourceHashes": [
         "0x3b8d61b335423f5ba47369c8a865fa7f3296ba457e10069b0b9c46bcb03aa1e8"
       ],
@@ -687,6 +688,7 @@
     {
       "name": "StrategyManager",
       "address": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+      "template": "eigenlayer/StrategyManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x02ef571f391efe8c4fe859f372cc691e345de88a1fc59df7f13eacbd8bba7bfa"
@@ -2383,8 +2385,10 @@
   },
   "usedTemplates": {
     "eigenlayer/DelegationManager": "0xfd8a130049bfff9fc3c44c2deb1a10a23a935b24bcaad7f0f7fde023a4f6c64f",
+    "eigenlayer/PauserRegistry": "0x070e0d2a87a66e7ea1a572a7be4c4f4ea1fea174ae98f39eabd05f307a9351d3",
     "eigenlayer/RewardAllStakersActionGenerator": "0xa1e72b495b3db29f665cecb787384e2469675c651996509c1a9b43e6f30b6dbf",
     "eigenlayer/Strategy": "0x7f05c104dc174e8bef77b9dc89f63e4f829a85217763c51f54824635c2e3eba8",
+    "eigenlayer/StrategyManager": "0xa913ef7b6496bca4d6c19934fbae1a9b7e2f02652b42bd598085ccbad9f248a5",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }

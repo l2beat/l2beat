@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+    "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.",
+    "fields": {
+      "pausers": {
+        "handler": {
+          "type": "arrayFromOneEvent",
+          "event": "PauserStatusChanged",
+          "valueKey": "pauser",
+          "flagKey": "canPause"
+        },
+        "target": {
+          "permissions": [
+            {
+              "type": "act"
+            }
+          ]
+        }
+      }
+    }
+}
