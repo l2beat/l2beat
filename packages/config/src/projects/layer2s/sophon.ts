@@ -4,6 +4,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
 import { Layer2 } from './types'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 
 const discovery = new ProjectDiscovery('sophon')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -24,6 +25,7 @@ export const sophon: Layer2 = zkStackL2({
   display: {
     name: 'Sophon',
     slug: 'sophon',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
