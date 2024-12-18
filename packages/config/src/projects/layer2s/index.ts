@@ -39,6 +39,7 @@ import { degate3 } from './degate3'
 import { degenlayer } from './degenlayer'
 import { dydx } from './dydx'
 import { ebichain } from './ebichain'
+import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
@@ -277,6 +278,7 @@ export const layer2s: Layer2[] = [
   lyra,
   race,
   ebichain,
+  eclipse,
   mantapacific,
   mantle,
   metal,

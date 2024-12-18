@@ -20,6 +20,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'honeypot',
   'degate3',
   'dydx',
+  'eclipse',
   'fuel',
   'fuelv1',
   'gpt',
