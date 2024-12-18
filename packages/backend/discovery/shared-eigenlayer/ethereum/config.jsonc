@@ -50,23 +50,6 @@
     "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
   },
   "overrides": {
-    "RewardAllStakersActionGenerator": {
-      "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
-    },
-    "TokenHopper": {
-      "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
-      "ignoreInWatchMode": ["latestPress", "canPress"],
-      "fields": {
-        "latestPress": {
-          "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals.",
-          "severity": "LOW"
-        },
-        "getHopperConfiguration": {
-          "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds.",
-          "severity": "MEDIUM"
-        }
-      }
-    },
     "EIGENProxyAdmin": {
       "fields": {
         "accessControl": {
@@ -157,19 +140,6 @@
     },
     "EigenLayerBeaconOracle": {
       "ignoreMethods": ["findBlockRoot", "timestampToBlockRoot"]
-    },
-    "AVSDirectory": {
-      "fields": {
-        "avs": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "OperatorAVSRegistrationStatusUpdated",
-            "valueKey": "avs"
-          }
-        }
-      },
-      "ignoreRelatives": ["avs"],
-      "ignoreInWatchMode": ["avs"]
     }
   }
 }

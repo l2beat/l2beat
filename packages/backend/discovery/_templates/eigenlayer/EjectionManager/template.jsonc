@@ -33,6 +33,6 @@
         "event": "QuorumEjectionParams",
         "valueKey": "ejectableStakePercent"
       }
-    },
+    }
   }
 }
