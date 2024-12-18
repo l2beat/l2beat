@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x9e83db4208a9cd700fadf4cb42e80bfaf4401728
+
+# Diff at Wed, 18 Dec 2024 09:52:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 673467
+- current block number: 678230
+
+## Description
+
+This upgrade adds the ArbSys contract (`0x0000000000000000000000000000000000000064`) as a system contract, whitelisting it in the STF to be called by EOAs. This is necessary for withdrawing ETH from Kinto from an EOA, e.g. in a forced transaction.
+
+The token contract of the KINTO token is upgraded to integrate new delegation and token voting libraries.
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x44215a226a4f9bbe6261cc55102df996258b9a5a2456bcfd1e33e7bb9886a8a7"
++        "0x4f5f7229da06877c8ec759071cd3d1999f9680fa1d5a7e5d5381558383c25b22"
+      values.$implementation:
+-        "0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"
++        "0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"
+      values.$pastUpgrades.4:
++        ["2024-12-18T00:08:48.000Z","0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8",["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]]
+      values.$pastUpgrades.3:
++        ["2024-12-17T20:37:39.000Z","0xbe1519e9c0c006360238f02214b8b50211659d44f2c37353ce47efdc9db07352",["0xDd11ab74e0e8B042F843447F5754376f2F303492"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.CLOCK_MODE:
++        "mode=timestamp"
+    }
+```
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      values.getNonce:
+-        217
++        220
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs. Accordingly, users can only transact from their smart wallets.
+      values.getSystemContracts.16:
++        "0x0000000000000000000000000000000000000064"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BridgedKinto/BridgedKinto.sol                  | 3562 ++++++++++++--------
+ 1 file changed, 2213 insertions(+), 1349 deletions(-)
+```
+
 Generated with discovered.json: 0x61bb2abc25873ee5cbc6fd74a69cf3ea384a4f54
 
 # Diff at Mon, 16 Dec 2024 13:50:33 GMT:
