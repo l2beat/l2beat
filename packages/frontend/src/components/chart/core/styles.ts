@@ -28,6 +28,7 @@ interface PointClassNames {
   pinkCircle: PointShapeDefinition
   cyanCircle: PointShapeDefinition
   yellowCircle: PointShapeDefinition
+  blueCircle: PointShapeDefinition
   blueSquare: PointShapeDefinition
   roundedPurpleSquare: PointShapeDefinition
   roundedBlueSquare: PointShapeDefinition
@@ -59,6 +60,10 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   yellowCircle: {
     type: 'div',
     className: 'size-2 rounded-full border-2 border-current bg-n-yellow-700',
+  },
+  blueCircle: {
+    type: 'div',
+    className: 'size-2 rounded-full border-2 border-current bg-blue-600',
   },
   blueSquare: {
     type: 'div',

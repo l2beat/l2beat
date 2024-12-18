@@ -87,7 +87,7 @@ export function useRecategorizedActivityChartRenderParams({
       {
         fill: 'blue gradient',
         line: 'blue gradient',
-        point: 'blueSquare',
+        point: 'blueCircle',
       },
     ],
     [],
