@@ -38,7 +38,7 @@ export function RecategorizedActivityChartHover(props: Props) {
   ]
 
   return (
-    <div className="min-w-36">
+    <div className="w-40 sm:w-60">
       <div className="mb-1.5 whitespace-nowrap">
         {formatTimestamp(props.timestamp, {
           mode: 'date',
@@ -56,16 +56,16 @@ export function RecategorizedActivityChartHover(props: Props) {
       {values.map((v) => (
         <div
           key={v.title}
-          className="flex w-full items-center justify-between gap-2"
+          className="flex w-full items-start justify-between gap-2"
         >
-          <div className="flex items-center gap-1">
+          <div className="flex items-start gap-1">
             <div
               className={cn(
-                'relative inline-block size-3 rounded',
+                'relative mt-1 inline-block size-3 rounded',
                 v.className,
               )}
             ></div>
-            <span>{v.title}</span>
+            <span className="w-20 sm:w-fit">{v.title}</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
             {props.syncedUntil && props.syncedUntil < props.timestamp
@@ -88,16 +88,16 @@ export function RecategorizedActivityChartHover(props: Props) {
       {values.map((v) => (
         <div
           key={v.title}
-          className="flex w-full items-center justify-between gap-2"
+          className="flex w-full items-start justify-between gap-2"
         >
-          <div className="flex items-center gap-1">
+          <div className="flex items-start gap-1">
             <div
               className={cn(
-                'relative inline-block size-3 rounded',
+                'relative mt-1 inline-block size-3 rounded',
                 v.className,
               )}
             ></div>
-            <span>{v.title}</span>
+            <span className="w-20 sm:w-fit">{v.title}</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
             {props.syncedUntil && props.syncedUntil < props.timestamp
