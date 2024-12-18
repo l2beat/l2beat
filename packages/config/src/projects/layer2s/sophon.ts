@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
 import { Layer2 } from './types'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 
 const discovery = new ProjectDiscovery('sophon')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
