@@ -1,5 +1,5 @@
-@import './markdown.css';
-@import './article.css';
+@import "./markdown.css";
+@import "./article.css";
 
 @tailwind base;
 @tailwind components;
@@ -88,16 +88,18 @@
    It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
    Temporary solution until project page is redesigned to new colors.
   */
-  body:has(.sidebar) [data-role='select-content'] {
+  body:has(.sidebar) [data-role="select-content"] {
     @apply bg-surface-secondary;
   }
-  body:has(.sidebar) [data-role='select-content'] [role='option'] {
+  body:has(.sidebar) [data-role="select-content"] [role="option"] {
     @apply focus:bg-surface-tertiary;
   }
-  body:has(.sidebar.main-page-card) [data-role='select-content'] {
+  body:has(.sidebar.main-page-card) [data-role="select-content"] {
     @apply bg-surface-primary;
   }
-  body:has(.sidebar.main-page-card) [data-role='select-content'] [role='option'] {
+  body:has(.sidebar.main-page-card)
+    [data-role="select-content"]
+    [role="option"] {
     @apply focus:bg-surface-secondary;
   }
 }
@@ -161,8 +163,18 @@
   }
 
   .chart-fade-out-to-bottom {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
   }
 
   /* For Webkit-based browsers (Chrome, Safari and Opera) */
