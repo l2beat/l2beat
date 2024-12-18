@@ -84,6 +84,16 @@
               }
             ]
           }
+        },
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "change the contract state and upgrade the bridge. @@@"
+              }
+            ]
+          }
         }
       }
     },

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.",
+  "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
   "ignoreMethods": [
     "sharesToUnderlying",
     "sharesToUnderlyingView",

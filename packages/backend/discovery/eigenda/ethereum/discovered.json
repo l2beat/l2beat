@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 21386394,
-  "configHash": "0xc6b1a6c4b15f8735eabfffa93eeba71fbc743a9043bf28eb435a7f05b8a648f7",
+  "configHash": "0xff1e9ed2ffa829610b00ac46492a0aee3022cf3912e524313ca627d0b6989676",
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -12,6 +12,7 @@
         "0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Keeps track of the total stake of each operator.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -120,12 +121,19 @@
         "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum",
+      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
           "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "via": []
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can approve the replacement of churned operators from a quorum"
         }
       ],
       "ignoreInWatchMode": ["registeredOperators"],
@@ -463,8 +471,13 @@
         "0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract used for ejection of operators from the RegistryCoordinator.",
+      "description": "Responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
@@ -932,6 +945,7 @@
         "0xb0f8e019272d9343047a9e89cbb9526954b9e2a1149fdc2476e7c29759b38951"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -947,6 +961,17 @@
           "permission": "configure",
           "target": "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
+          "via": [
+            {
+              "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+              "delay": 0,
+              "description": "can approve the replacement of churned operators from a quorum"
+            }
+          ]
         },
         {
           "permission": "upgrade",
@@ -1431,8 +1456,34 @@
     { "address": "0xaBd099133278ACF0415186c88F34e01b05D116f6" },
     { "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0" },
     { "address": "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7" },
-    { "address": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8" },
-    { "address": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734" },
+    {
+      "address": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum."
+        }
+      ]
+    },
+    {
+      "address": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can approve the replacement of churned operators from a quorum",
+          "via": [{ "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "@@@ TODO: act independently but permissions are limited"
+        }
+      ]
+    },
     { "address": "0xe7fFd467F7526abf9c8796EDeE0AD30110419127" },
     { "address": "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4" }
   ],
@@ -2023,7 +2074,7 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/EjectionManager": "0xb5c46205bf1e35452e10c8015c98bece257b7c2adb82ab4999fda33193a8a894",
+    "eigenlayer/EjectionManager": "0x7cfd95106af3381a07b4fe9aaef575c52257dacb57ebb1c9467b2e3e7a39c9bb",
     "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"

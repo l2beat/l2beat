@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21430864,
-  "configHash": "0xce6f3b5c51896f38b5c0cdc0883c6671ae8863381df08602d9701df3925d9628",
+  "configHash": "0x1c2321239d01201584bad9a5ae805389bb376cf8b54689f70674d52669706ab4",
   "contracts": [
     {
       "name": "DepositContract",
@@ -57,6 +57,7 @@
     {
       "name": "TokenHopper",
       "address": "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563",
+      "template": "eigenlayer/TokenHopper",
       "sourceHashes": [
         "0x7a33b4c0c58212ece91ddbb1006f31ba22a346c26b7b89555d88d72b195aec84"
       ],
@@ -93,6 +94,7 @@
     {
       "name": "AVSDirectory",
       "address": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+      "template": "eigenlayer/AVSDirectory",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xda5855140fd893c11984d2ce3e5c9833d7024c104ca1eaf0a5b756f81e55087c"
@@ -544,6 +546,7 @@
     {
       "name": "RewardsCoordinator",
       "address": "0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "template": "eigenlayer/RewardsCoordinator",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xe548a802866b09c90c208e0f77018c9cdafa34ab07c071eac1e68c0a46d384b9"
@@ -1264,7 +1267,7 @@
       "sourceHashes": [
         "0x6be5dd10217b2d3a9bca287766865129906f886adb603752ddcb21538ef683ea"
       ],
-      "description": "Contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.",
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1723232207,
       "values": {
@@ -1294,6 +1297,7 @@
     {
       "name": "EIGEN token",
       "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "template": "eigenlayer/EIGEN token",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x857392f0c602177fab038b9cc445ed977e9367e7ac3b70515f6296d459a585af"
@@ -2384,11 +2388,15 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/AVSDirectory": "0x7c586f2543cfcaed7b0c25c5309baca81d55b76a18a28c5afa369848b3a9bf86",
     "eigenlayer/DelegationManager": "0xfd8a130049bfff9fc3c44c2deb1a10a23a935b24bcaad7f0f7fde023a4f6c64f",
+    "eigenlayer/EIGEN token": "0x6b817e446fa1b2182fbc6aeda4fd861d47c5e91f8858e3a3d6511607bc319515",
     "eigenlayer/PauserRegistry": "0x070e0d2a87a66e7ea1a572a7be4c4f4ea1fea174ae98f39eabd05f307a9351d3",
     "eigenlayer/RewardAllStakersActionGenerator": "0xa1e72b495b3db29f665cecb787384e2469675c651996509c1a9b43e6f30b6dbf",
-    "eigenlayer/Strategy": "0x7f05c104dc174e8bef77b9dc89f63e4f829a85217763c51f54824635c2e3eba8",
+    "eigenlayer/RewardsCoordinator": "0xb5ccc5edff6a864c5ccde2e1d3e6e67ab972eeb0f576bf49cbe32269a349bf48",
+    "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
     "eigenlayer/StrategyManager": "0xa913ef7b6496bca4d6c19934fbae1a9b7e2f02652b42bd598085ccbad9f248a5",
+    "eigenlayer/TokenHopper": "0x974987837863d269833e3896df2ffc7615b0876423263369b2bb4449b93a96a6",
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }

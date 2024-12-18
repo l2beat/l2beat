@@ -1,3 +1,125 @@
+Generated with discovered.json: 0xc632cffdd30184204b178e24946eb6e831cdd916
+
+# Diff at Wed, 18 Dec 2024 19:40:46 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@4a595e12be28b493e7ee29410db8191a131e7ae4 block: 21429022
+- current block number: 21430864
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429022 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.
+      template:
++        "eigenlayer/PauserRegistry"
+      description:
++        "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager."
+    }
+```
+
+```diff
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      template:
++        "eigenlayer/TokenHopper"
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      template:
++        "eigenlayer/AVSDirectory"
+    }
+```
+
+```diff
+    contract EigenLayerExecutorMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"act","target":"0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"}
+      directlyReceivedPermissions.0.target:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "0x0c431C66F4dE941d089625E5B423D00707977060"
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      template:
++        "eigenlayer/DelegationManager"
+      description:
++        "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator."
+    }
+```
+
+```diff
+    contract GnosisSafe (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x0c431C66F4dE941d089625E5B423D00707977060"}]
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      template:
++        "eigenlayer/RewardsCoordinator"
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      template:
++        "eigenlayer/StrategyManager"
+      description:
++        "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      template:
++        "eigenlayer/RewardAllStakersActionGenerator"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"act","target":"0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF","delay":864000}
+      directlyReceivedPermissions.0.target:
+-        "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF"
++        "0x0c431C66F4dE941d089625E5B423D00707977060"
+      directlyReceivedPermissions.0.delay:
+-        864000
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      template:
++        "eigenlayer/EIGEN token"
+      description:
++        "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract."
+    }
+```
+
 Generated with discovered.json: 0x79b881bc073e17c0b4a3ce9698ef8a05529c470f
 
 # Diff at Wed, 18 Dec 2024 11:09:45 GMT:

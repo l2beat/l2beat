@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x56d58bf036ae294a4879a63b7f27c361119b0468
+
+# Diff at Wed, 18 Dec 2024 19:40:44 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@4a595e12be28b493e7ee29410db8191a131e7ae4 block: 21365898
+- current block number: 21386394
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21365898 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: Keeps track of the total stake of each operator.
+      description:
++        "Keeps track of the total stake of each operator."
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      description:
+-        "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum"
++        "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum."
+      directlyReceivedPermissions:
++        [{"permission":"configure","target":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can approve the replacement of churned operators from a quorum"}]
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).
+      description:
+-        "Contract used for ejection of operators from the RegistryCoordinator."
++        "Responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA)."
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      issuedPermissions.4:
++        {"permission":"upgrade","target":"0x8247EF5705d3345516286B72bFE6D690197C2E99","via":[]}
+      issuedPermissions.3:
++        {"permission":"configure","target":"0xe0550117Cb066D3b330eBd764B0d75D3BA378734","via":[{"address":"0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","delay":0,"description":"can approve the replacement of churned operators from a quorum"}]}
+      issuedPermissions.2:
++        {"permission":"configure","target":"0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","target":"0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
+      description:
++        "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser."
+    }
+```
+
 Generated with discovered.json: 0x266d513bb55e652a9011ddefc4f87da60c466b71
 
 # Diff at Mon, 09 Dec 2024 15:40:04 GMT:
