@@ -147,8 +147,8 @@
       "ignoreMethods": ["proxiableUUID"]
     },
     "BridgedKinto": {
-      "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply", "clock"]
     },
     "RewardsDistributor": {
       "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],

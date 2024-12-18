@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 21394305,
+  "blockNumber": 21428964,
   "configHash": "0xb5ce17cb1c9c00fea8d4213e87c3d8579a04a2db4839ef0f4e2fdd6516de1262",
   "contracts": [
     {
@@ -231,7 +231,7 @@
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
+        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
       },
       "derivedName": "Vault"
     },
@@ -259,7 +259,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 375,
+        "nonce": 376,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -534,7 +534,7 @@
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
+        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
       },
       "derivedName": "Vault"
     },
@@ -654,7 +654,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 8475,
+        "globalMessageCount": 8786,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -810,7 +810,8 @@
           "0x12a4CC40a8F89E40F8C849c2F89741D5C9590a14",
           "0x94104d7801f30d2f9069118C65Fe63A3A11515B1",
           "0xA2bE759B86CeA53372C3e9a882047cdC3884D568",
-          "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93"
+          "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93",
+          "0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -914,7 +915,7 @@
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
+        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
       },
       "derivedName": "Vault"
     },
@@ -1164,7 +1165,7 @@
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
+        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
       },
       "derivedName": "Vault"
     },
@@ -1261,7 +1262,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 211,
+        "nonce": 213,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1287,10 +1288,6 @@
     { "address": "0x4cEa25e9c999E69F45765539783D149024f99F12" },
     { "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e" },
     { "address": "0x5ECfd6968593159e5b4f06832857943409122849" },
-    {
-      "name": "socketadmin.eth EOA",
-      "address": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
-    },
     { "address": "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52" },
     { "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E" },
     { "address": "0x9eab2223d84060E212354BfA620BF687b6E9Ae20" },

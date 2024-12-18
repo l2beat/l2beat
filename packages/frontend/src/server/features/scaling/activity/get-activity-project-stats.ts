@@ -27,7 +27,7 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
   const summed = sumUopsCount(counts)
 
   return {
-    txCount: summed,
+    uopsCount: summed,
     lastDayUops: getLastDayUops(counts),
     uopsWeeklyChange: getUopsWeeklyChange(counts),
   }
@@ -36,7 +36,7 @@ async function getActivityProjectStatsData(projectId: ProjectId) {
 function getMockActivityProjectStatsData(): ActivityProjectStats {
   return {
     lastDayUops: 15,
-    txCount: 1500,
+    uopsCount: 1500,
     uopsWeeklyChange: 0.1,
   }
 }

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x79b881bc073e17c0b4a3ce9698ef8a05529c470f
+
+# Diff at Wed, 18 Dec 2024 11:09:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21357574
+- current block number: 21429022
+
+## Description
+
+EigenLayerTokenMultisig threshold increased to 4/6.
+
+## Watched changes
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x951069dec9580ef9487e7c2cbfaf18e249e8a21a
 
 # Diff at Mon, 09 Dec 2024 15:51:32 GMT:
