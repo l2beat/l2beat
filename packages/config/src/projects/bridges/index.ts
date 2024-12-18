@@ -16,7 +16,6 @@ import { gravity } from './gravity'
 import { harmony } from './harmony'
 import { hop } from './hop'
 import { hyphen } from './hyphen'
-import { immutablezkevm } from './immutablezkevm'
 import { layerzerov2oft } from './layerzerov2oft'
 import { lzOmnichain } from './lzOmnichain'
 import { multichain } from './multichain'
@@ -66,7 +65,6 @@ export const bridges: Bridge[] = [
   chainport,
   hop,
   hyphen,
-  immutablezkevm,
   lzOmnichain,
   layerzerov2oft,
   multichain,

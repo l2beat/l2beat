@@ -5,9 +5,16 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import { CONTRACTS } from '../../common'
+import {
+  CONTRACTS,
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  RISK_VIEW,
+  addSentimentToDataAvailability,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Bridge } from './types'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -16,8 +23,13 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-export const immutablezkevm: Bridge = {
-  type: 'bridge',
+const withdrawalDelay = discovery.getContractValue<number>(
+  'Bridge',
+  'withdrawalDelay',
+)
+
+export const immutablezkevm: Layer2 = {
+  type: 'layer2',
   id: ProjectId('immutablezkevm'),
   createdAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
   display: {
@@ -25,7 +37,8 @@ export const immutablezkevm: Bridge = {
     slug: 'immutablezkevm',
     description:
       'Immutable zkEVM is a sidechain focused on gaming and powered by Polygon stack. It plans to eventually transition to a ZK Rollup.',
-    category: 'Token Bridge',
+    category: 'Other',
+    purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
       apps: [],
@@ -34,6 +47,9 @@ export const immutablezkevm: Bridge = {
       repositories: [],
       socialMedia: ['https://twitter.com/Immutable'],
     },
+  },
+  stage: {
+    stage: 'NotApplicable',
   },
   config: {
     associatedTokens: ['IMX'],
@@ -46,22 +62,33 @@ export const immutablezkevm: Bridge = {
       },
     ],
   },
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.EXTERNAL],
+      bridge: DA_BRIDGES.NONE,
+      mode: DA_MODES.TRANSACTION_DATA,
+    }),
+  ],
+  riskView: {
+    stateValidation: {
+      ...RISK_VIEW.STATE_NONE,
+      secondLine: `${formatSeconds(withdrawalDelay)} challenge period`,
+    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
   technology: {
-    destination: ['Immutable zkEVM'],
-    principleOfOperation: {
-      name: 'Principle of Operation',
-      description: `Immutable zkEVM bridge makes use of Axelar network to transfer assets between Ethereum and Immutable zkEVM. A deposit starts by a user depositing tokens on the Bridge contract and then the tokens are minted on the destination chain.
+    stateCorrectness: {
+      name: 'No state validation',
+      description: `Immutable zkEVM bridge makes use of Axelar network (a Cosmos chain) to transfer assets between Ethereum and Immutable zkEVM. As in any standard Cosmos chain, validators are bonded by staking tokens and can be slashed by social consensus for misbehaviour. 
+
+A deposit starts by a user depositing tokens on the Bridge contract and then the tokens are minted on the destination chain.
 
 Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mechanism that controls outflows of the bridge escrow. The ProxyAdmin or an address with the rate_control role can define so-called buckets for each token: Each bucket has a capacity and a refill rate. All withdrawals that exceed the tokens bucket capacity trigger the withdrawal queue, which delays subsequent withdrawals of *any* of the bridges' assets for a time defined in withdrawalDelay (currently ${formatSeconds(
-        discovery.getContractValue('Bridge', 'withdrawalDelay'),
+        withdrawalDelay,
       )}).`,
-      references: [],
-      risks: [],
-    },
-    validation: {
-      name: 'Validators running PoS consensus',
-      description:
-        'Messages are verified by the Validators running the Axelar network which, technically, is a Cosmos chain. As in any standard Cosmos chain, Validators are bonded by staking tokens and can be slashed for misbehavior.',
       references: [],
       risks: [
         {
@@ -77,26 +104,6 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
           text: "validators relay a withdraw request that wasn't originated on the source chain.",
         },
       ],
-    },
-    destinationToken: {
-      name: 'Destination tokens are not upgradable',
-      description:
-        'Tokens on the destination end up as wrapped ERC20 proxies that are not upgradable, using EIP-1167.',
-      references: [],
-      risks: [],
-    },
-  },
-  riskView: {
-    validatedBy: {
-      value: 'Third Party',
-      description: "2/3 Validators' Stake",
-      sentiment: 'bad',
-    },
-    sourceUpgradeability: {
-      value: "2/3 Validators' Stake",
-      description:
-        'Contracts are upgradable by the same Validators that validate message transfers.',
-      sentiment: 'warning',
     },
   },
   permissions: [
