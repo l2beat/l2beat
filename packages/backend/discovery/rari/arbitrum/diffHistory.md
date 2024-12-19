@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd1e8b72b5f49b9d335dbcf7c943323cd3400487f
+Generated with discovered.json: 0x4e89616060e833ee7222d66ef38b25deca2186b0
 
-# Diff at Thu, 19 Dec 2024 13:41:31 GMT:
+# Diff at Thu, 19 Dec 2024 15:17:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@4676b49a4cd0a785c6d8fc57d5ad1d10cf53266d block: 279492285
-- current block number: 286407105
+- current block number: 286430025
 
 ## Description
 
@@ -139,7 +139,7 @@ Upgrade to ArbOS v32 with [the 'Celestia Nitro 3.2.1' tag](https://github.com/ce
 ```diff
 +   Status: CREATED
     contract OneStepProverHostIo (0xaAe0A2EB9C0fb6C97c095283030d0af635f44d3F)
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version references the [Blobstream DA bridge](https://arbiscan.io/address/0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794).
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the [Blobstream DA bridge](https://arbiscan.io/address/0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
 ```
 
 ## Source code changes
