@@ -202,7 +202,7 @@ const config: Config = {
       'indicator-validiums-optimiums': 'var(--indicator-validiums-optimiums)',
       'indicator-others': 'var(--indicator-others)',
       'indicator-ethereum': 'var(--indicator-ethereum)',
-      'success-positive': 'var(--success-positive)',
+      positive: 'var(--positive)',
       'link-stroke': 'var(--link-stroke)',
       link: 'var(--link)',
     },
