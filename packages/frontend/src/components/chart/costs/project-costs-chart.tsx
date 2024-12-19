@@ -42,7 +42,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     })
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -87,7 +87,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
             ]}
           />
         </ChartControlsWrapper>
-        <Chart />
+        <Chart className="mt-2" />
         {featureFlags.showOthers && <CostsChartLegend />}
         <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>

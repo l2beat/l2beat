@@ -85,7 +85,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
     })
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-2">
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -97,7 +97,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
         )}
       >
         <Header resolution={resolution} chartRange={chartRange} />
-        <Chart />
+        <Chart className="mt-2" />
         {featureFlags.showOthers && <CostsChartLegend />}
         <ChartControlsWrapper>
           <div className="flex flex-wrap gap-1">

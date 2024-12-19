@@ -76,7 +76,7 @@ export function ProjectActivityChart({
         />
       )}
     >
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-2">
         <ChartControlsWrapper>
           <ProjectChartTimeRange range={chartRange} />
           <ActivityTimeRangeControls
@@ -85,7 +85,7 @@ export function ProjectActivityChart({
             projectSection
           />
         </ChartControlsWrapper>
-        <Chart />
+        <Chart className="mt-2" />
         {featureFlags.showOthers && (
           <ChartLegend
             elements={[
