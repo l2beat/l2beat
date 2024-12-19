@@ -26,7 +26,7 @@ export function ScalingSummaryTvlChart({
   const { showOthers } = featureFlags
 
   if (showOthers) {
-    return <RecategorizedChart unit={unit} timeRange={timeRange} />
+    return <RecategorizedTvlChart unit={unit} timeRange={timeRange} />
   } else {
     return <TvlChart unit={unit} timeRange={timeRange} />
   }
@@ -67,7 +67,7 @@ function TvlChart({
   )
 }
 
-function RecategorizedChart({
+function RecategorizedTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
