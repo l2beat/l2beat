@@ -1,3 +1,169 @@
+Generated with discovered.json: 0x4e89616060e833ee7222d66ef38b25deca2186b0
+
+# Diff at Thu, 19 Dec 2024 15:17:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4676b49a4cd0a785c6d8fc57d5ad1d10cf53266d block: 279492285
+- current block number: 286430025
+
+## Description
+
+Upgrade to ArbOS v32 with [the 'Celestia Nitro 3.2.1' tag](https://github.com/celestiaorg/nitro/releases/tag/v3.2.1-rc.1). This upgrade is mostly to known contracts except for the SequencerInbo and OneStepProverHostIo, of which the former includes a new Celestia header among minor changes but the latter includes references to use Blobstream on Arbitrum as the source of truth for fault proof DA.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.$implementation.1:
+-        "0x5bc2d4D25446Fa7C51Eefe10e2FdF846bD355A5d"
++        "0x107B8ff1daeEFc37c27fc794fdb0828A1B5Af262"
+      values.$implementation.0:
+-        "0x8470c94a718f062156a4663ea797359E908b5836"
++        "0x086Fe1f212A4F311f1e3027A35dE3d45dC4AFA42"
+      values.$pastUpgrades.2:
++        ["2024-12-18T16:01:31.000Z","0xf6ba2a68694536996ab068340a4b4abc811a9d72c0ad5c2af34ccea6c7a25c88",["0x086Fe1f212A4F311f1e3027A35dE3d45dC4AFA42","0x107B8ff1daeEFc37c27fc794fdb0828A1B5Af262"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v32 wasmModuleRoot"
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
++        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x32Cb8609A12C6155333adc1594Eb5D4b78701fF7)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x40c6d6C9F97FD8390025eBeF5e790CffFd450088)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x6aDA4af3EAFF458cb7851581c3784f43C16b9b8F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge.
+      template:
+-        "orbitstack/SequencerInbox"
++        "orbitstack/SequencerInbox_Celestia"
+      sourceHashes.1:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x7c44d7be0909b7d0aaf2c476c9c337b43f59f311d40469f3e0cc99dc46308b56"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
++        "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge."
+      values.$implementation:
+-        "0x305eD6932AbF2e997832C570E467320BbA1491F4"
++        "0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2"
+      values.$pastUpgrades.2:
++        ["2024-12-18T16:01:31.000Z","0xf6ba2a68694536996ab068340a4b4abc811a9d72c0ad5c2af34ccea6c7a25c88",["0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.sequencerVersion:
+-        "0x88"
++        "0x63"
+      values.CELESTIA_MESSAGE_HEADER_FLAG:
++        "0x63"
+    }
+```
+
+```diff
+    contract ChallengeManager (0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      values.$implementation:
+-        "0x7Eac96FDa155F0cE911d93D540e405e4020B082D"
++        "0xFd7A2567C6b56153f1b0D4FDbCc671d178a971fc"
+      values.$pastUpgrades.3:
++        ["2024-12-18T16:01:31.000Z","0xf6ba2a68694536996ab068340a4b4abc811a9d72c0ad5c2af34ccea6c7a25c88",["0xFd7A2567C6b56153f1b0D4FDbCc671d178a971fc"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.osp:
+-        "0xF01b22DB890C47774c1E275A68FEE3757Dc72AaA"
++        "0x44fBCc2210BdC537f36bc9B98aCd3b63CC8f712c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xAB6D90EC412c4B5Db66e3DefEC32754311b1D91A)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0xF01b22DB890C47774c1E275A68FEE3757Dc72AaA)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x0B851CA3b2f92Ad257283C38d95dC3Ded917300F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x1fE9a7F654e8c7d0c63f0182ccBff91a0Ef68716)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x44fBCc2210BdC537f36bc9B98aCd3b63CC8f712c)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x8E83dB08E847E4b79CbD1F5E4DE56A9A6e882c6a)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0xaAe0A2EB9C0fb6C97c095283030d0af635f44d3F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the [Blobstream DA bridge](https://arbiscan.io/address/0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+```
+
+## Source code changes
+
+```diff
+.../OneStepProverHostIo.sol                        | 1312 +++++++++++++++++++-
+ .../SequencerInbox/SequencerInbox.sol              |  117 +-
+ 2 files changed, 1340 insertions(+), 89 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 279492285 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287:
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x84f6a18d33645257c2ed73e2a18f252fcae8fda8
 
 # Diff at Thu, 05 Dec 2024 12:02:30 GMT:
