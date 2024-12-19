@@ -5,6 +5,9 @@
   "initialAddresses": [
     "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364" // SystemConfig
   ],
+  "names": {
+    "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": "PermissionedDisputeGame" // currently unverified
+  },
   "types": {
     "DisputeGameMap": {
       "typeCaster": "Mapping",
@@ -12,6 +15,11 @@
         "0": "FaultDisputeGame",
         "1": "PermissionedDisputeGame"
       }
+    }
+  },
+  "overrides": {
+    "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": { // currently unverified
+      "extends": "opstack/PermissionedDisputeGame"
     }
   }
 }

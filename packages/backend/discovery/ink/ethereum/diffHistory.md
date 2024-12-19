@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcb8f2a0ca818e87ce23a57bf4a5adeca749f7c05
+Generated with discovered.json: 0xf3860e2c82bfb8913ab150cbf178246085df2265
 
-# Diff at Thu, 19 Dec 2024 09:44:52 GMT:
+# Diff at Thu, 19 Dec 2024 14:04:14 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 21435721
@@ -115,8 +115,8 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059)
-    +++ description: None
+    contract PermissionedDisputeGame (0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
 ```
 
 ```diff

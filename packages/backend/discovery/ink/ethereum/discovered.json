@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "blockNumber": 21435721,
-  "configHash": "0x1cfd738876819e4ed5f79cb2ee9abd881dd650baa9b91e1484ce8d762a365bc1",
+  "configHash": "0xc36092e433fa176714f37c62e731a31945ae49e3e83de1453583f27c636bfb56",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -784,11 +784,14 @@
       }
     },
     {
-      "name": "",
+      "name": "PermissionedDisputeGame",
       "address": "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059",
       "unverified": true,
+      "template": "opstack/PermissionedDisputeGame",
+      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1733498411,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "GelatoMultisig",
@@ -1537,6 +1540,7 @@
     "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal2": "0xdb11d2f7a8ea7a7cf25298feb8edc6f567ae5eca0d6f3acde5323cd958b9a50f",
+    "opstack/PermissionedDisputeGame": "0xa1884f80a601b59449ceecf3d0038d91830a8a382dd8da199c2081e4cb5596b5",
     "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef"
   }
 }
