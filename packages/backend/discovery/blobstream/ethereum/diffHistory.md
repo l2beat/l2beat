@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x51e6fe8f9fea26136664ef4d0acc40c6fdf87250
+Generated with discovered.json: 0x808b402e53f2dc90a002a2d2f491ee9ce6e99191
 
-# Diff at Thu, 19 Dec 2024 11:15:31 GMT:
+# Diff at Thu, 19 Dec 2024 11:44:47 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 21357513
@@ -41,14 +41,14 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
 
 ```diff
     contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
-    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
       values.$admin:
 -        "0x0000000000000000000000000000000000000000"
 +        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
       values.guardians:
 +        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
       description:
-+        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
++        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here."
       issuedPermissions:
 +        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]},{"permission":"upgrade","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
     }

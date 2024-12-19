@@ -167,7 +167,7 @@
         "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
+      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -381,7 +381,7 @@
         {
           "permission": "configure",
           "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
-          "description": "can call commitHeaderRange() to commit block ranges."
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
       ]
     },
@@ -743,7 +743,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xb08f46d0aca89ab9e693fac4ce77f0033aecd7b83ddc62dde1b0a2a2f2460f1e",
+    "succinct/SP1Blobstream": "0x5239a551f1b7f7dea00c9509b56f0bcb4db60b4fbfc43835e3e131da6c36425f",
     "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
     "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
   }
