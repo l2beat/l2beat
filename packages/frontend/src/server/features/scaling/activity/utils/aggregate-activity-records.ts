@@ -1,9 +1,13 @@
 import { type ActivityRecord } from '@l2beat/database'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 
-export function aggregateActivityRecords(entries: ActivityRecord[]) {
+export function aggregateActivityRecords(
+  entries: ActivityRecord[],
+  forEthereum = false,
+) {
   const startTimestamp = entries.find(
-    (e) => e.projectId !== ProjectId.ETHEREUM && e.count > 0,
+    (e) =>
+      (forEthereum ? true : e.projectId !== ProjectId.ETHEREUM) && e.count > 0,
   )?.timestamp
 
   if (!startTimestamp) {
