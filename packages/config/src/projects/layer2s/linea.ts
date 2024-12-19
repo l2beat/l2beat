@@ -415,8 +415,18 @@ export const linea: Layer2 = {
       ],
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      description:
+        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
+        ' Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to post data.',
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      description:
+        RISK_VIEW.PROPOSER_CANNOT_WITHDRAW.description +
+        ' Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to propose state with valid proofs.',
+    },
   },
   stage: getStage({
     stage0: {
@@ -479,16 +489,23 @@ export const linea: Layer2 = {
     forceTransactions: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR('zk', 'merkle proof'),
         description:
-          EXITS.REGULAR('zk', 'no proof').description +
+          EXITS.REGULAR('zk', 'merkle proof').description +
           ' Note that withdrawal requests can be censored by the Sequencer. ' +
-          withdrawalLimitString,
+          withdrawalLimitString +
+          `
+          
+          Users can (eventually, after 6 months of inactivity from the centralized Operator) exit by replacing the Operator. In such a case they need to self-propose and prove their new state on the base layer with the required software which is currently not made available.`,
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
             text: 'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
             href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+          },
+          {
+            text: 'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
+            href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code#F1#L212',
           },
         ],
       },
