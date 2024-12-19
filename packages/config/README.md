@@ -56,7 +56,7 @@ In some tests rpc calls to ethereum network are performed through Alchemy. In or
 | ImmutableX                        | https://medium.com/@immutablex                           |
 | Layer2.Finance, Layer2.Finance-zk | https://blog.celer.network/                              |
 | Loopring                          | https://medium.com/loopring-protocol                     |
-| Metis                             | https://medium.com/@MetisDAO                             |
+| Metis                             | https://www.metis.io/blog                                |
 | myria                             | https://medium.com/@myriagames                           |
 | OMGNetwork                        | -                                                        |
 | Optimism                          | https://optimism.mirror.xyz/                             |
@@ -64,5 +64,5 @@ In some tests rpc calls to ethereum network are performed through Alchemy. In or
 | RSS3, Value Sublayer              | https://rss3.io/blog                                     |
 | Sorare                            | https://medium.com/sorare                                |
 | Starknet                          | https://medium.com/starkware                             |
-| ZkSpace, ZkSwap V1, ZkSwap V2     | https://medium.com/@zkspaceofficial                      |
+| ZkSpace, ZkSwap V1, ZkSwap V2     | https://alpha.zks.org/blog                               |
 | zkSync                            | https://blog.matter-labs.io                              |
