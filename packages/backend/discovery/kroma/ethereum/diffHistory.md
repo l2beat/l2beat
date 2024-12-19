@@ -1932,7 +1932,7 @@ Previously, validators could only withdraw funds to themselves. Now, with the wi
 
 ### 2. Change in block header hash function for Colosseum
 
-With the Shanghai upgrade on the Kroma mainnet, a withdrawalsRoot field has been added to the block header. Accordingly, the hash function for obtaining the block header in Colosseum has been modified. Implemenatation contract address: `0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066`
+With the Shanghai upgrade on the Kroma mainnet, a withdrawalsRoot field has been added to the block header. Accordingly, the hash function for obtaining the block header in Colosseum has been modified. Implementation contract address: `0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066`
 
 ### Current Context
 

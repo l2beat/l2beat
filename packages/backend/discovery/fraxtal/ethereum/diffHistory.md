@@ -1490,7 +1490,7 @@ Generated with discovered.json: 0xc3e8941178b3803db5522df6ac9a70c1c4868b70
 
 ## Description
 
-frxETH owner transfered to a 2-day timelock.
+frxETH owner transferred to a 2-day timelock.
 
 ## Watched changes
 
