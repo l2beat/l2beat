@@ -50,23 +50,6 @@
     "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
   },
   "overrides": {
-    "RewardAllStakersActionGenerator": {
-      "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
-    },
-    "TokenHopper": {
-      "description": "Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).",
-      "ignoreInWatchMode": ["latestPress", "canPress"],
-      "fields": {
-        "latestPress": {
-          "description": "Timestamp of the latest press. A button-press makes a call (calldata and cooldown are defined by the owner). Anyone can press the button at the defined time intervals.",
-          "severity": "LOW"
-        },
-        "getHopperConfiguration": {
-          "description": "Current configuration of the TokenHopper, like calldata executed at each button-press (actionGenerator), target (token) and cooldownSeconds.",
-          "severity": "MEDIUM"
-        }
-      }
-    },
     "EIGENProxyAdmin": {
       "fields": {
         "accessControl": {
@@ -76,16 +59,6 @@
         }
       },
       "description": "ProxyAdmin owner of the timelock contract owning the EIGEN token contract."
-    },
-    "RewardsCoordinator": {
-      "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
-      "ignoreMethods": [
-        "getCurrentClaimableDistributionRoot",
-        "getCurrentDistributionRoot",
-        "getDistributionRootAtIndex",
-        "getDistributionRootsLength",
-        "currRewardsCalculationEndTimestamp"
-      ]
     },
     "StrategiesBeacon": {
       "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory."
@@ -120,16 +93,6 @@
         }
       }
     },
-    "EIGEN token": {
-      "ignoreMethods": ["getPastTotalSupply", "clock"],
-      "ignoreInWatchMode": ["totalSupply"],
-      "fields": {
-        "transferRestrictionsDisabledAfter": {
-          "description": "Timestamp after which transfer restrictions (whitelist) are disabled. Preset to uint256 max. Restrictions disabled if == 0.",
-          "severity": "HIGH"
-        }
-      }
-    },
     "EIGEN Timelock": {
       "fields": {
         "accessControl": {
@@ -156,31 +119,6 @@
     },
     "EigenLayerBeaconOracle": {
       "ignoreMethods": ["findBlockRoot", "timestampToBlockRoot"]
-    },
-    "AVSDirectory": {
-      "fields": {
-        "avs": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "OperatorAVSRegistrationStatusUpdated",
-            "valueKey": "avs"
-          }
-        }
-      },
-      "ignoreRelatives": ["avs"],
-      "ignoreInWatchMode": ["avs"]
-    },
-    "PauserRegistry": {
-      "fields": {
-        "pausers": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "PauserStatusChanged",
-            "valueKey": "pauser",
-            "flagKey": "canPause"
-          }
-        }
-      }
     }
   }
 }

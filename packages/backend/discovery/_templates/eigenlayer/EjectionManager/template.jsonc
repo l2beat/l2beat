@@ -8,6 +8,14 @@
         "event": "EjectorUpdated",
         "valueKey": "ejector",
         "flagKey": "status"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "can eject DA operators from a quorum."
+          }
+        ]
       }
     },
     "ejectionRateLimitWindow": {
