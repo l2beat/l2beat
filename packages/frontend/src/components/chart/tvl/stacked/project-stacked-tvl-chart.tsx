@@ -53,6 +53,7 @@ export function ProjectStackedTvlChart({
         setUnit={setUnit}
         milestones={milestones}
         projectId={projectId}
+        showStackedChartLegend
       />
     )
   }
