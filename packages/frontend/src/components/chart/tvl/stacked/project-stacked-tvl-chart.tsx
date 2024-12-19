@@ -19,6 +19,7 @@ import { type ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../token/project-token-chart'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
+import { StackedTvlChartLegend } from './stacked-tvl-chart-legend'
 import { useStackedTvlChartRenderParams } from './use-stacked-tvl-chart-render-params'
 
 interface Props {
@@ -129,6 +130,7 @@ function DefaultChart({
           />
         </ChartControlsWrapper>
         <Chart />
+        <StackedTvlChartLegend />
         <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox

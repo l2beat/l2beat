@@ -23,6 +23,7 @@ import { type ChartUnit } from '../../types'
 import { TvlChartHeader } from '../tvl-chart-header'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
+import { StackedTvlChartLegend } from './stacked-tvl-chart-legend'
 import { useStackedTvlChartRenderParams } from './use-stacked-tvl-chart-render-params'
 
 interface Props {
@@ -83,6 +84,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
           timeRange={chartRange}
         />
         <Chart />
+        <StackedTvlChartLegend />
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
             {featureFlags.showOthers && (

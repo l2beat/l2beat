@@ -17,6 +17,7 @@ import { useChartLoading } from '../core/chart-loading-context'
 import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 import { CostsChartHover } from './costs-chart-hover'
+import { CostsChartLegend } from './costs-chart-legend'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
@@ -86,6 +87,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           />
         </ChartControlsWrapper>
         <Chart />
+        <CostsChartLegend />
         <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>
     </div>
