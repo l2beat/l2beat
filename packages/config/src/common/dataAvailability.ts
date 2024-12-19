@@ -178,6 +178,12 @@ export const DA_BRIDGES = {
     description:
       'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
   },
+  BLOBSTREAM: {
+    value: 'Blobstream',
+    sentiment: 'warning',
+    description:
+      'The Blobstream DA bridge is used to attest to the data availability on Celestia.',
+  },
   DAC_MEMBERS: ({
     requiredSignatures,
     membersCount,
