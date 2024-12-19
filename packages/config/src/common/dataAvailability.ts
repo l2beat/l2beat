@@ -98,7 +98,7 @@ export const DA_LAYERS = {
   },
   NONE: {
     value: 'None',
-    sentiment: 'warning',
+    sentiment: 'bad',
     description: 'The data is not posted to any data availability layer.',
     fallbackDescription: undefined,
     secondLine: undefined,
