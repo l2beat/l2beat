@@ -1,5 +1,6 @@
 'use client'
 import { type Milestone } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ActivityChart } from '~/components/chart/activity/activity-chart'
 import {
@@ -41,6 +42,11 @@ export function ScalingActivityTabs({
     desc: true,
   }
 
+  const showOthers =
+    featureFlags.showOthers &&
+    filteredEntries.others.length > 0 &&
+    !filteredEntries.others.every((e) => !e.data || e.id === ProjectId.ETHEREUM)
+
   return (
     <>
       <ScalingActivityFilters
@@ -63,7 +69,7 @@ export function ScalingActivityTabs({
               {filteredEntries.validiumsAndOptimiums.length - 1}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {featureFlags.showOthers && filteredEntries.others.length > 1 && (
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -100,8 +106,7 @@ export function ScalingActivityTabs({
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {/* Greater than one because we always have the Ethereum entry */}
-        {featureFlags.showOthers && filteredEntries.others.length > 1 && (
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent
               value="others"
