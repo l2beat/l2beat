@@ -1,7 +1,7 @@
 'use client'
 import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 import { Callout } from '~/components/callout'
-import { OutLink } from '~/components/out-link'
+import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { CloseIcon } from '~/icons/close'
 
@@ -33,7 +33,10 @@ export function WhyAmIHereNotice({
       </div>
       <p className="mt-2.5 text-base font-bold">
         Learn more about the recategorisation{' '}
-        <OutLink href={externalLinks.articles.recategorisation}>here</OutLink>.
+        <CustomLink href={externalLinks.articles.recategorisation}>
+          here
+        </CustomLink>
+        .
       </p>
     </div>
   )

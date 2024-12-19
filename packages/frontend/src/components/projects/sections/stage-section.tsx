@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
+import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
@@ -15,7 +16,6 @@ import { SatisfiedIcon } from '~/icons/satisfied'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { StageBadge } from '../../badge/stage-badge'
 import { Callout } from '../../callout'
-import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'

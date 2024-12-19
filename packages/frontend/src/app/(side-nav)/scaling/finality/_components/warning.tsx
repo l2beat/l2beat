@@ -1,5 +1,5 @@
+import { CustomLink } from '~/components/link/custom-link'
 import { MainPageWarning } from '~/components/main-page-warning'
-import { OutLink } from '~/components/out-link'
 import { externalLinks } from '~/consts/external-links'
 
 export function FinalityWarning() {
@@ -13,12 +13,12 @@ export function FinalityWarning() {
       L1) for these transactions may be longer. In most other cases, however,
       this does not apply (e.g., when transferring funds to an exchange). For
       more information on how finality works for L2 transactions, check{' '}
-      <OutLink
+      <CustomLink
         href={externalLinks.articles.finality}
         className="dark:text-blue-700"
       >
         our article
-      </OutLink>
+      </CustomLink>
       .
     </MainPageWarning>
   )
