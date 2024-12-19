@@ -98,7 +98,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
       >
         <Header resolution={resolution} chartRange={chartRange} />
         <Chart />
-        <CostsChartLegend />
+        {featureFlags.showOthers && <CostsChartLegend />}
         <ChartControlsWrapper>
           <div className="flex flex-wrap gap-1">
             <UnitControls unit={unit} setUnit={setUnit} />

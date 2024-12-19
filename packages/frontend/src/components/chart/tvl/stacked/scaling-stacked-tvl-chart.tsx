@@ -84,7 +84,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
           timeRange={chartRange}
         />
         <Chart />
-        <StackedTvlChartLegend />
+        {featureFlags.showOthers && <StackedTvlChartLegend />}
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
             {featureFlags.showOthers && (

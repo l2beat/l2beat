@@ -110,18 +110,20 @@ export function ActivityChart({
           hideScalingFactor={hideScalingFactor}
         />
         <Chart />
-        <ChartLegend
-          elements={[
-            {
-              name: 'Projects',
-              color: typeToIndicator(type),
-            },
-            {
-              name: 'Ethereum',
-              color: 'bg-indicator-ethereum',
-            },
-          ]}
-        />
+        {featureFlags.showOthers && (
+          <ChartLegend
+            elements={[
+              {
+                name: 'Projects',
+                color: typeToIndicator(type),
+              },
+              {
+                name: 'Ethereum',
+                color: 'bg-indicator-ethereum',
+              },
+            ]}
+          />
+        )}
         <Controls
           scale={scale}
           setScale={setScale}
