@@ -61,15 +61,10 @@ export const rari: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
     }),
   ],
+  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'Caldera Multisig',
-      'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
-    ),
-  ],
   chainConfig: {
     name: 'rari',
     chainId: 1380012617,

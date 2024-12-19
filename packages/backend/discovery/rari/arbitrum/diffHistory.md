@@ -1,16 +1,14 @@
-Generated with discovered.json: 0x5b826220c9970fb81ad9ab395fe1cfea3c54a255
+Generated with discovered.json: 0xd1e8b72b5f49b9d335dbcf7c943323cd3400487f
 
-# Diff at Thu, 19 Dec 2024 11:45:34 GMT:
+# Diff at Thu, 19 Dec 2024 13:41:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@04dfc1c24d28e845974c789e366aa4f0292d234e block: 279492285
-- current block number: 286379316
+- comparing to: main@4676b49a4cd0a785c6d8fc57d5ad1d10cf53266d block: 279492285
+- current block number: 286407105
 
 ## Description
 
-Upgrade to known ArbOS v32 contracts with an unknown `wasmModuleRoot`!
-Searching this root on GH leads to a 'Celestia Nitro 3.2.1' tag.
-Since host chain contracts are matching the known ones, no DA bridge seems t be used.
+Upgrade to ArbOS v32 with [the 'Celestia Nitro 3.2.1' tag](https://github.com/celestiaorg/nitro/releases/tag/v3.2.1-rc.1). This upgrade is mostly to known contracts except for the SequencerInbo and OneStepProverHostIo, of which the former includes a new Celestia header among minor changes but the latter includes references to use Blobstream on Arbitrum as the source of truth for fault proof DA.
 
 ## Watched changes
 
@@ -31,7 +29,7 @@ Since host chain contracts are matching the known ones, no DA bridge seems t be 
 +++ description: ArbOS version derived from known wasmModuleRoots.
       values.arbOsFromWmRoot:
 -        "ArbOS v32 wasmModuleRoot"
-+        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287"
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
 +++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
       values.wasmModuleRoot:
 -        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
@@ -59,7 +57,7 @@ Since host chain contracts are matching the known ones, no DA bridge seems t be 
 
 ```diff
     contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
-    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge.
       template:
 -        "orbitstack/SequencerInbox"
 +        "orbitstack/SequencerInbox_Celestia"
@@ -68,7 +66,7 @@ Since host chain contracts are matching the known ones, no DA bridge seems t be 
 +        "0x7c44d7be0909b7d0aaf2c476c9c337b43f59f311d40469f3e0cc99dc46308b56"
       description:
 -        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
-+        "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia."
++        "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge."
       values.$implementation:
 -        "0x305eD6932AbF2e997832C570E467320BbA1491F4"
 +        "0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2"
@@ -140,16 +138,30 @@ Since host chain contracts are matching the known ones, no DA bridge seems t be 
 
 ```diff
 +   Status: CREATED
-    contract  (0xaAe0A2EB9C0fb6C97c095283030d0af635f44d3F)
-    +++ description: None
+    contract OneStepProverHostIo (0xaAe0A2EB9C0fb6C97c095283030d0af635f44d3F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version references the [Blobstream DA bridge](https://arbiscan.io/address/0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794).
 ```
 
 ## Source code changes
 
 ```diff
-.../OneStepProverHostIo.sol => /dev/null           | 1860 --------------------
+.../OneStepProverHostIo.sol                        | 1312 +++++++++++++++++++-
  .../SequencerInbox/SequencerInbox.sol              |  117 +-
- 2 files changed, 46 insertions(+), 1931 deletions(-)
+ 2 files changed, 1340 insertions(+), 89 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 279492285 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287:
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
+    }
 ```
 
 Generated with discovered.json: 0x84f6a18d33645257c2ed73e2a18f252fcae8fda8
