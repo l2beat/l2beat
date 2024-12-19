@@ -6,13 +6,13 @@ import { RpcClient } from '@l2beat/shared'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
-const calldataFnName = 'submitData'
+const calldataFnName = 'submitDataAsCalldata'
 const calldataFn =
-  'function submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))'
+  'function submitDataAsCalldata((bytes32,bytes32,bytes),bytes32,bytes32)' // does not include block numbers
 
 const blobFnName = 'submitBlobs'
 const blobFn =
-  'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[], bytes32, bytes32)'
+  'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[],bytes32,bytes32)'
 const iface = new utils.Interface([calldataFn, blobFn])
 
 export class LineaT2IAnalyzer extends BaseAnalyzer {
@@ -58,12 +58,12 @@ export class LineaT2IAnalyzer extends BaseAnalyzer {
     const txSig = data.slice(0, 10)
 
     switch (txSig) {
-      case iface.getSighash(calldataFnName): {
-        const decoded = iface.decodeFunctionData(calldataFnName, data) as [
-          [string, string, string, bigint, bigint],
-        ]
-        return [decoded[0][3], decoded[0][4]]
-      }
+      // case iface.getSighash(calldataFnName): {
+      //   const decoded = iface.decodeFunctionData(calldataFnName, data) as [
+      //     [string, string, string, bigint, bigint],
+      //   ]
+      //   return [decoded[0][3], decoded[0][4]]
+      // }
       case iface.getSighash(blobFnName): {
         const decoded = iface.decodeFunctionData(blobFnName, data) as [
           [[[string, bigint, bigint]]],
