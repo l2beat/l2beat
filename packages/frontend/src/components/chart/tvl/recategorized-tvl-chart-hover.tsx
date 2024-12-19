@@ -32,17 +32,17 @@ export function RecategorizedTvlChartHover(props: Props) {
     },
   ]
   return (
-    <div className="flex w-[158px] flex-col gap-1 xs:!w-60">
+    <div className="flex w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60">
       <div>
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',
         })}
       </div>
       <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50 xs:hidden">
+        <span className="text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:hidden">
           Total
         </span>
-        <span className="hidden text-sm text-gray-700 dark:text-gray-50 xs:inline">
+        <span className="hidden text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:inline">
           Total value locked
         </span>
         {total}
