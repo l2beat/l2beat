@@ -30,6 +30,7 @@ import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
 import { ChartTimeRange } from '../core/chart-time-range'
 import { CostsChartHover } from './costs-chart-hover'
+import { CostsChartLegend } from './costs-chart-legend'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
@@ -84,7 +85,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
     })
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col">
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -96,7 +97,8 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
         )}
       >
         <Header resolution={resolution} chartRange={chartRange} />
-        <Chart />
+        <Chart className="mt-4" />
+        {featureFlags.showOthers && <CostsChartLegend className="my-2" />}
         <ChartControlsWrapper>
           <div className="flex flex-wrap gap-1">
             <UnitControls unit={unit} setUnit={setUnit} />
