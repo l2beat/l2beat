@@ -10,7 +10,7 @@ export const externalLinks = {
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
   articles: {
-    recategorisation: 'https://tobeadded.com',
+    recategorisation: 'https://medium.com/l2beat/framework-update-l2-projects-recategorization-5d43b0d1fe50',
     stages:
       'https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe',
     finality:
