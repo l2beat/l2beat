@@ -1,7 +1,7 @@
+import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { InfoIcon } from '~/icons/info'
 import { Callout } from '../../callout'
-import { CustomLink } from '../../link/custom-link'
 
 export function UpcomingDisclaimer() {
   return (
