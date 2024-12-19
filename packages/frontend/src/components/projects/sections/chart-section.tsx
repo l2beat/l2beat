@@ -1,4 +1,4 @@
-import { type Milestone } from '@l2beat/config'
+import { type Milestone, type ScalingProjectCategory } from '@l2beat/config'
 import { type ProjectTokens } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { ProjectActivityChart } from '../../chart/activity/project-activity-chart'
 import { ProjectCostsChart } from '../../chart/costs/project-costs-chart'
@@ -26,6 +26,7 @@ export interface ChartSectionProps extends ProjectSectionProps {
   tokens?: ProjectTokens
   projectId: string
   milestones: Milestone[]
+  category?: ScalingProjectCategory
 }
 
 export function ChartSection({
@@ -77,6 +78,7 @@ function ProjectChart(props: ChartSectionProps) {
         <ProjectActivityChart
           milestones={props.milestones}
           projectId={props.projectId}
+          category={props.category}
         />
       )
   }

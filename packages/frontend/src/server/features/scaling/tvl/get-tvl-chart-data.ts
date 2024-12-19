@@ -66,6 +66,7 @@ export const getCachedTvlChartData = cache(
   ['tvl-chart-data'],
   {
     tags: ['tvl'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

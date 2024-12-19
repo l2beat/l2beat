@@ -27,7 +27,7 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
     const tableEntries = entries
       .map((e) => mapToTableEntry(e, metric))
       .sort((a, b) => {
-        return b.data.pastDayCount - a.data.pastDayCount
+        return (b.data?.pastDayCount ?? 0) - (a.data?.pastDayCount ?? 0)
       })
     return tableEntries ?? []
   }, [entries, metric])
@@ -55,12 +55,14 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
 function mapToTableEntry(entry: ScalingActivityEntry, metric: ActivityMetric) {
   return {
     ...entry,
-    data: {
-      ...entry.data,
-      change: entry.data[metric].change,
-      pastDayCount: entry.data[metric].pastDayCount,
-      summedCount: entry.data[metric].summedCount,
-      maxCount: entry.data[metric].maxCount,
-    },
+    data: entry.data
+      ? {
+          ...entry.data,
+          change: entry.data[metric].change,
+          pastDayCount: entry.data[metric].pastDayCount,
+          summedCount: entry.data[metric].summedCount,
+          maxCount: entry.data[metric].maxCount,
+        }
+      : undefined,
   }
 }

@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -12,6 +13,7 @@ export const bobanetwork: Layer2 = opStackL2({
   createdAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Boba Network',
     shortName: 'Boba',
     slug: 'bobanetwork',

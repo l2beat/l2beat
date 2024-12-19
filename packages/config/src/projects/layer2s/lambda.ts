@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
@@ -11,6 +12,7 @@ export const lambda: Layer2 = opStackL2({
   discovery,
   additionalPurposes: ['Storage'],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Lambda Chain',
     slug: 'lambda',
     redWarning:

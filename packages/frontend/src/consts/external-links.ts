@@ -9,4 +9,11 @@ export const externalLinks = {
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
+  articles: {
+    recategorisation: 'https://tobeadded.com',
+    stages:
+      'https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe',
+    finality:
+      'https://medium.com/l2beat/tracking-time-to-finality-of-l2-transactions-051d32f5d5ba',
+  },
 } as const

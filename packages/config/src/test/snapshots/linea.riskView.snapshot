@@ -7,9 +7,9 @@
     sentiment: "good"
     sources: [
       {
-        contract: "zkEVM"
+        contract: "LineaRollup"
         references: [
-          "https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code"
+          "https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code"
         ]
       }
     ]
@@ -24,12 +24,12 @@
   }
   proposerFailure: {
     definingMetric: -Infinity
-    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to propose state with valid proofs."
     sentiment: "bad"
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
+    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to post data."
     sentiment: "bad"
     value: "No mechanism"
   }
@@ -40,9 +40,9 @@
     sentiment: "good"
     sources: [
       {
-        contract: "zkEVM"
+        contract: "LineaRollup"
         references: [
-          "https://etherscan.io/address/0x1825242411792536469Cbb5843fd27Ce3e9e583A#code"
+          "https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code"
         ]
       }
     ]

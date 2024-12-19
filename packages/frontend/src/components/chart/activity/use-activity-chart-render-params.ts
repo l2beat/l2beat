@@ -1,4 +1,5 @@
 import { type Milestone } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { type ActivityChartData } from '~/server/features/scaling/activity/get-activity-chart'
@@ -9,11 +10,14 @@ import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 
+export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+
 interface Params {
   milestones: Milestone[]
   chart: ActivityChartData | undefined
   showMainnet: boolean
   metric?: ActivityMetric
+  type?: ActivityChartType
 }
 
 export function useActivityChartRenderParams({
@@ -21,6 +25,7 @@ export function useActivityChartRenderParams({
   chart,
   showMainnet,
   metric,
+  type,
 }: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
@@ -56,12 +61,12 @@ export function useActivityChartRenderParams({
 
         return {
           values: showMainnet
-            ? [{ value: projectsValue }, { value: ethereumValue }]
+            ? [{ value: ethereumValue }, { value: projectsValue }]
             : [{ value: projectsValue }],
           data: {
             timestamp,
-            count: isTps ? count : uopsCount,
             ethereumCount: isTps ? ethereumCount : ethereumUopsCount,
+            count: isTps ? count : uopsCount,
           },
           milestone,
         }
@@ -76,24 +81,14 @@ export function useActivityChartRenderParams({
       showMainnet
         ? [
             {
-              fill: 'signature gradient',
-              line: 'signature gradient',
-              point: 'redCircle',
-            },
-            {
               fill: 'blue gradient',
               line: 'blue gradient',
               point: 'blueSquare',
             },
+            getChartColors(type),
           ]
-        : [
-            {
-              fill: 'signature gradient',
-              line: 'signature gradient',
-              point: 'redCircle',
-            },
-          ],
-    [showMainnet],
+        : [getChartColors(type)],
+    [showMainnet, type],
   )
 
   return {
@@ -101,5 +96,31 @@ export function useActivityChartRenderParams({
     columns,
     chartRange,
     valuesStyle,
+  }
+}
+
+function getChartColors(type?: ActivityChartType): SeriesStyle {
+  switch (type) {
+    case 'Rollups':
+      return {
+        fill: 'signature gradient',
+        line: 'signature gradient',
+        point: 'pinkCircle',
+      }
+    case 'ValidiumsAndOptimiums':
+      return {
+        fill: 'cyan gradient',
+        line: 'cyan gradient',
+        point: 'cyanCircle',
+      }
+    case 'Others':
+    case undefined:
+      return {
+        fill: 'yellow gradient',
+        line: 'yellow gradient',
+        point: 'yellowCircle',
+      }
+    default:
+      assertUnreachable(type)
   }
 }

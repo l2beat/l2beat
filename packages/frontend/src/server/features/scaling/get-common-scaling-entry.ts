@@ -92,7 +92,8 @@ export function getCommonScalingEntry2({
       countdowns: project.countdowns,
     },
     tab:
-      featureFlags.showOthers && project.scalingInfo.isOther
+      (featureFlags.showOthers && project.scalingInfo.isOther) ||
+      project.scalingInfo.type === 'Other'
         ? 'Others'
         : isRollup
           ? 'Rollups'
