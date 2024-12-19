@@ -10,9 +10,9 @@
       "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB"
     },
     {
-      "symbol": "stATH",
+      "symbol": "stAethir",
       "coingeckoId": "aethir", // the staked version is not on CG
-      "address": "0xbe0ed4138121ecfc5c0e56b40517da27e6c5226b"
+      "address": "0xc96Aa65F31E41b4Ca6924B86D93e25686019E59C"
     },
     {
       "symbol": "stZENT",

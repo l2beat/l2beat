@@ -86,20 +86,6 @@
       "supply": "zero"
     },
     {
-      "name": "Aethir Token",
-      "coingeckoId": "aethir",
-      "address": "0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B",
-      "symbol": "stATH",
-      "decimals": 18,
-      "deploymentTimestamp": 1717570679,
-      "coingeckoListingTimestamp": 1718150400,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "Aevo",
       "coingeckoId": "aevo-exchange",
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
@@ -4170,6 +4156,20 @@
       "coingeckoListingTimestamp": 1718755200,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38499/large/azuro.jpeg?1717727357",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Staked Aethir",
+      "coingeckoId": "aethir",
+      "address": "0xc96Aa65F31E41b4Ca6924B86D93e25686019E59C",
+      "symbol": "stAethir",
+      "decimals": 18,
+      "deploymentTimestamp": 1718097239,
+      "coingeckoListingTimestamp": 1718150400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

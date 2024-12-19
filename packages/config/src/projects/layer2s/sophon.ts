@@ -93,15 +93,15 @@ export const sophon: Layer2 = zkStackL2({
         'ETH',
         'USDT',
         'BEAM',
-        'stATH',
+        'stAethir',
         'PEPE',
         'wstETH',
         'weETH',
         'sDAI',
         'DAI',
-        'wBTC',
+        'WBTC',
         'stAZUR',
-        'stAVAIL'
+        'stAVAIL',
       ], // 'SOPH' not on CG yet
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
