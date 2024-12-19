@@ -103,15 +103,16 @@ export function ActivityChart({
       )}
       useLogScale={scale === 'log'}
     >
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col">
         <ActivityChartHeader
           stats={stats}
           range={chartRange}
           hideScalingFactor={hideScalingFactor}
         />
-        <Chart className="mt-2" />
+        <Chart className="mt-4" />
         {featureFlags.showOthers && (
           <ChartLegend
+            className="my-2"
             elements={[
               {
                 name: 'Projects',

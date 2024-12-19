@@ -1,8 +1,12 @@
+import { type ClassNameValue } from 'tailwind-merge'
 import { ChartLegend } from '../../core/chart-legend'
 
-export function StackedTvlChartLegend() {
+export function StackedTvlChartLegend({
+  className,
+}: { className?: ClassNameValue }) {
   return (
     <ChartLegend
+      className={className}
       elements={[
         {
           name: 'Canonical',

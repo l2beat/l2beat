@@ -122,7 +122,7 @@ function DefaultChart({
         <StackedTvlChartHover {...data} unit={unit} />
       )}
     >
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col">
         <ChartControlsWrapper>
           <ProjectChartTimeRange range={chartRange} />
           <TvlChartTimeRangeControls
@@ -131,8 +131,8 @@ function DefaultChart({
             setTimeRange={setTimeRange}
           />
         </ChartControlsWrapper>
-        <Chart className="mt-2" />
-        {featureFlags.showOthers && <StackedTvlChartLegend />}
+        <Chart className="mt-4" />
+        {featureFlags.showOthers && <StackedTvlChartLegend className="my-2" />}
         <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox

@@ -11,7 +11,6 @@ import {
 } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
-import { cn } from '~/utils/cn'
 import { Chart } from '../../core/chart'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
 import { ChartProvider } from '../../core/chart-provider'
@@ -83,9 +82,7 @@ export function ProjectTokenChart({
         />
       )}
     >
-      <section
-        className={cn('flex flex-col gap-4', showStackedChartLegend && 'gap-2')}
-      >
+      <section className="flex flex-col">
         <ChartControlsWrapper>
           <ProjectChartTimeRange range={chartRange} />
           <TvlChartTimeRangeControls
@@ -94,9 +91,9 @@ export function ProjectTokenChart({
             setTimeRange={setTimeRange}
           />
         </ChartControlsWrapper>
-        <Chart className={cn(showStackedChartLegend && 'mt-2')} />
+        <Chart className="mt-4" />
         {featureFlags.showOthers && showStackedChartLegend && (
-          <StackedTvlChartLegend />
+          <StackedTvlChartLegend className="my-2" />
         )}
         <TokenChartUnitControls
           isBridge={isBridge}
