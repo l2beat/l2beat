@@ -37,16 +37,26 @@ export const linkVariants = cva(
 export function CustomLink({
   variant,
   underline,
-  children,
   className,
   ...rest
 }: CustomLinkProps) {
+  const isCustomLink = rest.href.startsWith('http')
+
+  if (isCustomLink) {
+    return (
+      <a
+        target="_blank"
+        rel="noreferrer noopener"
+        className={linkVariants({ variant, underline, className })}
+        {...rest}
+      />
+    )
+  }
+
   return (
     <NextLink
       className={linkVariants({ variant, underline, className })}
       {...rest}
-    >
-      {children}
-    </NextLink>
+    />
   )
 }
