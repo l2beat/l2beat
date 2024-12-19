@@ -1,7 +1,7 @@
 import { type FC } from 'react'
 
 import { cva } from 'class-variance-authority'
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { ShieldIcon } from '~/icons/shield'
 import { cn } from '~/utils/cn'
 import { Callout } from './callout'
@@ -60,7 +60,7 @@ export function WarningBar({
           body={
             <div className="flex items-center gap-1">
               {textElement}
-              <OutLinkIcon className="shrink-0" />
+              <CustomLinkIcon className="shrink-0" />
             </div>
           }
         />

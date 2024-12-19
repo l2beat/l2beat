@@ -1,7 +1,7 @@
 'use client'
 import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
-import { OutLink } from '~/components/out-link'
+import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { CloseIcon } from '~/icons/close'
@@ -46,7 +46,10 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
       </div>
       <p className="mt-2.5 text-base font-bold">
         Learn more about the recategorisation{' '}
-        <OutLink href={externalLinks.articles.recategorisation}>here</OutLink>.
+        <CustomLink href={externalLinks.articles.recategorisation}>
+          here
+        </CustomLink>
+        .
       </p>
     </div>
   )
