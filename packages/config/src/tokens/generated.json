@@ -86,6 +86,20 @@
       "supply": "zero"
     },
     {
+      "name": "Aethir Token",
+      "coingeckoId": "aethir",
+      "address": "0xbe0Ed4138121EcFC5c0E56B40517da27E6c5226B",
+      "symbol": "stATH",
+      "decimals": 18,
+      "deploymentTimestamp": 1717570679,
+      "coingeckoListingTimestamp": 1718150400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Aevo",
       "coingeckoId": "aevo-exchange",
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
@@ -530,6 +544,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Beam",
+      "coingeckoId": "beam-2",
+      "address": "0x62D0A8458eD7719FDAF978fe5929C6D342B0bFcE",
+      "symbol": "BEAM",
+      "decimals": 18,
+      "deploymentTimestamp": 1697466275,
+      "coingeckoListingTimestamp": 1698278400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32417/large/chain-logo.png?1698114384",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4133,6 +4161,34 @@
       "supply": "zero"
     },
     {
+      "name": "Staked $AZUR",
+      "coingeckoId": "azuro-protocol",
+      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB",
+      "symbol": "stAZUR",
+      "decimals": 18,
+      "deploymentTimestamp": 1723579643,
+      "coingeckoListingTimestamp": 1718755200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38499/large/azuro.jpeg?1717727357",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Staked Avail",
+      "coingeckoId": "staked-avail",
+      "address": "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a",
+      "symbol": "stAVAIL",
+      "decimals": 18,
+      "deploymentTimestamp": 1721699039,
+      "coingeckoListingTimestamp": 1730764800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51343/large/stAVAIL_200x200.png?1730824445",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Staked FRAX",
       "coingeckoId": "staked-frax",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
@@ -4184,6 +4240,20 @@
       "coingeckoListingTimestamp": 1720656000,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Staked Zentry",
+      "coingeckoId": "zentry",
+      "address": "0x996d67AA9b37df96428ad3608cb21352BF1FDB90",
+      "symbol": "stZENT",
+      "decimals": 18,
+      "deploymentTimestamp": 1717681283,
+      "coingeckoListingTimestamp": 1714089600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36979/large/Zentry-rebrand-Primary_200px.png?1713743277",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

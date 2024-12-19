@@ -89,7 +89,20 @@ export const sophon: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: [], // 'SOPH' not on CG yet
+      tokens: [
+        'ETH',
+        'USDT',
+        'BEAM',
+        'stATH',
+        'PEPE',
+        'wstETH',
+        'weETH',
+        'sDAI',
+        'DAI',
+        'wBTC',
+        'stAZUR',
+        'stAVAIL'
+      ], // 'SOPH' not on CG yet
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
       sharedEscrow: {
