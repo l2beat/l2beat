@@ -36,7 +36,7 @@ export function PizzaRosetteLabels({
   const context = useRosetteTooltipContext()
 
   const [first, second, third, fourth, fifth] = values
-  const content = context?.content
+  const selectedRisk = context?.selectedRisk
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
@@ -52,7 +52,7 @@ export function PizzaRosetteLabels({
         className={cn(
           'absolute origin-top -translate-x-1/2 rotate-[36deg]',
           rosetteVariants({ size, className: textClassName }),
-          content && content.risk.name !== first.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== first.name && 'opacity-20',
         )}
       >
         {first.name.split(' ').join('\n')}
@@ -65,7 +65,7 @@ export function PizzaRosetteLabels({
         className={cn(
           'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[-72deg]',
           rosetteVariants({ size, className: textClassName }),
-          content && content.risk.name !== second.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== second.name && 'opacity-20',
         )}
       >
         {second.name.split(' ').join('\n')}
@@ -78,7 +78,7 @@ export function PizzaRosetteLabels({
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full',
           rosetteVariants({ size, className: textClassName }),
-          content && content.risk.name !== third.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== third.name && 'opacity-20',
         )}
       >
         {third.name.split(' ').join('\n')}
@@ -91,7 +91,7 @@ export function PizzaRosetteLabels({
         className={cn(
           'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[72deg]',
           rosetteVariants({ size, className: textClassName }),
-          content && content.risk.name !== fourth.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== fourth.name && 'opacity-20',
         )}
       >
         {fourth.name.split(' ').join('\n')}
@@ -104,7 +104,7 @@ export function PizzaRosetteLabels({
         className={cn(
           'absolute origin-top -translate-x-1/2 rotate-[-36deg]',
           rosetteVariants({ size, className: textClassName }),
-          content && content.risk.name !== fifth.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== fifth.name && 'opacity-20',
         )}
       >
         {fifth.name.split(' ').join('\n')}

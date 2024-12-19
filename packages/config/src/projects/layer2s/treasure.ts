@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
@@ -23,17 +24,28 @@ export const treasure: Layer2 = zkStackL2({
   createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   display: {
-    name: 'Treasure Chain',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
+    name: 'Treasure',
     slug: 'treasure',
+    tvlWarning: {
+      content:
+        'The total TVL includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. The L2 escrow of these tokens [can be found here](https://treasurescan.io/address/0x24DF29723B54DE65f5fbC66a610053e90534631d). L2BEAT is working on a fix.',
+      sentiment: 'warning',
+    },
     description:
-      'Treasure Chain is a gaming-specific L2 built on the ZK Stack. The Treasure Platform powers end-to-end gaming and game-builder needs including but not limited to Identity, Marketplace, AMM Payments, Analytics and LiveOps.',
+      'Treasure is a gaming-specific L2 built on ZKsync, the Elastic Network. Treasure offers an end-to-end tech stack for developers and consumer apps to build the next generation of gaming.',
     links: {
       websites: ['https://treasure.lol/'],
       apps: ['https://app.treasure.lol'],
       documentation: ['https://docs.treasure.lol'],
       explorers: ['https://treasurescan.io'],
       repositories: ['https://github.com/TreasureProject'],
-      socialMedia: ['https://x.com/Treasure_DAO'],
+      socialMedia: [
+        'https://x.com/Treasure_DAO',
+        'https://discord.gg/treasuredao',
+        'https://youtube.com/@PlayOnTreasure',
+        'https://t.me/playontreasure',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },
@@ -42,7 +54,7 @@ export const treasure: Layer2 = zkStackL2({
   chainConfig: {
     name: 'treasure',
     chainId: 61166,
-    explorerUrl: 'http://treasurescan.io',
+    explorerUrl: 'https://treasurescan.io',
     minTimestampForTvl: new UnixTime(1732617294),
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),

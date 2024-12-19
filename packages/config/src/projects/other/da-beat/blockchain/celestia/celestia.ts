@@ -2,12 +2,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer } from '../../types/DaLayer'
+import { BlockchainDaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { blobstream } from './bridges/blobstream'
 
-export const celestia: DaLayer = {
+export const celestia: BlockchainDaLayer = {
   id: 'celestia',
   type: 'DaLayer',
   kind: 'PublicBlockchain',

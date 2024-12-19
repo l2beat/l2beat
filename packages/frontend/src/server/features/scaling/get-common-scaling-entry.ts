@@ -2,17 +2,22 @@ import {
   type BadgeId,
   type Layer2,
   type Layer3,
+  type ProjectWith,
   type StageConfig,
   badges,
+  getCurrentEntry,
+  isUnderReview,
+  isVerified,
 } from '@l2beat/config'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
+import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
-import { getCurrentEntry } from '../utils/get-current-entry'
+import { getCountdowns } from './utils/get-countdowns'
 import { getHostChain } from './utils/get-host-chain'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
+import { isProjectOther } from './utils/is-project-other'
 
 export interface FilterableScalingValues {
   isRollup: boolean
@@ -38,35 +43,41 @@ export interface CommonScalingEntry extends CommonProjectEntry {
 
 interface Params {
   project: Layer2 | Layer3
-  isVerified: boolean
-  hasImplementationChanged: boolean
-  hasHighSeverityFieldChanged: boolean
+  changes: ProjectChanges | undefined
   syncStatus: SyncStatus | undefined
 }
 
-export function getCommonScalingEntry({
+// TODO: Once this is the only version being used remove the 2 and the old one
+export function getCommonScalingEntry2({
   project,
-  isVerified,
-  hasImplementationChanged,
-  hasHighSeverityFieldChanged,
+  changes,
   syncStatus,
-}: Params): CommonScalingEntry {
+}: {
+  project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>
+  changes: ProjectChanges | undefined
+  syncStatus: SyncStatus | undefined
+}): CommonScalingEntry {
+  const isRollup =
+    project.scalingInfo.type === 'Optimistic Rollup' ||
+    project.scalingInfo.type === 'ZK Rollup'
   return {
     id: project.id,
-    slug: project.display.slug,
-    name: project.display.name,
+    slug: project.slug,
+    name: project.name,
     nameSecondLine:
-      project.type === 'layer2' ? undefined : `L3 on ${getHostChain(project)}`,
-    shortName: project.display.shortName,
-    href: `/scaling/projects/${project.display.slug}`,
+      project.scalingInfo.layer === 'layer2'
+        ? undefined
+        : `L3 on ${project.scalingInfo.hostChain.shortName ?? project.scalingInfo.hostChain.name}`,
+    shortName: project.shortName,
+    href: `/scaling/projects/${project.slug}`,
     statuses: {
-      yellowWarning: project.display.headerWarning,
-      redWarning: project.display.redWarning,
-      verificationWarning: !isVerified,
+      yellowWarning: project.statuses.yellowWarning,
+      redWarning: project.statuses.redWarning,
+      verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
-        isUnderReview: isAnySectionUnderReview(project),
-        hasImplementationChanged,
-        hasHighSeverityFieldChanged,
+        isUnderReview: project.statuses.isUnderReview,
+        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
+        implementationChanged: !!changes?.implementationChanged,
       }),
       syncStatusInfo:
         syncStatus?.isSynced === false
@@ -78,19 +89,80 @@ export function getCommonScalingEntry({
               },
             )}.`
           : undefined,
+      countdowns: project.countdowns,
     },
     tab:
-      env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.display.isOther
+      (featureFlags.showOthers && project.scalingInfo.isOther) ||
+      project.scalingInfo.type === 'Other'
         ? 'Others'
-        : project.display.category.includes('Rollup')
+        : isRollup
           ? 'Rollups'
           : 'ValidiumsAndOptimiums',
-    stageOrder: getStageOrder(project.stage),
+    stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: {
-      isRollup: project.display.category.includes('Rollup'),
-      type: project.display.category,
+      isRollup,
+      type: project.scalingInfo.type,
+      stack: project.scalingInfo.stack ?? 'No stack',
+      stage: project.scalingInfo.stage,
+      purposes: project.scalingInfo.purposes,
+      hostChain: project.scalingInfo.hostChain.name,
+      daLayer: project.scalingInfo.daLayer,
+      raas: project.scalingInfo.raas ?? 'No RaaS',
+    },
+  }
+}
+
+export function getCommonScalingEntry({
+  project,
+  changes,
+  syncStatus,
+}: Params): CommonScalingEntry {
+  const isRollup =
+    project.display.category === 'Optimistic Rollup' ||
+    project.display.category === 'ZK Rollup'
+  const stage = isProjectOther(project)
+    ? { stage: 'NotApplicable' as const }
+    : project.stage
+  return {
+    id: project.id,
+    slug: project.display.slug,
+    name: project.display.name,
+    nameSecondLine:
+      project.type === 'layer2' ? undefined : `L3 on ${getHostChain(project)}`,
+    shortName: project.display.shortName,
+    href: `/scaling/projects/${project.display.slug}`,
+    statuses: {
+      yellowWarning: project.display.headerWarning,
+      redWarning: project.display.redWarning,
+      verificationWarning: !isVerified(project),
+      underReview: getUnderReviewStatus({
+        isUnderReview: isUnderReview(project),
+        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
+        implementationChanged: !!changes?.implementationChanged,
+      }),
+      syncStatusInfo:
+        syncStatus?.isSynced === false
+          ? `The data for this item is not synced since ${formatTimestamp(
+              syncStatus.syncedUntil,
+              {
+                mode: 'datetime',
+                longMonthName: true,
+              },
+            )}.`
+          : undefined,
+      countdowns: getCountdowns(project),
+    },
+    tab: isProjectOther(project)
+      ? 'Others'
+      : isRollup
+        ? 'Rollups'
+        : 'ValidiumsAndOptimiums',
+    stageOrder: getStageOrder(stage?.stage),
+    filterable: {
+      isRollup,
+      type: isProjectOther(project) ? 'Other' : project.display.category,
       stack: project.display.provider ?? 'No stack',
-      stage: getStage(project.stage),
+      stage: getStage(stage),
       purposes: project.display.purposes,
       hostChain: project.type === 'layer2' ? 'Ethereum' : getHostChain(project),
       daLayer:
@@ -100,11 +172,11 @@ export function getCommonScalingEntry({
   }
 }
 
-function getStageOrder(stage: StageConfig | undefined): number {
-  if (stage?.stage === 'Stage 2' || stage?.stage === 'Stage 1') {
+function getStageOrder(stage: string | undefined): number {
+  if (stage === 'Stage 2' || stage === 'Stage 1') {
     return 2
   }
-  if (stage?.stage === 'Stage 0') {
+  if (stage === 'Stage 0') {
     return 1
   }
   return 0

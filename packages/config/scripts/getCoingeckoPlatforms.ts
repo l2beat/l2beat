@@ -1,5 +1,5 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient2 } from '@l2beat/shared'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 
 import { ScriptLogger } from './tokens/utils/ScriptLogger'
 
@@ -7,7 +7,7 @@ async function main() {
   const logger = new ScriptLogger({})
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const http = new HttpClient2()
+  const http = new HttpClient()
 
   const coingeckoClient = new CoingeckoClient({
     apiKey: coingeckoApiKey,

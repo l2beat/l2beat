@@ -23,11 +23,6 @@
     ]
     value: "Onchain (SD)"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
     sentiment: "bad"
@@ -57,7 +52,7 @@
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone."
+    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
     sentiment: "warning"
     sources: [
       {
@@ -97,10 +92,5 @@
       }
     ]
     value: "ZK proofs (ST, SN)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

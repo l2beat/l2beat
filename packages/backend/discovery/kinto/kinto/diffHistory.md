@@ -1,3 +1,119 @@
+Generated with discovered.json: 0x7acb4802288d2af3c0fa1a8ad793cc2ffe58e589
+
+# Diff at Wed, 18 Dec 2024 12:37:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 673467
+- current block number: 678494
+
+## Description
+
+This upgrade adds the ArbSys contract (`0x0000000000000000000000000000000000000064`) as a system contract, whitelisting it in the STF to be called by EOAs. This is necessary for withdrawing ETH from Kinto from an EOA, e.g. in a forced transaction.
+
+The token contract of the KINTO token is upgraded to integrate new delegation and token voting libraries.
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x44215a226a4f9bbe6261cc55102df996258b9a5a2456bcfd1e33e7bb9886a8a7"
++        "0x4f5f7229da06877c8ec759071cd3d1999f9680fa1d5a7e5d5381558383c25b22"
+      values.$implementation:
+-        "0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"
++        "0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"
+      values.$pastUpgrades.4:
++        ["2024-12-18T00:08:48.000Z","0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8",["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]]
+      values.$pastUpgrades.3:
++        ["2024-12-17T20:37:39.000Z","0xbe1519e9c0c006360238f02214b8b50211659d44f2c37353ce47efdc9db07352",["0xDd11ab74e0e8B042F843447F5754376f2F303492"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.CLOCK_MODE:
++        "mode=timestamp"
+    }
+```
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      values.getNonce:
+-        217
++        220
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs. Accordingly, users can only transact from their smart wallets.
+      values.getSystemContracts.16:
++        "0x0000000000000000000000000000000000000064"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BridgedKinto/BridgedKinto.sol                  | 3562 ++++++++++++--------
+ 1 file changed, 2213 insertions(+), 1349 deletions(-)
+```
+
+Generated with discovered.json: 0x61bb2abc25873ee5cbc6fd74a69cf3ea384a4f54
+
+# Diff at Mon, 16 Dec 2024 13:50:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33537d5b381f743921fc5e40006feb3f31e39a6 block: 628196
+- current block number: 673467
+
+## Description
+
+Minor upgrade of RewardsDistributor, which disables the claim of KINTO for all new users and limits claims to actors that can provide a valid merkle proof.
+
+## Watched changes
+
+```diff
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd15c713ccbe36c94f3701cc26df68875ded4c439ee290c429fd64be35c66d8ad"
++        "0xc84bc54272227a1f3a6c1edaf40ac11aeaf8651129538971e06e0fefa48c99bc"
+      values.$implementation:
+-        "0x5b4D3f7d5876a68107F755BE97cDef36091A336F"
++        "0xF3D955B4cF3489A37027f0F3484E87328dBdBB39"
+      values.$pastUpgrades.7:
++        ["2024-12-13T23:57:35.000Z","0xc25ca9b0d2a50eba7cec62481c5c83f9222786f3c29479977ff1182a2871c768",["0xF3D955B4cF3489A37027f0F3484E87328dBdBB39"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.NEW_USER_REWARD_END_TIMESTAMP:
++        1734133547
+    }
+```
+
+## Source code changes
+
+```diff
+.../RewardsDistributor/RewardsDistributor.sol      | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 628196 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
 Generated with discovered.json: 0xd84106a81a6dc6efcdb8dc2e7a535d8d7075456b
 
 # Diff at Wed, 11 Dec 2024 11:55:37 GMT:

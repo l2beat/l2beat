@@ -1,5 +1,5 @@
 import { bridges, layer2s, layer3s } from '@l2beat/config'
-import { type ProjectId } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, sum } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
@@ -39,6 +39,7 @@ const getCachedProjectsLatestTvlUsd = cache(
   ['latestTvlUsd'],
   {
     tags: ['tvl'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

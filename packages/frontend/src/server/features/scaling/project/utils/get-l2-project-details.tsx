@@ -136,6 +136,7 @@ export async function getL2ProjectDetails({
         title: 'Activity',
         projectId: project.id,
         milestones: sortedMilestones,
+        category: project.display.category,
       },
     })
   }

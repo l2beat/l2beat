@@ -234,6 +234,13 @@ export function DATA_CELESTIA(
   }
 }
 
+export const DATA_POS: ScalingProjectRiskViewEntry = {
+  value: 'PoS network',
+  description:
+    'Data is guaranteed to be available by an external proof of stake network of validators. On Ethereum, DA is attested via signed block headers.',
+  sentiment: 'warning',
+}
+
 // bridges
 
 export const VALIDATED_BY_ETHEREUM: ScalingProjectRiskViewEntry = {
@@ -295,8 +302,6 @@ export const UPCOMING_RISK_VIEW: ScalingProjectRiskView = {
   exitWindow: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
   proposerFailure: UPCOMING_RISK,
-  destinationToken: UPCOMING_RISK,
-  validatedBy: UPCOMING_RISK,
 }
 
 export const UNDER_REVIEW_RISK: ScalingProjectRiskViewEntry = {
@@ -311,8 +316,6 @@ export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView = {
   exitWindow: UNDER_REVIEW_RISK,
   sequencerFailure: UNDER_REVIEW_RISK,
   proposerFailure: UNDER_REVIEW_RISK,
-  destinationToken: UNDER_REVIEW_RISK,
-  validatedBy: UNDER_REVIEW_RISK,
 }
 
 // SEQUENCER COLUMN
@@ -395,16 +398,16 @@ export function SEQUENCER_ENQUEUE_VIA(
 ): ScalingProjectRiskViewEntry {
   return {
     value: `Enqueue via ${layer}`,
-    description: `Users can submit transactions to an ${layer} queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.`,
+    description: `Users can submit transactions to an ${layer} queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone.`,
     sentiment: 'warning',
   }
 }
 
 export function SEQUENCER_NO_MECHANISM(
-  disabled?: boolean,
+  isItThereButJustDisabled?: boolean,
 ): ScalingProjectRiskViewEntry {
   const additional =
-    disabled === true
+    isItThereButJustDisabled === true
       ? ' Although the functionality exists in the code, it is currently disabled.'
       : ''
   return {
@@ -492,6 +495,17 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ScalingProjectRiskViewEntry = {
     'Anyone can be a Proposer and propose new roots to the L1 bridge.',
   sentiment: 'good',
   definingMetric: 0,
+}
+
+function PROPOSER_POLYGON_POS(
+  stakedValidatorSetSize: number,
+  validatorSetSizeCap: number,
+): ScalingProjectRiskViewEntry {
+  return {
+    value: 'Cannot withdraw',
+    description: `The Polygon PoS network is composed of ${stakedValidatorSetSize} validators. Blocks are included in the chain only if signed by 2/3+1 of the network stake. It's currently not possible to join the set if the validator cap is reached. The current validator cap is set to ${validatorSetSizeCap}. In the event of a failure in reaching consensus, withdrawals are frozen.`,
+    sentiment: 'warning',
+  }
 }
 
 export function EXIT_WINDOW(
@@ -632,6 +646,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_L3,
   DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
+  DATA_POS,
 
   // validatedBy
   VALIDATED_BY_ETHEREUM,
@@ -661,6 +676,7 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
+  PROPOSER_POLYGON_POS,
 
   // exitWindow
   EXIT_WINDOW,

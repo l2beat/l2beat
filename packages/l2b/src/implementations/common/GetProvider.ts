@@ -3,13 +3,13 @@ import {
   AllProviders,
   DiscoveryCache,
   DiscoveryChainConfig,
-  HttpClient,
   IProvider,
   NoCache,
   SQLiteCache,
   getMulticall3Config,
 } from '@l2beat/discovery'
 import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import { HttpClient } from '@l2beat/shared'
 import { readConfig } from '../../config/readConfig'
 
 const UNKNOWN_CHAIN_NAME = 'UnknownChainName'

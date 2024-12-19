@@ -14,6 +14,7 @@ import { arithmic } from './arithmic'
 import { astarzkevm } from './astarzkevm'
 import { automata } from './automata'
 import { axonum } from './axonum'
+import { azchain } from './azchain'
 import { aztecV1 } from './aztecV1'
 import { aztecV2 } from './aztecV2'
 import { aztecconnect } from './aztecconnect'
@@ -31,11 +32,14 @@ import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { dbk } from './dbk'
+import { dcamonster } from './dcamonster'
 import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
+import { degenlayer } from './degenlayer'
 import { dydx } from './dydx'
 import { ebichain } from './ebichain'
+import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
@@ -63,6 +67,7 @@ import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { immutablezkevm } from './immutablezkevm'
 import { ink } from './ink'
 import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
@@ -76,6 +81,7 @@ import { layer2financezk } from './layer2financezk'
 import { layerai } from './layerai'
 import { leaf } from './leaf'
 import { lens } from './lens'
+import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
@@ -105,6 +111,7 @@ import { optimism } from './optimism'
 import { optopia } from './optopia'
 import { orderly } from './orderly'
 import { palm } from './palm'
+import { pandasea } from './pandasea'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
@@ -112,6 +119,7 @@ import { payy } from './payy'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
+import { polygonpos } from './polygonpos'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
@@ -132,6 +140,7 @@ import { shape } from './shape'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
 import { socialnetwork } from './socialnetwork'
+import { solo } from './solo'
 import { soneium } from './soneium'
 import { soon } from './soon'
 import { sophon } from './sophon'
@@ -196,6 +205,7 @@ export const layer2s: Layer2[] = [
   alienx,
   align,
   axonum,
+  azchain,
   aztecV1,
   aztecconnect,
   aztecV2,
@@ -214,9 +224,11 @@ export const layer2s: Layer2[] = [
   cronoszkevm,
   dbk,
   honeypot,
+  dcamonster,
   degate,
   degate2,
   degate3,
+  degenlayer,
   dydx,
   edgeless,
   ethernity,
@@ -244,6 +256,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  immutablezkevm,
   ink,
   intmax,
   kakarotzkevm,
@@ -257,6 +270,7 @@ export const layer2s: Layer2[] = [
   layer2finance,
   layer2financezk,
   lens,
+  lightlink,
   linea,
   lisk,
   loopring,
@@ -264,6 +278,7 @@ export const layer2s: Layer2[] = [
   lyra,
   race,
   ebichain,
+  eclipse,
   mantapacific,
   mantle,
   metal,
@@ -288,6 +303,7 @@ export const layer2s: Layer2[] = [
   optopia,
   orderly,
   palm,
+  pandasea,
   paradex,
   parallel,
   patex,
@@ -296,6 +312,7 @@ export const layer2s: Layer2[] = [
   plumenetwork,
   polygonmiden,
   polygonzkevm,
+  polygonpos,
   polygonpos2,
   polynomial,
   publicgoodsnetwork,
@@ -315,6 +332,7 @@ export const layer2s: Layer2[] = [
   sophon,
   soneium,
   socialnetwork,
+  solo,
   soon,
   sorare,
   specular,

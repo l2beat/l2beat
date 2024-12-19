@@ -30,7 +30,13 @@ async function getProjectsEconomicSecurityData() {
   )
 
   const arr = [...daLayers, ethereumDaLayer].map((daLayer) => {
-    if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+    if (
+      !(
+        daLayer.kind === 'PublicBlockchain' ||
+        daLayer.kind === 'EthereumDaLayer'
+      ) ||
+      !daLayer.economicSecurity
+    ) {
       return undefined
     }
 

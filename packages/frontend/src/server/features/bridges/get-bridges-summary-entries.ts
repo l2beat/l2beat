@@ -4,7 +4,6 @@ import {
   type WarningWithSentiment,
   bridges,
 } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '@l2beat/config'
 import { compact } from 'lodash'
 import {
   type ProjectsChangeReport,
@@ -78,19 +77,9 @@ function getBridges(params: Params) {
           })
         : undefined
 
-    const isVerified = getProjectsVerificationStatuses(bridge)
-    const hasImplementationChanged =
-      projectsChangeReport.hasImplementationChanged(bridge.id.toString())
-    const hasHighSeverityFieldChanged =
-      projectsChangeReport.hasHighSeverityFieldChanged(bridge.id.toString())
-
+    const changes = projectsChangeReport.getChanges(bridge.id)
     return {
-      ...getCommonBridgesEntry({
-        bridge,
-        isVerified,
-        hasImplementationChanged,
-        hasHighSeverityFieldChanged,
-      }),
+      ...getCommonBridgesEntry({ bridge, changes }),
       type: bridge.display.category,
       tvl: {
         breakdown: bridgeTvl?.breakdown,

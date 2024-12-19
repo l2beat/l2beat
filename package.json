@@ -12,7 +12,7 @@
     "build:frontend": "turbo run build --filter=@l2beat/frontend",
     "build:public": "turbo run build --filter=@l2beat/backend-tools --filter=@l2beat/discovery --filter=@l2beat/discovery-types --filter=@l2beat/uif",
     "build:protocolbeat": "turbo run build --filter=@l2beat/protocolbeat",
-    "build:tx-decoder": "turbo run build --filter=@l2beat/tx-decoder",
+    "build:tools": "turbo run build --filter=@l2beat/tools",
     "build:uops-dashboard": "turbo run build --filter=@l2beat/uops-dashboard",
     "build:dependencies": "turbo run build --filter=@l2beat/frontend^... --filter=@l2beat/backend^... --filter=@l2beat/l2b",
     "watch:dependencies": "turbo watch build --filter=@l2beat/frontend^... --filter=@l2beat/backend^... --filter=@l2beat/l2b",

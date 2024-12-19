@@ -1,5 +1,6 @@
 import { mean } from 'lodash'
 import { useEffect, useMemo, useRef } from 'react'
+import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { cn } from '~/utils/cn'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
@@ -57,7 +58,7 @@ export function ChartHover() {
     <div>
       <div
         className={cn(
-          'absolute top-0 z-30 block h-full w-0.5 bg-current',
+          'absolute top-0 block h-full w-0.5 bg-current',
           milestone && 'bg-green-500',
           milestone?.type === 'incident' && 'bg-red-300',
         )}
@@ -70,7 +71,7 @@ export function ChartHover() {
             <div
               key={index}
               className={cn(
-                'absolute left-[-3px] z-40',
+                'absolute left-[-3px]',
                 milestone &&
                   POINT_CLASS_NAMES[
                     milestone?.type === 'incident' ? 'incident' : 'milestone'
@@ -85,10 +86,9 @@ export function ChartHover() {
       <div
         ref={contentRef}
         className={cn(
-          'absolute z-50 rounded-lg px-3 py-2 text-2xs md:px-4 md:py-3 md:text-xs',
-          'bg-white dark:bg-neutral-700',
+          tooltipContentVariants({ fitContent: true }),
+          'absolute text-2xs md:text-xs',
           'pointer-events-none select-none',
-          'shadow-md animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
           'transition-duration-50 transition-[bottom]',
         )}
       >

@@ -130,7 +130,7 @@ Along with each transport it is required to provide a formatter which will produ
 
 ### Pretty
 
-Type: `LogFormarretPretty`
+Type: `LogFormatterPretty`
 
 In this format every message is logged on one or more lines with another newline in between the messages. The first line contains the timestamp, log level, service, tag and the message. The following lines contain a representation of the parameters. This form is best suited for local development purposes.
 
@@ -158,7 +158,7 @@ Below is an example log output:
 
 ### JSON
 
-Type: `LogFormarretJson`
+Type: `LogFormatterJson`
 
 In this format every message is logged on a single line as a single JSON object. The object contains the timestamp, log level, service, tag, message, error and parameters. This format is best suited for deployment environments.
 
@@ -171,7 +171,7 @@ Below is an example log output:
 
 ### ECS
 
-Type: `LogFormarretEcs`
+Type: `LogFormatterEcs`
 
 In this format every message is logged on a single line as a single JSON object compatible with [ECS standard](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html). This format is best suited for deployment environments with ElastiSearch enabled
 

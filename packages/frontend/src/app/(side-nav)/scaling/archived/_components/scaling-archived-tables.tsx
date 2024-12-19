@@ -8,6 +8,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -22,7 +23,7 @@ export function ScalingArchivedTables({
   const filteredEntries = {
     rollups: entries.rollups.filter(includeFilters),
     validiumsAndOptimiums: entries.validiumsAndOptimiums.filter(includeFilters),
-    others: entries.others?.filter(includeFilters) ?? [],
+    others: entries.others.filter(includeFilters),
   }
 
   const initialSort = {
@@ -51,7 +52,7 @@ export function ScalingArchivedTables({
               {filteredEntries.validiumsAndOptimiums.length}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {featureFlags.showOthers && filteredEntries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -69,7 +70,7 @@ export function ScalingArchivedTables({
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
+        {featureFlags.showOthers && filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <ScalingArchivedTable entries={filteredEntries.others} />

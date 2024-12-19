@@ -31,8 +31,9 @@ describe('layer3s', () => {
       }
     })
   })
-  it('every layer3 has a valid host chain except those with Multiple', () => {
-    for (const layer3 of layer3s.filter((x) => x.hostChain !== 'Multiple')) {
+
+  it('every layer3 has a valid host chain', () => {
+    for (const layer3 of layer3s) {
       expect(layer3.hostChain).not.toBeNullish()
       const hostChain = layer2s.find((x) => x.id === layer3.hostChain)
       expect(hostChain).not.toBeNullish()
@@ -147,16 +148,6 @@ describe('layer3s', () => {
       it(`${layer3.display.name} does not have duplicated badges`, () => {
         expect(layer3.badges?.length).toEqual(uniq(layer3.badges).length)
       })
-    }
-  })
-
-  describe('Other category projects have other details', () => {
-    for (const layer3 of layer3s) {
-      if (layer3.display.isOther) {
-        it(layer3.display.name, () => {
-          expect(layer3.display.mainPermissions).not.toEqual(undefined)
-        })
-      }
     }
   })
 })

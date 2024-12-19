@@ -3,12 +3,12 @@ import {
   type Layer3,
   type ScalingProjectDisplay,
 } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '@l2beat/config'
-import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
-import { env } from 'process'
+import { assert, ProjectId } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
+import { featureFlags } from '~/consts/feature-flags'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectsChangeReport,
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import {
@@ -21,8 +21,6 @@ import {
 } from './get-activity-table-data'
 import { getActivityProjects } from './utils/get-activity-projects'
 
-type ActivityProject = Layer2 | Layer3
-
 export async function getScalingActivityEntries() {
   const projects = getActivityProjects()
   const [projectsChangeReport, activityData] = await Promise.all([
@@ -34,24 +32,20 @@ export async function getScalingActivityEntries() {
   assert(ethereumData !== undefined, 'Ethereum data not found')
 
   const entries = projects
-    .map((project) => {
-      const isVerified = getProjectsVerificationStatuses(project)
-      const data = activityData[project.id]
-      if (!data) {
-        return undefined
-      }
-      return getScalingProjectActivityEntry(
+    .map((project) =>
+      getScalingProjectActivityEntry(
         project,
-        data,
-        isVerified,
-        projectsChangeReport,
-      )
-    })
-    .filter(notUndefined)
+        projectsChangeReport.getChanges(project.id),
+        activityData[project.id],
+      ),
+    )
+    .filter((entry) => entry !== undefined)
     .concat(
-      getEthereumEntry(ethereumData, 'Rollups'),
-      getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-      getEthereumEntry(ethereumData, 'Others'),
+      compact([
+        getEthereumEntry(ethereumData, 'Rollups'),
+        getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
+        featureFlags.showOthers && getEthereumEntry(ethereumData, 'Others'),
+      ]),
     )
     .sort(compareActivityEntry)
 
@@ -60,25 +54,19 @@ export async function getScalingActivityEntries() {
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
   dataSource: ScalingProjectDisplay['activityDataSource']
-  data: ActivityProjectTableData
+  data: ActivityProjectTableData | undefined
 }
 
 function getScalingProjectActivityEntry(
-  project: ActivityProject,
-  data: ActivityProjectTableData,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
-): ScalingActivityEntry {
+  project: Layer2 | Layer3,
+  changes: ProjectChanges,
+  data: ActivityProjectTableData | undefined,
+): ScalingActivityEntry | undefined {
   return {
     ...getCommonScalingEntry({
       project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-      syncStatus: data.syncStatus,
+      changes,
+      syncStatus: data?.syncStatus,
     }),
     href: `/scaling/projects/${project.display.slug}#activity`,
     dataSource: project.display.activityDataSource,
@@ -110,13 +98,14 @@ function compareActivityEntry(
   a: ScalingActivityEntry,
   b: ScalingActivityEntry,
 ) {
-  if (env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+  if (featureFlags.stageSorting) {
     const stageDiff = b.stageOrder - a.stageOrder
     if (stageDiff !== 0) {
       return stageDiff
     }
   }
-  const diff = b.data.uops.pastDayCount - a.data.uops.pastDayCount
+  const diff =
+    (b.data?.uops.pastDayCount ?? 0) - (a.data?.uops.pastDayCount ?? 0)
   if (diff !== 0) {
     return diff
   }

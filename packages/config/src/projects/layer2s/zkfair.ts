@@ -19,6 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Layer2 } from './types'
@@ -96,6 +97,10 @@ export const zkfair: Layer2 = {
   createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     name: 'ZKFair',
     slug: 'zkfair',
     purposes: ['Universal'],
@@ -215,8 +220,6 @@ export const zkfair: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: {
     stage: 'NotApplicable',

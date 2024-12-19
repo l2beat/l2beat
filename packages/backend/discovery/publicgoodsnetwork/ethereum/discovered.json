@@ -1,7 +1,7 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 21370693,
+  "blockNumber": 21428894,
   "configHash": "0x3a54f3ab3aeb854af2a1777b38da8dc8dc9f3879d47ee4eda3de6e36ed655d68",
   "contracts": [
     {
@@ -29,6 +29,58 @@
       "values": {
         "$immutable": true,
         "owner": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
+      }
+    },
+    {
+      "name": "BalanceClaimer",
+      "address": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+      "template": "opstack/BalanceClaimer",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x162e189e2a50fea3f598cf9b4d21593d1e1fe9ec0d11aa9fa653dc980399677d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": [
+            {
+              "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
+              "delay": 0
+            }
+          ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+          "description": "withdraw ETH escrowed in the OptimismPortal."
+        },
+        {
+          "permission": "configure",
+          "target": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+          "description": "withdraw ERC-20 tokens escrowed in the bridge."
+        }
+      ],
+      "sinceTimestamp": 1733954471,
+      "values": {
+        "$admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
+        "$implementation": "0xda926133e23F6681a5B9445A439F80889d030EFb",
+        "$pastUpgrades": [
+          [
+            "2024-12-11T22:01:11.000Z",
+            "0x3984a1daead38965fbde5b05f5d2fd072e2fd60f68d61764e8fd9d9b005307fe",
+            ["0xda926133e23F6681a5B9445A439F80889d030EFb"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ERC20_BALANCE_WITHDRAWER": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+        "ETH_BALANCE_WITHDRAWER": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+        "ROOT": "0xdc8d72680e7aa76a53e17f537ee4455c1546c32badeac410313687a14bbe9625",
+        "version": "1.0.0"
       }
     },
     {
@@ -70,7 +122,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -95,6 +147,11 @@
           "permission": "configure",
           "target": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
           "permission": "upgrade",
@@ -144,7 +201,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 64,
+        "nonce": 66,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -324,10 +381,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 22350600,
-        "latestOutputIndex": 12416,
-        "nextBlockNumber": 22352400,
-        "nextOutputIndex": 12417,
+        "latestBlockNumber": 22674600,
+        "latestOutputIndex": 12596,
+        "nextBlockNumber": 22676400,
+        "nextOutputIndex": 12597,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -343,14 +400,19 @@
     {
       "name": "OptimismPortal",
       "address": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
-      "template": "opstack/OptimismPortal",
+      "template": "opstack/OptimismPortal_PGN_withdraw",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x8d871731877bb6dfe48e64a821acb08680fe17b500908486a34315093c236d0b"
+        "0x18ba9f08d5c62bddd4131c2df38d760af4011869233e575569a52379ec8eee6a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "via": []
+        },
         {
           "permission": "guard",
           "target": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
@@ -371,15 +433,21 @@
       "sinceTimestamp": 1689106847,
       "values": {
         "$admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-        "$implementation": "0x436e9FC7894e26718637f086d42B4a06439C8ae0",
+        "$implementation": "0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09",
         "$pastUpgrades": [
           [
             "2023-07-11T20:25:23.000Z",
             "0xb9822d59b3f66040b5283611a47e3ffaf597d522a7dc58fa41108dbf9594cd7a",
             ["0x436e9FC7894e26718637f086d42B4a06439C8ae0"]
+          ],
+          [
+            "2024-12-13T23:16:59.000Z",
+            "0x3fe74b8c72f294ff456a997ea43070350485d48cb96da3390ae02837cf626789",
+            ["0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
+        "BALANCE_CLAIMER": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
         "GUARDIAN": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "L2_ORACLE": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
@@ -388,9 +456,9 @@
           "prevBoughtGas": 490798,
           "prevBlockNum": 21363499
         },
-        "paused": true,
+        "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
-        "version": "1.6.0"
+        "version": "1.7.0"
       }
     },
     {
@@ -405,6 +473,10 @@
           "permission": "configure",
           "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
           "description": "set and change address mappings."
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
         },
         {
           "permission": "upgrade",
@@ -435,14 +507,19 @@
     {
       "name": "L1StandardBridge",
       "address": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
-      "template": "opstack/L1StandardBridge",
+      "template": "opstack/L1StandardBridge_PGN_withdraw",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
+        "0x6e17f8c044cb5416af604d756bb7ab831395f1ea7638248701de78a55271e561"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -458,14 +535,15 @@
       "sinceTimestamp": 1689106811,
       "values": {
         "$admin": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-        "$implementation": "0x459bA3BD8fb18CCBf557Ae9Fab13ceD2542B0d8E",
+        "$implementation": "0xF5328094aE48F975CF588f361DDCC749F706aAF0",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
+        "BALANCE_CLAIMER": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
         "MESSENGER": "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
-        "version": "1.1.0"
+        "version": "1.2.0"
       }
     }
   ],
@@ -512,6 +590,16 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
+    "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x1d8180D739D01dC97e837478af8d494215C5EF5e": [
       "constructor(address _portal)",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
@@ -542,62 +630,6 @@
     "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84": [
       "constructor(address _singleton)"
     ],
-    "0x436e9FC7894e26718637f086d42B4a06439C8ae0": [
-      "constructor(address _l2Oracle, address _guardian, bool _paused, address _config)",
-      "event Initialized(uint8 version)",
-      "event Paused(address account)",
-      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
-      "event Unpaused(address account)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
-      "function GUARDIAN() view returns (address)",
-      "function L2_ORACLE() view returns (address)",
-      "function SYSTEM_CONFIG() view returns (address)",
-      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function donateETH() payable",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function initialize(bool _paused)",
-      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
-      "function l2Sender() view returns (address)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
-      "function unpause()",
-      "function version() view returns (string)"
-    ],
-    "0x459bA3BD8fb18CCBf557Ae9Fab13ceD2542B0d8E": [
-      "constructor(address _messenger)",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function l2TokenBridge() view returns (address)",
-      "function messenger() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "0x463B3777d3DD6a90234b594D1f94002267CE7948": [
       "constructor(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
@@ -625,6 +657,37 @@
     ],
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
       "constructor(address _singleton)"
+    ],
+    "0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09": [
+      "constructor(address _l2Oracle, address _guardian, bool _paused, address _config, address _balanceClaimer)",
+      "error CallerNotBalanceClaimer()",
+      "error EthTransferFailed()",
+      "event Initialized(uint8 version)",
+      "event Paused(address account)",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event Unpaused(address account)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "function BALANCE_CLAIMER() view returns (address)",
+      "function GUARDIAN() view returns (address)",
+      "function L2_ORACLE() view returns (address)",
+      "function SYSTEM_CONFIG() view returns (address)",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function initialize(bool _paused)",
+      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function unpause()",
+      "function version() view returns (string)",
+      "function withdrawEthBalance(address _user, uint256 _ethClaim)"
     ],
     "0x76983dfED43C7ae7ebB592A92Be2BE972cAE4348": [
       "constructor(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
@@ -761,16 +824,62 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xda926133e23F6681a5B9445A439F80889d030EFb": [
+      "constructor(address _ethBalanceWithdrawer, address _erc20BalanceWithdrawer, bytes32 _root)",
+      "error InvalidMerkleRoot()",
+      "error NoBalanceToClaim()",
+      "event BalanceClaimed(address indexed user, uint256 ethBalance, tuple(address token, uint256 balance)[] erc20TokenBalances)",
+      "function ERC20_BALANCE_WITHDRAWER() view returns (address)",
+      "function ETH_BALANCE_WITHDRAWER() view returns (address)",
+      "function ROOT() view returns (bytes32)",
+      "function canClaim(bytes32[] _proof, address _user, uint256 _ethBalance, tuple(address token, uint256 balance)[] _erc20Claim) view returns (bool _canClaimTokens)",
+      "function claim(bytes32[] _proof, address _user, uint256 _ethBalance, tuple(address token, uint256 balance)[] _erc20Claim)",
+      "function claimed(address) view returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "0xF5328094aE48F975CF588f361DDCC749F706aAF0": [
+      "constructor(address _messenger, address _balanceClaimer)",
+      "error CallerNotBalanceClaimer()",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "function BALANCE_CLAIMER() view returns (address)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function version() view returns (string)",
+      "function withdrawErc20Balance(address _user, tuple(address token, uint256 balance)[] _erc20Claim)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
+    "opstack/BalanceClaimer": "0x7a30e41741ae2c6a7984c4ad6cea30b458edc58e79a3db576e40bd2bac32249b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
-    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L1StandardBridge_PGN_withdraw": "0x09b918a91f33d385a5434c29762497d077df99c6bbc5fa1627c8cb5b8eeddbb8",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
-    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
+    "opstack/OptimismPortal_PGN_withdraw": "0x85f44d5fadf5c6dfa87d7512bb709bb6d868098610aed29d7ddcb1e9c1172858",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }

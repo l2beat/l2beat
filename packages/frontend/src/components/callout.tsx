@@ -1,10 +1,10 @@
 import { type VariantProps, cva } from 'class-variance-authority'
-import React, { type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 const calloutVariants = cva('flex rounded-lg', {
   variants: {
     color: {
-      red: 'bg-red-600/20 hover:bg-red-500/20',
+      red: 'bg-negative/20',
       yellow: 'bg-yellow-700/20',
       blue: 'bg-blue-700/20',
       gray: 'bg-gray-500/20',

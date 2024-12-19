@@ -13,6 +13,7 @@ import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
+import { featureFlags } from '~/consts/feature-flags'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -31,9 +32,16 @@ import { useActivityChartRenderParams } from './use-activity-chart-render-params
 interface Props {
   milestones: Milestone[]
   entries: ScalingActivityEntry[]
+  hideScalingFactor?: boolean
+  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 }
 
-export function ActivityChart({ milestones, entries }: Props) {
+export function ActivityChart({
+  milestones,
+  entries,
+  hideScalingFactor,
+  type,
+}: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
   const filters = useScalingFilterValues()
@@ -48,12 +56,15 @@ export function ActivityChart({ milestones, entries }: Props) {
     true,
   )
 
-  const filter = filters.isEmpty
-    ? { type: 'all' as const }
-    : {
-        type: 'projects' as const,
-        projectIds: entries.filter(includeFilter).map((project) => project.id),
-      }
+  const filter =
+    !featureFlags.showOthers && filters.isEmpty
+      ? { type: 'all' as const }
+      : {
+          type: 'projects' as const,
+          projectIds: entries
+            .filter(includeFilter)
+            .map((project) => project.id),
+        }
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter,
@@ -69,6 +80,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       chart: data,
       showMainnet,
       metric,
+      type,
     })
 
   return (
@@ -84,12 +96,17 @@ export function ActivityChart({ milestones, entries }: Props) {
           showEthereum={showMainnet}
           metric={metric}
           singleProject={filter.projectIds?.length === 1}
+          type={type}
         />
       )}
       useLogScale={scale === 'log'}
     >
       <section className="flex flex-col gap-4">
-        <ActivityChartHeader stats={stats} range={chartRange} />
+        <ActivityChartHeader
+          stats={stats}
+          range={chartRange}
+          hideScalingFactor={hideScalingFactor}
+        />
         <Chart />
         <Controls
           scale={scale}
@@ -127,7 +144,7 @@ function Controls({
   const isClient = useIsClient()
   return (
     <ChartControlsWrapper>
-      <div className="flex gap-2 md:gap-4">
+      <div className="flex gap-1">
         {isClient ? (
           <RadioGroup
             value={scale}
