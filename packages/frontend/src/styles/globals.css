@@ -1,5 +1,5 @@
-@import "./markdown.css";
-@import "./article.css";
+@import './markdown.css';
+@import './article.css';
 
 @tailwind base;
 @tailwind components;
@@ -24,7 +24,7 @@
     --indicator-validiums-optimiums: #36a3a3;
     --indicator-others: #ab8000;
     --indicator-ethereum: #2a5bd8;
-    --success-positive: #007408;
+    --positive: #007408;
     --link-stroke: #badaff;
     --link: #2a5bd8;
   }
@@ -47,7 +47,7 @@
     --indicator-validiums-optimiums: #3ac5e1;
     --indicator-others: #dfd043;
     --indicator-ethereum: #53a2ff;
-    --success-positive: #15ca60;
+    --positive: #15ca60;
     --link-stroke: #152a4b;
     --link: #53a2ff;
   }
@@ -88,18 +88,16 @@
    It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
    Temporary solution until project page is redesigned to new colors.
   */
-  body:has(.sidebar) [data-role="select-content"] {
+  body:has(.sidebar) [data-role='select-content'] {
     @apply bg-surface-secondary;
   }
-  body:has(.sidebar) [data-role="select-content"] [role="option"] {
+  body:has(.sidebar) [data-role='select-content'] [role='option'] {
     @apply focus:bg-surface-tertiary;
   }
-  body:has(.sidebar.main-page-card) [data-role="select-content"] {
+  body:has(.sidebar.main-page-card) [data-role='select-content'] {
     @apply bg-surface-primary;
   }
-  body:has(.sidebar.main-page-card)
-    [data-role="select-content"]
-    [role="option"] {
+  body:has(.sidebar.main-page-card) [data-role='select-content'] [role='option'] {
     @apply focus:bg-surface-secondary;
   }
 }
@@ -163,18 +161,8 @@
   }
 
   .chart-fade-out-to-bottom {
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      black 0px,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      black 0px,
-      transparent 100%
-    );
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
   }
 
   /* For Webkit-based browsers (Chrome, Safari and Opera) */
