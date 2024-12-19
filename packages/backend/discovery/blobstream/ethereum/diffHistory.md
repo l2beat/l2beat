@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x65677d9f57abdd00beda17a9398046f262267dee
+Generated with discovered.json: 0x51e6fe8f9fea26136664ef4d0acc40c6fdf87250
 
-# Diff at Thu, 19 Dec 2024 10:26:41 GMT:
+# Diff at Thu, 19 Dec 2024 11:15:31 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 21357513
 - current block number: 21435567
 
@@ -10,6 +10,7 @@ Generated with discovered.json: 0x65677d9f57abdd00beda17a9398046f262267dee
 
 Discovery rerun on the same block number with only config-related changes.
 Properly resolve $admin.
+Resolve old Gateway owner's permissions.
 
 ## Config/verification related changes
 
@@ -23,6 +24,18 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
       name:
 -        "nextHeaderVerifier"
 +        "NextHeaderVerifier"
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      template:
++        "succinct/SuccinctGateway"
+      description:
++        "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0","via":[]}]
     }
 ```
 
@@ -46,6 +59,14 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
     +++ description: None
       receivedPermissions:
 +        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"can freeze the bridge contract and update the list of authorized relayers."},{"permission":"upgrade","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"}]
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x6c7a05e0AE641c6559fD76ac56641778B6eCd776","description":"can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."}]
     }
 ```
 

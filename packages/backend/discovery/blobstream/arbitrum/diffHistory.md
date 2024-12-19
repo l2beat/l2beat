@@ -1,15 +1,16 @@
-Generated with discovered.json: 0x7eb2eace5345b56b7cc870f270bebd1805a78f74
+Generated with discovered.json: 0x22cb9f7ee016b2f7410e3925de218021571af7dd
 
-# Diff at Thu, 19 Dec 2024 10:30:03 GMT:
+# Diff at Thu, 19 Dec 2024 11:15:31 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 282615739
 - current block number: 282615739
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes. 
+Discovery rerun on the same block number with only config-related changes.
 Properly resolve $admin.
+Resolve old Gateway owner's permissions.
 
 ## Config/verification related changes
 
@@ -23,6 +24,18 @@ discovery. Values are for block 282615739 (main branch discovery), not current.
       name:
 -        "headerRangeVerifier"
 +        "HeaderRangeVerifier"
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      template:
++        "succinct/SuccinctGateway"
+      description:
++        "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3","via":[]}]
     }
 ```
 
@@ -46,6 +59,14 @@ discovery. Values are for block 282615739 (main branch discovery), not current.
 +        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
       issuedPermissions:
 +        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]},{"permission":"upgrade","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}]
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x6c7a05e0AE641c6559fD76ac56641778B6eCd776","description":"can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."}]
     }
 ```
 

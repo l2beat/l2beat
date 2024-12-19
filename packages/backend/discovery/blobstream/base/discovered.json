@@ -111,8 +111,17 @@
     {
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+      "template": "succinct/SuccinctGateway",
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
+      ],
+      "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1706574051,
       "values": {
@@ -303,6 +312,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706568681,
       "values": {
@@ -728,6 +744,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0xb08f46d0aca89ab9e693fac4ce77f0033aecd7b83ddc62dde1b0a2a2f2460f1e",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
+    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
+    "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
   }
 }
