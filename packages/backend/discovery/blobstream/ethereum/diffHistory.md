@@ -1,14 +1,15 @@
-Generated with discovered.json: 0x4120414e25bb72f5fd213a8d00b241dee16f6a2e
+Generated with discovered.json: 0x65677d9f57abdd00beda17a9398046f262267dee
 
-# Diff at Thu, 19 Dec 2024 09:07:28 GMT:
+# Diff at Thu, 19 Dec 2024 10:26:41 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 21357513
 - current block number: 21435567
 
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
+Properly resolve $admin.
 
 ## Config/verification related changes
 
@@ -28,14 +29,15 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
 ```diff
     contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
     +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.
-      values.admins:
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
 +        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
       values.guardians:
 +        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
       description:
 +        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
       issuedPermissions:
-+        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
++        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]},{"permission":"upgrade","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
     }
 ```
 
@@ -43,7 +45,7 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
     contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"can freeze the bridge contract and update the list of authorized relayers."}]
++        [{"permission":"configure","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe","description":"can freeze the bridge contract and update the list of authorized relayers."},{"permission":"upgrade","target":"0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"}]
     }
 ```
 

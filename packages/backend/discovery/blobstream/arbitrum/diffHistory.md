@@ -1,14 +1,15 @@
-Generated with discovered.json: 0x901968ec955af341f44c6601cb82d6c5d79be03d
+Generated with discovered.json: 0x7eb2eace5345b56b7cc870f270bebd1805a78f74
 
-# Diff at Thu, 19 Dec 2024 09:11:33 GMT:
+# Diff at Thu, 19 Dec 2024 10:30:03 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 282615739
 - current block number: 282615739
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Discovery rerun on the same block number with only config-related changes. 
+Properly resolve $admin.
 
 ## Config/verification related changes
 
@@ -29,21 +30,22 @@ discovery. Values are for block 282615739 (main branch discovery), not current.
     contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
     +++ description: None
       receivedPermissions:
-+        [{"permission":"configure","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"can freeze the bridge contract and update the list of authorized relayers."}]
++        [{"permission":"configure","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"can freeze the bridge contract and update the list of authorized relayers."},{"permission":"upgrade","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"}]
     }
 ```
 
 ```diff
     contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
     +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.
-      values.admins:
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
 +        ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
       values.guardians:
 +        ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
       description:
 +        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum."
       issuedPermissions:
-+        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}]
++        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]},{"permission":"upgrade","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}]
     }
 ```
 

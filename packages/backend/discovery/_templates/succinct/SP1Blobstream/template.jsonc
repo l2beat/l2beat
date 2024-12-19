@@ -4,10 +4,10 @@
   "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
   "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
   "fields": {
-    "admins": {
+    "$admin": {
       "handler": {
         "type": "accessControl",
-        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+        "pickRoleMembers": "TIMELOCK_ROLE"
       }
     },
     "guardians": {

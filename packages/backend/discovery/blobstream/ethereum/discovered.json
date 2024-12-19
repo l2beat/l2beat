@@ -140,12 +140,17 @@
           "permission": "configure",
           "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "via": []
         }
       ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1717615307,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
+        "$admin": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
         "$pastUpgrades": [
           [
@@ -179,7 +184,6 @@
             "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
           }
         },
-        "admins": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 10000,
@@ -214,6 +218,10 @@
           "permission": "configure",
           "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "can freeze the bridge contract and update the list of authorized relayers."
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -335,15 +343,7 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
-        }
-      ]
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9" },
     { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
     { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
@@ -610,7 +610,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xb0728acddadb17268564989a4ed4c663c6d7ada64298ab276ba96c945c411d7b",
+    "succinct/SP1Blobstream": "0xb08f46d0aca89ab9e693fac4ce77f0033aecd7b83ddc62dde1b0a2a2f2460f1e",
     "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
   }
 }
