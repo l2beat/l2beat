@@ -1,10 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -13,7 +10,6 @@ import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { featureFlags } from '~/consts/feature-flags'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -44,7 +40,6 @@ export function ActivityChart({
 }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
-  const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvl-scale',
@@ -56,15 +51,10 @@ export function ActivityChart({
     true,
   )
 
-  const filter =
-    !featureFlags.showOthers && filters.isEmpty
-      ? { type: 'all' as const }
-      : {
-          type: 'projects' as const,
-          projectIds: entries
-            .filter(includeFilter)
-            .map((project) => project.id),
-        }
+  const filter = {
+    type: 'projects' as const,
+    projectIds: entries.filter(includeFilter).map((project) => project.id),
+  }
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter,
