@@ -11,6 +11,7 @@ import {
 } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
+import { cn } from '~/utils/cn'
 import { Chart } from '../../core/chart'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
 import { ChartProvider } from '../../core/chart-provider'
@@ -95,14 +96,16 @@ export function ProjectTokenChart({
         {featureFlags.showOthers && showStackedChartLegend && (
           <StackedTvlChartLegend className="my-2" />
         )}
-        <TokenChartUnitControls
-          isBridge={isBridge}
-          unit={unit}
-          setUnit={setUnit}
-          tokens={tokens}
-          token={token}
-          setToken={setToken}
-        />
+        <div className={cn(!showStackedChartLegend && 'mt-4')}>
+          <TokenChartUnitControls
+            isBridge={isBridge}
+            unit={unit}
+            setUnit={setUnit}
+            tokens={tokens}
+            token={token}
+            setToken={setToken}
+          />
+        </div>
       </section>
     </ChartProvider>
   )
