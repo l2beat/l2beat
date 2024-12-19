@@ -3,6 +3,7 @@ import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_componen
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import { type ActivityChartType } from './use-activity-chart-render-params'
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export function ActivityChartHover(props: Props) {
+  const decimals =
+    props.count < 1 ? getFirstTwoNonZeroPrecision(props.count) : 2
   return (
     <div className="min-w-36">
       <div className="mb-1.5 whitespace-nowrap">
@@ -49,7 +52,7 @@ export function ActivityChartHover(props: Props) {
           {props.syncedUntil && props.syncedUntil < props.timestamp
             ? 'Not synced'
             : formatActivityCount(countPerSecond(props.count), {
-                morePrecision: !!props.singleProject,
+                decimals,
               })}
         </span>
       </div>
@@ -62,7 +65,7 @@ export function ActivityChartHover(props: Props) {
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
             {formatActivityCount(countPerSecond(props.ethereumCount), {
-              morePrecision: !!props.singleProject,
+              decimals,
             })}
           </span>
         </div>
