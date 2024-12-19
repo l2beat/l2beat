@@ -2,7 +2,7 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
   "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
-  "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum.",
+  "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
   "fields": {
     "$admin": {
       "handler": {
@@ -29,7 +29,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "can call commitHeaderRange() to commit block ranges."
+            "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
           }
         ]
       },
