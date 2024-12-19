@@ -1,3 +1,96 @@
+Generated with discovered.json: 0x59df2631957c2fcd2298bc15d340ec886934759c
+
+# Diff at Thu, 19 Dec 2024 11:57:29 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 23434494
+- current block number: 23434494
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+Properly resolve $admin.
+Resolve old Gateway owner's permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 23434494 (main branch discovery), not current.
+
+```diff
+    contract BlobstreamMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"can freeze the bridge contract and update the list of authorized relayers."},{"permission":"upgrade","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"}]
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      template:
++        "succinct/SuccinctGateway"
+      description:
++        "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3","via":[]}]
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
+      values.isRelayerApproved:
+-        true
+      values.relayers.2:
++        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.1:
++        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
+      values.guardians:
++        ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
+      values.isRelayer1Approved:
++        true
+      values.isRelayer2Approved:
++        true
+      values.isRelayer3Approved:
++        true
+      description:
++        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D","via":[]},{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6","via":[]},{"permission":"configure","target":"0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC","via":[]},{"permission":"upgrade","target":"0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6","via":[]}]
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x6c7a05e0AE641c6559fD76ac56641778B6eCd776","description":"can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."}]
+    }
+```
+
+```diff
+    contract NextHeaderVerifier (0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "NextHeaderVerifier"
+    }
+```
+
+```diff
+    contract HeaderRangeVerifier (0xF2415C44F47983F7dD22003B46A034B1F1d04e44) {
+    +++ description: None
+      name:
+-        "FunctionVerifier"
++        "HeaderRangeVerifier"
+    }
+```
+
 Generated with discovered.json: 0xa1b5d233f3944b15389a548ed37dfd5e63fa0578
 
 # Diff at Thu, 12 Dec 2024 15:07:35 GMT:

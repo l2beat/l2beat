@@ -70,9 +70,7 @@ export function RecategorizedActivityChartHover(props: Props) {
           <span className="whitespace-nowrap font-bold tabular-nums">
             {props.syncedUntil && props.syncedUntil < props.timestamp
               ? 'Not synced'
-              : formatActivityCount(countPerSecond(v.value), {
-                  morePrecision: false,
-                })}
+              : formatActivityCount(countPerSecond(v.value))}
           </span>
         </div>
       ))}

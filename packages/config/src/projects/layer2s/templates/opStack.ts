@@ -72,7 +72,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
   nodeSourceLink?: string,
-  daLayer: DataAvailabilityLayer = DA_LAYERS.EXTERNAL,
+  daLayer: DataAvailabilityLayer = DA_LAYERS.NONE,
 ): DAProvider {
   return {
     layer: daLayer,
