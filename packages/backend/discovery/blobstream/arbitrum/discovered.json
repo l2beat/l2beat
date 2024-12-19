@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 282615739,
-  "configHash": "0x8c9848c72a22be9bb2aed39d374e958d9b561ec37cd149a987e339689443fd33",
+  "configHash": "0x9cefa2589a8ac1da670e95489c212c2855adecdeca4cf0ce85bd5315a96134df",
   "contracts": [
     {
       "name": "SuccinctFeeVault",

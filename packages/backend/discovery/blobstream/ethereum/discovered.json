@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 21357513,
-  "configHash": "0xfef1b6fceab3b9ccbd74ffcffbb80c4812f380f7290b173560cb0c2b49940a0e",
+  "blockNumber": 21435567,
+  "configHash": "0x095fcfd945197d147275446dd612c9a9d466577219ff0c82160e1bafb10e2735",
   "contracts": [
     {
       "name": "NextHeaderVerifier",
@@ -190,10 +190,10 @@
         "guardians": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"],
         "headerRangeFunctionId_deprecated": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
         "isRelayerApproved": true,
-        "latestBlock": 2962800,
+        "latestBlock": 3106800,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
-        "state_proofNonce": 1512,
+        "state_proofNonce": 1623,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
