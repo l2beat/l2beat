@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../../types/DaCommitteeSecurityRisk'
 import { DaRelayerFailureRisk } from '../../../../types/DaRelayerFailureRisk'
@@ -63,7 +63,11 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
   chain: 'ethereum',
   createdAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
   usedIn: [
-    // no project integrates it for state validation
+    {
+      id: ProjectId('rari'),
+      name: 'RARI Chain',
+      slug: 'rari',
+    },
   ],
   display: {
     links: {

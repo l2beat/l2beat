@@ -36,7 +36,6 @@ import { paychainDac } from './dac/payChain'
 import { playblockDac } from './dac/playblock'
 import { popapexDac } from './dac/popapex'
 import { popbossDac } from './dac/popboss'
-import { rariDac } from './dac/rari'
 import { realDac } from './dac/real'
 import { redstoneDA } from './dac/redstoneDA'
 import { reyaDac } from './dac/reya'
@@ -88,7 +87,6 @@ export const daLayers = applyProcessor([
   playblockDac,
   popapexDac,
   popbossDac,
-  rariDac,
   realDac,
   reyaDac,
   rhinofiDac,
