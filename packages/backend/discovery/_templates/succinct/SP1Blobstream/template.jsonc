@@ -2,7 +2,7 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
   "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
-  "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
+  "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
   "fields": {
     "$admin": {
       "handler": {
@@ -36,6 +36,7 @@
       // No events are emitted when relayers are added or removed, so we must hardcode the list of relayers.
       // Use the slot explorer for the reference:
       // https://explorer.sim.io/eth/21436312/0x7cf3876f681dbb6eda8f6ffc45d66b996df08fae/approvedRelayers#map
+      // ^ REMEMBER to change the block number to the most recent one in the URL.
       "handler": {
         "type": "hardcoded",
         "value": [
