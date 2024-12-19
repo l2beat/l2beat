@@ -19,10 +19,7 @@ export const rari: Layer3 = orbitStackL3({
   discovery,
   hostChain: ProjectId('arbitrum'),
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
     name: 'RARI Chain',
     slug: 'rari',
     description:
