@@ -89,6 +89,13 @@ export const DA_LAYERS = {
     fallbackDescription: undefined,
     secondLine: undefined,
   },
+  AVAIL: {
+    value: 'Avail',
+    sentiment: 'warning',
+    description: 'The data is posted to Avail.',
+    fallbackDescription: undefined,
+    secondLine: undefined,
+  },
   EXTERNAL: {
     value: 'External',
     sentiment: 'warning',

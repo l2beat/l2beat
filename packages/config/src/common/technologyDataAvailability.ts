@@ -160,6 +160,38 @@ function CELESTIA_OFF_CHAIN(
   }
 }
 
+function AVAIL_OFF_CHAIN(
+  isUsingVector: boolean,
+): ScalingProjectTechnologyChoice {
+  const additionalDescription = isUsingVector
+    ? ' The vector bridge is used to verify attestations from the Avail validator set that the data is indeed available.'
+    : ' Since the Vector bridge is not used, availability of the data is not verified against Avail validators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+  return {
+    name: 'Data is stored on Avail',
+    description:
+      `Transactions roots are posted onchain and the full data is posted on Avail. ` +
+      additionalDescription,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the sequencer posts an unavailable transaction root.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the data is not available on the external provider.',
+        isCritical: true,
+      },
+    ],
+    references: [
+      {
+        text: "Avail's Data Attestation Bridge: Enabling Secure Validiums and Optimistic Chains",
+        href: 'https://blog.availproject.org/data-attestation-bridge/',
+      },
+    ],
+  }
+}
+
 function DACHALLENGES_OFF_CHAIN(
   daChallengeWindow: string,
   daResolveWindow: string,
@@ -213,5 +245,6 @@ export const TECHNOLOGY_DATA_AVAILABILITY = {
   ANYTRUST_OFF_CHAIN,
   PLASMA_OFF_CHAIN,
   CELESTIA_OFF_CHAIN,
+  AVAIL_OFF_CHAIN,
   DACHALLENGES_OFF_CHAIN,
 }
