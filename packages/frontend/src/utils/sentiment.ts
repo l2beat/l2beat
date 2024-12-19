@@ -7,7 +7,7 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
     case 'warning':
       return 'fill-yellow-200'
     case 'good':
-      return 'fill-positive'
+      return 'fill-green-300 dark:fill-green-450'
     case 'neutral':
     case 'UnderReview':
       return 'fill-gray-400 dark:fill-zinc-700'
@@ -21,7 +21,7 @@ export function sentimentToOpaqueBgColor(sentiment: Sentiment): string {
     case 'warning':
       return 'bg-yellow-200'
     case 'good':
-      return 'bg-positive'
+      return 'bg-green-300 dark:bg-green-450'
     case 'neutral':
     case 'UnderReview':
       return 'bg-gray-400 dark:bg-zinc-700'
@@ -35,7 +35,7 @@ export function sentimentToTransparentBgColor(sentiment: Sentiment): string {
     case 'warning':
       return 'bg-yellow-200/15'
     case 'good':
-      return 'bg-positive/15'
+      return 'bg-green-300/15 dark:bg-green-450/15'
     case 'neutral':
     case 'UnderReview':
       return 'bg-gray-400/15 dark:bg-zinc-700/15'

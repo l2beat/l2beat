@@ -29,7 +29,11 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
   const providerProps = provider ? providerMap[provider] : undefined
 
   return (
-    <span className={cn(isRollup && !disableColors && 'text-positive')}>
+    <span
+      className={cn(
+        isRollup && !disableColors && 'text-green-300 dark:text-green-450',
+      )}
+    >
       {children ?? EM_DASH}
       {providerProps ? (
         <TypeTooltip
