@@ -45,7 +45,7 @@ export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
       })}
       {daLayerGrissiniValues && (
         <ProjectStat
-          className="lg:hidden"
+          className="md:gap-1.5 lg:hidden"
           title="Risks"
           value={
             <GrissiniCell
