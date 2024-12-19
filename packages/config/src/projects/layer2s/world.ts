@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -12,6 +13,7 @@ export const world: Layer2 = opStackL2({
   additionalBadges: [Badge.RaaS.Alchemy, Badge.Infra.Superchain],
   additionalPurposes: ['Identity'],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'World Chain',
     slug: 'world',
     description:

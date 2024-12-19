@@ -27,7 +27,7 @@ export const REASON_FOR_BEING_OTHER = {
   },
   LOW_DAC_THRESHOLD: {
     label: 'Low DAC threshold',
-    shortDescription: 'A higher threshold in the data availability committee',
+    shortDescription: 'The data availability committee threshold is too low',
     description:
       'Projects with a low DAC threshold rely on the honesty of few entities to safely attest data availability on Ethereum. These entities can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
   },

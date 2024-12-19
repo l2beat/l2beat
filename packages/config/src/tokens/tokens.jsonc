@@ -1,6 +1,29 @@
 {
   "ethereum": [
     {
+      "symbol": "stAVAIL",
+      "address": "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a"
+    },
+    {
+      "symbol": "stAZUR",
+      "coingeckoId": "azuro-protocol", // the staked version is not on CG
+      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB"
+    },
+    {
+      "symbol": "stAethir",
+      "coingeckoId": "aethir", // the staked version is not on CG
+      "address": "0xc96Aa65F31E41b4Ca6924B86D93e25686019E59C"
+    },
+    {
+      "symbol": "stZENT",
+      "coingeckoId": "zentry", // the staked version is not on CG
+      "address": "0x996d67AA9b37df96428ad3608cb21352BF1FDB90"
+    },
+    {
+      "symbol": "BEAM",
+      "address": "0x62D0A8458eD7719FDAF978fe5929C6D342B0bFcE"
+    },
+    {
       "symbol": "FFM",
       "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92"
     },

@@ -1,7 +1,7 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 21415736,
+  "blockNumber": 21428894,
   "configHash": "0x3a54f3ab3aeb854af2a1777b38da8dc8dc9f3879d47ee4eda3de6e36ed655d68",
   "contracts": [
     {
@@ -122,7 +122,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -381,10 +381,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 22624200,
-        "latestOutputIndex": 12568,
-        "nextBlockNumber": 22626000,
-        "nextOutputIndex": 12569,
+        "latestBlockNumber": 22674600,
+        "latestOutputIndex": 12596,
+        "nextBlockNumber": 22676400,
+        "nextOutputIndex": 12597,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -456,7 +456,7 @@
           "prevBoughtGas": 490798,
           "prevBlockNum": 21363499
         },
-        "paused": true,
+        "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.7.0"
       }

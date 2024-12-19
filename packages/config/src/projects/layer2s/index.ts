@@ -39,6 +39,7 @@ import { degate3 } from './degate3'
 import { degenlayer } from './degenlayer'
 import { dydx } from './dydx'
 import { ebichain } from './ebichain'
+import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
@@ -66,6 +67,7 @@ import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { immutablezkevm } from './immutablezkevm'
 import { ink } from './ink'
 import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
@@ -254,6 +256,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  immutablezkevm,
   ink,
   intmax,
   kakarotzkevm,
@@ -275,6 +278,7 @@ export const layer2s: Layer2[] = [
   lyra,
   race,
   ebichain,
+  eclipse,
   mantapacific,
   mantle,
   metal,

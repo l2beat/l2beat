@@ -22,6 +22,7 @@ export function getProjects(): Project[] {
 }
 
 function layer2Or3ToProject(p: Layer2 | Layer3): Project {
+  const otherMigrationContext = PROJECT_COUNTDOWNS.otherMigration.getContext(p)
   return {
     id: p.id,
     name: p.display.name,
@@ -57,12 +58,12 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       stacked: undefined,
     },
     proofVerification: p.stateValidation?.proofVerification,
-    countdowns: p.display.reasonsForBeingOther
+    countdowns: otherMigrationContext
       ? {
           otherMigration: {
             expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
             pretendingToBe: p.display.category,
-            reasons: p.display.reasonsForBeingOther,
+            reasons: otherMigrationContext.reasonsForBeingOther,
           },
         }
       : undefined,

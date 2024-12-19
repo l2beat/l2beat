@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { getScalingApiEntries } from '~/server/features/scaling/summary/get-scaling-api-entries'
@@ -31,5 +32,5 @@ const getCachedData = cache(
     }
   },
   ['scaling-summary-route'],
-  { tags: ['activity'] },
+  { tags: ['activity'], revalidate: UnixTime.DAY },
 )
