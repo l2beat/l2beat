@@ -14,7 +14,7 @@ export function TrendArrowUpIcon(props: SvgIconProps) {
     <TrendArrowIcon
       aria-label="Arrow up icon"
       alt-text="+"
-      className={cn('inline-block fill-positive', props.className)}
+      className={cn('inline-block fill-success-positive', props.className)}
     />
   )
 }

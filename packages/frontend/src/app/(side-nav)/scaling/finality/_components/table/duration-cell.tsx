@@ -22,7 +22,7 @@ export function DurationCell(props: { durationInSeconds: number }) {
 
 function getDurationColorClassName(durationInSeconds: number) {
   if (durationInSeconds < 60) {
-    return 'text-positive'
+    return 'text-green-300 dark:text-green-450'
   }
   if (durationInSeconds < 60 * 60) {
     return ''
