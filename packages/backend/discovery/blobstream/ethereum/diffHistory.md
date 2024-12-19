@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x808b402e53f2dc90a002a2d2f491ee9ce6e99191
+Generated with discovered.json: 0x24202fc88ca099eedbef4df55ffb37f3e733e0de
 
-# Diff at Thu, 19 Dec 2024 11:44:47 GMT:
+# Diff at Thu, 19 Dec 2024 11:51:02 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 21357513
@@ -45,12 +45,24 @@ discovery. Values are for block 21357513 (main branch discovery), not current.
       values.$admin:
 -        "0x0000000000000000000000000000000000000000"
 +        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+      values.isRelayerApproved:
+-        true
+      values.relayers.2:
++        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.1:
++        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
       values.guardians:
 +        ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
+      values.isRelayer1Approved:
++        true
+      values.isRelayer2Approved:
++        true
+      values.isRelayer3Approved:
++        true
       description:
 +        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and Ethereum. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here."
       issuedPermissions:
-+        [{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]},{"permission":"upgrade","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
++        [{"permission":"configure","target":"0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D","via":[]},{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]},{"permission":"configure","target":"0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC","via":[]},{"permission":"upgrade","target":"0x8bF34D8df1eF0A8A7f27fC587202848E528018E6","via":[]}]
     }
 ```
 
