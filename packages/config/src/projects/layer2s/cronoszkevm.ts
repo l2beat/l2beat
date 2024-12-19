@@ -53,7 +53,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   },
   diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {
-    layer: DA_LAYERS.EXTERNAL,
+    layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
     riskView: {
       ...RISK_VIEW.DATA_EXTERNAL,

@@ -483,7 +483,7 @@ export const zklinknova: Layer3 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.EXTERNAL],
+      layers: [DA_LAYERS.NONE],
       bridge: DA_BRIDGES.NONE,
       mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     }),

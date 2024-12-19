@@ -55,7 +55,7 @@ export const redstone: Layer2 = opStackL2({
     daChallengeWindow,
     daResolveWindow,
     'https://github.com/latticexyz/redstone',
-    DA_LAYERS.REDSTONE_DA,
+    DA_LAYERS.OP_ALT_DA,
   ),
   discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1712192291),
