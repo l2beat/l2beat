@@ -95,7 +95,7 @@ export const avail: BlockchainDaLayer = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest supermajority of Avcail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
+        text: 'a dishonest supermajority of Avail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
       },
     ],
   },
