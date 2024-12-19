@@ -16,9 +16,13 @@
     "0xF24f1DC519d88246809B660eb56D94048575d083": "Roles",
     "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4": "VerifierProofType1",
     "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F": "VerifierProofType3",
-    "0xd6B95c960779c72B8C6752119849318E5d550574": "Timelock"
+    "0xd6B95c960779c72B8C6752119849318E5d550574": "Timelock",
+    "0x3697bD0bC6C050135b8321F989a5316eACbF367D": "CallForwardingProxy"
   },
   "overrides": {
+    "CallForwardingProxy": {
+      "description": "A proxy contract forwarding calls to a predefined (immutable) target contract."
+    },
     // BUG: source shapes are not matching
     "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": {
       "extends": "linea/LineaRollup"

@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 21430072,
-  "configHash": "0xf980ddc0b5eea253e3c48559c2d4b7f3936bc7f2a3c7f0f039cc47925772b42a",
+  "blockNumber": 21434844,
+  "configHash": "0x33ccda097a401b6333105619455017c874536ca6f3d8789d19c47ef650e6946f",
   "contracts": [
     {
       "name": "TokenBridge",
@@ -146,11 +146,13 @@
       "sourceHashes": [
         "0x51e1fd21b79473438268845d5f9025c91fd69c6feb26e25f97f932e174e7ce1e"
       ],
+      "description": "A proxy contract forwarding calls to a predefined (immutable) target contract.",
       "sinceTimestamp": 1733219987,
       "values": {
         "$immutable": true,
         "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
-      }
+      },
+      "derivedName": "CallForwardingProxy"
     },
     {
       "name": "BridgedToken",
@@ -231,7 +233,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "balance": 26151983677759,
+        "balance": 25961143630846,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -523,11 +525,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xb408988bba7db6e26e397b4f0a517ba0d70daba06296622358744d1e96b4a05a",
-        "currentFinalizedState": "0xcce7cc04c2f8ba178deb02aab4dd37f7cbd24208919274c55e66d7fc5de809fd",
+        "currentFinalizedShnarf": "0xefc9ac66d59c702e19806e0c9a480590508f47614a83f7d24496d675a225575f",
+        "currentFinalizedState": "0x24f6b3fbb85a83ce48e2f758cd5bdbf5acb638fa83b4636946a0a33ae4ed6368",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "277600000000000000",
+        "currentPeriodAmountInWei": "961958072262443152060",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
         "GENESIS_SHNARF": "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f",

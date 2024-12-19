@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xcfe84496acf93e755a73a1d39ec3685dfc3972f1
+Generated with discovered.json: 0x74f47ec6a3c97a5b8c864a863be7f2284e8f319b
 
-# Diff at Wed, 18 Dec 2024 15:47:28 GMT:
+# Diff at Thu, 19 Dec 2024 06:41:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ba3abe5bc7194f8b3495f894c1b7e7b769bcdbb1 block: 21078909
-- current block number: 21430072
+- current block number: 21434844
 
 ## Description
 
@@ -173,7 +173,7 @@ This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds se
 ```diff
 +   Status: CREATED
     contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D)
-    +++ description: None
+    +++ description: A proxy contract forwarding calls to a predefined (immutable) target contract.
 ```
 
 ## Source code changes
