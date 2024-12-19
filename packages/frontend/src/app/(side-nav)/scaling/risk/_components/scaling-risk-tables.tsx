@@ -7,7 +7,6 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -52,7 +51,7 @@ export function ScalingRiskTables(props: Props) {
               {filteredEntries.validiumsAndOptimiums.length}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {featureFlags.showOthers && filteredEntries.others.length > 0 && (
+          {filteredEntries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -68,7 +67,7 @@ export function ScalingRiskTables(props: Props) {
             <ScalingRiskTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {featureFlags.showOthers && filteredEntries.others.length > 0 && (
+        {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <ScalingRiskTable entries={filteredEntries.others} />

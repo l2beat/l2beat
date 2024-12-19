@@ -11,9 +11,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -43,7 +41,6 @@ export function ScalingActivityTabs({
   }
 
   const showOthers =
-    featureFlags.showOthers &&
     filteredEntries.others.length > 0 &&
     !filteredEntries.others.every((e) => !e.data || e.id === ProjectId.ETHEREUM)
 
@@ -55,7 +52,7 @@ export function ScalingActivityTabs({
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', featureFlags.showOthers && 'md:mt-0')}
+        className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -77,16 +74,12 @@ export function ScalingActivityTabs({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {featureFlags.showOthers && (
-              <>
-                <ActivityChart
-                  milestones={milestones}
-                  entries={rollups}
-                  type="Rollups"
-                />
-                <HorizontalSeparator className="mb-3 mt-5" />
-              </>
-            )}
+            <ActivityChart
+              milestones={milestones}
+              entries={rollups}
+              type="Rollups"
+            />
+            <HorizontalSeparator className="mb-3 mt-5" />
             <ScalingActivityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -95,17 +88,13 @@ export function ScalingActivityTabs({
             value="validiums-and-optimiums"
             className="main-page-card pt-5"
           >
-            {featureFlags.showOthers && (
-              <>
-                <ActivityChart
-                  milestones={milestones}
-                  entries={validiumsAndOptimiums}
-                  hideScalingFactor
-                  type="ValidiumsAndOptimiums"
-                />
-                <HorizontalSeparator className="mb-3 mt-5" />
-              </>
-            )}
+            <ActivityChart
+              milestones={milestones}
+              entries={validiumsAndOptimiums}
+              hideScalingFactor
+              type="ValidiumsAndOptimiums"
+            />
+            <HorizontalSeparator className="mb-3 mt-5" />
             <ScalingActivityTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -117,17 +106,13 @@ export function ScalingActivityTabs({
               value="others"
               className="main-page-card pt-5"
             >
-              {featureFlags.showOthers && (
-                <>
-                  <ActivityChart
-                    milestones={milestones}
-                    entries={others ?? []}
-                    hideScalingFactor
-                    type="Others"
-                  />
-                  <HorizontalSeparator className="mb-3 mt-5" />
-                </>
-              )}
+              <ActivityChart
+                milestones={milestones}
+                entries={others ?? []}
+                hideScalingFactor
+                type="Others"
+              />
+              <HorizontalSeparator className="mb-3 mt-5" />
               <ScalingActivityTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

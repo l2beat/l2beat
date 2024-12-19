@@ -8,7 +8,6 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -52,7 +51,7 @@ export function ScalingUpcomingTables({
               {filteredEntries.validiumsAndOptimiums.length}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {featureFlags.showOthers && filteredEntries.others.length > 0 && (
+          {filteredEntries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -70,7 +69,7 @@ export function ScalingUpcomingTables({
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {featureFlags.showOthers && filteredEntries.others.length > 0 && (
+        {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <ScalingUpcomingTable entries={filteredEntries.others} />

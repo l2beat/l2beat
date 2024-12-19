@@ -1,7 +1,5 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { featureFlags } from '~/consts/feature-flags'
-import { api } from '~/trpc/server'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -22,12 +20,6 @@ export async function getScalingTvlEntries() {
   const [projectsChangeReport, tvl] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvlBreakdown(),
-    !featureFlags.showOthers &&
-      api.tvl.chart.prefetch({
-        filter: { type: 'layer2' },
-        range: '1y',
-        excludeAssociatedTokens: false,
-      }),
   ])
 
   const entries = projects

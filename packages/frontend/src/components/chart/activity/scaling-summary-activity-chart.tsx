@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
-import { featureFlags } from '~/consts/feature-flags'
 import { ChevronIcon } from '~/icons/chevron'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
@@ -13,74 +12,14 @@ import { formatActivityCount } from '~/utils/number-format/format-activity-count
 import { Chart } from '../core/chart'
 import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
-import { ActivityChartHover } from './activity-chart-hover'
 import { RecategorizedActivityChartHover } from './recategorized-activity-chart-hover'
-import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 import { useRecategorizedActivityChartRenderParams } from './use-recategorized-activity-chart-render-params'
-
-const SHOW_MAINNET = true
 
 interface Props {
   timeRange: ActivityTimeRange
 }
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  if (featureFlags.showOthers) {
-    return <RecategorizedActivityChart timeRange={timeRange} />
-  } else {
-    return <ActivityChart timeRange={timeRange} />
-  }
-}
-
-function ActivityChart({
-  timeRange,
-}: {
-  timeRange: ActivityTimeRange
-}) {
-  const { data: stats } = api.activity.chartStats.useQuery({
-    filter: { type: 'all' },
-  })
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
-    filter: { type: 'all' },
-  })
-
-  const { columns, valuesStyle, formatYAxisLabel } =
-    useActivityChartRenderParams({
-      chart: data,
-      milestones: [],
-      showMainnet: SHOW_MAINNET,
-      type: 'Rollups',
-    })
-
-  return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={formatYAxisLabel}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => (
-        <ActivityChartHover
-          {...data}
-          showEthereum={SHOW_MAINNET}
-          type="Rollups"
-        />
-      )}
-    >
-      <section className="flex flex-col gap-4">
-        <Header stats={stats} />
-        <Chart disableMilestones />
-      </section>
-    </ChartProvider>
-  )
-}
-
-function RecategorizedActivityChart({
-  timeRange,
-}: {
-  timeRange: ActivityTimeRange
-}) {
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'all' },
   })

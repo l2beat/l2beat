@@ -7,7 +7,6 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -44,7 +43,7 @@ export function ScalingFinalityTables(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {featureFlags.showOthers && filteredEntries.others.length > 0 && (
+          {filteredEntries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -55,7 +54,7 @@ export function ScalingFinalityTables(props: Props) {
             <ScalingFinalityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {featureFlags.showOthers && filteredEntries.others.length > 0 && (
+        {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <ScalingFinalityTable entries={filteredEntries.others} />
