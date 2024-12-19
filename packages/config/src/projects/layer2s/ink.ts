@@ -23,7 +23,7 @@ function safeGetImplementation(contract: ContractParameters): string {
 }
 
 const maxClockDuration = discovery.getContractValue<number>(
-  'FaultDisputeGame',
+  'PermissionedDisputeGame',
   'maxClockDuration',
 )
 
