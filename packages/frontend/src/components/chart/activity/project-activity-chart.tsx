@@ -26,12 +26,14 @@ interface Props {
   milestones: Milestone[]
   projectId: string
   category?: ScalingProjectCategory
+  projectName?: string
 }
 
 export function ProjectActivityChart({
   milestones,
   projectId,
   category,
+  projectName,
 }: Props) {
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
   const [metric, setMetric] = useState<ActivityMetric>('uops')
@@ -73,6 +75,7 @@ export function ProjectActivityChart({
           syncedUntil={chart?.syncStatus.syncedUntil}
           metric={metric}
           type={getChartType(category)}
+          projectName={projectName}
         />
       )}
     >
@@ -91,7 +94,7 @@ export function ProjectActivityChart({
             className="my-2"
             elements={[
               {
-                name: 'Project',
+                name: projectName ?? 'Project',
                 color: typeToIndicator(type),
               },
               {

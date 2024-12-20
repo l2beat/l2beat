@@ -115,7 +115,10 @@ export function ActivityChart({
             className="my-2"
             elements={[
               {
-                name: 'Projects',
+                name:
+                  type === 'ValidiumsAndOptimiums'
+                    ? 'Validiums and Optimiums'
+                    : (type ?? 'Projects'),
                 color: typeToIndicator(type),
               },
               {
