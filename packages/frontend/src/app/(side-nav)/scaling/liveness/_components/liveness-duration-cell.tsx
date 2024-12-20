@@ -23,7 +23,7 @@ export function LivenessDurationCell(props: { durationInSeconds: number }) {
 
 function getDurationColorClassName(durationInSeconds: number) {
   if (durationInSeconds < UnixTime.MINUTE) {
-    return 'text-green-300 dark:text-green-450'
+    return 'text-positive'
   }
   if (durationInSeconds < UnixTime.HOUR) {
     return ''

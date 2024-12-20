@@ -814,6 +814,7 @@ export class ProjectDiscovery {
       propose: 'A Proposer',
       sequence: 'A Sequencer',
       validate: 'A Validator',
+      operateLinea: 'An Operator',
       fastconfirm: 'A FastConfirmer',
     }
 
@@ -872,6 +873,7 @@ export class ProjectDiscovery {
       propose: 'Can act as a Proposer',
       sequence: 'Can act as a Sequencer',
       validate: 'Can act as a Validator',
+      operateLinea: 'Can act as an Operator',
       fastconfirm: 'Can act as a FastConfirmer',
     }
 
@@ -1117,6 +1119,12 @@ const roleDescriptions: {
     name: 'Validator/Proposer',
     description:
       'Can propose new state roots (called nodes) and challenge state roots on the host chain.',
+  },
+  operateLinea: {
+    // LINEA specific
+    name: 'Operator',
+    description:
+      'Allowed to prove blocks and post the corresponding transaction data.',
   },
   fastconfirm: {
     name: 'AnyTrust FastConfirmer',

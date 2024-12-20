@@ -1,6 +1,7 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import { type Milestone, type ScalingProjectCategory } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
@@ -22,9 +23,14 @@ import { useActivityChartRenderParams } from './use-activity-chart-render-params
 interface Props {
   milestones: Milestone[]
   projectId: string
+  category?: ScalingProjectCategory
 }
 
-export function ProjectActivityChart({ milestones, projectId }: Props) {
+export function ProjectActivityChart({
+  milestones,
+  projectId,
+  category,
+}: Props) {
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('lin')
@@ -44,6 +50,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
       chart,
       showMainnet,
       metric,
+      type: getChartType(category),
     })
 
   return (
@@ -61,6 +68,7 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
           singleProject
           syncedUntil={chart?.syncStatus.syncedUntil}
           metric={metric}
+          type={getChartType(category)}
         />
       )}
     >
@@ -106,4 +114,21 @@ export function ProjectActivityChart({ milestones, projectId }: Props) {
       </section>
     </ChartProvider>
   )
+}
+
+function getChartType(category?: ScalingProjectCategory) {
+  switch (category) {
+    case 'Optimistic Rollup':
+    case 'ZK Rollup':
+      return 'Rollups'
+    case 'Validium':
+    case 'Optimium':
+      return 'ValidiumsAndOptimiums'
+    case 'Other':
+    case undefined:
+    case 'Plasma':
+      return 'Others'
+    default:
+      assertUnreachable(category)
+  }
 }
