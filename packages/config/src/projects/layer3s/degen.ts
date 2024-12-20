@@ -62,9 +62,9 @@ export const degen: Layer3 = orbitStackL3({
     minTimestampForTvl: new UnixTime(1710087539),
     multicallContracts: [
       {
-        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        address: EthereumAddress('0x79035Dc4436bA9C95016D3bF6304e5bA78B1066A'),
         batchSize: 150,
-        sinceBlock: 142,
+        sinceBlock: 2279171,
         version: '3',
       },
     ],
