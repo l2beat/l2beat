@@ -81,6 +81,7 @@ export const fuel: Layer2 = {
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
   config: {
+    associatedTokens: ['FUEL'],
     escrows: [
       {
         // ETH bridge

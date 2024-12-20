@@ -647,6 +647,20 @@
       "supply": "zero"
     },
     {
+      "name": "BitgetToken",
+      "coingeckoId": "bitget-token",
+      "address": "0x54D2252757e1672EEaD234D27B1270728fF90581",
+      "symbol": "BGB",
+      "decimals": 18,
+      "deploymentTimestamp": 1719296243,
+      "coingeckoListingTimestamp": 1591747200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11610/large/icon_colour.png?1696511504",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BitTorrent",
       "coingeckoId": "bittorrent",
       "address": "0xC669928185DbCE49d2230CC9B0979BE6DC797957",
@@ -1888,6 +1902,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/9026/large/F.png?1696509161",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "FUEL",
+      "coingeckoId": "fuel-network",
+      "address": "0x675B68AA4d9c2d3BB3F0397048e62E6B7192079c",
+      "symbol": "FUEL",
+      "decimals": 9,
+      "deploymentTimestamp": 1731922679,
+      "coingeckoListingTimestamp": 1734652800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29577/large/fuel.png?1696528516",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -10623,6 +10651,50 @@
         "bridges": [
           {
             "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xF1815bd50389c46847f0Bda824eC8da914045D14",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1732321763,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 666666666,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WETH",
+      "coingeckoId": "weth",
+      "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1732657069,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 666666666,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
           }
         ]
       }
