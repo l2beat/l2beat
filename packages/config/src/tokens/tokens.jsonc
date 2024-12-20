@@ -1,6 +1,14 @@
 {
   "ethereum": [
     {
+      "symbol": "BGB",
+      "address": "0x54D2252757e1672EEaD234D27B1270728fF90581"
+    },
+    {
+      "symbol": "FUEL",
+      "address": "0x675B68AA4d9c2d3BB3F0397048e62E6B7192079c"
+    },
+    {
       "symbol": "stAVAIL",
       "address": "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a"
     },
@@ -4946,6 +4954,40 @@
         "bridges": [
           {
             "name": "FBTC FireBridge"
+          }
+        ]
+      }
+    }
+  ],
+  "degen": [
+    {
+      "symbol": "WETH",
+      "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+      "category": "ether",
+      "coingeckoId": "weth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xF1815bd50389c46847f0Bda824eC8da914045D14",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
           }
         ]
       }
