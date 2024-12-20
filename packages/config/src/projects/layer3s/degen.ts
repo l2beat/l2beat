@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
@@ -50,6 +50,24 @@ export const degen: Layer3 = orbitStackL3({
     defaultCallsPerMinute: 5000,
     assessCount: subtractOne,
     startBlock: 1,
+  },
+  chainConfig: {
+    name: 'degen',
+    chainId: 666666666,
+    explorerUrl: 'https://explorer.degen.tips/',
+    explorerApi: {
+      url: 'https://explorer.degen.tips/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1710087539),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 142,
+        version: '3',
+      },
+    ],
   },
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
