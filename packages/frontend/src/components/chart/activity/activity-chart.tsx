@@ -23,11 +23,13 @@ import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
+import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
 import { type ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import { typeToIndicator } from './utils/get-chart-type'
 
 interface Props {
   milestones: Milestone[]
@@ -101,13 +103,31 @@ export function ActivityChart({
       )}
       useLogScale={scale === 'log'}
     >
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col">
         <ActivityChartHeader
           stats={stats}
           range={chartRange}
           hideScalingFactor={hideScalingFactor}
         />
-        <Chart />
+        <Chart className="mt-4" />
+        {featureFlags.showOthers && (
+          <ChartLegend
+            className="my-2"
+            elements={[
+              {
+                name:
+                  type === 'ValidiumsAndOptimiums'
+                    ? 'Validiums and Optimiums'
+                    : (type ?? 'Projects'),
+                color: typeToIndicator(type),
+              },
+              {
+                name: 'Ethereum',
+                color: 'bg-indicator-ethereum',
+              },
+            ]}
+          />
+        )}
         <Controls
           scale={scale}
           setScale={setScale}
