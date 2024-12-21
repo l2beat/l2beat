@@ -20,7 +20,8 @@
     }
   },
   "overrides": {
-    "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": { // currently unverified
+    "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": {
+      // currently unverified
       "extends": "opstack/PermissionedDisputeGame",
       "fields": {
         "clockExtension": {

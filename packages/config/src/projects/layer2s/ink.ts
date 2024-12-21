@@ -1,16 +1,35 @@
-import { EthereumAddress, ProjectId, UnixTime, assert, formatSeconds } from '@l2beat/shared-pure'
-import { Layer2 } from './types'
-import { Badge } from '../badges'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
-import { HARDCODED } from '../../discovery/values/hardcoded'
-import { addSentimentToDataAvailability, DA_BRIDGES, DA_LAYERS, DA_MODES, DERIVATION, EXITS, FORCE_TRANSACTIONS, OPERATOR, RISK_VIEW, TECHNOLOGY_DATA_AVAILABILITY } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
-import { formatDelay } from '../../common/formatDelays'
-import { getStage } from './common/stages/getStage'
-import { ContractParameters, get$Implementations } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+} from '../../common'
+import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
+import { formatDelay } from '../../common/formatDelays'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
+import { getStage } from './common/stages/getStage'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ink')
 
@@ -57,7 +76,10 @@ const proofMaturityDelaySeconds = discovery.getContractValue<number>(
 const portal = discovery.getContract('OptimismPortal')
 
 // >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
-assert(discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') === 1)
+assert(
+  discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') ===
+    1,
+)
 
 const permissionedDisputeGameBonds = discovery.getContractValue<number[]>(
   'DisputeGameFactory',
@@ -87,8 +109,7 @@ const permissionedGameFullCost = (() => {
   for (let i = 0; i <= permissionedGameMaxDepth; i++) {
     cost =
       cost +
-      (permissionedDisputeGameBonds / scaleFactor) *
-      exponentialBondsFactor ** i
+      (permissionedDisputeGameBonds / scaleFactor) * exponentialBondsFactor ** i
   }
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
@@ -102,7 +123,6 @@ const permissionedGameMaxClockExtension =
   permissionedGameClockExtension * 2 + // at SPLIT_DEPTH - 1
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
   permissionedGameClockExtension * (permissionedGameMaxDepth - 3) // the rest, excluding also the last depth
-
 
 export const ink: Layer2 = {
   type: 'layer2',
@@ -143,7 +163,7 @@ export const ink: Layer2 = {
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets confirmed ${formatSeconds(
         maxClockDuration,
-      )} after it has been posted.`
+      )} after it has been posted.`,
     },
     finality: { finalizationPeriod: maxClockDuration },
   },
@@ -208,25 +228,39 @@ export const ink: Layer2 = {
       layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    })
+    }),
   ],
   riskView: {
     stateValidation: (() => {
-      assert(discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') === 1)
+      assert(
+        discovery.getContractValue<number>(
+          'OptimismPortal',
+          'respectedGameType',
+        ) === 1,
+      )
       return {
         ...RISK_VIEW.STATE_FP_INT,
-        description: RISK_VIEW.STATE_FP_INT.description + ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
-        sentiment: 'bad'
+        description:
+          RISK_VIEW.STATE_FP_INT.description +
+          ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
+        sentiment: 'bad',
       }
     })(),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      ),
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
     proposerFailure: (() => {
-      assert(discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') === 1)
+      assert(
+        discovery.getContractValue<number>(
+          'OptimismPortal',
+          'respectedGameType',
+        ) === 1,
+      )
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     })(),
   },
@@ -383,28 +417,26 @@ export const ink: Layer2 = {
       },
     ],
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: 'UnderReview',
-      },
-      stage1: {
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: true,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: false,
-        delayWith30DExitWindow: false
-      },
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeSourceAvailable: 'UnderReview',
     },
-  ),
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: false,
+      usersHave7DaysToExit: true,
+      usersCanExitWithoutCooperation: false,
+      securityCouncilProperlySetUp: true,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: false,
+      delayWith30DExitWindow: false,
+    },
+  }),
   milestones: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
@@ -412,9 +444,8 @@ export const ink: Layer2 = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: ''
-      }
-    ]
-  }
-
+        text: '',
+      },
+    ],
+  },
 }

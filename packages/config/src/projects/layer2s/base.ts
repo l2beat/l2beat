@@ -104,7 +104,7 @@ const permissionlessGameFullCost = (() => {
     cost =
       cost +
       (permissionlessDisputeGameBonds / scaleFactor) *
-      exponentialBondsFactor ** i
+        exponentialBondsFactor ** i
   }
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
