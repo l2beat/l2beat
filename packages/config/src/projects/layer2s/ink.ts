@@ -78,7 +78,7 @@ const portal = discovery.getContract('OptimismPortal')
 // >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
 assert(
   discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') ===
-    1,
+  1,
 )
 
 const permissionedDisputeGameBonds = discovery.getContractValue<number[]>(
@@ -148,7 +148,7 @@ export const ink: Layer2 = {
       documentation: [],
       explorers: [
         'https://explorer.inkonchain.com',
-        'https://www.okx.com/en-au/web3/explorer/inkchain',
+        'https://okx.com/en-au/web3/explorer/inkchain',
       ],
       repositories: ['https://github.com/inkonchain'],
       socialMedia: [
