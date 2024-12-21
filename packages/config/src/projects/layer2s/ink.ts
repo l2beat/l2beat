@@ -151,12 +151,12 @@ export const ink: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         // OptimismPortal
-        address: EthereumAddress(''),
+        address: EthereumAddress('0x5d66C1782664115999C47c9fA5cd031f495D3e4F'),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
         // L1StandardBridge
-        address: EthereumAddress(''),
+        address: EthereumAddress('0x88FF1e5b602916615391F55854588EFcBB7663f0'),
         tokens: '*',
       }),
     ],
