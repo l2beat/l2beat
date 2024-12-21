@@ -3,7 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { OutLink } from '~/components/out-link'
+import { CustomLink } from '~/components/link/custom-link'
 import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
@@ -87,7 +87,11 @@ export function SubVerifiersTable({ verifier, className }: Props) {
               <td>{sV.mainPCS}</td>
               <td>{sV.trustedSetup ?? '?'}</td>
               <td>
-                {sV.link ? <OutLink href={sV.link}>Link</OutLink> : EM_DASH}
+                {sV.link ? (
+                  <CustomLink href={sV.link}>Link</CustomLink>
+                ) : (
+                  EM_DASH
+                )}
               </td>
             </tr>
           ))}

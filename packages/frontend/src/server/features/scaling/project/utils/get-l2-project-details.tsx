@@ -136,6 +136,8 @@ export async function getL2ProjectDetails({
         title: 'Activity',
         projectId: project.id,
         milestones: sortedMilestones,
+        category: project.display.category,
+        projectName: project.display.name,
       },
     })
   }
@@ -148,6 +150,7 @@ export async function getL2ProjectDetails({
         title: 'Onchain costs',
         projectId: project.id,
         milestones: sortedMilestones,
+        projectName: project.display.name,
       },
     })
   }

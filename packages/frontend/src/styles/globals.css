@@ -20,6 +20,13 @@
     --icon-secondary: #5f6470;
     --overlay: #181b2d99;
     --divider: #ccd0da;
+    --indicator-rollups: #ef43b4;
+    --indicator-validiums-optimiums: #36a3a3;
+    --indicator-others: #ab8000;
+    --indicator-ethereum: #2a5bd8;
+    --positive: #007408;
+    --link-stroke: #badaff;
+    --link: #2a5bd8;
   }
 
   .dark {
@@ -36,6 +43,13 @@
     --icon-secondary: #5f6470;
     --overlay: #00000099;
     --divider: #3f4454;
+    --indicator-rollups: #db8bf7;
+    --indicator-validiums-optimiums: #3ac5e1;
+    --indicator-others: #dfd043;
+    --indicator-ethereum: #53a2ff;
+    --positive: #15ca60;
+    --link-stroke: #152a4b;
+    --link: #53a2ff;
   }
 }
 

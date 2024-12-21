@@ -12,8 +12,8 @@ export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)
   const { setRect } = useChartRect()
   const context = useChartContext()
-  const { theme: rawTheme } = useTheme()
-  const theme = rawTheme === 'light' ? 'light' : 'dark'
+  const { resolvedTheme } = useTheme()
+  const theme = resolvedTheme === 'light' ? 'light' : 'dark'
 
   const setupCanvas = useCallback(() => {
     const chart = ref.current
@@ -41,7 +41,7 @@ export function ChartRenderer() {
       for (const { style, paths } of renderPaths) {
         if (style.fill) {
           for (const path of paths) {
-            ctx.fillStyle = getFillStyle(ctx, style.fill, theme)
+            ctx.fillStyle = getFillStyle(ctx, style.fill, theme, path.minY)
             const fillPath = new Path2D(path.path)
             fillPath.lineTo(path.lastX, chart.height)
             fillPath.lineTo(path.startX ?? 0, chart.height)

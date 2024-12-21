@@ -30,7 +30,7 @@ export class BlobClient extends ClientCore {
     assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
 
     // Skip blob processing for type 2 transactions
-    if (tx.type === '0x2') {
+    if (Number(tx.type) === 2) {
       return { blobs: [], blockNumber: tx.blockNumber }
     }
 

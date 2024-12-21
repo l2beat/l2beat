@@ -2,10 +2,9 @@
 
 {
   dataAvailability: {
-    definingMetric: 1
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators."
     sentiment: "bad"
-    value: "External (DAC)"
+    value: "External"
   }
   exitWindow: {
     definingMetric: -86400
@@ -41,10 +40,9 @@
 
 {
   dataAvailability: {
-    definingMetric: 1
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are checked against the Blobstream bridge data roots, signed off by Celestia validators."
     sentiment: "bad"
-    value: "External (DAC)"
+    value: "External"
   }
   exitWindow: {
     definingMetric: -86400
