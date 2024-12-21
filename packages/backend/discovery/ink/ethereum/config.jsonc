@@ -6,7 +6,9 @@
     "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364" // SystemConfig
   ],
   "names": {
-    "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": "PermissionedDisputeGame" // currently unverified
+    "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": "PermissionedDisputeGame", // currently unverified
+    "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364": "SystemConfig",
+    "0x5d66C1782664115999C47c9fA5cd031f495D3e4F": "OptimismPortal"
   },
   "types": {
     "DisputeGameMap": {
@@ -46,6 +48,13 @@
           "handler": {
             "type": "call",
             "method": "function splitDepth() view returns (uint256)",
+            "args": []
+          }
+        },
+        "vm": {
+          "handler": {
+            "type": "call",
+            "method": "function vm() view returns (address)",
             "args": []
           }
         }

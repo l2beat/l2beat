@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x889f3a37b5677c2e7d81c60e291a9e68ac12e934
+Generated with discovered.json: 0xbd600053420fff6c2c58e1a8475d6fbcfdedf3fb
 
-# Diff at Sat, 21 Dec 2024 14:13:31 GMT:
+# Diff at Sat, 21 Dec 2024 16:37:09 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 21451406
@@ -31,6 +31,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
     contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
     +++ description: None
 ```
@@ -55,14 +61,14 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract OptimismPortal2 (0x5d66C1782664115999C47c9fA5cd031f495D3e4F)
+    contract OptimismPortal (0x5d66C1782664115999C47c9fA5cd031f495D3e4F)
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
 ```
 
 ```diff
 +   Status: CREATED
     contract SystemConfig (0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364)
-    +++ description: None
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
 ```
 
 ```diff
@@ -105,6 +111,12 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
