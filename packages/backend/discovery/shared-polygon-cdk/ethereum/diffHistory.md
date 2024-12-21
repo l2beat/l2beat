@@ -1305,7 +1305,7 @@ Generated with discovered.json: 0x6124ec4be2edb290f32c6def8e55cfc071ddc45e
 ## Description
 
 Changes related to improving the shared-polygon-cdk module.
-Verifier is no longer part of this shared module - each rollup discoveres it for themselfs.
+Verifier is no longer part of this shared module - each rollup discoveres it for themselves.
 
 ## Config/verification related changes
 

@@ -52,7 +52,7 @@ Generated with discovered.json: 0x8523c24bfac779038af8583a650b1aca37ec8f83
 
 Batches reverted due to accidental 'old-version batches'. The reverted batches used the old version 2 and not the new v4 `commitBatchWithBlobProof()`. The post-mortem should appear [here](https://status.scroll.io/incidents/pw1cf3bmxy8s).
 
-In Scroll, batches can be reverted by the EmergencyMultisig anytime before they are proven (which currently happens around 2h after they are commited).
+In Scroll, batches can be reverted by the EmergencyMultisig anytime before they are proven (which currently happens around 2h after they are committed).
 
 ## Watched changes
 
@@ -2237,7 +2237,7 @@ The L2 changes are listed in the blog post.
 
 ### ScrollChain
 
-Batch version > 1 is now suported. This allows for the new batch version 2 to be posted.
+Batch version > 1 is now supported. This allows for the new batch version 2 to be posted.
 
 ### MultipleVersionRollupVerifier (manages verifiers)
 
@@ -2247,7 +2247,7 @@ In the `updateVerifier()` function, a check wether the new verifier's `_startBat
 
 This is the contract in the third slot of `latestVerifier`, added in this upgrade. It is code-identical with the previous one, but points to the new Plonk Verifier.
 
-### New Plonk Verfier
+### New Plonk Verifier
 
 The source code (yul+) can be found at https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul.
 

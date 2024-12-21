@@ -718,7 +718,7 @@ Each ZK stack chain including zkSync Era has its own diamond contract similar to
 - Governor role removed (onlyGovernor functions are now mostly onlySTM)
 - VerifierParams moved to STM
 - Support for custom native token ('basetoken')
-- Function `upgradeChainFromVersion()` added: Allows to upgrade the diamond with preformed calldata (can be used for synchronous upgrading of multiple chains in the future)
+- Function `upgradeChainFromVersion()` added: Allows to upgrade the diamond with performed calldata (can be used for synchronous upgrading of multiple chains in the future)
 
 #### ExecutorFacet.sol
 

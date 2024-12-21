@@ -320,7 +320,7 @@ Generated with discovered.json: 0xf6bf5966c73218d06e07d411dec3c09220a1b4b8
 
 ## Description
 
-Threshold of the AuthorityMultisig raised to 2. As long as there are no withdrawals, the AuthorityMultisig is essentially a pauser only since upgrades do not change the withdrawals and can only affect a 'virtual' state on the L2 (from ethereum persepective).
+Threshold of the AuthorityMultisig raised to 2. As long as there are no withdrawals, the AuthorityMultisig is essentially a pauser only since upgrades do not change the withdrawals and can only affect a 'virtual' state on the L2 (from ethereum perspective).
 
 ## Watched changes
 

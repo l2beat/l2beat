@@ -4232,7 +4232,7 @@ Generated with discovered.json: 0x3ea08e093c4fc78a79b685a42dbbadc7258c49c0
 - timelock transactions:
 - arbitrum: - AIP1Point2Action.perform - AIP4Action.perform - GovernanceChainSCMgmtActivationAction.perform - UpdateGasChargeAction.perform - SetSweepReceiverAction.perform - SecurityCouncilMemberSyncAction.perform - SetArbOS11VersionAction.perform - NomineeGovernorV2UpgradeAction.perform - SetArbOS20VersionAction - ArbOneSetAtlasL1PricingRewardAction - ArbOneSetAtlasMinBaseFeeAction
 - ethereum: - L1SCMgmtActivationAction.perform - UpdateL1CoreTimelockAction.perform - SecurityCouncilMemberSyncAction.perform - AddNovaKeysetAction.perform - SetArbOneArbOS11ModuleRootAciton.perform - SetNovaArbOS11ModuleRootAction.perform - AIPSetSequencerInboxMaxTimeVariationArbOneAction - AIPSetSequencerInboxMaxTimeVariationNovaAction - ArbOneAIP4844Action - ArbOneSetBatchPosterManagerAction - NovaSetBatchPosterManagerAction
-- nova: - NonGovernanceChainSCMgmtActivationAction.perfom - SecurityCouncilMemberSyncAction - SetArbOS11VersionAction - NovaAIP4844Action - SetArbOS20VersionAction
+- nova: - NonGovernanceChainSCMgmtActivationAction.perform - SecurityCouncilMemberSyncAction - SetArbOS11VersionAction - NovaAIP4844Action - SetArbOS20VersionAction
 
 ## Watched changes
 
