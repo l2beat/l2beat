@@ -78,7 +78,7 @@ const portal = discovery.getContract('OptimismPortal')
 // >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
 assert(
   discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') ===
-  1,
+    1,
 )
 
 const permissionedDisputeGameBonds = discovery.getContractValue<number[]>(
