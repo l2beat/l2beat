@@ -78,7 +78,7 @@ const portal = discovery.getContract('OptimismPortal')
 // >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
 assert(
   discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') ===
-    1,
+  1,
 )
 
 const permissionedDisputeGameBonds = discovery.getContractValue<number[]>(
@@ -374,8 +374,9 @@ export const ink: Layer2 = {
   },
   //stateDerivation: DERIVATION.OPSTACK('INK'),
   stateValidation: {
+    // NOTE THAT DESCRIPTIONS ARE SLIGHTLY MODIFIED BECAUSE PERMISSIONED
     description:
-      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+      'Currently, updates to the system state can only be proposed and challenged by the same entity as the proof system is permissioned. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
     categories: [
       {
         title: 'State root proposals',
