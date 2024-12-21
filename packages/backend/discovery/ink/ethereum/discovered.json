@@ -1,8 +1,8 @@
 {
   "name": "ink",
   "chain": "ethereum",
-  "blockNumber": 21435721,
-  "configHash": "0xc36092e433fa176714f37c62e731a31945ae49e3e83de1453583f27c636bfb56",
+  "blockNumber": 21451406,
+  "configHash": "0x23b650c8106f6814ade200285c50ca63bfdfbd8b85c389afa2a935f501f13b3a",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -107,7 +107,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 51,
+        "gameCount": 59,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059",
@@ -117,7 +117,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 51,
+        "permissionedGamesTotal": 59,
         "version": "1.0.0"
       }
     },
@@ -319,7 +319,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 21435687
+          "prevBlockNum": 21451369
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -485,7 +485,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622415",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622909",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -790,7 +790,13 @@
       "template": "opstack/PermissionedDisputeGame",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1733498411,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "clockExtension": 10800,
+        "maxClockDuration": 302400,
+        "maxGameDepth": 73,
+        "splitDepth": 30
+      },
       "derivedName": ""
     },
     {
