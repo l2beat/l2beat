@@ -146,7 +146,10 @@ export const ink: Layer2 = {
       websites: ['https://inkonchain.com/en-US'],
       apps: [],
       documentation: [],
-      explorers: ['https://explorer.inkonchain.com', 'https://www.okx.com/en-au/web3/explorer/inkchain'],
+      explorers: [
+        'https://explorer.inkonchain.com',
+        'https://www.okx.com/en-au/web3/explorer/inkchain',
+      ],
       repositories: ['https://github.com/inkonchain'],
       socialMedia: [
         'https://x.com/inkonchain',
