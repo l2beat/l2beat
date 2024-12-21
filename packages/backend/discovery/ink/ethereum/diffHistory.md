@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xbd600053420fff6c2c58e1a8475d6fbcfdedf3fb
+Generated with discovered.json: 0xb460fe5b8571c72292bb07bc5744163c6e09ae6a
 
-# Diff at Sat, 21 Dec 2024 16:37:09 GMT:
+# Diff at Sat, 21 Dec 2024 17:04:52 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 21451406
+- current block number: 21452260
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery. Chain controlled by Superchain upgradability but with permissioned games.
 
 ## Initial discovery
 

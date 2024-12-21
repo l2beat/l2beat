@@ -78,7 +78,7 @@ const portal = discovery.getContract('OptimismPortal')
 // >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
 assert(
   discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') ===
-    1,
+  1,
 )
 
 const permissionedDisputeGameBonds = discovery.getContractValue<number[]>(
@@ -278,11 +278,11 @@ export const ink: Layer2 = {
       references: [
         {
           text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: 'https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code',
+          href: 'https://etherscan.io/address/0x10d7B35078d3baabB96Dd45a9143B94be65b12CD#code',
         },
         {
-          text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xCd3c0194db74C23807D4B90A5181e1B28cF7007C#code',
+          text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
+          href: 'https://etherscan.io/address/0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059#code',
         },
       ],
     },
@@ -444,7 +444,7 @@ export const ink: Layer2 = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: '',
+        text: 'a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.',
       },
     ],
   },
