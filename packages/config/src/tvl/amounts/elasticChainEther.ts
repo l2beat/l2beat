@@ -34,7 +34,7 @@ export function getElasticChainEtherEntry(
     : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-  // We are hardcoding assetId because elasticChainEther is an canonical token
+  // We are hardcoding assetId because elasticChainEther is a canonical token
   const assetId = AssetId.create(ethereum.name, 'native')
   const type = 'elasticChainEther'
   const dataSource = `${project.projectId}_elastic_chain`
