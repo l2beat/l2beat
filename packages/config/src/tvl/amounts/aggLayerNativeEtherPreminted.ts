@@ -17,7 +17,7 @@ export function getAggLayerNativeEtherPremintedEntry(
   assert(escrow.sharedEscrow?.type === 'AggLayer')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
-  // We are hardcoding assetId because aggLayerNativeEtherPreminted is an canonical token
+  // We are hardcoding assetId because aggLayerNativeEtherPreminted is a canonical token
   const assetId = AssetId.create(ethereum.name, 'native')
   const type = 'aggLayerNativeEtherPreminted'
   const dataSource = `${chain.name}_agglayer`
