@@ -186,6 +186,7 @@ export const ink: Layer2 = {
     transactionApi: {
       type: 'rpc',
       defaultUrl: 'https://rpc-gel.inkonchain.com',
+      defaultCallsPerMinute: 2000,
       startBlock: 1,
       assessCount: subtractOneAfterBlockInclusive(1),
     },
