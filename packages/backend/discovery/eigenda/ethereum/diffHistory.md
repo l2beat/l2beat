@@ -1917,7 +1917,7 @@ Generated with discovered.json: 0x8e81bf69871f9c75df3876cc95e439c7edc13416
 
 ## Description
 
-A third quorum is added. (added config) This new quorum uses a yet unverified strategy to count its stake. (Probbaly related to restaked ALT)
+A third quorum is added. (added config) This new quorum uses a yet unverified strategy to count its stake. (Probably related to restaked ALT)
 
 source: [StakeRegistry.strategyParams(2,0)](https://etherscan.io/address/0x006124Ae7976137266feeBFb3F4D2BE4C073139D#readProxyContract#F20)
 
@@ -2756,7 +2756,7 @@ Generated with discovered.json: 0x6c1f315d53c94420733788742a072d1746dfbbcb
 
 ## Description
 
-EigenDA exposes the address of the RegistryCoordinator while for istance EOracle does not (it's immutable constructor param). Check RC is discovered when adding new AVSes.
+EigenDA exposes the address of the RegistryCoordinator while for instance EOracle does not (it's immutable constructor param). Check RC is discovered when adding new AVSes.
 
 ## Watched changes
 

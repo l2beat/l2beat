@@ -349,7 +349,7 @@ Generated with discovered.json: 0xedbd057508280d9873d1196125e4fa0e7282bc84
 
 ## Description
 
-The governance (owner, admin roles) of the scroll contracts are transfered from an EOA to a new Multisig.
+The governance (owner, admin roles) of the scroll contracts are transferred from an EOA to a new Multisig.
 
 ## Watched changes
 
