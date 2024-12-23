@@ -128,6 +128,15 @@ assert(
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
+const hasThreeTiers =
+  discovery.getContractValue<number[]>('MainnetTierRouter', 'getTiers')
+    .length === 3
+
+assert(
+  hasThreeTiers,
+  'Remove the header warning in case validity proofs are re-enabled.',
+)
+
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   createdAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
@@ -144,8 +153,9 @@ export const taiko: Layer2 = {
     name: 'Taiko',
     slug: 'taiko',
     provider: 'Taiko',
-    headerWarning:
-      'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.',
+    headerWarning: hasThreeTiers
+      ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
+      : undefined,
     description:
       'Taiko is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
