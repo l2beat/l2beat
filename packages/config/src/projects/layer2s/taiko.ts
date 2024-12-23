@@ -129,7 +129,7 @@ assert(
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
 const hasThreeTiers =
-  discovery.getContractValue<number[]>('MainnetTierRouter', 'getTiers')
+  discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
     .length === 3
 
 assert(
