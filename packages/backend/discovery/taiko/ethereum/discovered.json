@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21334445,
-  "configHash": "0x784276e8ab8d26b8692e7d487f4559c6cf326770c350bc09492a651b5f592145",
+  "blockNumber": 21465570,
+  "configHash": "0x3a4f0a2ea5d48c157ad260339dfb6c8f20031619ef905db6fc2a07f3253a3010",
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -18,7 +18,7 @@
       "address": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x5ced94c638514ff09ace408fda7efb4bd52077a7e9ce2f20e154419454ac3869"
+        "0xeeb07b10bec4783237afadc9ac7b0e746138695fef1f85996e97012e2e83b6df"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This contract provides functionalities for proposing, proving, and verifying blocks.",
@@ -38,7 +38,7 @@
       "sinceTimestamp": 1714550627,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "$implementation": "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B",
+        "$implementation": "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
         "$pastUpgrades": [
           [
             "2024-05-01T08:03:47.000Z",
@@ -129,9 +129,19 @@
             "2024-11-10T16:10:23.000Z",
             "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",
             ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
+          ],
+          [
+            "2024-12-23T02:45:11.000Z",
+            "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944",
+            ["0xb74A66b6CF50AD63E29669F0BDE4354E11758162"]
+          ],
+          [
+            "2024-12-23T03:12:35.000Z",
+            "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20",
+            ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
           ]
         ],
-        "$upgradeCount": 18,
+        "$upgradeCount": 20,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "assignment_hook": "0x0000000000000000000000000000000000000000",
         "automata_dcap_attestation": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
@@ -164,35 +174,35 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 639231,
-          "blockHash_": "0xce74180a3a4162b08c8d9feed1f19958ca2c122400c18b04622e15cd3baf517f",
-          "stateRoot_": "0xed19745621621bea3d8c4f485b242085616789f6d8f7f376873f5861f6bfe234",
-          "verifiedAt_": 1733364299
+          "blockId_": 703151,
+          "blockHash_": "0x5569568f170c84298b7c3dedf61556d9b361fd73b3303af9769d97a4bdb0402e",
+          "stateRoot_": "0x0c07691ddbfa40438a3d29140872201beaeb796e49e46b7943d69cde734fa140",
+          "verifiedAt_": 1734946715
         },
         "getLastVerifiedBlock": {
-          "blockId_": 639236,
-          "blockHash_": "0x9ce63f4b08896dc374ac835d467e53e9dc512b4656a757afb032f5a2201826cf",
+          "blockId_": 703159,
+          "blockHash_": "0x2a2eaaaea68a5cfc894d3d68b5dffdb914cf30ed278a0dfd805616415a0f038a",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1733364479
+          "verifiedAt_": 1734946991
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 639231,
-            "lastSynecdAt": 1733378903
+            "lastSyncedBlockId": 703151,
+            "lastSynecdAt": 1734961163
           },
           {
-            "numBlocks": 639793,
-            "lastVerifiedBlockId": 639236,
+            "numBlocks": 703746,
+            "lastVerifiedBlockId": 703159,
             "provingPaused": false,
-            "__reservedB1": 46,
-            "__reservedB2": 17113,
+            "__reservedB1": 45,
+            "__reservedB2": 18301,
             "__reservedB3": 1,
             "lastUnpausedAt": 1716571955
           }
         ],
-        "impl": "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B",
+        "impl": "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -215,15 +225,15 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 639231,
-            "lastSynecdAt": 1733378903
+            "lastSyncedBlockId": 703151,
+            "lastSynecdAt": 1734961163
           },
           "slotB": {
-            "numBlocks": 639793,
-            "lastVerifiedBlockId": 639236,
+            "numBlocks": 703746,
+            "lastVerifiedBlockId": 703159,
             "provingPaused": false,
-            "__reservedB1": 46,
-            "__reservedB2": 17113,
+            "__reservedB1": 45,
+            "__reservedB2": 18301,
             "__reservedB3": 1,
             "lastUnpausedAt": 1716571955
           }
@@ -231,7 +241,7 @@
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
         "taiko_token": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-        "tier_router": "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0",
+        "tier_router": "0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542",
         "verifier_RISCZERO_GROTH16_VERIFIER": "0xcF706D99C265fC2349AE43c5f6BFD7931FE5308D",
         "verifier_TIER_GUARDIAN": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
         "verifier_TIER_GUARDIAN_MINORITY": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
@@ -296,7 +306,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1733379395,
+        "clock": 1734961571,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -335,117 +345,6 @@
         "VERSION": "v3.0.0"
       },
       "derivedName": "SP1Verifier"
-    },
-    {
-      "name": "MainnetTierRouter",
-      "address": "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0",
-      "sourceHashes": [
-        "0xc72be915a88a5dc51a217ffb43b1b71f6a722f22ed61b1c6e763802e6c23de36"
-      ],
-      "sinceTimestamp": 1731210875,
-      "values": {
-        "$immutable": true,
-        "active_tiers": [
-          [
-            "0x746965725f736778000000000000000000000000000000000000000000000000"
-          ],
-          [
-            "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"
-          ],
-          [
-            "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"
-          ],
-          [
-            "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"
-          ],
-          ["0x746965725f677561726469616e00000000000000000000000000000000000000"]
-        ],
-        "BOND_UNIT": "75000000000000000000",
-        "DAO_FALLBACK_PROPOSER": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
-        "getTierIds": [200, 250, 251, 900, 1000],
-        "GRACE_PERIOD": 240,
-        "TIER_GUARDIAN": {
-          "verifierName": "0x746965725f677561726469616e00000000000000000000000000000000000000",
-          "validityBond": 0,
-          "contestBond": 0,
-          "cooldownWindow": 240,
-          "provingWindow": 240,
-          "maxBlocksToVerifyPerProof": 0
-        },
-        "TIER_GUARDIAN_MINORITY": {
-          "verifierName": "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
-          "validityBond": "225000000000000000000",
-          "contestBond": "1476562500000000000000",
-          "cooldownWindow": 240,
-          "provingWindow": 240,
-          "maxBlocksToVerifyPerProof": 0
-        },
-        "TIER_OPTIMISTIC": {
-          "verifierName": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "validityBond": "75000000000000000000",
-          "contestBond": "492187500000000000000",
-          "cooldownWindow": 1440,
-          "provingWindow": 255,
-          "maxBlocksToVerifyPerProof": 0
-        },
-        "tier_provider": "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0",
-        "TIER_RISC0": {
-          "verifierName": "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000",
-          "validityBond": "225000000000000000000",
-          "contestBond": "1476562500000000000000",
-          "cooldownWindow": 240,
-          "provingWindow": 420,
-          "maxBlocksToVerifyPerProof": 0
-        },
-        "TIER_SGX": {
-          "verifierName": "0x746965725f736778000000000000000000000000000000000000000000000000",
-          "validityBond": "150000000000000000000",
-          "contestBond": "984375000000000000000",
-          "cooldownWindow": 240,
-          "provingWindow": 300,
-          "maxBlocksToVerifyPerProof": 0
-        },
-        "TIER_SGX_ZKVM": {
-          "verifierName": "0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000",
-          "validityBond": "225000000000000000000",
-          "contestBond": "1476562500000000000000",
-          "cooldownWindow": 240,
-          "provingWindow": 420,
-          "maxBlocksToVerifyPerProof": 0
-        },
-        "TIER_SP1": {
-          "verifierName": "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000",
-          "validityBond": "225000000000000000000",
-          "contestBond": "1476562500000000000000",
-          "cooldownWindow": 240,
-          "provingWindow": 420,
-          "maxBlocksToVerifyPerProof": 0
-        }
-      },
-      "fieldMeta": {
-        "TIER_SGX": {
-          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_RISC0": {
-          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_SP1": {
-          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_GUARDIAN_MINORITY": {
-          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_GUARDIAN": {
-          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_OPTIMISTIC": {
-          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        },
-        "TIER_SGX_ZKVM": {
-          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
-        }
-      },
-      "derivedName": "MainnetTierRouter"
     },
     {
       "name": "SigVerifyLib",
@@ -581,7 +480,7 @@
       "address": "0x579f40D0BE111b823962043702cabe6Aaa290780",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xe3ef3bce11823157fe0b3d8d8705554e47a8789445c2a255990ca15564e7e945"
+        "0x9dede6e55b7b0db6226ea3cead125c4750d147ad96cef774a61e51e8e9ce6d36"
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
@@ -594,7 +493,7 @@
       "sinceTimestamp": 1714550615,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "$implementation": "0x52CA3c5566d779b3c6bb5c4f760Ea39E294Fc788",
+        "$implementation": "0x0079a79E5d8DDA67029051d505E5A11DE279B36D",
         "$pastUpgrades": [
           [
             "2024-05-01T08:03:35.000Z",
@@ -645,11 +544,16 @@
             "2024-11-10T05:21:47.000Z",
             "0x43353a74df973d8f6a379b5c8815ac80935a5099f8ab93a4aa204eb5ef2c663e",
             ["0x52CA3c5566d779b3c6bb5c4f760Ea39E294Fc788"]
+          ],
+          [
+            "2024-12-23T02:45:11.000Z",
+            "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944",
+            ["0x0079a79E5d8DDA67029051d505E5A11DE279B36D"]
           ]
         ],
-        "$upgradeCount": 10,
+        "$upgradeCount": 11,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
-        "impl": "0x52CA3c5566d779b3c6bb5c4f760Ea39E294Fc788",
+        "impl": "0x0079a79E5d8DDA67029051d505E5A11DE279B36D",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -702,7 +606,7 @@
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x6c2e43f356e499e332ee9b82cb8ae970dbe6209146e72d925e9d9f22f5b791e1"
+        "0x62ec48ec56b8eb6e604ca35e87dca2922adb6e914b1922139a0ae932750abd61"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
@@ -716,7 +620,7 @@
       "sinceTimestamp": 1716217559,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "$implementation": "0x3022Ed0346CCE0c08268c8ad081458AfD95E8763",
+        "$implementation": "0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B",
         "$pastUpgrades": [
           [
             "2024-05-20T15:05:59.000Z",
@@ -762,12 +666,17 @@
             "2024-11-01T09:20:35.000Z",
             "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
             ["0x3022Ed0346CCE0c08268c8ad081458AfD95E8763"]
+          ],
+          [
+            "2024-12-23T02:45:11.000Z",
+            "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944",
+            ["0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "impl": "0x3022Ed0346CCE0c08268c8ad081458AfD95E8763",
+        "impl": "0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -835,6 +744,111 @@
         "sigVerifyLib": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
       },
       "derivedName": "AutomataDcapV3Attestation"
+    },
+    {
+      "name": "MainnetTierRouter",
+      "address": "0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542",
+      "sourceHashes": [
+        "0xadb7d2fefd2f897d28f0193f148788ca7be18701fd6b19298f140c7a545bd02a"
+      ],
+      "sinceTimestamp": 1730514827,
+      "values": {
+        "$immutable": true,
+        "active_tiers": [
+          [
+            "0x746965725f736778000000000000000000000000000000000000000000000000"
+          ],
+          [
+            "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"
+          ],
+          ["0x746965725f677561726469616e00000000000000000000000000000000000000"]
+        ],
+        "BOND_UNIT": "75000000000000000000",
+        "DAO_FALLBACK_PROPOSER": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+        "getTierIds": [200, 900, 1000],
+        "GRACE_PERIOD": 240,
+        "TIER_GUARDIAN": {
+          "verifierName": "0x746965725f677561726469616e00000000000000000000000000000000000000",
+          "validityBond": 0,
+          "contestBond": 0,
+          "cooldownWindow": 240,
+          "provingWindow": 240,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_GUARDIAN_MINORITY": {
+          "verifierName": "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 240,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_OPTIMISTIC": {
+          "verifierName": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "validityBond": "75000000000000000000",
+          "contestBond": "492187500000000000000",
+          "cooldownWindow": 1440,
+          "provingWindow": 255,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "tier_provider": "0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542",
+        "TIER_RISC0": {
+          "verifierName": "0x746965725f7a6b766d5f72697363300000000000000000000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 420,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SGX": {
+          "verifierName": "0x746965725f736778000000000000000000000000000000000000000000000000",
+          "validityBond": "150000000000000000000",
+          "contestBond": "984375000000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 300,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SGX_ZKVM": {
+          "verifierName": "0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 420,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SP1": {
+          "verifierName": "0x746965725f7a6b766d5f73703100000000000000000000000000000000000000",
+          "validityBond": "225000000000000000000",
+          "contestBond": "1476562500000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 420,
+          "maxBlocksToVerifyPerProof": 0
+        }
+      },
+      "fieldMeta": {
+        "TIER_SGX": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_RISC0": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_SP1": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_GUARDIAN_MINORITY": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_GUARDIAN": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_OPTIMISTIC": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_SGX_ZKVM": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        }
+      },
+      "derivedName": "MainnetTierRouter"
     },
     {
       "name": "SharedERC20Vault",
@@ -994,7 +1008,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 61,
+        "nonce": 64,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1122,7 +1136,7 @@
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
         "lastUnpausedAt": 0,
-        "nextInstanceId": 164,
+        "nextInstanceId": 165,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1153,7 +1167,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 5,
+        "nonce": 10,
         "VERSION": "1.4.1"
       }
     },
@@ -1282,7 +1296,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 35424,
+        "nextMessageId": 35674,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1452,6 +1466,48 @@
     { "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" }
   ],
   "abis": {
+    "0x0079a79E5d8DDA67029051d505E5A11DE279B36D": [
+      "error AM_ADDRESS_ALREADY_SET()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AddressSet(uint64 indexed chainId, bytes32 indexed name, address newAddress, address oldAddress)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function getAddress(uint64 _chainId, bytes32 _name) view returns (address)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner)",
+      "function init2()",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function setAddress(uint64 _chainId, bytes32 _name, address _newAddress)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169": [
       "function decodeCert(bytes der, bool isPckCert) pure returns (bool success, tuple(uint256 notBefore, uint256 notAfter, bytes serialNumber, bytes tbsCertificate, bytes pubKey, bytes signature, bool isPck, tuple(string commonName, string issuerName, tuple(string pceid, string fmspc, uint256 pcesvn, uint256[] sgxTcbCompSvnArr) sgxExtension) pck) cert)",
       "function splitCertificateChain(bytes pemChain, uint256 size) pure returns (bool success, bytes[] certs)"
@@ -1550,73 +1606,6 @@
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
-    "0x3022Ed0346CCE0c08268c8ad081458AfD95E8763": [
-      "error ETH_TRANSFER_FAILED()",
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error INVALID_PAUSE_STATUS()",
-      "error INVALID_STATUS()",
-      "error PERMISSION_DENIED()",
-      "error REENTRANT_CALL()",
-      "error RESOLVER_DENIED()",
-      "error RESOLVER_INVALID_MANAGER()",
-      "error RESOLVER_UNEXPECTED_CHAINID()",
-      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProverEnabled(address indexed prover, bool indexed enabled)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function addressManager() view returns (address)",
-      "function admin() view returns (address)",
-      "function approveAllowance(address _address, uint256 _allowance)",
-      "function delegate(address _delegatee)",
-      "function depositBond(uint256 _amount)",
-      "function enableProver(address _prover, bool _isProver)",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function init(address _owner, address _admin, address _rollupAddressManager)",
-      "function isProver(address prover) view returns (bool isProver)",
-      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
-      "function lastUnpausedAt() view returns (uint64)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function proposeBlock(bytes _params, bytes _txList) payable",
-      "function proposeBlockV2(bytes _params, bytes _txList) payable",
-      "function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) payable",
-      "function proveBlock(uint64 _blockId, bytes _input)",
-      "function proveBlocks(uint64[] _blockId, bytes[] _input, bytes _batchProof)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function withdrawBond(uint256 _amount)",
-      "function withdrawEtherToAdmin(uint256 _amount)",
-      "function withdrawToAdmin(uint256 _amount)"
-    ],
-    "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0": [
-      "constructor(address _daoFallbackProposer)",
-      "error TIER_NOT_FOUND()",
-      "function BOND_UNIT() view returns (uint96)",
-      "function DAO_FALLBACK_PROPOSER() view returns (address)",
-      "function GRACE_PERIOD() view returns (uint16)",
-      "function getMinTier(address _proposer, uint256 _rand) view returns (uint16)",
-      "function getProvider(uint256) view returns (address)",
-      "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
-      "function getTierIds() pure returns (uint16[] tiers_)"
     ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1736,48 +1725,6 @@
     "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9": [
       "constructor(address es256Verifier)",
       "function verifyES256Signature(bytes tbs, bytes signature, bytes publicKey) view returns (bool sigValid)"
-    ],
-    "0x52CA3c5566d779b3c6bb5c4f760Ea39E294Fc788": [
-      "error AM_ADDRESS_ALREADY_SET()",
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error INVALID_PAUSE_STATUS()",
-      "error REENTRANT_CALL()",
-      "error RESOLVER_DENIED()",
-      "error RESOLVER_INVALID_MANAGER()",
-      "error RESOLVER_UNEXPECTED_CHAINID()",
-      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "event AddressSet(uint64 indexed chainId, bytes32 indexed name, address newAddress, address oldAddress)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function addressManager() view returns (address)",
-      "function getAddress(uint64 _chainId, bytes32 _name) view returns (address)",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function init(address _owner)",
-      "function init2()",
-      "function lastUnpausedAt() view returns (uint64)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function setAddress(uint64 _chainId, bytes32 _name, address _newAddress)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc": [
       "constructor(address _logic, bytes _data) payable",
@@ -1984,6 +1931,17 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542": [
+      "constructor(address _daoFallbackProposer)",
+      "error TIER_NOT_FOUND()",
+      "function BOND_UNIT() view returns (uint96)",
+      "function DAO_FALLBACK_PROPOSER() view returns (address)",
+      "function GRACE_PERIOD() view returns (uint16)",
+      "function getMinTier(address _proposer, uint256 _rand) view returns (uint16)",
+      "function getProvider(uint256) view returns (address)",
+      "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+      "function getTierIds() pure returns (uint16[] tiers_)"
+    ],
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1998,6 +1956,93 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17": [
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error L1_BLOCK_MISMATCH()",
+      "error L1_FORK_ERROR()",
+      "error L1_INVALID_BLOCK_ID()",
+      "error L1_INVALID_GENESIS_HASH()",
+      "error L1_INVALID_PARAMS()",
+      "error L1_INVALID_PARAMS()",
+      "error L1_INVALID_PAUSE_STATUS()",
+      "error L1_PROVING_PAUSED()",
+      "error L1_TRANSITION_ID_ZERO()",
+      "error L1_TRANSITION_NOT_FOUND()",
+      "error L1_UNEXPECTED_TRANSITION_ID()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event BlockProposed(uint256 indexed blockId, address indexed assignedProver, uint96 livenessBond, tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta, tuple(address recipient, uint96 amount, uint64 id)[] depositsProcessed)",
+      "event BlockProposedV2(uint256 indexed blockId, tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) meta)",
+      "event BlockVerified(uint256 indexed blockId, address indexed prover, bytes32 blockHash, bytes32 stateRoot, uint16 tier)",
+      "event BlockVerified(uint256 indexed blockId, address indexed prover, bytes32 blockHash, bytes32 stateRoot, uint16 tier)",
+      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
+      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
+      "event BondCredited(address indexed user, uint256 amount)",
+      "event BondCredited(address indexed user, uint256 amount)",
+      "event BondDebited(address indexed user, uint256 amount)",
+      "event CalldataTxList(uint256 indexed blockId, bytes txList)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProvingPaused(bool paused)",
+      "event ProvingPaused(bool paused)",
+      "event StateVariablesUpdated(tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint8 __reservedB1, uint16 __reservedB2, uint32 __reservedB3, uint64 lastUnpausedAt) slotB)",
+      "event TransitionContested(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier)",
+      "event TransitionContestedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier, uint64 proposedIn)",
+      "event TransitionProved(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier)",
+      "event TransitionProvedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier, uint64 proposedIn)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function bondBalanceOf(address _user) view returns (uint256)",
+      "function depositBond(uint256 _amount)",
+      "function getBlock(uint64 _blockId) view returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint32 nextTransitionId, uint32 verifiedTransitionId) blk_)",
+      "function getBlockV2(uint64 _blockId) view returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint24 nextTransitionId, bool livenessBondReturned, uint24 verifiedTransitionId) blk_)",
+      "function getConfig() pure returns (tuple(uint64 chainId, uint64 blockMaxProposals, uint64 blockRingBufferSize, uint64 maxBlocksToVerify, uint32 blockMaxGasLimit, uint96 livenessBond, uint8 stateRootSyncInternal, uint64 maxAnchorHeightOffset, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig, uint64 ontakeForkHeight))",
+      "function getLastSyncedBlock() view returns (uint64 blockId_, bytes32 blockHash_, bytes32 stateRoot_, uint64 verifiedAt_)",
+      "function getLastVerifiedBlock() view returns (uint64 blockId_, bytes32 blockHash_, bytes32 stateRoot_, uint64 verifiedAt_)",
+      "function getStateVariables() view returns (tuple(uint64 genesisHeight, uint64 genesisTimestamp, uint64 lastSyncedBlockId, uint64 lastSynecdAt), tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint8 __reservedB1, uint16 __reservedB2, uint32 __reservedB3, uint64 lastUnpausedAt))",
+      "function getTransition(uint64 _blockId, uint32 _tid) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1))",
+      "function getTransition(uint64 _blockId, bytes32 _parentHash) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1))",
+      "function getTransitions(uint64[] _blockIds, bytes32[] _parentHashes) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1)[])",
+      "function getVerifiedBlockProver(uint64 _blockId) view returns (address prover_)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, address _rollupAddressManager, bytes32 _genesisBlockHash, bool _toPause)",
+      "function init2()",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function pauseProving(bool _pause)",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)",
+      "function proposeBlockV2(bytes _params, bytes _txList) returns (tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) meta_)",
+      "function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig)[] metaArr_)",
+      "function proveBlock(uint64 _blockId, bytes _input)",
+      "function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function state() view returns (bytes32 __reserve1, tuple(uint64 genesisHeight, uint64 genesisTimestamp, uint64 lastSyncedBlockId, uint64 lastSynecdAt) slotA, tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint8 __reservedB1, uint16 __reservedB2, uint32 __reservedB3, uint64 lastUnpausedAt) slotB)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyBlocks(uint64 _maxBlocksToVerify)",
+      "function withdrawBond(uint256 _amount)"
     ],
     "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81": [
       "constructor(address _logic, bytes _data) payable",
@@ -2272,6 +2317,64 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B": [
+      "error ETH_TRANSFER_FAILED()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_BOND_TOKEN()",
+      "error INVALID_PAUSE_STATUS()",
+      "error INVALID_STATUS()",
+      "error NOT_FIRST_PROPOSAL()",
+      "error PERMISSION_DENIED()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProverEnabled(address indexed prover, bool indexed enabled)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function admin() view returns (address)",
+      "function approveAllowance(address _address, uint256 _allowance)",
+      "function delegate(address _delegatee)",
+      "function depositBond(uint256 _amount)",
+      "function enableProver(address _prover, bool _isProver)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, address _admin, address _rollupAddressManager)",
+      "function isProver(address prover) view returns (bool isProver)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proposeBlockV2(bytes _params, bytes _txList)",
+      "function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr)",
+      "function proposeBlocksV2Conditionally(bytes[] _params, bytes[] _txList)",
+      "function proveBlock(uint64 _blockId, bytes _input)",
+      "function proveBlocks(uint64[] _blockId, bytes[] _input, bytes _batchProof)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdrawBond(uint256 _amount)",
+      "function withdrawEtherToAdmin(uint256 _amount)",
+      "function withdrawToAdmin(uint256 _amount)"
+    ],
     "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2332,93 +2435,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B": [
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error INVALID_PAUSE_STATUS()",
-      "error L1_BLOCK_MISMATCH()",
-      "error L1_FORK_ERROR()",
-      "error L1_INVALID_BLOCK_ID()",
-      "error L1_INVALID_GENESIS_HASH()",
-      "error L1_INVALID_PARAMS()",
-      "error L1_INVALID_PARAMS()",
-      "error L1_INVALID_PAUSE_STATUS()",
-      "error L1_PROVING_PAUSED()",
-      "error L1_TRANSITION_ID_ZERO()",
-      "error L1_TRANSITION_NOT_FOUND()",
-      "error L1_UNEXPECTED_TRANSITION_ID()",
-      "error REENTRANT_CALL()",
-      "error RESOLVER_DENIED()",
-      "error RESOLVER_INVALID_MANAGER()",
-      "error RESOLVER_UNEXPECTED_CHAINID()",
-      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event BlockProposed(uint256 indexed blockId, address indexed assignedProver, uint96 livenessBond, tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta, tuple(address recipient, uint96 amount, uint64 id)[] depositsProcessed)",
-      "event BlockProposedV2(uint256 indexed blockId, tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) meta)",
-      "event BlockVerified(uint256 indexed blockId, address indexed prover, bytes32 blockHash, bytes32 stateRoot, uint16 tier)",
-      "event BlockVerified(uint256 indexed blockId, address indexed prover, bytes32 blockHash, bytes32 stateRoot, uint16 tier)",
-      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
-      "event BlockVerifiedV2(uint256 indexed blockId, address indexed prover, bytes32 blockHash, uint16 tier)",
-      "event BondCredited(address indexed user, uint256 amount)",
-      "event BondCredited(address indexed user, uint256 amount)",
-      "event BondDebited(address indexed user, uint256 amount)",
-      "event CalldataTxList(uint256 indexed blockId, bytes txList)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProvingPaused(bool paused)",
-      "event ProvingPaused(bool paused)",
-      "event StateVariablesUpdated(tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint8 __reservedB1, uint16 __reservedB2, uint32 __reservedB3, uint64 lastUnpausedAt) slotB)",
-      "event TransitionContested(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier)",
-      "event TransitionContestedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address contester, uint96 contestBond, uint16 tier, uint64 proposedIn)",
-      "event TransitionProved(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier)",
-      "event TransitionProvedV2(uint256 indexed blockId, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran, address prover, uint96 validityBond, uint16 tier, uint64 proposedIn)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function addressManager() view returns (address)",
-      "function bondBalanceOf(address _user) view returns (uint256)",
-      "function depositBond(uint256 _amount)",
-      "function getBlock(uint64 _blockId) view returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint32 nextTransitionId, uint32 verifiedTransitionId) blk_)",
-      "function getBlockV2(uint64 _blockId) view returns (tuple(bytes32 metaHash, address assignedProver, uint96 livenessBond, uint64 blockId, uint64 proposedAt, uint64 proposedIn, uint24 nextTransitionId, bool livenessBondReturned, uint24 verifiedTransitionId) blk_)",
-      "function getConfig() pure returns (tuple(uint64 chainId, uint64 blockMaxProposals, uint64 blockRingBufferSize, uint64 maxBlocksToVerify, uint32 blockMaxGasLimit, uint96 livenessBond, uint8 stateRootSyncInternal, uint64 maxAnchorHeightOffset, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig, uint64 ontakeForkHeight))",
-      "function getLastSyncedBlock() view returns (uint64 blockId_, bytes32 blockHash_, bytes32 stateRoot_, uint64 verifiedAt_)",
-      "function getLastVerifiedBlock() view returns (uint64 blockId_, bytes32 blockHash_, bytes32 stateRoot_, uint64 verifiedAt_)",
-      "function getStateVariables() view returns (tuple(uint64 genesisHeight, uint64 genesisTimestamp, uint64 lastSyncedBlockId, uint64 lastSynecdAt), tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint8 __reservedB1, uint16 __reservedB2, uint32 __reservedB3, uint64 lastUnpausedAt))",
-      "function getTransition(uint64 _blockId, uint32 _tid) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1))",
-      "function getTransition(uint64 _blockId, bytes32 _parentHash) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1))",
-      "function getTransitions(uint64[] _blockIds, bytes32[] _parentHashes) view returns (tuple(bytes32 key, bytes32 blockHash, bytes32 stateRoot, address prover, uint96 validityBond, address contester, uint96 contestBond, uint64 timestamp, uint16 tier, uint8 __reserved1)[])",
-      "function getVerifiedBlockProver(uint64 _blockId) view returns (address prover_)",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function init(address _owner, address _rollupAddressManager, bytes32 _genesisBlockHash, bool _toPause)",
-      "function init2()",
-      "function lastUnpausedAt() view returns (uint64)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function pauseProving(bool _pause)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)",
-      "function proposeBlockV2(bytes _params, bytes _txList) returns (tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) meta_)",
-      "function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple(bytes32 anchorBlockHash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 anchorBlockId, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address proposer, uint96 livenessBond, uint64 proposedAt, uint64 proposedIn, uint32 blobTxListOffset, uint32 blobTxListLength, uint8 blobIndex, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig)[] metaArr_)",
-      "function proveBlock(uint64 _blockId, bytes _input)",
-      "function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function state() view returns (bytes32 __reserve1, tuple(uint64 genesisHeight, uint64 genesisTimestamp, uint64 lastSyncedBlockId, uint64 lastSynecdAt) slotA, tuple(uint64 numBlocks, uint64 lastVerifiedBlockId, bool provingPaused, uint8 __reservedB1, uint16 __reservedB2, uint32 __reservedB3, uint64 lastUnpausedAt) slotB)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifyBlocks(uint64 _maxBlocksToVerify)",
-      "function withdrawBond(uint256 _amount)"
     ],
     "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449": [
       "error AM_ADDRESS_ALREADY_SET()",

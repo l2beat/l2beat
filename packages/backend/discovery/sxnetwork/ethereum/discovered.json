@@ -1,7 +1,7 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 21365599,
+  "blockNumber": 21465245,
   "configHash": "0x4263749d952187a95e61c9f9b63eb98aca39a0ceb3f15761f75c71ae5dd39eaa",
   "contracts": [
     {
@@ -150,12 +150,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 346,
+        "firstUnresolvedNode": 373,
         "inbox": "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "lastStakeBlock": 20269009,
-        "latestConfirmed": 345,
-        "latestNodeCreated": 345,
+        "latestConfirmed": 372,
+        "latestNodeCreated": 372,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -225,7 +225,8 @@
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
-            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
       ]
@@ -463,12 +464,12 @@
           "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 147,
+        "delayedMessageCount": 156,
         "nativeToken": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 449,
-        "sequencerReportedSubMessageCount": 2096923
+        "sequencerMessageCount": 477,
+        "sequencerReportedSubMessageCount": 2234875
       }
     },
     {
@@ -686,7 +687,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 449,
+        "batchCount": 477,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x90906eA9eb38B6afC104bB761F493b2a78c85024"],
         "bridge": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
@@ -717,7 +718,7 @@
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 147,
+        "totalDelayedMessagesRead": 155,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -759,7 +760,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 77,
+        "nonce": 104,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

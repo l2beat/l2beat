@@ -1,3 +1,25 @@
+Generated with discovered.json: 0xa21d9ef5e1f99bf8b3a155ec283a1b15639d8c6e
+
+# Diff at Mon, 23 Dec 2024 13:26:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21078440
+- current block number: 21465473
+
+## Description
+
+addNewRollupType() for a new validium version scheduled (validiums can be then upgraded to this version).
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.19:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","verifier":"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB","forkID":13,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: Validium, Version: fork.13 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
 Generated with discovered.json: 0xb4eda61fe08c1533e7db7c7c6b9356c723381097
 
 # Diff at Wed, 30 Oct 2024 12:25:53 GMT:

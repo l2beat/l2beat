@@ -25,6 +25,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'fuelv1',
   'gpt',
   'hychain',
+  'hyperliquid',
   'immutablex',
   'immutablezkevm',
   'ink',

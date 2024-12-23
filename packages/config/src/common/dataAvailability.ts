@@ -151,6 +151,14 @@ export const DA_LAYERS = {
     fallbackDescription: undefined,
     secondLine: undefined,
   },
+  HYPERLIQUID_DA: {
+    value: 'Hyperliquid DA',
+    sentiment: 'bad',
+    description:
+      'The data is custodied by Hyperliquid validators. On Arbitrum there is no direct reference of the data.',
+    fallbackDescription: undefined,
+    secondLine: undefined,
+  },
 } as const satisfies Record<
   string,
   ValueWithSentiment<string> & {
