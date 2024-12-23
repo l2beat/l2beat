@@ -7,7 +7,6 @@ import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_compo
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { NotSyncedBanner } from '~/components/not-synced-banner'
-import { featureFlags } from '~/consts/feature-flags'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
@@ -89,21 +88,19 @@ export function ProjectActivityChart({
           />
         </ChartControlsWrapper>
         <Chart className="mt-4" />
-        {featureFlags.showOthers && (
-          <ChartLegend
-            className="my-2"
-            elements={[
-              {
-                name: projectName ?? 'Project',
-                color: typeToIndicator(type),
-              },
-              {
-                name: 'Ethereum',
-                color: 'bg-indicator-ethereum',
-              },
-            ]}
-          />
-        )}
+        <ChartLegend
+          className="my-2"
+          elements={[
+            {
+              name: projectName ?? 'Project',
+              color: typeToIndicator(type),
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-indicator-ethereum',
+            },
+          ]}
+        />
         <div className="flex justify-between gap-4">
           <div className="flex gap-1">
             <ActivityMetricControls

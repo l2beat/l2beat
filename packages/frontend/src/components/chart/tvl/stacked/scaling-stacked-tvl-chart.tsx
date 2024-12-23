@@ -3,15 +3,11 @@
 import { type Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
 import { Checkbox } from '~/components/core/checkbox'
-import { featureFlags } from '~/consts/feature-flags'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
@@ -35,21 +31,17 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
-  const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useState<TvlChartRange>('1y')
 
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
 
   const filter = useMemo<TvlProjectFilter>(() => {
-    if (!featureFlags.showOthers && filters.isEmpty) {
-      return { type: 'layer2' }
-    }
     return {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, filters, includeFilter])
+  }, [entries, includeFilter])
 
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
@@ -84,19 +76,17 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
           timeRange={chartRange}
         />
         <Chart className="mt-2" />
-        {featureFlags.showOthers && <StackedTvlChartLegend />}
+        <StackedTvlChartLegend />
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
-            {featureFlags.showOthers && (
-              <Checkbox
-                checked={excludeAssociatedTokens}
-                onCheckedChange={(checked) =>
-                  setExcludeAssociatedTokens(!!checked)
-                }
-              >
-                Exclude associated tokens
-              </Checkbox>
-            )}
+            <Checkbox
+              checked={excludeAssociatedTokens}
+              onCheckedChange={(checked) =>
+                setExcludeAssociatedTokens(!!checked)
+              }
+            >
+              Exclude associated tokens
+            </Checkbox>
           </TvlChartUnitControls>
           <TvlChartTimeRangeControls
             timeRange={timeRange}

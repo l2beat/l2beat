@@ -6,7 +6,6 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
 import { TokenCombobox } from '~/components/token-combobox'
-import { featureFlags } from '~/consts/feature-flags'
 import {
   type ProjectToken,
   type ProjectTokens,
@@ -132,7 +131,7 @@ function DefaultChart({
           />
         </ChartControlsWrapper>
         <Chart className="mt-4" />
-        {featureFlags.showOthers && <StackedTvlChartLegend className="my-2" />}
+        <StackedTvlChartLegend className="my-2" />
         <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox
