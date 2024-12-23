@@ -4,7 +4,13 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { OPERATOR, RISK_VIEW } from '../../common'
+import {
+  DA_LAYERS,
+  DA_MODES,
+  OPERATOR,
+  RISK_VIEW,
+  addSentimentToDataAvailability,
+} from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -84,6 +90,18 @@ export const hyperliquid: Layer3 = {
       },
     ],
   },
+  dataAvailability: [
+    addSentimentToDataAvailability({
+      layers: [DA_LAYERS.HYPERLIQUID_DA],
+      bridge: {
+        value: `${validatorSetSize} validators`,
+        sentiment: 'bad',
+        description:
+          'The bridge verifies that at least 2/3+1 of the Huperliquid validators have signed off a withdrawal request.',
+      },
+      mode: DA_MODES.TRANSACTION_DATA,
+    }),
+  ],
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
