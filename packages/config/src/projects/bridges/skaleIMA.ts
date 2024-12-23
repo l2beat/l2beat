@@ -16,7 +16,7 @@ export const skaleIMA: Bridge = {
     slug: 'skale-ima',
     links: {
       websites: ['https://skale.space'],
-      apps: ['https://bridge.skale.network'],
+      apps: ['https://bridge.skale.network/bridge'],
       socialMedia: [
         'https://twitter.com/SkaleNetwork',
         'https://t.me/skaleofficial',
@@ -26,7 +26,7 @@ export const skaleIMA: Bridge = {
       ],
       documentation: [
         'https://docs.skale.network/ima/1.4.x/',
-        'https://mainnet.skalenodes.com',
+        'https://bridge.skale.network/chains',
       ],
       repositories: ['https://github.com/skalenetwork/IMA'],
       explorers: ['https://elated-tan-skat.explorer.mainnet.skalenodes.com'],
@@ -56,6 +56,13 @@ export const skaleIMA: Bridge = {
           'WBTC',
           // 'HMT',
           'LINK',
+          'EXD',
+          'CGT2.0',
+          'rETH',
+          'HMKR',
+          'DIVI',
+          'UNP',
+          'PEPE'
         ],
       }),
     ],
