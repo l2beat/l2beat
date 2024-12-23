@@ -20,6 +20,11 @@
     }
   },
   "overrides": {
+    "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD": {
+      // permissionedGamesTotal from the template ignored as they are using permissioned games by default
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "extends": "opstack/DisputeGameFactory"
+    },
     "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": {
       // currently unverified
       "extends": "opstack/PermissionedDisputeGame",
