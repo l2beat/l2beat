@@ -3,6 +3,7 @@ import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_componen
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import { type ActivityChartType } from './use-activity-chart-render-params'
@@ -16,9 +17,12 @@ interface Props {
   singleProject?: boolean
   syncedUntil?: number
   type?: ActivityChartType
+  projectName?: string
 }
 
 export function ActivityChartHover(props: Props) {
+  const decimals =
+    props.count < 1 ? getFirstTwoNonZeroPrecision(props.count) : 2
   return (
     <div className="min-w-36">
       <div className="mb-1.5 whitespace-nowrap">
@@ -35,21 +39,27 @@ export function ActivityChartHover(props: Props) {
         </div>
       </div>
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
+      <div className="flex w-full items-start justify-between gap-2">
+        <div className="flex items-start gap-1">
           <div
             className={cn(
-              'relative inline-block size-3 rounded-full',
+              'relative mt-0.5 inline-block size-3 rounded-full md:mt-1',
               getColorByType(props.type),
             )}
           ></div>
-          <span>{props.singleProject ? 'Project' : 'Projects'}</span>
+          <span className="max-sm:w-24">
+            {props.singleProject
+              ? (props.projectName ?? 'Project')
+              : props.type === 'ValidiumsAndOptimiums'
+                ? 'Validiums and Optimiums'
+                : (props.type ?? 'Projects')}
+          </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
           {props.syncedUntil && props.syncedUntil < props.timestamp
             ? 'Not synced'
             : formatActivityCount(countPerSecond(props.count), {
-                morePrecision: !!props.singleProject,
+                decimals,
               })}
         </span>
       </div>
@@ -62,7 +72,7 @@ export function ActivityChartHover(props: Props) {
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
             {formatActivityCount(countPerSecond(props.ethereumCount), {
-              morePrecision: !!props.singleProject,
+              decimals,
             })}
           </span>
         </div>
@@ -76,15 +86,21 @@ export function ActivityChartHover(props: Props) {
         </div>
       </div>
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
+      <div className="flex w-full items-start justify-between gap-2">
+        <div className="flex items-start gap-1">
           <div
             className={cn(
-              'relative inline-block size-3 rounded-full',
+              'relative mt-0.5 inline-block size-3 rounded-full md:mt-1',
               getColorByType(props.type),
             )}
           ></div>
-          <span>{props.singleProject ? 'Project' : 'Projects'}</span>
+          <span className="max-sm:w-24">
+            {props.singleProject
+              ? (props.projectName ?? 'Project')
+              : props.type === 'ValidiumsAndOptimiums'
+                ? 'Validiums and Optimiums'
+                : (props.type ?? 'Projects')}
+          </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
           {props.syncedUntil && props.syncedUntil < props.timestamp

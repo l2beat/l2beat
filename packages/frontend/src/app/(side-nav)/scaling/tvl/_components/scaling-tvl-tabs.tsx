@@ -9,6 +9,11 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
@@ -68,6 +73,7 @@ export function ScalingTvlTabs(props: Props) {
               entries={props.rollups}
             />
             <HorizontalSeparator className="my-5" />
+            <RollupsInfo />
             <ScalingTvlTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -81,6 +87,7 @@ export function ScalingTvlTabs(props: Props) {
               entries={props.validiumsAndOptimiums}
             />
             <HorizontalSeparator className="my-5" />
+            <ValidiumsAndOptimiumsInfo />
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -91,6 +98,7 @@ export function ScalingTvlTabs(props: Props) {
               entries={props.others ?? []}
             />
             <HorizontalSeparator className="my-5" />
+            <OthersInfo />
             <ScalingTvlTable entries={filteredEntries.others} />
           </DirectoryTabsContent>
         </TableSortingProvider>

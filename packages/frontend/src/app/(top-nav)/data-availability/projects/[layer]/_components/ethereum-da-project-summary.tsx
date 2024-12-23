@@ -57,7 +57,10 @@ export function EthereumDaProjectSummary({ project }: Props) {
                         projectLinks={project.header.links}
                       />
                     </div>
-                    <DaProjectStats stats={stats} />
+                    <DaProjectStats
+                      stats={stats}
+                      daLayerGrissiniValues={undefined}
+                    />
                   </div>
                 </div>
               </div>

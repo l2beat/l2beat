@@ -10,6 +10,11 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
@@ -80,6 +85,7 @@ export function ScalingActivityTabs({
               type="Rollups"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
+            <RollupsInfo />
             <ScalingActivityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -95,6 +101,7 @@ export function ScalingActivityTabs({
               type="ValidiumsAndOptimiums"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
+            <ValidiumsAndOptimiumsInfo />
             <ScalingActivityTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -113,6 +120,7 @@ export function ScalingActivityTabs({
                 type="Others"
               />
               <HorizontalSeparator className="mb-3 mt-5" />
+              <OthersInfo />
               <ScalingActivityTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

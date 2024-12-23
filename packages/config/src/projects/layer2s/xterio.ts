@@ -1,4 +1,5 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -55,6 +56,7 @@ export const xterio: Layer2 = opStackL2({
     daChallengeWindow,
     daResolveWindow,
     'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
+    DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
   discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1716537433),

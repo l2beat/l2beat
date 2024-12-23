@@ -2,6 +2,7 @@ import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
 import { type RecategorizedActivityChartData } from '~/server/features/scaling/activity/get-recategorized-activity-chart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
+import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { type SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
@@ -21,11 +22,14 @@ export function useRecategorizedActivityChartRenderParams({
     [milestones],
   )
 
-  const formatYAxisLabel = useCallback(
-    (value: number) =>
-      `${formatActivityCount(value, { morePrecision: true })} UOPS`,
-    [],
-  )
+  const formatYAxisLabel = useCallback((value: number, values?: number[]) => {
+    const decimals = values?.every((v) => v % 1 === 0)
+      ? 0
+      : value < 1
+        ? getFirstTwoNonZeroPrecision(value)
+        : 2
+    return `${formatActivityCount(value, { decimals })} UOPS`
+  }, [])
 
   const columns = useMemo(
     () =>
