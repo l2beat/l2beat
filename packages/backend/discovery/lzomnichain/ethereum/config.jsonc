@@ -48,7 +48,7 @@
       "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"]
     },
     "WagmiEscrow": {
-      "ignoreInWatchMode": ["circulatingSupply"],
+      "ignoreInWatchMode": ["circulatingSupply", "totalSupply"],
       "ignoreRelatives": ["token"]
     },
     "LinkEscrow": {

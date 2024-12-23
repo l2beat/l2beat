@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe053fb77ee9f9a3f836f3a6257cfaf665e3c767c
+
+# Diff at Mon, 23 Dec 2024 12:42:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 279474286
+- current block number: 287770407
+
+## Description
+
+Config related: Celestia-Nitro wmroot added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 279474286 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x374de579AE15aD59eD0519aeAf1A23F348Df259c) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287:
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x90319b12d430dde70561631298a17d10e7bb7430
 
 # Diff at Thu, 05 Dec 2024 11:53:38 GMT:

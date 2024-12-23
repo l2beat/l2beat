@@ -1,7 +1,7 @@
 {
   "name": "fluence",
   "chain": "ethereum",
-  "blockNumber": 21365584,
+  "blockNumber": 21465176,
   "configHash": "0x9d816d3fa4d275a73ace500776da83a8646aca1f31a7ff61dfa8a3009a826ae6",
   "contracts": [
     {
@@ -344,12 +344,12 @@
           "0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"
         ],
         "allowedOutboxList": ["0x50Df2E43aDefee3b6510b637697d30e7dc155e13"],
-        "delayedMessageCount": 206,
+        "delayedMessageCount": 219,
         "nativeToken": "0x236501327e701692a281934230AF0b6BE8Df3353",
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerInbox": "0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0",
-        "sequencerMessageCount": 930,
-        "sequencerReportedSubMessageCount": 2972788
+        "sequencerMessageCount": 1161,
+        "sequencerReportedSubMessageCount": 3751292
       }
     },
     {
@@ -665,7 +665,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 930,
+        "batchCount": 1161,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xAec3997252d4F9Cd92Cc49be2e8068e23065665a"],
         "bridge": "0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
@@ -696,7 +696,7 @@
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 206,
+        "totalDelayedMessagesRead": 219,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -786,12 +786,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 241,
+        "firstUnresolvedNode": 269,
         "inbox": "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
         "isERC20Enabled": false,
         "lastStakeBlock": 20425444,
-        "latestConfirmed": 240,
-        "latestNodeCreated": 253,
+        "latestConfirmed": 268,
+        "latestNodeCreated": 281,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x50Df2E43aDefee3b6510b637697d30e7dc155e13",
@@ -858,7 +858,8 @@
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
-            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
       ]
