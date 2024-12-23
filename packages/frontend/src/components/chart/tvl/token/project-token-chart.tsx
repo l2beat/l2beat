@@ -3,7 +3,6 @@ import { type Milestone } from '@l2beat/config'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { TokenCombobox } from '~/components/token-combobox'
-import { featureFlags } from '~/consts/feature-flags'
 import { useIsClient } from '~/hooks/use-is-client'
 import {
   type ProjectToken,
@@ -93,9 +92,7 @@ export function ProjectTokenChart({
           />
         </ChartControlsWrapper>
         <Chart className="mt-4" />
-        {featureFlags.showOthers && showStackedChartLegend && (
-          <StackedTvlChartLegend className="my-2" />
-        )}
+        {showStackedChartLegend && <StackedTvlChartLegend className="my-2" />}
         <div className={cn(!showStackedChartLegend && 'mt-4')}>
           <TokenChartUnitControls
             isBridge={isBridge}

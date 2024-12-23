@@ -76,7 +76,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
           timeRange={chartRange}
         />
         <Chart className="mt-2" />
-        {featureFlags.showOthers && <StackedTvlChartLegend />}
+        <StackedTvlChartLegend />
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
             <Checkbox

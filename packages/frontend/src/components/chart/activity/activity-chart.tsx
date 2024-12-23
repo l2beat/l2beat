@@ -100,24 +100,22 @@ export function ActivityChart({
           hideScalingFactor={hideScalingFactor}
         />
         <Chart className="mt-4" />
-        {featureFlags.showOthers && (
-          <ChartLegend
-            className="my-2"
-            elements={[
-              {
-                name:
-                  type === 'ValidiumsAndOptimiums'
-                    ? 'Validiums and Optimiums'
-                    : (type ?? 'Projects'),
-                color: typeToIndicator(type),
-              },
-              {
-                name: 'Ethereum',
-                color: 'bg-indicator-ethereum',
-              },
-            ]}
-          />
-        )}
+        <ChartLegend
+          className="my-2"
+          elements={[
+            {
+              name:
+                type === 'ValidiumsAndOptimiums'
+                  ? 'Validiums and Optimiums'
+                  : (type ?? 'Projects'),
+              color: typeToIndicator(type),
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-indicator-ethereum',
+            },
+          ]}
+        />
         <Controls
           scale={scale}
           setScale={setScale}

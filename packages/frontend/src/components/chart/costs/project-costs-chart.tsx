@@ -6,7 +6,6 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { featureFlags } from '~/consts/feature-flags'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import {
   type CostsTimeRange,
@@ -88,7 +87,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           />
         </ChartControlsWrapper>
         <Chart className="mt-4" />
-        {featureFlags.showOthers && <CostsChartLegend className="my-2" />}
+        <CostsChartLegend className="my-2" />
         <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>
     </div>
