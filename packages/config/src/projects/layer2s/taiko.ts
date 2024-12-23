@@ -144,6 +144,8 @@ export const taiko: Layer2 = {
     name: 'Taiko',
     slug: 'taiko',
     provider: 'Taiko',
+    headerWarning:
+      'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.',
     description:
       'Taiko is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
