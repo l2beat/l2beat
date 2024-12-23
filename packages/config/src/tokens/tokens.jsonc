@@ -422,6 +422,10 @@
       "address": "0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5"
     },
     {
+      "symbol": "CGT2.0",
+      "address": "0x0e186357c323c806c1efdad36d217f7a54b63d18",
+    },
+    {
       "symbol": "CHR",
       "address": "0x8A2279d4A90B6fe1C4B30fa660cC9f926797bAA2"
     },
@@ -538,6 +542,10 @@
       "address": "0xc719d010B63E5bbF2C0551872CD5316ED26AcD83"
     },
     {
+      "symbol": "DIVI",
+      "address": "0x246908bff0b1ba6ecadcf57fb94f6ae2fcd43a77"
+    },
+    {
       "symbol": "DOLA",
       "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4"
     },
@@ -618,6 +626,10 @@
     {
       "symbol": "EURT",
       "address": "0xC581b735A1688071A1746c968e0798D642EDE491"
+    },
+    {
+      "symbol": "EXD",
+      "address": "0x02de007d412266a2e0fa9287c103474170f06560"
     },
     {
       "symbol": "eXRD",
@@ -787,6 +799,10 @@
     {
       "symbol": "HEZ",
       "address": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
+    },
+    {
+      "symbol": "HMKR",
+      "address": "0x3300b02efa180c99a2f61f4731665b51e4e254c4"
     },
     {
       "symbol": "HOP",
@@ -1447,6 +1463,11 @@
       "symbol": "UNI",
       "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
     },
+    {
+      "symbol": "UNP",
+      "address": "0x23d7ff057c696fee679c60cef61fee6614218f04"
+    },
+    
     {
       "symbol": "uniETH",
       "category": "ether",
