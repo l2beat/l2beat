@@ -12,6 +12,7 @@
       "ignoreDiscovery": true
     },
     "HyperliquidBridge": {
+      "description": "Single contract containing all the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions.",
       "fields": {
         "constructorArgs": {
           "handler": {
