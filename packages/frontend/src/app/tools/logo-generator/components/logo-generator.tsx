@@ -1,9 +1,10 @@
 'use client'
 
 import { TooltipTrigger } from '@radix-ui/react-tooltip'
+import html2canvas from 'html2canvas'
 import { partition } from 'lodash'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Tooltip, TooltipContent } from '~/components/core/tooltip/tooltip'
 
 interface Props {
@@ -115,31 +116,71 @@ export function LogoGenerator({ projects }: Props) {
           />
         </div>
       </div>
-      <div className="mt-6 flex flex-wrap gap-1 bg-pure-white p-4">
-        {firstGroup.map((project) => (
-          <Tooltip key={project.slug}>
-            <TooltipTrigger>
-              <Image
-                src={`/icons/${project.slug}.png`}
-                alt={project.name}
-                width={128}
-                height={128}
-                className="cursor-pointer"
-                style={{ borderRadius, width: size, height: size }}
-                onClick={() =>
-                  setSecondGroupValue((exclude) => exclude + project.slug + ',')
-                }
-              />
-            </TooltipTrigger>
-            <TooltipContent>{project.name}</TooltipContent>
-          </Tooltip>
-        ))}
+      <div className="space-y-6">
+        <LogoGroup
+          projects={firstGroup}
+          borderRadius={borderRadius}
+          size={size}
+          onClick={(slug) =>
+            setSecondGroupValue((exclude) => exclude + slug + ',')
+          }
+        />
+        {secondGroup.length !== 0 && (
+          <LogoGroup
+            projects={secondGroup}
+            borderRadius={borderRadius}
+            size={size}
+            onClick={(slug) =>
+              setSecondGroupValue((exclude) => {
+                const slugs = exclude
+                  .split(',')
+                  .filter((s) => s.trim() !== slug)
+                return slugs.join(',')
+              })
+            }
+          />
+        )}
       </div>
-      {secondGroup.length !== 0 && (
-        <div className="mt-6 flex flex-wrap gap-1 bg-pure-white p-4">
-          {secondGroup.map((project) => (
+    </div>
+  )
+}
+
+interface LogoGroupProps {
+  projects: { name: string; slug: string }[]
+  borderRadius: number
+  size: number
+  onClick: (slug: string) => void
+}
+function LogoGroup({ projects, borderRadius, size, onClick }: LogoGroupProps) {
+  const printRef = useRef<HTMLDivElement>(null)
+
+  const handleDownloadImage = async () => {
+    const element = printRef.current
+    if (!element) return
+    const canvas = await html2canvas(element, { backgroundColor: null })
+
+    const data = canvas.toDataURL('image/png')
+    const link = document.createElement('a')
+
+    if (typeof link.download === 'string') {
+      link.href = data
+      link.download = 'image.png'
+
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    } else {
+      window.open(data)
+    }
+  }
+
+  return (
+    <div className="my-4">
+      <div className="rounded-lg border-2 border-brand p-3">
+        <div ref={printRef} className="w-fit pl-1 pt-1">
+          {projects.map((project) => (
             <Tooltip key={project.slug}>
-              <TooltipTrigger>
+              <TooltipTrigger asChild className="mb-1 mr-1 inline">
                 <Image
                   src={`/icons/${project.slug}.png`}
                   alt={project.name}
@@ -147,21 +188,21 @@ export function LogoGenerator({ projects }: Props) {
                   height={128}
                   className="cursor-pointer"
                   style={{ borderRadius, width: size, height: size }}
-                  onClick={() =>
-                    setSecondGroupValue((exclude) => {
-                      const slugs = exclude
-                        .split(',')
-                        .filter((s) => s.trim() !== project.slug)
-                      return slugs.join(',')
-                    })
-                  }
+                  onClick={() => onClick(project.slug)}
                 />
               </TooltipTrigger>
               <TooltipContent>{project.name}</TooltipContent>
             </Tooltip>
           ))}
         </div>
-      )}
+      </div>
+      <button
+        type="button"
+        onClick={handleDownloadImage}
+        className="mt-2 rounded-lg bg-brand px-4 py-1 text-white"
+      >
+        Download as Image
+      </button>
     </div>
   )
 }
