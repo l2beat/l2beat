@@ -43,7 +43,7 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
       The BlobstreamX bridge is composed of three main components: the **BlobstreamX** contract, the **Succinct Gateway** contract and the **Verifier** contracts.
       By default, BlobstreamX operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestDataHeader() method of the blobstreamX smart contract.
       Once a proving request is received, the off-chain prover generates the proof and submits it to the Succinct Gateway contract. The Succinct Gateway contract verifies the proof with the corresponding verifier contract and, if successful, calls the blobstreamX contract to store the data commitment.
-      Alternatively, it is possible to run an Blobstream X operator with local proving, allowing for self-generation of the proofs.
+      Alternatively, it is possible to run a Blobstream X operator with local proving, allowing for self-generation of the proofs.
 
       Verifying a header range includes verifying Tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root. This is achieved through a combined circuit. This combined circuit is made up of two parts:
       1) **TendermintX** circuit is used to verify tendermint consensus,

@@ -10,7 +10,7 @@ export const superposition: Layer3 = upcomingL3({
     name: 'Superposition',
     slug: 'superposition',
     description:
-      'Superposition is an upcoming Layer 3 powered by Arbitrum Orbit. It is the ultimate yield centric blockchain that pays users and developers to use it. Superposition offers novel incentive mechanisms such as Utility Mining and Super Assets and an native onchain order book built using Stylus that provides shared liquidity for the ecosystem.',
+      'Superposition is an upcoming Layer 3 powered by Arbitrum Orbit. It is the ultimate yield centric blockchain that pays users and developers to use it. Superposition offers novel incentive mechanisms such as Utility Mining and Super Assets and a native onchain order book built using Stylus that provides shared liquidity for the ecosystem.',
     purposes: ['Universal'],
     category: 'Optimium',
     provider: 'Arbitrum',
