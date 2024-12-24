@@ -2,7 +2,7 @@
   "name": "hyperliquid",
   "chain": "arbitrum",
   "blockNumber": 287788820,
-  "configHash": "0xc2ab629d49517eb4ae05a2794ec8be563f256e3d61f04a95ca0453c04b847e4a",
+  "configHash": "0x3f30830e73ba948da91f283af19b0dc038b29a354fd2a8ba3a07c606a2d374d3",
   "contracts": [
     {
       "name": "HyperliquidBridge",
@@ -10,6 +10,7 @@
       "sourceHashes": [
         "0x8c22d9d0e8dc4b87b77a97aca8a01a2050b5c416ff894e2b0c18daf22c76b122"
       ],
+      "description": "Single contract containing all the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions.",
       "sinceTimestamp": 1701389130,
       "values": {
         "$immutable": true,
