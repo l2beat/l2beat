@@ -1,7 +1,7 @@
 {
   "name": "playblock",
   "chain": "nova",
-  "blockNumber": 80805453,
+  "blockNumber": 81006902,
   "configHash": "0x8c4aa8fb727afa83b0355072a3a542c09afc4404817c8da056e901a0567e32e4",
   "contracts": [
     {
@@ -80,12 +80,12 @@
         "confirmPeriodBlocks": 150,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 6503,
+        "firstUnresolvedNode": 6643,
         "inbox": "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
         "lastStakeBlock": 19391320,
-        "latestConfirmed": 6502,
-        "latestNodeCreated": 6502,
+        "latestConfirmed": 6642,
+        "latestNodeCreated": 6642,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -153,7 +153,8 @@
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
-            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
       ]
@@ -485,8 +486,8 @@
         "nativeToken": "0x73C3cDd1418c3F17D54A81148387d93122802E72",
         "rollup": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 148530,
-        "sequencerReportedSubMessageCount": 80490100
+        "sequencerMessageCount": 149226,
+        "sequencerReportedSubMessageCount": 82496660
       },
       "derivedName": "ERC20Bridge"
     },

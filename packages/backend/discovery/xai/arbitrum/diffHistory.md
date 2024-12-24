@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x7c6b1a12ac3a53a7b00118bae34d6bb06ce78f3b
+
+# Diff at Tue, 24 Dec 2024 09:40:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8f52aa11293aef791f10e1b8317bef0d461a04f9 block: 286040164
+- current block number: 288071483
+
+## Description
+
+Config related: Add Celestia Nitro wmroot, ignore USDC CA.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 286040164 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (0x8aFf09e2259cacbF4Fc4e3E53F3bf799EfEEab36)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FiatTokenV2_2 (0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287:
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x2c65a62bde750190ecb05ab1a59de3bb6766b5ce
 
 # Diff at Wed, 18 Dec 2024 12:17:32 GMT:

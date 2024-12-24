@@ -65,7 +65,7 @@
         "ethToXai"
       ],
       "ignoreInWatchMode": ["totalSupply"],
-      "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
+      "ignoreRelatives": ["esXaiAddress", "xaiAddress", "usdcAddress"]
     }
   }
 }
