@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x2385c3b93d0830ca2e735582d300545290c48a42
+
+# Diff at Tue, 24 Dec 2024 09:41:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8f52aa11293aef791f10e1b8317bef0d461a04f9 block: 678494
+- current block number: 686782
+
+## Description
+
+KYC provider role granted to new account.
+
+## Watched changes
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.
+      values.accessControl.KYC_PROVIDER_ROLE.members.5:
++        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+    }
+```
+
 Generated with discovered.json: 0x7acb4802288d2af3c0fa1a8ad793cc2ffe58e589
 
 # Diff at Wed, 18 Dec 2024 12:37:21 GMT:
