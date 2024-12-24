@@ -19,13 +19,12 @@ export function SortingArrows({
 }: Props) {
   return (
     <div
-      className="group/sorting-arrows flex w-max cursor-pointer select-none items-end gap-1.5"
+      className="group/sorting-arrows flex w-max cursor-pointer select-none items-end gap-1"
       onClick={onClick}
     >
-      <div className="mb-px flex scale-90 flex-col items-end gap-0.5">
+      <div className="mb-0.5 flex flex-col items-end gap-px">
         <SortingArrowIcon
-          width={10}
-          height={6}
+          height={4.5}
           className={cn(
             'fill-gray-550 transition-all dark:fill-gray-650',
             direction === 'asc' && 'fill-black dark:fill-white',
@@ -34,8 +33,7 @@ export function SortingArrows({
           )}
         />
         <SortingArrowIcon
-          width={10}
-          height={6}
+          height={4.5}
           className={cn(
             'rotate-180 fill-gray-550 transition-all dark:fill-gray-650',
             direction === 'desc' && 'fill-black dark:fill-white',
