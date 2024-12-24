@@ -2273,7 +2273,7 @@ The L2 changes are listed in the blog post.
 
 ### ScrollChain
 
-Batch version > 1 is now suported. This allows for the new batch version 2 to be posted.
+Batch version > 1 is now supported. This allows for the new batch version 2 to be posted.
 
 ### MultipleVersionRollupVerifier (manages verifiers)
 
