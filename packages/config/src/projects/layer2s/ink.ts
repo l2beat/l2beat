@@ -133,6 +133,7 @@ export const ink: Layer2 = {
     Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.RaaS.Gelato
   ],
   display: {
     name: 'Ink',
