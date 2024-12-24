@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x31ba653ef31f5529d5c2af23836d2d26e8e35fc7
+
+# Diff at Tue, 24 Dec 2024 09:35:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8f52aa11293aef791f10e1b8317bef0d461a04f9 block: 21465473
+- current block number: 21471468
+
+## Description
+
+Single new signer `0x9Ec9E740c5423147FCE0c78E0f3cb12ee3Fa02F6` added to CreateRollupMultisig.
+
+## Watched changes
+
+```diff
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.6:
++        "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
+      values.$members.5:
+-        "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
++        "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+      values.$members.4:
+-        "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
++        "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
+      values.$members.3:
+-        "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
++        "0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
+      values.$members.2:
+-        "0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
++        "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
+      values.$members.1:
+-        "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
++        "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+      values.$members.0:
+-        "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
++        "0x9Ec9E740c5423147FCE0c78E0f3cb12ee3Fa02F6"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
+
 Generated with discovered.json: 0xa21d9ef5e1f99bf8b3a155ec283a1b15639d8c6e
 
 # Diff at Mon, 23 Dec 2024 13:26:43 GMT:
