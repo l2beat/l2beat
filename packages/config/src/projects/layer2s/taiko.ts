@@ -128,14 +128,14 @@ assert(
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
-const hasThreeTiers =
-  discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
-    .length === 3
+// const hasThreeTiers =
+//   discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
+//     .length === 3
 
-assert(
-  hasThreeTiers,
-  'Remove the header warning in case validity proofs are re-enabled.',
-)
+// assert(
+//   hasThreeTiers,
+//   'Remove the header warning in case validity proofs are re-enabled.',
+// )
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -153,9 +153,9 @@ export const taiko: Layer2 = {
     name: 'Taiko',
     slug: 'taiko',
     provider: 'Taiko',
-    headerWarning: hasThreeTiers
-      ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
-      : undefined,
+    // headerWarning: hasThreeTiers
+    //   ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
+    //   : undefined,
     description:
       'Taiko is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
@@ -360,11 +360,11 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-          href: 'https://etherscan.io/address/0x8f1C1D58C858e9a9eeCc587d7D51AECfd16b5542#code#F1#L26',
+          href: 'https://etherscan.io/address/0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66#code#F1#L26',
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17#code',
+          href: 'https://etherscan.io/address/0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66#code',
         },
       ],
       risks: [
@@ -390,7 +390,7 @@ export const taiko: Layer2 = {
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17#code',
+          href: 'https://etherscan.io/address/0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c#code',
         },
       ],
       risks: [],
