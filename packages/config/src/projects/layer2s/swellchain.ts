@@ -476,49 +476,29 @@ import {
         },
       },
       {
-        rollupNodeLink: 'https://github.com/base-org/node',
+        rollupNodeLink: 'https://github.com/alt-research/opstack-fullnode-sync/tree/v1.0.0',
       },
     ),
     milestones: [
       {
-        name: 'Fault proofs!',
-        link: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
-        date: '2024-10-30T00:00:00Z',
-        description: 'Base upgrades to OP stack fault proofs for state proving.',
+        name: 'Swellchain Mainnet Public Launch',
+        link: 'https://www.swellnetwork.io/post/build-on-swellchain',
+        date: '2024-12-19T00:00:00Z',
+        description: 'Swellchain launch publicly announceded',
         type: 'general',
       },
       {
-        name: 'Chain stall',
-        link: 'https://status.base.org/incidents/n3q0q4z24b7h',
-        date: '2023-09-05T00:00:00Z',
-        description:
-          'Due to an RPC issue, the sequencer stops producing blocks for ~30 minutes.',
-        type: 'incident',
-      },
-      {
-        name: 'Base starts using blobs',
-        link: 'https://twitter.com/Optimism/status/1768235284494450922',
-        date: '2024-03-14T00:00:00Z',
-        description: 'Base starts publishing data to blobs.',
-        type: 'general',
-      },
-      {
-        name: 'Base Mainnet Launch',
-        link: 'https://base.mirror.xyz/hwNwqXHVoLlO8s4DZppog4DfGvM34tigaDjOWuEJQfY',
-        date: '2023-07-13T00:00:00.00Z',
-        description: 'Base is live on mainnet.',
+        name: 'Swellchain Mainnet Stealth Launch',
+        link: 'https://www.swellnetwork.io/post/build-on-swellchain',
+        date: '2024-11-27T00:00:00.00Z',
+        description: 'Swellchain is live on mainnet.',
         type: 'general',
       },
     ],
     permissions: discovery.getDiscoveredPermissions(),
     contracts: {
       addresses: discovery.getDiscoveredContracts(),
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: `a contract receives a malicious code upgrade. Upgrades must be approved by both the BaseMultisig1 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
-        },
-      ],
+      risks: [],
     },
   }
   
