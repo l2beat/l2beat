@@ -261,7 +261,7 @@ export const starknet: Layer2 = {
         'https://starkware.co/ecosystem/',
         'https://community.starknet.io/',
       ],
-      documentation: ['https://starknet.io/learn/what-is-starknet'],
+      documentation: ['https://docs.starknet.io'],
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
