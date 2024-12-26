@@ -683,7 +683,7 @@ export const scroll: Layer2 = {
         description: 'Plonk verifier used to verify ZK proofs for bundles.',
       }),
       discovery.getContractDetails('L1ETHGateway', {
-        description: 'Contract used to bridge ETH from L1 to L2. NOTE L1ETHGateway was deprecated, current bridge ETH from L1 to L2 can directly use L1ScrollMessenger',
+        description: 'Deprecated: Contract used to bridge ETH from L1 to L2.',
         ...upgradesScrollMultisig,
       }),
       discovery.getContractDetails('L1WETHGateway', {
