@@ -197,6 +197,8 @@
         "CronosDiamond": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
         "CronosSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "getHyperchain": [],
+        "GrvtDiamond": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
+        "GrvtSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -446,7 +448,11 @@
         ],
         "executionDelay": 75600,
         "getName": "ValidatorTimelock",
-        "grvtThirdBatchTS": 1733327159,
+        "grvtValidatorsAdded": [
+          "0x58D14960E0a2be353eDdE61ad719196A2b816522",
+          "0x0b114d4675Cb79507e68F2616c93e124122c6ef0"
+        ],
+        "grvtValidatorsRemoved": [],
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
@@ -474,10 +480,6 @@
       },
       "fieldMeta": {
         "abstractThirdBatchTS": {
-          "severity": "MEDIUM",
-          "description": "If non-zero, the third batch has been posted (launch monitor)."
-        },
-        "grvtThirdBatchTS": {
           "severity": "MEDIUM",
           "description": "If non-zero, the third batch has been posted (launch monitor)."
         }
@@ -1109,6 +1111,7 @@
     { "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de" },
     { "address": "0x53A26f48ED901336D7C165B85E6F43d9F8dBeAA7" },
     { "address": "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222" },
+    { "address": "0x58D14960E0a2be353eDdE61ad719196A2b816522" },
     { "address": "0x5B87156f1e4Da117c5B49571aa80C836b007e479" },
     { "address": "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C" },
     { "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991" },
