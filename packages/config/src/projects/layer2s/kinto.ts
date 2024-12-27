@@ -28,11 +28,7 @@ export const kinto: Layer2 = orbitStackL2({
       websites: ['https://kinto.xyz'],
       apps: ['https://engen.kinto.xyz'],
       documentation: ['https://docs.kinto.xyz'],
-      explorers: [
-        'https://explorer.kinto.xyz/',
-        'https://kintoscan.io/',
-        'https://searchkinto.com/',
-      ],
+      explorers: ['https://explorer.kinto.xyz/', 'https://kintoscan.io/'],
       repositories: ['https://github.com/kintoxyz'],
       socialMedia: [
         'https://twitter.com/kintoxyz',
