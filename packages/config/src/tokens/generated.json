@@ -6461,6 +6461,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "KelpDao Restaked ETH",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "address": "0x6bE2425C381eb034045b527780D2Bf4E21AB7236",
+      "symbol": "rsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715792840,
+      "coingeckoListingTimestamp": 1705017600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "chainId": 324,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Staked Frax Ether",
       "coingeckoId": "staked-frax-ether",
       "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
