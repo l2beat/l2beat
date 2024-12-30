@@ -28,7 +28,7 @@ const getCachedProjectsLatestTvlUsd = cache(
     return Object.fromEntries(
       Object.entries(groupedByProject).map(([projectId, records]) => {
         const summedPerSource = sumValuesPerSource(records, {
-          forTotal: true,
+          forTotal: false,
           excludeAssociatedTokens: false,
         })
         const summed = sum(Object.values(summedPerSource))
@@ -36,7 +36,7 @@ const getCachedProjectsLatestTvlUsd = cache(
       }),
     )
   },
-  ['latestTvlUsd'],
+  ['latestTvlUsd-v2'],
   {
     tags: ['tvl'],
     revalidate: UnixTime.HOUR,
