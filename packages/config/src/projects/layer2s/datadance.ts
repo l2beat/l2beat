@@ -18,7 +18,10 @@ export const datadance: Layer2 = upcomingL2({
       documentation: ['https://datadance.gitbook.io'],
       explorers: [],
       repositories: ['https://github.com/DataDanceChain'],
-      socialMedia: ['https://x.com/DataDanceChain', 'https://datadance.medium.com'],
+      socialMedia: [
+        'https://x.com/DataDanceChain',
+        'https://datadance.medium.com',
+      ],
     },
   },
 })
