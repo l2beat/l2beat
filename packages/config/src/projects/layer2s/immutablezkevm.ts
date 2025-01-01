@@ -71,7 +71,7 @@ export const immutablezkevm: Layer2 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.EXTERNAL],
+      layers: [DA_LAYERS.NONE],
       bridge: DA_BRIDGES.NONE,
       mode: DA_MODES.TRANSACTION_DATA,
     }),

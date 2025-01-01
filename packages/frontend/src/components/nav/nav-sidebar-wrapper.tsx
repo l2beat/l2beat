@@ -46,7 +46,7 @@ export const NavSideBarWrapper = ({
       <div
         ref={ref}
         className={cn(
-          'custom-scrollbar absolute z-999 flex shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out lg:static lg:mr-3 lg:transform-none',
+          'custom-scrollbar absolute flex shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out max-lg:z-999 lg:static lg:mr-3 lg:transform-none',
           sharedSizeClasses,
           open && 'translate-x-0 sm:translate-x-[calc(100%-300px)]',
           resizing && 'transition-none',

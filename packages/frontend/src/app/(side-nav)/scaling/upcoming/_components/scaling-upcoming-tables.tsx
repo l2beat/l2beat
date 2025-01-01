@@ -7,6 +7,11 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
@@ -60,11 +65,13 @@ export function ScalingUpcomingTables({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            <RollupsInfo />
             <ScalingUpcomingTable entries={filteredEntries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiums-and-optimiums">
+            <ValidiumsAndOptimiumsInfo />
             <ScalingUpcomingTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -73,6 +80,7 @@ export function ScalingUpcomingTables({
         {featureFlags.showOthers && filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
+              <OthersInfo />
               <ScalingUpcomingTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

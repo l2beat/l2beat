@@ -71,7 +71,7 @@ export function LinkWithThumbnail({
             </p>
           </div>
         )}
-        <p className="flex flex-wrap items-center gap-1 text-sm font-medium text-blue-700 underline transition-colors group-hover:text-blue-550 dark:text-blue-500 md:mt-3">
+        <p className="flex flex-wrap items-center gap-1 text-sm font-medium text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>

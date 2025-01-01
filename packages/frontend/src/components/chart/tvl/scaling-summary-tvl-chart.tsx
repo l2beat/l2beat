@@ -6,16 +6,33 @@ import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
+import { featureFlags } from '~/consts/feature-flags'
 import { ChevronIcon } from '~/icons/chevron'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { ChartLegend } from '../core/chart-legend'
 import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
+import { RecategorizedTvlChartHover } from './recategorized-tvl-chart-hover'
 import { TvlChartHover } from './tvl-chart-hover'
+import { useRecategorizedTvlChartRenderParams } from './use-recategorized-tvl-chart-render-params'
 import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
 export function ScalingSummaryTvlChart({
+  unit,
+  timeRange,
+}: { unit: ChartUnit; timeRange: TvlChartRange }) {
+  const { showOthers } = featureFlags
+
+  if (showOthers) {
+    return <RecategorizedTvlChart unit={unit} timeRange={timeRange} />
+  } else {
+    return <TvlChart unit={unit} timeRange={timeRange} />
+  }
+}
+
+function TvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
@@ -26,7 +43,7 @@ export function ScalingSummaryTvlChart({
   })
 
   const { formatYAxisLabel, valuesStyle, columns, change, total } =
-    useTvlChartRenderParams({ data, unit: unit, milestones: [] })
+    useTvlChartRenderParams({ data, unit, milestones: [] })
 
   return (
     <ChartProvider
@@ -50,6 +67,57 @@ export function ScalingSummaryTvlChart({
   )
 }
 
+function RecategorizedTvlChart({
+  unit,
+  timeRange,
+}: { unit: ChartUnit; timeRange: TvlChartRange }) {
+  const { data, isLoading } = api.tvl.recategorizedChart.useQuery({
+    range: timeRange,
+    excludeAssociatedTokens: false,
+    filter: { type: 'layer2' },
+  })
+
+  const { formatYAxisLabel, valuesStyle, columns, change, total } =
+    useRecategorizedTvlChartRenderParams({ data, unit, milestones: [] })
+
+  return (
+    <ChartProvider
+      columns={columns}
+      valuesStyle={valuesStyle}
+      formatYAxisLabel={formatYAxisLabel}
+      range={timeRange}
+      isLoading={isLoading}
+      renderHoverContents={(data) => <RecategorizedTvlChartHover {...data} />}
+    >
+      <section className="flex flex-col gap-4">
+        <Header
+          total={total}
+          change={change}
+          unit={unit}
+          timeRange={timeRange}
+        />
+        <Chart disableMilestones />
+        <ChartLegend
+          elements={[
+            {
+              name: 'Rollups',
+              color: 'bg-indicator-rollups',
+            },
+            {
+              name: 'Validiums & Optimiums',
+              color: 'bg-indicator-validiums-optimiums',
+            },
+            {
+              name: 'Others',
+              color: 'bg-indicator-others',
+            },
+          ]}
+        />
+      </section>
+    </ChartProvider>
+  )
+}
+
 interface Props {
   total: Record<ChartUnit, number | undefined> | undefined
   change: number
@@ -66,7 +134,7 @@ function Header({ total, unit, change, timeRange }: Props) {
         <div className="flex items-center gap-3">
           <span className="text-xl font-bold">Value Locked</span>
           <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
             href="/scaling/tvl"
           >
             View details

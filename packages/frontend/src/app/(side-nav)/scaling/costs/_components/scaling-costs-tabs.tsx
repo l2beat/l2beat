@@ -9,6 +9,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
@@ -69,6 +70,7 @@ export function ScalingCostsTabs(props: Props) {
                 <HorizontalSeparator className="my-5" />
               </>
             )}
+            <RollupsInfo />
             <ScalingCostsTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -87,6 +89,7 @@ export function ScalingCostsTabs(props: Props) {
                   <HorizontalSeparator className="my-5" />
                 </>
               )}
+              <OthersInfo />
               <ScalingCostsTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

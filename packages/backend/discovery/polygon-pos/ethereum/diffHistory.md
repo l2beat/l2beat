@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xb780f4561e6787c08188190b593a93593485ca09
+
+# Diff at Mon, 23 Dec 2024 13:21:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21141675
+- current block number: 21465440
+
+## Description
+
+Slashing Manager reference removed (the contract was unverified and unused).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SlashingManager (0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A)
+    +++ description: None
+```
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      values.getSlashingManagerAddress:
+-        "0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
 Generated with discovered.json: 0xc20a91b80a6975330aea8d251983186767413fa3
 
 # Diff at Tue, 05 Nov 2024 14:19:22 GMT:

@@ -218,11 +218,6 @@ export const polygonpos: Layer2 = {
         'StakingInfo',
         'Contains logging and getter functions about staking on Polygon.',
       ),
-      discovery.getContractDetails('SlashingManager', {
-        description:
-          'A contract privileged to slash validators in StakeManager via slash() method.',
-        ...upgrades,
-      }),
       discovery.getContractDetails('Registry', {
         description:
           'Maintains the addresses of the contracts used in the system.',

@@ -6,6 +6,7 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
+import { featureFlags } from '~/consts/feature-flags'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import {
   type CostsTimeRange,
@@ -17,6 +18,7 @@ import { useChartLoading } from '../core/chart-loading-context'
 import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 import { CostsChartHover } from './costs-chart-hover'
+import { CostsChartLegend } from './costs-chart-legend'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
@@ -40,7 +42,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     })
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -85,7 +87,8 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
             ]}
           />
         </ChartControlsWrapper>
-        <Chart />
+        <Chart className="mt-4" />
+        {featureFlags.showOthers && <CostsChartLegend className="my-2" />}
         <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>
     </div>

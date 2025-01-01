@@ -6,6 +6,11 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
@@ -58,6 +63,7 @@ export function ScalingDaTables(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            <RollupsInfo />
             <ScalingDataAvailabilityTable
               entries={filteredEntries.rollups}
               rollups
@@ -66,6 +72,7 @@ export function ScalingDaTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiums-and-optimiums">
+            <ValidiumsAndOptimiumsInfo />
             <ScalingDataAvailabilityTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -74,6 +81,7 @@ export function ScalingDaTables(props: Props) {
         {featureFlags.showOthers && filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
+              <OthersInfo />
               <ScalingDataAvailabilityTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

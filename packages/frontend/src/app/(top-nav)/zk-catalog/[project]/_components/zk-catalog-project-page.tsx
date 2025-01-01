@@ -9,8 +9,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { CustomLink } from '~/components/link/custom-link'
 import { Markdown } from '~/components/markdown/markdown'
-import { OutLink } from '~/components/out-link'
 import { InfoIcon } from '~/icons/info'
 import { type ZkCatalogProofVerification } from '../../_utils/types'
 import { ProjectHeader } from './project-header'
@@ -88,12 +88,12 @@ function Header(props: ZkCatalogProjectPageProps) {
       <div>
         <ProjectHeader {...props.details} />
         {props.details.linkToMainProjectDetails ? (
-          <OutLink
+          <CustomLink
             className="mt-1 md:mt-0"
             href={props.details.linkToMainProjectDetails}
           >
             View project&apos;s detail page
-          </OutLink>
+          </CustomLink>
         ) : undefined}
       </div>
       <HorizontalSeparator className="mb-5 mt-6 md:hidden" />

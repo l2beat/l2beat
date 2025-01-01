@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x384419632caf39432c39bdffcdd60bf8377b7b8d
+
+# Diff at Mon, 23 Dec 2024 13:24:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21264288
+- current block number: 21465455
+
+## Description
+
+2 provers, 2 sequencers added and one whitelisted address added (can relay l2 basefee on l1).
+
+## Watched changes
+
+```diff
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
+    +++ description: None
+      values.whitelisted.1:
++        "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.provers.3:
++        "0x74b286304576625557629C47E9E8702383D9eF92"
+      values.provers.2:
++        "0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c"
+      values.sequencers.3:
++        "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
+      values.sequencers.2:
++        "0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B"
+    }
+```
+
 Generated with discovered.json: 0x8805237f1312263093e4828c630a57292dd03616
 
 # Diff at Mon, 25 Nov 2024 10:51:12 GMT:

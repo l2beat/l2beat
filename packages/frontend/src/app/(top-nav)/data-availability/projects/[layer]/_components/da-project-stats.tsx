@@ -7,6 +7,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
+import { type RosetteValue } from '~/components/rosette/types'
 import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
 import {
@@ -18,9 +20,10 @@ import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface Props {
   stats: ProjectStat[]
+  daLayerGrissiniValues: RosetteValue[] | undefined
 }
 
-export function DaProjectStats({ stats }: Props) {
+export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
   const GROUPS = 3
   const partitionedByThree = chunkArray(stats, GROUPS)
 
@@ -40,6 +43,18 @@ export function DaProjectStats({ stats }: Props) {
           </Fragment>
         )
       })}
+      {daLayerGrissiniValues && (
+        <ProjectStat
+          className="md:gap-1.5 lg:hidden"
+          title="Risks"
+          value={
+            <GrissiniCell
+              values={daLayerGrissiniValues}
+              iconClassName="w-max"
+            />
+          }
+        />
+      )}
     </div>
   )
 }

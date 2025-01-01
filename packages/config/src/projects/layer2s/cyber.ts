@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -63,6 +64,7 @@ export const cyber: Layer2 = opStackL2({
     daChallengeWindow,
     daResolveWindow,
     'https://github.com/ethereum-optimism/optimism/releases/tag/v1.9.4',
+    DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
   chainConfig: {
     name: 'cyber',

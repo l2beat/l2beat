@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 23434494,
-  "configHash": "0xa9c9a185f6beed5653eca6d4eedbdebf15dba2943c71ac1b76b8bc9b904ff06e",
+  "configHash": "0x1453a541b747a69f4a56448c7cd60c171ae55f647f985ffeebf04d4888e83719",
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -74,6 +74,17 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710507013,
       "values": {
@@ -100,8 +111,17 @@
     {
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+      "template": "succinct/SuccinctGateway",
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
+      ],
+      "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1706574051,
       "values": {
@@ -147,10 +167,38 @@
         "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1710651207,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
+        "$admin": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"],
         "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
         "$pastUpgrades": [
           [
@@ -196,11 +244,18 @@
         "frozen": false,
         "gateway_deprecated": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
+        "guardians": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"],
         "headerRangeFunctionId_deprecated": "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca",
-        "isRelayerApproved": true,
+        "isRelayer1Approved": true,
+        "isRelayer2Approved": true,
+        "isRelayer3Approved": true,
         "latestBlock": 2963400,
         "nextHeaderFunctionId_depcrecated": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25",
-        "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
+        "relayers": [
+          "0x44eb418a966ff47f5af6f48aea6afde0bf193a8d",
+          "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
+          "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+        ],
         "state_proofNonce": 6096,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
@@ -273,6 +328,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706568681,
       "values": {
@@ -295,7 +357,7 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "name": "FunctionVerifier",
+      "name": "NextHeaderVerifier",
       "address": "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
@@ -305,10 +367,11 @@
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
         "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
-      }
+      },
+      "derivedName": "FunctionVerifier"
     },
     {
-      "name": "FunctionVerifier",
+      "name": "HeaderRangeVerifier",
       "address": "0xF2415C44F47983F7dD22003B46A034B1F1d04e44",
       "sourceHashes": [
         "0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"
@@ -318,30 +381,51 @@
         "$immutable": true,
         "CIRCUIT_DIGEST": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f",
         "verificationKeyHash": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f"
-      }
+      },
+      "derivedName": "FunctionVerifier"
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
-        }
-      ]
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9" },
     { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
     { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
-    { "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D" },
-    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
+    {
+      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    {
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
     { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
     { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899" },
     { "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15" },
     { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
+    {
+      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
     { "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65" },
     { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" }
   ],
@@ -694,7 +778,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
+    "succinct/SP1Blobstream": "0x9f6f569f3a2573cfe923841563663b9d0ff70b3d2108d54a2625d598ca1006b9",
+    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
+    "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
   }
 }

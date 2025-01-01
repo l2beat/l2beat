@@ -1,6 +1,7 @@
+import { CustomLink } from '~/components/link/custom-link'
+import { externalLinks } from '~/consts/external-links'
 import { InfoIcon } from '~/icons/info'
 import { Callout } from '../../callout'
-import { CustomLink } from '../../link/custom-link'
 
 export function UpcomingDisclaimer() {
   return (
@@ -16,8 +17,7 @@ export function UpcomingDisclaimer() {
           </p>
 
           <p className="leading-snug">
-            Follow us on{' '}
-            <CustomLink href="https://twitter.com/l2beat">Twitter</CustomLink>{' '}
+            Follow us on <CustomLink href={externalLinks.x}>Twitter</CustomLink>{' '}
             to stay updated on the latest news regarding this and other
             projects.
           </p>

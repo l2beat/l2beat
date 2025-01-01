@@ -7,6 +7,11 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
@@ -60,11 +65,13 @@ export function ScalingArchivedTables({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            <RollupsInfo />
             <ScalingArchivedTable entries={filteredEntries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiums-and-optimiums">
+            <ValidiumsAndOptimiumsInfo />
             <ScalingArchivedTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -73,6 +80,7 @@ export function ScalingArchivedTables({
         {featureFlags.showOthers && filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
+              <OthersInfo />
               <ScalingArchivedTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

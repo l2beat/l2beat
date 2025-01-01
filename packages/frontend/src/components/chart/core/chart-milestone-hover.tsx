@@ -1,7 +1,7 @@
 import { type Milestone } from '@l2beat/config'
+import { CustomLink } from '~/components/link/custom-link'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { formatDate } from '~/utils/dates'
-import { CustomLink } from '../../link/custom-link'
 
 interface Props {
   milestone: Milestone

@@ -15,7 +15,7 @@ export function PercentChange({ value, className, textClassName }: Props) {
   return (
     <span
       className={cn(
-        isMore && 'text-green-300 dark:text-green-450',
+        isMore && 'text-positive',
         isLess && 'text-red-300',
         'relative',
         className,

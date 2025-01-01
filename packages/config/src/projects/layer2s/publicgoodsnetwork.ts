@@ -51,10 +51,18 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
-      name: 'PGN pauses the bridge',
+      name: 'PGN unpauses the bridge',
+      link: 'https://app.blocksec.com/explorer/tx/eth/0x49a8691bef3d6a1434deaa801240af5aeeb4e95034a31564947b23ca6587d276',
+      date: '2024-12-17T00:00:00.00Z',
+      description:
+        'PGN unpauses the bridge after claiming contracts are updated.',
+      type: 'general',
+    },
+    {
+      name: 'PGN starts sunset process',
       link: 'https://app.blocksec.com/explorer/tx/eth/0xaf8648b0e0a28902f7cfcc544d520a45d8df8217bba016c4a2f01aaf2bf39556',
       date: '2024-12-10T00:00:00.00Z',
-      description: 'PGN starts sunset process.',
+      description: 'PGN starts its shutdown by pausing the bridge.',
       type: 'incident',
     },
     {

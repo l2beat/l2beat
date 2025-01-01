@@ -212,12 +212,24 @@
     {
       "name": "SystemConfig",
       "address": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+      "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
         "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "target": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -229,7 +241,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1685377403,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -332,7 +344,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "1h 23m",
+        "timeSinceLastL2beatInteraction": "14d 21h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -906,6 +918,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
       "values": {
@@ -1512,7 +1531,15 @@
     { "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa" },
     { "address": "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e" },
     { "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865" },
-    { "address": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985" },
+    {
+      "address": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "target": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+        }
+      ]
+    },
     { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
@@ -2489,6 +2516,7 @@
     "opstack/OptimismPortal2": "0xdb11d2f7a8ea7a7cf25298feb8edc6f567ae5eca0d6f3acde5323cd958b9a50f",
     "opstack/PermissionedDisputeGame": "0xa1884f80a601b59449ceecf3d0038d91830a8a382dd8da199c2081e4cb5596b5",
     "opstack/PreimageOracle": "0x523c74a9550e7030e60a4508d1775811a97958c35b5093d36b8cba6981360a35",
-    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef"
+    "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
+    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
   }
 }
