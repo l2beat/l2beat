@@ -57,32 +57,36 @@ function NavLinkMultipleGroup({
   group,
 }: { group: Extract<NavGroup, { type: 'multiple' }> }) {
   const pathname = usePathname()
-  const [open, setOpen] = useState(pathname.startsWith(`/${group.match}`))
+  const isActive = pathname.startsWith(`/${group.match}`)
+  const [open, setOpen] = useState(isActive)
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
-      <div className="flex items-center gap-1.5 p-1.5">
+      <div
+        className="group flex cursor-pointer items-center gap-1.5 p-1.5"
+        data-active={isActive}
+      >
         <Link
           href={group.links[0]!.href}
-          className="group flex items-center gap-2"
+          className="flex items-center gap-2"
           onClick={() => setOpen(true)}
-          data-active={open}
+          data-active={isActive}
         >
           <div>{group.icon}</div>
           <span
             className={cn(
               'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
-              open && 'text-brand',
+              isActive && 'text-brand',
             )}
           >
             {group.title}
           </span>
         </Link>
-        <CollapsibleTrigger className="group">
+        <CollapsibleTrigger asChild>
           <ChevronIcon
             className={cn(
-              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
-              open && 'fill-brand',
+              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 data-[state=open]:rotate-0',
+              isActive && 'fill-brand',
             )}
           />
         </CollapsibleTrigger>
