@@ -74,10 +74,8 @@ model BlockTimestamp {
 }
 
 model DiscoveryCache {
-  key         String @id
-  value       String
-  blockNumber Int
-  chain       String @db.VarChar(255)
+  key   String @id
+  value String
 }
 
 model Finality {
