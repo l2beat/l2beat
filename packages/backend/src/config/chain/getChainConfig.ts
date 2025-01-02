@@ -29,7 +29,7 @@ export function getChainConfig(env: Env): ChainApi[] {
         indexerApis.push({
           type,
           url,
-          apiKey: env.string(`${chain.toUpperCase()}_ETHERSCAN_API_KEY`),
+          apiKey: env.string(Env.key(chain, 'ETHERSCAN_API_KEY')),
         })
       } else {
         indexerApis.push({
@@ -43,7 +43,7 @@ export function getChainConfig(env: Env): ChainApi[] {
     const rpcUrls = getRpcUrlsFromEnv(env, chain)
     for (const url of rpcUrls) {
       const callsPerMinute = env.integer(
-        `${chain.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+        Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
         60,
       )
       blockApis.push({
@@ -82,9 +82,9 @@ export function getChainConfig(env: Env): ChainApi[] {
 
 function getRpcUrlsFromEnv(env: Env, chain: string) {
   return [
-    env.optionalString(`${chain.toUpperCase()}_RPC_URL`),
-    env.optionalString(`${chain.toUpperCase()}_RPC_URL_FOR_TVL`),
-    env.optionalString(`${chain.toUpperCase()}_RPC_URL_FOR_ACTIVITY`),
+    env.optionalString(Env.key(chain, 'RPC_URL')),
+    env.optionalString(Env.key(chain, 'RPC_URL_FOR_TVL')),
+    env.optionalString(Env.key(chain, 'RPC_URL_FOR_ACTIVITY')),
   ].filter(notUndefined)
 }
 
