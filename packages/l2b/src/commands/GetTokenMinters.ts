@@ -1,8 +1,8 @@
 import { CliLogger } from '@l2beat/shared'
 import { command, positional } from 'cmd-ts'
+import { getTokenMinterEvents } from '../implementations/tokenMinters'
 import { explorerApiKey, explorerType, explorerUrl, rpcUrl } from './args'
 import { EthereumAddressValue } from './types'
-import { getTokenMinterEvents } from '../implementations/tokenMinters'
 
 export const GetTokenMinters = command({
   name: 'get-token-minters',
