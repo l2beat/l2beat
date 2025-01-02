@@ -24,6 +24,10 @@ export class Env {
     return value !== undefined ? { value, key } : value
   }
 
+  static key(...inputs: string[]): string {
+    return inputs.join('_').replace(/-/g, '').toUpperCase()
+  }
+
   string(key: string | string[], fallback?: string): string {
     const value = this.optionalString(key)
     if (value !== undefined) {
