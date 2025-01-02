@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import {
@@ -58,7 +58,12 @@ function NavLinkMultipleGroup({
 }: { group: Extract<NavGroup, { type: 'multiple' }> }) {
   const pathname = usePathname()
   const isActive = pathname.startsWith(`/${group.match}`)
+
   const [open, setOpen] = useState(isActive)
+
+  useEffect(() => {
+    setOpen(pathname.startsWith(`/${group.match}`))
+  }, [group.match, pathname])
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
@@ -69,7 +74,6 @@ function NavLinkMultipleGroup({
         <Link
           href={group.links[0]!.href}
           className="flex items-center gap-2"
-          onClick={() => setOpen(true)}
           data-active={isActive}
         >
           <div>{group.icon}</div>
