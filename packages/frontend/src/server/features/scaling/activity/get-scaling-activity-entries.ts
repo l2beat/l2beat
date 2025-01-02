@@ -19,6 +19,7 @@ import {
   type ActivityProjectTableData,
   getActivityTable,
 } from './get-activity-table-data'
+import { compareActivityEntry } from './utils/compare-activity-entry'
 import { getActivityProjects } from './utils/get-activity-projects'
 
 export async function getScalingActivityEntries() {
@@ -92,22 +93,4 @@ function getEthereumEntry(
     data,
     statuses: undefined,
   }
-}
-
-function compareActivityEntry(
-  a: ScalingActivityEntry,
-  b: ScalingActivityEntry,
-) {
-  if (featureFlags.stageSorting) {
-    const stageDiff = b.stageOrder - a.stageOrder
-    if (stageDiff !== 0) {
-      return stageDiff
-    }
-  }
-  const diff =
-    (b.data?.uops.pastDayCount ?? 0) - (a.data?.uops.pastDayCount ?? 0)
-  if (diff !== 0) {
-    return diff
-  }
-  return a.name.localeCompare(b.name)
 }
