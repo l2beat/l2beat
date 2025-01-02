@@ -17,19 +17,22 @@ export const metadata = getDefaultMetadata({
   },
 })
 
-const TIME_RANGE = '30d'
+const TIME_RANGE = '1y'
 const UNIT = 'usd'
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: { searchParams: Promise<{ range: '1y' | '180d' }> }) {
   const entries = await getScalingSummaryEntries()
+  const timeRange = (await searchParams).range ?? TIME_RANGE
 
   const tvlChartParams = {
-    range: TIME_RANGE,
+    range: timeRange,
     excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
   } as const
   const activityChartParams = {
-    range: TIME_RANGE,
+    range: timeRange,
     filter: { type: 'all' },
   } as const
 
@@ -50,13 +53,13 @@ export default async function Page() {
       <MainPageHeader>Summary</MainPageHeader>
       <div className="grid grid-cols-2 gap-4 max-lg:hidden">
         <MainPageCard>
-          <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
+          <ScalingSummaryTvlChart unit={UNIT} timeRange={timeRange} />
         </MainPageCard>
         <MainPageCard>
-          <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
+          <ScalingSummaryActivityChart timeRange={timeRange} />
         </MainPageCard>
       </div>
-      <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
+      <ChartTabs className="lg:hidden" unit={UNIT} timeRange={timeRange} />
       <ScalingAssociatedTokensContextProvider>
         <ScalingFilterContextProvider>
           <ScalingSummaryTables {...entries} />
