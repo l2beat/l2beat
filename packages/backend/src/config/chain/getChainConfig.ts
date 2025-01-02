@@ -18,8 +18,11 @@ export function getChainConfig(env: Env): ChainApi[] {
     }
     const project = projects.find((p) => p.id === chain)
     assert(project, `${chain}: Project not found`)
+    // TODO: we need to find a better way to link project to it's chain
+    const chainConfig = chains.find((c) => c.name === chain.replace(/-/g, ''))
 
-    const indexerConfig = project.chainConfig?.explorerApi
+    const indexerConfig =
+      project.chainConfig?.explorerApi || chainConfig?.explorerApi
     const indexerApis: IndexerApi[] = []
     if (indexerConfig) {
       const type = indexerConfig.type
