@@ -7,10 +7,10 @@ import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { decodeBlob } from './decodeBlob'
 
-const blobFnName = 'submitBlobs'
+export const blobFnName = 'submitBlobs'
 const blobFn =
   'function submitBlobs(tuple(uint256 dataEvaluationClaim, bytes kzgCommitment, bytes kzgProof, bytes32 finalStateRootHash, bytes32 snarkHash)[] _blobSubmissions, bytes32 _parentShnarf, bytes32 _finalBlobShnarf)'
-const iface = new utils.Interface([blobFn])
+export const lineaIface = new utils.Interface([blobFn])
 
 export class LineaT2IAnalyzer extends BaseAnalyzer {
   constructor(
@@ -34,7 +34,7 @@ export class LineaT2IAnalyzer extends BaseAnalyzer {
 
     switch (tx.data.slice(0, 10)) {
       // for now we only support blobs as the function that is using calldata was never called so we can't test it
-      case iface.getSighash(blobFnName): {
+      case lineaIface.getSighash(blobFnName): {
         const blobs = await this.blobProvider.getRelevantBlobs(
           transaction.txHash,
         )
