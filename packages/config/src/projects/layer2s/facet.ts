@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure/build/types/UnixTime'
-import { OPERATOR, RISK_VIEW } from '../../common'
+import { EXITS, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -43,7 +43,38 @@ export const facet: Layer2 = opStackL2({
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  nonTemplateTechnology: { operator: OPERATOR.DECENTRALIZED_OPERATOR },
+  nonTemplateTechnology: {
+    operator: OPERATOR.DECENTRALIZED_OPERATOR,
+    exitMechanisms: [
+      {
+        name: 'Withdrawals are initiated on L1',
+        description:
+          'Users can initiate a withdrawal from the L1StandardBridge escrow by sending a transaction to the L1 contract, forcing the operator to either process it, halt all withdrawals or produce an invalid state transition. Deposits from the L1StandardBridge are disabled, and the use of the fast bridge is encouraged. There is no way to force the fast bridge operator (EOA) to process a withdrawal.',
+        references: [
+          {
+            text: 'PausedL1StandardBridge.sol - Etherscan source code, disabled _initiateBridgeERC20 function',
+            href: 'https://etherscan.io/address//0x8F75466D69a52EF53C7363F38834bEfC027A2909#code',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the fast bridge EOA operator signs an invalid withdrawal.',
+            isCritical: true,
+          },
+          {
+            category: 'Funds can be frozen if',
+            text: 'the operator halts withdrawals.',
+            isCritical: true,
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the operator confirms an invalid state root.',
+          },
+        ],
+      },
+    ],
+  },
   architectureImage: 'facet',
   rpcUrl: 'https://mainnet.facet.org/',
   genesisTimestamp: new UnixTime(1733855495),
