@@ -5,17 +5,17 @@ import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { BlockActivityIndexer } from './BlockActivityIndexer'
+import { BlockIndexerBase } from './BlockIndexerBase'
 import { ActivityIndexerDeps, TxsCountService } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
-describe(BlockActivityIndexer.name, () => {
+describe(BlockIndexerBase.name, () => {
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 
-  describe(BlockActivityIndexer.prototype.update.name, () => {
+  describe(BlockIndexerBase.prototype.doUpdate.name, () => {
     it('make update based on batchSize', async () => {
       const txsCountService = mockObject<TxsCountService>({
         getTxsCount: mockFn().resolvesTo([]),
@@ -26,7 +26,7 @@ describe(BlockActivityIndexer.name, () => {
         batchSize: 50,
       })
 
-      const newSafeHeight = await indexer.update(0, 100)
+      const newSafeHeight = await indexer.doUpdate(0, 100)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
       expect(newSafeHeight).toEqual(50)
@@ -55,7 +55,7 @@ describe(BlockActivityIndexer.name, () => {
         batchSize: 100,
       })
 
-      const newSafeHeight = await indexer.update(0, 10)
+      const newSafeHeight = await indexer.doUpdate(0, 10)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith([
@@ -86,7 +86,7 @@ describe(BlockActivityIndexer.name, () => {
         batchSize: 100,
       })
 
-      const newSafeHeight = await indexer.update(0, 10)
+      const newSafeHeight = await indexer.doUpdate(0, 10)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 10)
       expect(activityRepository.upsertMany).toHaveBeenCalledWith([
@@ -103,7 +103,7 @@ describe(BlockActivityIndexer.name, () => {
     })
   })
 
-  describe(BlockActivityIndexer.prototype.getDatabaseEntries.name, () => {
+  describe(BlockIndexerBase.prototype.getDatabaseEntries.name, () => {
     it('return an empty map if there are no records', async () => {
       const indexer = createIndexer()
 
@@ -153,7 +153,7 @@ describe(BlockActivityIndexer.name, () => {
     })
   })
 
-  describe(BlockActivityIndexer.prototype.invalidate.name, () => {
+  describe(BlockIndexerBase.prototype.doInvalidate.name, () => {
     it('returns targetHeight if no rows found', async () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectIncludingDataPoint: mockFn().resolvesTo([]),
@@ -164,7 +164,7 @@ describe(BlockActivityIndexer.name, () => {
       })
 
       const targetHeight = 10
-      const newSafeHeight = await indexer.invalidate(targetHeight)
+      const newSafeHeight = await indexer.doInvalidate(targetHeight)
 
       expect(newSafeHeight).toEqual(targetHeight)
     })
@@ -187,7 +187,7 @@ describe(BlockActivityIndexer.name, () => {
 
       const targetHeight = 15
       expect(
-        async () => await indexer.invalidate(targetHeight),
+        async () => await indexer.doInvalidate(targetHeight),
       ).toBeRejectedWith(
         `There should be exactly one record that includes data point (projectId: ${mockProjectId}, dataPoint: ${targetHeight})`,
       )
@@ -210,7 +210,7 @@ describe(BlockActivityIndexer.name, () => {
       })
 
       const targetHeight = 15
-      const result = await indexer.invalidate(targetHeight)
+      const result = await indexer.doInvalidate(targetHeight)
 
       expect(
         activityRepository.getByProjectIncludingDataPoint,
@@ -247,10 +247,22 @@ function activityRecord(
   }
 }
 
-function createIndexer(
-  deps?: Partial<ActivityIndexerDeps>,
-): BlockActivityIndexer {
-  return new BlockActivityIndexer({
+class TestIndexer extends BlockIndexerBase {
+  constructor($: ActivityIndexerDeps) {
+    super($, `activity_block_indexer`)
+  }
+
+  async update(from: number, to: number): Promise<number> {
+    return await Promise.resolve(Math.max(from, to))
+  }
+
+  async invalidate(targetHeight: number): Promise<number> {
+    return await Promise.resolve(targetHeight)
+  }
+}
+
+function createIndexer(deps?: Partial<ActivityIndexerDeps>): TestIndexer {
+  return new TestIndexer({
     logger: Logger.SILENT,
     parents: [],
     txsCountService: mockObject<TxsCountService>({

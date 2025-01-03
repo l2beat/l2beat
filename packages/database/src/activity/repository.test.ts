@@ -315,6 +315,24 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.getProjectBlockNumberBeforeCutOffPoint
+    .name, () => {
+    it('should return correct response', async () => {
+      await repository.upsertMany([
+        record('a', START, 1, 1, 1, 10),
+        record('a', START.add(1, 'days'), 1, 1, 11, 20),
+        record('a', START.add(2, 'days'), 1, 1, 101, 110),
+      ])
+
+      const result = await repository.getProjectBlockNumberBeforeCutOffPoint(
+        ProjectId('a'),
+        101,
+      )
+
+      expect(result).toEqual(20)
+    })
+  })
+
   afterEach(async function () {
     await repository.deleteAll()
   })

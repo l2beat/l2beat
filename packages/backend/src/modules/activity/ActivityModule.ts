@@ -10,6 +10,7 @@ import { ApplicationModule } from '../ApplicationModule'
 import { ActivityDependencies } from './ActivityDependencies'
 import { ActivityTransactionConfig } from './ActivityTransactionConfig'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
+import { BlockBackfillIndexer } from './indexers/BlockBackfillIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
@@ -76,15 +77,19 @@ function createActivityIndexers(
       case 'loopring':
       case 'degate3':
       case 'fuel': {
-        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexer(
-          clock,
-          project,
-          dependencies,
-          indexerService,
-          logger,
-        )
+        const [blockTargetIndexer, activityIndexer, backfillIndexer] =
+          createBlockBasedIndexers(
+            clock,
+            project,
+            dependencies,
+            indexerService,
+            logger,
+          )
 
         indexers.push(blockTargetIndexer, activityIndexer)
+        if (backfillIndexer) {
+          indexers.push(backfillIndexer)
+        }
         break
       }
 
@@ -105,13 +110,17 @@ function createActivityIndexers(
   return indexers
 }
 
-function createBlockBasedIndexer(
+function createBlockBasedIndexers(
   clock: Clock,
   project: { id: ProjectId; config: ActivityTransactionConfig },
   dependencies: ActivityDependencies,
   indexerService: IndexerService,
   logger: Logger,
-): [BlockTargetIndexer, BlockActivityIndexer] {
+): [
+  BlockTargetIndexer,
+  BlockActivityIndexer,
+  BlockBackfillIndexer | undefined,
+] {
   assert(project.config.type !== 'starkex')
 
   const blockTimestampProvider = dependencies.getBlockTimestampProvider(
@@ -130,13 +139,31 @@ function createBlockBasedIndexer(
     logger,
     projectId: project.id,
     batchSize: getBatchSizeFromCallsPerMinute(project.config.callsPerMinute),
-    minHeight: 1,
+    minHeight: project.config.startBlock ?? 1,
+    cutOffPoint: project.config.cutOffPoint,
     parents: [blockTargetIndexer],
     txsCountService,
     indexerService,
     db: dependencies.database,
   })
-  return [blockTargetIndexer, activityIndexer]
+
+  const backfillIndexer = project.config.cutOffPoint
+    ? new BlockBackfillIndexer({
+        logger,
+        projectId: project.id,
+        batchSize: getBatchSizeFromCallsPerMinute(
+          project.config.callsPerMinute,
+        ),
+        minHeight: project.config.startBlock ?? 1,
+        cutOffPoint: project.config.cutOffPoint,
+        parents: [blockTargetIndexer],
+        txsCountService,
+        indexerService,
+        db: dependencies.database,
+      })
+    : undefined
+
+  return [blockTargetIndexer, activityIndexer, backfillIndexer]
 }
 
 function createStarkexIndexer(

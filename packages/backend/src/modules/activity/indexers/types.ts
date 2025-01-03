@@ -13,6 +13,8 @@ export interface ActivityIndexerDeps
   db: Database
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
+  cutOffPoint?: number
+  name?: string
 }
 
 export interface TxsCountService {

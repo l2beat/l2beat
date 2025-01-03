@@ -121,7 +121,9 @@ export const polygonpos: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://polygon.llamarpc.com',
       defaultCallsPerMinute: 1500,
-      startBlock: 5000000,
+      startBlock: 1,
+      // first block from 01-12-2024
+      cutOffPoint: 64932349,
     },
   },
   dataAvailability: [

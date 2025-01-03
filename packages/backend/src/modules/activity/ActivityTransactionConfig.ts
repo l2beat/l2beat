@@ -5,6 +5,8 @@ interface SimpleActivityTransactionConfig<T extends string> {
   type: T
   url: string
   callsPerMinute: number
+  startBlock?: number
+  cutOffPoint?: number
 }
 
 interface RpcActivityTransactionConfig {
@@ -13,6 +15,7 @@ interface RpcActivityTransactionConfig {
   callsPerMinute: number
   assessCount?: AssessCount
   startBlock?: number
+  cutOffPoint?: number
 }
 
 interface StarkexActivityTransactionConfig {
