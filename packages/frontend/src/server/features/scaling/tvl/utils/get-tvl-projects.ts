@@ -14,9 +14,11 @@ import {
   toBackendProject,
 } from '@l2beat/config'
 import {
+  assert,
   type AmountConfigEntry,
   type ProjectId,
   UnixTime,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
@@ -36,6 +38,7 @@ export interface TvlProject extends BaseProject {
       minTimestamp: UnixTime
     }
   >
+  category?: 'Rollups' | 'ValidiumOrOptimiums' | 'Others'
 }
 
 export function toTvlProject(project: Layer2 | Layer3 | Bridge): TvlProject {
@@ -66,7 +69,8 @@ export function toTvlProject(project: Layer2 | Layer3 | Bridge): TvlProject {
   }
 }
 
-const projects = [
+const projects = [...layer2s, ...layer3s, ...bridges]
+const backendProjects = [
   ...layer2s.map(layer2ToBackendProject),
   ...layer3s.map(layer3ToBackendProject),
   ...bridges.map(bridgeToBackendProject),
@@ -75,13 +79,13 @@ const projects = [
 export function getTvlProjects(
   filter: (p: BaseProject) => boolean,
 ): TvlProject[] {
-  const filteredProjects = projects
+  const filteredProjects = backendProjects
     .filter((p) => filter(p))
     .filter(
       (project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.projectId),
     )
 
-  const tvlAmounts = getTvlAmountsConfig(projects)
+  const tvlAmounts = getTvlAmountsConfig(backendProjects)
   const tvlAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
     tvlAmounts,
     (e) => e.project,
@@ -92,6 +96,9 @@ export function getTvlProjects(
     if (!amounts) {
       return []
     }
+    const project = projects.find((p) => p.id === projectId)
+    assert(project, `Project not found: ${projectId}`)
+
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
       .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
@@ -106,8 +113,38 @@ export function getTvlProjects(
         })
       }
     }
-    return { projectId, minTimestamp, type, slug, sources }
+    return {
+      projectId,
+      minTimestamp,
+      type,
+      slug,
+      sources,
+      category: getCategory(project),
+    }
   })
 
   return result
+}
+
+function getCategory(
+  p: Layer2 | Layer3 | Bridge,
+): 'Rollups' | 'ValidiumOrOptimiums' | 'Others' | undefined {
+  if (p.type === 'bridge') {
+    return undefined
+  }
+
+  switch (p.display.category) {
+    case 'Validium':
+    case 'Optimium':
+      return 'ValidiumOrOptimiums'
+    case 'Optimistic Rollup':
+    case 'ZK Rollup':
+      return 'Rollups'
+    case 'Other':
+      return 'Others'
+    case 'Plasma':
+      return undefined
+    default:
+      assertUnreachable(p.display.category)
+  }
 }

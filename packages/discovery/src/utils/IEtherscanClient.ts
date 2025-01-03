@@ -1,7 +1,7 @@
+import { HttpClient } from '@l2beat/shared'
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { BlockscoutClient } from './BlockscoutClient'
 import { EtherscanClient } from './EtherscanClient'
-import { HttpClient } from './HttpClient'
 
 // If a given instance of Etherscan does not support some endpoint set a
 // corresponding variable to true, otherwise do not set to anything -

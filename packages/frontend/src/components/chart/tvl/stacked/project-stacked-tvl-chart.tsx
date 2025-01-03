@@ -19,6 +19,7 @@ import { type ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../token/project-token-chart'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
+import { StackedTvlChartLegend } from './stacked-tvl-chart-legend'
 import { useStackedTvlChartRenderParams } from './use-stacked-tvl-chart-render-params'
 
 interface Props {
@@ -51,6 +52,7 @@ export function ProjectStackedTvlChart({
         setUnit={setUnit}
         milestones={milestones}
         projectId={projectId}
+        showStackedChartLegend
       />
     )
   }
@@ -119,7 +121,7 @@ function DefaultChart({
         <StackedTvlChartHover {...data} unit={unit} />
       )}
     >
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col">
         <ChartControlsWrapper>
           <ProjectChartTimeRange range={chartRange} />
           <TvlChartTimeRangeControls
@@ -128,7 +130,8 @@ function DefaultChart({
             setTimeRange={setTimeRange}
           />
         </ChartControlsWrapper>
-        <Chart />
+        <Chart className="mt-4" />
+        <StackedTvlChartLegend className="my-2" />
         <TvlChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox

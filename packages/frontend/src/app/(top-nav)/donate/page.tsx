@@ -2,9 +2,9 @@ import { compact } from 'lodash'
 import { type Metadata } from 'next'
 import Image from 'next/image'
 import { ContentWrapper } from '~/components/content-wrapper'
-import { OutLink } from '~/components/out-link'
+import { CustomLink } from '~/components/link/custom-link'
 import { env } from '~/env'
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { fundingSources } from './funding-sources'
 
@@ -118,15 +118,15 @@ async function Header(props: HeaderProps) {
               </span>
               <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
                 {props.networks.map((network) => (
-                  <OutLink
+                  <CustomLink
                     key={network.name}
                     className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
                     href={network.linkURL}
                     underline={false}
                   >
                     {network.name}
-                    <OutLinkIcon className="fill-current" />
-                  </OutLink>
+                    <CustomLinkIcon className="fill-current" />
+                  </CustomLink>
                 ))}
               </div>
             </div>

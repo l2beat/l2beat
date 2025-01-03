@@ -9,13 +9,16 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
+import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingTvlTable } from './table/scaling-tvl-table'
 
 type Props = TabbedScalingEntries<ScalingTvlEntry> & {
@@ -37,13 +40,14 @@ export function ScalingTvlTabs(props: Props) {
 
   return (
     <>
-      <ScalingTvlFilters
+      <ScalingFilters
         items={[
           ...filteredEntries.rollups,
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', featureFlags.showOthers && 'mt-5')}
+        showHostChainFilter
+        className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -64,15 +68,12 @@ export function ScalingTvlTabs(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="primary-card pt-5">
-            {featureFlags.showOthers && (
-              <>
-                <ScalingStackedTvlChart
-                  milestones={props.milestones}
-                  entries={props.rollups}
-                />
-                <HorizontalSeparator className="my-5" />
-              </>
-            )}
+            <ScalingStackedTvlChart
+              milestones={props.milestones}
+              entries={props.rollups}
+            />
+            <HorizontalSeparator className="my-5" />
+            <RollupsInfo />
             <ScalingTvlTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -81,34 +82,26 @@ export function ScalingTvlTabs(props: Props) {
             value="validiums-and-optimiums"
             className="primary-card pt-5"
           >
-            {featureFlags.showOthers && (
-              <>
-                <ScalingStackedTvlChart
-                  milestones={props.milestones}
-                  entries={props.validiumsAndOptimiums}
-                />
-                <HorizontalSeparator className="my-5" />
-              </>
-            )}
+            <ScalingStackedTvlChart
+              milestones={props.milestones}
+              entries={props.validiumsAndOptimiums}
+            />
+            <HorizontalSeparator className="my-5" />
+            <ValidiumsAndOptimiumsInfo />
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others" className="primary-card pt-5">
-              {featureFlags.showOthers && (
-                <>
-                  <ScalingStackedTvlChart
-                    milestones={props.milestones}
-                    entries={props.others ?? []}
-                  />
-                  <HorizontalSeparator className="my-5" />
-                </>
-              )}
-              <ScalingTvlTable entries={filteredEntries.others} />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others" className="primary-card pt-5">
+            <ScalingStackedTvlChart
+              milestones={props.milestones}
+              entries={props.others ?? []}
+            />
+            <HorizontalSeparator className="my-5" />
+            <OthersInfo />
+            <ScalingTvlTable entries={filteredEntries.others} />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

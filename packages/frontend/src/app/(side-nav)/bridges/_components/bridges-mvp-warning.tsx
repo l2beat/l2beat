@@ -1,5 +1,5 @@
+import { CustomLink } from '~/components/link/custom-link'
 import { MainPageWarning } from '~/components/main-page-warning'
-import { OutLink } from '~/components/out-link'
 import { externalLinks } from '~/consts/external-links'
 
 export function BridgesMvpWarning({
@@ -11,7 +11,7 @@ export function BridgesMvpWarning({
       <MainPageWarning className={className}>
         L2BEAT Bridges is a work in progress. You might find incomplete research
         or inconsistent naming. Join our{' '}
-        <OutLink href={externalLinks.discord}>Discord</OutLink> to suggest
+        <CustomLink href={externalLinks.discord}>Discord</CustomLink> to suggest
         improvements!
       </MainPageWarning>
     )
@@ -21,7 +21,7 @@ export function BridgesMvpWarning({
     <p className="bg-yellow-500 p-2 text-center text-base font-medium text-black md:my-4 md:rounded-lg">
       L2BEAT Bridges is a work in progress. You might find incomplete research
       or inconsistent naming. Join our{' '}
-      <OutLink href={externalLinks.discord}>Discord</OutLink> to suggest
+      <CustomLink href={externalLinks.discord}>Discord</CustomLink> to suggest
       improvements!
     </p>
   )

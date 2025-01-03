@@ -17,18 +17,13 @@ interface Props {
 export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
   const containerRef = useRef(null)
   const context = useRosetteTooltipContext()
+  const setSelectedRisk = context?.setSelectedRisk
 
-  useOnClickOutside(containerRef, () => setContent?.(undefined))
-  useEventListener('scroll', () => setContent?.(undefined))
+  useOnClickOutside(containerRef, () => setSelectedRisk?.(undefined))
+  useEventListener('scroll', () => setSelectedRisk?.(undefined))
 
-  const setContent = context?.setContent
-
-  const selectRisk = (risk: RosetteValue, side: 'top' | 'bottom') => {
-    setContent?.({
-      risk,
-      side: side,
-      sideOffset: side === 'top' ? -60 : -55,
-    })
+  const selectRisk = (risk: RosetteValue) => {
+    setSelectedRisk?.(risk)
   }
 
   return (
@@ -43,7 +38,7 @@ export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
         <SingleGrissini
           sentiment={hasNoBridge ? 'UnderReview' : value.sentiment}
           key={i}
-          onMouseEnter={() => selectRisk(value, 'top')}
+          onMouseEnter={() => selectRisk(value)}
         />
       ))}
       {hasNoBridge && (

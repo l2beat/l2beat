@@ -45,7 +45,7 @@ export function ProjectsUsedIn({
   ) : (
     <Tooltip>
       <TooltipTrigger>
-        <span className="text-2xs text-zinc-800 dark:text-gray-50">
+        <span className="text-2xs leading-none text-zinc-800 dark:text-gray-50">
           + {rest.length} more
         </span>
       </TooltipTrigger>

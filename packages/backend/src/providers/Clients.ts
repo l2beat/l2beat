@@ -6,7 +6,6 @@ import {
   CoingeckoClient,
   FuelClient,
   HttpClient,
-  HttpClient2,
   LoopringClient,
   RpcClient,
   StarkexClient,
@@ -24,21 +23,20 @@ export interface Clients {
   degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   blob: BlobClient | undefined
-  starknet: StarknetClient | undefined
   getRpcClient: (chain: string) => RpcClient
+  getStarknetClient: (chain: string) => StarknetClient
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
-  const http2 = new HttpClient2()
 
   let starkexClient: StarkexClient | undefined
   let loopringClient: LoopringClient | undefined
   let degateClient: LoopringClient | undefined
   let ethereumClient: RpcClient | undefined
   let blobClient: BlobClient | undefined
-  let starknetClient: StarknetClient | undefined
 
+  const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
   const rpcClients: RpcClient[] = []
@@ -62,7 +60,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           const rpcClient = new RpcClient({
             sourceName: chain.name,
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -79,7 +77,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           const zksyncLiteClient = new ZksyncLiteClient({
             sourceName: 'zksynclite',
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -90,15 +88,15 @@ export function initClients(config: Config, logger: Logger): Clients {
 
         case 'starknet': {
           const client = new StarknetClient({
-            sourceName: 'starknet',
+            sourceName: chain.name,
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
           })
           blockClients.push(client)
-          starknetClient = client
+          starknetClients.push(client)
           break
         }
         case 'loopring':
@@ -107,7 +105,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             sourceName: blockApi.type,
             url: blockApi.url,
             type: blockApi.type,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -122,7 +120,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           const fuelClient = new FuelClient({
             sourceName: 'fuel',
             url: blockApi.url,
-            http: http2,
+            http,
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
@@ -134,7 +132,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           starkexClient = new StarkexClient({
             sourceName: 'starkex',
             apiKey: blockApi.apiKey,
-            http: http2,
+            http,
             retryStrategy: blockApi.retryStrategy,
             logger,
             callsPerMinute: blockApi.callsPerMinute,
@@ -150,7 +148,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
-    http: http2,
+    http,
     logger,
     callsPerMinute: config.coingeckoApiKey ? 400 : 10,
     retryStrategy: 'RELIABLE',
@@ -162,7 +160,7 @@ export function initClients(config: Config, logger: Logger): Clients {
       beaconApiUrl: config.beaconApi.url,
       rpcClient: ethereumClient,
       logger,
-      http: http2,
+      http,
       callsPerMinute: config.beaconApi.callsPerMinute,
       timeout: config.beaconApi.timeout,
       retryStrategy: 'RELIABLE',
@@ -175,6 +173,12 @@ export function initClients(config: Config, logger: Logger): Clients {
     return client
   }
 
+  const getStarknetClient = (chain: string) => {
+    const client = starknetClients.find((r) => r.chain === chain)
+    assert(client, `${chain}: Starknet client not found`)
+    return client
+  }
+
   return {
     block: blockClients,
     indexer: indexerClients,
@@ -183,7 +187,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     degate: degateClient,
     coingecko: coingeckoClient,
     blob: blobClient,
-    starknet: starknetClient,
+    getStarknetClient,
     getRpcClient,
   }
 }

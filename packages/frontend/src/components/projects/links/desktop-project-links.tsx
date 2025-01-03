@@ -8,7 +8,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/core/navigation-menu'
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
@@ -50,7 +50,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
         >
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name}
-          <OutLinkIcon className="fill-current" />
+          <CustomLinkIcon className="fill-current" />
         </NavigationMenuLink>
       </NavigationMenuItem>
     )
@@ -90,7 +90,7 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
                 />
               )}
               {parsedSocial ? parsedSocial.text : formatLink(link)}
-              <OutLinkIcon className="fill-current" />
+              <CustomLinkIcon className="fill-current" />
             </NavigationMenuLink>
           )
         })}

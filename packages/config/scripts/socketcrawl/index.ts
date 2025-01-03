@@ -72,6 +72,7 @@ const ownerAddressToName: Record<string, string> = {
   '0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34': 'socketadmin.eth EOA',
   '0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13': 'LooksRareMultisig',
   '0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332': 'PolynomialEOA',
+  '0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836': 'Socket EOA',
   // Add more owner addresses and their corresponding names here to get them integrated in the output
 }
 

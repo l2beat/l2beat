@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { CoingeckoClient, HttpClient2 } from '@l2beat/shared'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -41,7 +41,7 @@ export async function estimateTVL(rpcUrl: string, address: EthereumAddress) {
   }
   console.log(`Found ${nonZeroBalances.length} tokens with non-zero balances`)
 
-  const http = new HttpClient2()
+  const http = new HttpClient()
   const coingeckoClient = new CoingeckoClient({
     apiKey: undefined,
     http,

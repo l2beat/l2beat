@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
@@ -43,5 +44,6 @@ const getCachedResponse = cache(
   ['scaling-activity-route'],
   {
     tags: ['activity'],
+    revalidate: UnixTime.DAY,
   },
 )

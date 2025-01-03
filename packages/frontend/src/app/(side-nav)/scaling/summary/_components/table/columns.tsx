@@ -170,5 +170,5 @@ export const scalingSummaryOthersColumns = [
       )
     },
   }),
-  ...scalingSummaryColumns.slice(6),
+  ...scalingSummaryValidiumAndOptimiumsColumns.slice(5),
 ]

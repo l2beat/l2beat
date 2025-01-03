@@ -84,7 +84,12 @@ export function RegularDaProjectSummary({ project }: Props) {
                         projectLinks={project.header.links}
                       />
                     </div>
-                    <DaProjectStats stats={stats} />
+                    <DaProjectStats
+                      stats={stats}
+                      daLayerGrissiniValues={
+                        project.header.daLayerGrissiniValues
+                      }
+                    />
                   </div>
                 </div>
               </div>

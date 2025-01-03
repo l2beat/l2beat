@@ -7,6 +7,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
+import { type RosetteValue } from '~/components/rosette/types'
 import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
 import {
@@ -18,9 +20,10 @@ import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface Props {
   stats: ProjectStat[]
+  daLayerGrissiniValues: RosetteValue[] | undefined
 }
 
-export function DaProjectStats({ stats }: Props) {
+export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
   const GROUPS = 3
   const partitionedByThree = chunkArray(stats, GROUPS)
 
@@ -40,6 +43,18 @@ export function DaProjectStats({ stats }: Props) {
           </Fragment>
         )
       })}
+      {daLayerGrissiniValues && (
+        <ProjectStat
+          className="md:gap-1.5 lg:hidden"
+          title="Risks"
+          value={
+            <GrissiniCell
+              values={daLayerGrissiniValues}
+              iconClassName="w-max"
+            />
+          }
+        />
+      )}
     </div>
   )
 }
@@ -105,7 +120,7 @@ export function getCommonDaProjectStats(
     title: 'TVS',
     value: formatCurrency(project.header.tvs, 'usd'),
     tooltip:
-      'Total value secured (TVS) is the total value locked of all projects using this layer.',
+      'Total value secured (TVS) is the sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVL of sovereign rollups.',
   })
 
   // Economic security

@@ -1,7 +1,7 @@
 'use client'
 import { CustomLink } from '~/components/link/custom-link'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { type GovernanceEventEntry } from '../../_utils/get-governance-event-entries'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
@@ -54,7 +54,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           type={event.highlighted ? 'plain' : 'primary'}
         >
           {hostname}
-          <OutLinkIcon />
+          <CustomLinkIcon />
         </CustomLink>
       </div>
       <div>

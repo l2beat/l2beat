@@ -20,6 +20,13 @@
     --icon-secondary: 222deg 8.21% 40.6%;
     --overlay: 231deg 30.4% 13.5% / 60%;
     --divider: 223deg 15.9% 82.7%;
+    --indicator-rollups: 321deg 84.3% 60%;
+    --indicator-validiums-optimiums: 180deg 50.2% 42.5%;
+    --indicator-others: 44.9deg 100% 33.5%;
+    --indicator-ethereum: 223deg 69% 50.6%;
+    --positive: 124deg 100% 22.7%;
+    --link-stroke: 212deg 100% 86.5%;
+    --link: 223deg 69% 50.6%;
   }
 
   .dark {
@@ -36,6 +43,13 @@
     --icon-secondary: 222deg 8.21% 40.6%;
     --overlay: 0deg 0% 0% / 60%;
     --divider: 226deg 14.3% 28.8%;
+    --indicator-rollups: 284deg 87.1% 75.7%;
+    --indicator-validiums-optimiums: 190deg 73.6% 55.5%;
+    --indicator-others: 54.2deg 70.9% 56.9%;
+    --indicator-ethereum: 212deg 100% 66.3%;
+    --positive: 145deg 81.2% 43.7%;
+    --link-stroke: 217deg 56.3% 18.8%;
+    --link: 212deg 100% 66.3%;
   }
 }
 

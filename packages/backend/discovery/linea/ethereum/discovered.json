@@ -1,22 +1,46 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 21078909,
-  "configHash": "0x662643b938e5eec82dd83a02389fd5e96ce033ad36f2b1a31bdfafe9f86e8251",
+  "blockNumber": 21434844,
+  "configHash": "0x33ccda097a401b6333105619455017c874536ca6f3d8789d19c47ef650e6946f",
   "contracts": [
     {
-      "name": "ERC20Bridge",
+      "name": "TokenBridge",
       "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+      "template": "linea/TokenBridge",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x4c5d4e5696bc435eefd0ba909c6a8a7748c4c49260fcb51a360f07af3c38d76f"
+        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used to bridge and escrow ERC-20 tokens.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "via": [
+            {
+              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
+              "delay": 0
+            },
+            {
+              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "via": [
+            {
+              "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "delay": 0
+            },
+            {
+              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
+              "delay": 0
+            },
             {
               "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
               "delay": 0
@@ -27,7 +51,7 @@
       "sinceTimestamp": 1691067875,
       "values": {
         "$admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-        "$implementation": "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2",
+        "$implementation": "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34",
         "$pastUpgrades": [
           [
             "2023-08-03T13:04:35.000Z",
@@ -38,19 +62,97 @@
             "2024-06-05T11:49:35.000Z",
             "0x497bdab1d3fb97eed72a55fc6e3672694195b08f949c2e0e84ea4b36428ee9c6",
             ["0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"]
+          ],
+          [
+            "2024-12-16T13:52:11.000Z",
+            "0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",
+            ["0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_CUSTOM_CONTRACT_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "REMOVE_RESERVED_TOKEN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_MESSAGE_SERVICE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_REMOTE_TOKENBRIDGE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SET_RESERVED_TOKEN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          }
+        },
+        "CONTRACT_VERSION": "1.0",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-        "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-        "paused": false,
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
+        "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5",
+        "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
         "remoteSender": "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+        "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
+        "SET_CUSTOM_CONTRACT_ROLE": "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe",
+        "SET_MESSAGE_SERVICE_ROLE": "0x77974cc9cb5bafc9bb265be792d93fa46355c05701895b82f6d3b4b448c8ce00",
+        "SET_REMOTE_TOKENBRIDGE_ROLE": "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24",
+        "SET_RESERVED_TOKEN_ROLE": "0xeaf25fcc6b7d45bda16c56628df3f435e20319ef53b065c11ee4510083f0ae2d",
         "sourceChainId": 1,
         "targetChainId": 59144,
-        "tokenBeacon": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
+        "tokenBeacon": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
+        "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
+        "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd",
+        "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
+      }
+    },
+    {
+      "name": "CallForwardingProxy",
+      "address": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
+      "sourceHashes": [
+        "0x51e1fd21b79473438268845d5f9025c91fd69c6feb26e25f97f932e174e7ce1e"
+      ],
+      "description": "A proxy contract forwarding calls to a predefined (immutable) target contract.",
+      "sinceTimestamp": 1733219987,
+      "values": {
+        "$immutable": true,
+        "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
       },
-      "derivedName": "TokenBridge"
+      "derivedName": "CallForwardingProxy"
     },
     {
       "name": "BridgedToken",
@@ -131,7 +233,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "balance": 30865176278955,
+        "balance": 25961143630846,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -141,7 +243,7 @@
       "derivedName": "L1USDCBridge"
     },
     {
-      "name": "AdminMultisig",
+      "name": "LineaAdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -149,6 +251,35 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions in the Timelock."
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "target": "0xd6B95c960779c72B8C6752119849318E5d550574"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689149759,
       "values": {
@@ -169,7 +300,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 51,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -208,18 +339,52 @@
       "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
     },
     {
-      "name": "zkEVM",
+      "name": "LineaRollup",
       "address": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "template": "linea/LineaRollup",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x6eace22f38b33b52c0608ca553753365c7aaa2ac2e9efba018e6f2c4864b9e40"
+        "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
       "issuedPermissions": [
         {
+          "permission": "operateLinea",
+          "target": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+          "via": []
+        },
+        {
+          "permission": "operateLinea",
+          "target": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
+          "via": []
+        },
+        {
           "permission": "upgrade",
-          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "via": [
+            {
+              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
+              "delay": 0
+            },
+            {
+              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+              "delay": 0
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "via": [
+            {
+              "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "delay": 0
+            },
+            {
+              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
+              "delay": 0
+            },
             {
               "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
               "delay": 0
@@ -237,7 +402,7 @@
       "sinceTimestamp": 1689159923,
       "values": {
         "$admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-        "$implementation": "0x1825242411792536469Cbb5843fd27Ce3e9e583A",
+        "$implementation": "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0",
         "$pastUpgrades": [
           [
             "2023-07-12T11:05:23.000Z",
@@ -278,9 +443,14 @@
             "2024-10-29T15:35:47.000Z",
             "0x0970f422c80627f28916f9c5583ff6298070893debd191ead0cf39778e4bae14",
             ["0x1825242411792536469Cbb5843fd27Ce3e9e583A"]
+          ],
+          [
+            "2024-12-16T13:52:11.000Z",
+            "0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",
+            ["0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"]
           ]
         ],
-        "$upgradeCount": 8,
+        "$upgradeCount": 9,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -297,43 +467,108 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           },
-          "PAUSE_MANAGER_ROLE": {
+          "PAUSE_MANAGER": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           },
           "VERIFIER_SETTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
+          },
+          "PAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_L1_L2_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_L2_L1_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_ALL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_L1_L2_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_L2_L1_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_BLOB_SUBMISSION_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_BLOB_SUBMISSION_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_FINALIZATION_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_FINALIZATION_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "USED_RATE_LIMIT_RESETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "VERIFIER_UNSETTER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "currentFinalizedShnarf": "0x29a59b1a7cca950c1b83c59432dc131eed3b12392922673c6f1b996a88f88849",
-        "currentFinalizedState": "0xa846fe92ca2b505d1bd3e6e69b6656f9b55016d4bccd3e8d0d999da3945dbb64",
+        "CONTRACT_VERSION": "6.0",
+        "currentFinalizedShnarf": "0xefc9ac66d59c702e19806e0c9a480590508f47614a83f7d24496d675a225575f",
+        "currentFinalizedState": "0x24f6b3fbb85a83ce48e2f758cd5bdbf5acb638fa83b4636946a0a33ae4ed6368",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "8309700000000000000",
+        "currentPeriodAmountInWei": "961958072262443152060",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "GENERAL_PAUSE_TYPE": 1,
-        "generalPause": false,
+        "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
         "GENESIS_SHNARF": "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f",
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
-        "L1_L2_PAUSE_TYPE": 2,
-        "l1l2Pause": false,
-        "L2_L1_PAUSE_TYPE": 3,
-        "l2l1Pause": false,
+        "isPaused_BLOB_SUBMISSION": false,
+        "isPaused_CALLDATA_SUBMISSION": false,
+        "isPaused_COMPLETE_TOKEN_BRIDGING": false,
+        "isPaused_FINALIZATION": false,
+        "isPaused_GENERAL": false,
+        "isPaused_INITIATE_TOKEN_BRIDGING": false,
+        "isPaused_L1_L2": false,
+        "isPaused_L2_L1": false,
         "limitInWei": "18750000000000000000000",
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
+        "Operators": [
+          "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+          "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+        ],
         "OUTBOX_STATUS_RECEIVED": 2,
         "OUTBOX_STATUS_SENT": 1,
         "OUTBOX_STATUS_UNKNOWN": 0,
-        "PAUSE_MANAGER_ROLE": "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26",
+        "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
+        "PAUSE_BLOB_SUBMISSION_ROLE": "0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77",
+        "PAUSE_FINALIZATION_ROLE": "0xe37c272ea30e2bb381ad7cf89ae754b49153250609f36d0cbdad8b64c184bb5c",
+        "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
+        "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
         "periodInSeconds": 86400,
-        "provenCompressedBlocksWithoutProof": [2242752],
-        "PROVING_SYSTEM_PAUSE_TYPE": 4,
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
         "sender": "0x0000000000000000000000000000000000000000",
         "systemMigrationBlock": 19219000,
+        "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
+        "UNPAUSE_BLOB_SUBMISSION_ROLE": "0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40",
+        "UNPAUSE_FINALIZATION_ROLE": "0x1ab87f7458c0e3d07e9881c14ee67f0141703614fd48ea5b15ed987e5f4b030e",
+        "UNPAUSE_L1_L2_ROLE": "0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc",
+        "UNPAUSE_L2_L1_ROLE": "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770",
+        "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9",
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
+        "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
           "0x1111111111111111111111111111111111111111",
           "0x0000000000000000000000000000000000000000",
@@ -344,6 +579,16 @@
           "0x1111111111111111111111111111111111111111",
           "0x1111111111111111111111111111111111111111",
           "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000"
         ]
       },
@@ -351,25 +596,32 @@
         "verifiers": {
           "description": "Mapping of proof type to ZK Plonk Verifier contract"
         }
-      },
-      "derivedName": "LineaRollup"
+      }
     },
     {
       "name": "Timelock",
       "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
+      "template": "linea/Timelock",
       "sourceHashes": [
         "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
       ],
-      "receivedPermissions": [
+      "description": "A Timelock with currently 0s minimum delay.",
+      "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "via": [{ "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }]
+          "permission": "configure",
+          "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "via": []
         },
         {
-          "permission": "upgrade",
-          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "via": [{ "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }]
+          "permission": "configure",
+          "target": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "via": [
+            {
+              "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "delay": 0,
+              "description": "propose transactions in the Timelock."
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -403,10 +655,14 @@
             "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
+        "Canceller": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "delayFormatted": "0s",
+        "Executor": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
+        "Proposer": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
@@ -419,6 +675,33 @@
         "0x699a67bde09c0d73c29ec9de66133bfee484544494865d954ac01f9736efed30"
       ],
       "proxyType": "gnosis safe zodiac module",
+      "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions in the Timelock.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -519,10 +802,26 @@
     { "address": "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE" },
     { "address": "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9" },
     { "address": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8" },
-    { "address": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e" },
+    {
+      "address": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+        }
+      ]
+    },
     { "address": "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB" },
     { "address": "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4" },
-    { "address": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754" },
+    {
+      "address": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+        }
+      ]
+    },
     { "address": "0x5822D8457c00FB82203918ED92907b935B9D40AE" },
     { "address": "0x9376c137AF5124FFc39bD8940A3D88D1cd508992" },
     { "address": "0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A" },
@@ -535,6 +834,153 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0": [
+      "constructor()",
+      "error ArrayLengthsDoNotMatch()",
+      "error BlobSubmissionDataEmpty(uint256 emptyBlobIndex)",
+      "error BlobSubmissionDataIsMissing()",
+      "error BytesLengthNotMultipleOf32()",
+      "error BytesLengthNotMultipleOfTwo(uint256 bytesLength)",
+      "error DataAlreadySubmitted(bytes32 currentDataHash)",
+      "error EmptyBlobDataAtIndex(uint256 index)",
+      "error EmptySubmissionData()",
+      "error FeePaymentFailed(address recipient)",
+      "error FeeTooLow()",
+      "error FinalBlobNotSubmitted(bytes32 shnarf)",
+      "error FinalBlockNumberLessThanOrEqualToLastFinalizedBlock(uint256 finalBlockNumber, uint256 lastFinalizedBlock)",
+      "error FinalBlockStateEqualsZeroHash()",
+      "error FinalShnarfWrong(bytes32 expected, bytes32 value)",
+      "error FinalizationInTheFuture(uint256 l2BlockTimestamp, uint256 currentBlockTimestamp)",
+      "error FinalizationStateIncorrect(bytes32 expected, bytes32 value)",
+      "error FirstByteIsNotZero()",
+      "error InvalidMerkleProof()",
+      "error InvalidProof()",
+      "error InvalidProofOrProofVerificationRanOutOfGas(string errorReason)",
+      "error InvalidProofType()",
+      "error IsNotPaused(uint8 pauseType)",
+      "error IsPaused(uint8 pauseType)",
+      "error L1RollingHashDoesNotExistOnL1(uint256 messageNumber, bytes32 rollingHash)",
+      "error L2MerkleRootAlreadyAnchored(bytes32 merkleRoot)",
+      "error L2MerkleRootDoesNotExist()",
+      "error LastFinalizationTimeNotLapsed()",
+      "error LeafIndexOutOfBounds(uint32 leafIndex, uint32 maxAllowedIndex)",
+      "error LimitIsZero()",
+      "error MessageAlreadyClaimed(uint256 messageIndex)",
+      "error MessageDoesNotExistOrHasAlreadyBeenClaimed(bytes32 messageHash)",
+      "error MessageSendingFailed(address destination)",
+      "error MissingMessageNumberForRollingHash(bytes32 rollingHash)",
+      "error MissingRollingHashForMessageNumber(uint256 messageNumber)",
+      "error OnlyNonFallbackOperator()",
+      "error ParentBlobNotSubmitted(bytes32 shnarf)",
+      "error PeriodIsZero()",
+      "error PointEvaluationFailed()",
+      "error PointEvaluationResponseInvalid(uint256 fieldElements, uint256 blsCurveModulus)",
+      "error PrecompileReturnDataLengthWrong(uint256 expected, uint256 actual)",
+      "error ProofIsEmpty()",
+      "error ProofLengthDifferentThanMerkleDepth(uint256 actual, uint256 expected)",
+      "error RateLimitExceeded()",
+      "error ReentrantCall()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error StartingRootHashDoesNotMatch()",
+      "error ValueSentTooLow()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event AmountUsedInPeriodReset(address indexed resettingAddress)",
+      "event DataFinalizedV3(uint256 indexed startBlockNumber, uint256 indexed endBlockNumber, bytes32 indexed shnarf, bytes32 parentStateRootHash, bytes32 finalStateRootHash)",
+      "event DataSubmittedV3(bytes32 parentShnarf, bytes32 indexed shnarf, bytes32 finalStateRootHash)",
+      "event FallbackOperatorAddressSet(address indexed caller, address indexed fallbackOperator)",
+      "event FallbackOperatorRoleGranted(address indexed caller, address indexed fallbackOperator)",
+      "event Initialized(uint8 version)",
+      "event L2MerkleRootAdded(bytes32 indexed l2MerkleRoot, uint256 indexed treeDepth)",
+      "event L2MessagingBlockAnchored(uint256 indexed l2Block)",
+      "event LimitAmountChanged(address indexed amountChangeBy, uint256 amount, bool amountUsedLoweredToLimit, bool usedAmountResetToZero)",
+      "event LineaRollupVersionChanged(bytes8 indexed previousVersion, bytes8 indexed newVersion)",
+      "event MessageClaimed(bytes32 indexed _messageHash)",
+      "event MessageSent(address indexed _from, address indexed _to, uint256 _fee, uint256 _value, uint256 _nonce, bytes _calldata, bytes32 indexed _messageHash)",
+      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event Paused(address messageSender, uint8 indexed pauseType)",
+      "event RateLimitInitialized(uint256 periodInSeconds, uint256 limitInWei, uint256 currentPeriodEnd)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RollingHashUpdated(uint256 indexed messageNumber, bytes32 indexed rollingHash, bytes32 indexed messageHash)",
+      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPaused(address messageSender, uint8 indexed pauseType)",
+      "event VerifierAddressChanged(address indexed verifierAddress, uint256 indexed proofType, address indexed verifierSetBy, address oldVerifierAddress)",
+      "function CONTRACT_VERSION() view returns (string)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GENESIS_SHNARF() view returns (bytes32)",
+      "function INBOX_STATUS_RECEIVED() view returns (uint8)",
+      "function INBOX_STATUS_UNKNOWN() view returns (uint8)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function OUTBOX_STATUS_RECEIVED() view returns (uint8)",
+      "function OUTBOX_STATUS_SENT() view returns (uint8)",
+      "function OUTBOX_STATUS_UNKNOWN() view returns (uint8)",
+      "function PAUSE_ALL_ROLE() view returns (bytes32)",
+      "function PAUSE_BLOB_SUBMISSION_ROLE() view returns (bytes32)",
+      "function PAUSE_FINALIZATION_ROLE() view returns (bytes32)",
+      "function PAUSE_L1_L2_ROLE() view returns (bytes32)",
+      "function PAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function RATE_LIMIT_SETTER_ROLE() view returns (bytes32)",
+      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_BLOB_SUBMISSION_ROLE() view returns (bytes32)",
+      "function UNPAUSE_FINALIZATION_ROLE() view returns (bytes32)",
+      "function UNPAUSE_L1_L2_ROLE() view returns (bytes32)",
+      "function UNPAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function USED_RATE_LIMIT_RESETTER_ROLE() view returns (bytes32)",
+      "function VERIFIER_SETTER_ROLE() view returns (bytes32)",
+      "function VERIFIER_UNSETTER_ROLE() view returns (bytes32)",
+      "function blobShnarfExists(bytes32 shnarf) view returns (uint256 exists)",
+      "function claimMessage(address _from, address _to, uint256 _fee, uint256 _value, address _feeRecipient, bytes _calldata, uint256 _nonce)",
+      "function claimMessageWithProof(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params)",
+      "function currentFinalizedShnarf() view returns (bytes32)",
+      "function currentFinalizedState() view returns (bytes32)",
+      "function currentL2BlockNumber() view returns (uint256)",
+      "function currentL2StoredL1MessageNumber() view returns (uint256)",
+      "function currentL2StoredL1RollingHash() view returns (bytes32)",
+      "function currentPeriodAmountInWei() view returns (uint256)",
+      "function currentPeriodEnd() view returns (uint256)",
+      "function currentTimestamp() view returns (uint256)",
+      "function dataEndingBlock(bytes32 dataHash) view returns (uint256 endingBlock)",
+      "function dataFinalStateRootHashes(bytes32 dataHash) view returns (bytes32 finalStateRootHash)",
+      "function dataParents(bytes32 dataHash) view returns (bytes32 parentHash)",
+      "function dataShnarfHashes(bytes32 dataHash) view returns (bytes32 shnarfHash)",
+      "function dataStartingBlock(bytes32 dataHash) view returns (uint256 startingBlock)",
+      "function fallbackOperator() view returns (address)",
+      "function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function inboxL2L1MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
+      "function initialize(tuple(bytes32 initialStateRootHash, uint256 initialL2BlockNumber, uint256 genesisTimestamp, address defaultVerifier, uint256 rateLimitPeriodInSeconds, uint256 rateLimitAmountInWei, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles, address fallbackOperator, address defaultAdmin) _initializationData)",
+      "function isMessageClaimed(uint256 _messageNumber) view returns (bool isClaimed)",
+      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function l2MerkleRootsDepths(bytes32 merkleRoot) view returns (uint256 treeDepth)",
+      "function limitInWei() view returns (uint256)",
+      "function nextMessageNumber() view returns (uint256)",
+      "function outboxL1L2MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
+      "function pauseByType(uint8 _pauseType)",
+      "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
+      "function periodInSeconds() view returns (uint256)",
+      "function reinitializeLineaRollupV6(tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles, address _fallbackOperator)",
+      "function renounceRole(bytes32 _role, address _account)",
+      "function resetAmountUsedInPeriod()",
+      "function resetRateLimitAmount(uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollingHashes(uint256 messageNumber) view returns (bytes32 rollingHash)",
+      "function sendMessage(address _to, uint256 _fee, bytes _calldata) payable",
+      "function sender() view returns (address originalSender)",
+      "function setFallbackOperator(uint256 _messageNumber, bytes32 _rollingHash, uint256 _lastFinalizedTimestamp)",
+      "function setVerifierAddress(address _newVerifierAddress, uint256 _proofType)",
+      "function stateRootHashes(uint256 blockNumber) view returns (bytes32 stateRootHash)",
+      "function submitBlobs(tuple(uint256 dataEvaluationClaim, bytes kzgCommitment, bytes kzgProof, bytes32 finalStateRootHash, bytes32 snarkHash)[] _blobSubmissions, bytes32 _parentShnarf, bytes32 _finalBlobShnarf)",
+      "function submitDataAsCalldata(tuple(bytes32 finalStateRootHash, bytes32 snarkHash, bytes compressedData) _submission, bytes32 _parentShnarf, bytes32 _expectedShnarf)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function systemMigrationBlock() view returns (uint256)",
+      "function unPauseByType(uint8 _pauseType)",
+      "function unsetVerifierAddress(uint256 _proofType)",
+      "function verifiers(uint256 proofType) view returns (address verifierAddress)"
     ],
     "0x0eC393209674090368C592A591B25811e490BF36": [
       "error AmountTooBig(uint256 amount, uint256 limit)",
@@ -576,142 +1022,97 @@
       "function unpause()",
       "function usdc() view returns (address)"
     ],
-    "0x1825242411792536469Cbb5843fd27Ce3e9e583A": [
+    "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": [
       "constructor()",
-      "error BlobSubmissionDataIsMissing()",
-      "error BytesLengthNotMultipleOf32()",
-      "error BytesLengthNotMultipleOfTwo(uint256 bytesLength)",
-      "error DataAlreadySubmitted(bytes32 currentDataHash)",
-      "error DataStartingBlockDoesNotMatch(uint256 expected, uint256 actual)",
-      "error EmptyBlobData()",
-      "error EmptyBlobDataAtIndex(uint256 index)",
-      "error EmptySubmissionData()",
-      "error FeePaymentFailed(address recipient)",
-      "error FeeTooLow()",
-      "error FinalBlockDoesNotMatchShnarfFinalBlock(uint256 expected, uint256 actual)",
-      "error FinalBlockNumberLessThanOrEqualToLastFinalizedBlock(uint256 finalBlockNumber, uint256 lastFinalizedBlock)",
-      "error FinalBlockStateEqualsZeroHash()",
-      "error FinalShnarfWrong(bytes32 expected, bytes32 value)",
-      "error FinalizationInTheFuture(uint256 l2BlockTimestamp, uint256 currentBlockTimestamp)",
-      "error FinalizationStateIncorrect(bytes32 expected, bytes32 value)",
-      "error FirstBlockGreaterThanFinalBlock(uint256 firstBlockNumber, uint256 finalBlockNumber)",
-      "error FirstBlockLessThanOrEqualToLastFinalizedBlock(uint256 firstBlockNumber, uint256 lastFinalizedBlock)",
-      "error FirstByteIsNotZero()",
-      "error InvalidMerkleProof()",
-      "error InvalidProof()",
-      "error InvalidProofType()",
-      "error IsNotPaused(uint256 pauseType)",
-      "error IsPaused(uint256 pauseType)",
-      "error L1RollingHashDoesNotExistOnL1(uint256 messageNumber, bytes32 rollingHash)",
-      "error L2MerkleRootAlreadyAnchored(bytes32 merkleRoot)",
-      "error L2MerkleRootDoesNotExist()",
-      "error LastFinalizedShnarfWrong(bytes32 expected, bytes32 actual)",
-      "error LimitIsZero()",
-      "error MessageAlreadyClaimed(uint256 messageIndex)",
-      "error MessageDoesNotExistOrHasAlreadyBeenClaimed(bytes32 messageHash)",
-      "error MessageSendingFailed(address destination)",
-      "error MissingMessageNumberForRollingHash(bytes32 rollingHash)",
-      "error MissingRollingHashForMessageNumber(uint256 messageNumber)",
-      "error ParentStateRootHashInvalid(bytes32 expected, bytes32 actual)",
-      "error PeriodIsZero()",
-      "error PointEvaluationFailed()",
-      "error PointEvaluationResponseInvalid(uint256 fieldElements, uint256 blsCurveModulus)",
-      "error PrecompileReturnDataLengthWrong(uint256 expected, uint256 actual)",
-      "error ProofIsEmpty()",
-      "error ProofLengthDifferentThanMerkleDepth(uint256 actual, uint256 expected)",
-      "error RateLimitExceeded()",
-      "error ReentrantCall()",
-      "error ShnarfAndFinalBlockNumberLengthsMismatched(uint256 shnarfsLength, uint256 finalBlockNumbers)",
-      "error SnarkHashIsZeroHash()",
-      "error StartingRootHashDoesNotMatch()",
-      "error ValueSentTooLow()",
+      "error AlreadyBridgedToken(address token)",
+      "error AlreadyBrigedToNativeTokenSet(address token)",
+      "error ArrayLengthsDoNotMatch()",
+      "error CallerIsNotMessageService()",
+      "error DecimalsAreUnknown(address token)",
+      "error InvalidPermitData(bytes4 permitData, bytes4 permitSelector)",
+      "error IsNotPaused(uint8 pauseType)",
+      "error IsPaused(uint8 pauseType)",
+      "error NativeToBridgedTokenAlreadySet(address token)",
+      "error NotReserved(address token)",
+      "error PermitNotAllowingBridge(address spender)",
+      "error PermitNotFromSender(address owner)",
+      "error RemoteTokenBridgeAlreadySet(address remoteTokenBridge)",
+      "error ReservedToken(address token)",
+      "error SenderNotAuthorized()",
+      "error StatusAddressNotAllowed(address token)",
+      "error TokenListEmpty()",
+      "error TokenNotDeployed(address token)",
       "error ZeroAddressNotAllowed()",
-      "event AmountUsedInPeriodReset(address indexed resettingAddress)",
-      "event BlockFinalized(uint256 indexed blockNumber, bytes32 indexed stateRootHash, bool indexed finalizedWithProof)",
-      "event BlocksVerificationDone(uint256 indexed lastBlockFinalized, bytes32 startingRootHash, bytes32 finalRootHash)",
-      "event DataFinalized(uint256 indexed lastBlockFinalized, bytes32 indexed startingRootHash, bytes32 indexed finalRootHash, bool withProof)",
-      "event DataSubmittedV2(bytes32 indexed shnarf, uint256 indexed startBlock, uint256 indexed endBlock)",
+      "error ZeroAmountNotAllowed(uint256 amount)",
+      "error ZeroHashNotAllowed()",
+      "event BridgingFinalized(address indexed nativeToken, address indexed bridgedToken, uint256 indexed amount, address recipient)",
+      "event BridgingFinalizedV2(address indexed nativeToken, address indexed bridgedToken, uint256 amount, address indexed recipient)",
+      "event BridgingInitiated(address indexed sender, address recipient, address indexed token, uint256 indexed amount)",
+      "event BridgingInitiatedV2(address indexed sender, address indexed recipient, address indexed token, uint256 amount)",
+      "event CustomContractSet(address indexed nativeToken, address indexed customContract, address indexed setBy)",
+      "event DeploymentConfirmed(address[] tokens, address indexed confirmedBy)",
       "event Initialized(uint8 version)",
-      "event L1L2MessagesReceivedOnL2(bytes32[] messageHashes)",
-      "event L2L1MessageHashAddedToInbox(bytes32 indexed messageHash)",
-      "event L2MerkleRootAdded(bytes32 indexed l2MerkleRoot, uint256 indexed treeDepth)",
-      "event L2MessagingBlockAnchored(uint256 indexed l2Block)",
-      "event LimitAmountChanged(address indexed amountChangeBy, uint256 amount, bool amountUsedLoweredToLimit, bool usedAmountResetToZero)",
-      "event MessageClaimed(bytes32 indexed _messageHash)",
-      "event MessageSent(address indexed _from, address indexed _to, uint256 _fee, uint256 _value, uint256 _nonce, bytes _calldata, bytes32 indexed _messageHash)",
-      "event Paused(address messageSender, uint256 indexed pauseType)",
-      "event RateLimitInitialized(uint256 periodInSeconds, uint256 limitInWei, uint256 currentPeriodEnd)",
+      "event MessageServiceUpdated(address indexed newMessageService, address indexed oldMessageService, address indexed setBy)",
+      "event NewToken(address indexed token)",
+      "event NewTokenDeployed(address indexed bridgedToken, address indexed nativeToken)",
+      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event Paused(address messageSender, uint8 indexed pauseType)",
+      "event RemoteSenderSet(address indexed remoteSender, address indexed setter)",
+      "event RemoteTokenBridgeSet(address indexed remoteTokenBridge, address indexed setBy)",
+      "event ReservationRemoved(address indexed token)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
       "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RollingHashUpdated(uint256 indexed messageNumber, bytes32 indexed rollingHash, bytes32 indexed messageHash)",
-      "event SystemMigrationBlockInitialized(uint256 systemMigrationBlock)",
-      "event UnPaused(address messageSender, uint256 indexed pauseType)",
-      "event VerifierAddressChanged(address indexed verifierAddress, uint256 indexed proofType, address indexed verifierSetBy, address oldVerifierAddress)",
+      "event TokenDeployed(address indexed token)",
+      "event TokenReserved(address indexed token)",
+      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPaused(address messageSender, uint8 indexed pauseType)",
+      "function CONTRACT_VERSION() view returns (string)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function GENERAL_PAUSE_TYPE() view returns (uint8)",
-      "function GENESIS_SHNARF() view returns (bytes32)",
-      "function INBOX_STATUS_RECEIVED() view returns (uint8)",
-      "function INBOX_STATUS_UNKNOWN() view returns (uint8)",
-      "function L1_L2_PAUSE_TYPE() view returns (uint8)",
-      "function L2_L1_PAUSE_TYPE() view returns (uint8)",
-      "function OPERATOR_ROLE() view returns (bytes32)",
-      "function OUTBOX_STATUS_RECEIVED() view returns (uint8)",
-      "function OUTBOX_STATUS_SENT() view returns (uint8)",
-      "function OUTBOX_STATUS_UNKNOWN() view returns (uint8)",
-      "function PAUSE_MANAGER_ROLE() view returns (bytes32)",
-      "function PROVING_SYSTEM_PAUSE_TYPE() view returns (uint8)",
-      "function RATE_LIMIT_SETTER_ROLE() view returns (bytes32)",
-      "function VERIFIER_SETTER_ROLE() view returns (bytes32)",
-      "function claimMessage(address _from, address _to, uint256 _fee, uint256 _value, address _feeRecipient, bytes _calldata, uint256 _nonce)",
-      "function claimMessageWithProof(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params)",
-      "function currentFinalizedShnarf() view returns (bytes32)",
-      "function currentFinalizedState() view returns (bytes32)",
-      "function currentL2BlockNumber() view returns (uint256)",
-      "function currentL2StoredL1MessageNumber() view returns (uint256)",
-      "function currentL2StoredL1RollingHash() view returns (bytes32)",
-      "function currentPeriodAmountInWei() view returns (uint256)",
-      "function currentPeriodEnd() view returns (uint256)",
-      "function currentTimestamp() view returns (uint256)",
-      "function dataEndingBlock(bytes32 dataHash) view returns (uint256 endingBlock)",
-      "function dataFinalStateRootHashes(bytes32 dataHash) view returns (bytes32 finalStateRootHash)",
-      "function dataParents(bytes32 dataHash) view returns (bytes32 parentHash)",
-      "function dataShnarfHashes(bytes32 dataHash) view returns (bytes32 shnarfHash)",
-      "function dataStartingBlock(bytes32 dataHash) view returns (uint256 startingBlock)",
-      "function finalizeBlocksWithProof(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, bytes32 lastFinalizedShnarf, uint256 finalBlockInData, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)",
-      "function finalizeBlocksWithoutProof(tuple(bytes32 parentStateRootHash, bytes32 lastFinalizedShnarf, uint256 finalBlockInData, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)",
+      "function PAUSE_ALL_ROLE() view returns (bytes32)",
+      "function PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function PAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function REMOVE_RESERVED_TOKEN_ROLE() view returns (bytes32)",
+      "function SET_CUSTOM_CONTRACT_ROLE() view returns (bytes32)",
+      "function SET_MESSAGE_SERVICE_ROLE() view returns (bytes32)",
+      "function SET_REMOTE_TOKENBRIDGE_ROLE() view returns (bytes32)",
+      "function SET_RESERVED_TOKEN_ROLE() view returns (bytes32)",
+      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function bridgeToken(address _token, uint256 _amount, address _recipient) payable",
+      "function bridgeTokenWithPermit(address _token, uint256 _amount, address _recipient, bytes _permitData) payable",
+      "function bridgedToNativeToken(address bridged) view returns (address native)",
+      "function completeBridging(address _nativeToken, uint256 _amount, address _recipient, uint256 _chainId, bytes _tokenMetadata)",
+      "function confirmDeployment(address[] _tokens) payable",
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
       "function grantRole(bytes32 role, address account)",
       "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function inboxL2L1MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
-      "function initialize(bytes32 _initialStateRootHash, uint256 _initialL2BlockNumber, address _defaultVerifier, address _securityCouncil, address[] _operators, uint256 _rateLimitPeriodInSeconds, uint256 _rateLimitAmountInWei, uint256 _genesisTimestamp)",
-      "function initializeParentShnarfsAndFinalizedState(bytes32[] _shnarfs, uint256[] _finalBlockNumbers)",
-      "function isMessageClaimed(uint256 _messageNumber) view returns (bool)",
-      "function isPaused(uint8 _pauseType) view returns (bool)",
-      "function l2MerkleRootsDepths(bytes32 merkleRoot) view returns (uint256 treeDepth)",
-      "function limitInWei() view returns (uint256)",
-      "function nextMessageNumber() view returns (uint256)",
-      "function outboxL1L2MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
+      "function initialize(tuple(address defaultAdmin, address messageService, address tokenBeacon, uint256 sourceChainId, uint256 targetChainId, address[] reservedTokens, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles) _initializationData)",
+      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function messageService() view returns (address)",
+      "function nativeToBridgedToken(uint256 chainId, address native) view returns (address bridged)",
       "function pauseByType(uint8 _pauseType)",
       "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
-      "function periodInSeconds() view returns (uint256)",
+      "function reinitializePauseTypesAndPermissions(address _defaultAdmin, tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles)",
+      "function remoteSender() view returns (address)",
+      "function removeReserved(address _token)",
       "function renounceRole(bytes32 role, address account)",
-      "function resetAmountUsedInPeriod()",
-      "function resetRateLimitAmount(uint256 _amount)",
       "function revokeRole(bytes32 role, address account)",
-      "function rollingHashes(uint256 messageNumber) view returns (bytes32 rollingHash)",
-      "function sendMessage(address _to, uint256 _fee, bytes _calldata) payable",
-      "function sender() view returns (address addr)",
-      "function setVerifierAddress(address _newVerifierAddress, uint256 _proofType)",
-      "function shnarfFinalBlockNumbers(bytes32 shnarf) view returns (uint256 finalBlockNumber)",
-      "function stateRootHashes(uint256 blockNumber) view returns (bytes32 stateRootHash)",
-      "function submitBlobs(tuple(tuple(bytes32 finalStateRootHash, uint256 firstBlockInData, uint256 finalBlockInData, bytes32 snarkHash) submissionData, uint256 dataEvaluationClaim, bytes kzgCommitment, bytes kzgProof)[] _blobSubmissionData, bytes32 _parentShnarf, bytes32 _finalBlobShnarf)",
-      "function submitDataAsCalldata(tuple(bytes32 finalStateRootHash, uint256 firstBlockInData, uint256 finalBlockInData, bytes32 snarkHash, bytes compressedData) _submissionData, bytes32 _parentShnarf, bytes32 _expectedShnarf)",
+      "function setCustomContract(address _nativeToken, address _targetContract)",
+      "function setDeployed(address[] _nativeTokens)",
+      "function setMessageService(address _messageService)",
+      "function setRemoteTokenBridge(address _remoteTokenBridge)",
+      "function setReserved(address _token)",
+      "function sourceChainId() view returns (uint256)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function systemMigrationBlock() view returns (uint256)",
-      "function unPauseByType(uint8 _pauseType)",
-      "function unsetVerifierAddress(uint256 _proofType)",
-      "function verifiers(uint256 proofType) view returns (address verifierAddress)"
+      "function targetChainId() view returns (uint256)",
+      "function tokenBeacon() view returns (address)",
+      "function unPauseByType(uint8 _pauseType)"
+    ],
+    "0x3697bD0bC6C050135b8321F989a5316eACbF367D": [
+      "constructor(address _target)",
+      "function target() view returns (address)"
     ],
     "0x36f274C1C197F277EA3C57859729398FCc8a3763": [
       "constructor()",
@@ -788,69 +1189,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2": [
-      "constructor()",
-      "error AlreadyBridgedToken(address token)",
-      "error AlreadyBrigedToNativeTokenSet(address token)",
-      "error CallerIsNotMessageService()",
-      "error DecimalsAreUnknown(address token)",
-      "error InvalidPermitData(bytes4 permitData, bytes4 permitSelector)",
-      "error NativeToBridgedTokenAlreadySet(address token)",
-      "error NotReserved(address token)",
-      "error PermitNotAllowingBridge(address spender)",
-      "error PermitNotFromSender(address owner)",
-      "error RemoteTokenBridgeAlreadySet(address remoteTokenBridge)",
-      "error ReservedToken(address token)",
-      "error SenderNotAuthorized()",
-      "error StatusAddressNotAllowed(address token)",
-      "error TokenNotDeployed(address token)",
-      "error ZeroAddressNotAllowed()",
-      "error ZeroAmountNotAllowed(uint256 amount)",
-      "event BridgingFinalized(address indexed nativeToken, address indexed bridgedToken, uint256 indexed amount, address recipient)",
-      "event BridgingFinalizedV2(address indexed nativeToken, address indexed bridgedToken, uint256 amount, address indexed recipient)",
-      "event BridgingInitiated(address indexed sender, address recipient, address indexed token, uint256 indexed amount)",
-      "event BridgingInitiatedV2(address indexed sender, address indexed recipient, address indexed token, uint256 amount)",
-      "event CustomContractSet(address indexed nativeToken, address indexed customContract, address indexed setBy)",
-      "event DeploymentConfirmed(address[] tokens, address indexed confirmedBy)",
-      "event Initialized(uint8 version)",
-      "event MessageServiceUpdated(address indexed newMessageService, address indexed oldMessageService, address indexed setBy)",
-      "event NewToken(address indexed token)",
-      "event NewTokenDeployed(address indexed bridgedToken, address indexed nativeToken)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RemoteTokenBridgeSet(address indexed remoteTokenBridge, address indexed setBy)",
-      "event ReservationRemoved(address indexed token)",
-      "event TokenDeployed(address indexed token)",
-      "event TokenReserved(address indexed token)",
-      "event Unpaused(address account)",
-      "function acceptOwnership()",
-      "function bridgeToken(address _token, uint256 _amount, address _recipient) payable",
-      "function bridgeTokenWithPermit(address _token, uint256 _amount, address _recipient, bytes _permitData) payable",
-      "function bridgedToNativeToken(address) view returns (address)",
-      "function completeBridging(address _nativeToken, uint256 _amount, address _recipient, uint256 _chainId, bytes _tokenMetadata)",
-      "function confirmDeployment(address[] _tokens) payable",
-      "function initialize(address _securityCouncil, address _messageService, address _tokenBeacon, uint256 _sourceChainId, uint256 _targetChainId, address[] _reservedTokens)",
-      "function messageService() view returns (address)",
-      "function nativeToBridgedToken(uint256, address) view returns (address)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function remoteSender() view returns (address)",
-      "function removeReserved(address _token)",
-      "function renounceOwnership()",
-      "function setCustomContract(address _nativeToken, address _targetContract)",
-      "function setDeployed(address[] _nativeTokens)",
-      "function setMessageService(address _messageService)",
-      "function setRemoteTokenBridge(address _remoteTokenBridge)",
-      "function setReserved(address _token)",
-      "function sourceChainId() view returns (uint256)",
-      "function targetChainId() view returns (uint256)",
-      "function tokenBeacon() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()"
     ],
     "0xd6B95c960779c72B8C6752119849318E5d550574": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
@@ -1005,6 +1343,9 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "linea/LineaRollup": "0xef3c5b89a0f59fd674142bd2ca0d7efcc8f0ca2b1698e9c9b9c7b22394a05e8b",
+    "linea/Timelock": "0x6ac440cffe46557709ca6e27336e9cce1a0c13bb34fbac95db79eb2148cb12ff",
+    "linea/TokenBridge": "0xc7f437cd95670bba903eb5000ed21ebe4bd697a425d8392364aad7253a2d60fb"
   }
 }

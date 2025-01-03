@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xf2c34bb8ea00da0d45419dedffb6de0495deb57f
+
+# Diff at Wed, 18 Dec 2024 10:43:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21415736
+- current block number: 21428894
+
+## Description
+
+OptiPortal unpaused, ready for claims through the BalanceClaimer added in the last upgrade.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.paused:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x450ab2617c6d7c7826a6f90f48870b03e998d403
 
 # Diff at Mon, 16 Dec 2024 14:40:20 GMT:

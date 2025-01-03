@@ -1,7 +1,7 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
-import { HttpClient } from '../utils/HttpClient'
 import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { Analysis } from './analysis/AddressAnalyzer'

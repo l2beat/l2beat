@@ -1,9 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { ActivityChart } from '~/components/chart/activity/activity-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { featureFlags } from '~/consts/feature-flags'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -19,34 +15,20 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const [entries] = await Promise.all([
-    getScalingActivityEntries(),
-    !featureFlags.showOthers &&
-      api.activity.chart.prefetch({
-        range: '30d',
-        filter: { type: 'all' },
-      }),
-    !featureFlags.showOthers &&
-      api.activity.chartStats.prefetch({
-        filter: { type: 'all' },
-      }),
+  const entries = await getScalingActivityEntries()
+  const rollupsIds = entries.rollups.map((project) => project.id)
+  await Promise.all([
+    api.activity.chart.prefetch({
+      range: '30d',
+      filter: {
+        type: 'projects',
+        projectIds: rollupsIds,
+      },
+    }),
+    api.activity.chartStats.prefetch({
+      filter: { type: 'projects', projectIds: rollupsIds },
+    }),
   ])
-
-  if (featureFlags.showOthers) {
-    const rollupsIds = entries.rollups.map((project) => project.id)
-    await Promise.all([
-      api.activity.chart.prefetch({
-        range: '30d',
-        filter: {
-          type: 'projects',
-          projectIds: rollupsIds,
-        },
-      }),
-      api.activity.chartStats.prefetch({
-        filter: { type: 'projects', projectIds: rollupsIds },
-      }),
-    ])
-  }
 
   return (
     <HydrateClient>
@@ -54,21 +36,6 @@ export default async function Page() {
         <ActivityTimeRangeContextProvider>
           <ActivityMetricContextProvider>
             <MainPageHeader>Activity</MainPageHeader>
-            {featureFlags.showOthers && (
-              <HorizontalSeparator className="max-lg:hidden" />
-            )}
-            {!featureFlags.showOthers && (
-              <MainPageCard>
-                <ActivityChart
-                  milestones={HOMEPAGE_MILESTONES}
-                  entries={[
-                    ...entries.rollups,
-                    ...entries.validiumsAndOptimiums,
-                    ...entries.others,
-                  ]}
-                />
-              </MainPageCard>
-            )}
             <ScalingActivityTabs
               {...entries}
               milestones={HOMEPAGE_MILESTONES}

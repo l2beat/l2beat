@@ -7,8 +7,12 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -57,18 +61,18 @@ export function ScalingSummaryTables(props: Props) {
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
             Others
-            {featureFlags.showOthers && (
-              <CountBadge>{filteredEntries.others.length}</CountBadge>
-            )}
+            <CountBadge>{filteredEntries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            <RollupsInfo />
             <ScalingSummaryRollupsTable entries={filteredEntries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiums-and-optimiums">
+            <ValidiumsAndOptimiumsInfo />
             <ScalingSummaryValidiumsAndOptimiumsTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -76,8 +80,11 @@ export function ScalingSummaryTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
-            {featureFlags.showOthers && filteredEntries.others.length > 0 ? (
-              <ScalingSummaryOthersTable entries={filteredEntries.others} />
+            {filteredEntries.others.length > 0 ? (
+              <>
+                <OthersInfo />
+                <ScalingSummaryOthersTable entries={filteredEntries.others} />
+              </>
             ) : (
               <OthersComingSoonNotice />
             )}

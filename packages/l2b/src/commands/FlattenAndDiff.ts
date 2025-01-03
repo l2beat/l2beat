@@ -1,10 +1,11 @@
 import { writeFileSync } from 'fs'
 import path from 'path'
-import { HttpClient, flattenStartingFrom } from '@l2beat/discovery'
+import { flattenStartingFrom } from '@l2beat/discovery'
 import {
   ExplorerConfig,
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { command, option, positional, string } from 'cmd-ts'
 import { powerdiff } from '../implementations/powerdiff'

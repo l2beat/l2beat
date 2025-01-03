@@ -1,6 +1,37 @@
 {
   "ethereum": [
     {
+      "symbol": "BGB",
+      "address": "0x54D2252757e1672EEaD234D27B1270728fF90581"
+    },
+    {
+      "symbol": "FUEL",
+      "address": "0x675B68AA4d9c2d3BB3F0397048e62E6B7192079c"
+    },
+    {
+      "symbol": "stAVAIL",
+      "address": "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a"
+    },
+    {
+      "symbol": "stAZUR",
+      "coingeckoId": "azuro-protocol", // the staked version is not on CG
+      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB"
+    },
+    {
+      "symbol": "stAethir",
+      "coingeckoId": "aethir", // the staked version is not on CG
+      "address": "0xc96Aa65F31E41b4Ca6924B86D93e25686019E59C"
+    },
+    {
+      "symbol": "stZENT",
+      "coingeckoId": "zentry", // the staked version is not on CG
+      "address": "0x996d67AA9b37df96428ad3608cb21352BF1FDB90"
+    },
+    {
+      "symbol": "BEAM",
+      "address": "0x62D0A8458eD7719FDAF978fe5929C6D342B0bFcE"
+    },
+    {
       "symbol": "FFM",
       "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92"
     },
@@ -236,7 +267,7 @@
       "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
     },
     {
-      "symbol": "ankrMATIC",
+      "symbol": "ankrPOL",
       "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C"
     },
     {
@@ -4228,6 +4259,22 @@
   ],
   "zksync2": [
     {
+      "symbol": "rsETH",
+      "category": "ether",
+      "address": "0x6be2425c381eb034045b527780d2bf4e21ab7236",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "wBTC",
       "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
       "source": "canonical",
@@ -4923,6 +4970,40 @@
         "bridges": [
           {
             "name": "FBTC FireBridge"
+          }
+        ]
+      }
+    }
+  ],
+  "degen": [
+    {
+      "symbol": "WETH",
+      "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+      "category": "ether",
+      "coingeckoId": "weth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xF1815bd50389c46847f0Bda824eC8da914045D14",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
           }
         ]
       }

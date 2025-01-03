@@ -60,54 +60,6 @@ describe('discovery config.jsonc', () => {
     })
   })
 
-  describe('fields inside ignoreInWatchMode exist in discovery', () => {
-    for (const configs of chainConfigs) {
-      for (const c of configs) {
-        it(`${c.name} on ${c.chain}`, () => {
-          const discovery = configReader.readDiscovery(c.name, c.chain)
-
-          for (const override of c.overrides) {
-            if (override.ignoreDiscovery === true) {
-              continue
-            }
-
-            const contract = discovery.contracts.find(
-              (c) => c.address === override.address,
-            )
-
-            if (contract?.ignoreInWatchMode === undefined) {
-              continue
-            }
-
-            const errorPrefix = `${c.name} (chain: ${
-              c.chain
-            }) - ${override.address.toString()}`
-
-            assert(
-              contract,
-              `${errorPrefix} - contract does not exist in discovery.json`,
-            )
-
-            assert(
-              contract.values,
-              `${errorPrefix} - values does not exist for this contract in discovery.json`,
-            )
-
-            const ignore = contract.ignoreInWatchMode
-            const values = Object.keys(contract.values)
-
-            assert(
-              ignore.every((x) => values.includes(x)),
-              `${errorPrefix} - [${ignore.join(
-                ',',
-              )}] - fields do not exist in discovery.json`,
-            )
-          }
-        })
-      }
-    }
-  })
-
   it('every discovery.json has sorted contracts', () => {
     const notSorted: string[] = []
 

@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
 import chalk from 'chalk'
 import {
   boolean,
@@ -14,7 +15,6 @@ import { getChainConfig, getChainConfigs } from '../config/config.discovery'
 import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
-import { HttpClient } from '../utils/HttpClient'
 import { ChainValue } from './types'
 
 export const DiscoverCommandArgs = {

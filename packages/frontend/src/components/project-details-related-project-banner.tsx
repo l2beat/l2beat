@@ -38,7 +38,7 @@ export function ProjectDetailsRelatedProjectBanner({
           />
           <Link
             href={href}
-            className="inline-block text-xs font-medium text-blue-700 underline hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550"
+            className="inline-block text-xs font-medium text-link underline hover:text-blue-550 dark:hover:text-blue-550"
           >
             {project.name}
           </Link>

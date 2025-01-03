@@ -24,24 +24,20 @@ export function PentagonRosetteIcon({
 }: Props) {
   const svgRef = useRef(null)
   const context = useRosetteTooltipContext()
+  const selectedRisk = context?.selectedRisk
+  const setSelectedRisk = context?.setSelectedRisk
 
-  useOnClickOutside(svgRef, () => setContent?.(undefined))
-  useEventListener('scroll', () => setContent?.(undefined))
+  useOnClickOutside(svgRef, () => setSelectedRisk?.(undefined))
+  useEventListener('scroll', () => setSelectedRisk?.(undefined))
 
-  const setContent = context?.setContent
-  const content = context?.content
   const [first, second, third, fourth, fifth] = values
 
   const shouldGrayOut = !!isUnderReview || !!hasNoBridge
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
-  const selectRisk = (risk: RosetteValue, side: 'top' | 'bottom') => {
-    setContent?.({
-      risk,
-      side: side,
-      sideOffset: side === 'top' ? -60 : -55,
-    })
+  const selectRisk = (risk: RosetteValue) => {
+    setSelectedRisk?.(risk)
   }
 
   return (
@@ -52,7 +48,7 @@ export function PentagonRosetteIcon({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       ref={svgRef}
-      onMouseLeave={() => setContent?.(undefined)}
+      onMouseLeave={() => setSelectedRisk?.(undefined)}
       // Easiest way to move the center of the pentagon to the center of the div
       // It's basically percentage diff between r and R
       // See: https://uploads-cdn.omnicalculator.com/images//geometry/area/pentagon-calc-fixed.svg
@@ -71,10 +67,10 @@ export function PentagonRosetteIcon({
           'transition-opacity',
           sentimentToFillColor(first.sentiment),
           shouldGrayOut && sentimentToFillColor('UnderReview'),
-          content && content.risk.name !== first.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== first.name && 'opacity-20',
         )}
-        onMouseEnter={() => selectRisk(first, 'bottom')}
-        onTouchStart={() => selectRisk(first, 'bottom')}
+        onMouseEnter={() => selectRisk(first)}
+        onTouchStart={() => selectRisk(first)}
       />
       <path
         d="M106.7 107.185C105.896 106.082 106.407 104.516 107.707 104.101L184.486 79.5422C185.651 79.1695 186.748 80.2732 186.369 81.4361L156.859 171.88C156.479 173.043 154.942 173.287 154.221 172.299L106.7 107.185Z"
@@ -82,10 +78,10 @@ export function PentagonRosetteIcon({
           'transition-opacity',
           sentimentToFillColor(second.sentiment),
           shouldGrayOut && sentimentToFillColor('UnderReview'),
-          content && content.risk.name !== second.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== second.name && 'opacity-20',
         )}
-        onMouseEnter={() => selectRisk(second, 'top')}
-        onTouchStart={() => selectRisk(second, 'top')}
+        onMouseEnter={() => selectRisk(second)}
+        onTouchStart={() => selectRisk(second)}
       />
       <path
         d="M97.878 111.248C98.6763 110.142 100.324 110.142 101.122 111.248L148.285 176.622C149 177.614 148.292 179 147.068 179H51.9317C50.7085 179 49.9996 177.614 50.7153 176.622L97.878 111.248Z"
@@ -93,10 +89,10 @@ export function PentagonRosetteIcon({
           'transition-opacity',
           sentimentToFillColor(third.sentiment),
           shouldGrayOut && sentimentToFillColor('UnderReview'),
-          content && content.risk.name !== third.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== third.name && 'opacity-20',
         )}
-        onMouseEnter={() => selectRisk(third, 'top')}
-        onTouchStart={() => selectRisk(third, 'top')}
+        onMouseEnter={() => selectRisk(third)}
+        onTouchStart={() => selectRisk(third)}
       />
       <path
         d="M90.3366 104.311C91.6374 104.722 92.1533 106.287 91.3524 107.391L44.0343 172.653C43.3162 173.643 41.7784 173.404 41.3953 172.242L11.6049 81.8903C11.2218 80.7285 12.3157 79.6214 13.482 79.9905L90.3366 104.311Z"
@@ -104,10 +100,10 @@ export function PentagonRosetteIcon({
           'transition-opacity',
           sentimentToFillColor(fourth.sentiment),
           shouldGrayOut && sentimentToFillColor('UnderReview'),
-          content && content.risk.name !== fourth.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== fourth.name && 'opacity-20',
         )}
-        onMouseEnter={() => selectRisk(fourth, 'top')}
-        onTouchStart={() => selectRisk(fourth, 'top')}
+        onMouseEnter={() => selectRisk(fourth)}
+        onTouchStart={() => selectRisk(fourth)}
       />
       <path
         d="M94.9177 95.7581C94.9168 97.1225 93.5801 98.0854 92.2857 97.6543L15.8055 72.181C14.6449 71.7944 14.4102 70.2558 15.4027 69.5408L92.5928 13.9293C93.5854 13.2142 94.9704 13.924 94.9697 15.1473L94.9177 95.7581Z"
@@ -115,10 +111,10 @@ export function PentagonRosetteIcon({
           'transition-opacity',
           sentimentToFillColor(fifth.sentiment),
           shouldGrayOut && sentimentToFillColor('UnderReview'),
-          content && content.risk.name !== fifth.name && 'opacity-20',
+          selectedRisk && selectedRisk.name !== fifth.name && 'opacity-20',
         )}
-        onMouseEnter={() => selectRisk(fifth, 'bottom')}
-        onTouchStart={() => selectRisk(fifth, 'bottom')}
+        onMouseEnter={() => selectRisk(fifth)}
+        onTouchStart={() => selectRisk(fifth)}
       />
 
       {isUnderReview ? (

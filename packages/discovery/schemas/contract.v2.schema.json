@@ -99,6 +99,7 @@
             "propose",
             "challenge",
             "validate",
+            "operateLinea",
             "sequence",
             "guard",
             "fastconfirm",

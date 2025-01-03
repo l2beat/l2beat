@@ -20,15 +20,14 @@ const TIME_RANGE = '30d'
 const UNIT = 'usd'
 
 export default async function Page() {
-  const entries = await getScalingSummaryEntries()
-
-  await Promise.all([
-    api.tvl.chart.prefetch({
+  const [entries] = await Promise.all([
+    getScalingSummaryEntries(),
+    api.tvl.recategorizedChart.prefetch({
       range: TIME_RANGE,
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
     }),
-    api.activity.chart.prefetch({
+    api.activity.recategorizedChart.prefetch({
       range: TIME_RANGE,
       filter: { type: 'all' },
     }),

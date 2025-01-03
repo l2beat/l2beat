@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 21285500,
+  "blockNumber": 21465401,
   "configHash": "0x9355907acedd9efc4a17134af5695b92b757a29c780569e5fa2acd817c4f675a",
   "contracts": [
     {
@@ -242,9 +242,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 3353,
+        "nextCrossDomainMessageIndex": 4440,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 3235,
+        "pendingQueueIndex": 4277,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -370,7 +370,157 @@
       "issuedPermissions": [
         {
           "permission": "challenge",
+          "target": "0x0092bC49078f130D27e70dBeee441E227280B97D",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x323a78C1c910b282dE98a557d735628A02E00983",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
+          "via": []
+        },
+        {
+          "permission": "challenge",
           "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xC412B4e6399F694CfF21D038d225373Fd6596811",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xC4db900F76293042349448D1Ba30F71518325Bb3",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xF2FF0509520fAf35B511074466A509e00d73C307",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
+          "via": []
+        },
+        {
+          "permission": "challenge",
+          "target": "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
           "via": []
         },
         {
@@ -423,12 +573,44 @@
         ],
         "$upgradeCount": 4,
         "batchChallenged": 45,
-        "challengers": ["0xB822319ab7848b7cC4537c8409e50f85BFb04377"],
+        "challengers": [
+          "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
+          "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
+          "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
+          "0x323a78C1c910b282dE98a557d735628A02E00983",
+          "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
+          "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
+          "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
+          "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
+          "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
+          "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
+          "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
+          "0xC4db900F76293042349448D1Ba30F71518325Bb3",
+          "0xF2FF0509520fAf35B511074466A509e00d73C307",
+          "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
+          "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
+          "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
+          "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
+          "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
+          "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
+          "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
+          "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
+          "0x0092bC49078f130D27e70dBeee441E227280B97D",
+          "0xC412B4e6399F694CfF21D038d225373Fd6596811",
+          "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
+          "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
+          "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
+          "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
+          "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
+          "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
+          "0x95C373754C66feF1Eb2dbb6934aF821C551D9738"
+        ],
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 2892,
-        "lastFinalizedBatchIndex": 2749,
+        "lastCommittedBatchIndex": 4769,
+        "lastFinalizedBatchIndex": 4590,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -555,7 +737,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 19,
+        "nonce": 23,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -662,7 +844,7 @@
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 3353,
+        "messageNonce": 4440,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -689,9 +871,54 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
+    {
+      "address": "0x0092bC49078f130D27e70dBeee441E227280B97D",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     { "address": "0x05e1d4694041aF987Af6F8402D902686018E2136" },
     { "address": "0x0659dF9D53A987e3aDaa9019407431413A101eF3" },
+    {
+      "address": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     { "address": "0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6" },
+    {
+      "address": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x323a78C1c910b282dE98a557d735628A02E00983",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     {
       "address": "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
       "receivedPermissions": [
@@ -703,6 +930,15 @@
       ]
     },
     { "address": "0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F" },
+    {
+      "address": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     { "address": "0x5300000000000000000000000000000000000006" },
     { "address": "0x5300000000000000000000000000000000000007" },
     { "address": "0x5300000000000000000000000000000000000008" },
@@ -710,6 +946,24 @@
     { "address": "0x530000000000000000000000000000000000000e" },
     { "address": "0x5300000000000000000000000000000000000015" },
     { "address": "0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5" },
+    {
+      "address": "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     {
       "address": "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
       "receivedPermissions": [
@@ -731,6 +985,87 @@
       ]
     },
     {
+      "address": "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
       "address": "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
       "receivedPermissions": [
         {
@@ -742,6 +1077,15 @@
     },
     { "address": "0xa79fEE4418338B59B8C6c93b87777A89F57c0Fd3" },
     { "address": "0xAD249861A911717fE74FA329fEC3c619f55DfFDf" },
+    {
+      "address": "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     {
       "address": "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
       "receivedPermissions": [
@@ -762,7 +1106,115 @@
         }
       ]
     },
+    {
+      "address": "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xC412B4e6399F694CfF21D038d225373Fd6596811",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xC4db900F76293042349448D1Ba30F71518325Bb3",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     { "address": "0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0" },
+    {
+      "address": "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xF2FF0509520fAf35B511074466A509e00d73C307",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
+    {
+      "address": "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+        }
+      ]
+    },
     {
       "address": "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
       "receivedPermissions": [

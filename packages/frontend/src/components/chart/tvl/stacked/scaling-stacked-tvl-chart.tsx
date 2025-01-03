@@ -3,15 +3,11 @@
 import { type Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
 import { Checkbox } from '~/components/core/checkbox'
-import { featureFlags } from '~/consts/feature-flags'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
@@ -23,6 +19,7 @@ import { type ChartUnit } from '../../types'
 import { TvlChartHeader } from '../tvl-chart-header'
 import { TvlChartTimeRangeControls } from '../tvl-chart-time-range-controls'
 import { StackedTvlChartHover } from './stacked-tvl-chart-hover'
+import { StackedTvlChartLegend } from './stacked-tvl-chart-legend'
 import { useStackedTvlChartRenderParams } from './use-stacked-tvl-chart-render-params'
 
 interface Props {
@@ -34,21 +31,17 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
-  const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useState<TvlChartRange>('1y')
 
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
 
   const filter = useMemo<TvlProjectFilter>(() => {
-    if (!featureFlags.showOthers && filters.isEmpty) {
-      return { type: 'layer2' }
-    }
     return {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, filters, includeFilter])
+  }, [entries, includeFilter])
 
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,
@@ -74,7 +67,7 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
         <StackedTvlChartHover {...data} unit={unit} />
       )}
     >
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-2">
         <TvlChartHeader
           unit={unit}
           value={total?.[unit]}
@@ -82,19 +75,18 @@ export function ScalingStackedTvlChart({ milestones, entries }: Props) {
           range={timeRange}
           timeRange={chartRange}
         />
-        <Chart />
+        <Chart className="mt-2" />
+        <StackedTvlChartLegend />
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
-            {featureFlags.showOthers && (
-              <Checkbox
-                checked={excludeAssociatedTokens}
-                onCheckedChange={(checked) =>
-                  setExcludeAssociatedTokens(!!checked)
-                }
-              >
-                Exclude associated tokens
-              </Checkbox>
-            )}
+            <Checkbox
+              checked={excludeAssociatedTokens}
+              onCheckedChange={(checked) =>
+                setExcludeAssociatedTokens(!!checked)
+              }
+            >
+              Exclude associated tokens
+            </Checkbox>
           </TvlChartUnitControls>
           <TvlChartTimeRangeControls
             timeRange={timeRange}

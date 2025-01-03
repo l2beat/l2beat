@@ -1,4 +1,4 @@
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
@@ -19,7 +19,7 @@ interface Props {
 
 export function TokenBreakdownStat({ breakdown }: Props) {
   if (!breakdown) {
-    return <UpcomingBadge />
+    return <NoDataBadge />
   }
   const { total, associated, ether, stablecoin, associatedTokens, warnings } =
     breakdown

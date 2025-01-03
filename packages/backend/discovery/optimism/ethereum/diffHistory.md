@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x9074daf74e21587a6df98b6fa92ce587120f152f
+
+# Diff at Sat, 21 Dec 2024 17:14:44 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@873a66d1ca14f5f7fb72cefd59af61bb4df31351 block: 21346059
+- current block number: 21346059
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21346059 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"sequence","target":"0x6887246668a3b87F54DeB3b94Ba47a6f63F32985","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+      issuedPermissions.0.via.0:
+-        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+      template:
++        "opstack/SystemConfig"
+      description:
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+    }
+```
+
 Generated with discovered.json: 0xbe6d1bd6cdf06c3266e47df316adae1127543239
 
 # Diff at Fri, 06 Dec 2024 21:11:41 GMT:

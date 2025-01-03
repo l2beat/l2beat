@@ -9,7 +9,6 @@ import {
   isUnderReview,
   isVerified,
 } from '@l2beat/config'
-import { featureFlags } from '~/consts/feature-flags'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -92,7 +91,7 @@ export function getCommonScalingEntry2({
       countdowns: project.countdowns,
     },
     tab:
-      featureFlags.showOthers && project.scalingInfo.isOther
+      project.scalingInfo.isOther || project.scalingInfo.type === 'Other'
         ? 'Others'
         : isRollup
           ? 'Rollups'

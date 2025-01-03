@@ -69,15 +69,13 @@ export const scalingFinalityColumns = [
     header: 'Past day avg.\nTime to inclusion',
     cell: (ctx) => {
       const { data } = ctx.row.original
-      return data ? (
+      return (
         <FinalityDurationCell
           scope="timeToInclusion"
           warning={data.timeToInclusion.warning}
           timings={data.timeToInclusion}
           syncStatus={data.syncStatus}
         />
-      ) : (
-        <Badge type="gray">COMING SOON</Badge>
       )
     },
     sortUndefined: 'last',

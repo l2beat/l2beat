@@ -13,15 +13,17 @@ import { type ActivityMetric } from '../activity-metric-context'
 import { MaxCountCell } from './max-count-cell'
 
 export type ScalingActivityTableEntry = ScalingActivityEntry & {
-  data: {
-    change: number
-    pastDayCount: number
-    summedCount: number
-    maxCount: {
-      value: number
-      timestamp: number
-    }
-  }
+  data:
+    | {
+        change: number
+        pastDayCount: number
+        summedCount: number
+        maxCount: {
+          value: number
+          timestamp: number
+        }
+      }
+    | undefined
 }
 
 const columnHelper = createColumnHelper<ScalingActivityTableEntry>()
@@ -35,6 +37,9 @@ export const getScalingActivityColumns = (
     header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
     cell: (ctx) => {
       const data = ctx.row.original.data
+      if (!data) {
+        return <NoDataBadge className="w-full" />
+      }
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
           <PrimaryValueCell>
@@ -48,6 +53,7 @@ export const getScalingActivityColumns = (
       align: 'right',
       headClassName: 'max-w-[60px]',
       tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`,
+      colSpan: (cell) => (cell.row.original.data ? 1 : 100),
     },
   }),
   columnHelper.accessor('data.maxCount.value', {
@@ -55,6 +61,9 @@ export const getScalingActivityColumns = (
     sortUndefined: 'last',
     cell: (ctx) => {
       const data = ctx.row.original.data
+      if (!data) {
+        return null
+      }
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
           <MaxCountCell
@@ -66,12 +75,16 @@ export const getScalingActivityColumns = (
     },
     meta: {
       align: 'right',
+      hideIfNull: true,
     },
   }),
   columnHelper.accessor('data.summedCount', {
     header: '30D Count',
     cell: (ctx) => {
       const data = ctx.row.original.data
+      if (!data) {
+        return null
+      }
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
           <ValueWithPercentageChange
@@ -87,6 +100,7 @@ export const getScalingActivityColumns = (
     sortUndefined: 'last',
     meta: {
       align: 'right',
+      hideIfNull: true,
     },
   }),
   columnHelper.accessor('data.ratio', {
@@ -95,7 +109,7 @@ export const getScalingActivityColumns = (
     cell: (ctx) => {
       const data = ctx.row.original.data
       if (!data) {
-        return <NoDataBadge />
+        return null
       }
       return (
         <SyncStatusWrapper syncStatus={data.syncStatus}>
@@ -107,6 +121,7 @@ export const getScalingActivityColumns = (
       align: 'right',
       tooltip:
         'The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction.',
+      hideIfNull: true,
     },
   }),
 ]

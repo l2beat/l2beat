@@ -22,7 +22,7 @@ If you want to add starkex type project, go to the [next section](#starkex-type-
    - `cast block-number -r <rpc-url>`
    - `cast block -r <rpc-url>`
 
-If you get a response, you are good to go. If not, try to find another RPC. If you can't another,
+If you get a response, you are good to go. If not, try to find another RPC. If you can't find another,
 you need to talk to devs to handle this case.
 
 3. Next step is to fill activity config in project config file. Add `config.transactionApi` property

@@ -112,7 +112,6 @@ export const zkspace: Layer2 = {
         to: 'proofSubmissions',
       },
     },
-    finality: 'coming soon',
   },
   dataAvailability: [
     addSentimentToDataAvailability({

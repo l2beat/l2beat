@@ -8,7 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { OutLink } from '~/components/out-link'
+import { CustomLink } from '~/components/link/custom-link'
 
 type Props = {
   askForVerificationLink: string
@@ -45,9 +45,9 @@ export function VerifiedCell(props: Props) {
           <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-secondary max-md:hidden">
             (performed by{' '}
             {
-              <OutLink className="underline" href={props.performedBy.link}>
+              <CustomLink className="underline" href={props.performedBy.link}>
                 {props.performedBy.name}
-              </OutLink>
+              </CustomLink>
             }
             )
           </div>
@@ -65,12 +65,12 @@ export function VerifiedCell(props: Props) {
               Verification was not performed for this verifier.
             </TooltipContent>
           </Tooltip>
-          <OutLink
+          <CustomLink
             className="ml-[26px] text-xs max-md:hidden"
             href={props.askForVerificationLink}
           >
             Submit or ask for verification
-          </OutLink>
+          </CustomLink>
         </span>
       )
     case 'failed':
@@ -91,9 +91,9 @@ export function VerifiedCell(props: Props) {
           <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-secondary max-md:hidden">
             (performed by{' '}
             {
-              <OutLink className="underline" href={props.performedBy.link}>
+              <CustomLink className="underline" href={props.performedBy.link}>
                 {props.performedBy.name}
-              </OutLink>
+              </CustomLink>
             }
             )
           </div>

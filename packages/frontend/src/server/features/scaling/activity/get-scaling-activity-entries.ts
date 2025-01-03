@@ -44,7 +44,7 @@ export async function getScalingActivityEntries() {
       compact([
         getEthereumEntry(ethereumData, 'Rollups'),
         getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-        featureFlags.showOthers && getEthereumEntry(ethereumData, 'Others'),
+        getEthereumEntry(ethereumData, 'Others'),
       ]),
     )
     .sort(compareActivityEntry)
@@ -54,7 +54,7 @@ export async function getScalingActivityEntries() {
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
   dataSource: ScalingProjectDisplay['activityDataSource']
-  data: ActivityProjectTableData
+  data: ActivityProjectTableData | undefined
 }
 
 function getScalingProjectActivityEntry(
@@ -62,11 +62,12 @@ function getScalingProjectActivityEntry(
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry | undefined {
-  if (!data) {
-    return undefined
-  }
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: data.syncStatus }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncStatus: data?.syncStatus,
+    }),
     href: `/scaling/projects/${project.display.slug}#activity`,
     dataSource: project.display.activityDataSource,
     data,
@@ -103,7 +104,8 @@ function compareActivityEntry(
       return stageDiff
     }
   }
-  const diff = b.data.uops.pastDayCount - a.data.uops.pastDayCount
+  const diff =
+    (b.data?.uops.pastDayCount ?? 0) - (a.data?.uops.pastDayCount ?? 0)
   if (diff !== 0) {
     return diff
   }

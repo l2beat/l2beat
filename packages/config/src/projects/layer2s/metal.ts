@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -13,6 +14,7 @@ export const metal: Layer2 = opStackL2({
   associatedTokens: ['MTL'],
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Metal',
     slug: 'metal',
     description:

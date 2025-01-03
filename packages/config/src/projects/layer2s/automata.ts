@@ -1,4 +1,6 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -28,6 +30,10 @@ export const automata: Layer2 = opStackL2({
     Badge.RaaS.AltLayer,
   ],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     name: 'Automata',
     slug: 'automata',
     description:
@@ -57,6 +63,7 @@ export const automata: Layer2 = opStackL2({
     daChallengeWindow,
     daResolveWindow,
     'https://github.com/ethereum-optimism/optimism/releases/tag/v1.7.7',
+    DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
   discoveryDrivenData: true,
 })

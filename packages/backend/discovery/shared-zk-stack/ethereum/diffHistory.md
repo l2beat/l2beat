@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xb0f939e85b4e05e4f91c70268a7f64a6310e634f
+Generated with discovered.json: 0x689e4270aa9108022db71e3b0f874b583a00bdef
 
 # Diff at Thu, 12 Dec 2024 11:47:09 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb0f939e85b4e05e4f91c70268a7f64a6310e634f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Config related changes. Adding Sophon discovery.
 
 ## Config/verification related changes
 

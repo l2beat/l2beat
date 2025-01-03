@@ -83,34 +83,34 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
 
 function RosetteTooltipContent() {
   const context = useRosetteTooltipContext()
-  const content = context?.content
-  if (!content) return null
+  const selectedRisk = context?.selectedRisk
+  if (!selectedRisk) return null
 
   return (
     <TooltipContent
-      side={content.side}
-      sideOffset={content.sideOffset}
+      side="bottom"
       onPointerDownOutside={(e) => {
         e.preventDefault()
       }}
       className="w-[300px]"
     >
+      <p className="font-medium text-primary">{selectedRisk.name}</p>
       <SentimentText
-        sentiment={content.risk.sentiment}
-        className="mb-2 flex items-center gap-1 font-medium"
+        sentiment={selectedRisk.sentiment}
+        className="mb-2 flex items-center gap-1 text-lg font-bold"
       >
-        {content.risk.value}
+        {selectedRisk.value}
       </SentimentText>
-      {content.risk.warning && (
+      {selectedRisk.warning && (
         <WarningBar
           className="mb-2"
           icon={RoundedWarningIcon}
-          text={content.risk.warning.value}
-          color={content.risk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+          text={selectedRisk.warning.value}
+          color={selectedRisk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
           ignoreMarkdown
         />
       )}
-      <span className="text-xs">{content.risk.description}</span>
+      <span className="text-xs">{selectedRisk.description}</span>
     </TooltipContent>
   )
 }

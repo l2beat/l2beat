@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { HttpClient2 } from '../http/HttpClient2'
+import { HttpClient } from '../http/HttpClient'
 import { RpcClient } from '../rpc/RpcClient'
 import { BlobClient } from './BlobClient'
 
@@ -90,7 +90,7 @@ describe(BlobClient.name, () => {
           blob,
         },
       ]
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({
           data: expected,
         }),
@@ -120,7 +120,7 @@ describe(BlobClient.name, () => {
 
   describe(BlobClient.prototype.call.name, () => {
     it('should call beacon api and return result', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({ result: 'result' }),
       })
       const client = mockClient({ http, beaconApiUrl: 'BEACON_API_URL' })
@@ -132,7 +132,7 @@ describe(BlobClient.name, () => {
     })
 
     it('should throw on beacon error', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => ({
           code: -32000,
           message: 'RPC Error',
@@ -160,7 +160,7 @@ describe(BlobClient.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
+  http?: HttpClient
   beaconApiUrl?: string
   rpcClient?: RpcClient
   generateId?: () => string
@@ -169,7 +169,7 @@ function mockClient(deps: {
   return new BlobClient({
     beaconApiUrl: deps.beaconApiUrl ?? 'BEACON_API_URL',
     rpcClient: deps.rpcClient ?? mockObject<RpcClient>({}),
-    http: deps.http ?? mockObject<HttpClient2>({}),
+    http: deps.http ?? mockObject<HttpClient>({}),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

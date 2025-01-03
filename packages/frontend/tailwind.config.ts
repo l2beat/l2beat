@@ -81,10 +81,6 @@ const config: Config = {
         900: '#2F2F2F',
         950: '#111111',
       },
-      'n-gray': {
-        200: '#E6E7EC',
-        400: '#AEB1C2',
-      },
       black: '#1B1B1B',
       yellow: {
         100: '#FFDD28',
@@ -109,14 +105,14 @@ const config: Config = {
         700: '#4A133C',
         800: '#32102A',
       },
-      indigo: {
-        500: '#7252F2',
-      },
       pink: {
         100: '#FF46C0',
         200: '#DB8BF7',
         800: '#B94DDF',
         900: '#AB3BD2',
+      },
+      'n-pink': {
+        400: '#FC49C2',
       },
       green: {
         200: '#B0FFAA',
@@ -151,7 +147,6 @@ const config: Config = {
         550: '#1F87FF',
         600: '#2B5CD9',
         700: '#005DD7',
-        800: '#083575',
         900: '#112944',
         950: '#152A4B',
       },
@@ -168,6 +163,9 @@ const config: Config = {
       },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
       fuchsia: { 700: '#860CB0' },
+      'n-cyan': {
+        600: '#1C8BA4',
+      },
 
       // New colors
       primary: {
@@ -185,6 +183,14 @@ const config: Config = {
       'icon-secondary': 'hsl(var(--icon-secondary))',
       overlay: 'hsl(var(--overlay))',
       divider: 'hsl(var(--divider))',
+      'indicator-rollups': 'hsl(var(--indicator-rollups))',
+      'indicator-validiums-optimiums':
+        'hsl(var(--indicator-validiums-optimiums))',
+      'indicator-others': 'hsl(var(--indicator-others))',
+      'indicator-ethereum': 'hsl(var(--indicator-ethereum))',
+      positive: 'hsl(var(--positive))',
+      'link-stroke': 'hsl(var(--link-stroke))',
+      link: 'hsl(var(--link))',
     },
     screens: {
       xs: '400px',

@@ -1,7 +1,7 @@
 import { type EthereumAddress } from '@l2beat/shared-pure'
-import { OutLink } from '~/components/out-link'
+import { CustomLink } from '~/components/link/custom-link'
 
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { formatAddress } from '~/utils/format-address'
 
 interface Props {
@@ -19,11 +19,11 @@ export function TokenAddressCell(props: Props) {
   }
 
   return (
-    <OutLink href={`${props.explorer}/address/${props.address.toString()}`}>
+    <CustomLink href={`${props.explorer}/address/${props.address.toString()}`}>
       <span className="flex items-center gap-1 text-xs">
         {formatAddress(props.address.toString())}
-        <OutLinkIcon className="fill-blue-700 dark:fill-blue-500" />
+        <CustomLinkIcon className="fill-blue-700 dark:fill-blue-500" />
       </span>
-    </OutLink>
+    </CustomLink>
   )
 }

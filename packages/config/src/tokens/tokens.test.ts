@@ -1,4 +1,4 @@
-import { CoingeckoClient, HttpClient2 } from '@l2beat/shared'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
   AssetId,
@@ -157,7 +157,7 @@ describe('tokens', () => {
     it('every token has correct CoingeckoId', async function () {
       this.timeout(10000)
 
-      const http = new HttpClient2()
+      const http = new HttpClient()
       const coingeckoClient = new CoingeckoClient({
         apiKey: config.coingeckoApiKey,
         http,

@@ -1,5 +1,6 @@
 'use client'
 import { type Milestone } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ActivityChart } from '~/components/chart/activity/activity-chart'
 import {
@@ -9,10 +10,13 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
@@ -41,6 +45,10 @@ export function ScalingActivityTabs({
     desc: true,
   }
 
+  const showOthers =
+    filteredEntries.others.length > 0 &&
+    !filteredEntries.others.every((e) => !e.data || e.id === ProjectId.ETHEREUM)
+
   return (
     <>
       <ScalingActivityFilters
@@ -49,7 +57,7 @@ export function ScalingActivityTabs({
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', featureFlags.showOthers && 'mt-5')}
+        className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -63,7 +71,7 @@ export function ScalingActivityTabs({
               {filteredEntries.validiumsAndOptimiums.length - 1}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -71,12 +79,13 @@ export function ScalingActivityTabs({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="primary-card pt-5">
-            {featureFlags.showOthers && (
-              <>
-                <ActivityChart milestones={milestones} entries={rollups} />
-                <HorizontalSeparator className="mb-3 mt-5" />
-              </>
-            )}
+            <ActivityChart
+              milestones={milestones}
+              entries={rollups}
+              type="Rollups"
+            />
+            <HorizontalSeparator className="mb-3 mt-5" />
+            <RollupsInfo />
             <ScalingActivityTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -85,35 +94,30 @@ export function ScalingActivityTabs({
             value="validiums-and-optimiums"
             className="primary-card pt-5"
           >
-            {featureFlags.showOthers && (
-              <>
-                <ActivityChart
-                  milestones={milestones}
-                  entries={validiumsAndOptimiums}
-                  hideScalingFactor
-                />
-                <HorizontalSeparator className="mb-3 mt-5" />
-              </>
-            )}
+            <ActivityChart
+              milestones={milestones}
+              entries={validiumsAndOptimiums}
+              hideScalingFactor
+              type="ValidiumsAndOptimiums"
+            />
+            <HorizontalSeparator className="mb-3 mt-5" />
+            <ValidiumsAndOptimiumsInfo />
             <ScalingActivityTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {/* Greater than one because we always have the Ethereum entry */}
-        {filteredEntries.others.length > 1 && (
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others" className="primary-card pt-5">
-              {featureFlags.showOthers && (
-                <>
-                  <ActivityChart
-                    milestones={milestones}
-                    entries={others ?? []}
-                    hideScalingFactor
-                  />
-                  <HorizontalSeparator className="mb-3 mt-5" />
-                </>
-              )}
+              <ActivityChart
+                milestones={milestones}
+                entries={others ?? []}
+                hideScalingFactor
+                type="Others"
+              />
+              <HorizontalSeparator className="mb-3 mt-5" />
+              <OthersInfo />
               <ScalingActivityTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

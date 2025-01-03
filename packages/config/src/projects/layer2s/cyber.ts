@@ -1,4 +1,6 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -31,6 +33,10 @@ export const cyber: Layer2 = opStackL2({
   ],
   additionalPurposes: ['Social'],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     name: 'Cyber',
     slug: 'cyber',
     architectureImage: 'opstack-dachallenge',
@@ -58,6 +64,7 @@ export const cyber: Layer2 = opStackL2({
     daChallengeWindow,
     daResolveWindow,
     'https://github.com/ethereum-optimism/optimism/releases/tag/v1.9.4',
+    DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
   chainConfig: {
     name: 'cyber',

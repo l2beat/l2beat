@@ -94,6 +94,7 @@ export const getCachedActivityChartData = cache(
   ['activity-chart-data'],
   {
     tags: ['activity'],
+    revalidate: UnixTime.DAY,
   },
 )
 

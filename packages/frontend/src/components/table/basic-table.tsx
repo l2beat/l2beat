@@ -190,6 +190,14 @@ export function BasicTableRow<T extends CommonProjectEntry>({
           const groupParams = getBasicTableGroupParams(cell.column)
           const href = getBasicTableHref(row.original.href, meta?.hash)
 
+          if (meta?.hideIfNull && cell.renderValue() === null) {
+            return null
+          }
+
+          const colSpan = meta?.colSpan
+            ? meta.colSpan(cell.getContext())
+            : undefined
+
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
               <TableCell
@@ -205,10 +213,10 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                       ? 'pl-10'
                       : 'pl-4'
                     : undefined,
-
                   meta?.cellClassName,
                 )}
                 style={getCommonPinningStyles(cell.column)}
+                colSpan={colSpan}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>

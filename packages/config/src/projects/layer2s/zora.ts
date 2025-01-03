@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -14,6 +15,7 @@ export const zora: Layer2 = opStackL2({
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Zora',
     slug: 'zora',
     description:
@@ -52,7 +54,7 @@ export const zora: Layer2 = opStackL2({
       url: 'https://explorer.zora.energy/api',
       type: 'blockscout',
     },
-    // ~ Timestamp of block number 0 on Mode
+    // ~ Timestamp of block number 0 on Zora
     // The first full hour timestamp that will return the block number
     // https://explorer.zora.energy/block/0
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),

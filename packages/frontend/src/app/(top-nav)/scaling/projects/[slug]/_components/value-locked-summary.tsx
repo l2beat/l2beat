@@ -1,5 +1,5 @@
 import { type WarningWithSentiment } from '@l2beat/config'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ValueLockedBreakdown } from '~/components/breakdown/value-locked-breakdown'
 import {
   Tooltip,
@@ -106,7 +106,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           )
         ) : (
           <div className="w-auto">
-            <UpcomingBadge />
+            <NoDataBadge />
           </div>
         )}
       </div>

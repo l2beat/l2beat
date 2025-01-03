@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -10,6 +11,10 @@ export const xchain: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
   additionalBadges: [Badge.RaaS.Conduit, Badge.DA.DAC],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'XCHAIN',
     slug: 'xchain',
     description:

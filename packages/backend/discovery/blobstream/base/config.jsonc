@@ -9,30 +9,11 @@
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "SuccinctGatewayMultisig",
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1",
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
-    "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": "BlobstreamMultisig"
+    "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": "BlobstreamMultisig",
+    "0xF2415C44F47983F7dD22003B46A034B1F1d04e44": "HeaderRangeVerifier",
+    "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6": "NextHeaderVerifier"
   },
   "overrides": {
-    "Blobstream": {
-      "extends": "succinct/SP1Blobstream",
-      "fields": {
-        "relayers": {
-          "handler": {
-            "type": "hardcoded",
-            "value": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
-          }
-        },
-        "isRelayerApproved": {
-          "handler": {
-            "type": "call",
-            "method": "function approvedRelayers(address) view returns (bool)",
-            "args": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"]
-          }
-        }
-      }
-    },
-    "SuccinctGatewaySP1": {
-      "extends": "succinct/SP1SuccinctGateway"
-    },
     // deprecated
     "SuccinctGateway": {
       "fields": {

@@ -18,6 +18,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ESCROW } from '../../common/escrow'
 import { formatChallengePeriod } from '../../common/formatDelays'
@@ -88,6 +89,7 @@ export const kroma: Layer2 = {
     Badge.Infra.Superchain,
   ],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Kroma',
     slug: 'kroma',
     description:

@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xa59f09725194cc1921cb9ba6d313792567e420db
+
+# Diff at Mon, 23 Dec 2024 12:38:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21428935
+- current block number: 21465236
+
+## Description
+
+Config related: Celestia-Nitro wmroot added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428935 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287:
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x6c2987f2fd2f0d30409924f65b1807ff9fddb32b
+
+# Diff at Wed, 18 Dec 2024 10:51:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21292526
+- current block number: 21428935
+
+## Description
+
+Reya socket vault admin transfered to a new EOA (previous was socketadmin.eth, current one is funded by it).
+
+## Watched changes
+
+```diff
+    contract SocketVault_Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
 Generated with discovered.json: 0x3f145b2993136469b9ddeb0b2659975ed948d77d
 
 # Diff at Thu, 05 Dec 2024 11:52:10 GMT:

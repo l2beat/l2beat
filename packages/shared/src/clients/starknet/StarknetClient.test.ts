@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Block, Transaction, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { HttpClient2 } from '../http/HttpClient2'
+import { HttpClient } from '../http/HttpClient'
 import { StarknetClient } from './StarknetClient'
 import {
   StarknetErrorResponse,
@@ -26,7 +26,7 @@ describe(StarknetClient.name, () => {
         ],
       }
 
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () =>
           mockStarknetGetBlockWithTxsResponse(mockStarknetBlock),
       })
@@ -41,7 +41,7 @@ describe(StarknetClient.name, () => {
 
   describe(StarknetClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockStarknetGetBlockResponse(100),
       })
       const client = mockClient({ http })
@@ -54,7 +54,7 @@ describe(StarknetClient.name, () => {
 
   describe(StarknetClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => 'data-returned-from-api',
       })
 
@@ -106,14 +106,14 @@ describe(StarknetClient.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
+  http?: HttpClient
   url?: string
   generateId?: () => string
 }) {
   return new StarknetClient({
     url: deps.url ?? 'API_URL',
     generateId: deps.generateId,
-    http: deps.http ?? mockObject<HttpClient2>({}),
+    http: deps.http ?? mockObject<HttpClient>({}),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

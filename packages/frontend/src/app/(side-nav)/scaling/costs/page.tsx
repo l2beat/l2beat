@@ -1,9 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { featureFlags } from '~/consts/feature-flags'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -22,21 +18,17 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [entries] = await Promise.all([
     getScalingCostsEntries(),
-    !featureFlags.showOthers &&
-      api.costs.chart.prefetch({ range: '30d', filter: { type: 'all' } }),
     api.costs.table.prefetch({ range: '30d' }),
   ])
 
-  if (featureFlags.showOthers) {
-    const rollupsIds = entries.rollups.map((project) => project.id)
-    await api.costs.chart.prefetch({
-      range: '30d',
-      filter: {
-        type: 'projects',
-        projectIds: rollupsIds,
-      },
-    })
-  }
+  const rollupsIds = entries.rollups.map((project) => project.id)
+  await api.costs.chart.prefetch({
+    range: '30d',
+    filter: {
+      type: 'projects',
+      projectIds: rollupsIds,
+    },
+  })
 
   return (
     <HydrateClient>
@@ -45,21 +37,6 @@ export default async function Page() {
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
               <MainPageHeader>Onchain costs</MainPageHeader>
-              {featureFlags.showOthers && (
-                <HorizontalSeparator className="max-lg:hidden" />
-              )}
-              {!featureFlags.showOthers && (
-                <MainPageCard>
-                  <ScalingCostsChart
-                    entries={[
-                      ...entries.rollups,
-                      ...entries.validiumsAndOptimiums,
-                      ...entries.others,
-                    ]}
-                    milestones={HOMEPAGE_MILESTONES}
-                  />
-                </MainPageCard>
-              )}
               <ScalingCostsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>

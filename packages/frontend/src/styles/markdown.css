@@ -106,11 +106,11 @@
 
 /* Make sure this is compatible with the <Link /> component */
 .mdc a:not([data-link-role="glossary"]) {
-  @apply font-medium text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
+  @apply font-medium text-link underline transition-colors hover:text-blue-550;
 }
 
 .mdc a[data-link-role="glossary"] {
-  @apply underline decoration-dotted md:underline-offset-2 decoration-blue-700 dark:decoration-blue-500;
+  @apply underline decoration-dotted md:underline-offset-2 decoration-link;
 }
 
 .mdc img {

@@ -1,7 +1,7 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { StageBadge } from '~/components/badge/stage-badge'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
@@ -49,17 +49,17 @@ export function ScalingProjectStats({ project, className }: Props) {
               {project.header.activity.lastDayUops.toFixed(2)}
             </ValueWithPercentageChange>
           ) : (
-            <UpcomingBadge />
+            <NoDataBadge />
           )
         }
       />
       <ProjectStat
-        title="30D tx count"
+        title="30D ops count"
         value={
           project.header.activity ? (
-            formatNumber(project.header.activity.txCount)
+            formatNumber(project.header.activity.uopsCount)
           ) : (
-            <UpcomingBadge />
+            <NoDataBadge />
           )
         }
       />
