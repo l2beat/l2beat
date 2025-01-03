@@ -451,6 +451,10 @@
       "address": "0xDDB3422497E61e13543BeA06989C0789117555c5"
     },
     {
+      "symbol": "COW",
+      "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
+    },
+    {
       "symbol": "CREDI",
       "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B"
     },
@@ -536,6 +540,10 @@
     {
       "symbol": "DIP",
       "address": "0xc719d010B63E5bbF2C0551872CD5316ED26AcD83"
+    },
+    {
+      "symbol": "DODO",
+      "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd"
     },
     {
       "symbol": "DOLA",
@@ -1040,6 +1048,10 @@
       "address": "0x967da4048cD07aB37855c090aAF366e4ce1b9F48"
     },
     {
+      "symbol": "ONDO",
+      "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3"
+    },
+    {
       "symbol": "OHM",
       "address": "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5"
     },
@@ -1156,6 +1168,10 @@
     {
       "symbol": "Puff",
       "address": "0x18fA05ee5e478EED8925946abb41d09AEc5d34D6"
+    },
+    {
+      "symbol": "PUFFER",
+      "address": "0x4d1C297d39C5c1277964D0E3f8Aa901493664530"
     },
     {
       "symbol": "PUNDIX",
@@ -1497,6 +1513,10 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "USUAL",
+      "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E"
+    },
+    {
       "symbol": "VENT",
       "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624"
     },
@@ -1518,8 +1538,16 @@
       "address": "0x92CC36D66e9d739D50673d1f27929a371FB83a67"
     },
     {
+      "symbol": "WAVAX",
+      "address": "0x85f138bfEE4ef8e540890CFb48F620571d67Eda3"
+    },
+    {
       "symbol": "WAVES",
       "address": "0x1cF4592ebfFd730c7dc92c1bdFFDfc3B9EfCf29a"
+    },
+    {
+      "symbol": "WBNB",
+      "address": "0x418d75f65a02b3d53b2418fb8e1fe493759c7605"
     },
     {
       "symbol": "WBTC",
@@ -1541,6 +1569,11 @@
       "coingeckoId": "wecoin"
     },
     {
+      "symbol": "WNEAR",
+      "address": "0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
+      "coingeckoId": "near"
+    },
+    {
       "symbol": "WLD",
       "address": "0x163f8C2467924be0ae7B5347228CABF260318753"
     },
@@ -1552,6 +1585,11 @@
       "symbol": "wstETH",
       "category": "ether",
       "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+    },
+    {
+      "symbol": "WSUI",
+      "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
+      "coingeckoId": "sui"
     },
     {
       "symbol": "wUSDM",
