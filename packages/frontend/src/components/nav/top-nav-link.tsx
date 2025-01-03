@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation'
 import { cn } from '~/utils/cn'
 
 /**
- * Legacy nav link component, used in the legacy navbar.
+ * Top nav link component, used in the top navbar.
  */
-export function LegacyNavLink({
+export function TopNavLink({
   href,
   children,
   large,

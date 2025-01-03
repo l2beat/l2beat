@@ -1,6 +1,6 @@
 export function NoBridgeGrissiniDetailsPlaceholder() {
   return (
-    <div className="flex h-[278px] w-[264px] flex-col items-center justify-center gap-3 rounded-lg bg-zinc-100 p-4 text-center dark:bg-zinc-900">
+    <div className="flex h-[278px] w-[264px] flex-col items-center justify-center gap-3 rounded-lg bg-surface-primary p-4 text-center">
       <svg
         width="40"
         height="40"

@@ -78,7 +78,7 @@ export function ScalingActivityTabs({
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
+          <DirectoryTabsContent value="rollups" className="primary-card pt-5">
             <ActivityChart
               milestones={milestones}
               entries={rollups}
@@ -92,7 +92,7 @@ export function ScalingActivityTabs({
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent
             value="validiums-and-optimiums"
-            className="main-page-card pt-5"
+            className="primary-card pt-5"
           >
             <ActivityChart
               milestones={milestones}
@@ -109,10 +109,7 @@ export function ScalingActivityTabs({
         </TableSortingProvider>
         {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent
-              value="others"
-              className="main-page-card pt-5"
-            >
+            <DirectoryTabsContent value="others" className="primary-card pt-5">
               <ActivityChart
                 milestones={milestones}
                 entries={others ?? []}
