@@ -9,7 +9,10 @@ export class BlockBackfillIndexer extends BlockIndexerBase {
 
   override async update(from: number, to: number): Promise<number> {
     //check cut-off point
-    assert(this.$.cutOffPoint, 'Cut-off point should be defined')
+    assert(
+      this.$.cutOffPoint && this.$.cutOffPoint <= to,
+      `Cut-off point (${this.$.cutOffPoint}) should be less than or equal to the target height ${to}`,
+    )
 
     if (from >= this.$.cutOffPoint - 1) {
       this.logger.info('Backfill completed. Skipping', {
@@ -25,6 +28,7 @@ export class BlockBackfillIndexer extends BlockIndexerBase {
         this.$.projectId,
         this.$.cutOffPoint,
       )
+
     if (from < currentBackfillBlock) {
       this.logger.info('Adjusting to the current backfill block', {
         from,
@@ -33,7 +37,7 @@ export class BlockBackfillIndexer extends BlockIndexerBase {
       from = currentBackfillBlock
     }
 
-    return await this.doUpdate(from, to)
+    return await this.doUpdate(from, this.$.cutOffPoint)
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
