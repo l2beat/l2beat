@@ -352,6 +352,13 @@ export function SEQUENCER_SELF_SEQUENCE(
   }
 }
 
+const SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER: ScalingProjectRiskViewEntry = {
+  value: 'Self sequence',
+  description:
+    'Users can self sequence transactions by sending them on L1. There is no privileged operator.',
+  sentiment: 'good',
+}
+
 export function SEQUENCER_SELF_SEQUENCE_ZK(
   delay?: number,
 ): ScalingProjectRiskViewEntry {
@@ -676,6 +683,7 @@ export const RISK_VIEW = {
   // sequencerFailure
   SEQUENCER_SELF_SEQUENCE,
   SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
   SEQUENCER_FORCE_VIA_L1,
   SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
   SEQUENCER_FORCE_VIA_L1_LOOPRING,

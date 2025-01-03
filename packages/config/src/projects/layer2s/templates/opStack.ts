@@ -138,6 +138,7 @@ interface OpStackConfigCommon {
   additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  riskView?: ScalingProjectRiskView
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -595,7 +596,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     ],
-    riskView: {
+    riskView: templateVars.riskView ?? {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
         secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
