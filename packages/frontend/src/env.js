@@ -41,7 +41,6 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default('false'),
-    NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
       process.env.NODE_ENV === 'development' ? 'true' : 'false',
     ),
@@ -72,8 +71,6 @@ export const env = createEnv({
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
-    NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS,
     NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS,
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,

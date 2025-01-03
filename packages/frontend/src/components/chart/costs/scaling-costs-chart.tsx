@@ -2,10 +2,7 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
   type CostsMetric,
   useCostsMetricContext,
@@ -17,7 +14,6 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
@@ -52,8 +48,6 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
   }
 
   const includeFilters = useScalingFilter()
-  const filters = useScalingFilterValues()
-
   const resolution = rangeToResolution(range)
 
   const filteredEntries = useMemo(
@@ -62,15 +56,11 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
   )
 
   const filter = useMemo<CostsProjectsFilter>(() => {
-    if (filters.isEmpty && !featureFlags.showOthers) {
-      return { type: 'all' }
-    }
-
     return {
       type: 'projects',
       projectIds: filteredEntries.map((project) => project.id),
     }
-  }, [filteredEntries, filters])
+  }, [filteredEntries])
 
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
@@ -98,16 +88,14 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
       >
         <Header resolution={resolution} chartRange={chartRange} />
         <Chart className="mt-4" />
-        {featureFlags.showOthers && <CostsChartLegend className="my-2" />}
+        <CostsChartLegend className="my-2" />
         <ChartControlsWrapper>
           <div className="flex flex-wrap gap-1">
             <UnitControls unit={unit} setUnit={setUnit} />
-            {featureFlags.showOthers && (
-              <CostsMetricControls
-                value={metric}
-                onValueChange={onMetricChange}
-              />
-            )}
+            <CostsMetricControls
+              value={metric}
+              onValueChange={onMetricChange}
+            />
           </div>
           <CostsChartTimeRangeControls
             timeRange={range}

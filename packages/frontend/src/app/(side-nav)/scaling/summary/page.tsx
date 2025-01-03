@@ -2,7 +2,6 @@ import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling
 import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
 import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
-import { featureFlags } from '~/consts/feature-flags'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -21,25 +20,17 @@ const TIME_RANGE = '30d'
 const UNIT = 'usd'
 
 export default async function Page() {
-  const entries = await getScalingSummaryEntries()
-
-  const tvlChartParams = {
-    range: TIME_RANGE,
-    excludeAssociatedTokens: false,
-    filter: { type: 'layer2' },
-  } as const
-  const activityChartParams = {
-    range: TIME_RANGE,
-    filter: { type: 'all' },
-  } as const
-
-  await Promise.all([
-    featureFlags.showOthers
-      ? api.tvl.recategorizedChart.prefetch(tvlChartParams)
-      : api.tvl.chart.prefetch(tvlChartParams),
-    featureFlags.showOthers
-      ? api.activity.recategorizedChart.prefetch(activityChartParams)
-      : api.activity.chart.prefetch(activityChartParams),
+  const [entries] = await Promise.all([
+    getScalingSummaryEntries(),
+    api.tvl.recategorizedChart.prefetch({
+      range: TIME_RANGE,
+      excludeAssociatedTokens: false,
+      filter: { type: 'layer2' },
+    }),
+    api.activity.recategorizedChart.prefetch({
+      range: TIME_RANGE,
+      filter: { type: 'all' },
+    }),
     api.activity.chartStats.prefetch({
       filter: { type: 'all' },
     }),
