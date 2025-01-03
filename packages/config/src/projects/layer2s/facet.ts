@@ -12,6 +12,7 @@ export const facet: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.Other.BasedSequencing],
   display: {
+    category: 'Other',
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Facet',
     slug: 'facet',
