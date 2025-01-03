@@ -105,6 +105,7 @@ export function getChainActivityConfig(
       ),
       assessCount: project.transactionApi.assessCount,
       startBlock: project.transactionApi.startBlock,
+      cutOffPoint: project.transactionApi.cutOffPoint,
     }
   } else if (project.transactionApi.type === 'starkex') {
     return {
@@ -132,6 +133,8 @@ export function getChainActivityConfig(
         project.transactionApi.defaultCallsPerMinute ??
           DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
+      startBlock: project.transactionApi.startBlock,
+      cutOffPoint: project.transactionApi.cutOffPoint,
     }
   }
 }
