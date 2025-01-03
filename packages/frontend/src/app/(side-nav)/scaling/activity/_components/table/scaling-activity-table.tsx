@@ -1,13 +1,15 @@
 'use client'
 
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { getCoreRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
+import { getEthereumFirstSortedRowModel } from '~/components/table/sorting/get-ethereum-first-sorted-row-model'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { compareActivityEntry } from '~/server/features/scaling/activity/utils/compare-activity-entry'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -25,10 +27,8 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
 
   const tableEntries = useMemo(() => {
     const tableEntries = entries
+      .sort((a, b) => compareActivityEntry(a, b, { metric }))
       .map((e) => mapToTableEntry(e, metric))
-      .sort((a, b) => {
-        return (b.data?.pastDayCount ?? 0) - (a.data?.pastDayCount ?? 0)
-      })
     return tableEntries ?? []
   }, [entries, metric])
 
@@ -38,7 +38,7 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    getSortedRowModel: getEthereumFirstSortedRowModel(),
     state: {
       sorting,
     },
