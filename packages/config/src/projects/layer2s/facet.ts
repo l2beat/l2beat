@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure/build/types/UnixTime'
-import { EXITS, OPERATOR, RISK_VIEW } from '../../common'
+import { OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
