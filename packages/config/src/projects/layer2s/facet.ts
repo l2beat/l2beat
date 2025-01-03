@@ -4,7 +4,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-import { RISK_VIEW } from '../../common'
+import { OPERATOR, RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('facet')
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
@@ -43,6 +43,7 @@ export const facet: Layer2 = opStackL2({
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
+  nonTemplateTechnology: { operator: OPERATOR.DECENTRALIZED_OPERATOR },
   rpcUrl: 'https://mainnet.facet.org/',
   genesisTimestamp: new UnixTime(1733855495),
   milestones: [
