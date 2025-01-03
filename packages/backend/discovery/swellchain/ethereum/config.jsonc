@@ -1,0 +1,36 @@
+{
+    "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+    "chain": "ethereum",
+    "name": "swellchain",
+    "initialAddresses": [
+        "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121", //wstETHEscrow
+        "0x758E0EE66102816F5C3Ec9ECc1188860fbb87812" //L1StandardBridge
+    ],
+    "types": {
+        "DisputeGameMap": {
+        "typeCaster": "Mapping",
+        "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame"
+        }
+        }
+    },
+    "names": {
+        "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121": "wstETHEscrow",
+        "0x758E0EE66102816F5C3Ec9ECc1188860fbb87812": "OptimismPortal"
+    },
+    "overrides": {
+        "wstETHEscrow": {
+        "ignoreRelatives": ["l2Token", "l1Token"],
+        "fields": {
+            "accessControl": {
+            "handler": {
+                "type": "accessControl",
+                "ignoreRelative": true
+            }
+            }
+        }
+        }
+    }
+    }
+  
