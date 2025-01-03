@@ -78,12 +78,6 @@
   body {
     @apply bg-background text-base text-primary md:text-lg font-sans transition-colors selection:bg-brand/30 dark:selection:bg-brand/50;
   }
-
-  /* 
-   It has to be done this way because we want to keep the old styles for select component for top nav pages.
-   It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
-   Temporary solution until project page is redesigned to new colors.
-  */
 }
 
 @layer utilities {
