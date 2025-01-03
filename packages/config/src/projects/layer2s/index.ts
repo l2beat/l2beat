@@ -147,6 +147,7 @@ import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
+import { status } from './status'
 import { stealthchain } from './stealthchain'
 import { superlumio } from './superlumio'
 import { superseed } from './superseed'
@@ -337,6 +338,7 @@ export const layer2s: Layer2[] = [
   sorare,
   specular,
   starknet,
+  status,
   stealthchain,
   shape,
   superlumio,
