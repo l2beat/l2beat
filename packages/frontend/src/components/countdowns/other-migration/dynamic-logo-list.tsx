@@ -65,14 +65,9 @@ export function DynamicLogoList({ projects }: Props) {
           </Tooltip>
         ))}
         {visibleCount < projects.length && (
-          <Tooltip>
-            <TooltipTrigger className="flex-none text-2xs text-secondary">
-              +{projects.length - visibleCount} more
-            </TooltipTrigger>
-            <TooltipContent>
-              {projects.map(({ name }) => name).join(', ')}
-            </TooltipContent>
-          </Tooltip>
+          <div className="flex-none text-2xs text-secondary">
+            +{projects.length - visibleCount} more
+          </div>
         )}
       </div>
     </div>
