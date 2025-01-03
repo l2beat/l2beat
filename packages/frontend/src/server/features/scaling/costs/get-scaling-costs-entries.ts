@@ -4,13 +4,13 @@ import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCostsProjects } from './utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
   type ProjectsLatestTvlUsd,
   getProjectsLatestTvlUsd,
 } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import { getCostsProjects } from './utils/get-costs-projects'
 
 export async function getScalingCostsEntries() {
   const [tvl, projectsChangeReport] = await Promise.all([
