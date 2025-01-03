@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure/build/types/UnixTime'
 import { OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
@@ -36,6 +37,13 @@ export const facet: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x0000000000000b07ED001607f5263D85bf28Ce4C'),
+      tokens: ['ETH'],
+      description: 'Fast bridge contract.',
+    }),
+  ],
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
