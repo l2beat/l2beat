@@ -31,6 +31,7 @@ import { coti } from './coti'
 import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
+import { datadance } from './datadance'
 import { dbk } from './dbk'
 import { dcamonster } from './dcamonster'
 import { degate } from './degate'
@@ -222,6 +223,7 @@ export const layer2s: Layer2[] = [
   coti,
   creator,
   cronoszkevm,
+  datadance,
   dbk,
   honeypot,
   dcamonster,
