@@ -4,7 +4,7 @@ import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCostsProjects } from '../costs/utils/get-costs-projects'
+import { getCostsProjects } from './utils/get-costs-projects'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
   type ProjectsLatestTvlUsd,

@@ -7,9 +7,7 @@ import {
 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { TIME_RANGE } from '~/app/(side-nav)/scaling/summary/page'
 import { type RosetteValue } from '~/components/rosette/types'
-import { api } from '~/trpc/server'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -39,18 +37,6 @@ export async function getScalingSummaryEntries() {
     getProjectsChangeReport(),
     get7dTokenBreakdown({ type: 'layer2' }),
     getActivityLatestUops(projects),
-    api.tvl.recategorizedChart.prefetch({
-      range: TIME_RANGE,
-      excludeAssociatedTokens: false,
-      filter: { type: 'layer2' },
-    }),
-    api.activity.recategorizedChart.prefetch({
-      range: TIME_RANGE,
-      filter: { type: 'all' },
-    }),
-    api.activity.chartStats.prefetch({
-      filter: { type: 'all' },
-    }),
   ])
 
   const entries = projects
