@@ -1,7 +1,6 @@
 'use client'
 import { type ReactNode } from 'react'
 
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import { type ProjectSectionId } from './types'
@@ -20,15 +19,11 @@ export interface ExtendedProjectSectionProps {
 
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
   return (
     <Component
       id={props.id}
-      // eslint-disable-next-line tailwindcss/no-custom-classname
       className={cn(
-        'mt-10',
-        !isMobile && 'primary-card rounded-lg bg-surface-primary p-8',
+        'primary-card bg-surface-primary p-4 md:mt-10 md:rounded-lg md:p-8',
         props.nested && 'mt-10 md:p-0',
         props.className,
       )}
