@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xb01359e6b262fce04a47953690d9596f2a9a9aff
+
+# Diff at Fri, 03 Jan 2025 12:00:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21471468
+- current block number: 21543818
+
+## Description
+
+New unverified L2 base contract deployed with a new rollupTypeID (7) and chainID 752025.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.12:
++        [false]
+      values.rollupCount:
+-        12
++        13
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.12:
++        ["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",7]
+    }
+```
+
 Generated with discovered.json: 0x31ba653ef31f5529d5c2af23836d2d26e8e35fc7
 
 # Diff at Tue, 24 Dec 2024 09:35:10 GMT:

@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xca301c42828a7251027b17fbe9c43b1806c48eb8
+
+# Diff at Fri, 03 Jan 2025 10:46:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21357562
+- current block number: 21543439
+
+## Description
+
+Congress members (chainport bridge governance for e.g. upgrades) added (1  changed, one added). Quorum increased to 3/4.
+
+## Watched changes
+
+```diff
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa) {
+    +++ description: None
+      values.allMembers.3:
++        "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
+      values.allMembers.2:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+      values.allMembers.1:
+-        "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
++        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.getAllMemberAddresses.3:
++        "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
+      values.getAllMemberAddresses.2:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+      values.getAllMemberAddresses.1:
+-        "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
++        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.getMinimalQuorum:
+-        2
++        3
+      values.getNumberOfMembers:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x1ffae2f2e0c49d3a19397c6b4b2d88c4b385e973
 
 # Diff at Sun, 08 Dec 2024 11:46:29 GMT:

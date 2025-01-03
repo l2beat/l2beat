@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 20927364,
+  "blockNumber": 21543769,
   "configHash": "0x451e9bb21873be4af6fd2255c02f3573dd24a5d75b03780ed06c8ef9a53d2990",
   "contracts": [
     {
@@ -84,7 +84,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631359",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633606",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -355,8 +355,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 10000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 20924889
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 21543714
         },
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
@@ -365,6 +365,35 @@
         "version": "2.5.0"
       },
       "derivedName": "FraxchainPortal"
+    },
+    {
+      "name": "EtherRouter",
+      "address": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+      "template": "fraxtal/EtherRouter",
+      "sourceHashes": [
+        "0x9e03a8813acf697f471971579204060db51665091a061d90320d055fcf64d4f5"
+      ],
+      "description": "ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1734221171,
+      "values": {
+        "$immutable": true,
+        "amosArray": ["0xEcb9bBb97BD3C23e8f176075EDB3c68B9a1869Ae"],
+        "depositToAmoAddr": "0xEcb9bBb97BD3C23e8f176075EDB3c68B9a1869Ae",
+        "frxETH": "0x5E8422345238F34275888049021821E8E08CAa1f",
+        "lendingPool": "0x24A1d1671a3Bd1C3cABb9B10724a4127d84e1Da0",
+        "operatorAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+        "pendingTimelockAddress": "0x0000000000000000000000000000000000000000",
+        "primaryWithdrawFromAmoAddr": "0xEcb9bBb97BD3C23e8f176075EDB3c68B9a1869Ae",
+        "redemptionQueue": "0xfDC69e6BE352BD5644C438302DE4E311AAD5565b",
+        "timelockAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
+      }
     },
     {
       "name": "frxETH",
@@ -376,6 +405,11 @@
       "displayName": "frxETH Token",
       "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "via": []
+        },
         {
           "permission": "configure",
           "target": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -401,14 +435,15 @@
         "DOMAIN_SEPARATOR": "0xf76bc0789b1168d8167e9ab7fe582017fc10c446b759047e0b1cb2d4451d7ce6",
         "minters_array": [
           "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
-          "0x0000000000000000000000000000000000000000"
+          "0x0000000000000000000000000000000000000000",
+          "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
         ],
         "name": "Frax Ether",
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "175454522144428952474885"
+        "totalSupply": "147594314561536506889230"
       }
     },
     {
@@ -540,10 +575,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 10827000,
-        "latestOutputIndex": 6014,
-        "nextBlockNumber": 10828800,
-        "nextOutputIndex": 6015,
+        "latestBlockNumber": 14545800,
+        "latestOutputIndex": 8080,
+        "nextBlockNumber": 14547600,
+        "nextOutputIndex": 8081,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -559,6 +594,41 @@
       }
     },
     {
+      "name": "FraxEtherMinter",
+      "address": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+      "template": "fraxtal/FraxEtherMinter",
+      "sourceHashes": [
+        "0x69f04bb460f0627fa685c48813134972ea72a339b1add8185fdde04f92a6e1f3"
+      ],
+      "displayName": "frxETH Minter",
+      "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can mint frxETH tokens."
+        }
+      ],
+      "sinceTimestamp": 1734221195,
+      "values": {
+        "$immutable": true,
+        "etherRouter": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+        "frxEthToken": "0x5E8422345238F34275888049021821E8E08CAa1f",
+        "mintFrxEthPaused": false,
+        "operatorAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+        "pendingTimelockAddress": "0x0000000000000000000000000000000000000000",
+        "sfrxEthToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+        "timelockAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
+      }
+    },
+    {
       "name": "frxETHMultisig",
       "address": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
       "template": "GnosisSafe",
@@ -567,6 +637,18 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
+        },
+        {
+          "permission": "configure",
+          "target": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1665087971,
       "values": {
@@ -586,7 +668,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 1100,
+        "nonce": 1174,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -725,15 +807,15 @@
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xe8254029df4a5fbfcf2de75f8fcf68b1060354a363693b1507e1197cc3dcc29b",
-        "lastRewardAmount": "93537000000000000000",
-        "lastSync": 1727917379,
+        "lastRewardAmount": "63072000000000000000",
+        "lastSync": 1735776023,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1101001163210941880",
-        "rewardsCycleEnd": 1728518400,
+        "pricePerShare": "1109641800666052587",
+        "rewardsCycleEnd": 1736380800,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "131661212397721570628721",
-        "totalSupply": "119583172840387336900095"
+        "totalAssets": "110943193933237330174775",
+        "totalSupply": "99981087470429347745296"
       },
       "derivedName": "sfrxETH"
     },
@@ -794,7 +876,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5854,
+        "nonce": 6069,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -832,13 +914,13 @@
       "sinceTimestamp": 1665022895,
       "values": {
         "$immutable": true,
-        "currentWithheldETH": "1096329984141409675745",
+        "currentWithheldETH": "1888503377075897896",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
         "frxETHToken": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "numValidators": 200,
+        "numValidators": 199,
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "RATIO_PRECISION": 1000000,
         "sfrxETHToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
@@ -1173,6 +1255,68 @@
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() view returns (string)"
     ],
+    "0x5acAf61d339dd123e60ba450Ea38fbC49445007C": [
+      "constructor(address _timelockAddress, address _operatorAddress, address _frxEthAddress)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AddressIsNotFraxEtherRedemptionQueueV2(address redemptionQueueAddress, address actualAddress)",
+      "error AddressIsNotLendingPool(address lendingPoolAddress, address actualAddress)",
+      "error AddressIsNotOperator(address operatorAddress, address actualAddress)",
+      "error AddressIsNotPendingTimelock(address pendingTimelockAddress, address actualAddress)",
+      "error AddressIsNotTimelock(address timelockAddress, address actualAddress)",
+      "error AmoAlreadyExists()",
+      "error AmoAlreadyOffOrMissing()",
+      "error EthTransferFailedER(uint256 step)",
+      "error FailedInnerCall()",
+      "error InvalidAmo()",
+      "error InvalidRecoverEtherTransfer()",
+      "error NotEnoughEthPulled(uint256 remainingEth)",
+      "error NotLendingPoolOrRedemptionQueue()",
+      "error NotTimelockOrOperator()",
+      "error RedemptionQueueAddressAlreadySet()",
+      "error SafeERC20FailedOperation(address token)",
+      "error ZeroAddress()",
+      "event Erc20Recovered(address tokenAddress, uint256 tokenAmount)",
+      "event EtherRecovered(uint256 amount)",
+      "event EtherRequested(address requesterAddress, uint256 amountToRequester, uint256 amountToRedemptionQueue)",
+      "event EtherSwept(address destAddress, uint256 amount)",
+      "event FrxEthAmoAdded(address amoAddress)",
+      "event FrxEthAmoRemoved(address amoAddress)",
+      "event OperatorTransferred(address indexed previousOperator, address indexed newOperator)",
+      "event PreferredDepositAndWithdrawalAmoAddressesSet(address depositToAddress, address withdrawFromAddress)",
+      "event SetFraxEtherRedemptionQueueV2(address indexed oldFraxEtherRedemptionQueueV2, address indexed newFraxEtherRedemptionQueueV2)",
+      "event SetLendingPool(address indexed oldLendingPool, address indexed newLendingPool)",
+      "event TimelockTransferStarted(address indexed previousTimelock, address indexed newTimelock)",
+      "event TimelockTransferred(address indexed previousTimelock, address indexed newTimelock)",
+      "function acceptTransferTimelock()",
+      "function addAmo(address _amoAddress)",
+      "function amos(address) view returns (bool)",
+      "function amosArray(uint256) view returns (address)",
+      "function cachedConsEFxEBals(address) view returns (bool isStale, address amoAddress, uint96 ethFree, uint96 ethInLpBalanced, uint96 ethTotalBalanced, uint96 frxEthFree, uint96 frxEthInLpBalanced)",
+      "function depositEther() payable",
+      "function depositToAmoAddr() view returns (address)",
+      "function frxETH() view returns (address)",
+      "function getConsolidatedEthFrxEthBalance(bool _forceLive, bool _updateCache) returns (tuple(bool isStale, address amoAddress, uint96 ethFree, uint96 ethInLpBalanced, uint96 ethTotalBalanced, uint96 frxEthFree, uint96 frxEthInLpBalanced) _rtnBalances)",
+      "function getConsolidatedEthFrxEthBalanceView(bool _forceLive) view returns (tuple(bool isStale, address amoAddress, uint96 ethFree, uint96 ethInLpBalanced, uint96 ethTotalBalanced, uint96 frxEthFree, uint96 frxEthInLpBalanced) _rtnBalances)",
+      "function lendingPool() view returns (address)",
+      "function operatorAddress() view returns (address)",
+      "function pendingTimelockAddress() view returns (address)",
+      "function previewRequestEther(uint256 _ethRequested) view returns (uint256 _currEthInRouter, uint256 _rqShortage, uint256 _pullFromAmosAmount)",
+      "function primaryWithdrawFromAmoAddr() view returns (address)",
+      "function recoverErc20(address _tokenAddress, uint256 _tokenAmount)",
+      "function recoverEther(uint256 _amount)",
+      "function redemptionQueue() view returns (address)",
+      "function removeAmo(address _amoAddress)",
+      "function renounceTimelock()",
+      "function requestEther(address _recipient, uint256 _ethRequested, bool _bypassFullRqShortage)",
+      "function setLendingPool(address _newAddress)",
+      "function setOperatorAddress(address _newOperatorAddress)",
+      "function setPreferredDepositAndWithdrawalAMOs(address _depositToAddress, address _withdrawFromAddress)",
+      "function setRedemptionQueue(address _newAddress)",
+      "function sweepEther(uint256 _amount, bool _depositAndVault)",
+      "function timelockAddress() view returns (address)",
+      "function transferTimelock(address _newTimelock)"
+    ],
     "0x5E8422345238F34275888049021821E8E08CAa1f": [
       "constructor(address _creator_address, address _timelock_address)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -1275,6 +1419,44 @@
       "function startingTimestamp() view returns (uint256)",
       "function submissionInterval() view returns (uint256)",
       "function version() view returns (string)"
+    ],
+    "0x7Bc6bad540453360F744666D625fec0ee1320cA3": [
+      "constructor(tuple(address frxEthErc20Address, address sfrxEthErc20Address, address timelockAddress, address etherRouterAddress, address operatorRoleAddress) _params)",
+      "error AddressIsNotEtherRouter(address etherRouterAddress, address actualAddress)",
+      "error AddressIsNotOperator(address operatorAddress, address actualAddress)",
+      "error AddressIsNotPendingTimelock(address pendingTimelockAddress, address actualAddress)",
+      "error AddressIsNotTimelock(address timelockAddress, address actualAddress)",
+      "error CannotMintZero()",
+      "error InvalidEthTransfer()",
+      "error MintFrxEthIsPaused()",
+      "error NoSfrxEthReturned()",
+      "error NotOperatorOrTimelock()",
+      "event EmergencyErc20Recovered(address tokenAddress, uint256 tokenAmount)",
+      "event EmergencyEtherRecovered(uint256 amount)",
+      "event EthSubmitted(address indexed sender, address indexed recipient, uint256 sentEthAmount)",
+      "event MintFrxEthPaused(bool newStatus)",
+      "event OperatorTransferred(address indexed previousOperator, address indexed newOperator)",
+      "event SetEtherRouter(address indexed oldEtherRouter, address indexed newEtherRouter)",
+      "event TimelockTransferStarted(address indexed previousTimelock, address indexed newTimelock)",
+      "event TimelockTransferred(address indexed previousTimelock, address indexed newTimelock)",
+      "function acceptTransferTimelock()",
+      "function etherRouter() view returns (address)",
+      "function frxEthToken() view returns (address)",
+      "function mintFrxEth() payable",
+      "function mintFrxEthAndGive(address _recipient) payable",
+      "function mintFrxEthPaused() view returns (bool)",
+      "function operatorAddress() view returns (address)",
+      "function pendingTimelockAddress() view returns (address)",
+      "function recoverErc20(address _tokenAddress, uint256 _tokenAmount)",
+      "function recoverEther(uint256 _amount)",
+      "function renounceTimelock()",
+      "function setEtherRouterAddress(address _newEtherRouterAddress)",
+      "function setOperatorAddress(address _newOperatorAddress)",
+      "function sfrxEthToken() view returns (address)",
+      "function submitAndDeposit(address _recipient) payable returns (uint256 _shares)",
+      "function timelockAddress() view returns (address)",
+      "function togglePauseSubmits()",
+      "function transferTimelock(address _newTimelock)"
     ],
     "0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4": [
       "constructor()",
@@ -1527,6 +1709,8 @@
     ]
   },
   "usedTemplates": {
+    "fraxtal/EtherRouter": "0x399bbff76f1e1ba031678f7751531085b8173da3d865a6b395bfbce9d22d578e",
+    "fraxtal/FraxEtherMinter": "0xa168d81665971700b92633f2e29117b929e05f4d2da059e00bf47f53189c9405",
     "fraxtal/frxETH": "0xe5482b6c32a0742121bc11ad168d5b887a7553531f6f04145597db129a8b0a8d",
     "fraxtal/FrxEthMinter": "0xb3496e9ff1bb9694e50fc29dd6bddc7340da994d9679cc0e51dd2e3dad9a74fd",
     "fraxtal/Timelock": "0xfb84a150b2dede291d087c46dac44d27f03fb609f506a60ed3ffe2b92651ea35",
