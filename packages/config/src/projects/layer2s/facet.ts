@@ -67,10 +67,6 @@ export const facet: Layer2 = opStackL2({
             text: 'the operator halts withdrawals.',
             isCritical: true,
           },
-          {
-            category: 'Funds can be stolen if',
-            text: 'the operator confirms an invalid state root.',
-          },
         ],
       },
     ],
