@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import { expect } from 'earl'
 import { BigNumber } from 'ethers'
-import { byteArrFromHexStr } from '../opStack/utils'
+import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { decodeBatch } from './batch'
 
 describe(decodeBatch.name, () => {

@@ -3,8 +3,8 @@ import path from 'path'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { BufferReader, decodeBatch } from './decodeBatch'
-import { byteArrFromHexStr } from './utils'
 
 describe(decodeBatch.name, () => {
   it('should decode the span batch blob', () => {
