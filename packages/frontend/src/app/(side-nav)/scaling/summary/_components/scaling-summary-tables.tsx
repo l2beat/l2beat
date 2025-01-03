@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -32,16 +33,16 @@ export function ScalingSummaryTables(props: Props) {
     others: props.others.filter(includeFilters),
   }
 
-  const projectToBeMigratedToOthers = [
-    ...props.rollups,
-    ...props.validiumsAndOptimiums,
-    ...props.others,
-  ]
-    .filter((project) => project.statuses?.countdowns?.otherMigration)
-    .map((project) => ({
-      slug: project.slug,
-      name: project.name,
-    }))
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [props.others, props.rollups, props.validiumsAndOptimiums],
+  )
 
   const initialSort = {
     id: 'total',

@@ -1,4 +1,5 @@
 import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/common/projectCountdowns'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Countdown } from '~/components/countdown'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
@@ -17,7 +18,10 @@ export function OtherMigrationTabNotice({
   projectsToBeMigrated,
   className,
 }: Props) {
-  if (projectsToBeMigrated.length === 0) {
+  if (
+    projectsToBeMigrated.length === 0 ||
+    PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now())
+  ) {
     return null
   }
 

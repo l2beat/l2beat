@@ -1,5 +1,6 @@
 'use client'
 import { type Milestone } from '@l2beat/config'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
 import {
@@ -9,6 +10,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import {
   OthersInfo,
   RollupsInfo,
@@ -32,6 +34,17 @@ export function ScalingTvlTabs(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others.filter(includeFilters),
   }
+
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [props.others, props.rollups, props.validiumsAndOptimiums],
+  )
 
   const initialSort = {
     id: 'total',
@@ -100,6 +113,10 @@ export function ScalingTvlTabs(props: Props) {
             <HorizontalSeparator className="my-5" />
             <OthersInfo />
             <ScalingTvlTable entries={filteredEntries.others} />
+            <OtherMigrationTabNotice
+              projectsToBeMigrated={projectToBeMigratedToOthers}
+              className="mt-2"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

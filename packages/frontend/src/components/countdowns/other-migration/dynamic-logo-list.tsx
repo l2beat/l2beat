@@ -1,11 +1,11 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 
 const OFFSET = 54
 const GAP = 10
@@ -39,6 +39,7 @@ export function DynamicLogoList({ projects }: Props) {
       window.removeEventListener('resize', updateVisibleCount)
     }
   }, [])
+
   return (
     <div className="w-full overflow-hidden">
       <div
@@ -50,23 +51,23 @@ export function DynamicLogoList({ projects }: Props) {
       >
         {projects.slice(0, visibleCount).map(({ slug, name }) => (
           <Tooltip key={slug}>
-            <TooltipTrigger>
-              <Link href={`/projects/${slug}`}>
+            <LinkWithOnHoverPrefetch href={`/scaling/projects/${slug}`}>
+              <TooltipTrigger>
                 <Image
                   src={`/icons/${slug}.png`}
                   alt={name}
                   width={LOGO_SIZE}
                   height={LOGO_SIZE}
                 />
-              </Link>
-            </TooltipTrigger>
+              </TooltipTrigger>
+            </LinkWithOnHoverPrefetch>
             <TooltipContent>{name}</TooltipContent>
           </Tooltip>
         ))}
         {visibleCount < projects.length && (
           <Tooltip>
             <TooltipTrigger className="flex-none text-2xs text-secondary">
-              + {projects.length - visibleCount} more
+              +{projects.length - visibleCount} more
             </TooltipTrigger>
             <TooltipContent>
               {projects.map(({ name }) => name).join(', ')}
