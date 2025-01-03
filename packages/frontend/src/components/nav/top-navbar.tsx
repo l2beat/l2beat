@@ -7,14 +7,14 @@ import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { SocialLinks } from '../social-links'
-import { LegacyNavLink } from './legacy-nav-link'
+import { TopNavLink } from './top-nav-link'
 import { type NavGroup } from './types'
 
 /**
- * Legacy nav bar component used on old-style pages *on xl screens*.
+ * Top navbar component used on old-style pages *on xl screens*.
  * Everywhere else, the new sidenav is used.
  */
-export function LegacyNavbar({
+export function TopNavbar({
   logoLink,
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
@@ -32,7 +32,7 @@ export function LegacyNavbar({
           {groups.map((group) => {
             if (group.type === 'single') {
               return (
-                <LegacyNavLink
+                <TopNavLink
                   key={group.title}
                   large
                   href={group.href}
@@ -43,7 +43,7 @@ export function LegacyNavbar({
             }
             return (
               group.links[0] && (
-                <LegacyNavLink
+                <TopNavLink
                   key={group.title}
                   large
                   href={group.links[0].href}
@@ -60,15 +60,15 @@ export function LegacyNavbar({
           </ul>
           <VerticalSeparator className="hidden h-8 xl:block" />
           <ul className="flex h-full items-center gap-1.5">
-            <LegacyNavLink title="Forum" href={externalLinks.forum} />
-            <LegacyNavLink title="Donate" href="/donate" />
-            <LegacyNavLink title="Governance" href="/governance" />
-            <LegacyNavLink title="Glossary" href="/glossary" />
-            <LegacyNavLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
+            <TopNavLink title="Forum" href={externalLinks.forum} />
+            <TopNavLink title="Donate" href="/donate" />
+            <TopNavLink title="Governance" href="/governance" />
+            <TopNavLink title="Glossary" href="/glossary" />
+            <TopNavLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
               Jobs
               {hiringBadge && <HiringBadge />}
-            </LegacyNavLink>
-            <LegacyNavLink title="FAQ" href="/faq" />
+            </TopNavLink>
+            <TopNavLink title="FAQ" href="/faq" />
           </ul>
           <VerticalSeparator className="h-8" />
           <div className="flex gap-4">
