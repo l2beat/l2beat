@@ -44,6 +44,7 @@ export const facet: Layer2 = opStackL2({
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   nonTemplateTechnology: { operator: OPERATOR.DECENTRALIZED_OPERATOR },
+  architectureImage: 'facet',
   rpcUrl: 'https://mainnet.facet.org/',
   genesisTimestamp: new UnixTime(1733855495),
   milestones: [

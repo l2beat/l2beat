@@ -95,6 +95,7 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  architectureImage?: string
   isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
@@ -471,7 +472,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     ...opStackCommon(templateVars),
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage,
+      architectureImage: templateVars.architectureImage ?? architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category:
