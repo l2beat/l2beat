@@ -13,6 +13,7 @@ import {
   createActivityProjectsFilter,
 } from './utils/project-filter-utils'
 import { type ActivityTimeRange } from './utils/range'
+import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 
 /**
  * A function that computes values for chart data of the activity over time.
@@ -104,7 +105,7 @@ function getMockActivityChart(
 ): ActivityChartData {
   const [from, to] = getRangeWithMax(timeRange, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? new UnixTime(1590883200),
+    from ?? MIN_TIMESTAMPS.activity,
     to,
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')

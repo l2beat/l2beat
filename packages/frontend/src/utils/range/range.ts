@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { rangeToDays } from './range-to-days'
 
 export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
@@ -12,6 +12,7 @@ export function getRange(
   },
 ): [UnixTime, UnixTime] {
   const days = rangeToDays(range)
+  assert(days !== null, 'Range cannot be max')
 
   const roundedNow = (opts?.now ?? UnixTime.now()).toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',
@@ -36,7 +37,7 @@ export function getRangeWithMax(
     resolution === 'hourly' ? 'hour' : 'day',
   )
 
-  const start = days != Infinity ? roundedNow.add(-days, 'days') : null
+  const start = days !== null ? roundedNow.add(-days, 'days') : null
   const end = roundedNow
 
   return [start, end]

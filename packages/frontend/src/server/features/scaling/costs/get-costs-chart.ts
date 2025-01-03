@@ -1,7 +1,8 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
+import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRange, getRangeWithMax } from '~/utils/range/range'
@@ -51,7 +52,7 @@ export const getCachedCostsChartData = cache(
     const fromToQuery = from
       ? // one-off
         from.add(-1, resolution === 'daily' ? 'days' : 'hours')
-      : new UnixTime(1682899200)
+      : MIN_TIMESTAMPS.costs
 
     // to is exclusive
     const rangeForQuery: [UnixTime, UnixTime] = [fromToQuery, to]
