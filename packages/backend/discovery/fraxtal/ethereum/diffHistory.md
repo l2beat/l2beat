@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x372dc254389c54acc724cb9f4708ea0424110454
+
+# Diff at Fri, 03 Jan 2025 11:55:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 20927364
+- current block number: 21543769
+
+## Description
+
+New minter added for frxETH: The FraxEtherMinter contract forwards ETH to an EtherRouter contract which in turn supports AMOs and lending pools modularly. Permissions are the same as before and the old minter is still operational.
+
+## Watched changes
+
+```diff
+    contract frxETH (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+      issuedPermissions.2:
++        {"permission":"configure","target":"0xbAFA44EFE7901E04E39Dad13167D089C559c1138","via":[]}
+      issuedPermissions.1.target:
+-        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
++        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      issuedPermissions.1.via.0:
++        {"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800,"description":"can add and remove frxETH minters and set a new timelock address."}
+      issuedPermissions.0.target:
+-        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
++        "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
+      issuedPermissions.0.via.0:
+-        {"address":"0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA","delay":172800,"description":"can add and remove frxETH minters and set a new timelock address."}
+      values.minters_array.2:
++        "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
+    }
+```
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x5acAf61d339dd123e60ba450Ea38fbC49445007C","description":"withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."},{"permission":"configure","target":"0x7Bc6bad540453360F744666D625fec0ee1320cA3","description":"configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EtherRouter (0x5acAf61d339dd123e60ba450Ea38fbC49445007C)
+    +++ description: ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.
+```
+
+```diff
++   Status: CREATED
+    contract FraxEtherMinter (0x7Bc6bad540453360F744666D625fec0ee1320cA3)
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+```
+
+## Source code changes
+
+```diff
+.../fraxtal/ethereum/.flat/EtherRouter.sol         | 1239 ++++++++++++++++++++
+ .../fraxtal/ethereum/.flat/FraxEtherMinter.sol     |  510 ++++++++
+ 2 files changed, 1749 insertions(+)
+```
+
 Generated with discovered.json: 0xf8f41c681f2b61d2c6f78971b3eab30f17e78f5f
 
 # Diff at Thu, 28 Nov 2024 11:02:15 GMT:
