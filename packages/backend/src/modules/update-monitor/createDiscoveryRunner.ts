@@ -3,6 +3,8 @@ import {
   DiscoveryChainConfig,
   DiscoveryLogger,
   DiscoveryCache as IDiscoveryCache,
+  InMemoryCache,
+  LeveledCache,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
@@ -20,12 +22,14 @@ export function createDiscoveryRunner(
   chain: string,
   enableCache: boolean,
 ) {
-  let discoveryCache: IDiscoveryCache = new DiscoveryCache(peripherals.database)
-  if (!enableCache) {
-    discoveryCache = {
-      get: async () => undefined,
-      set: async () => {},
-    }
+  let discoveryCache: IDiscoveryCache = {
+    get: async () => undefined,
+    set: async () => {},
+  }
+  if (enableCache) {
+    const l1Cache = new InMemoryCache()
+    const l2Cache = new DiscoveryCache(peripherals.database)
+    discoveryCache = new LeveledCache(l1Cache, l2Cache)
   }
 
   const { allProviders, discoveryEngine } = getDiscoveryEngine(

@@ -381,6 +381,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      lru_map:
+        specifier: 0.4.1
+        version: 0.4.1
       mkdirp:
         specifier: ^3.0.0
         version: 3.0.1
@@ -7217,6 +7220,9 @@ packages:
   lru-cache@6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
+
+  lru_map@0.4.1:
+    resolution: {integrity: sha512-I+lBvqMMFfqaV8CJCISjI3wbjmwVu/VyOoU7+qtu9d7ioW5klMgsTTiUOUp+DJvfTTzKXoPbyC6YfgkNcyPSOg==}
 
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -17141,6 +17147,8 @@ snapshots:
     dependencies:
       yallist: 4.0.0
     optional: true
+
+  lru_map@0.4.1: {}
 
   lz-string@1.5.0: {}
 
