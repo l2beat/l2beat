@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x235785a41477e974169177fb73f450f915c7ace1
+Generated with discovered.json: 0x8e00637257264bdaf7b8421b1b97da0a008fdfd3
 
-# Diff at Thu, 02 Jan 2025 16:09:43 GMT:
+# Diff at Fri, 03 Jan 2025 08:50:30 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 21537888
+- current block number: 21542868
 
 ## Description
 
@@ -37,7 +37,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract PausedL1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909)
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909)
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
 ```
 

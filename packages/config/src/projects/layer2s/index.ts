@@ -43,6 +43,7 @@ import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
+import { facet } from './facet'
 import { fhenix } from './fhenix'
 import { fluence } from './fluence'
 import { fluent } from './fluent'
@@ -233,6 +234,7 @@ export const layer2s: Layer2[] = [
   edgeless,
   ethernity,
   everclear,
+  facet,
   fhenix,
   fluence,
   fluent,
