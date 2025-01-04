@@ -13,7 +13,7 @@ import { Permission } from '../config/RawDiscoveryConfig'
 // operation with some additional baseline delay.
 //
 // Edges link two nodes together and define the action that can take place on
-// that link. Each action can have a execution delay which is additive to the
+// that link. Each action can have an execution delay which is additive to the
 // node on which that action can take place.
 //
 // Multisigs are modeled as a link between the multisig and the owner with the
