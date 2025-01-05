@@ -1171,7 +1171,7 @@ library CelestiaBatchVerifier {
      * @notice Given some batch data with the structre of `BlobPointer`, verifyBatch validates:
      * 1. The Celestia Height for the batch data is in blobsream.
      * 2. The user supplied proof's data root exists in Blobstream.
-     * 2. The the data root from the batch data and the valid user supplied proof match, and the
+     * 2. The data root from the batch data and the valid user supplied proof match, and the
      *    span of shares for the batch data is available (i.e the start + length of a blob does not
      *    go outside the bounds of the origianal celestia data square for the given height)
      *
