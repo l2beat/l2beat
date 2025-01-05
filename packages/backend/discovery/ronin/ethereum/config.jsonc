@@ -41,7 +41,7 @@
         "checkThreshold",
         "globalProposalRelayed",
         "round",
-        "getFullBridgeOperatorInfos" // this method returns operators, their indidual weights and asosciated governors with each operator. We skip becase there are other methods to get operators/governors
+        "getFullBridgeOperatorInfos" // this method returns operators, their individual weights and associated governors with each operator. We skip becase there are other methods to get operators/governors
       ],
       "fields": {
         "accessControl": {
