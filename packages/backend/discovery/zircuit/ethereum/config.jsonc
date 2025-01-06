@@ -2,7 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zircuit",
-  "initialAddresses": ["0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8"],
+  "initialAddresses": [
+    "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8", // L1StandardBridge
+    "0x912C7271a6A3622dfb8B218eb46a6122aB046C79" // wsteth escrow
+  ],
   "names": {
     "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": "OptimismPortal",
     "0x2a721cBE81a128be0F01040e3353c3805A5EA091": "L1CrossDomainMessenger",

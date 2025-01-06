@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ScalingProjectTechnologyChoice } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
@@ -81,6 +82,15 @@ export const zircuit: Layer2 = opStackL2({
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
   l1StandardBridgePremintedTokens: ['ZRC'],
   associatedTokens: ['ZRC'],
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x912C7271a6A3622dfb8B218eb46a6122aB046C79'),
+      tokens: ['wstETH'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
+    }),
+  ],
   nonTemplatePermissions: [
     {
       name: 'Admins of SuperchainConfig',

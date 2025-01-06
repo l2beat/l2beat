@@ -16,6 +16,7 @@
         "NODE_ENV",
         "NEXT_RUNTIME",
         "PORT",
+        "SENTRY_AUTH_TOKEN",
         "SKIP_ENV_VALIDATION",
         "VERCEL_GIT_COMMIT_REF",
         "VERCEL_GIT_COMMIT_SHA",

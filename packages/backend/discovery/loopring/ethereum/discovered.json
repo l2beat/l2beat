@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "blockNumber": 21313525,
+  "blockNumber": 21543795,
   "configHash": "0xe9bd2973027e8cfcdb6f7b9058e779873badea948dc61b3fa4017b2e2777cdc3",
   "contracts": [
     {
@@ -72,7 +72,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 56516,
+        "getBlockHeight": 57336,
         "getConstants": {
           "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           "MAX_OPEN_FORCED_REQUESTS": 4096,
@@ -89,10 +89,10 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x0b7d40aa26986d9d8951368d1619bf070dd8aee315d7e87b0f5c9fcb6f1f9a4e",
+        "getMerkleRoot": "0x083956b5db7484d10f75a8968c9cbdd32b8d7c41352b62b529c62b5fa77a3569",
         "getNumAvailableForcedSlots": 4096,
         "getProtocolFeeValues": {
-          "syncedAt": 1732532975,
+          "syncedAt": 1735564763,
           "takerFeeBips": 0,
           "makerFeeBips": 0,
           "previousTakerFeeBips": 0,
@@ -390,7 +390,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
+          "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2",
           "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
         ],
         "$threshold": 1,
@@ -398,7 +398,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 2,
+        "nonce": 22,
         "VERSION": "1.4.1"
       }
     },
@@ -439,10 +439,10 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98",
           "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
           "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
           "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
-          "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
           "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
           "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
         ],
@@ -451,7 +451,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 207,
+        "nonce": 210,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -523,13 +523,14 @@
     { "address": "0x238b649E62a0C383b54060b1625516b489183843" },
     { "address": "0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46" },
     { "address": "0x2Fc617E933a52713247CE25730f6695920B3befe" },
+    { "address": "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2" },
     { "address": "0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2" },
     { "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1" },
     { "address": "0x4374D3d032B3c96785094ec9f384f07077792768" },
     { "address": "0x4774d954D20DB98492B0487BC9F91dc401dBA3aE" },
     { "address": "0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341" },
     { "address": "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234" },
-    { "address": "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268" },
+    { "address": "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98" },
     { "address": "0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374" },
     { "address": "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C" },
     { "address": "0x7414eA41bd1844f61e8990b209a1Dc301489baa9" },

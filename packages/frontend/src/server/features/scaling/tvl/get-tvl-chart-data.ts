@@ -3,6 +3,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
+import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getEthPrices } from './utils/get-eth-prices'
@@ -105,8 +106,7 @@ function getMockTvlChartData({ range }: TvlChartDataParams): TvlChartData {
   const target = getTvlTargetTimestamp().toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from =
-    days !== Infinity ? target.add(-days, 'days') : new UnixTime(1573776000)
+  const from = days !== null ? target.add(-days, 'days') : MIN_TIMESTAMPS.tvl
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
