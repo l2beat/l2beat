@@ -1095,6 +1095,20 @@
       "supply": "zero"
     },
     {
+      "name": "CoW Protocol Token",
+      "coingeckoId": "cow-protocol",
+      "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB",
+      "symbol": "COW",
+      "decimals": 18,
+      "deploymentTimestamp": 1644608664,
+      "coingeckoListingTimestamp": 1648425600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24384/large/CoW-token_logo.png?1719524382",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Cratos",
       "coingeckoId": "cratos",
       "address": "0x678e840C640F619E17848045D23072844224dD37",
@@ -1371,6 +1385,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/8089/large/XDB_CHAIN_LOGO.jpeg?1702723430",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "DODO bird",
+      "coingeckoId": "dodo",
+      "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd",
+      "symbol": "DODO",
+      "decimals": 18,
+      "deploymentTimestamp": 1601377130,
+      "coingeckoListingTimestamp": 1601424000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12651/large/dodo_logo.png?1696512458",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3223,6 +3251,20 @@
       "supply": "zero"
     },
     {
+      "name": "Ondo",
+      "coingeckoId": "ondo-finance",
+      "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3",
+      "symbol": "ONDO",
+      "decimals": 18,
+      "deploymentTimestamp": 1651123412,
+      "coingeckoListingTimestamp": 1705536000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26580/large/ONDO.png?1696525656",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "OpenLeverage Token V2",
       "coingeckoId": "openleverage",
       "address": "0x1B6e9c73beE68102d9dd4A2627f97bFf4183ab0A",
@@ -3624,6 +3666,20 @@
       "coingeckoListingTimestamp": 1710201600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35950/large/photo_2024-03-11_10.18.27.jpeg?1710240090",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "PUFFER",
+      "coingeckoId": "puffer-finance",
+      "address": "0x4d1C297d39C5c1277964D0E3f8Aa901493664530",
+      "symbol": "PUFFER",
+      "decimals": 18,
+      "deploymentTimestamp": 1727781299,
+      "coingeckoListingTimestamp": 1728864000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50630/large/PUFFER_token_Logo.png?1729574024",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
