@@ -3279,6 +3279,20 @@
       "supply": "zero"
     },
     {
+      "name": "Open Ecosystem Token",
+      "coingeckoId": "open-ticketing-ecosystem",
+      "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509",
+      "symbol": "OPN",
+      "decimals": 18,
+      "deploymentTimestamp": 1709680043,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36612/large/TOKEN.png?1711975511",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "OpenLeverage Token V2",
       "coingeckoId": "openleverage",
       "address": "0x1B6e9c73beE68102d9dd4A2627f97bFf4183ab0A",

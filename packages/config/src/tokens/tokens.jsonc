@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "OPN",
+      "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509"
+    },
+    {
       "symbol": "SUI", // wormhole version
       "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
       "coingeckoId": "sui"
