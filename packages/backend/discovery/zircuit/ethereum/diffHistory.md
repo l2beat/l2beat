@@ -8,7 +8,7 @@ Generated with discovered.json: 0x08cf2c4e25744f7a6789f00dfd8095dbc77dd493
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Add external wsteth escrow (matches template).
 
 ## Config/verification related changes
 
