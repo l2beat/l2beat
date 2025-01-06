@@ -55,7 +55,7 @@ const sequencerInbox = EthereumAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
-const genesisTimestamp = new UnixTime(1733498411)
+const genesisTimestamp = new UnixTime(1732696703)
 
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
