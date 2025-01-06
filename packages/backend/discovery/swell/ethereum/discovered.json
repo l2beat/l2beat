@@ -1,8 +1,8 @@
 {
   "name": "swell",
   "chain": "ethereum",
-  "blockNumber": 21565708,
-  "configHash": "0x40f0e8acd80a5620450157953bf17523cdb539df3b74f21a0daae34c41573221",
+  "blockNumber": 21565774,
+  "configHash": "0xb92e622dce98c6094d5c60c53665436f10615f11aa70be7a24bffd88a8c05f45",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -425,7 +425,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21565450
+          "prevBlockNum": 21565724
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -557,7 +557,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 956,
+        "gameCount": 957,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xa0cFbe3402d6E0a74e96D3C360F74D5ea4Fa6893",
@@ -567,7 +567,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 956,
+        "permissionedGamesTotal": 957,
         "version": "1.0.0"
       }
     },
@@ -1114,7 +1114,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622391",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622392",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1131,6 +1131,45 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
+      }
+    },
+    {
+      "name": "L1ERC20TokenBridge",
+      "address": "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121",
+      "template": "lido/L1ERC20TokenBridge",
+      "sourceHashes": [
+        "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
+        "0xc4b0423b7d0fcada3862027e805c2fc79676feb6f4bc3978e5a86b390bfd7be3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
+      "sinceTimestamp": 1734102575,
+      "values": {
+        "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "$implementation": "0x7e97935FbDF2a27EA35c4fdDdaCf5ACd685e65A2",
+        "$pastUpgrades": [
+          [
+            "2024-12-13T15:09:35.000Z",
+            "0xad7c277ccb1907dcfc1485a433a193ca4d38bf6ec23ffd826a415a26a3b16466",
+            ["0x7e97935FbDF2a27EA35c4fdDdaCf5ACd685e65A2"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
+        "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
+        "isDepositsEnabled": true,
+        "isInitialized": true,
+        "isWithdrawalsEnabled": true,
+        "l1Token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "l2Token": "0x7c98E0779EB5924b3ba8cE3B17648539ed5b0Ecc",
+        "l2TokenBridge": "0x8311496799B8C2C7f13bC32c123ac4Eea068e6F0",
+        "messenger": "0xe6a99Ef12995DeFC5ff47EC0e13252f0E6903759",
+        "proxy__getAdmin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "proxy__getImplementation": "0x7e97935FbDF2a27EA35c4fdDdaCf5ACd685e65A2",
+        "proxy__getIsOssified": false,
+        "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
+        "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
       }
     },
     {
@@ -1507,6 +1546,56 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "0x7e97935FbDF2a27EA35c4fdDdaCf5ACd685e65A2": [
+      "constructor(address messenger_, address l2TokenBridge_, address l1Token_, address l2Token_)",
+      "error ErrorAccountIsZeroAddress()",
+      "error ErrorAlreadyInitialized()",
+      "error ErrorDepositsDisabled()",
+      "error ErrorDepositsEnabled()",
+      "error ErrorSenderNotEOA()",
+      "error ErrorUnauthorizedMessenger()",
+      "error ErrorUnsupportedL1Token()",
+      "error ErrorUnsupportedL2Token()",
+      "error ErrorWithdrawalsDisabled()",
+      "error ErrorWithdrawalsEnabled()",
+      "error ErrorWrongCrossDomainSender()",
+      "event DepositsDisabled(address indexed disabler)",
+      "event DepositsEnabled(address indexed enabler)",
+      "event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event Initialized(address indexed admin)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WithdrawalsDisabled(address indexed disabler)",
+      "event WithdrawalsEnabled(address indexed enabler)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSITS_DISABLER_ROLE() view returns (bytes32)",
+      "function DEPOSITS_ENABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_DISABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_ENABLER_ROLE() view returns (bytes32)",
+      "function depositERC20(address l1Token_, address l2Token_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function depositERC20To(address l1Token_, address l2Token_, address to_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function disableDeposits()",
+      "function disableWithdrawals()",
+      "function enableDeposits()",
+      "function enableWithdrawals()",
+      "function finalizeERC20Withdrawal(address l1Token_, address l2Token_, address from_, address to_, uint256 amount_, bytes data_)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin_)",
+      "function isDepositsEnabled() view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isWithdrawalsEnabled() view returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Token() view returns (address)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": [
       "constructor(address _singleton)"
@@ -1945,6 +2034,22 @@
       "function tryUpdateAnchorState()",
       "function version() view returns (string)"
     ],
+    "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121": [
+      "constructor(address implementation_, address admin_, bytes data_)",
+      "error ErrorNotAdmin()",
+      "error ErrorProxyIsOssified()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ProxyOssified()",
+      "event Upgraded(address indexed implementation)",
+      "function proxy__changeAdmin(address newAdmin_)",
+      "function proxy__getAdmin() view returns (address)",
+      "function proxy__getImplementation() view returns (address)",
+      "function proxy__getIsOssified() view returns (bool)",
+      "function proxy__ossify()",
+      "function proxy__upgradeTo(address newImplementation_)",
+      "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
+    ],
     "0xF56D96B2535B932656d3c04Ebf51baBff241D886": [
       "constructor()",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
@@ -2002,6 +2107,7 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "gnosisSafeModules/DeputyGuardianModule": "0x0cc34179bb0493633cd2618454587cf0cced70e01678f49c9633c6ffcf5af9e9",
     "gnosisSafeModules/LivenessModule": "0x93a18dea68cf1d0abddfc33adec077c82356344dd7b49ae5542b16ca9319bb91",
+    "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/AnchorStateRegistry": "0xd777a643e82bcaa34c6605409142defa095bd558d37580cb92153eb68d721b3b",
     "opstack/DelayedWETH": "0x68c3c46b77dde7a7af0ae6477fe17a8531050e799e7ee4c01be128dee3c59447",

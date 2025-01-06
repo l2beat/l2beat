@@ -3,7 +3,8 @@
   "name": "swell",
   "chain": "ethereum",
   "initialAddresses": [
-    "0x7aA4960908B13D104bf056B23E2C76B43c5AACc8" // L1StandardBridge
+    "0x7aA4960908B13D104bf056B23E2C76B43c5AACc8", // L1StandardBridge
+    "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121" // wsteth escrow
   ],
   "names": {
     "0x06F7fB1C74147e34Fce04a6828c7BF809B038d0E": "SwellChainMultisig"

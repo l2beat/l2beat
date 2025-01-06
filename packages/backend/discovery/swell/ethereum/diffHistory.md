@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x57fb1ee3bf6dbe91242b29bb77ea3ba6d55ffafc
+Generated with discovered.json: 0xb0e909c4ca225287b65a88ec74f64cf83376606c
 
-# Diff at Mon, 06 Jan 2025 13:26:23 GMT:
+# Diff at Mon, 06 Jan 2025 13:39:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@969dad8a7ea2e6cba9a02db28683ddad0178857a block: 20985756
-- current block number: 21565708
+- current block number: 21565774
 
 ## Description
 
@@ -170,6 +170,12 @@ Initial discovery of an OP stack chain with known contracts and superchain gov, 
 
 ```diff
 +   Status: CREATED
+    contract L1ERC20TokenBridge (0xecf3376512EDAcA4FBB63d2c67d12a0397d24121)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
+```diff
++   Status: CREATED
     contract L1ERC721Bridge (0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e)
     +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
 ```
@@ -189,6 +195,8 @@ Initial discovery of an OP stack chain with known contracts and superchain gov, 
  .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |   35 +
  .../L1CrossDomainMessenger.sol                     | 1514 ++++++++
  .../ResolvedDelegateProxy.p.sol                    |   55 +
+ .../L1ERC20TokenBridge/L1ERC20TokenBridge.sol      | 1078 ++++++
+ .../.flat/L1ERC20TokenBridge/OssifiableProxy.p.sol |  614 +++
  .../.flat/L1ERC721Bridge/L1ERC721Bridge.sol        |  707 ++++
  .../ethereum/.flat/L1ERC721Bridge/Proxy.p.sol      |  200 +
  .../.flat/L1StandardBridge/L1ChugSplashProxy.p.sol |  269 ++
@@ -221,7 +229,7 @@ Initial discovery of an OP stack chain with known contracts and superchain gov, 
  .../.flat/SwellChainMultisig/SafeProxy.p.sol       |   37 +
  .../swell/ethereum/.flat/SystemConfig/Proxy.p.sol  |  200 +
  .../ethereum/.flat/SystemConfig/SystemConfig.sol   |  826 ++++
- 44 files changed, 28896 insertions(+)
+ 46 files changed, 30588 insertions(+)
 ```
 
 ## Config/verification related changes
