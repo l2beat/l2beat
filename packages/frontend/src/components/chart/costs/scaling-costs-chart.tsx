@@ -2,11 +2,13 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+  type CostsMetric,
+  useCostsMetricContext,
+} from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
 import { useCostsTimeRangeContext } from '~/app/(side-nav)/scaling/costs/_components/costs-time-range-context'
+import { CostsMetricControls } from '~/app/(side-nav)/scaling/costs/_components/costs-type-controls'
 import { useCostsUnitContext } from '~/app/(side-nav)/scaling/costs/_components/costs-unit-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
@@ -24,6 +26,7 @@ import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
 import { ChartTimeRange } from '../core/chart-time-range'
 import { CostsChartHover } from './costs-chart-hover'
+import { CostsChartLegend } from './costs-chart-legend'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
@@ -35,10 +38,16 @@ interface Props {
 export function ScalingCostsChart({ milestones, entries }: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
+  const { metric, setMetric } = useCostsMetricContext()
+
+  const onMetricChange = (metric: CostsMetric) => {
+    setMetric(metric)
+    if (metric === 'per-l2-tx' && (range === '1d' || range === '7d')) {
+      setRange('30d')
+    }
+  }
 
   const includeFilters = useScalingFilter()
-  const filters = useScalingFilterValues()
-
   const resolution = rangeToResolution(range)
 
   const filteredEntries = useMemo(
@@ -47,15 +56,11 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
   )
 
   const filter = useMemo<CostsProjectsFilter>(() => {
-    if (filters.isEmpty) {
-      return { type: 'all' }
-    }
-
     return {
       type: 'projects',
       projectIds: filteredEntries.map((project) => project.id),
     }
-  }, [filteredEntries, filters])
+  }, [filteredEntries])
 
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
@@ -70,7 +75,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
     })
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col">
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -82,12 +87,20 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
         )}
       >
         <Header resolution={resolution} chartRange={chartRange} />
-        <Chart />
+        <Chart className="mt-4" />
+        <CostsChartLegend className="my-2" />
         <ChartControlsWrapper>
-          <UnitControls unit={unit} setUnit={setUnit} />
+          <div className="flex flex-wrap gap-1">
+            <UnitControls unit={unit} setUnit={setUnit} />
+            <CostsMetricControls
+              value={metric}
+              onValueChange={onMetricChange}
+            />
+          </div>
           <CostsChartTimeRangeControls
             timeRange={range}
             setTimeRange={setRange}
+            metric={metric}
           />
         </ChartControlsWrapper>
       </ChartProvider>

@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x9e7ff7c7ead0675cd67275f0d96652fa38131bf3
+
+# Diff at Thu, 12 Dec 2024 15:26:58 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21322246
+- current block number: 21387313
+
+## Description
+
+Ignored not needed values in config.
+
+## Watched changes
+
+```diff
+    contract StakeLogic (0x84e34fD82FC368F1a072075114AdC4b552a7a1F4) {
+    +++ description: None
+      values.currentIntervalIndex:
+-        23
++        24
+      values.getToBeDistributed.2:
+-        2730626699
++        2730244557
+      values.getToBeDistributed.1:
+-        "1346902354215947912554"
++        "1346505840564614195006"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21322246 (main branch discovery), not current.
+
+```diff
+    contract StakeLogic (0x84e34fD82FC368F1a072075114AdC4b552a7a1F4) {
+    +++ description: None
+      values.toBeDistributed:
+-        [0,"1346902354215947912554",2730626699]
+    }
+```
+
 Generated with discovered.json: 0x87e9ba61b5443320a05ce2afe1174210be0f1560
 
 # Diff at Tue, 10 Dec 2024 11:07:37 GMT:

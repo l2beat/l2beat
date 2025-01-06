@@ -10,12 +10,10 @@ import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils
 import { api } from '~/trpc/react'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { Chart } from '../core/chart'
+import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
-import { ScalingFactorTooltip } from './activity-chart-header'
-import { ActivityChartHover } from './activity-chart-hover'
-import { useActivityChartRenderParams } from './use-activity-chart-render-params'
-
-const SHOW_MAINNET = true
+import { RecategorizedActivityChartHover } from './recategorized-activity-chart-hover'
+import { useRecategorizedActivityChartRenderParams } from './use-recategorized-activity-chart-render-params'
 
 interface Props {
   timeRange: ActivityTimeRange
@@ -25,16 +23,15 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'all' },
   })
-  const { data, isLoading } = api.activity.chart.useQuery({
+  const { data, isLoading } = api.activity.recategorizedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
   })
 
   const { columns, valuesStyle, formatYAxisLabel } =
-    useActivityChartRenderParams({
+    useRecategorizedActivityChartRenderParams({
       chart: data,
       milestones: [],
-      showMainnet: SHOW_MAINNET,
     })
 
   return (
@@ -45,12 +42,32 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <ActivityChartHover {...data} showEthereum={SHOW_MAINNET} />
+        <RecategorizedActivityChartHover {...data} />
       )}
     >
       <section className="flex flex-col gap-4">
         <Header stats={stats} />
         <Chart disableMilestones />
+        <ChartLegend
+          elements={[
+            {
+              name: 'Rollups',
+              color: 'bg-indicator-rollups',
+            },
+            {
+              name: 'Validiums & Optimiums',
+              color: 'bg-indicator-validiums-optimiums',
+            },
+            {
+              name: 'Others',
+              color: 'bg-indicator-others',
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-indicator-ethereum',
+            },
+          ]}
+        />
       </section>
     </ChartProvider>
   )
@@ -63,7 +80,7 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
         <div className="flex items-center gap-3">
           <span className="text-xl font-bold">Activity</span>
           <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
             href="/scaling/activity"
           >
             View details
@@ -88,17 +105,12 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
               )}{' '}
               UOPS
             </div>
-            <div className="flex items-center gap-1">
-              <span className="whitespace-nowrap text-right text-xs text-secondary">
-                Scaling factor: {stats.uops.scalingFactor.toFixed(2)}x
-              </span>
-              <ScalingFactorTooltip className="size-3" />
-            </div>
+            <div className="h-5" />
           </>
         ) : (
           <>
             <Skeleton className="my-[5px] h-5 w-20 md:w-[243px]" />
-            <Skeleton className="my-0.5 h-4 w-[135px]" />
+            <div className="h-5" />
           </>
         )}
       </div>

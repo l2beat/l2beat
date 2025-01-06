@@ -90,6 +90,6 @@ export class StarknetClient extends ClientCore implements BlockClient {
   }
 
   get chain() {
-    return 'starknet'
+    return this.$.sourceName
   }
 }

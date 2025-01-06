@@ -13,7 +13,7 @@ import { IEtherscanClient } from '../../utils/IEtherscanClient'
 import { ContractSource } from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { ContractDeployment, RawProviders } from './IProvider'
-import { ProviderStats, getZeroStats } from './Stats'
+import { ProviderMeasurement, ProviderStats } from './Stats'
 
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 500, // 0.5, 1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s
@@ -23,7 +23,7 @@ const shouldRetry = Retries.exponentialBackOff({
 })
 
 export class LowLevelProvider {
-  public stats: ProviderStats = getZeroStats()
+  public stats: ProviderStats = new ProviderStats()
 
   constructor(
     private readonly provider: providers.JsonRpcProvider,
@@ -46,18 +46,19 @@ export class LowLevelProvider {
     data: Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
-    this.stats.callCount++
-    return await rpcWithRetries(
-      async () => {
-        const result = await this.provider.call(
-          { to: address.toString(), data: data.toString() },
-          blockNumber,
-        )
-        return Bytes.fromHex(result)
-      },
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          const result = await this.provider.call(
+            { to: address.toString(), data: data.toString() },
+            blockNumber,
+          )
+          return Bytes.fromHex(result)
+        },
 
-      () => `call ${address.toString()} ${data.length} ${blockNumber}`,
-    )
+        () => `call ${address.toString()} ${data.length} ${blockNumber}`,
+      )
+    }, ProviderMeasurement.CALL)
   }
 
   async getStorage(
@@ -65,18 +66,19 @@ export class LowLevelProvider {
     slot: number | bigint | Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
-    this.stats.getStorageCount++
-    return await rpcWithRetries(
-      async () => {
-        const result = await this.provider.getStorageAt(
-          address.toString(),
-          slot instanceof Bytes ? slot.toString() : slot,
-          blockNumber,
-        )
-        return Bytes.fromHex(result)
-      },
-      () => `getStorage ${address.toString()} ${slot} ${blockNumber}`,
-    )
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          const result = await this.provider.getStorageAt(
+            address.toString(),
+            slot instanceof Bytes ? slot.toString() : slot,
+            blockNumber,
+          )
+          return Bytes.fromHex(result)
+        },
+        () => `getStorage ${address.toString()} ${slot} ${blockNumber}`,
+      )
+    }, ProviderMeasurement.GET_STORAGE)
   }
 
   async getLogs(
@@ -85,131 +87,139 @@ export class LowLevelProvider {
     fromBlock: number,
     toBlock: number,
   ) {
-    this.stats.getLogsCount++
-    return await rpcWithRetries(
-      async () => {
-        return await this.eventProvider.getLogs({
-          address: address.toString(),
-          fromBlock,
-          toBlock,
-          topics,
-        })
-      },
-      () => `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`,
-    )
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          return await this.eventProvider.getLogs({
+            address: address.toString(),
+            fromBlock,
+            toBlock,
+            topics,
+          })
+        },
+        () => `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`,
+      )
+    }, ProviderMeasurement.GET_LOGS)
   }
 
   async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {
-    this.stats.getTransactionCount++
-    return await rpcWithRetries(
-      async () => {
-        return (
-          (await this.provider.getTransaction(transactionHash.toString())) ??
-          undefined
-        )
-      },
-      () => `getTransaction ${transactionHash.toString()}`,
-    )
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          return (
+            (await this.provider.getTransaction(transactionHash.toString())) ??
+            undefined
+          )
+        },
+        () => `getTransaction ${transactionHash.toString()}`,
+      )
+    }, ProviderMeasurement.GET_TRANSACTION)
   }
 
   async getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
-    this.stats.getDebugTraceCount++
-    return await rpcWithRetries(
-      async () => {
-        const response = await this.provider.send('debug_traceTransaction', [
-          transactionHash.toString(),
-          { tracer: 'callTracer' },
-        ])
-        return DebugTransactionCallResponse.parse(response)
-      },
-      () => `debug_traceTransaction ${transactionHash.toString()}`,
-    )
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          const response = await this.provider.send('debug_traceTransaction', [
+            transactionHash.toString(),
+            { tracer: 'callTracer' },
+          ])
+          return DebugTransactionCallResponse.parse(response)
+        },
+        () => `debug_traceTransaction ${transactionHash.toString()}`,
+      )
+    }, ProviderMeasurement.GET_DEBUG_TRACE)
   }
 
   async getBytecode(
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Bytes> {
-    this.stats.getBytecodeCount++
-    return await rpcWithRetries(
-      async () => {
-        const result = await this.provider.getCode(
-          address.toString(),
-          blockNumber,
-        )
-        return Bytes.fromHex(result)
-      },
-      () => `getCode ${address.toString()} ${blockNumber}`,
-    )
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          const result = await this.provider.getCode(
+            address.toString(),
+            blockNumber,
+          )
+          return Bytes.fromHex(result)
+        },
+        () => `getCode ${address.toString()} ${blockNumber}`,
+      )
+    }, ProviderMeasurement.GET_BYTECODE)
   }
 
-  async getSource(address: EthereumAddress): Promise<ContractSource> {
-    this.stats.getSourceCount++
-    return await this.etherscanClient.getContractSource(address)
+  getSource(address: EthereumAddress): Promise<ContractSource> {
+    return this.measure(() => {
+      return this.etherscanClient.getContractSource(address)
+    }, ProviderMeasurement.GET_SOURCE)
   }
 
-  async getDeployment(
+  getDeployment(
     address: EthereumAddress,
   ): Promise<ContractDeployment | undefined> {
-    this.stats.getDeploymentCount++
-    const transactionHash =
-      await this.etherscanClient.getContractDeploymentTx(address)
-    if (transactionHash === undefined) {
-      // getContractDeploymentTx API is not available
-      return undefined
-    }
+    return this.measure(async () => {
+      const transactionHash =
+        await this.etherscanClient.getContractDeploymentTx(address)
+      if (transactionHash === undefined) {
+        // getContractDeploymentTx API is not available
+        return undefined
+      }
 
-    // Hack for Base and possibly others
-    if (transactionHash === Hash256.ZERO) {
+      // Hack for Base and possibly others
+      if (transactionHash === Hash256.ZERO) {
+        return {
+          transactionHash,
+          deployer: EthereumAddress.ZERO,
+          blockNumber: 0,
+          timestamp: new UnixTime((await this.getBlock(1)).timestamp),
+        }
+      }
+
+      const tx = await this.getTransaction(transactionHash)
+      if (tx === undefined) {
+        return undefined
+      }
+
+      assert(tx.blockNumber, 'Transaction returned without a block number.')
+      const deployer = EthereumAddress(tx.from)
+      const blockNumber = tx.blockNumber
+      const block = await this.getBlock(blockNumber)
+      const timestamp = new UnixTime(block.timestamp)
+
       return {
         transactionHash,
-        deployer: EthereumAddress.ZERO,
-        blockNumber: 0,
-        timestamp: new UnixTime((await this.getBlock(1)).timestamp),
+        deployer,
+        blockNumber,
+        timestamp,
       }
-    }
-
-    const tx = await this.getTransaction(transactionHash)
-    if (tx === undefined) {
-      return undefined
-    }
-
-    assert(tx.blockNumber, 'Transaction returned without a block number.')
-    const deployer = EthereumAddress(tx.from)
-    const blockNumber = tx.blockNumber
-    const block = await this.getBlock(blockNumber)
-    const timestamp = new UnixTime(block.timestamp)
-
-    return {
-      transactionHash,
-      deployer,
-      blockNumber,
-      timestamp,
-    }
+    }, ProviderMeasurement.GET_DEPLOYMENT)
   }
 
-  async getBlock(blockNumber: number): Promise<providers.Block> {
-    this.stats.getBlockCount++
-    return await rpcWithRetries(
-      async () => {
-        return await this.provider.getBlock(blockNumber)
-      },
-      () => `getBlock ${blockNumber}`,
-    )
+  getBlock(blockNumber: number): Promise<providers.Block> {
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          return await this.provider.getBlock(blockNumber)
+        },
+        () => `getBlock ${blockNumber}`,
+      )
+    }, ProviderMeasurement.GET_BLOCK)
   }
 
-  async getBlockNumber(): Promise<number> {
-    this.stats.getBlockNumberCount++
-    return await rpcWithRetries(
-      async () => {
-        return await this.provider.getBlockNumber()
-      },
-      () => `getBlockNumber`,
-    )
+  getBlockNumber(): Promise<number> {
+    return this.measure(() => {
+      return rpcWithRetries(
+        async () => {
+          return await this.provider.getBlockNumber()
+        },
+        () => `getBlockNumber`,
+      )
+    }, ProviderMeasurement.GET_BLOCKNUMBER)
   }
 
   async getBlobs(txHash: string): Promise<BlobsInBlock> {
@@ -218,6 +228,16 @@ export class LowLevelProvider {
       'BlobClient is not available, configure the .env to include beacon url.',
     )
     return await this.blobClient.getRelevantBlobs(txHash)
+  }
+
+  private async measure<T>(fn: () => Promise<T>, key: number): Promise<T> {
+    const start = performance.now()
+    try {
+      return await fn()
+    } finally {
+      const duration = performance.now() - start
+      this.stats.mark(key, duration)
+    }
   }
 }
 

@@ -7,11 +7,6 @@
     sentiment: "good"
     value: "Onchain"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: Infinity
     description: "Users can exit funds at any time because contracts are not upgradeable."
@@ -35,10 +30,5 @@
     description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve."
     sentiment: "good"
     value: "Fraud proofs (1R)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

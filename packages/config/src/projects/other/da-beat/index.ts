@@ -36,7 +36,6 @@ import { paychainDac } from './dac/payChain'
 import { playblockDac } from './dac/playblock'
 import { popapexDac } from './dac/popapex'
 import { popbossDac } from './dac/popboss'
-import { rariDac } from './dac/rari'
 import { realDac } from './dac/real'
 import { redstoneDA } from './dac/redstoneDA'
 import { reyaDac } from './dac/reya'
@@ -54,13 +53,11 @@ import { xlayerDac } from './dac/xlayer'
 import { xterioDA } from './dac/xterioDA'
 import { zkfairDac } from './dac/zkfair'
 import { applyProcessor } from './processors'
-import { DaLayer } from './types/DaLayer'
 
 export * from './types'
 
 export const ethereumDaLayer = ethereum
-
-export const daLayers: DaLayer[] = applyProcessor([
+export const daLayers = applyProcessor([
   // Permissioned DACs
   alienxDac,
   alephzeroDac,
@@ -90,7 +87,6 @@ export const daLayers: DaLayer[] = applyProcessor([
   playblockDac,
   popapexDac,
   popbossDac,
-  rariDac,
   realDac,
   reyaDac,
   rhinofiDac,

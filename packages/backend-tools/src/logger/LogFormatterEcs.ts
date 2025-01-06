@@ -19,6 +19,7 @@ export class LogFormatterEcs implements LogFormatter {
         module: entry.module,
         chain: entry.chain,
         project: entry.project,
+        source: entry.source,
       },
       message: entry.message ? truncate(entry.message) : undefined,
       error: entry.resolvedError

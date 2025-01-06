@@ -2,21 +2,8 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 282615739,
-  "configHash": "0x453cb8250699195f4d1965340c7278f47f5e5826f14fa85366847aa8f0e2fbe9",
+  "configHash": "0x9cefa2589a8ac1da670e95489c212c2855adecdeca4cf0ce85bd5315a96134df",
   "contracts": [
-    {
-      "name": "SP1Verifier",
-      "address": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
-      "sourceHashes": [
-        "0xeb051b88e210e28fd696d01528e3cc9a131a08d69e20bf1983ac8d90dd9b1f4f"
-      ],
-      "sinceTimestamp": 1726276269,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x4aca240a3e5296e6a565f98dc728c6f48f8de4792a8fa365038c3b86952176f5",
-        "VERSION": "v2.0.0"
-      }
-    },
     {
       "name": "SuccinctFeeVault",
       "address": "0x296666e937b270193B960a7cEC526B351F353166",
@@ -35,6 +22,19 @@
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
+      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1719523665,
       "values": {
@@ -66,7 +66,7 @@
       "derivedName": "SP1VerifierGateway"
     },
     {
-      "name": "headerRangeVerifier",
+      "name": "HeaderRangeVerifier",
       "address": "0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3",
       "sourceHashes": [
         "0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"
@@ -80,30 +80,19 @@
       "derivedName": "FunctionVerifier"
     },
     {
-      "name": "SP1Verifier",
-      "address": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
-      "sourceHashes": [
-        "0x0f6f590ac4c542e7f927f783929cb0bf126657b5207b3c796f77ac9d01433fb5"
-      ],
-      "sinceTimestamp": 1729727422,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x090690902a12d1d02c07a1ad25aa76bded5f6499e12a11ba127669501b553998",
-        "VERSION": "v3.0.0"
-      }
-    },
-    {
-      "name": "",
-      "address": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
-      "unverified": true,
-      "sinceTimestamp": 1725472227,
-      "values": { "$immutable": true }
-    },
-    {
       "name": "SuccinctGateway",
       "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+      "template": "succinct/SuccinctGateway",
       "sourceHashes": [
         "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
+      ],
+      "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1709852148,
       "values": {
@@ -149,6 +138,17 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710506484,
       "values": {
@@ -181,10 +181,38 @@
         "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "sinceTimestamp": 1710651080,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
+        "$admin": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
         "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
         "$pastUpgrades": [
           [
@@ -230,30 +258,24 @@
         "frozen": false,
         "gateway_deprecated": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
+        "guardians": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
         "headerRangeFunctionId_deprecated": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0",
-        "isRelayerApproved": true,
+        "isRelayer1Approved": true,
+        "isRelayer2Approved": true,
+        "isRelayer3Approved": true,
         "latestBlock": 2963400,
         "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
-        "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
+        "relayers": [
+          "0x44eb418a966ff47f5af6f48aea6afde0bf193a8d",
+          "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
+          "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+        ],
         "state_proofNonce": 6097,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
       },
       "derivedName": "SP1Blobstream"
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
-      "sourceHashes": [
-        "0x6e3bfeae0d549b79decfd956f551a8aeac66523cdd66da389ef55eb56ef72aac"
-      ],
-      "sinceTimestamp": 1722645816,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xc430ff7f31a22c5f7607f3ed2a2f5621af340bc45a44179319cba5761664e1f0",
-        "VERSION": "v1.1.0"
-      }
     },
     {
       "name": "SuccinctGatewaySP1Multisig",
@@ -264,6 +286,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204782,
       "values": {
@@ -288,6 +317,13 @@
       "name": "",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
       "unverified": true,
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
       "sinceTimestamp": 1729727170,
       "values": { "$immutable": true }
     },
@@ -300,6 +336,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678822125,
       "values": {
@@ -322,7 +365,7 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "name": "nextHeaderVerifier",
+      "name": "NextHeaderVerifier",
       "address": "0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C",
       "sourceHashes": [
         "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
@@ -337,39 +380,50 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
-        }
-      ]
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9" },
     { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
     { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
-    { "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D" },
-    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
+    {
+      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    {
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
     { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
     { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899" },
     { "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15" },
     { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
+    {
+      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
     { "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65" },
     { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" }
   ],
   "abis": {
-    "0x1764C29FBd94865198588f10FC75D4f6636d158d": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0x296666e937b270193B960a7cEC526B351F353166": [
       "error FailedToSendNative(uint256 amount)",
       "error InsufficentAllowance(address token, uint256 amount)",
@@ -526,19 +580,6 @@
       "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
       "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
-    "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": [
       "error CallFailed(address callbackAddress, bytes callbackData)",
       "error CallbackFailed(bytes4 callbackSelector, bytes output, bytes context)",
@@ -608,15 +649,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
@@ -681,7 +713,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0xb0717b3e2a9ebc9678d934fa77de178537019305cf6fd12950b8f116da2a0e9c",
-    "succinct/SP1SuccinctGateway": "0xc0b1862d6ddf4e09ee2a3baf1ead0eda8461322a213cd66dfd8e013950b9a0cc"
+    "succinct/SP1Blobstream": "0x9f6f569f3a2573cfe923841563663b9d0ff70b3d2108d54a2625d598ca1006b9",
+    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
+    "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
   }
 }

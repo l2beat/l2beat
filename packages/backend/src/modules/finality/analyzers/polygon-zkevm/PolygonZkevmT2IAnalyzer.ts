@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 import { z } from 'zod'
 
 import { Database } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
@@ -12,10 +12,10 @@ import { toTransactionHash } from './hash'
 
 export class PolygonZkEvmT2IAnalyzer extends BaseAnalyzer {
   constructor(
-    provider: RpcClient2,
+    provider: RpcClient,
     db: Database,
     projectId: ProjectId,
-    private readonly l2Provider: RpcClient2,
+    private readonly l2Provider: RpcClient,
   ) {
     super(provider, db, projectId)
   }

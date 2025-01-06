@@ -1,23 +1,23 @@
 import { uniq } from 'lodash'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { TableFilter } from '~/components/table/filters/table-filter'
-import {
-  type BridgesFilterEntry,
-  useBridgesFilterValues,
-} from './bridges-filter-context'
+import { type CommonBridgesEntry } from '~/server/features/bridges/get-common-bridges-entry'
+import { useBridgesFilterValues } from './bridges-filter-context'
 
 interface Props {
-  entries: BridgesFilterEntry[]
+  entries: CommonBridgesEntry[]
 }
 
 export function BridgesFilters({ entries }: Props) {
   const filter = useBridgesFilterValues()
 
-  const typeOptions = uniq(entries.map((entry) => entry.category)).sort()
+  const filterables = entries
+    .map((e) => e.filterable)
+    .filter((f) => f !== undefined)
 
-  const validatedByOptions = uniq(
-    entries.map((entry) => entry.validatedBy?.value),
-  ).sort()
+  const typeOptions = uniq(filterables.map((f) => f.type)).sort()
+
+  const validatedByOptions = uniq(filterables.map((f) => f.validatedBy)).sort()
 
   return (
     <OverflowWrapper>

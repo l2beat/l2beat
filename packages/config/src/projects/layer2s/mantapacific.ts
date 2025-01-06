@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -19,6 +20,10 @@ export const mantapacific: Layer2 = opStackL2({
     slug: 'mantapacific',
     description:
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     links: {
       websites: ['https://pacific.manta.network/'],
       apps: ['https://pacific-bridge.manta.network/'],

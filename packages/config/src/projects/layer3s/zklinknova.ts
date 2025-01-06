@@ -17,6 +17,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Layer3 } from './types'
@@ -100,6 +101,7 @@ export const zklinknova: Layer3 = {
   hostChain: ProjectId('linea'),
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'zkLink Nova',
     slug: 'zklinknova',
     description:
@@ -400,8 +402,6 @@ export const zklinknova: Layer3 = {
     ],
   },
   riskView: {
-    validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('linea')),
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
       sources: [
@@ -432,8 +432,6 @@ export const zklinknova: Layer3 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stackedRiskView: {
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: RISK_VIEW.STATE_ZKP_L3('Linea'),
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_L3,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0), // TODO(donnoh): something smarter if things change. should be (min(zklink, linea), sum(zklink, linea))
@@ -485,7 +483,7 @@ export const zklinknova: Layer3 = {
   },
   dataAvailability: [
     addSentimentToDataAvailability({
-      layers: [DA_LAYERS.EXTERNAL],
+      layers: [DA_LAYERS.NONE],
       bridge: DA_BRIDGES.NONE,
       mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     }),

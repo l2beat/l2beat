@@ -9,16 +9,18 @@ describe(ProjectService.name, () => {
       id: ProjectId('foo'),
       slug: 'foochain',
       name: 'Foo Chain',
+      shortName: undefined,
       addedAt: UnixTime.ZERO,
-      isLayer2: true,
+      isScaling: true,
       isArchived: true,
     },
     {
       id: ProjectId('bar'),
       slug: 'barnetwork',
       name: 'Bar Network',
+      shortName: 'Bar',
       addedAt: UnixTime.ZERO,
-      isLayer2: true,
+      isScaling: true,
     },
   ]
   const getProjects = () => projects
@@ -32,6 +34,7 @@ describe(ProjectService.name, () => {
       id: ProjectId('foo'),
       slug: 'foochain',
       name: 'Foo Chain',
+      shortName: undefined,
       addedAt: UnixTime.ZERO,
     })
   })
@@ -48,16 +51,17 @@ describe(ProjectService.name, () => {
     const service = new ProjectService(getProjects)
     const result = await service.getProject({
       id: ProjectId('foo'),
-      select: ['isLayer2'],
-      optional: ['isLayer3', 'isArchived'],
+      select: ['isScaling'],
+      optional: ['isBridge', 'isArchived'],
     })
     expect(result).toEqual({
       id: ProjectId('foo'),
       slug: 'foochain',
       name: 'Foo Chain',
+      shortName: undefined,
       addedAt: UnixTime.ZERO,
-      isLayer2: true,
-      isLayer3: undefined,
+      isScaling: true,
+      isBridge: undefined,
       isArchived: true,
     })
   })
@@ -65,26 +69,28 @@ describe(ProjectService.name, () => {
   it('returns multiple projects', async () => {
     const service = new ProjectService(getProjects)
     const result = await service.getProjects({
-      select: ['isLayer2'],
-      optional: ['isLayer3', 'isArchived'],
+      select: ['isScaling'],
+      optional: ['isBridge', 'isArchived'],
     })
     expect(result).toEqual([
       {
         id: ProjectId('foo'),
         slug: 'foochain',
         name: 'Foo Chain',
+        shortName: undefined,
         addedAt: UnixTime.ZERO,
-        isLayer2: true,
-        isLayer3: undefined,
+        isScaling: true,
+        isBridge: undefined,
         isArchived: true,
       },
       {
         id: ProjectId('bar'),
         slug: 'barnetwork',
         name: 'Bar Network',
+        shortName: 'Bar',
         addedAt: UnixTime.ZERO,
-        isLayer2: true,
-        isLayer3: undefined,
+        isScaling: true,
+        isBridge: undefined,
         isArchived: undefined,
       },
     ])

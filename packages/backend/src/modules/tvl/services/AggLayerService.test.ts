@@ -1,5 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber, utils } from 'ethers'
@@ -27,7 +27,7 @@ describe(AggLayerService.name, () => {
         l1Address: EthereumAddress.random(),
       })
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getBalance: mockFn(),
         call: mockFn(),
       })
@@ -66,7 +66,7 @@ describe(AggLayerService.name, () => {
         id: MOCK_ID2,
       })
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getBalance: mockFn().resolvesTo(BigNumber.from(900)),
       })
       const mockAggLayerService = agglayerService({
@@ -104,7 +104,7 @@ describe(AggLayerService.name, () => {
         id: MOCK_ID2,
       })
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         call: mockFn().resolvesTo(
           erc20Interface.encodeFunctionResult('totalSupply', [300n]),
         ),
@@ -147,7 +147,7 @@ describe(AggLayerService.name, () => {
       const mockL2Address = EthereumAddress.random()
       const mockTokenSupply = 1000n
 
-      const rpcClient = mockObject<RpcClient2>({})
+      const rpcClient = mockObject<RpcClient>({})
       const multicallClient = mockObject<MulticallClient>({
         multicall: mockFn()
           .resolvesToOnce([
@@ -218,7 +218,7 @@ describe(AggLayerService.name, () => {
       const mockToken1Supply = 1000n
       const mockToken2Supply = 2000n
 
-      const rpcClient = mockObject<RpcClient2>({})
+      const rpcClient = mockObject<RpcClient>({})
       const multicallClient = mockObject<MulticallClient>({
         multicall: mockFn().resolvesTo([
           {
@@ -277,7 +277,7 @@ describe(AggLayerService.name, () => {
       const mockL2Address1 = EthereumAddress.random()
       const mockL2Address2 = EthereumAddress.random()
 
-      const rpcClient = mockObject<RpcClient2>({})
+      const rpcClient = mockObject<RpcClient>({})
       const multicallClient = mockObject<MulticallClient>({
         multicall: mockFn().resolvesTo([
           {
@@ -331,7 +331,7 @@ describe(AggLayerService.name, () => {
         premintedAmount: 1000n,
       })
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getBalance: mockFn().resolvesTo(BigNumber.from(900)),
       })
       const mockAggLayerService = agglayerService({
@@ -360,7 +360,7 @@ describe(AggLayerService.name, () => {
 
       const expectedSupply = 1000n
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         call: mockFn().resolvesTo(
           utils.defaultAbiCoder.encode(['uint256'], [expectedSupply]),
         ),
@@ -392,7 +392,7 @@ function agglayerService(opts: Partial<AggLayerServiceDependencies>) {
   return new AggLayerService({
     bridgeAddress: bridgeAddress ?? BRIDGE_ADDRESS,
     multicallClient: multicallClient ?? mockObject<MulticallClient>({}),
-    rpcClient: rpcClient ?? mockObject<RpcClient2>({}),
+    rpcClient: rpcClient ?? mockObject<RpcClient>({}),
   })
 }
 

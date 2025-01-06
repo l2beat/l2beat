@@ -10,7 +10,7 @@ export interface BadgeProps extends VariantProps<typeof badgeVariants> {
 const badgeVariants = cva('rounded text-center font-medium', {
   variants: {
     type: {
-      error: 'bg-red-500 text-white',
+      error: 'bg-negative/20 text-negative',
       gray: 'bg-gray-200 font-medium text-gray-700 sidebar:!bg-surface-tertiary sidebar:!text-secondary dark:bg-zinc-700 dark:text-gray-50',
       warning: 'bg-yellow-500 text-black',
       brightYellow: 'bg-yellow-200 text-purple-700',

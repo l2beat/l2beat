@@ -1,5 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import {
   AggLayerL2Token,
   AggLayerNativeEtherPreminted,
@@ -31,7 +31,7 @@ export type Config<T extends AggLayerAmountConfig['type']> =
   AggLayerAmountConfig & { type: T } & { id: string }
 
 export interface AggLayerServiceDependencies {
-  readonly rpcClient: RpcClient2
+  readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
   readonly bridgeAddress: EthereumAddress
 }

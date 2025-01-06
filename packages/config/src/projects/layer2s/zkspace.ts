@@ -112,7 +112,6 @@ export const zkspace: Layer2 = {
         to: 'proofSubmissions',
       },
     },
-    finality: 'coming soon',
   },
   dataAvailability: [
     addSentimentToDataAvailability({
@@ -180,8 +179,6 @@ export const zkspace: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage({
     stage0: {

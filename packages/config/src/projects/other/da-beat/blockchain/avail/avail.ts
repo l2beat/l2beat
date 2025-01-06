@@ -2,12 +2,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer } from '../../types/DaLayer'
+import { BlockchainDaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { vector } from './bridges/vector'
 
-export const avail: DaLayer = {
+export const avail: BlockchainDaLayer = {
   id: 'avail',
   type: 'DaLayer',
   kind: 'PublicBlockchain',
@@ -91,11 +91,11 @@ export const avail: DaLayer = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a dishonest majority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+        text: `a dishonest supermajority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
+        text: 'a dishonest supermajority of Avail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
       },
     ],
   },

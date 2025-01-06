@@ -1,4 +1,7 @@
-import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
+import {
+  daLayers,
+  ethereumDaLayer,
+} from '@l2beat/config/build/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
@@ -6,9 +9,13 @@ import { MobileProjectNavigation } from '~/components/projects/navigation/mobile
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
 import { env } from '~/env'
-import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import {
+  getDaProjectEntry,
+  getEthereumDaProjectEntry,
+} from '~/server/features/data-availability/project/get-da-project-entry'
 import { getProjectMetadata } from '~/utils/metadata'
-import { DaProjectSummary } from '../_components/da-project-summary'
+import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
+import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
 
 interface Props {
   params: Promise<{
@@ -19,7 +26,7 @@ interface Props {
 
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
-  return daLayers.flatMap((layer) =>
+  return [...daLayers, ethereumDaLayer].flatMap((layer) =>
     layer.bridges.map((bridge) => ({
       layer: layer.display.slug,
       bridge: bridge.display.slug,
@@ -29,7 +36,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props) {
   const params = await props.params
-  const layer = daLayers.find((layer) => layer.display.slug === params.layer)
+  const layer = [...daLayers, ethereumDaLayer].find(
+    (layer) => layer.display.slug === params.layer,
+  )
   if (!layer) {
     notFound()
   }
@@ -54,16 +63,16 @@ export async function generateMetadata(props: Props) {
 
 export default async function Page(props: Props) {
   const params = await props.params
-  const daLayer = daLayers.find((p) => p.display.slug === params.layer)
-  if (!daLayer) return notFound()
-  const daBridge = daLayer.bridges.find((b) => b.display.slug === params.bridge)
-  if (!daBridge) return notFound()
 
-  const daProjectEntry = await getDaProjectEntry(daLayer, daBridge)
+  const pageData = await getPageData(params)
 
-  const navigationSections = projectDetailsToNavigationSections(
-    daProjectEntry.projectDetails,
-  )
+  if (!pageData) {
+    return notFound()
+  }
+
+  const { entry, summaryComponent } = pageData
+
+  const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
   return (
@@ -73,32 +82,60 @@ export default async function Page(props: Props) {
           <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}
-      <DaProjectSummary project={daProjectEntry} />
+      {summaryComponent}
       {isNavigationEmpty ? (
-        <ProjectDetails items={daProjectEntry.projectDetails} />
+        <ProjectDetails items={entry.sections} />
       ) : (
         <div className="gap-x-12 md:flex">
           <div className="mt-10 hidden w-[242px] shrink-0 md:block">
             <DesktopProjectNavigation
               project={{
-                title: daProjectEntry.name,
-                slug: daLayer.display.slug,
-                isUnderReview: daProjectEntry.isUnderReview,
+                title: entry.name,
+                slug: entry.slug,
+                isUnderReview: entry.isUnderReview,
               }}
               sections={navigationSections}
-              projectVariants={daLayer.bridges.map((bridge) => ({
-                title: bridge.display.name,
-                href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
-              }))}
+              projectVariants={entry.projectVariants}
             />
           </div>
           <div className="w-full">
             <HighlightableLinkContextProvider>
-              <ProjectDetails items={daProjectEntry.projectDetails} />
+              <ProjectDetails items={entry.sections} />
             </HighlightableLinkContextProvider>
           </div>
         </div>
       )}
     </>
   )
+}
+
+async function getPageData(params: { layer: string; bridge: string }) {
+  if (
+    params.layer === ethereumDaLayer.display.slug &&
+    params.bridge === ethereumDaLayer.bridges[0].display.slug
+  ) {
+    const entry = await getEthereumDaProjectEntry(ethereumDaLayer)
+
+    return {
+      entry,
+      summaryComponent: <EthereumDaProjectSummary project={entry} />,
+    }
+  }
+
+  const daLayer = daLayers.find((p) => p.display.slug === params.layer)
+  if (!daLayer) {
+    return
+  }
+  const daBridge = daLayer.bridges.find((b) => b.display.slug === params.bridge)
+
+  if (!daBridge) {
+    return
+  }
+
+  const entry = await getDaProjectEntry(daLayer, daBridge)
+
+  return {
+    entry,
+    summaryComponent: <RegularDaProjectSummary project={entry} />,
+  }
 }

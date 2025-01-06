@@ -2,8 +2,8 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 
 interface Params {
   isUnderReview: boolean
-  hasImplementationChanged: boolean
-  hasHighSeverityFieldChanged: boolean
+  implementationChanged: boolean
+  highSeverityFieldChanged: boolean
 }
 
 export type UnderReviewStatus =
@@ -12,23 +12,24 @@ export type UnderReviewStatus =
   | 'high-severity-field-change'
   | 'implementation-and-field-change'
   | undefined
+
 export function getUnderReviewStatus({
   isUnderReview,
-  hasHighSeverityFieldChanged,
-  hasImplementationChanged,
+  highSeverityFieldChanged,
+  implementationChanged,
 }: Params): UnderReviewStatus {
   if (isUnderReview) {
     return 'config'
   }
 
-  if (hasImplementationChanged && hasHighSeverityFieldChanged) {
+  if (implementationChanged && highSeverityFieldChanged) {
     return 'implementation-and-field-change'
   }
 
-  if (hasHighSeverityFieldChanged) {
+  if (highSeverityFieldChanged) {
     return 'high-severity-field-change'
   }
-  if (hasImplementationChanged) {
+  if (implementationChanged) {
     return 'implementation-change'
   }
 }

@@ -19,9 +19,14 @@ import { ChartTimeRange } from '../core/chart-time-range'
 interface Props {
   stats: ActivityChartStats | undefined
   range: [number, number] | undefined
+  hideScalingFactor?: boolean
 }
 
-export function ActivityChartHeader({ stats, range }: Props) {
+export function ActivityChartHeader({
+  stats,
+  range,
+  hideScalingFactor,
+}: Props) {
   const { metric, setMetric } = useActivityMetricContext()
 
   const isTps = metric === 'tps'
@@ -37,6 +42,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
               <ActivityMetricControls
                 value={metric}
                 onValueChange={setMetric}
+                className="h-9"
               />
               <SwitchInfoTooltip />
             </div>
@@ -53,7 +59,7 @@ export function ActivityChartHeader({ stats, range }: Props) {
           ) : (
             <Skeleton className="my-[5px] h-5 w-28 md:my-1.5 md:h-6 md:w-[200px] lg:w-[243px]" />
           )}
-          {stats !== undefined ? (
+          {hideScalingFactor ? null : stats !== undefined ? (
             <div className="flex items-center gap-1.5 text-right text-secondary group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0 lg:w-auto">
               <div>
                 <span className="max-md:hidden">Scaling factor: </span>

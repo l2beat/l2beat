@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x8d063efb8aca257b5f302697e4e4618982c8c3a5
+
+# Diff at Wed, 18 Dec 2024 10:01:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 20919938
+- current block number: 21428646
+
+## Description
+
+SystemConfig upgrade to version `2.3.0-beta.5`, which is a post-faultproofs version. But since the DisputeGameFactory address is not set and OptimismPortal is still on an old version, this has no consequence on the state validation logic.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
++        "0xe8f575933bc08fd1b1839c74e98447d0a629845c07c4281981ee0ba86ce88298"
+      values.$implementation:
+-        "0xfaE274B77BA59f001196689f93E9e73693866f4a"
++        "0xb52F8f5D1285e3bc13F9C53D27C6F7336a3B50A9"
+      values.$pastUpgrades.1:
++        ["2024-12-16T17:58:59.000Z","0x2dd4983dfade963b3da262a0c56b5085ffc5ee2f3046292326568738250b5a42",["0xb52F8f5D1285e3bc13F9C53D27C6F7336a3B50A9"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.L2_OUTPUT_ORACLE_SLOT:
+-        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
+-        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      values.version:
+-        "1.12.0"
++        "2.3.0-beta.5"
+      values.basefeeScalar:
++        500000
+      values.blobbasefeeScalar:
++        1014213
+      values.DISPUTE_GAME_FACTORY_SLOT:
++        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.disputeGameFactory:
++        "0x0000000000000000000000000000000000000000"
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+      values.maximumGasLimit:
++        200000000
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 1502 +++++++++++++++++++-
+ 1 file changed, 1462 insertions(+), 40 deletions(-)
+```
+
 Generated with discovered.json: 0x8724b65dcee24112f0c4a946b885a8647360af24
 
 # Diff at Fri, 01 Nov 2024 12:23:12 GMT:

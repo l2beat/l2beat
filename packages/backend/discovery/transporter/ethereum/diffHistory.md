@@ -1,3 +1,70 @@
+Generated with discovered.json: 0xa5b6041bd3420178d5da9a3c7bb65d8f0961ffc4
+
+# Diff at Thu, 12 Dec 2024 17:18:51 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21378825
+- current block number: 21387870
+
+## Description
+
+Discovery refresh.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.38:
++        {"sourceChainSelector":"7937294810946806131","offRamp":"0x3B45dd27E0cF84F1af98DEaBDc8f96303475ef58"}
+      values.onRamps.7937294810946806131:
++        "0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.38:
++        "0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9"
+    }
+```
+
+```diff
+    contract RMN (0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F) {
+    +++ description: None
+      values.getPermaBlessedCommitStores.6:
++        "0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x3B45dd27E0cF84F1af98DEaBDc8f96303475ef58)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9.sol | 1297 ++++++++
+ ...-0x3B45dd27E0cF84F1af98DEaBDc8f96303475ef58.sol | 3430 ++++++++++++++++++++
+ ...-0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5.sol | 2982 +++++++++++++++++
+ 3 files changed, 7709 insertions(+)
+```
+
 Generated with discovered.json: 0x665e9b7a4f462ac0496b7020db1800904e953310
 
 # Diff at Wed, 11 Dec 2024 11:00:18 GMT:

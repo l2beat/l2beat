@@ -20,7 +20,8 @@
     "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": "Bridge Multisig",
     "0x2796317b0fF8538F253012862c06787Adfb8cEb6": "SynapseBridge",
     "0x6571d6be3d8460CF5F7d6711Cd9961860029D85F": "L1BridgeZap",
-    "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": "Liquidity Pool"
+    "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": "Liquidity Pool",
+    "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F": "LPToken"
   },
   "overrides": {
     "0x647489df0673E17dB3163c47d5233EBB6F5cAc70": {
@@ -77,7 +78,11 @@
       ]
     },
     "Liquidity Pool": {
-      "ignoreMethods": ["calculateRemoveLiquidity"]
+      "ignoreMethods": ["calculateRemoveLiquidity"],
+      "ignoreInWatchMode": ["getAdminBalance", "getVirtualPrice"]
+    },
+    "LPToken": {
+      "ignoreMethods": ["totalSupply"]
     }
   }
 }

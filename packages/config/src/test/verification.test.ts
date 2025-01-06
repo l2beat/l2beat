@@ -51,7 +51,10 @@ describe('verification status', () => {
         const bridgeId = bridge.id.toString()
         for (const chain of chains) {
           it(`${bridgeId}:${chain}`, () => {
-            const projectIds = bridge.usedIn.map((u) => u.id.toString())
+            const projectIds =
+              daLayer.kind === 'PublicBlockchain'
+                ? [bridge.id]
+                : bridge.usedIn.map((u) => u.id.toString())
             for (const projectId of projectIds) {
               const manuallyVerified = getManuallyVerifiedContracts(chain)
               const addressesOnChain = getUniqueAddressesForDaBridge(

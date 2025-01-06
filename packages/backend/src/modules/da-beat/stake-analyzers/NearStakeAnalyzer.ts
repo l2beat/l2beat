@@ -18,7 +18,7 @@ export class NearStakeAnalyzer extends AbstractStakeAnalyzer {
       params: [null],
     }
 
-    const res = await this.client.fetch(this.url, {
+    const response = await this.client.fetch(this.url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,8 +26,7 @@ export class NearStakeAnalyzer extends AbstractStakeAnalyzer {
       body: JSON.stringify(body),
     })
 
-    const json = await res.json()
-    const validators = ValidatorsList.parse(json)
+    const validators = ValidatorsList.parse(response)
 
     const totalStake = validators.result.current_validators.reduce(
       (acc, v) => acc + BigInt(v.stake),

@@ -30,7 +30,7 @@ export async function generateMetadata(props: Props): Promise<Metadata | null> {
   const params = await props.params
   const project = await ProjectService.STATIC.getProject({
     slug: params.project,
-    select: ['proofVerification'],
+    where: ['proofVerification'],
     whereNot: ['isArchived'],
   })
   if (!project) {

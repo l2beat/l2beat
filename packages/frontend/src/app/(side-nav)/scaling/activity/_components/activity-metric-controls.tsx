@@ -5,18 +5,21 @@ interface Props<T extends string> {
   value: T
   onValueChange: (value: T) => void
   projectChart?: boolean
+  className?: string
 }
 
 export function ActivityMetricControls<T extends string>({
   value,
   onValueChange,
   projectChart,
+  className,
 }: Props<T>) {
   return (
     <RadioGroup
       value={value}
       onValueChange={onValueChange}
       variant="highlighted"
+      className={className}
     >
       <MetricSwitchElement metric="uops" projectChart={projectChart} />
       <MetricSwitchElement metric="tps" projectChart={projectChart} />

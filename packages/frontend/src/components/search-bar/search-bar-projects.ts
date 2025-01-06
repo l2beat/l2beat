@@ -4,11 +4,10 @@ import { type SearchBarProject } from './search-bar-entry'
 export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
   const projects = await ProjectService.STATIC.getProjects({
     optional: [
+      'scalingInfo',
       'daBridges',
       'isZkCatalog',
       'isScaling',
-      'isLayer2',
-      'isLayer3',
       'isBridge',
       'isDaLayer',
       'isUpcoming',
@@ -74,11 +73,11 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
 function getKind(
   p: ProjectWith<
     never,
-    'isLayer2' | 'isLayer3' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
+    'scalingInfo' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
   >,
 ): SearchBarProject['kind'] {
-  if (p.isLayer2) return 'layer2'
-  if (p.isLayer3) return 'layer3'
+  if (p.scalingInfo?.layer === 'layer2') return 'layer2'
+  if (p.scalingInfo?.layer === 'layer3') return 'layer3'
   if (p.isBridge) return 'bridge'
   if (p.isZkCatalog) return 'zkCatalog'
   if (p.isDaLayer) return 'da'

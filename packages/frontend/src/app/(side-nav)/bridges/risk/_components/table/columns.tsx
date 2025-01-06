@@ -26,15 +26,15 @@ export const bridgesRisksColumns = [
         return sentimentResult
       }
       return (
-        a.original.destination.description.split(',').length -
-        b.original.destination.description.split(',').length
+        (a.original.destination.description?.split(',').length ?? 0) -
+        (b.original.destination.description?.split(',').length ?? 0)
       )
     },
     meta: {
       tooltip: 'What chains can you get to using this bridge?',
     },
   }),
-  columnHelper.accessor('validatedBy', {
+  columnHelper.accessor('riskView.validatedBy', {
     header: 'Validated by',
     cell: (ctx) => {
       const validatedBy = ctx.getValue()
@@ -47,21 +47,21 @@ export const bridgesRisksColumns = [
     sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortBySentimentAndAlphabetically(
-        a.original.validatedBy,
-        b.original.validatedBy,
+        a.original.riskView.validatedBy,
+        b.original.riskView.validatedBy,
       ),
   }),
-  columnHelper.accessor('category', {
+  columnHelper.accessor('type', {
     header: 'Type',
     cell: (ctx) => {
-      return <TypeCell>{ctx.row.original.category}</TypeCell>
+      return <TypeCell>{ctx.getValue()}</TypeCell>
     },
     meta: {
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
     },
   }),
-  columnHelper.accessor('sourceUpgradeability', {
+  columnHelper.accessor('riskView.sourceUpgradeability', {
     header: 'Source\nUpgradeability',
     cell: (ctx) => {
       const sourceUpgradeability = ctx.getValue()
@@ -79,11 +79,11 @@ export const bridgesRisksColumns = [
     sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortBySentimentAndAlphabetically(
-        a.original.sourceUpgradeability,
-        b.original.sourceUpgradeability,
+        a.original.riskView.sourceUpgradeability,
+        b.original.riskView.sourceUpgradeability,
       ),
   }),
-  columnHelper.accessor('destinationToken', {
+  columnHelper.accessor('riskView.destinationToken', {
     header: 'Destination Token',
     cell: (ctx) => {
       const destinationToken = ctx.getValue()
@@ -100,8 +100,8 @@ export const bridgesRisksColumns = [
     sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortBySentimentAndAlphabetically(
-        a.original.destinationToken,
-        b.original.destinationToken,
+        a.original.riskView.destinationToken,
+        b.original.riskView.destinationToken,
       ),
   }),
 ]

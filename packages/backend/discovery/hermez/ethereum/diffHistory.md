@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x860bdd91b712e93082844f19b8044a636e240b15
+
+# Diff at Thu, 12 Dec 2024 15:29:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21322541
+- current block number: 21387322
+
+## Description
+
+Ignored not needed slot value in config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21322541 (main branch discovery), not current.
+
+```diff
+    contract HermezAuctionProtocol (0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2) {
+    +++ description: None
+      values.getCurrentSlotNumber:
+-        230713
+    }
+```
+
+```diff
+    contract HermezAuctionProtocol2 (0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6) {
+    +++ description: None
+      values.getCurrentSlotNumber:
+-        533063
+    }
+```
+
 Generated with discovered.json: 0xba37643c501eacaafa71413ef8afafef49868c1b
 
 # Diff at Thu, 05 Dec 2024 08:52:52 GMT:

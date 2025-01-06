@@ -1,7 +1,7 @@
 {
   "name": "everclear",
   "chain": "ethereum",
-  "blockNumber": 21365577,
+  "blockNumber": 21471461,
   "configHash": "0x776ba3b8fa5ed2574a454474695f88cce019d656fcc61727da02a0e1f8fc9b24",
   "contracts": [
     {
@@ -244,11 +244,11 @@
           "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         ],
         "allowedOutboxList": ["0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
-        "delayedMessageCount": 205,
+        "delayedMessageCount": 236,
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "sequencerMessageCount": 180,
-        "sequencerReportedSubMessageCount": 369863
+        "sequencerMessageCount": 209,
+        "sequencerReportedSubMessageCount": 449548
       }
     },
     {
@@ -295,7 +295,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 180,
+        "batchCount": 209,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x54F9375F5a6CEA1eECc561FC7f309aD8Cb633Ef9"],
         "bridge": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
@@ -326,7 +326,7 @@
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 204,
+        "totalDelayedMessagesRead": 235,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -724,12 +724,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 165,
+        "firstUnresolvedNode": 194,
         "inbox": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
         "isERC20Enabled": false,
         "lastStakeBlock": 20711424,
-        "latestConfirmed": 164,
-        "latestNodeCreated": 177,
+        "latestConfirmed": 193,
+        "latestNodeCreated": 206,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
@@ -796,7 +796,8 @@
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
-            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
       ]

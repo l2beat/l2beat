@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
-import { RpcClient2, StarknetClient } from '@l2beat/shared'
+import { RpcClient, StarknetClient } from '@l2beat/shared'
 import { StarknetT2IAnalyzer } from './StarknetT2IAnalyzer'
 
 describe(StarknetT2IAnalyzer.name, () => {
@@ -25,7 +25,7 @@ describe(StarknetT2IAnalyzer.name, () => {
       })
 
       const projectId = ProjectId('scroll')
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
           data: mockBytesResponse,
         }),

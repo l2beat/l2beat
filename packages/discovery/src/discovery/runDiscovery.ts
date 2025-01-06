@@ -1,7 +1,7 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
 import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
-import { HttpClient } from '../utils/HttpClient'
 import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { Analysis } from './analysis/AddressAnalyzer'
@@ -9,6 +9,7 @@ import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
+import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { SQLiteCache } from './provider/SQLiteCache'
@@ -57,8 +58,10 @@ export async function runDiscovery(
   }
 
   if (config.printStats) {
-    printProviderStats(providerStats)
+    printProviderStats(logger, providerStats)
   }
+
+  printTemplatization(logger, result, !!config.verboseTemplatization)
 }
 
 export async function dryRunDiscovery(

@@ -1,7 +1,7 @@
 {
   "name": "deri",
   "chain": "arbitrum",
-  "blockNumber": 274077007,
+  "blockNumber": 287770865,
   "configHash": "0xbe1b4bf4ac6c295dc3435ffc6d3860410237ecb77fe17071fb52b79cb867bfbe",
   "contracts": [
     {
@@ -323,12 +323,12 @@
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2396,
+        "firstUnresolvedNode": 2700,
         "inbox": "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
         "lastStakeBlock": 18603821,
-        "latestConfirmed": 2395,
-        "latestNodeCreated": 2403,
+        "latestConfirmed": 2699,
+        "latestNodeCreated": 2705,
         "loserStakeEscrow": "0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
         "minimumAssertionPeriod": 75,
         "outbox": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -395,7 +395,8 @@
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
-            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
       ]
@@ -619,11 +620,11 @@
           "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
         ],
         "allowedOutboxList": ["0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"],
-        "delayedMessageCount": 2300,
+        "delayedMessageCount": 2546,
         "rollup": "0x846387C3D6001F74170455B1074D01f05eB3067a",
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 2236,
-        "sequencerReportedSubMessageCount": 152732
+        "sequencerMessageCount": 2481,
+        "sequencerReportedSubMessageCount": 167041
       }
     },
     {
@@ -681,7 +682,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 2236,
+        "batchCount": 2481,
         "batchPosters": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"],
         "bridge": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
         "dacKeyset": {
@@ -703,7 +704,7 @@
         "rollup": "0x846387C3D6001F74170455B1074D01f05eB3067a",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2299
+        "totalDelayedMessagesRead": 2545
       },
       "fieldMeta": {
         "maxTimeVariation": {

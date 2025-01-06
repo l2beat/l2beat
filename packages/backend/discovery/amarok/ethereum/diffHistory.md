@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xc7414748081f2c9e2bf85e8c9b38dc502ab947ae
+
+# Diff at Thu, 12 Dec 2024 18:00:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21285509
+- current block number: 21388078
+
+## Description
+
+Multisig threshold change, ignored lastProposeAggregateRootAt.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b) {
+    +++ description: None
+      values.$members.13:
+-        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.12:
+-        "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682"
+      values.$members.11:
+-        "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.10:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682"
+      values.$members.9:
+-        "0x40b46a6C2DEFdCFC1b6Cfb667CD0c024F1FfBBA9"
++        "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895"
+      values.$members.8:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.7:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "0xf0c1d7d38972c117F899Ea190afd6FeEee04E5fd"
+      values.$members.6:
+-        "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.5:
+-        "0x6fd2072B961aCC9bd6e188f957a0FB1CEb8632dc"
++        "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e"
+      values.$members.4:
+-        "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
++        "0x5aA748326f03C651749E7998D88647e59Ee386Bc"
+      values.$members.3:
+-        "0x5aA748326f03C651749E7998D88647e59Ee386Bc"
++        "0xebD4919C075417a86F19713dADe101852867A04F"
+      values.$members.2:
+-        "0xebD4919C075417a86F19713dADe101852867A04F"
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.1:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
+      values.$members.0:
+-        "0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$threshold:
+-        6
++        5
+      values.multisigThreshold:
+-        "6 of 14 (43%)"
++        "5 of 12 (42%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285509 (main branch discovery), not current.
+
+```diff
+    contract RelayerProxyHub3 (0xB4F8D176466f5F544bAd53737bffAaeA17185c05) {
+    +++ description: None
+      values.lastProposeAggregateRootAt:
+-        1732782143
+    }
+```
+
 Generated with discovered.json: 0x98b4f5e84bbaff9188ce66e71b18ab07b6613d18
 
 # Diff at Tue, 10 Dec 2024 10:36:51 GMT:

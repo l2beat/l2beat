@@ -1,5 +1,5 @@
 import { AmountRecord } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
@@ -31,7 +31,7 @@ describe(ElasticChainService.name, () => {
         address: EthereumAddress.random(),
       })
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getBalance: mockFn(),
         call: mockFn(),
       })
@@ -70,7 +70,7 @@ describe(ElasticChainService.name, () => {
         l1Address: EthereumAddress.random(),
       })
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getBalance: mockFn(),
         call: mockFn(),
       })
@@ -108,7 +108,7 @@ describe(ElasticChainService.name, () => {
 
       const expectedSupply = 1000n
 
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         call: mockFn().resolvesTo(
           utils.defaultAbiCoder.encode(['uint256'], [expectedSupply]),
         ),
@@ -139,7 +139,7 @@ describe(ElasticChainService.name, () => {
       const mockL2Address = EthereumAddress.random()
       const mockTokenSupply = 1000n
 
-      const rpcClient = mockObject<RpcClient2>({})
+      const rpcClient = mockObject<RpcClient>({})
       const multicallClient = mockObject<MulticallClient>({
         multicall: mockFn()
           .resolvesToOnce([
@@ -208,7 +208,7 @@ describe(ElasticChainService.name, () => {
       const mockToken1Supply = 1000n
       const mockToken2Supply = 2000n
 
-      const rpcClient = mockObject<RpcClient2>({})
+      const rpcClient = mockObject<RpcClient>({})
       const multicallClient = mockObject<MulticallClient>({
         multicall: mockFn().resolvesTo([
           {
@@ -267,7 +267,7 @@ describe(ElasticChainService.name, () => {
       const mockL2Address1 = EthereumAddress.random()
       const mockL2Address2 = EthereumAddress.random()
 
-      const rpcClient = mockObject<RpcClient2>({})
+      const rpcClient = mockObject<RpcClient>({})
       const multicallClient = mockObject<MulticallClient>({
         multicall: mockFn().resolvesTo([
           {
@@ -320,7 +320,7 @@ function elasticChainService(opts: Partial<ElasticChainServiceDependencies>) {
   return new ElasticChainService({
     bridgeAddress: bridgeAddress ?? BRIDGE_ADDRESS,
     multicallClient: multicallClient ?? mockObject<MulticallClient>({}),
-    rpcClient: rpcClient ?? mockObject<RpcClient2>({}),
+    rpcClient: rpcClient ?? mockObject<RpcClient>({}),
   })
 }
 

@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import { RpcClient } from '@l2beat/shared'
 import { ZkSyncLiteT2IAnalyzer } from './ZkSyncLiteT2IAnalyzer'
 
 describe(ZkSyncLiteT2IAnalyzer.name, () => {
@@ -14,7 +14,7 @@ describe(ZkSyncLiteT2IAnalyzer.name, () => {
       const L2_TIMESTAMP = 1711364267
 
       const projectId = ProjectId('zksync')
-      const rpcClient = mockObject<RpcClient2>({
+      const rpcClient = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
           data: mockBytesResponse,
         }),

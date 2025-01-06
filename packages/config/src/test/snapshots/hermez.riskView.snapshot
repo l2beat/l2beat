@@ -7,11 +7,6 @@
     sentiment: "good"
     value: "Onchain"
   }
-  destinationToken: {
-    description: "Tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Canonical"
-  }
   exitWindow: {
     definingMetric: 604800
     description: "Users have 7d to exit funds in case of an unwanted regular upgrade. There is a 7d delay before a regular upgrade is applied, and withdrawals can take up to 0s to be processed."
@@ -35,10 +30,5 @@
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
     sentiment: "good"
     value: "ZK proofs (SN)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

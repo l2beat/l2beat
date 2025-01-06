@@ -11,10 +11,17 @@ export const sp1blobstream: Project = {
   id: ProjectId('sp1blobstream'),
   slug: 'SP1Blobstream', // TODO: lowercase + redirect
   name: 'SP1Blobstream',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-04')),
   // tags
   isZkCatalog: true,
   // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
   proofVerification: {
     shortDescription: 'Celestia ZK light client implementation.',
     aggregation: true,

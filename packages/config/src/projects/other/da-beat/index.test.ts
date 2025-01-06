@@ -57,7 +57,7 @@ describe('DA-BEAT', () => {
           // It makes no sense to list them on the DA-BEAT
           (scaling) =>
             getLatestDataAvailabilityEntry(scaling.dataAvailability)?.layer
-              .value !== 'External',
+              .value !== 'None',
         )
 
       const daBeatProjectIds = daLayers.flatMap((daLayer) =>

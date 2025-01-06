@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xeb9c45c21d98aef44cd88289f1b52433e95201cc
+
+# Diff at Thu, 12 Dec 2024 15:37:10 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21334435
+- current block number: 21387348
+
+## Description
+
+Changed WooTokenOFTAdapter owner to Multisig, previously an EOA.
+
+## Watched changes
+
+```diff
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711) {
+    +++ description: None
+      values.owner:
+-        "0xc031C368b51c28266396273b0C6ce2489b00969d"
++        "0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0"
+    }
+```
+
 Generated with discovered.json: 0x563823d469aa3d17fd321481192440eeea736a11
 
 # Diff at Thu, 05 Dec 2024 06:15:35 GMT:

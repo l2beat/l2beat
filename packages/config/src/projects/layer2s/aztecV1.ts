@@ -199,8 +199,6 @@ export const aztecV1: Layer2 = {
         },
       ],
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   stateDerivation: {
     nodeSoftware:
@@ -268,9 +266,9 @@ export const aztecV1: Layer2 = {
       ],
     },
     operator: {
-      name: 'No operator',
+      name: 'No regular operators',
       risks: [],
-      description: `Only specific addresses appointed by the owner were permitted to propose new blocks during regular rollup operation. Since EOL, these operators are not processing the rollup anymore. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
+      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operations. Since EOL, these operators are not regularly processing the rollup anymore.`,
       references: [
         {
           text: 'RollupProcessor.sol#L97 - Etherscan source code',
@@ -286,8 +284,12 @@ export const aztecV1: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description:
         FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description +
-        ` Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} the rollup opens a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) during which anyone can propose new blocks.`,
+        `The private key of one of the permissioned operators is public (first Anvil address), therefore anyone can in principle resume regular operations. No funds need to be deposited to that address since submitting signatures is enough. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which any address can propose new blocks.`,
       references: [
+        {
+          text: 'Anvil - a local testnet node toolchain',
+          href: 'https://book.getfoundry.sh/anvil/',
+        },
         {
           text: 'RollupProcessor.sol#L347 - Etherscan source code',
           href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
@@ -300,17 +302,6 @@ export const aztecV1: Layer2 = {
     },
     exitMechanisms: [
       {
-        name: 'EOL: Manual withdrawal using Aztec v2 Ejector',
-        description: `EOL: Ownership of the rollup contract is irrevocably renounced and operators are not processing the rollup. Assets in the escrow can be manually withdrawn with the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/).`,
-        risks: [],
-        references: [
-          {
-            text: 'Aztec v2 Ejector - Codespace template for running the Aztec v2 rollup.',
-            href: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
-          },
-        ],
-      },
-      {
         name: 'Regular withdraw (deprecated)',
         description:
           'The user initiates the withdrawal by submitting a transaction on L2. When the block containing that transaction is proven on L1 the assets are automatically withdrawn to the user.',
@@ -319,6 +310,17 @@ export const aztecV1: Layer2 = {
           {
             text: 'RollupProcessor.sol#LL396 - Etherscan source code',
             href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L396',
+          },
+        ],
+      },
+      {
+        name: 'EOL: Manual withdrawal using Aztec v2 Ejector',
+        description: `EOL: Ownership of the rollup contract is irrevocably renounced and operators are not processing the rollup. Assets in the escrow can be manually withdrawn with the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/).`,
+        risks: [],
+        references: [
+          {
+            text: 'Aztec v2 Ejector - Codespace template for running the Aztec v2 rollup.',
+            href: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
           },
         ],
       },
@@ -345,14 +347,14 @@ export const aztecV1: Layer2 = {
   permissions: [
     {
       name: 'Rollup Providers',
-      description: `Addresses that can propose new blocks during regular rollup operation. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
+      description: `Addresses that can propose new blocks during regular rollup operation. Since the private key of one of them is public (first Anvil address), anyone can in principle resume regular operations. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
       accounts: getRollupProviders().map((account) =>
         discovery.formatPermissionedAccount(account),
       ),
     },
     ...discovery.getMultisigPermission(
       'AztecMultisig',
-      "Can update parameters related to the reimbursement of gas to permissioned rollup providers. It doesn't affect the escape hatch mechanism.",
+      "Can update parameters related to the reimbursement of gas to permissioned rollup providers. It doesn't affect the escape hatch mechanism, but it can halt regular operations by setting a reimbursement constant that is too high.",
     ),
   ],
   milestones: [

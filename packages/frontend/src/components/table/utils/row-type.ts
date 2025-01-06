@@ -1,10 +1,11 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { type BasicTableEntry, type BasicTableProps } from '../basic-table'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
+import { type BasicTableProps } from '../basic-table'
 
 export type RowType = ReturnType<typeof getRowType>
 export function getRowType(
-  entry: BasicTableEntry,
-  rowColoringMode: BasicTableProps<BasicTableEntry>['rowColoringMode'],
+  entry: CommonProjectEntry,
+  rowColoringMode: BasicTableProps<CommonProjectEntry>['rowColoringMode'],
 ) {
   if (entry.id === ProjectId.ETHEREUM) {
     return 'ethereum'
@@ -13,10 +14,10 @@ export function getRowType(
     return undefined
   }
 
-  if (entry.isVerified === false || entry.redWarning) {
+  if (!!entry.statuses?.verificationWarning || !!entry.statuses?.redWarning) {
     return 'unverified'
   }
-  if (!!entry.underReviewStatus) {
+  if (!!entry.statuses?.underReview) {
     return 'under-review'
   }
 }
@@ -36,6 +37,7 @@ export function getRowTypeClassNames(rowType: RowType) {
       return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05] hover:shadow-sm'
   }
 }
+
 export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
     case 'ethereum':

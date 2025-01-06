@@ -8,12 +8,12 @@ import type {
 import type {
   DataAvailabilityHistory,
   KnowledgeNugget,
-  Layer2Provider,
   Milestone,
   ScalingProjectConfig,
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectStack,
   ScalingProjectTransactionApi,
 } from '../../../common'
 import type { ChainConfig } from '../../../common/ChainConfig'
@@ -77,7 +77,7 @@ export interface Layer2 {
 
 export type Layer2Display = ScalingProjectDisplay & {
   /** Technology provider */
-  provider?: Layer2Provider
+  provider?: ScalingProjectStack
   /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
   finality?: Layer2FinalityDisplay
@@ -111,7 +111,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** Configuration for getting liveness data */
   liveness?: Layer2LivenessConfig
   /** Configuration for getting finality data */
-  finality?: Layer2FinalityConfig | 'coming soon'
+  finality?: Layer2FinalityConfig
 }
 
 export interface WarningWithSentiment {

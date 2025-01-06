@@ -73,8 +73,6 @@ export const fuelv1: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(),
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage(
     {

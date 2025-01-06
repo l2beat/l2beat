@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4af3aff0252c55574995b6b9c12af13894e795a9
+
+# Diff at Thu, 12 Dec 2024 18:08:36 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21041947
+- current block number: 21388117
+
+## Description
+
+Ignoring not needed escrow values. Multisig member change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      values.$members.4:
+-        "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
++        "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326"
+    }
+```
+
 Generated with discovered.json: 0x4481d66b3b2a8e9bc49fb1b508992c43956e02ce
 
 # Diff at Tue, 10 Dec 2024 11:30:40 GMT:

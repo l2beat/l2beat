@@ -1,13 +1,11 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
-import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { HydrateClient } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { ScalingTvlTables } from './_components/scaling-tvl-tables'
+import { ScalingTvlTabs } from './_components/scaling-tvl-tabs'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -18,22 +16,21 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const entries = await getScalingTvlEntries()
 
+  await api.tvl.chart.prefetch({
+    filter: {
+      type: 'projects',
+      projectIds: entries.rollups.map((project) => project.id),
+    },
+    range: '1y',
+    excludeAssociatedTokens: false,
+  })
+
   return (
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Value Locked</MainPageHeader>
-          <MainPageCard>
-            <ScalingStackedTvlChart
-              milestones={HOMEPAGE_MILESTONES}
-              entries={[
-                ...entries.rollups,
-                ...entries.validiumsAndOptimiums,
-                ...(entries.others ?? []),
-              ]}
-            />
-          </MainPageCard>
-          <ScalingTvlTables {...entries} />
+          <ScalingTvlTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

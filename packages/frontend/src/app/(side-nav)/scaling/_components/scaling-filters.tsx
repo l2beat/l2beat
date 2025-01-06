@@ -109,7 +109,7 @@ export function ScalingFilters({
   )
 }
 
-function putFirst(value: string) {
+export function putFirst(value: string) {
   return function compare(a: string, b: string) {
     if (a === value) return -1
     if (b === value) return 1

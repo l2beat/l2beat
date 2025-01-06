@@ -10,6 +10,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -31,6 +32,7 @@ export const bugbuster: Layer3 = {
     Badge.L3ParentChain.Optimism,
   ],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Bug Buster',
     slug: 'bugbuster',
     description:
@@ -170,8 +172,6 @@ export const bugbuster: Layer3 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(0),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.CANONICAL,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stackedRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
@@ -181,8 +181,6 @@ export const bugbuster: Layer3 = {
       HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
     ),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.CANONICAL,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   permissions: [
     {

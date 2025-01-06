@@ -1,4 +1,68 @@
-Generated with discovered.json: 0xd4a9e4aa5baf006d15da2c77d54845bb6b67e730
+Generated with discovered.json: 0xaf1f741d783c99544b3ee4356dd1103cdb0cbc23
+
+# Diff at Mon, 23 Dec 2024 12:29:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21429443
+- current block number: 21465190
+
+## Description
+
+Config related: Celestia-Nitro wmroot added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429443 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287:
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x2bd708fab05955301c1f1d6ccf735f064a471fbd
+
+# Diff at Wed, 18 Dec 2024 12:34:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21394564
+- current block number: 21429443
+
+## Description
+
+Minor Bridger upgrade, notably adding a `rescueToken` function callable by the owner that does what it says (Bridger does not usually escrow funds, it behaves like a router).
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.
+      sourceHashes.1:
+-        "0xe7c2c13ea3945f7f426234c719fd1c436d2f5e0152427b80b30ca059c9f2f4e5"
++        "0xe2aec4572349f66126b1ebb9d5e63c56d78d4655c3d036b5fdcd621c052125e5"
+      values.$implementation:
+-        "0x21D3921B50617BDef223207118950B0b577e4007"
++        "0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6"
+      values.$pastUpgrades.11:
++        ["2024-12-17T00:38:35.000Z","0x9e8c1bcb81d01c1d3ed8c7f0b34ac033d5838e341641a809a6a1ad101139e118",["0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6"]]
+      values.$upgradeCount:
+-        11
++        12
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21394564 => .flat}/Bridger/Bridger.sol  | 27 ++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
+```
+
+Generated with discovered.json: 0x8a5f69d0cb6b892ebfd38ca8887bac3224e03da8
 
 # Diff at Fri, 06 Dec 2024 08:09:46 GMT:
 

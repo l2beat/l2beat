@@ -84,8 +84,6 @@ export const layer2aWithDups: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW_UNKNOWN,
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {

@@ -5,7 +5,6 @@ https://discord.com/developers/docs/getting-started#configuring-a-bot
 
 import { HttpClient } from '@l2beat/shared'
 import { RequestInit } from 'node-fetch'
-import { Counter } from 'prom-client'
 
 import { RateLimiter } from '@l2beat/backend-tools'
 import { DiscordConfig } from '../../config/Config'
@@ -62,27 +61,12 @@ export class DiscordClient {
   private async query(endpoint: string, options?: RequestInit) {
     const url = 'https://discord.com/api/v10' + endpoint
 
-    const res = await this.httpClient.fetch(url, {
+    return await this.httpClient.fetch(url, {
       headers: {
         Authorization: `Bot ${this.config.token}`,
         'Content-Type': 'application/json; charset=UTF-8',
       },
       ...options,
     })
-
-    if (!res.ok) {
-      // Discord API returns pretty useful errors
-      // this functionality aims to preserve them
-      const body = (await res.json()) as unknown
-      throw new Error(`Discord error: ${JSON.stringify(body)}`)
-    }
-
-    callsCount.inc()
-    return res.json() as unknown
   }
 }
-
-const callsCount = new Counter({
-  name: 'discord_client_calls',
-  help: 'Value showing amount of calls to DiscordClient',
-})

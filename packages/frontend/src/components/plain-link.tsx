@@ -1,16 +1,16 @@
-import React, { type AnchorHTMLAttributes } from 'react'
+import { type AnchorHTMLAttributes } from 'react'
 
 interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   allowReferrer?: boolean
 }
 
 export function PlainLink({ allowReferrer, ...props }: Props) {
-  const isOutLink = props.href?.startsWith('http')
+  const isCustomLink = props.href?.startsWith('http')
 
-  const rel = isOutLink
+  const rel = isCustomLink
     ? allowReferrer
       ? 'noopener'
       : 'noopener noreferrer'
     : undefined
-  return <a rel={rel} target={isOutLink ? '_blank' : undefined} {...props} />
+  return <a rel={rel} target={isCustomLink ? '_blank' : undefined} {...props} />
 }

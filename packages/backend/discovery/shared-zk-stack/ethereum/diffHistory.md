@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x630ceb70bec843b173e2618cf268f7e1adda1539
+
+# Diff at Fri, 03 Jan 2025 12:08:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21421036
+- current block number: 21543858
+
+## Description
+
+Multisig signer changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0) {
+    +++ description: None
+      values.$members.5:
+-        "0x3133781381bC58564D5e9888c208ED0b7BD7721F"
+      values.$members.4:
+-        "0xDFbD13B78010BF2110a168FA59b682c8a6D96564"
++        "0x3133781381bC58564D5e9888c208ED0b7BD7721F"
+      values.$members.3:
+-        "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c"
++        "0xDFbD13B78010BF2110a168FA59b682c8a6D96564"
+      values.$members.2:
+-        "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
++        "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c"
+      values.$members.1:
+-        "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2"
++        "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
+      values.$members.0:
+-        "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07"
++        "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x689e4270aa9108022db71e3b0f874b583a00bdef
+
+# Diff at Thu, 12 Dec 2024 11:47:09 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21357589
+- current block number: 21386218
+
+## Description
+
+Config related changes. Adding Sophon discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21357589 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.treasureThirdBatchTS:
+-        1732907795
+      values.treasureValidatorsAdded:
++        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.treasureValidatorsRemoved:
++        []
+      fieldMeta.treasureThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
 Generated with discovered.json: 0x94a03248b7c968a9228f4c918b302f081aaa268f
 
 # Diff at Tue, 10 Dec 2024 11:08:21 GMT:

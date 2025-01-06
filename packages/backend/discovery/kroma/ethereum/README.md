@@ -18,7 +18,7 @@ against mainnet.
 As per [documentation](https://book.getfoundry.sh/tutorials/solidity-scripting):
 
 > Solidity scripting is a way to declaratively deploy contracts using Solidity,
-> instead of using the more limiting and less user friendly forge create. [...]
+> instead of using the more limiting and less user-friendly forge create. [...]
 > they are run on the fast Foundry EVM backend, which provides dry-run
 > capabilities.
 

@@ -1,8 +1,8 @@
 {
   "name": "synapse",
   "chain": "ethereum",
-  "blockNumber": 19876012,
-  "configHash": "0xd6060e74ca5ac469c5f4735edac7c110e89bf9e62a362e908a08ab379870b740",
+  "blockNumber": 21387773,
+  "configHash": "0x577c7b2b3577f4aa427c8c508a7075f8e6198307dfcdc3c87dbc3e508e3f1b27",
   "contracts": [
     {
       "name": "Liquidity Pool",
@@ -10,14 +10,19 @@
       "sourceHashes": [
         "0xda336842ad358274289356ce376a6f9e6cd728ad4c4d74609f3a65768c9c95b9"
       ],
+      "ignoreInWatchMode": ["getAdminBalance", "getVirtualPrice"],
       "sinceTimestamp": 1629082839,
       "values": {
         "$immutable": true,
         "flashLoanFeeBPS": 8,
         "getA": 2000,
-        "getAdminBalance": ["3908155328531293140574", 6498101043, 7481947915],
+        "getAdminBalance": [
+          "13804561110566440022953",
+          20729333528,
+          25246591713
+        ],
         "getAPrecise": 200000,
-        "getVirtualPrice": "1001229199931464069",
+        "getVirtualPrice": "1001229200492888736",
         "MAX_BPS": 10000,
         "owner": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
         "paused": false,
@@ -46,9 +51,9 @@
         "decimals": 18,
         "name": "nUSD",
         "owner": "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8",
-        "symbol": "nUSD",
-        "totalSupply": "8865787005661770066402784"
-      }
+        "symbol": "nUSD"
+      },
+      "derivedName": "LPToken"
     },
     {
       "name": "SynapseBridge",
@@ -227,7 +232,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 814,
+        "nonce": 829,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

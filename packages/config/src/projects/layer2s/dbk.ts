@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
@@ -10,6 +11,7 @@ export const dbk: Layer2 = opStackL2({
   discovery,
   additionalBadges: [],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'DeBank Chain',
     slug: 'dbk',
     description:

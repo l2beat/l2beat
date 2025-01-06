@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -9,6 +10,10 @@ const discovery = new ProjectDiscovery('edgeless')
 export const edgeless: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1712313901), // 2024-04-05T10:45:01Z
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'Edgeless',
     slug: 'edgeless',
     description:

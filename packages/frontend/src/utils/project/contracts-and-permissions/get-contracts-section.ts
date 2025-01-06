@@ -144,9 +144,6 @@ export function getContractsSection(
   }
 
   const getL3HostChain = (hostChain: string) => {
-    if (hostChain === 'Multiple') {
-      return 'Multiple'
-    }
     return layer2s.find((l2) => l2.id === hostChain)?.display.name ?? 'Unknown'
   }
 

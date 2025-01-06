@@ -58,6 +58,7 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { mergeBadges } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
@@ -71,7 +72,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
   nodeSourceLink?: string,
-  daLayer: DataAvailabilityLayer = DA_LAYERS.EXTERNAL,
+  daLayer: DataAvailabilityLayer = DA_LAYERS.NONE,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -94,9 +95,12 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  architectureImage?: string
+  isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
   discovery: ProjectDiscovery
+  additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -135,6 +139,7 @@ interface OpStackConfigCommon {
   additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  riskView?: ScalingProjectRiskView
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -154,17 +159,26 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 
 function opStackCommon(
   templateVars: OpStackConfigCommon,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+  const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
+  const discoveryDrivenSections = templateVars.discoveryDrivenData
+    ? generateDiscoveryDrivenSections(
+        templateVars.discovery,
+        nativeContractRisks,
+        templateVars.additionalDiscoveries,
+      )
+    : undefined
+
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
 
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -205,6 +219,7 @@ function opStackCommon(
   }
 
   return {
+    isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
@@ -342,33 +357,31 @@ function opStackCommon(
         },
       ],
     },
-    permissions:
-      templateVars.discoveryDrivenData === true
-        ? templateVars.discovery.getDiscoveredPermissions()
-        : [
-            ...templateVars.discovery.getOpStackPermissions({
-              batcherHash: 'Sequencer',
-              PROPOSER: 'Proposer',
-              GUARDIAN: 'Guardian',
-              CHALLENGER: 'Challenger',
-              ...(templateVars.roleOverrides ?? {}),
-            }),
-            ...(templateVars.nonTemplatePermissions ?? []),
+    permissions: discoveryDrivenSections
+      ? discoveryDrivenSections.permissions
+      : [
+          ...templateVars.discovery.getOpStackPermissions({
+            batcherHash: 'Sequencer',
+            PROPOSER: 'Proposer',
+            GUARDIAN: 'Guardian',
+            CHALLENGER: 'Challenger',
+            ...(templateVars.roleOverrides ?? {}),
+          }),
+          ...(templateVars.nonTemplatePermissions ?? []),
+        ],
+    nativePermissions: discoveryDrivenSections
+      ? discoveryDrivenSections.nativePermissions
+      : templateVars.nonTemplateNativePermissions,
+    contracts: discoveryDrivenSections
+      ? discoveryDrivenSections.contracts
+      : {
+          addresses: [
+            ...templateVars.discovery.getOpStackContractDetails(upgradeability),
+            ...(templateVars.nonTemplateContracts ?? []),
           ],
-    nativePermissions: templateVars.nonTemplateNativePermissions,
-    contracts: {
-      addresses:
-        templateVars.discoveryDrivenData === true
-          ? templateVars.discovery.getDiscoveredContracts()
-          : [
-              ...templateVars.discovery.getOpStackContractDetails(
-                upgradeability,
-              ),
-              ...(templateVars.nonTemplateContracts ?? []),
-            ],
-      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-      nativeAddresses: templateVars.nonTemplateNativeContracts,
-    },
+          risks: nativeContractRisks,
+          nativeAddresses: templateVars.nonTemplateNativeContracts,
+        },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),
@@ -421,18 +434,21 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
 
   if (daProvider === undefined) {
     assert(
@@ -456,7 +472,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     ...opStackCommon(templateVars),
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage,
+      architectureImage: templateVars.architectureImage ?? architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category:
@@ -581,7 +597,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     ],
-    riskView: {
+    riskView: templateVars.riskView ?? {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
         secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
@@ -627,8 +643,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           },
         ],
       },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     },
     stage:
       templateVars.stage === undefined
@@ -769,10 +783,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
     return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,

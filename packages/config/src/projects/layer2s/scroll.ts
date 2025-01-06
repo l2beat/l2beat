@@ -389,8 +389,6 @@ export const scroll: Layer2 = {
         },
       ],
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   technology: {
     newCryptography: {

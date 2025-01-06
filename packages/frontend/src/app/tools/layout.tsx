@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  if (!env.NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS) {
+  if (!featureFlags.internalTools) {
     return notFound()
   }
   return <div className="p-4">{children}</div>

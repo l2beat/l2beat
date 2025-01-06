@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -14,6 +15,7 @@ export const lisk: Layer2 = opStackL2({
   associatedTokens: ['LSK'],
   additionalBadges: [Badge.RaaS.Gelato, Badge.Other.MigratedFromL1],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Lisk',
     slug: 'lisk',
     description:

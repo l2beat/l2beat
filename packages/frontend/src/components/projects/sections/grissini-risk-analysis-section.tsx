@@ -8,11 +8,13 @@ import { type ProjectSectionProps } from './types'
 export interface GrissiniRiskAnalysisSectionProps extends ProjectSectionProps {
   isVerified: boolean | undefined
   grissiniValues: RosetteValue[]
+  description?: string
   hideRisks?: boolean
 }
 
 export function GrissiniRiskAnalysisSection({
   grissiniValues,
+  description,
   hideRisks = false,
   ...sectionProps
 }: GrissiniRiskAnalysisSectionProps) {
@@ -27,6 +29,7 @@ export function GrissiniRiskAnalysisSection({
       isUnderReview={isUnderReview}
       className={cn(hideRisks ? 'space-y-0' : 'space-y-6')}
     >
+      {description && <Markdown>{description}</Markdown>}
       {Object.values(grissiniValues).map((value, key) => (
         <div key={key} className="flex flex-col gap-2">
           <SingleGrissiniDetails

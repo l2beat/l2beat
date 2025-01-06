@@ -12,10 +12,17 @@ export const worldcoinsmtb: Project = {
   id: ProjectId('worldcoinsmtb'),
   slug: 'worldcoin-smtb',
   name: 'Worldcoin SMTB',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-05-23')),
   // tags
   isZkCatalog: true,
   // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
   proofVerification: {
     shortDescription:
       'ZK program to add or delete users from the Worldcoin anonymity set.',

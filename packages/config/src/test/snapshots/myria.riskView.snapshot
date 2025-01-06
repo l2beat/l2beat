@@ -21,11 +21,6 @@
     ]
     value: "External (DAC)"
   }
-  destinationToken: {
-    description: "Tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Canonical"
-  }
   exitWindow: {
     definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
@@ -51,10 +46,5 @@
     description: "STARKs are zero knowledge proofs that ensure state correctness."
     sentiment: "good"
     value: "ZK proofs (ST)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

@@ -85,10 +85,7 @@ export function layer2ToBackendProject(layer2: Layer2): BackendProject {
       layer2.config.trackedTxs,
     ),
     livenessConfig: layer2.config.liveness,
-    finalityConfig:
-      layer2.config.finality !== 'coming soon'
-        ? layer2.config.finality
-        : undefined,
+    finalityConfig: layer2.config.finality,
     associatedTokens: layer2.config.associatedTokens,
   }
 }

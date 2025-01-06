@@ -9,7 +9,7 @@ import {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { getZeroStats } from '@l2beat/discovery/dist/discovery/provider/Stats'
+import { ProviderStats } from '@l2beat/discovery'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 const ADDRESS = EthereumAddress.random()
@@ -29,9 +29,9 @@ describe(DiscoveryRunner.name, () => {
         mockObject<AllProviders>({
           get: () => MOCK_PROVIDER,
           getStats: () => ({
-            highLevelCounts: getZeroStats(),
-            cacheCounts: getZeroStats(),
-            lowLevelCounts: getZeroStats(),
+            highLevelMeasurements: new ProviderStats(),
+            cacheMeasurements: new ProviderStats(),
+            lowLevelMeasurements: new ProviderStats(),
           }),
         }),
         engine,
@@ -70,9 +70,9 @@ describe(DiscoveryRunner.name, () => {
         mockObject<AllProviders>({
           get: () => MOCK_PROVIDER,
           getStats: () => ({
-            highLevelCounts: getZeroStats(),
-            cacheCounts: getZeroStats(),
-            lowLevelCounts: getZeroStats(),
+            highLevelMeasurements: new ProviderStats(),
+            cacheMeasurements: new ProviderStats(),
+            lowLevelMeasurements: new ProviderStats(),
           }),
         }),
         engine,
@@ -99,9 +99,9 @@ describe(DiscoveryRunner.name, () => {
           mockObject<AllProviders>({
             get: () => MOCK_PROVIDER,
             getStats: () => ({
-              highLevelCounts: getZeroStats(),
-              cacheCounts: getZeroStats(),
-              lowLevelCounts: getZeroStats(),
+              highLevelMeasurements: new ProviderStats(),
+              cacheMeasurements: new ProviderStats(),
+              lowLevelMeasurements: new ProviderStats(),
             }),
           }),
           engine,
@@ -130,9 +130,9 @@ describe(DiscoveryRunner.name, () => {
           mockObject<AllProviders>({
             get: () => MOCK_PROVIDER,
             getStats: () => ({
-              highLevelCounts: getZeroStats(),
-              cacheCounts: getZeroStats(),
-              lowLevelCounts: getZeroStats(),
+              highLevelMeasurements: new ProviderStats(),
+              cacheMeasurements: new ProviderStats(),
+              lowLevelMeasurements: new ProviderStats(),
             }),
           }),
           engine,

@@ -6,11 +6,6 @@
     sentiment: "bad"
     value: "External"
   }
-  destinationToken: {
-    description: "OMG transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
@@ -35,10 +30,5 @@
     description: "Exits from the network are subject to a period when they can be challenged. The internal network state is left unchecked."
     sentiment: "bad"
     value: "Exits only"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

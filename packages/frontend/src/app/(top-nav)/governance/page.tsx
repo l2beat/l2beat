@@ -4,7 +4,7 @@ import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
 import { CustomLink } from '~/components/link/custom-link'
 import { getCollection } from '~/content/get-collection'
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { GovernanceHeaderIllustration } from './_assets/governance-header'
 import { GovernanceEventsSection } from './_components/sections/governance-events-section'
@@ -98,7 +98,7 @@ function Header() {
                     src={`/icons/${delegatedProject.data.slug}.png`}
                   />
                   {delegatedProject.data.name}
-                  <OutLinkIcon className="fill-current" />
+                  <CustomLinkIcon className="fill-current" />
                 </CustomLink>
               ))}
             </div>

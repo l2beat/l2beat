@@ -35,7 +35,7 @@ export function Chart({ className, disableHovers, disableMilestones }: Props) {
       <ChartNoDataState />
       <Logo
         animated={false}
-        className="absolute bottom-3 right-3 z-30 h-8 w-20 opacity-50"
+        className="absolute bottom-3 right-3 h-8 w-20 opacity-50"
       />
       <ChartTimeline />
     </div>

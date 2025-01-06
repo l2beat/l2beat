@@ -1,43 +1,9 @@
 {
   "name": "xdai",
   "chain": "ethereum",
-  "blockNumber": 21322860,
-  "configHash": "0x4059aa66bf1ac89eccde61364d7030489396498dd650dd241d21a128892a2ac8",
+  "blockNumber": 21429285,
+  "configHash": "0x59ffd13a471a781fe21e38e7e993c0f120a7cb7c91414a2d694aa5b8f3b8327d",
   "contracts": [
-    {
-      "name": "SDaiForeignBridge",
-      "address": "0x166124b75c798Cedf1B43655E9B5284eBd5203DB",
-      "sourceHashes": [
-        "0xc9e17870eb8594989459b35217d292000a746beaf237f82e703d3de4b55cc4d2"
-      ],
-      "sinceTimestamp": 1694184083,
-      "values": {
-        "$immutable": true,
-        "dailyLimit": 0,
-        "daiToken": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "decimalShift": 0,
-        "deployedAtBlock": 0,
-        "erc20token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "executionDailyLimit": 0,
-        "executionMaxPerTx": 0,
-        "gasPrice": 0,
-        "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
-        "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20060,
-        "getTrustedForwarder": "0x0000000000000000000000000000000000000000",
-        "isInitialized": false,
-        "maxAvailablePerTx": 0,
-        "maxPerTx": 0,
-        "minPerTx": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "requiredBlockConfirmations": 0,
-        "requiredSignatures": "EXPECT_REVERT",
-        "sDaiToken": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "validatorContract": "0x0000000000000000000000000000000000000000",
-        "versionRecipient": "1.0.1"
-      },
-      "derivedName": "XDaiForeignBridge"
-    },
     {
       "name": "Unitroller",
       "address": "0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B",
@@ -54,7 +20,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "GnosisBridgeGovernanceMultisig",
       "address": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -62,6 +28,16 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1600956399,
       "values": {
@@ -71,8 +47,8 @@
           "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
           "0xb8173f558f75EE263013fd6294177bf75279a21e",
           "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
-          "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E",
-          "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c",
+          "0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
+          "0xA07888742c18d7e658132AE0148fF205fFF46481",
           "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9",
           "0x0101016044726994aFd16f4A99f0d960090D35e7",
           "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
@@ -90,24 +66,101 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 16 (50%)",
-        "nonce": 83,
+        "nonce": 84,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "EternalStorageProxy",
+      "name": "SDaiForeignBridge",
       "address": "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
       "sourceHashes": [
-        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839"
+        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839",
+        "0xc9e17870eb8594989459b35217d292000a746beaf237f82e703d3de4b55cc4d2"
       ],
+      "proxyType": "Eternal Storage proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": ["maxAvailablePerTx"],
       "sinceTimestamp": 1539028166,
       "values": {
-        "$immutable": true,
+        "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "0x166124b75c798Cedf1B43655E9B5284eBd5203DB",
+        "$pastUpgrades": [
+          [
+            "2018-10-08T19:50:23.000Z",
+            "0x01d8eeea7ea146970fb4fbe8991d6118f8f41a779b06c69041d32362575f1eda",
+            ["0x710d6eC2b0948dEf1f423Ec77B51b6a55847D2C5"]
+          ],
+          [
+            "2018-12-19T12:49:42.000Z",
+            "0x29fdf4418b3ab5b5380e7ad0259278b1bbab18e121438c9c9d69ac6091f44a00",
+            ["0x0D3726e5a9f37234D6B55216fC971D30F150a60F"]
+          ],
+          [
+            "2019-12-25T13:53:49.000Z",
+            "0x003ae91dc06c549cc28cdf47294abeb545577e119b98f6b6e631940a744a3356",
+            ["0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"]
+          ],
+          [
+            "2020-03-31T11:16:05.000Z",
+            "0x9f50cee64b4e729b7bd61630ed174ea3c7e47e3db1403d9828a9736b2ad7ce79",
+            ["0xd40355B17643Bc26554c9A9BBC95b5CAbd92C2CD"]
+          ],
+          [
+            "2020-04-16T15:59:27.000Z",
+            "0xd0c3c92c94e05bc71256055ce8c4c993e047f04e04f3283a04e4cb077b71f6c6",
+            ["0x83c2E0E3B5328E599a3cBa95d97090fA7d0FDE8b"]
+          ],
+          [
+            "2020-05-12T14:05:38.000Z",
+            "0x0f8ee640cb733e48ef1011554cb36945492f8cd40b5111417d1f54f30633f986",
+            ["0x7E7669bdff02F2eE75b68B91FB81c2B38F9228C2"]
+          ],
+          [
+            "2021-10-06T18:49:32.000Z",
+            "0xb4afa1efcf12ba7907458062704efcc5658af3da5d36a4b4d4035af431d9df19",
+            ["0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473"]
+          ],
+          [
+            "2023-09-20T07:33:35.000Z",
+            "0x291d48fdfd430165b2b7f62c3ae806ea28ab34b4dc8a2e4d7d01693f19b780c9",
+            ["0x166124b75c798Cedf1B43655E9B5284eBd5203DB"]
+          ]
+        ],
+        "$upgradeCount": 8,
+        "dailyLimit": "10000000000000000000000000",
+        "daiToken": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "decimalShift": 0,
+        "deployedAtBlock": 6478428,
+        "erc20token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "executionDailyLimit": "15000000000000000000000000",
+        "executionMaxPerTx": "10000000000000000000000000",
+        "gasPrice": 100000000000,
+        "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
+        "getBridgeMode": "0x18762d46",
+        "getTrustedForwarder": "0x0000000000000000000000000000000000000000",
         "implementation": "0x166124b75c798Cedf1B43655E9B5284eBd5203DB",
+        "isInitialized": true,
+        "maxAvailablePerTx": "9865603079013541013696953",
+        "maxPerTx": "9999999000000000000000000",
+        "minPerTx": 5000000000000000,
+        "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "requiredBlockConfirmations": 20,
+        "requiredSignatures": 4,
+        "sDaiToken": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
         "upgradeabilityOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-        "version": 8
-      }
+        "validatorContract": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+        "version": 8,
+        "versionRecipient": "1.0.1"
+      },
+      "derivedName": "XDaiForeignBridge"
     },
     {
       "name": "GnosisSafe",
@@ -135,48 +188,6 @@
         "multisigThreshold": "2 of 3 (67%)",
         "nonce": 16,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "BridgeValidators",
-      "address": "0x6943A218d58135793F1FE619414eD476C37ad65a",
-      "sourceHashes": [
-        "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398"
-      ],
-      "sinceTimestamp": 1576700551,
-      "values": {
-        "$immutable": true,
-        "deployedAtBlock": 0,
-        "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
-        "getBridgeValidatorsInterfacesVersion": {
-          "major": 2,
-          "minor": 3,
-          "patch": 0
-        },
-        "isInitialized": false,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "requiredSignatures": 0,
-        "validatorCount": 0,
-        "validatorList": "EXPECT_REVERT"
-      },
-      "derivedName": "BridgeValidators"
-    },
-    {
-      "name": "Dai",
-      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "sourceHashes": [
-        "0x9b792a0d5af6c0a88429413cb318629d76df165fef71bda23764c7f730ce6a70"
-      ],
-      "sinceTimestamp": 1573672677,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7",
-        "name": "Dai Stablecoin",
-        "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
-        "symbol": "DAI",
-        "totalSupply": "3564597511875997876172000028",
-        "version": "1"
       }
     },
     {
@@ -256,7 +267,6 @@
         "compRate": 0,
         "comptrollerImplementation": "0x0000000000000000000000000000000000000000",
         "getAllMarkets": [],
-        "getBlockNumber": 21322860,
         "getCompAddress": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
         "isComptroller": true,
         "liquidationIncentiveMantissa": 0,
@@ -268,7 +278,8 @@
         "proposal65FixExecuted": false,
         "seizeGuardianPaused": false,
         "transferGuardianPaused": false
-      }
+      },
+      "derivedName": "Comptroller"
     },
     {
       "name": "Comp",
@@ -302,19 +313,63 @@
       }
     },
     {
-      "name": "EternalStorageProxy",
+      "name": "BridgeValidators",
       "address": "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
       "sourceHashes": [
-        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839"
+        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839",
+        "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1539028018,
       "values": {
-        "$immutable": true,
+        "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "0x6943A218d58135793F1FE619414eD476C37ad65a",
+        "$pastUpgrades": [
+          [
+            "2018-10-08T19:48:08.000Z",
+            "0x6dbedab00bc4840c459ba44c856c3aa1e7be5acd0c4a4602620a457979e7c4ee",
+            ["0xd760E016226836cC02E329aDDBB6821945Dd5100"]
+          ],
+          [
+            "2019-12-25T13:53:35.000Z",
+            "0x721841ce7ca52a0a5ed23f1f4093fdd1dac4e538bcace263f0b59008885d2f34",
+            ["0x6943A218d58135793F1FE619414eD476C37ad65a"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "deployedAtBlock": 6478417,
+        "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+        "getBridgeValidatorsInterfacesVersion": {
+          "major": 2,
+          "minor": 3,
+          "patch": 0
+        },
         "implementation": "0x6943A218d58135793F1FE619414eD476C37ad65a",
+        "isInitialized": true,
+        "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "requiredSignatures": 4,
         "upgradeabilityOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "validatorCount": 7,
+        "validatorList": [
+          "0x90776017057b84bc47D7e7383b65C463C80a6cdd",
+          "0xfA98B60E02A61B6590f073cAD56e68326652d094",
+          "0x97630E2aE609D4104aBdA91F3066C556403182dd",
+          "0x587C0d02B40822f15f05301d87c16f6a08AaDDde",
+          "0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
+          "0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
+          "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506"
+        ],
         "version": 2
-      }
+      },
+      "derivedName": "BridgeValidators"
     },
     {
       "name": "DaiForeignBridge",
@@ -338,7 +393,6 @@
         "gasPrice": 0,
         "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
         "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20060,
         "getTrustedForwarder": "0x0000000000000000000000000000000000000000",
         "isInitialized": false,
         "maxAvailablePerTx": 0,
@@ -357,23 +411,30 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0101016044726994aFd16f4A99f0d960090D35e7" },
     { "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd" },
+    { "address": "0x1312E98995bbCc30fc63Db3cef807e20CDd33dca" },
     { "address": "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9" },
     { "address": "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0" },
     { "address": "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b" },
+    { "address": "0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051" },
     { "address": "0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B" },
+    { "address": "0x587C0d02B40822f15f05301d87c16f6a08AaDDde" },
     { "address": "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97" },
     { "address": "0x839395e20bbB182fa440d08F850E6c7A8f6F0780" },
-    { "address": "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c" },
+    { "address": "0x90776017057b84bc47D7e7383b65C463C80a6cdd" },
+    { "address": "0x97630E2aE609D4104aBdA91F3066C556403182dd" },
+    { "address": "0xA07888742c18d7e658132AE0148fF205fFF46481" },
     { "address": "0xA8F4514E4dB0cE95E30142cC8bAa5E6c921e16a5" },
-    { "address": "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E" },
     { "address": "0xb8173f558f75EE263013fd6294177bf75279a21e" },
+    { "address": "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506" },
     { "address": "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8" },
     { "address": "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709" },
     { "address": "0xd26a3F686D43f2A62BA9eaE2ff77e9f516d945B9" },
     { "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A" },
     { "address": "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992" },
+    { "address": "0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5" },
+    { "address": "0xfA98B60E02A61B6590f073cAD56e68326652d094" },
     { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
   ],
   "abis": {
@@ -501,34 +562,6 @@
       "event ValidatorRemoved(address indexed validator)",
       "event RequiredSignaturesChanged(uint256 requiredSignatures)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
-    ],
-    "0x6B175474E89094C44Da98b954EedeAC495271d0F": [
-      "constructor(uint256 chainId_)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event LogNote(bytes4 indexed sig, address indexed usr, bytes32 indexed arg1, bytes32 indexed arg2, bytes data) anonymous",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address usr, uint256 wad) returns (bool)",
-      "function balanceOf(address) view returns (uint256)",
-      "function burn(address usr, uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function deny(address guy)",
-      "function mint(address usr, uint256 wad)",
-      "function move(address src, address dst, uint256 wad)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address holder, address spender, uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s)",
-      "function pull(address usr, uint256 wad)",
-      "function push(address usr, uint256 wad)",
-      "function rely(address guy)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function version() view returns (string)",
-      "function wards(address) view returns (uint256)"
     ],
     "0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": [
       "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) payable returns (bytes)",

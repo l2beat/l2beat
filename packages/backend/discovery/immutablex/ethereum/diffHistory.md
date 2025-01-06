@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x2765b3f4780f90f735cd928d71f7c1cbd1830a75
+
+# Diff at Thu, 12 Dec 2024 15:33:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21334467
+- current block number: 21387345
+
+## Description
+
+Removed Multisig1 as admin of StarkExchange, now admin is only Multisig2.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xD2C37fC6fD89563187f3679304975655e448D192","via":[]}
+      issuedPermissions.0.target:
+-        "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91"
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.$admin:
+-        ["0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91","0xD2C37fC6fD89563187f3679304975655e448D192"]
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract IMXProxyGovernanceMultisig1 (0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
 Generated with discovered.json: 0x05d320eff815b3c241c92574418be87d8d86f1d6
 
 # Diff at Thu, 05 Dec 2024 06:21:13 GMT:

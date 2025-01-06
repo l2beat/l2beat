@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -12,9 +13,12 @@ export const thebinaryholdings: Layer2 = opStackL2({
   associatedTokens: ['BNRY'],
   additionalBadges: [Badge.Infra.Superchain],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'The Binary Holdings',
     slug: 'thebinaryholdings',
     shortName: 'Binary',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement. It uses its own token (BNRY) for gas.',
     links: {

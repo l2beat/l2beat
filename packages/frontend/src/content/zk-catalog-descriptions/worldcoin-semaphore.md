@@ -12,7 +12,7 @@ The procedure is explained for the semaphore circuit of size 30. While, as menti
 
 ![Semaphore verification process](/images/zk-catalog/semaphore-verification.png)
 
-**From the .circom to the .r1cs file**: the circom version used in the original verification key generation process is non deterministic, meaning that a different r1cs file is generated every time the circom file is compiled. A workaround is currently being investigated.
+**From the .circom to the .r1cs file**: the circom version used in the original verification key generation process is non-deterministic, meaning that a different r1cs file is generated every time the circom file is compiled. A workaround is currently being investigated.
 
 **From the .r1cs to the onchain verification keys**: download the corresponding r1cs file from the semaphore artifacts. This can be done manually or with the following command:
 

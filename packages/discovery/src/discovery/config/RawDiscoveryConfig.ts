@@ -22,6 +22,7 @@ export const RolePermissionEntries = [
   'propose',
   'sequence',
   'validate',
+  'operateLinea',
   'fastconfirm',
 ] as const
 

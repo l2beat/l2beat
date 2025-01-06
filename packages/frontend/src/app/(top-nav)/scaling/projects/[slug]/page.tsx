@@ -1,10 +1,13 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
+import { OtherMigrationNotice } from '~/components/countdowns/other-migration/other-migration-notice'
+import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/why-am-i-here-notice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
+import { featureFlags } from '~/consts/feature-flags'
 import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { HydrateClient } from '~/trpc/server'
@@ -85,6 +88,17 @@ export default async function Page(props: Props) {
             />
           </div>
           <div className="w-full">
+            {projectEntry.countdowns.otherMigration &&
+              !featureFlags.othersMigrated() && (
+                <OtherMigrationNotice
+                  {...projectEntry.countdowns.otherMigration}
+                />
+              )}
+            {projectEntry.header.category === 'Other' &&
+              projectEntry.reasonsForBeingOther &&
+              projectEntry.reasonsForBeingOther.length > 0 && (
+                <WhyAmIHereNotice reasons={projectEntry.reasonsForBeingOther} />
+              )}
             <HighlightableLinkContextProvider>
               <ProjectDetails items={projectEntry.projectDetails} />
             </HighlightableLinkContextProvider>

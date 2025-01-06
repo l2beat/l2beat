@@ -1,8 +1,8 @@
 {
   "name": "gluon",
   "chain": "ethereum",
-  "blockNumber": 21322246,
-  "configHash": "0x10a5578517cada4e655d1937b62cddeb42cf2807cbe3250c78480c9cdd104f71",
+  "blockNumber": 21387313,
+  "configHash": "0xe99fc9206cdd5d11e7a2b3547a51973e1bb04a3a447b002e62be1e37983df0c9",
   "contracts": [
     {
       "name": "SpotData",
@@ -152,12 +152,12 @@
       "values": {
         "$immutable": true,
         "activationInterval": 11520,
-        "currentIntervalIndex": 23,
+        "currentIntervalIndex": 24,
         "currentLogic": "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
         "data": "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
         "extensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
         "getExtensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
-        "getToBeDistributed": [0, "1346902354215947912554", 2730626699],
+        "getToBeDistributed": [0, "1346505840564614195006", 2730244557],
         "getTokens": [
           "0x0000000000000000000000000000000000000000",
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -171,7 +171,6 @@
         "name": "242081396065570819141608129364921780154322842473686362595258672082816653923",
         "quorumPercentage": 50,
         "state": 1,
-        "toBeDistributed": [0, "1346902354215947912554", 2730626699],
         "tokens": [
           "0x0000000000000000000000000000000000000000",
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",

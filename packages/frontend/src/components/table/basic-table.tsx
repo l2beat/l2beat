@@ -1,4 +1,4 @@
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import {
   type Column,
   type Header,
@@ -8,8 +8,8 @@ import {
 } from '@tanstack/react-table'
 import { range } from 'lodash'
 import React from 'react'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
-import { type UnderReviewStatus } from '~/utils/project/under-review'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
   Table,
@@ -28,16 +28,7 @@ import {
   getRowTypeClassNamesWithoutOpacity,
 } from './utils/row-type'
 
-export interface BasicTableEntry {
-  id: ProjectId | string
-  slug: string
-  isVerified?: boolean
-  redWarning?: string | undefined
-  underReviewStatus?: UnderReviewStatus
-  href?: string
-}
-
-export interface BasicTableProps<T extends BasicTableEntry> {
+export interface BasicTableProps<T extends CommonProjectEntry> {
   table: TanstackTable<T>
   children?: React.ReactNode
   /**
@@ -55,7 +46,7 @@ export interface BasicTableProps<T extends BasicTableEntry> {
   rowColoringMode?: 'default' | 'ethereum-only'
 }
 
-export function BasicTable<T extends BasicTableEntry>(
+export function BasicTable<T extends CommonProjectEntry>(
   props: BasicTableProps<T>,
 ) {
   if (props.table.getRowCount() === 0) {
@@ -176,7 +167,7 @@ export function BasicTable<T extends BasicTableEntry>(
   )
 }
 
-export function BasicTableRow<T extends BasicTableEntry>({
+export function BasicTableRow<T extends CommonProjectEntry>({
   row,
   className,
   ...props
@@ -199,6 +190,14 @@ export function BasicTableRow<T extends BasicTableEntry>({
           const groupParams = getBasicTableGroupParams(cell.column)
           const href = getBasicTableHref(row.original.href, meta?.hash)
 
+          if (meta?.hideIfNull && cell.renderValue() === null) {
+            return null
+          }
+
+          const colSpan = meta?.colSpan
+            ? meta.colSpan(cell.getContext())
+            : undefined
+
           return (
             <React.Fragment key={`${row.id}-${cell.id}`}>
               <TableCell
@@ -214,10 +213,10 @@ export function BasicTableRow<T extends BasicTableEntry>({
                       ? 'pl-10'
                       : 'pl-4'
                     : undefined,
-
                   meta?.cellClassName,
                 )}
                 style={getCommonPinningStyles(cell.column)}
+                colSpan={colSpan}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>

@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import {
@@ -27,14 +27,14 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
     const tableEntries = entries
       .map((e) => mapToTableEntry(e, metric))
       .sort((a, b) => {
-        return b.data.pastDayCount - a.data.pastDayCount
+        return (b.data?.pastDayCount ?? 0) - (a.data?.pastDayCount ?? 0)
       })
     return tableEntries ?? []
   }, [entries, metric])
 
   const table = useTable({
     columns: getScalingActivityColumns(metric, {
-      activity: env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
+      activity: featureFlags.stageSorting,
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
@@ -55,12 +55,14 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
 function mapToTableEntry(entry: ScalingActivityEntry, metric: ActivityMetric) {
   return {
     ...entry,
-    data: {
-      ...entry.data,
-      change: entry.data[metric].change,
-      pastDayCount: entry.data[metric].pastDayCount,
-      summedCount: entry.data[metric].summedCount,
-      maxCount: entry.data[metric].maxCount,
-    },
+    data: entry.data
+      ? {
+          ...entry.data,
+          change: entry.data[metric].change,
+          pastDayCount: entry.data[metric].pastDayCount,
+          summedCount: entry.data[metric].summedCount,
+          maxCount: entry.data[metric].maxCount,
+        }
+      : undefined,
   }
 }

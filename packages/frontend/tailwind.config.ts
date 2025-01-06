@@ -118,6 +118,10 @@ const config: Config = {
         800: '#B94DDF',
         900: '#AB3BD2',
       },
+      'n-pink': {
+        400: '#FC49C2',
+        500: '#EF43B4',
+      },
       green: {
         200: '#B0FFAA',
         300: '#4EAB58',
@@ -155,6 +159,9 @@ const config: Config = {
         900: '#112944',
         950: '#152A4B',
       },
+      'n-blue': {
+        700: '#2A5BD8',
+      },
       slate: {
         600: '#525C6A',
       },
@@ -166,8 +173,14 @@ const config: Config = {
         400: '#2EC4B6',
         500: '#27AC9F',
       },
+      'n-teal': {
+        500: '#36A3A3',
+      },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
       fuchsia: { 700: '#860CB0' },
+      'n-cyan': {
+        600: '#1C8BA4',
+      },
 
       // New colors
       primary: {
@@ -175,7 +188,8 @@ const config: Config = {
         invert: 'var(--primary-invert)',
       },
       secondary: 'var(--secondary)',
-      brand: 'var(--brand)',
+      negative: 'hsl(var(--negative))',
+      brand: 'hsl(var(--brand))',
       background: 'var(--background)',
       'surface-primary': 'var(--surface-primary)',
       'surface-secondary': 'var(--surface-secondary)',
@@ -184,6 +198,13 @@ const config: Config = {
       'icon-secondary': 'var(--icon-secondary)',
       overlay: 'var(--overlay)',
       divider: 'var(--divider)',
+      'indicator-rollups': 'var(--indicator-rollups)',
+      'indicator-validiums-optimiums': 'var(--indicator-validiums-optimiums)',
+      'indicator-others': 'var(--indicator-others)',
+      'indicator-ethereum': 'var(--indicator-ethereum)',
+      positive: 'var(--positive)',
+      'link-stroke': 'var(--link-stroke)',
+      link: 'var(--link)',
     },
     screens: {
       xs: '400px',

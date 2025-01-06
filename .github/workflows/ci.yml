@@ -80,8 +80,8 @@ jobs:
       - name: Build protocolbeat
         run: pnpm build:protocolbeat
 
-  build-tx-decoder:
-    name: Build tx-decoder
+  build-tools:
+    name: Build tools
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -104,8 +104,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build tx-decoder
-        run: pnpm build:tx-decoder
+      - name: Build tools
+        run: pnpm build:tools
 
   build-uops-dashboard:
     name: Build uops-dashboard

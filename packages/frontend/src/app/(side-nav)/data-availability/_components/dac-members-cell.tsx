@@ -1,23 +1,22 @@
-import { type DacBridge } from '@l2beat/config'
+import { NaBadge } from '~/components/badge/na-badge'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { type DaBridgeSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 
-type Props = Pick<
-  DacBridge,
-  'knownMembers' | 'requiredMembers' | 'membersCount'
->
+interface Props {
+  dacInfo: DaBridgeSummaryEntry['dacInfo']
+}
 
-export function DacMembersCell({
-  knownMembers,
-  requiredMembers,
-  membersCount,
-}: Props) {
+export function DacMembersCell({ dacInfo }: Props) {
+  if (!dacInfo?.membersArePublic) {
+    return <NaBadge />
+  }
   return (
     <TwoRowCell>
       <TwoRowCell.First className="leading-5">
-        {requiredMembers}/{membersCount}
+        {dacInfo.requiredMemebers}/{dacInfo.memberCount}
       </TwoRowCell.First>
       <TwoRowCell.Second>
-        {knownMembers ? 'Public' : 'Anonymous'}
+        {dacInfo.membersArePublic ? 'Public' : 'Anonymous'}
       </TwoRowCell.Second>
     </TwoRowCell>
   )

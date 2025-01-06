@@ -7,11 +7,6 @@
     sentiment: "good"
     value: "Onchain"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: -Infinity
     description: "Some contracts are not verified, so there is no way to assess the exit window."
@@ -35,10 +30,5 @@
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
     sentiment: "good"
     value: "ZK proofs (SN)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

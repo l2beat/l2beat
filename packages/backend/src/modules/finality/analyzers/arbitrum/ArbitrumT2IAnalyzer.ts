@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
-import { BlobProvider, RpcClient2 } from '@l2beat/shared'
+import { BlobProvider, RpcClient } from '@l2beat/shared'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { calculateDelaysFromSegments } from './calculateDelaysFromSegments'
@@ -12,7 +12,7 @@ export class ArbitrumT2IAnalyzer extends BaseAnalyzer {
   constructor(
     private readonly blobProvider: BlobProvider,
     private readonly logger: Logger,
-    provider: RpcClient2,
+    provider: RpcClient,
     db: Database,
     projectId: ProjectId,
   ) {

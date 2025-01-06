@@ -6,11 +6,7 @@ import { type FinalityProjectConfig } from '../get-finality'
 export function getFinalityConfigurations(): FinalityProjectConfig[] {
   return layer2s
     .map((layer2) => {
-      if (
-        !layer2.config.finality ||
-        layer2.config.finality === 'coming soon' ||
-        layer2.isArchived
-      ) {
+      if (!layer2.config.finality || layer2.isArchived) {
         return
       }
 

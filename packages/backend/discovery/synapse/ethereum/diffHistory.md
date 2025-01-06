@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x53cfa8d8f19627de2e57940dcbc0cc6b31b2ec93
+
+# Diff at Thu, 12 Dec 2024 16:59:31 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 19876012
+- current block number: 21387773
+
+## Description
+
+Ignored not needed supply/balance values in config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F) {
+    +++ description: None
+      values.totalSupply:
+-        "8865787005661770066402784"
+    }
+```
+
 Generated with discovered.json: 0xba4fb0f0c2caac3aa6869cb778bc4a93721efa15
 
 # Diff at Tue, 03 Dec 2024 13:08:55 GMT:

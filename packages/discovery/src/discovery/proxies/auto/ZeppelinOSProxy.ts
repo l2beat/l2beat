@@ -38,19 +38,19 @@ export async function detectZeppelinOSProxy(
   const pastUpgrades = []
   try {
     pastUpgrades.push(
-      await getPastUpgradesSingleEvent(
+      ...(await getPastUpgradesSingleEvent(
         provider,
         address,
         'event Upgraded(address indexed implementation)',
-      ),
+      )),
     )
   } catch {
     pastUpgrades.push(
-      await getPastUpgradesSingleEvent(
+      ...(await getPastUpgradesSingleEvent(
         provider,
         address,
         'event Upgraded(address implementation)',
-      ),
+      )),
     )
   }
 

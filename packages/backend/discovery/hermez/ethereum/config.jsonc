@@ -20,6 +20,7 @@
   "names": {
     "0xA68D85dF56E733A06443306A095646317B5Fa633": "Hermez",
     "0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez2",
+    "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": "HermezAuctionProtocol",
     "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol2"
   },
   "overrides": {
@@ -28,6 +29,12 @@
     },
     "Hermez2": {
       "ignoreMethods": ["unpackBucket"]
+    },
+    "HermezAuctionProtocol": {
+      "ignoreMethods": ["getCurrentSlotNumber"]
+    },
+    "HermezAuctionProtocol2": {
+      "ignoreMethods": ["getCurrentSlotNumber"]
     }
   }
 }

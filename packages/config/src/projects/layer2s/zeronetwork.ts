@@ -18,7 +18,7 @@ export const zeronetwork: Layer2 = zkStackL2({
     added: 'zeronetworkValidatorsAdded',
     removed: 'zeronetworkValidatorsRemoved',
   },
-  additionalBadges: [Badge.Infra.ElasticChain, Badge.RaaS.Caldera],
+  additionalBadges: [Badge.RaaS.Caldera],
   createdAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
     name: 'ZERO Network',

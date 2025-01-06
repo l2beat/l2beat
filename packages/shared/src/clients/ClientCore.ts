@@ -2,10 +2,10 @@ import { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { json } from '@l2beat/shared-pure'
 import { RequestInit } from 'node-fetch'
 import { RetryHandler, RetryHandlerVariant } from '../tools'
-import { HttpClient2 } from './http/HttpClient2'
+import { HttpClient } from './http/HttpClient'
 
 export interface ClientCoreDependencies {
-  http: HttpClient2
+  http: HttpClient
   logger: Logger
   sourceName: string
   callsPerMinute: number
@@ -17,7 +17,7 @@ export abstract class ClientCore {
   retryHandler: RetryHandler
 
   constructor(private readonly deps: ClientCoreDependencies) {
-    const logger = deps.logger.tag({ chain: deps.sourceName })
+    const logger = deps.logger.tag({ source: deps.sourceName })
     this.retryHandler = RetryHandler.create(deps.retryStrategy, logger)
     this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
   }

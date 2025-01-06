@@ -1,8 +1,8 @@
 {
   "name": "hermez",
   "chain": "ethereum",
-  "blockNumber": 21322541,
-  "configHash": "0x7857852f2ec9ca00383e4e047e3adc9c6b7c5fc553b825a06887d6a507803ac3",
+  "blockNumber": 21387322,
+  "configHash": "0xd13d7d9b7d206ea002d15a07d74498431546ba3a59fb1910f0fb456f584bb637",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -53,7 +53,6 @@
         "getAllocationRatio": [4000, 4000, 2000],
         "getBootCoordinator": "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
         "getClosedAuctionSlots": 2,
-        "getCurrentSlotNumber": 230713,
         "getDonationAddress": "0x0000000000000000000000000000000000000000",
         "getOpenAuctionSlots": 4320,
         "getOutbidding": 1000,
@@ -62,7 +61,8 @@
         "hermezRollup": "0xA68D85dF56E733A06443306A095646317B5Fa633",
         "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
         "tokenHEZ": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
-      }
+      },
+      "derivedName": "HermezAuctionProtocol"
     },
     {
       "name": "Verifier2048",
@@ -166,7 +166,6 @@
         "getAllocationRatio": [0, 0, 0],
         "getBootCoordinator": "0x0000000000000000000000000000000000000000",
         "getClosedAuctionSlots": 0,
-        "getCurrentSlotNumber": 533063,
         "getDonationAddress": "0x0000000000000000000000000000000000000000",
         "getOpenAuctionSlots": 0,
         "getOutbidding": 0,

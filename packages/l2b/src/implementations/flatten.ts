@@ -1,9 +1,9 @@
-import { HttpClient, flattenStartingFrom } from '@l2beat/discovery'
+import { flattenStartingFrom } from '@l2beat/discovery'
 import {
   ExplorerConfig,
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
-import { CliLogger } from '@l2beat/shared'
+import { CliLogger, HttpClient } from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 export async function fetchAndFlatten(

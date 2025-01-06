@@ -83,9 +83,6 @@ function initializeConfigurations(
   const degateClient = providers.clients.degate
   assert(degateClient, 'Degate client not defined')
 
-  const starknetClient = providers.clients.starknet
-  assert(starknetClient, 'Starknet client not defined')
-
   const blobProvider = providers.blob?.getBlobProvider()
   assert(blobProvider, 'Blob client is required for finality module')
 
@@ -194,7 +191,7 @@ function initializeConfigurations(
                 ethereumClient,
                 database,
                 configuration.projectId,
-                starknetClient,
+                providers.clients.getStarknetClient(configuration.projectId),
               ),
             },
             minTimestamp: configuration.minTimestamp,

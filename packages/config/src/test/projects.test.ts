@@ -184,21 +184,6 @@ describe('projects', () => {
     }
   })
 
-  describe('regular L3s have proper host chain set', () => {
-    it('should have proper host chain set', () => {
-      const applicableProjects = layer3s.filter(
-        (l3) => !l3.isUpcoming && !l3.isUnderReview,
-      )
-
-      // Name mapping for easier test resolution
-      const l3sWithInvalidHostChain = applicableProjects
-        .filter((l3) => l3.hostChain === 'Multiple')
-        .map((l3) => l3.display.name)
-
-      expect(l3sWithInvalidHostChain).toEqual([])
-    })
-  })
-
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: Layer2 | Layer3) => {
       return (

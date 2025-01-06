@@ -12,10 +12,17 @@ export const worldcoinsemaphore: Project = {
   id: ProjectId('worldcoinsemaphore'),
   slug: 'worldcoin-semaphore',
   name: 'Worldcoin Semaphore',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-06-04')),
   // tags
   isZkCatalog: true,
   // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
   proofVerification: {
     shortDescription:
       'Anonymity set inclusion checker for the Worldcoin network.',

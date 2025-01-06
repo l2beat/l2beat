@@ -15,6 +15,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -51,6 +52,7 @@ export const fuel: Layer2 = {
     }),
   ],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Fuel Ignition',
     slug: 'fuel',
     description:
@@ -79,6 +81,7 @@ export const fuel: Layer2 = {
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
   config: {
+    associatedTokens: ['FUEL'],
     escrows: [
       {
         // ETH bridge
@@ -132,8 +135,6 @@ export const fuel: Layer2 = {
     },
   },
   riskView: {
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       secondLine: formatChallengePeriod(challengePeriod),

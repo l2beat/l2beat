@@ -15,11 +15,6 @@
     ]
     value: "Onchain"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: 432000
     description: "Users have 5d to exit funds in case of an unwanted regular upgrade. There is a 8d delay before a regular upgrade is applied, and withdrawals can take up to 3d to be processed."
@@ -79,10 +74,5 @@
       }
     ]
     value: "ZK proofs (SN)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

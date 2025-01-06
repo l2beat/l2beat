@@ -58,6 +58,7 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
@@ -108,6 +109,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 interface OrbitStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
+  additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
@@ -307,11 +309,27 @@ function defaultStateValidation(
   }
 }
 
+const wmrValidForBlobstream = [
+  '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
+]
+
 function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
   blockNumberOpcodeTimeSeconds: number,
 ): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+  const nativeContractRisks = templateVars.nonTemplateContractRisks ?? [
+    CONTRACTS.UPGRADE_NO_DELAY_RISK,
+  ]
+
+  const discoveryDrivenSections = templateVars.discoveryDrivenData
+    ? generateDiscoveryDrivenSections(
+        templateVars.discovery,
+        nativeContractRisks,
+        templateVars.additionalDiscoveries,
+      )
+    : undefined
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -330,6 +348,12 @@ function orbitStackCommon(
     'SequencerInbox',
     'sequencerVersion',
   )
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
   const currentRequiredStake = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'currentRequiredStake',
@@ -392,23 +416,19 @@ function orbitStackCommon(
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: {
-      addresses:
-        templateVars.discoveryDrivenData === true
-          ? templateVars.discovery.getDiscoveredContracts()
-          : unionBy(
-              [
-                ...(templateVars.nonTemplateContracts ?? []),
-                ...templateVars.discovery.resolveOrbitStackTemplates()
-                  .contracts,
-              ],
-              'address',
-            ),
-      nativeAddresses: templateVars.nativeAddresses,
-      risks: templateVars.nonTemplateContractRisks ?? [
-        CONTRACTS.UPGRADE_NO_DELAY_RISK,
-      ],
-    },
+    contracts: discoveryDrivenSections
+      ? discoveryDrivenSections.contracts
+      : {
+          addresses: unionBy(
+            [
+              ...(templateVars.nonTemplateContracts ?? []),
+              ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
+            ],
+            'address',
+          ),
+          nativeAddresses: templateVars.nativeAddresses,
+          risks: nativeContractRisks,
+        },
     chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness:
@@ -417,16 +437,20 @@ function orbitStackCommon(
         (templateVars.nonTemplateTechnology?.dataAvailability ??
         postsToExternalDA)
           ? (() => {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
+              if (isUsingValidBlobstreamWmr) {
+                return TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true)
+              } else {
+                const DAC = templateVars.discovery.getContractValue<{
+                  membersCount: number
+                  requiredSignatures: number
+                }>('SequencerInbox', 'dacKeyset')
+                const { membersCount, requiredSignatures } = DAC
 
-              return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
-                membersCount,
-                requiredSignatures,
-              })
+                return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
+                  membersCount,
+                  requiredSignatures,
+                })
+              }
             })()
           : {
               ...(usesBlobs
@@ -511,16 +535,17 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions:
-      templateVars.discoveryDrivenData === true
-        ? templateVars.discovery.getDiscoveredPermissions()
-        : [
-            sequencers,
-            validators,
-            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-            ...(templateVars.nonTemplatePermissions ?? []),
-          ],
-    nativePermissions: templateVars.nativePermissions,
+    permissions: discoveryDrivenSections
+      ? discoveryDrivenSections.permissions
+      : [
+          sequencers,
+          validators,
+          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
+          ...(templateVars.nonTemplatePermissions ?? []),
+        ],
+    nativePermissions: discoveryDrivenSections
+      ? discoveryDrivenSections.nativePermissions
+      : templateVars.nativePermissions,
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -542,10 +567,6 @@ function orbitStackCommon(
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
-  assert(
-    templateVars.hostChain !== 'Multiple',
-    'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-  )
   const layer2s = require('..').layer2s as Layer2[]
 
   const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
@@ -593,6 +614,13 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
   const riskView = {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
@@ -604,15 +632,19 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     dataAvailability:
       (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
         ? (() => {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-            return RISK_VIEW.DATA_EXTERNAL_DAC({
-              membersCount,
-              requiredSignatures,
-            })
+            if (isUsingValidBlobstreamWmr) {
+              return RISK_VIEW.DATA_CELESTIA(true)
+            } else {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
+              return RISK_VIEW.DATA_EXTERNAL_DAC({
+                membersCount,
+                requiredSignatures,
+              })
+            }
           })()
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
@@ -628,12 +660,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
       secondLine: formatDelay(challengePeriodSeconds + validatorAfkTimeSeconds),
     },
-    validatedBy:
-      templateVars.nonTemplateRiskView?.validatedBy ??
-      RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
-    destinationToken:
-      templateVars.nonTemplateRiskView?.destinationToken ??
-      RISK_VIEW.NATIVE_AND_CANONICAL(),
   }
 
   const getStackedRisks = () => {
@@ -667,11 +693,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           baseChain.riskView.proposerFailure,
           RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
         ),
-      validatedBy:
-        templateVars.stackedRiskView?.validatedBy ?? riskView.validatedBy,
-      destinationToken:
-        templateVars.stackedRiskView?.destinationToken ??
-        riskView.destinationToken,
     }
   }
 
@@ -744,20 +765,28 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     dataAvailability: postsToExternalDA
       ? [
           (() => {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
+            if (isUsingValidBlobstreamWmr) {
+              return addSentimentToDataAvailability({
+                layers: [DA_LAYERS.CELESTIA],
+                bridge: DA_BRIDGES.BLOBSTREAM,
+                mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+              })
+            } else {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+              return addSentimentToDataAvailability({
+                layers: [DA_LAYERS.DAC],
+                bridge: DA_BRIDGES.DAC_MEMBERS({
+                  membersCount,
+                  requiredSignatures,
+                }),
+                mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+              })
+            }
           })(),
         ]
       : baseChain.dataAvailability,
@@ -864,6 +893,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ) ??
     false
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
@@ -929,20 +965,28 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     dataAvailability: [
       postsToExternalDA
         ? (() => {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
+            if (isUsingValidBlobstreamWmr) {
+              return addSentimentToDataAvailability({
+                layers: [DA_LAYERS.CELESTIA],
+                bridge: DA_BRIDGES.BLOBSTREAM,
+                mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+              })
+            } else {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+              return addSentimentToDataAvailability({
+                layers: [DA_LAYERS.DAC],
+                bridge: DA_BRIDGES.DAC_MEMBERS({
+                  membersCount,
+                  requiredSignatures,
+                }),
+                mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+              })
+            }
           })()
         : addSentimentToDataAvailability({
             layers: [
@@ -966,15 +1010,19 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         (templateVars.nonTemplateRiskView?.dataAvailability ??
         postsToExternalDA)
           ? (() => {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
+              if (isUsingValidBlobstreamWmr) {
+                return RISK_VIEW.DATA_CELESTIA(true)
+              } else {
+                const DAC = templateVars.discovery.getContractValue<{
+                  membersCount: number
+                  requiredSignatures: number
+                }>('SequencerInbox', 'dacKeyset')
+                const { membersCount, requiredSignatures } = DAC
+                return RISK_VIEW.DATA_EXTERNAL_DAC({
+                  membersCount,
+                  requiredSignatures,
+                })
+              }
             })()
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
@@ -992,12 +1040,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           challengePeriodSeconds + validatorAfkTimeSeconds,
         ),
       },
-      validatedBy:
-        templateVars.nonTemplateRiskView?.validatedBy ??
-        RISK_VIEW.VALIDATED_BY_ETHEREUM,
-      destinationToken:
-        templateVars.nonTemplateRiskView?.destinationToken ??
-        RISK_VIEW.NATIVE_AND_CANONICAL(),
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -1026,7 +1068,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,
-      finality: templateVars.finality ?? 'coming soon',
+      finality: templateVars.finality,
     },
   }
 }

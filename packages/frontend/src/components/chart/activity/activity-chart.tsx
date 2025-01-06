@@ -1,10 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -22,21 +19,29 @@ import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
+import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
 import { type ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import { typeToIndicator } from './utils/get-chart-type'
 
 interface Props {
   milestones: Milestone[]
   entries: ScalingActivityEntry[]
+  hideScalingFactor?: boolean
+  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 }
 
-export function ActivityChart({ milestones, entries }: Props) {
+export function ActivityChart({
+  milestones,
+  entries,
+  hideScalingFactor,
+  type,
+}: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
-  const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvl-scale',
@@ -48,12 +53,10 @@ export function ActivityChart({ milestones, entries }: Props) {
     true,
   )
 
-  const filter = filters.isEmpty
-    ? { type: 'all' as const }
-    : {
-        type: 'projects' as const,
-        projectIds: entries.filter(includeFilter).map((project) => project.id),
-      }
+  const filter = {
+    type: 'projects' as const,
+    projectIds: entries.filter(includeFilter).map((project) => project.id),
+  }
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter,
@@ -69,6 +72,7 @@ export function ActivityChart({ milestones, entries }: Props) {
       chart: data,
       showMainnet,
       metric,
+      type,
     })
 
   return (
@@ -84,13 +88,34 @@ export function ActivityChart({ milestones, entries }: Props) {
           showEthereum={showMainnet}
           metric={metric}
           singleProject={filter.projectIds?.length === 1}
+          type={type}
         />
       )}
       useLogScale={scale === 'log'}
     >
-      <section className="flex flex-col gap-4">
-        <ActivityChartHeader stats={stats} range={chartRange} />
-        <Chart />
+      <section className="flex flex-col">
+        <ActivityChartHeader
+          stats={stats}
+          range={chartRange}
+          hideScalingFactor={hideScalingFactor}
+        />
+        <Chart className="mt-4" />
+        <ChartLegend
+          className="my-2"
+          elements={[
+            {
+              name:
+                type === 'ValidiumsAndOptimiums'
+                  ? 'Validiums and Optimiums'
+                  : (type ?? 'Projects'),
+              color: typeToIndicator(type),
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-indicator-ethereum',
+            },
+          ]}
+        />
         <Controls
           scale={scale}
           setScale={setScale}
@@ -127,7 +152,7 @@ function Controls({
   const isClient = useIsClient()
   return (
     <ChartControlsWrapper>
-      <div className="flex gap-2 md:gap-4">
+      <div className="flex gap-1">
         {isClient ? (
           <RadioGroup
             value={scale}

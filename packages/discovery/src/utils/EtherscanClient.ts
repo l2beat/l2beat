@@ -10,6 +10,7 @@ import {
 
 import { ContractSource } from './IEtherscanClient'
 
+import { HttpClient } from '@l2beat/shared'
 import { z } from 'zod'
 import {
   ContractCreatorAndCreationTxHashResult,
@@ -18,12 +19,10 @@ import {
   TwentyTransactionListResult,
   tryParseEtherscanResponse,
 } from './EtherscanModels'
-import { HttpClient } from './HttpClient'
 import {
   EtherscanUnsupportedMethods,
   IEtherscanClient,
 } from './IEtherscanClient'
-import { getErrorMessage } from './getErrorMessage'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 class EtherscanError extends Error {}
@@ -285,53 +284,22 @@ export class EtherscanClient implements IEtherscanClient {
     })
     const url = `${this.url}?${query.toString()}`
 
-    const start = Date.now()
-    const { httpResponse, error } = await this.httpClient
-      .fetch(url, { timeout: this.timeoutMs })
-      .then(
-        (httpResponse) => ({ httpResponse, error: undefined }),
-        (error: unknown) => ({ httpResponse: undefined, error }),
-      )
-    const timeMs = Date.now() - start
+    const response = await this.httpClient.fetch(url, {
+      timeout: this.timeoutMs,
+    })
 
-    if (!httpResponse) {
-      const message = getErrorMessage(error)
-      this.recordError(module, action, timeMs, message)
-      throw error
-    }
-
-    const text = await httpResponse.text()
-    const etherscanResponse = tryParseEtherscanResponse(text)
-
-    if (!httpResponse.ok) {
-      this.recordError(module, action, timeMs, text)
-      throw new Error(
-        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}`,
-      )
-    }
+    const etherscanResponse = tryParseEtherscanResponse(response)
 
     if (!etherscanResponse) {
-      const message = `Invalid Etherscan response [${text}] for request [${url}].`
-      this.recordError(module, action, timeMs, message)
+      const message = `Invalid Etherscan response [${JSON.stringify(response)}] for request [${url}].`
       throw new TypeError(message)
     }
 
     if (etherscanResponse.message !== 'OK') {
-      this.recordError(module, action, timeMs, etherscanResponse.result)
       throw new EtherscanError(etherscanResponse.result)
     }
 
-    this.logger.debug({ type: 'success', timeMs, module, action })
     return etherscanResponse.result
-  }
-
-  protected recordError(
-    module: string,
-    action: string,
-    timeMs: number,
-    message: string,
-  ): void {
-    this.logger.debug({ type: 'error', message, timeMs, module, action })
   }
 }
 

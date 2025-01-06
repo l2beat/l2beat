@@ -1,5 +1,4 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
 import {
   createContext,
   useCallback,
@@ -7,9 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
-import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
+import { type CommonBridgesEntry } from '~/server/features/bridges/get-common-bridges-entry'
 
 export type BridgesFilterContextValue = {
   validatedBy?: string
@@ -45,27 +42,17 @@ export function useOptionalBridgesFilterValues() {
   return context
 }
 
-export type BridgesFilterEntry =
-  | BridgesSummaryEntry
-  | BridgesRiskEntry
-  | BridgesArchivedEntry
-
 export function useBridgesFilter() {
-  const bridgesFilters = useBridgesFilterValues()
+  const filters = useBridgesFilterValues()
 
   const filter = useCallback(
-    (entry: BridgesFilterEntry) => {
-      const checks = [
-        bridgesFilters.type !== undefined
-          ? entry.category === bridgesFilters.type
-          : undefined,
-        bridgesFilters.validatedBy !== undefined
-          ? entry.validatedBy?.value === bridgesFilters.validatedBy
-          : undefined,
-      ].filter(notUndefined)
-      return checks.length === 0 || checks.every(Boolean)
+    ({ filterable }: CommonBridgesEntry) => {
+      return (
+        (!filters.type || filters.type === filterable.type) &&
+        (!filters.validatedBy || filters.validatedBy === filterable.validatedBy)
+      )
     },
-    [bridgesFilters],
+    [filters],
   )
 
   return filter
