@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 21465190,
+  "blockNumber": 21566096,
   "configHash": "0x2f582a24c74ad1764ce44677d855986539300e493f1545d81d17e4c66e1987db",
   "contracts": [
     {
@@ -365,12 +365,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2354,
+        "firstUnresolvedNode": 2401,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2353,
-        "latestNodeCreated": 2379,
+        "latestConfirmed": 2400,
+        "latestNodeCreated": 2413,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -837,11 +837,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 4555,
+        "delayedMessageCount": 4646,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 3830,
-        "sequencerReportedSubMessageCount": 685538
+        "sequencerMessageCount": 3914,
+        "sequencerReportedSubMessageCount": 695887
       }
     },
     {
@@ -1038,7 +1038,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 215,
+        "nonce": 216,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1092,7 +1092,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3830,
+        "batchCount": 3914,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1120,7 +1120,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4554,
+        "totalDelayedMessagesRead": 4645,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
