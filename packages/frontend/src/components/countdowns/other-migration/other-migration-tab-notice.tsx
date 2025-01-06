@@ -41,11 +41,12 @@ export function OtherMigrationTabNotice({
         />
       </div>
       <p className="text-xs font-medium md:text-base">
-        More projects will be classifed as &quot;Other&quot; due to its specific
-        risks that set it apart from the standard classifications.
+        More projects will be classifed as &quot;Other&quot; due to specific
+        risks that set them apart from the standard classifications.
         <span className="max-md:hidden">
           {' '}
-          Visit detail page of a specific project to view reasons.
+          Visit a project&apos;s detail page to learn more about the specific
+          reasons.
         </span>
       </p>
       <Countdown
