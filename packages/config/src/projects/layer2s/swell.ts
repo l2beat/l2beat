@@ -191,7 +191,7 @@ export const swell: Layer2 = {
     transactionApi: {
       type: 'rpc',
       defaultUrl: 'https://rpc.ankr.com/swell',
-      defaultCallsPerMinute: 900,
+      defaultCallsPerMinute: 700,
       startBlock: 1,
       assessCount: subtractOneAfterBlockInclusive(1),
     },
