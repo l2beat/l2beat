@@ -171,7 +171,7 @@ export const taiko: Layer2 = {
         'https://discord.gg/taikoxyz',
         'https://taiko.mirror.xyz',
         'https://community.taiko.xyz',
-        'https://www.youtube.com/@taikoxyz',
+        'https://youtube.com/@taikoxyz',
       ],
       rollupCodes: 'https://rollup.codes/taiko',
     },
