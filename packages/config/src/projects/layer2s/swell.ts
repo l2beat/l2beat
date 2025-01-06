@@ -134,6 +134,7 @@ export const swell: Layer2 = {
     Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.RaaS.AltLayer,
   ],
   display: {
     name: 'Swellchain',
@@ -446,7 +447,15 @@ export const swell: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
-  milestones: [],
+  milestones: [
+    {
+      name: 'Mainnet full launch',
+      link: 'https://www.swellnetwork.io/post/swellchain',
+      date: '2024-12-19T00:00:00Z',
+      description: 'Swellchain mainnet launches publicly.',
+      type: 'general',
+    },
+  ],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
