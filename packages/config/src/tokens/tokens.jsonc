@@ -1634,6 +1634,20 @@
   ],
   "galxegravity": [
     {
+      "symbol": "atETH",
+      "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
+      "category": "ether",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Latch.io mint-bridge"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDC.e",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "coingeckoId": "usd-coin",
@@ -1687,6 +1701,82 @@
   ],
   "zircuit": [
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ENA",
+      "address": "0x813635891aA06bd55036bbd8f7d1A34aB3de9a0F",
+      "source": "external",
+      "coingeckoId": "ethena",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pumpBTC",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "coingeckoId": "pumpbtc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "stakestone-ether",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "pzETH",
       "category": "ether",
       "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
@@ -1730,22 +1820,6 @@
           {
             "name": "Layer Zero OFT",
             "slug": "omnichain"
-          }
-        ]
-      }
-    },
-    {
-      "symbol": "USDe",
-      "coingeckoId": "ethena-usde",
-      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2",
-            "slug": "stargate"
           }
         ]
       }
