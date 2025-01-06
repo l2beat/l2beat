@@ -9363,6 +9363,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0x813635891aA06bd55036bbd8f7d1A34aB3de9a0F",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1724433087,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
@@ -9380,6 +9402,27 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pumpBTC",
+      "coingeckoId": "pumpbtc",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "symbol": "pumpBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1724765843,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -9446,6 +9489,50 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1724432997,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1724602709,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
           }
         ]
       }
