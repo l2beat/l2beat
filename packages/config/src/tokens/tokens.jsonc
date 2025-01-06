@@ -1634,6 +1634,20 @@
   ],
   "galxegravity": [
     {
+      "symbol": "atETH",
+      "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
+      "category": "ether",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Latch.io mint-bridge"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDC.e",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "coingeckoId": "usd-coin",

@@ -6863,6 +6863,27 @@
       }
     },
     {
+      "name": "Latch staked ETH",
+      "coingeckoId": "latch-staked-eth",
+      "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
+      "symbol": "atETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1729508457,
+      "coingeckoListingTimestamp": 1732233600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51956/large/eth-white-bg.png?1732239149",
+      "chainId": 1625,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Latch.io mint-bridge"
+          }
+        ]
+      }
+    },
+    {
       "name": "Tether USD",
       "coingeckoId": "tether",
       "address": "0x816E810f9F787d669FB71932DeabF6c83781Cd48",
