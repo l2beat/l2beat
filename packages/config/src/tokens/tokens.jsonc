@@ -1,6 +1,24 @@
 {
   "ethereum": [
     {
+      "symbol": "SUI", // wormhole version
+      "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
+      "coingeckoId": "sui"
+    },
+    {
+      "symbol": "NEAR", // wormhole version
+      "address": "0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
+      "coingeckoId": "near"
+    },
+    {
+      "symbol": "WBNB", // wormhole version
+      "address": "0x418d75f65a02b3d53b2418fb8e1fe493759c7605"
+    },
+    {
+      "symbol": "WAVAX", // wormhole version
+      "address": "0x85f138bfEE4ef8e540890CFb48F620571d67Eda3"
+    },
+    {
       "symbol": "PUFFER",
       "address": "0x4d1C297d39C5c1277964D0E3f8Aa901493664530"
     },
