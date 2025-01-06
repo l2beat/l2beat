@@ -6,7 +6,7 @@ import { cn } from '~/utils/cn'
 
 interface Props {
   expiresAt: number
-  size?: 'md' | 'sm'
+  size?: 'lg' | 'md' | 'sm'
   className?: string
   withBackground?: boolean
 }
@@ -62,13 +62,14 @@ function TimePart({
   children: React.ReactNode
   suffix: string
   className?: string
-  size?: 'md' | 'sm'
+  size?: Props['size']
 }) {
   return (
     <div
       className={cn(
         'rounded bg-brand px-3 py-2 text-center font-bold text-primary-invert',
-        size === 'md' && 'text-[28px]',
+        size === 'lg' && 'text-[28px]',
+        size === 'md' && 'text-2xl leading-none',
         size === 'sm' && 'text-[18px]',
         className,
       )}
@@ -77,7 +78,8 @@ function TimePart({
       <span
         className={cn(
           'ml-0.5',
-          size === 'md' && 'text-lg leading-none',
+          size === 'lg' && 'text-lg leading-none',
+          size === 'md' && 'text-base leading-none',
           size === 'sm' && 'text-xs leading-none',
         )}
       >

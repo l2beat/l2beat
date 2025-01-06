@@ -95,6 +95,7 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  architectureImage?: string
   isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
@@ -138,6 +139,7 @@ interface OpStackConfigCommon {
   additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  riskView?: ScalingProjectRiskView
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -171,9 +173,12 @@ function opStackCommon(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
 
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -429,18 +434,21 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
 
   if (daProvider === undefined) {
     assert(
@@ -464,7 +472,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     ...opStackCommon(templateVars),
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage,
+      architectureImage: templateVars.architectureImage ?? architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category:
@@ -589,7 +597,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
     ],
-    riskView: {
+    riskView: templateVars.riskView ?? {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
         secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),

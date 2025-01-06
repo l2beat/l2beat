@@ -254,15 +254,15 @@
       "supply": "zero"
     },
     {
-      "name": "Ankr Staked MATIC",
+      "name": "Ankr Staked POL",
       "coingeckoId": "ankr-reward-earning-matic",
       "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C",
-      "symbol": "ankrMATIC",
+      "symbol": "ankrPOL",
       "decimals": 18,
       "deploymentTimestamp": 1651655374,
       "coingeckoListingTimestamp": 1654646400,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/25742/large/a-matic-c-da4ec10dc9723e695700e25dbf8c8edf.png?1696524833",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25742/large/a-matic-c-da4ec10dc9723e695700e25dbf8c8edf.png?1696524833",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6459,6 +6459,28 @@
       "chainId": 324,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "KelpDao Restaked ETH",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "address": "0x6bE2425C381eb034045b527780D2Bf4E21AB7236",
+      "symbol": "rsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715792840,
+      "coingeckoListingTimestamp": 1705017600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "chainId": 324,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "Staked Frax Ether",

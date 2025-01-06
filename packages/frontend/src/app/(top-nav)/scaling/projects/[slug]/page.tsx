@@ -88,8 +88,7 @@ export default async function Page(props: Props) {
             />
           </div>
           <div className="w-full">
-            {featureFlags.showOthers &&
-              projectEntry.countdowns.otherMigration &&
+            {projectEntry.countdowns.otherMigration &&
               !featureFlags.othersMigrated() && (
                 <OtherMigrationNotice
                   {...projectEntry.countdowns.otherMigration}

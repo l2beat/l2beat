@@ -44,7 +44,7 @@ export async function getScalingActivityEntries() {
       compact([
         getEthereumEntry(ethereumData, 'Rollups'),
         getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-        featureFlags.showOthers && getEthereumEntry(ethereumData, 'Others'),
+        getEthereumEntry(ethereumData, 'Others'),
       ]),
     )
     .sort(compareActivityEntry)

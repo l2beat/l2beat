@@ -59,25 +59,25 @@ const genesisTimestamp = new UnixTime(1733498411)
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'OptimismPortal',
+  'OptimismPortal2',
   'proofMaturityDelaySeconds',
 )
 
 const disputeGameFinalityDelaySeconds = discovery.getContractValue<number>(
-  'OptimismPortal',
+  'OptimismPortal2',
   'disputeGameFinalityDelaySeconds',
 )
 
 const proofMaturityDelaySeconds = discovery.getContractValue<number>(
-  'OptimismPortal',
+  'OptimismPortal2',
   'proofMaturityDelaySeconds',
 )
 
-const portal = discovery.getContract('OptimismPortal')
+const portal = discovery.getContract('OptimismPortal2')
 
 // >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
 assert(
-  discovery.getContractValue<number>('OptimismPortal', 'respectedGameType') ===
+  discovery.getContractValue<number>('OptimismPortal2', 'respectedGameType') ===
     1,
 )
 
@@ -239,7 +239,7 @@ export const ink: Layer2 = {
     stateValidation: (() => {
       assert(
         discovery.getContractValue<number>(
-          'OptimismPortal',
+          'OptimismPortal2',
           'respectedGameType',
         ) === 1,
       )
@@ -262,7 +262,7 @@ export const ink: Layer2 = {
     proposerFailure: (() => {
       assert(
         discovery.getContractValue<number>(
-          'OptimismPortal',
+          'OptimismPortal2',
           'respectedGameType',
         ) === 1,
       )

@@ -10,8 +10,7 @@ export function isProjectOther<
   },
 >(project: T) {
   return (
-    (featureFlags.showOthers &&
-      featureFlags.othersMigrated() &&
+    (featureFlags.othersMigrated() &&
       !!project.display.reasonsForBeingOther &&
       project.display.reasonsForBeingOther.length > 0) ||
     project.display.category === 'Other'

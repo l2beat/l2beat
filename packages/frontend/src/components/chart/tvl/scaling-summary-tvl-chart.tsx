@@ -6,7 +6,6 @@ import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
-import { featureFlags } from '~/consts/feature-flags'
 import { ChevronIcon } from '~/icons/chevron'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
@@ -15,59 +14,9 @@ import { ChartLegend } from '../core/chart-legend'
 import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
 import { RecategorizedTvlChartHover } from './recategorized-tvl-chart-hover'
-import { TvlChartHover } from './tvl-chart-hover'
 import { useRecategorizedTvlChartRenderParams } from './use-recategorized-tvl-chart-render-params'
-import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
 
 export function ScalingSummaryTvlChart({
-  unit,
-  timeRange,
-}: { unit: ChartUnit; timeRange: TvlChartRange }) {
-  const { showOthers } = featureFlags
-
-  if (showOthers) {
-    return <RecategorizedTvlChart unit={unit} timeRange={timeRange} />
-  } else {
-    return <TvlChart unit={unit} timeRange={timeRange} />
-  }
-}
-
-function TvlChart({
-  unit,
-  timeRange,
-}: { unit: ChartUnit; timeRange: TvlChartRange }) {
-  const { data, isLoading } = api.tvl.chart.useQuery({
-    range: timeRange,
-    excludeAssociatedTokens: false,
-    filter: { type: 'layer2' },
-  })
-
-  const { formatYAxisLabel, valuesStyle, columns, change, total } =
-    useTvlChartRenderParams({ data, unit, milestones: [] })
-
-  return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={formatYAxisLabel}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => <TvlChartHover data={data} />}
-    >
-      <section className="flex flex-col gap-4">
-        <Header
-          total={total}
-          change={change}
-          unit={unit}
-          timeRange={timeRange}
-        />
-        <Chart disableMilestones />
-      </section>
-    </ChartProvider>
-  )
-}
-
-function RecategorizedTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
