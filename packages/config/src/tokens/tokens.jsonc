@@ -1,6 +1,44 @@
 {
   "ethereum": [
     {
+      "symbol": "OPN",
+      "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509"
+    },
+    {
+      "symbol": "SUI", // wormhole version
+      "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
+      "coingeckoId": "sui"
+    },
+    {
+      "symbol": "NEAR", // wormhole version
+      "address": "0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
+      "coingeckoId": "near"
+    },
+    {
+      "symbol": "WBNB", // wormhole version
+      "address": "0x418d75f65a02b3d53b2418fb8e1fe493759c7605"
+    },
+    {
+      "symbol": "WAVAX", // wormhole version
+      "address": "0x85f138bfEE4ef8e540890CFb48F620571d67Eda3"
+    },
+    {
+      "symbol": "PUFFER",
+      "address": "0x4d1C297d39C5c1277964D0E3f8Aa901493664530"
+    },
+    {
+      "symbol": "ONDO",
+      "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3"
+    },
+    {
+      "symbol": "COW",
+      "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
+    },
+    {
+      "symbol": "DODO",
+      "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd"
+    },
+    {
       "symbol": "BGB",
       "address": "0x54D2252757e1672EEaD234D27B1270728fF90581"
     },
