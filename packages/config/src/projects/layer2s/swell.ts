@@ -427,26 +427,32 @@ export const swell: Layer2 = {
       },
     ],
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: false,
-      usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: true,
+    {
+      rollupNodeLink:
+        'https://github.com/ethereum-optimism/optimism/releases/tag/v1.9.4', // source: https://rollup-info.altlayer.io/news-school-enough/swell_mainnet
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: false,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   milestones: [
     {
       name: 'Mainnet full launch',
