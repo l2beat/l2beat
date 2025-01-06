@@ -17,6 +17,7 @@ interface Props {
   singleProject?: boolean
   syncedUntil?: number
   type?: ActivityChartType
+  projectName?: string
 }
 
 export function ActivityChartHover(props: Props) {
@@ -38,15 +39,21 @@ export function ActivityChartHover(props: Props) {
         </div>
       </div>
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
+      <div className="flex w-full items-start justify-between gap-2">
+        <div className="flex items-start gap-1">
           <div
             className={cn(
-              'relative inline-block size-3 rounded-full',
+              'relative mt-0.5 inline-block size-3 rounded-full md:mt-1',
               getColorByType(props.type),
             )}
           ></div>
-          <span>{props.singleProject ? 'Project' : 'Projects'}</span>
+          <span className="max-sm:w-24">
+            {props.singleProject
+              ? (props.projectName ?? 'Project')
+              : props.type === 'ValidiumsAndOptimiums'
+                ? 'Validiums and Optimiums'
+                : (props.type ?? 'Projects')}
+          </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
           {props.syncedUntil && props.syncedUntil < props.timestamp
@@ -64,9 +71,7 @@ export function ActivityChartHover(props: Props) {
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatActivityCount(countPerSecond(props.ethereumCount), {
-              decimals,
-            })}
+            {formatActivityCount(countPerSecond(props.ethereumCount))}
           </span>
         </div>
       )}
@@ -79,15 +84,21 @@ export function ActivityChartHover(props: Props) {
         </div>
       </div>
       <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
+      <div className="flex w-full items-start justify-between gap-2">
+        <div className="flex items-start gap-1">
           <div
             className={cn(
-              'relative inline-block size-3 rounded-full',
+              'relative mt-0.5 inline-block size-3 rounded-full md:mt-1',
               getColorByType(props.type),
             )}
           ></div>
-          <span>{props.singleProject ? 'Project' : 'Projects'}</span>
+          <span className="max-sm:w-24">
+            {props.singleProject
+              ? (props.projectName ?? 'Project')
+              : props.type === 'ValidiumsAndOptimiums'
+                ? 'Validiums and Optimiums'
+                : (props.type ?? 'Projects')}
+          </span>
         </div>
         <span className="whitespace-nowrap font-bold tabular-nums">
           {props.syncedUntil && props.syncedUntil < props.timestamp

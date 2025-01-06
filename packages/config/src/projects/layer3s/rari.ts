@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('rari', 'arbitrum')
 export const rari: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [
-    Badge.DA.DAC,
+    Badge.DA.Celestia,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
   ],
@@ -19,10 +19,7 @@ export const rari: Layer3 = orbitStackL3({
   discovery,
   hostChain: ProjectId('arbitrum'),
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
     name: 'RARI Chain',
     slug: 'rari',
     description:
@@ -61,15 +58,10 @@ export const rari: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
     }),
   ],
+  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'Caldera Multisig',
-      'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
-    ),
-  ],
   chainConfig: {
     name: 'rari',
     chainId: 1380012617,

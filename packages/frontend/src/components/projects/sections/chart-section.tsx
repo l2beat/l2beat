@@ -27,6 +27,7 @@ export interface ChartSectionProps extends ProjectSectionProps {
   projectId: string
   milestones: Milestone[]
   category?: ScalingProjectCategory
+  projectName?: string
 }
 
 export function ChartSection({
@@ -79,6 +80,7 @@ function ProjectChart(props: ChartSectionProps) {
           milestones={props.milestones}
           projectId={props.projectId}
           category={props.category}
+          projectName={props.projectName}
         />
       )
   }

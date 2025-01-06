@@ -12,15 +12,25 @@ export function isVerified(
 
   const manual = getManuallyVerifiedContracts()
   const contractsVerification =
-    project.contracts?.addresses.every(
-      (c) =>
-        ('isVerified' in c && c.isVerified) ||
-        ('address' in c && c.address in (manual[c.chain ?? 'ethereum'] ?? {})),
-    ) ?? true
+    project.contracts?.addresses.every((c) => {
+      const isAutoVerified = 'isVerified' in c && c.isVerified
+      const isManuallyVerified =
+        'address' in c && c.address in (manual[c.chain ?? 'ethereum'] ?? {})
+      return isAutoVerified || isManuallyVerified
+    }) ?? true
   const escrowVerifications =
-    project.config.escrows.every((c) =>
-      'contract' in c ? c.contract.isVerified : true,
-    ) ?? true
+    project.config.escrows.every((c) => {
+      if (!('contract' in c)) {
+        return true
+      }
+      const isManuallyVerified =
+        'address' in c.contract &&
+        typeof c.contract.address === 'string' &&
+        c.contract.address in (manual[c.chain] ?? {})
+
+      return c.contract.isVerified || isManuallyVerified
+    }) ?? true
+
   const newVerification = escrowVerifications && contractsVerification
 
   return newVerification

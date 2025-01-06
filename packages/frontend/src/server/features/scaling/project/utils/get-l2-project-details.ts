@@ -1,10 +1,9 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
+import { type Layer2 } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
@@ -23,36 +22,27 @@ import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawal
 import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
 
 interface Params {
-  project: Layer3
+  project: Layer2
   isVerified: boolean
-  isHostChainVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
-  hostChain?: Layer2
-  hostChainRosetteValues?: RosetteValue[]
-  combinedRosetteValues?: RosetteValue[]
 }
 
-export async function getL3ProjectDetails({
+export async function getL2ProjectDetails({
   project,
-  hostChain,
   isVerified,
-  rosetteValues,
-  isHostChainVerified,
-  combinedRosetteValues,
-  hostChainRosetteValues,
+  contractsVerificationStatuses,
   manuallyVerifiedContracts,
   projectsChangeReport,
-  contractsVerificationStatuses,
+  rosetteValues,
 }: Params) {
   const permissionsSection = project.permissions
     ? getPermissionsSection(
         {
           id: project.id,
           type: project.type,
-          hostChain: project.hostChain,
           isUnderReview: !!project.isUnderReview,
           permissions: project.permissions,
           nativePermissions: project.nativePermissions,
@@ -66,7 +56,6 @@ export async function getL3ProjectDetails({
     {
       id: project.id,
       type: project.type,
-      hostChain: project.hostChain,
       isVerified,
       slug: project.display.slug,
       contracts: project.contracts,
@@ -79,9 +68,6 @@ export async function getL3ProjectDetails({
     projectsChangeReport,
   )
 
-  const hostChainRisksSummary = hostChain
-    ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
-    : hostChain
   const riskSummary = getScalingRiskSummarySection(project, isVerified)
   const technologySection = getScalingTechnologySection(project)
   const operatorSection = getOperatorSection(project)
@@ -98,19 +84,28 @@ export async function getL3ProjectDetails({
       range: '30d',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
-  ])
-  const [tvlChartData, activityChartData, tokens] = await Promise.all([
-    api.tvl.chart({
-      range: '30d',
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-    }),
-    api.activity.chart({
+    api.costs.chart.prefetch({
       range: '30d',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
-    getTokensForProject(project),
   ])
+  const [tvlChartData, activityChartData, costsChartData, tokens] =
+    await Promise.all([
+      api.tvl.chart({
+        range: '30d',
+        filter: { type: 'projects', projectIds: [project.id] },
+        excludeAssociatedTokens: false,
+      }),
+      api.activity.chart({
+        range: '30d',
+        filter: { type: 'projects', projectIds: [project.id] },
+      }),
+      api.costs.chart({
+        range: '30d',
+        filter: { type: 'projects', projectIds: [project.id] },
+      }),
+      getTokensForProject(project),
+    ])
 
   const sortedMilestones =
     project.milestones?.sort(
@@ -118,18 +113,6 @@ export async function getL3ProjectDetails({
     ) ?? []
 
   const items: ProjectDetailsSection[] = []
-
-  const hostChainWarning = hostChain
-    ? { hostChain: hostChain.display }
-    : undefined
-  const hostChainWarningWithRiskCount =
-    hostChain && hostChainRisksSummary
-      ? {
-          hostChain: hostChain.display,
-          riskCount: hostChainRisksSummary.riskGroups.flatMap((rg) => rg.items)
-            .length,
-        }
-      : undefined
 
   if (!project.isUpcoming && !isTvlChartDataEmpty(tvlChartData)) {
     items.push({
@@ -152,8 +135,22 @@ export async function getL3ProjectDetails({
         id: 'activity',
         title: 'Activity',
         projectId: project.id,
-        milestones: project.milestones ?? [],
+        milestones: sortedMilestones,
         category: project.display.category,
+        projectName: project.display.name,
+      },
+    })
+  }
+
+  if (!project.isUpcoming && costsChartData.length > 0) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'onchain-costs',
+        title: 'Onchain costs',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        projectName: project.display.name,
       },
     })
   }
@@ -189,10 +186,9 @@ export async function getL3ProjectDetails({
     items.push({
       type: 'RiskSummarySection',
       props: {
-        ...riskSummary,
         id: 'risk-summary',
         title: 'Risk summary',
-        hostChainWarning: hostChainWarningWithRiskCount,
+        ...riskSummary,
       },
     })
   }
@@ -205,46 +201,21 @@ export async function getL3ProjectDetails({
     return items
   }
 
-  if (hostChain && hostChainRosetteValues) {
-    items.push({
-      type: 'L3RiskAnalysisSection',
-      props: {
-        id: 'risk-analysis',
-        title: 'Risk analysis',
-        l2: {
-          name: hostChain.display.name,
-          risks: toRosetteTuple(hostChainRosetteValues),
-        },
-        l3: {
-          name: project.display.name,
-          risks: toRosetteTuple(rosetteValues),
-        },
-        combined: combinedRosetteValues
-          ? toRosetteTuple(combinedRosetteValues)
-          : undefined,
-        warning: project.display.warning,
-        redWarning: project.display.redWarning,
-        isVerified,
-        isUnderReview: project.isUnderReview,
-      },
-    })
-  } else {
-    items.push({
-      type: 'RiskAnalysisSection',
-      props: {
-        id: 'risk-analysis',
-        title: 'Risk analysis',
-        rosetteType: 'pizza',
-        rosetteValues,
-        warning: project.display.warning,
-        redWarning: project.display.redWarning,
-        isVerified,
-        isUnderReview: project.isUnderReview,
-      },
-    })
-  }
+  items.push({
+    type: 'RiskAnalysisSection',
+    props: {
+      id: 'risk-analysis',
+      title: 'Risk analysis',
+      rosetteType: 'pizza',
+      rosetteValues,
+      warning: project.display.warning,
+      redWarning: project.display.redWarning,
+      isVerified,
+      isUnderReview: project.isUnderReview,
+    },
+  })
 
-  if (project.stage && project.stage.stage !== 'NotApplicable') {
+  if (project.stage.stage !== 'NotApplicable') {
     items.push({
       type: 'StageSection',
       props: {
@@ -266,7 +237,6 @@ export async function getL3ProjectDetails({
         id: 'technology',
         title: 'Technology',
         ...technologySection,
-        hostChainWarning,
       },
     })
   }
@@ -290,7 +260,10 @@ export async function getL3ProjectDetails({
         id: 'state-validation',
         title: 'State validation',
         stateValidation: project.stateValidation,
-        diagram: getDiagramParams('state-validation', project.display.slug),
+        diagram: getDiagramParams(
+          'state-validation',
+          project.display.stateValidationImage ?? project.display.slug,
+        ),
         isUnderReview: project.isUnderReview,
       },
     })
@@ -303,7 +276,6 @@ export async function getL3ProjectDetails({
         id: 'operator',
         title: 'Operator',
         ...operatorSection,
-        hostChainWarning,
       },
     })
   }
@@ -315,7 +287,6 @@ export async function getL3ProjectDetails({
         id: 'withdrawals',
         title: 'Withdrawals',
         ...withdrawalsSection,
-        hostChainWarning,
       },
     })
   }
@@ -327,6 +298,24 @@ export async function getL3ProjectDetails({
         id: 'other-considerations',
         title: 'Other considerations',
         ...otherConsiderationsSection,
+      },
+    })
+  }
+  if (project.upgradesAndGovernance) {
+    items.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: project.upgradesAndGovernance,
+        diagram: {
+          type: 'upgrades-and-governance',
+          slug:
+            project.display.upgradesAndGovernanceImage ?? project.display.slug,
+        },
+        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+        isUnderReview: project.isUnderReview,
+        includeChildrenIfUnderReview: true,
       },
     })
   }

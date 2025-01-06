@@ -51,6 +51,7 @@ export const galxegravity: Layer2 = orbitStackL2({
   },
   chainConfig: {
     name: 'galxegravity',
+    coingeckoPlatform: 'gravity-alpha',
     chainId: 1625,
     explorerUrl: 'https://gscan.xyz/',
     explorerApi: {

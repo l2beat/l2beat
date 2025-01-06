@@ -1,3 +1,160 @@
+Generated with discovered.json: 0x2591eb0e4fbd08ad6c30f25e6cfddda2cd92d0eb
+
+# Diff at Mon, 23 Dec 2024 13:12:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21285500
+- current block number: 21465401
+
+## Description
+
+~30 Challengers added.
+
+## Watched changes
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      issuedPermissions.32:
++        {"permission":"upgrade","target":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}]}
+      issuedPermissions.31:
++        {"permission":"configure","target":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","via":[]}
+      issuedPermissions.30:
++        {"permission":"challenge","target":"0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd","via":[]}
+      issuedPermissions.29:
++        {"permission":"challenge","target":"0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9","via":[]}
+      issuedPermissions.28:
++        {"permission":"challenge","target":"0xF2FF0509520fAf35B511074466A509e00d73C307","via":[]}
+      issuedPermissions.27:
++        {"permission":"challenge","target":"0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe","via":[]}
+      issuedPermissions.26:
++        {"permission":"challenge","target":"0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272","via":[]}
+      issuedPermissions.25:
++        {"permission":"challenge","target":"0xd11f9c4F5d9b1feC2d14581d3674066442B68772","via":[]}
+      issuedPermissions.24:
++        {"permission":"challenge","target":"0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0","via":[]}
+      issuedPermissions.23:
++        {"permission":"challenge","target":"0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8","via":[]}
+      issuedPermissions.22:
++        {"permission":"challenge","target":"0xC4db900F76293042349448D1Ba30F71518325Bb3","via":[]}
+      issuedPermissions.21:
++        {"permission":"challenge","target":"0xC412B4e6399F694CfF21D038d225373Fd6596811","via":[]}
+      issuedPermissions.20:
++        {"permission":"challenge","target":"0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C","via":[]}
+      issuedPermissions.19:
++        {"permission":"challenge","target":"0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab","via":[]}
+      issuedPermissions.18:
++        {"permission":"challenge","target":"0xB822319ab7848b7cC4537c8409e50f85BFb04377","via":[]}
+      issuedPermissions.17:
++        {"permission":"challenge","target":"0xb4A20D473e8C378aE742a8017DD67756a358eAB6","via":[]}
+      issuedPermissions.16:
++        {"permission":"challenge","target":"0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b","via":[]}
+      issuedPermissions.15:
++        {"permission":"challenge","target":"0x95C373754C66feF1Eb2dbb6934aF821C551D9738","via":[]}
+      issuedPermissions.14:
++        {"permission":"challenge","target":"0x95417708f67f4a5dF1A447efe40c6C74e38Ab832","via":[]}
+      issuedPermissions.13:
++        {"permission":"challenge","target":"0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb","via":[]}
+      issuedPermissions.12:
++        {"permission":"challenge","target":"0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd","via":[]}
+      issuedPermissions.11:
++        {"permission":"challenge","target":"0x77B29534738E3F0F297d36635d7884965C7c8cE1","via":[]}
+      issuedPermissions.10:
++        {"permission":"challenge","target":"0x74204e3801E9394848AbDBAd6f378d0b11e9a091","via":[]}
+      issuedPermissions.9:
++        {"permission":"challenge","target":"0x71C10870dC38E54d987C22e96aB32b46cc08564F","via":[]}
+      issuedPermissions.8:
++        {"permission":"challenge","target":"0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854","via":[]}
+      issuedPermissions.7:
++        {"permission":"challenge","target":"0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db","via":[]}
+      issuedPermissions.6:
++        {"permission":"challenge","target":"0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e","via":[]}
+      issuedPermissions.5:
++        {"permission":"challenge","target":"0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C","via":[]}
+      issuedPermissions.4:
++        {"permission":"challenge","target":"0x323a78C1c910b282dE98a557d735628A02E00983","via":[]}
+      issuedPermissions.3:
++        {"permission":"challenge","target":"0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0","via":[]}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "challenge"
+      issuedPermissions.2.target:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6"
+      issuedPermissions.2.via.0:
+-        {"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0","delay":0}
+      issuedPermissions.1.permission:
+-        "configure"
++        "challenge"
+      issuedPermissions.1.target:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA"
+      issuedPermissions.0.target:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0x0092bC49078f130D27e70dBeee441E227280B97D"
+      values.challengers.30:
++        "0x95C373754C66feF1Eb2dbb6934aF821C551D9738"
+      values.challengers.29:
++        "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e"
+      values.challengers.28:
++        "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0"
+      values.challengers.27:
++        "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb"
+      values.challengers.26:
++        "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db"
+      values.challengers.25:
++        "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272"
+      values.challengers.24:
++        "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6"
+      values.challengers.23:
++        "0xC412B4e6399F694CfF21D038d225373Fd6596811"
+      values.challengers.22:
++        "0x0092bC49078f130D27e70dBeee441E227280B97D"
+      values.challengers.21:
++        "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8"
+      values.challengers.20:
++        "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C"
+      values.challengers.19:
++        "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA"
+      values.challengers.18:
++        "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe"
+      values.challengers.17:
++        "0xb4A20D473e8C378aE742a8017DD67756a358eAB6"
+      values.challengers.16:
++        "0x71C10870dC38E54d987C22e96aB32b46cc08564F"
+      values.challengers.15:
++        "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9"
+      values.challengers.14:
++        "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd"
+      values.challengers.13:
++        "0xF2FF0509520fAf35B511074466A509e00d73C307"
+      values.challengers.12:
++        "0xC4db900F76293042349448D1Ba30F71518325Bb3"
+      values.challengers.11:
++        "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd"
+      values.challengers.10:
++        "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854"
+      values.challengers.9:
++        "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0"
+      values.challengers.8:
++        "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C"
+      values.challengers.7:
++        "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b"
+      values.challengers.6:
++        "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab"
+      values.challengers.5:
++        "0x74204e3801E9394848AbDBAd6f378d0b11e9a091"
+      values.challengers.4:
++        "0x323a78C1c910b282dE98a557d735628A02E00983"
+      values.challengers.3:
++        "0xd11f9c4F5d9b1feC2d14581d3674066442B68772"
+      values.challengers.2:
++        "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832"
+      values.challengers.1:
++        "0x77B29534738E3F0F297d36635d7884965C7c8cE1"
+    }
+```
+
 Generated with discovered.json: 0x251bd3fc5a694cc0afc4aaf27f0eec9430eefb52
 
 # Diff at Thu, 28 Nov 2024 10:07:52 GMT:

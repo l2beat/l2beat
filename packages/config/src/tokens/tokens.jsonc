@@ -1,6 +1,52 @@
 {
   "ethereum": [
     {
+      "symbol": "OPN",
+      "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509"
+    },
+    {
+      "symbol": "SUI", // wormhole version
+      "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
+      "coingeckoId": "sui"
+    },
+    {
+      "symbol": "NEAR", // wormhole version
+      "address": "0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
+      "coingeckoId": "near"
+    },
+    {
+      "symbol": "WBNB", // wormhole version
+      "address": "0x418d75f65a02b3d53b2418fb8e1fe493759c7605"
+    },
+    {
+      "symbol": "WAVAX", // wormhole version
+      "address": "0x85f138bfEE4ef8e540890CFb48F620571d67Eda3"
+    },
+    {
+      "symbol": "PUFFER",
+      "address": "0x4d1C297d39C5c1277964D0E3f8Aa901493664530"
+    },
+    {
+      "symbol": "ONDO",
+      "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3"
+    },
+    {
+      "symbol": "COW",
+      "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
+    },
+    {
+      "symbol": "DODO",
+      "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd"
+    },
+    {
+      "symbol": "BGB",
+      "address": "0x54D2252757e1672EEaD234D27B1270728fF90581"
+    },
+    {
+      "symbol": "FUEL",
+      "address": "0x675B68AA4d9c2d3BB3F0397048e62E6B7192079c"
+    },
+    {
       "symbol": "stAVAIL",
       "address": "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a"
     },
@@ -259,7 +305,7 @@
       "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
     },
     {
-      "symbol": "ankrMATIC",
+      "symbol": "ankrPOL",
       "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C"
     },
     {
@@ -1626,6 +1672,20 @@
   ],
   "galxegravity": [
     {
+      "symbol": "atETH",
+      "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
+      "category": "ether",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Latch.io mint-bridge"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDC.e",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "coingeckoId": "usd-coin",
@@ -1679,6 +1739,82 @@
   ],
   "zircuit": [
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ENA",
+      "address": "0x813635891aA06bd55036bbd8f7d1A34aB3de9a0F",
+      "source": "external",
+      "coingeckoId": "ethena",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pumpBTC",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "coingeckoId": "pumpbtc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "stakestone-ether",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "pzETH",
       "category": "ether",
       "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
@@ -1722,22 +1858,6 @@
           {
             "name": "Layer Zero OFT",
             "slug": "omnichain"
-          }
-        ]
-      }
-    },
-    {
-      "symbol": "USDe",
-      "coingeckoId": "ethena-usde",
-      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2",
-            "slug": "stargate"
           }
         ]
       }
@@ -4251,6 +4371,22 @@
   ],
   "zksync2": [
     {
+      "symbol": "rsETH",
+      "category": "ether",
+      "address": "0x6be2425c381eb034045b527780d2bf4e21ab7236",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "wBTC",
       "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
       "source": "canonical",
@@ -4946,6 +5082,40 @@
         "bridges": [
           {
             "name": "FBTC FireBridge"
+          }
+        ]
+      }
+    }
+  ],
+  "degen": [
+    {
+      "symbol": "WETH",
+      "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+      "category": "ether",
+      "coingeckoId": "weth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xF1815bd50389c46847f0Bda824eC8da914045D14",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
           }
         ]
       }

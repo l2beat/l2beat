@@ -1,7 +1,6 @@
 'use client'
 
 import { type Milestone, type ScalingProjectCategory } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
@@ -14,22 +13,26 @@ import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
+import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
 import { ProjectChartTimeRange } from '../core/chart-time-range'
 import { type ChartScale } from '../types'
 import { ActivityChartHover } from './activity-chart-hover'
 import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import { getChartType, typeToIndicator } from './utils/get-chart-type'
 
 interface Props {
   milestones: Milestone[]
   projectId: string
   category?: ScalingProjectCategory
+  projectName?: string
 }
 
 export function ProjectActivityChart({
   milestones,
   projectId,
   category,
+  projectName,
 }: Props) {
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
   const [metric, setMetric] = useState<ActivityMetric>('uops')
@@ -44,13 +47,15 @@ export function ProjectActivityChart({
     },
   })
 
+  const type = getChartType(category)
+
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
     useActivityChartRenderParams({
       milestones,
       chart,
       showMainnet,
       metric,
-      type: getChartType(category),
+      type,
     })
 
   return (
@@ -69,10 +74,11 @@ export function ProjectActivityChart({
           syncedUntil={chart?.syncStatus.syncedUntil}
           metric={metric}
           type={getChartType(category)}
+          projectName={projectName}
         />
       )}
     >
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col">
         <ChartControlsWrapper>
           <ProjectChartTimeRange range={chartRange} />
           <ActivityTimeRangeControls
@@ -81,7 +87,20 @@ export function ProjectActivityChart({
             projectSection
           />
         </ChartControlsWrapper>
-        <Chart />
+        <Chart className="mt-4" />
+        <ChartLegend
+          className="my-2"
+          elements={[
+            {
+              name: projectName ?? 'Project',
+              color: typeToIndicator(type),
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-indicator-ethereum',
+            },
+          ]}
+        />
         <div className="flex justify-between gap-4">
           <div className="flex gap-1">
             <ActivityMetricControls
@@ -114,21 +133,4 @@ export function ProjectActivityChart({
       </section>
     </ChartProvider>
   )
-}
-
-function getChartType(category?: ScalingProjectCategory) {
-  switch (category) {
-    case 'Optimistic Rollup':
-    case 'ZK Rollup':
-      return 'Rollups'
-    case 'Validium':
-    case 'Optimium':
-      return 'ValidiumsAndOptimiums'
-    case 'Other':
-    case undefined:
-    case 'Plasma':
-      return 'Others'
-    default:
-      assertUnreachable(category)
-  }
 }

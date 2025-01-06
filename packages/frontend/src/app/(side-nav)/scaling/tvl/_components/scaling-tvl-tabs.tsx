@@ -1,5 +1,6 @@
 'use client'
 import { type Milestone } from '@l2beat/config'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingStackedTvlChart } from '~/components/chart/tvl/stacked/scaling-stacked-tvl-chart'
 import {
@@ -9,13 +10,17 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { featureFlags } from '~/consts/feature-flags'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import { cn } from '~/utils/cn'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingTvlFilters } from '../../_components/scaling-tvl-filters'
+import { ScalingFilters } from '../../_components/scaling-filters'
 import { ScalingTvlTable } from './table/scaling-tvl-table'
 
 type Props = TabbedScalingEntries<ScalingTvlEntry> & {
@@ -30,6 +35,17 @@ export function ScalingTvlTabs(props: Props) {
     others: props.others.filter(includeFilters),
   }
 
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [props.others, props.rollups, props.validiumsAndOptimiums],
+  )
+
   const initialSort = {
     id: 'total',
     desc: true,
@@ -37,13 +53,14 @@ export function ScalingTvlTabs(props: Props) {
 
   return (
     <>
-      <ScalingTvlFilters
+      <ScalingFilters
         items={[
           ...filteredEntries.rollups,
           ...filteredEntries.validiumsAndOptimiums,
           ...filteredEntries.others,
         ]}
-        className={cn('mt-4', featureFlags.showOthers && 'md:mt-0')}
+        showHostChainFilter
+        className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
@@ -56,7 +73,7 @@ export function ScalingTvlTabs(props: Props) {
               {filteredEntries.validiumsAndOptimiums.length}
             </CountBadge>
           </DirectoryTabsTrigger>
-          {featureFlags.showOthers && filteredEntries.others.length > 0 && (
+          {filteredEntries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{filteredEntries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -64,15 +81,12 @@ export function ScalingTvlTabs(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
-            {featureFlags.showOthers && (
-              <>
-                <ScalingStackedTvlChart
-                  milestones={props.milestones}
-                  entries={props.rollups}
-                />
-                <HorizontalSeparator className="my-5" />
-              </>
-            )}
+            <ScalingStackedTvlChart
+              milestones={props.milestones}
+              entries={props.rollups}
+            />
+            <HorizontalSeparator className="my-5" />
+            <RollupsInfo />
             <ScalingTvlTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -81,37 +95,30 @@ export function ScalingTvlTabs(props: Props) {
             value="validiums-and-optimiums"
             className="main-page-card pt-5"
           >
-            {featureFlags.showOthers && (
-              <>
-                <ScalingStackedTvlChart
-                  milestones={props.milestones}
-                  entries={props.validiumsAndOptimiums}
-                />
-                <HorizontalSeparator className="my-5" />
-              </>
-            )}
+            <ScalingStackedTvlChart
+              milestones={props.milestones}
+              entries={props.validiumsAndOptimiums}
+            />
+            <HorizontalSeparator className="my-5" />
+            <ValidiumsAndOptimiumsInfo />
             <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {featureFlags.showOthers && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent
-              value="others"
-              className="main-page-card pt-5"
-            >
-              {featureFlags.showOthers && (
-                <>
-                  <ScalingStackedTvlChart
-                    milestones={props.milestones}
-                    entries={props.others ?? []}
-                  />
-                  <HorizontalSeparator className="my-5" />
-                </>
-              )}
-              <ScalingTvlTable entries={filteredEntries.others} />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others" className="main-page-card pt-5">
+            <ScalingStackedTvlChart
+              milestones={props.milestones}
+              entries={props.others ?? []}
+            />
+            <HorizontalSeparator className="my-5" />
+            <OthersInfo />
+            <ScalingTvlTable entries={filteredEntries.others} />
+            <OtherMigrationTabNotice
+              projectsToBeMigrated={projectToBeMigratedToOthers}
+              className="mt-2"
+            />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

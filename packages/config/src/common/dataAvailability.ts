@@ -151,6 +151,14 @@ export const DA_LAYERS = {
     fallbackDescription: undefined,
     secondLine: undefined,
   },
+  HYPERLIQUID_DA: {
+    value: 'Hyperliquid DA',
+    sentiment: 'bad',
+    description:
+      'The data is custodied by Hyperliquid validators. On Arbitrum there is no direct reference of the data.',
+    fallbackDescription: undefined,
+    secondLine: undefined,
+  },
 } as const satisfies Record<
   string,
   ValueWithSentiment<string> & {
@@ -184,6 +192,12 @@ export const DA_BRIDGES = {
     sentiment: 'bad',
     description:
       'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
+  },
+  BLOBSTREAM: {
+    value: 'Blobstream',
+    sentiment: 'warning',
+    description:
+      'The Blobstream DA bridge is used to attest to the data availability on Celestia.',
   },
   DAC_MEMBERS: ({
     requiredSignatures,

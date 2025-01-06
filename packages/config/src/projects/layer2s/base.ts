@@ -153,6 +153,7 @@ export const base: Layer2 = {
         'https://twitter.com/BuildOnBase',
         'https://discord.gg/buildonbase',
         'https://base.mirror.xyz/',
+        'https://warpcast.com/base',
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
@@ -306,7 +307,7 @@ export const base: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, actors can submit a fraud proof that shows that the state was incorrect.',
       risks: [
         {
           category: 'Funds can be stolen if',
