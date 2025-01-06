@@ -10,6 +10,7 @@ import { chunk, groupBy } from 'lodash'
 import {
   OUTPUT_PATH,
   PROCESSED_ESCROWS_PATH,
+  formatNumberWithCommas,
   getEscrowKey,
   loadExistingTokens,
   loadProcessedEscrows,
@@ -307,6 +308,15 @@ async function main() {
       const missingValueB = b.missingValue ?? 0
       return missingValueB - missingValueA
     })
+    .map((token) => ({
+      ...token,
+      marketCap: formatNumberWithCommas(token.marketCap),
+      missingValue: formatNumberWithCommas(token.missingValue),
+      escrows: token.escrows.map((escrow) => ({
+        ...escrow,
+        value: formatNumberWithCommas(escrow.value),
+      })),
+    }))
 
   console.log(`Saving ${sortedTokens.length} tokens...`)
 

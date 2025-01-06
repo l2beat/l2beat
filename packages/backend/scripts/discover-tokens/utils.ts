@@ -31,3 +31,10 @@ export function loadProcessedEscrows(): ProcessedEscrows {
 export function getEscrowKey(chain: string, address: string) {
   return `${chain}:${address}`
 }
+
+export function formatNumberWithCommas(value: number, precision = 2): string {
+  return value.toLocaleString('en-US', {
+    minimumFractionDigits: precision,
+    maximumFractionDigits: precision,
+  })
+}
