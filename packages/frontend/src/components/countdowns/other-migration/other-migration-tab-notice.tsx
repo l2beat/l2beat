@@ -45,7 +45,7 @@ export function OtherMigrationTabNotice({
         risks that set them apart from the standard classifications.
         <span className="max-md:hidden">
           {' '}
-          Visit a project&quot;s detail page to learn more about the specific
+          Visit a project&apos;s detail page to learn more about the specific
           reasons.
         </span>
       </p>
