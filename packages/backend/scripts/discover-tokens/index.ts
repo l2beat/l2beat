@@ -1,17 +1,12 @@
 import { writeFileSync } from 'fs'
 import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
 import { chains, layer2s, layer3s, tokenList } from '@l2beat/config'
-import {
-  BlockIndexerClient,
-  CoingeckoClient,
-  HttpClient,
-  HttpClient2,
-} from '@l2beat/shared'
+import { RateLimitedProvider } from '@l2beat/discovery'
+import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter, ChainId } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers, utils } from 'ethers'
 import { chunk, groupBy } from 'lodash'
-import { RateLimitedProvider } from '../../src/peripherals/rpcclient/RateLimitedProvider'
 import {
   OUTPUT_PATH,
   PROCESSED_ESCROWS_PATH,
@@ -120,6 +115,8 @@ async function main() {
     assert(etherscanClient, `Etherscan client for chain ${chain} not found`)
 
     for (const escrow of chainEscrows) {
+      if (escrow.address === '0x4e798659b9846F1da7B6D6B5d09d581270aB6FEC')
+        continue
       console.log(
         `Checking logs for escrow: ${escrow.address} - ${chainEscrows.findIndex((e) => e.address === escrow.address) + 1}/${chainEscrows.length} on ${escrow.chain}`,
       )
@@ -277,8 +274,13 @@ async function main() {
           balance: adjustedBalance,
           value: Math.floor(adjustedBalance * tokenPrice),
           project: data.project,
+          preminted: data.balance > circulatingSupply ? true : undefined,
         }
       })
+      const escrowsBalance = escrows.reduce(
+        (sum, escrow) => sum + escrow.balance,
+        0,
+      )
 
       return {
         symbol: data.symbol,
@@ -290,6 +292,8 @@ async function main() {
           (sum, escrow) => sum + (escrow.value ?? 0),
           0,
         ),
+        exceedsCirculatingSupply:
+          escrowsBalance > circulatingSupply ? true : undefined,
         escrows,
       }
     })
@@ -336,7 +340,7 @@ function getProvider(chain: string) {
 function getCoingeckoClient() {
   const env = getEnv()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const http = new HttpClient2()
+  const http = new HttpClient()
   const coingeckoClient = new CoingeckoClient({
     apiKey: coingeckoApiKey,
     http,
