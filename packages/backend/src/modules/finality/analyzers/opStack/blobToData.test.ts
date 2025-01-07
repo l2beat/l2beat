@@ -2,8 +2,11 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { expect } from 'earl'
 
+import {
+  byteArrFromHexStr,
+  hexStrFromByteArr,
+} from '../../utils/byteArrFromHexStr'
 import { blobToData } from './blobToData'
-import { byteArrFromHexStr, hexStrFromByteArr } from './utils'
 
 describe(blobToData.name, () => {
   it('should decode the blob', () => {

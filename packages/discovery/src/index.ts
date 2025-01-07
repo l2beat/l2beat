@@ -41,6 +41,8 @@ export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export { type DiscoveryCache } from './discovery/provider/DiscoveryCache'
+export { InMemoryCache } from './discovery/provider/InMemoryCache'
+export { LeveledCache } from './discovery/provider/LeveledCache'
 export { SQLiteCache } from './discovery/provider/SQLiteCache'
 export { NoCache } from './discovery/provider/NoCache'
 export {

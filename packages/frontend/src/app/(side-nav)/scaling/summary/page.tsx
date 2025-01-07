@@ -16,7 +16,7 @@ export const metadata = getDefaultMetadata({
   },
 })
 
-const TIME_RANGE = '30d'
+const TIME_RANGE = '1y'
 const UNIT = 'usd'
 
 export default async function Page() {
