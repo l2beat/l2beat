@@ -34,18 +34,18 @@ function NavLinkGroupSingleLink({
   group,
 }: { group: Extract<NavGroup, { type: 'single' }> }) {
   const pathname = usePathname()
-  const isSelected = group.href === pathname
+  const isActive = getIsActive({ pathname, group })
   return (
     <Link
       href={group.href}
       className="group flex items-center gap-2 p-1.5"
-      data-active={isSelected}
+      data-active={isActive}
     >
       {group.icon}
       <span
         className={cn(
           'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300',
-          isSelected && 'text-brand',
+          isActive && 'text-brand',
         )}
       >
         {group.title}
@@ -58,16 +58,17 @@ function NavLinkMultipleGroup({
   group,
 }: { group: Extract<NavGroup, { type: 'multiple' }> }) {
   const pathname = usePathname()
-  const isActive = pathname.startsWith(`/${group.match}`)
+  const isActive = getIsActive({ pathname, group })
   const isMobile = useIsMobile()
 
   const [open, setOpen] = useState(isActive)
 
   useEffect(() => {
-    if (!open) {
-      setOpen(pathname.startsWith(`/${group.match}`))
+    const isActive = getIsActive({ pathname, group })
+    if (isActive) {
+      setOpen(true)
     }
-  }, [group.match, pathname, open])
+  }, [group, pathname])
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
@@ -144,4 +145,14 @@ function NavLinkMultipleGroup({
       </CollapsibleContent>
     </Collapsible>
   )
+}
+
+function getIsActive({
+  pathname,
+  group,
+}: { pathname: string; group: NavGroup }) {
+  if (group.type === 'single') {
+    return group.href === pathname
+  }
+  return pathname.startsWith(`/${group.match}`)
 }
