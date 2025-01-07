@@ -26,13 +26,15 @@ export class BlockActivityIndexer extends BlockIndexerBase {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    if (this.$.cutOffPoint) {
-      assert(
-        targetHeight >= this.$.cutOffPoint,
-        `Cannot invalidate below cut-off point (targetHeight: ${targetHeight} , cutOffPoint: ${this.$.cutOffPoint})`,
-      )
+    if (this.$.cutOffPoint && targetHeight < this.$.cutOffPoint) {
+      this.logger.info('Adjusting invalidation to cut-off point', {
+        targetHeight,
+        cutOffPoint: this.$.cutOffPoint,
+      })
+      await this.doInvalidate(this.$.cutOffPoint)
+      return targetHeight
+    } else {
+      return await this.doInvalidate(targetHeight)
     }
-
-    return await this.doInvalidate(targetHeight)
   }
 }

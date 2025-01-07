@@ -61,16 +61,16 @@ describe(BlockActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(50)
     })
 
-    it('throws if targetHeight below cutOffPoint', async () => {
-      const mockCutOffPoint = 50
-      const mockTargetHeight = 40
-      const indexer = createIndexer(mockCutOffPoint)
+    it('execute invalidation adjusted to cutoffPoint', async () => {
+      const indexer = createIndexer(50)
 
-      expect(
-        async () => await indexer.invalidate(mockTargetHeight),
-      ).toBeRejectedWith(
-        `Cannot invalidate below cut-off point (targetHeight: ${mockTargetHeight} , cutOffPoint: ${mockCutOffPoint})`,
-      )
+      const mockDoInvalidate = mockFn().resolvesTo(50)
+      indexer.doInvalidate = mockDoInvalidate
+
+      const newSafeHeight = await indexer.invalidate(20)
+
+      expect(mockDoInvalidate).toHaveBeenCalledWith(50)
+      expect(newSafeHeight).toEqual(20)
     })
   })
 })
