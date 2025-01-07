@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { SearchBarDialog } from './search-bar-dialog'
 import { type SearchBarProject } from './search-bar-entry'
 
@@ -19,8 +19,7 @@ interface Props {
 
 export function SearchBarContextProvider({ children, projects }: Props) {
   const [open, setOpen] = useState(false)
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
+  const isMobile = useIsMobile()
 
   const recentlyAdded = [...projects]
     .filter((p) => !p.isUpcoming)

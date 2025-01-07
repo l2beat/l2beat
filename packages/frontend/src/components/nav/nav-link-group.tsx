@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import {
@@ -58,12 +59,15 @@ function NavLinkMultipleGroup({
 }: { group: Extract<NavGroup, { type: 'multiple' }> }) {
   const pathname = usePathname()
   const isActive = pathname.startsWith(`/${group.match}`)
+  const isMobile = useIsMobile()
 
   const [open, setOpen] = useState(isActive)
 
   useEffect(() => {
-    setOpen(pathname.startsWith(`/${group.match}`))
-  }, [group.match, pathname])
+    if (!open) {
+      setOpen(pathname.startsWith(`/${group.match}`))
+    }
+  }, [group.match, pathname, open])
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>

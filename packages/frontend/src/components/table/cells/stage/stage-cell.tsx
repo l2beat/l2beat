@@ -6,7 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { StageTooltip } from './stage-tooltip'
 
 export interface StageCellProps {
@@ -14,8 +14,7 @@ export interface StageCellProps {
 }
 
 export function StageCell({ stageConfig }: StageCellProps) {
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
+  const isMobile = useIsMobile()
 
   if (stageConfig.stage === 'NotApplicable' || isMobile) {
     return <StageBadge stage={stageConfig.stage} />

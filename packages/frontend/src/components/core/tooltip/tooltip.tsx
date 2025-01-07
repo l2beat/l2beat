@@ -3,7 +3,7 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { type VariantProps, cva } from 'class-variance-authority'
 import React, { useRef, useState } from 'react'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { mergeRefs } from '~/utils/merge-refs'
 import {
   TooltipTriggerContextProvider,
@@ -35,8 +35,7 @@ const TooltipTrigger = ({
   disabledOnMobile?: boolean
 }) => {
   const localRef = useRef(null)
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
+  const isMobile = useIsMobile()
   const { setOpen } = useTooltipTriggerContext()
 
   // Tooltips do not work on mobile by default

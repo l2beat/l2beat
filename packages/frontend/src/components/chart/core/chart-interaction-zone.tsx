@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
 import { useChartRect } from './chart-rect-context'
@@ -8,12 +8,10 @@ import { getHoveredColumn } from './utils/get-hovered-column'
 
 export function ChartInteractionZone() {
   const ref = useRef<HTMLDivElement>(null)
-  const breakpoint = useBreakpoint()
+  const isMobile = useIsMobile()
   const chartContext = useChartContext()
   const { rect } = useChartRect()
   const chartHoverContext = useChartHoverContext()
-
-  const isMobile = breakpoint === 'mobile'
 
   const onWindowMoveEvent = useCallback(
     (e: MouseEvent | Touch) => {
