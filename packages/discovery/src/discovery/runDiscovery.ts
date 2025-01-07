@@ -148,7 +148,6 @@ export async function discover(
   providerStats: AllProviderStats
 }> {
   const sqliteCache = new SQLiteCache()
-  await sqliteCache.init()
 
   const cache = overwriteChache
     ? new OverwriteCacheWrapper(sqliteCache)
