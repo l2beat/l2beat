@@ -19,7 +19,7 @@ describe(LineaT2IAnalyzer.name, () => {
   describe(LineaT2IAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data for blob example', async () => {
       const blobProvider = mockObject<BlobProvider>({
-        getRelevantBlobs: mockFn().resolvesTo({
+        getBlobsByVersionedHashesAndBlockNumber: mockFn().resolvesTo({
           blobs: [
             {
               ...blobData,
@@ -30,6 +30,8 @@ describe(LineaT2IAnalyzer.name, () => {
       const provider = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
           data: lineaIface.getSighash(blobFnName),
+          blobVersionedHashes: ['0x0'],
+          blockNumber: 1,
         }),
       })
 

@@ -1,4 +1,4 @@
-import { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { Database } from '@l2beat/database'
@@ -35,10 +35,17 @@ export class LineaT2IAnalyzer extends BaseAnalyzer {
     switch (tx.data.slice(0, 10)) {
       // for now we only support blobs as the function that is using calldata was never called so we can't test it
       case lineaIface.getSighash(blobFnName): {
-        const blobs = await this.blobProvider.getRelevantBlobs(
-          transaction.txHash,
+        assert(
+          tx.blobVersionedHashes,
+          'Type 3 transaction missing blobVersionedHashes',
         )
-        const blocksData = blobs.blobs.flatMap((blob) => decodeBlob(blob.data))
+        assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
+        const { blobs } =
+          await this.blobProvider.getBlobsByVersionedHashesAndBlockNumber(
+            tx.blobVersionedHashes,
+            tx.blockNumber,
+          )
+        const blocksData = blobs.flatMap((blob) => decodeBlob(blob.data))
         return blocksData
       }
       default:
