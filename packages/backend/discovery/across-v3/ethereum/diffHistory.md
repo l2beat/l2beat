@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x4a75fdca8455fbd7d6fb3c4a66c4947552961416
+
+# Diff at Fri, 03 Jan 2025 10:43:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21388072
+- current block number: 21543430
+
+## Description
+
+New Arbitrum_Adapter: No changes  except for comments.
+
+New standard OP_Adapter for the Ink RU.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Arbitrum_Adapter (0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.42161:
+-        "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426"
++        "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210"
+      values.Adapters.57073:
++        "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
+      values.CrossChainContracts.57073:
++        "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Ink_Adapter (0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21388072 => .flat}/Arbitrum_Adapter.sol |  10 +
+ .../across-v3/ethereum/.flat/Ink_Adapter.sol       | 596 +++++++++++++++++++++
+ 2 files changed, 606 insertions(+)
+```
+
 Generated with discovered.json: 0x5cf4cef23f0cb03295260afbe5b50fdd11ebf6d1
 
 # Diff at Thu, 12 Dec 2024 17:59:11 GMT:

@@ -153,6 +153,7 @@ export const base: Layer2 = {
         'https://twitter.com/BuildOnBase',
         'https://discord.gg/buildonbase',
         'https://base.mirror.xyz/',
+        'https://warpcast.com/base',
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
