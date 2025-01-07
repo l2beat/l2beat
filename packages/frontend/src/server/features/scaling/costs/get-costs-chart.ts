@@ -2,9 +2,10 @@ import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { type UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
+import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRange } from '~/utils/range/range'
+import { getRange, getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { addIfDefined } from './utils/add-if-defined'
 import {
@@ -44,10 +45,14 @@ export const getCachedCostsChartData = cache(
     }
     const resolution = rangeToResolution(timeRange)
     const targetTimestamp = getCostsTargetTimestamp()
-    const [from, to] = getRange(timeRange, resolution, { now: targetTimestamp })
+    const [from, to] = getRangeWithMax(timeRange, resolution, {
+      now: targetTimestamp,
+    })
 
-    // one-off
-    const fromToQuery = from.add(-1, resolution === 'daily' ? 'days' : 'hours')
+    const fromToQuery = from
+      ? // one-off
+        from.add(-1, resolution === 'daily' ? 'days' : 'hours')
+      : MIN_TIMESTAMPS.costs
 
     // to is exclusive
     const rangeForQuery: [UnixTime, UnixTime] = [fromToQuery, to]
@@ -113,7 +118,7 @@ function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
   const resolution = rangeToResolution(timeRange)
-  const range = getRange(timeRange, resolution)
+  const range = getRange(timeRange === 'max' ? '1y' : timeRange, resolution)
 
   const timestamps = generateTimestamps(range, resolution)
 

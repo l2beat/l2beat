@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x630ceb70bec843b173e2618cf268f7e1adda1539
+
+# Diff at Fri, 03 Jan 2025 12:08:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21421036
+- current block number: 21543858
+
+## Description
+
+Multisig signer changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0) {
+    +++ description: None
+      values.$members.5:
+-        "0x3133781381bC58564D5e9888c208ED0b7BD7721F"
+      values.$members.4:
+-        "0xDFbD13B78010BF2110a168FA59b682c8a6D96564"
++        "0x3133781381bC58564D5e9888c208ED0b7BD7721F"
+      values.$members.3:
+-        "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c"
++        "0xDFbD13B78010BF2110a168FA59b682c8a6D96564"
+      values.$members.2:
+-        "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
++        "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c"
+      values.$members.1:
+-        "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2"
++        "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
+      values.$members.0:
+-        "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07"
++        "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x689e4270aa9108022db71e3b0f874b583a00bdef
 
 # Diff at Thu, 12 Dec 2024 11:47:09 GMT:

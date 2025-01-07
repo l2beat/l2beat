@@ -11,5 +11,6 @@
   "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul", // Scroll's PlonkVerifierV1-1 (blobs, Curie upgrade) written in Yul+
   "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul", // Scroll's PlonkVerifierV2 (bundles, Darwin upgrade) written in Yul+
   "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul", // Scroll's PlonkVerifierV2-1 (bundles, DarwinV2 upgrade) written in Yul+
-  "0x8FafAE7Dd957044088b3d0F67359C327c6200d18": "https://docs.layerzero.network/v2/developers/evm/technical-reference/dvn-addresses" // Stargate Verifier, can be abstracted as a single signer in the LayerZero message protocol
+  "0x8FafAE7Dd957044088b3d0F67359C327c6200d18": "https://docs.layerzero.network/v2/developers/evm/technical-reference/dvn-addresses", // Stargate Verifier, can be abstracted as a single signer in the LayerZero message protocol
+  "0x0000000000000b07ED001607f5263D85bf28Ce4C": "https://github.com/vectorized/solady/blob/main/src/utils/ERC1967Factory.sol" // Facet proxy deployed through ERC1967 factory by Solady
 }

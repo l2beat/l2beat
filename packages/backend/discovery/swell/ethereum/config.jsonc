@@ -1,27 +1,28 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "chain": "ethereum",
   "name": "swell",
+  "chain": "ethereum",
   "initialAddresses": [
-    "0xBD9fc4FdB07e46a69349101E862e82aa002aDe0d" //zap
+    "0x7aA4960908B13D104bf056B23E2C76B43c5AACc8", // L1StandardBridge
+    "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121" // wsteth escrow
   ],
   "names": {
-    "0x38D43a6Cb8DA0E855A42fB6b0733A0498531d774": "SwellL2PrelaunchVault",
-    "0xBD9fc4FdB07e46a69349101E862e82aa002aDe0d": "Zap",
-    "0x20fDF47509C5eFC0e1101e3CE443691781C17F90": "SwellMultisig"
+    "0x06F7fB1C74147e34Fce04a6828c7BF809B038d0E": "SwellChainMultisig"
+  },
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame"
+      }
+    }
   },
   "overrides": {
-    "Zap": {
-      "ignoreRelatives": ["eETH", "stETH", "weETH", "weth", "wstETH"]
-    },
-    "SwellMultisig": {
-      "description": "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem",
-      "fields": {
-        "nonce": {
-          "description": "Watch out for txs concerning the prelaunch vault and swell L2 launch",
-          "severity": "MEDIUM"
-        }
-      }
+    "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57": {
+      // permissionedGamesTotal from the template ignored as they are using permissioned games by default
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "extends": "opstack/DisputeGameFactory"
     }
   }
 }

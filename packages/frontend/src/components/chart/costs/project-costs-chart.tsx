@@ -6,7 +6,6 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { featureFlags } from '~/consts/feature-flags'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import {
   type CostsTimeRange,
@@ -16,9 +15,9 @@ import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
 import { ProjectChartTimeRange } from '../core/chart-time-range'
-import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 import { CostsChartHover } from './costs-chart-hover'
 import { CostsChartLegend } from './costs-chart-legend'
+import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
@@ -59,36 +58,14 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       >
         <ChartControlsWrapper>
           <ProjectChartTimeRange range={chartRange} />
-          <ChartTimeRangeControls
+          <CostsChartTimeRangeControls
             projectSection
-            value={range}
-            setValue={setRange}
-            options={[
-              {
-                value: '1d',
-                label: '1D',
-              },
-              {
-                value: '7d',
-                label: '7D',
-              },
-              {
-                value: '30d',
-                label: '30D',
-              },
-              {
-                value: '90d',
-                label: '90D',
-              },
-              {
-                value: '180d',
-                label: '180D',
-              },
-            ]}
+            timeRange={range}
+            setTimeRange={setRange}
           />
         </ChartControlsWrapper>
         <Chart className="mt-4" />
-        {featureFlags.showOthers && <CostsChartLegend className="my-2" />}
+        <CostsChartLegend className="my-2" />
         <UnitControls unit={unit} setUnit={setUnit} />
       </ChartProvider>
     </div>

@@ -131,7 +131,7 @@ export const chainport: Bridge = {
       ),
       discovery.getContractDetails(
         'ChainportCongressMembersRegistry',
-        `Registry of the Chainport Congress members. Acts as a ${congressThreshold}-of-${congressSize} multisig.`,
+        `Registry of the Chainport Congress members. Acts as a ${congressThreshold} / ${congressSize} multisig.`,
       ),
     ],
     risks: [],
