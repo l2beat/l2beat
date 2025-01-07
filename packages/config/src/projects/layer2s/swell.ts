@@ -169,6 +169,12 @@ export const swell: Layer2 = {
     },
     finality: { finalizationPeriod: maxClockDuration },
   },
+  chainConfig: {
+    name: 'swell',
+    chainId: 1923,
+    // coingeckoPlatform: '',
+    minTimestampForTvl: new UnixTime(1732696703),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

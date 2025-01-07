@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x9bb8d6009e9f1a4109085ffc2c21b7eab10d0e29
+
+# Diff at Tue, 07 Jan 2025 14:18:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9139908c611ea9cf6755f22c4be71ff58d7dc547 block: 21388295
+- current block number: 21573134
+
+## Description
+
+Add sky / maker USDS escrow (canonical external).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21388295 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Escrow (0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x53bf656cb3e16e506d5d5788ac81e19d0e034b8f
 
 # Diff at Thu, 12 Dec 2024 18:44:40 GMT:

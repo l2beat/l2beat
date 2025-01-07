@@ -190,6 +190,13 @@ export const base: Layer2 = {
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3'),
+        tokens: ['USDS', 'sUSDS'],
+        ...ESCROW.CANONICAL_EXTERNAL,
+        description:
+          'Maker-controlled vault for USDS ans sUSDS bridged with canonical messaging.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',

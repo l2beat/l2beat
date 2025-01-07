@@ -101,7 +101,7 @@ export const zeronetwork: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ETH', 'USDC'],
+      tokens: ['ETH', 'USDC', 'WBTC', 'USDT'],
       description:
         'Shared bridge for depositing tokens to ZERϴ and other ZK stack chains.',
       sharedEscrow: {
