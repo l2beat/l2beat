@@ -1390,6 +1390,20 @@
       "supply": "zero"
     },
     {
+      "name": "Divi",
+      "coingeckoId": "divi",
+      "address": "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77",
+      "symbol": "DIVI",
+      "decimals": 8,
+      "deploymentTimestamp": 1648055734,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1273/large/red_logomark.png?1696502345",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "DODO bird",
       "coingeckoId": "dodo",
       "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd",
@@ -1706,6 +1720,20 @@
       "coingeckoListingTimestamp": 1627516800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17385/large/Tether_new.png?1696516934",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Exorde Network Token",
+      "coingeckoId": "exorde",
+      "address": "0x02dE007D412266a2e0Fa9287C103474170F06560",
+      "symbol": "EXD",
+      "decimals": 18,
+      "deploymentTimestamp": 1675691435,
+      "coingeckoListingTimestamp": 1679356800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28684/large/logo-exorde.png?1696527668",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2280,6 +2308,20 @@
       "coingeckoListingTimestamp": 1707177600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33895/large/2023-12-20_21.21.41_%281%29.jpg?1703230771",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "HITMAKR",
+      "coingeckoId": "hitmakr",
+      "address": "0x3300b02efa180c99a2F61f4731665b51e4E254C4",
+      "symbol": "HMKR",
+      "decimals": 9,
+      "deploymentTimestamp": 1710187487,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36660/large/HITMAKR_logo.png?1712042884",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4898,6 +4940,20 @@
       "coingeckoListingTimestamp": 1588179641,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/10951/large/UMA.png?1696510900",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Unipoly Coin",
+      "coingeckoId": "unipoly",
+      "address": "0x23d7Ff057c696fEE679c60cEf61Fee6614218f04",
+      "symbol": "UNP",
+      "decimals": 18,
+      "deploymentTimestamp": 1697669759,
+      "coingeckoListingTimestamp": 1698796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32510/large/20231018_231410.png?1698398961",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

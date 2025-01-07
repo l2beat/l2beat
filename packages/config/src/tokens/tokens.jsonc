@@ -1,6 +1,22 @@
 {
   "ethereum": [
     {
+      "symbol": "UNP",
+      "address": "0x23d7Ff057c696fEE679c60cEf61Fee6614218f04"
+    },
+    {
+      "symbol": "HMKR",
+      "address": "0x3300b02efa180c99a2F61f4731665b51e4E254C4"
+    },
+    {
+      "symbol": "EXD",
+      "address": "0x02dE007D412266a2e0Fa9287C103474170F06560"
+    },
+    {
+      "symbol": "DIVI",
+      "address": "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77"
+    },
+    {
       "symbol": "sUSDS",
       "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
     },
