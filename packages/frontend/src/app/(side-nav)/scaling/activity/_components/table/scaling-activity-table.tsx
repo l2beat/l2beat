@@ -1,6 +1,6 @@
 'use client'
 
-import { getCoreRowModel } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
@@ -38,7 +38,9 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getEthereumFirstSortedRowModel(),
+    getSortedRowModel: featureFlags.stageSorting
+      ? getEthereumFirstSortedRowModel()
+      : getSortedRowModel(),
     state: {
       sorting,
     },
