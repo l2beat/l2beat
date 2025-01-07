@@ -3,13 +3,14 @@ import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 import { Database } from '@l2beat/database'
 import { BlobProvider, EVMTransaction, RpcClient } from '@l2beat/shared'
+import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
 import { SpanBatchDecoderOpts, decodeBatch } from './decodeBatch'
 import { getFrames } from './getFrames'
-import { byteArrFromHexStr, getBatchFromChannel } from './utils'
+import { getBatchFromChannel } from './utils'
 
 export class OpStackT2IAnalyzer extends BaseAnalyzer {
   private readonly channelBank: ChannelBank

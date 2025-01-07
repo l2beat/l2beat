@@ -353,12 +353,12 @@ export const linea: Layer2 = {
         to: 'proofSubmissions',
       },
     },
-    // finality: { // fn sigs changed in the alpha v4 upgrade, and the finality analyzer would only work with blob data (basti has a working branch)
-    //   type: 'Linea',
-    //   lag: 0,
-    //   minTimestamp: new UnixTime(1717588271),
-    //   stateUpdate: 'disabled',
-    // },
+    finality: {
+      type: 'Linea',
+      lag: 0,
+      minTimestamp: new UnixTime(1717588271),
+      stateUpdate: 'disabled',
+    },
   },
   chainConfig: {
     name: 'linea',
