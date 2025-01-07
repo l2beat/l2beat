@@ -6,6 +6,7 @@ export interface DiscoveryModuleConfig {
   readonly chain: DiscoveryChainConfig
   readonly dryRun?: boolean
   readonly dev?: boolean
+  readonly overwriteCache: boolean
   readonly printStats?: boolean
   readonly verboseTemplatization?: boolean
   readonly saveSources?: boolean

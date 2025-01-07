@@ -10,7 +10,7 @@ import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
 import { discover } from '../discovery/runDiscovery'
 
 import { HttpClient } from '@l2beat/shared'
-import { command, positional } from 'cmd-ts'
+import { boolean, command, flag, positional } from 'cmd-ts'
 import { getChainConfigs } from '../config/config.discovery'
 import { ChainValue, EthereumAddressValue } from './types'
 
@@ -19,8 +19,13 @@ export const SingleDiscoveryCommand = command({
   args: {
     address: positional({ type: EthereumAddressValue, displayName: 'address' }),
     chain: positional({ type: ChainValue, displayName: 'chain' }),
+    overwriteCache: flag({
+      type: boolean,
+      long: 'overwrite-cache',
+      description: 'overwrite the cache entries',
+    }),
   },
-  handler: async ({ address, chain }) => {
+  handler: async ({ address, chain, overwriteCache }) => {
     const logger = Logger.DEBUG.for('SingleDiscovery')
     logger.info('Starting')
 
@@ -44,6 +49,7 @@ export const SingleDiscoveryCommand = command({
       DiscoveryLogger.CLI,
       undefined,
       http,
+      overwriteCache,
     )
 
     const rootFolder = `./cache/single-discovery`
