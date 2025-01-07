@@ -14,8 +14,8 @@ export function formatSize(size: number, options: SizeOptions = {}): string {
     throw new Error(`Invalid unit: ${fromUnit}`)
   }
 
-  while (size >= 1024 && unitIndex < units.length - 1) {
-    size /= 1024
+  while (size >= 1000 && unitIndex < units.length - 1) {
+    size /= 1000
     unitIndex++
   }
 
