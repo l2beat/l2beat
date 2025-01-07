@@ -122,7 +122,7 @@ export const grvt: Layer2 = zkStackL2({
     }),
     discovery.getContractDetails('GRVTBridgeProxy', {
       description:
-        'Checks if a user is permissioned to deposit to GRVT and forwards their funds to the L1SharedBridge contract to deposit to the GRVT Validium. ',
+        "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds to the L1SharedBridge contract to deposit to GRVT.",
     }),
   ],
   nonTemplatePermissions: [
@@ -139,6 +139,16 @@ export const grvt: Layer2 = zkStackL2({
         ),
       ],
       description: 'Can set the conversion factor for GBT deposits to GRVT.',
+    },
+    {
+      name: 'DepositApprover',
+      accounts: [
+        discovery.getPermissionedAccount(
+          'GRVTBridgeProxy',
+          'depositApprover',
+        ),
+      ],
+      description: 'Permissioned address that must approve each deposit to GRVT.',
     },
   ],
   milestones: [
