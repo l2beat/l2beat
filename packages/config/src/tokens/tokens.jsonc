@@ -1,6 +1,14 @@
 {
   "ethereum": [
     {
+      "symbol": "sUSDS",
+      "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
+    },
+    {
+      "symbol": "USDS",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+    },
+    {
       "symbol": "OPN",
       "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509"
     },

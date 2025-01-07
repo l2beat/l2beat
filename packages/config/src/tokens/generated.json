@@ -4063,6 +4063,20 @@
       "supply": "zero"
     },
     {
+      "name": "Savings USDS",
+      "coingeckoId": "susds",
+      "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+      "symbol": "sUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1725455483,
+      "coingeckoListingTimestamp": 1734048000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Serum",
       "coingeckoId": "serum",
       "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF",
@@ -4954,6 +4968,20 @@
       "coingeckoListingTimestamp": 1702512000,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1725290327,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
