@@ -8,7 +8,7 @@ Generated with discovered.json: 0x9bb8d6009e9f1a4109085ffc2c21b7eab10d0e29
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Add sky / maker USDS escrow (canonical external).
 
 ## Config/verification related changes
 
