@@ -22,7 +22,7 @@ export function decodeV0Blob(blob: Uint8Array): L2Block[] {
   assert(header.dictionaryChecksum === ASSUMED_DICT_CHECKSUM)
   const compressed = unpacked.slice(bytesRead)
   const dictionaryBuffer = readFileSync(
-    path.join(__dirname, 'dictionaries/a001342_dict.bin'),
+    path.join(__dirname, '../../../../static/a001342_dict.bin'),
   )
   const dictionary = new Uint8Array(dictionaryBuffer)
 
