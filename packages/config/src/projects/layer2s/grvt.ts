@@ -43,7 +43,7 @@ export const grvt: Layer2 = zkStackL2({
       socialMedia: [
         'https://x.com/grvt_io',
         'https://discord.gg/3jsVPwaGeB',
-        'https://grvt.io/blog/'
+        'https://grvt.io/blog/',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -120,6 +120,10 @@ export const grvt: Layer2 = zkStackL2({
       description:
         'Intermediary governance contract that has the *ChainAdmin* role in the GRVT zkEVM diamond contract.',
     }),
+    discovery.getContractDetails('GRVTBridgeProxy', {
+      description:
+        'Checks if a user is permissioned to deposit to GRVT and forwards their funds to the L1SharedBridge contract to deposit to the GRVT Validium. ',
+    }),
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
@@ -134,8 +138,7 @@ export const grvt: Layer2 = zkStackL2({
           'tokenMultiplierSetter',
         ),
       ],
-      description:
-        'Can set the conversion factor for GBT deposits to GRVT.',
+      description: 'Can set the conversion factor for GBT deposits to GRVT.',
     },
   ],
   milestones: [
