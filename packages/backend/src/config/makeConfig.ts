@@ -166,7 +166,8 @@ export function makeConfig(
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain)),
-      enableCache: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
+      cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
+      cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
     },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
