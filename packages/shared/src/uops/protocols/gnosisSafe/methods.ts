@@ -80,9 +80,9 @@ function decodeMultiSendInput(data: string): MultiSendTransaction[] {
     ).toBigInt()
 
     // Next 32 bytes is the data length
-    const dataLength = ethers.BigNumber.from(
-      txBuffer.slice(i + 53, i + 85),
-    ).toNumber()
+    const dataLength = Number(
+      ethers.BigNumber.from(txBuffer.slice(i + 53, i + 85)).toString(),
+    )
 
     // Following the dataLength, we extract the data
     const data = txBuffer.slice(i + 85, i + 85 + dataLength)
