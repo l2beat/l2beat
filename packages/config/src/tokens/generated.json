@@ -5793,7 +5793,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)"
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
           }
         ]
       }
@@ -5858,8 +5859,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -5980,8 +5981,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -6151,8 +6152,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -6244,8 +6245,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -6294,7 +6295,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)"
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
           }
         ]
       }
@@ -6315,8 +6317,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -6337,8 +6339,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -7122,6 +7124,334 @@
       }
     },
     {
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1734426759,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "KelpDao Restaked ETH",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "address": "0xc3eACf0612346366Db554C991D7858716db09f58",
+      "symbol": "rsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1733927053,
+      "coingeckoListingTimestamp": 1705017600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lorenzo stBTC",
+      "coingeckoId": "lorenzo-stbtc",
+      "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
+      "symbol": "stBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1733628351,
+      "coingeckoListingTimestamp": 1729641600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
+      "chainId": 1923,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1733506437,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Renzo Restaked LST",
+      "coingeckoId": "renzo-restaked-lst",
+      "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
+      "symbol": "pzETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1733506553,
+      "coingeckoListingTimestamp": 1720569600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "name": "rSWELL",
+      "coingeckoId": "swell-network",
+      "address": "0x939f1cC163fDc38a77571019eb4Ad1794873bf8c",
+      "symbol": "rSWELL",
+      "decimals": 18,
+      "deploymentTimestamp": 1733830079,
+      "coingeckoListingTimestamp": 1730937600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28777/large/swell1.png?1727899715",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "rswETH",
+      "coingeckoId": "restaked-swell-eth",
+      "address": "0x18d33689AE5d02649a859A1CF16c9f0563975258",
+      "symbol": "rswETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1733840453,
+      "coingeckoListingTimestamp": 1706572800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1734390799,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "swBTC",
+      "coingeckoId": "swell-restaked-btc",
+      "address": "0x1cf7b5f266A0F39d6f9408B90340E3E71dF8BF7B",
+      "symbol": "swBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1733862913,
+      "coingeckoListingTimestamp": 1723593600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39682/large/swBTC200x200.png?1723652322",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Swell Governance Token",
+      "coingeckoId": "swell-network",
+      "address": "0x2826D136F5630adA89C1678b64A61620Aab77Aea",
+      "symbol": "SWELL",
+      "decimals": 18,
+      "deploymentTimestamp": 1733824053,
+      "coingeckoListingTimestamp": 1730937600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28777/large/swell1.png?1727899715",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "swETH",
+      "coingeckoId": "sweth",
+      "address": "0x09341022ea237a4DB1644DE7CCf8FA0e489D85B7",
+      "symbol": "swETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1734454115,
+      "coingeckoListingTimestamp": 1684108800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30326/large/_lB7zEtS_400x400.jpg?1696529227",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "tether",
+      "address": "0xb89c6ED617f5F46175E41551350725A09110bbCE",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1733520817,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "uBTC",
+      "coingeckoId": "wrapped-bitcoin-universal",
+      "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
+      "symbol": "uBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1734473115,
+      "coingeckoListingTimestamp": 1726704000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50252/large/UA-BTC_1.png?1726721793",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1734369971,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0xA6cB988942610f6731e664379D15fFcfBf282b44",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1733783363,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 1923,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Smoovie Phone",
       "coingeckoId": "smoovie-phone",
       "address": "0x3f710cBd0F4268719C6c2E5E078a4CAfAeED7d45",
@@ -7343,8 +7673,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -7393,8 +7723,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -7826,8 +8156,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -7940,8 +8270,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -8192,8 +8522,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -8236,8 +8566,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -9141,8 +9471,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -9300,7 +9630,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargate"
+            "slug": "stargatev2"
           }
         ]
       }
@@ -9504,8 +9834,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -9608,7 +9938,7 @@
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
       "chainId": 48900,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -9635,8 +9965,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -9674,13 +10004,13 @@
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/30326/large/_lB7zEtS_400x400.jpg?1696529227",
       "chainId": 48900,
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero OFT",
-            "slug": "omnichain"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -9702,7 +10032,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargate"
+            "slug": "stargatev2"
           }
         ]
       }
@@ -9997,8 +10327,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -10069,8 +10399,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -10363,8 +10693,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -10406,8 +10736,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -10769,8 +11099,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -10841,8 +11171,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
