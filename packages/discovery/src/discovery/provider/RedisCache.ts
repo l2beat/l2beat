@@ -1,5 +1,5 @@
-import { DiscoveryCache } from './DiscoveryCache'
 import { createClient } from 'redis'
+import { DiscoveryCache } from './DiscoveryCache'
 
 export class RedisCache implements DiscoveryCache {
   private client: ReturnType<typeof createClient>

@@ -54,7 +54,7 @@ export function createUpdateMonitorModule(
       chains,
       chainConfig.name,
       !!cacheEnabled,
-      cacheUri
+      cacheUri,
     ),
   )
 

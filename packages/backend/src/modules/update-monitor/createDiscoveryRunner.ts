@@ -3,18 +3,18 @@ import {
   DiscoveryChainConfig,
   DiscoveryLogger,
   DiscoveryCache as IDiscoveryCache,
-  RedisCache,
   InMemoryCache,
   LeveledCache,
+  RedisCache,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
+import { Database } from '@l2beat/database'
 import { HttpClient } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
-import { Database } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
 
 export function createDiscoveryRunner(
   http: HttpClient,
