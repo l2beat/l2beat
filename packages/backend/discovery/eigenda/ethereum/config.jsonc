@@ -2,7 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "eigenda",
-  "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
+  "initialAddresses": [
+    "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+  ],
   "names": {
     "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "EigenDAServiceManager",
     "0x8247EF5705d3345516286B72bFE6D690197C2E99": "eigenDAProxyAdmin",
@@ -14,15 +17,25 @@
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
     "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
     "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "EjectionManager",
+    "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505": "BLSApkRegistry",
     "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": "StakeRegistry",
     "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": "StrategyBase",
     "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B": "StakedALT",
-    "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault"
-  },
-  "sharedModules": {
-    "bloppi": "shared-eigenlayer"
+    "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault",
+    "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2": "EIGEN Timelock",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
+    "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430": "EigenPod"
   },
   "overrides": {
+    "EigenPod": {
+      "ignoreRelatives": ["ethPOS"]
+    },
+    "EigenPodManager": {
+      "ignoreRelatives": ["ethPOS"]
+    },
+    "EIGEN Token": {
+      "ignoreRelatives": ["bEIGEN"]
+    },
     "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {
       "extends": "eigenlayer/Strategy" // temporary manual override until the proxy is verified and the shape fits
     },
@@ -90,7 +103,7 @@
             "permissions": [
               {
                 "type": "configure",
-                "description": "change the contract state and upgrade the bridge. @@@"
+                "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer"
               }
             ]
           }
@@ -203,16 +216,9 @@
           "target": {
             "permissions": [
               {
-                "description": "@@@ TODO: act independently but permissions are limited",
                 "type": "act"
               }
             ]
-            // "permissions": [
-            //   {
-            //     "type": "configure",
-            //     "description": "can approve the replacement of churned operators from a quorum."
-            //   }
-            // ]
           }
         }
       }

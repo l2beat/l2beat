@@ -7,9 +7,8 @@ import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('eigenda')
-const eigenDiscovery = new ProjectDiscovery('shared-eigenlayer')
 
-const EIGENUpgradeDelay = eigenDiscovery.getContractValue<number>(
+const EIGENUpgradeDelay = discovery.getContractValue<number>(
   'EIGEN Timelock',
   'getMinDelay',
 )
@@ -164,7 +163,7 @@ export const eigenDAbridge = {
     ],
   },
   permissions: {
-    ethereum: [...discovery.getDiscoveredPermissions()],
+    ethereum: discovery.getDiscoveredPermissions(),
   },
   requiredMembers: 0, // currently 0 since threshold is not enforced
   membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
