@@ -17,6 +17,7 @@ import {
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { formatSize } from '~/utils/number-format/format-size'
 
 interface Props {
   stats: ProjectStat[]
@@ -160,6 +161,13 @@ export function getCommonDaProjectStats(
     title: 'Duration of storage',
     ...durationOfStorage,
   })
+
+  if (project.header.spaceAvailable) {
+    stats.push({
+      title: 'Space available',
+      value: formatSize(project.header.spaceAvailable, { fromUnit: 'KB' }),
+    })
+  }
 
   return stats
 }

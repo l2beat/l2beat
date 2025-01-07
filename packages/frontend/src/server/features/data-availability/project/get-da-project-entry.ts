@@ -75,6 +75,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     links: ProjectLink[]
     economicSecurity: EconomicSecurityData | undefined
     durationStorage: number | undefined
+    spaceAvailable: number | undefined
     numberOfOperators: number | undefined
     usedIn: UsedInProject[]
   }
@@ -87,6 +88,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     tvs: number
     economicSecurity: EconomicSecurityData | undefined
     durationStorage: number
+    spaceAvailable: number | undefined
     usedIn: UsedInProject[]
     bridgeName: string
     callout: {
@@ -195,6 +197,10 @@ export async function getDaProjectEntry(
       economicSecurity,
       durationStorage:
         daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
+      spaceAvailable:
+        daLayer.kind === 'PublicBlockchain'
+          ? daLayer.spaceAvailable
+          : undefined,
       numberOfOperators: daLayer.numberOfOperators,
       usedIn: daLayer.bridges
         .flatMap((bridge) => bridge.usedIn)
@@ -253,6 +259,7 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: daLayer.pruningWindow,
+      spaceAvailable: daLayer.spaceAvailable,
       usedIn: usedInByTvlDesc,
       bridgeName: daBridge.display.name,
       callout: {

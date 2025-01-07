@@ -142,6 +142,7 @@ export const celestia: BlockchainDaLayer = {
     erasureCodingProof: DasErasureCodingProof.FraudProofs,
   },
   pruningWindow: 86400 * 30, // 30 days in seconds
+  spaceAvailable: 1000 ** 2, // 1 GB (1000^2 kilobytes)
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),

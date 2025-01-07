@@ -23,6 +23,12 @@ export type BlockchainDaLayer = CommonDaLayer & {
   bridges: (OnChainDaBridge | NoDaBridge)[]
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
+  /**
+   * Space available for data availability.
+   * @notice Evaluated in context of single blob/block.
+   * @unit KB
+   */
+  spaceAvailable?: number
   /** Details about data availability sampling. */
   dataAvailabilitySampling?: DataAvailabilitySampling
   /** The consensus algorithm used by the data availability layer. */
@@ -43,6 +49,12 @@ export type EthereumDaLayer = CommonDaLayer & {
   economicSecurity?: DaEconomicSecurity
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
+  /**
+   * Space available for data availability.
+   * @notice Evaluated in context of single blob/block.
+   * @unit KB
+   */
+  spaceAvailable?: number
 }
 
 export type DacDaLayer = CommonDaLayer & {
