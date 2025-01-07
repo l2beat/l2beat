@@ -6,7 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { useIsMobile } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { StageTooltip } from './stage-tooltip'
 
 export interface StageCellProps {

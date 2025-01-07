@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useIsMobile } from './use-breakpoint'
 import { useEventListener } from './use-event-listener'
-import { useIsMobile } from './use-is-mobile'
 
 const DEFAULT_THRESHOLD = `30%`
 

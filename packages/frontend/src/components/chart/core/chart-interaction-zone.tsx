@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
-import { useIsMobile } from '~/hooks/use-is-mobile'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
 import { useChartRect } from './chart-rect-context'

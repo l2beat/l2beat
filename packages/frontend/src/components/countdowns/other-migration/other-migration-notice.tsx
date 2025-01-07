@@ -3,7 +3,7 @@ import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
-import { useIsMobile } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CloseIcon } from '~/icons/close'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 

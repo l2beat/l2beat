@@ -8,7 +8,7 @@ import {
 } from 'next/navigation'
 import NProgress from 'nprogress'
 import React, { Suspense, useEffect, type JSX } from 'react'
-import { useIsMobile } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 
 export function ProgressBar() {
   return (

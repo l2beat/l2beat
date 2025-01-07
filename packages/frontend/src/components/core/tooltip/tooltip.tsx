@@ -3,7 +3,7 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { type VariantProps, cva } from 'class-variance-authority'
 import React, { useRef, useState } from 'react'
-import { useIsMobile } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { mergeRefs } from '~/utils/merge-refs'
 import {
   TooltipTriggerContextProvider,
