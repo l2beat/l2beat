@@ -5,7 +5,6 @@ import {
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { featureFlags } from '~/consts/feature-flags'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
