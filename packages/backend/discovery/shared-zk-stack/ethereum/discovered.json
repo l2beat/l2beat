@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21421036,
+  "blockNumber": 21543858,
   "configHash": "0xa25551c44b45705357b49bfa42e1c5ba88292bdf03753ba9f7423b62f86983f1",
   "contracts": [
     {
@@ -583,7 +583,6 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07",
           "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2",
           "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1",
           "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c",
@@ -594,8 +593,8 @@
         "domainSeparator": "0xa9f70aaa6c7cfdaa67fafe694ff2b98166fca2a9f73c398e38e4041294a82692",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 2,
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 3,
         "VERSION": "1.3.0"
       }
     },
@@ -1080,7 +1079,6 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
-    { "address": "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07" },
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },

@@ -1095,6 +1095,20 @@
       "supply": "zero"
     },
     {
+      "name": "CoW Protocol Token",
+      "coingeckoId": "cow-protocol",
+      "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB",
+      "symbol": "COW",
+      "decimals": 18,
+      "deploymentTimestamp": 1644608664,
+      "coingeckoListingTimestamp": 1648425600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24384/large/CoW-token_logo.png?1719524382",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Cratos",
       "coingeckoId": "cratos",
       "address": "0x678e840C640F619E17848045D23072844224dD37",
@@ -1371,6 +1385,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/8089/large/XDB_CHAIN_LOGO.jpeg?1702723430",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "DODO bird",
+      "coingeckoId": "dodo",
+      "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd",
+      "symbol": "DODO",
+      "decimals": 18,
+      "deploymentTimestamp": 1601377130,
+      "coingeckoListingTimestamp": 1601424000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12651/large/dodo_logo.png?1696512458",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3055,6 +3083,20 @@
       "supply": "zero"
     },
     {
+      "name": "NEAR",
+      "coingeckoId": "near",
+      "address": "0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
+      "symbol": "NEAR",
+      "decimals": 24,
+      "deploymentTimestamp": 1662998412,
+      "coingeckoListingTimestamp": 1602633600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Neutrino USD",
       "coingeckoId": "neutrino",
       "address": "0x674C6Ad92Fd080e4004b2312b45f796a192D27a0",
@@ -3218,6 +3260,34 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/4428/large/ECOMI.png?1696505023",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Ondo",
+      "coingeckoId": "ondo-finance",
+      "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3",
+      "symbol": "ONDO",
+      "decimals": 18,
+      "deploymentTimestamp": 1651123412,
+      "coingeckoListingTimestamp": 1705536000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26580/large/ONDO.png?1696525656",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Open Ecosystem Token",
+      "coingeckoId": "open-ticketing-ecosystem",
+      "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509",
+      "symbol": "OPN",
+      "decimals": 18,
+      "deploymentTimestamp": 1709680043,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36612/large/TOKEN.png?1711975511",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3624,6 +3694,20 @@
       "coingeckoListingTimestamp": 1710201600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35950/large/photo_2024-03-11_10.18.27.jpeg?1710240090",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "PUFFER",
+      "coingeckoId": "puffer-finance",
+      "address": "0x4d1C297d39C5c1277964D0E3f8Aa901493664530",
+      "symbol": "PUFFER",
+      "decimals": 18,
+      "deploymentTimestamp": 1727781299,
+      "coingeckoListingTimestamp": 1728864000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50630/large/PUFFER_token_Logo.png?1729574024",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4371,6 +4455,20 @@
       "supply": "zero"
     },
     {
+      "name": "Sui",
+      "coingeckoId": "sui",
+      "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
+      "symbol": "SUI",
+      "decimals": 9,
+      "deploymentTimestamp": 1683058871,
+      "coingeckoListingTimestamp": 1683072000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26375/large/sui-ocean-square.png?1727791290",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Super Symbiotic LRT",
       "coingeckoId": "etherfi-weeths",
       "address": "0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88",
@@ -5038,6 +5136,34 @@
       "coingeckoListingTimestamp": 1615939200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/14420/large/anchor_protocol_logo.jpg?1696514111",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wrapped AVAX",
+      "coingeckoId": "avalanche-wormhole",
+      "address": "0x85f138bfEE4ef8e540890CFb48F620571d67Eda3",
+      "symbol": "WAVAX",
+      "decimals": 18,
+      "deploymentTimestamp": 1640299238,
+      "coingeckoListingTimestamp": 1646006400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22943/large/AVAX_wh_small.png?1696522240",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wrapped BNB",
+      "coingeckoId": "binance-coin-wormhole",
+      "address": "0x418D75f65a02b3D53B2418FB8E1fe493759c7605",
+      "symbol": "WBNB",
+      "decimals": 18,
+      "deploymentTimestamp": 1633713478,
+      "coingeckoListingTimestamp": 1642723200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22884/large/BNB_wh_small.png?1696522182",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6858,6 +6984,27 @@
           {
             "name": "Stargate v2 (Hydra mode)",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Latch staked ETH",
+      "coingeckoId": "latch-staked-eth",
+      "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
+      "symbol": "atETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1729508457,
+      "coingeckoListingTimestamp": 1732233600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51956/large/eth-white-bg.png?1732239149",
+      "chainId": 1625,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Latch.io mint-bridge"
           }
         ]
       }
@@ -9342,6 +9489,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0x813635891aA06bd55036bbd8f7d1A34aB3de9a0F",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1724433087,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
@@ -9359,6 +9528,27 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pumpBTC",
+      "coingeckoId": "pumpbtc",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "symbol": "pumpBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1724765843,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
           }
         ]
       }
@@ -9425,6 +9615,50 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1724432997,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1724602709,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
           }
         ]
       }

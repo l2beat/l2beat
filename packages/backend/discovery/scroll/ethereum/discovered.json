@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 21465455,
+  "blockNumber": 21543805,
   "configHash": "0x5f7370f4a07a8cc3494a93546960c459fd25377b9c259ccbbcc8e1de5fd48b40",
   "contracts": [
     {
@@ -62,13 +62,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 40329486,
+        "l2BaseFee": 41050361,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 949290,
-        "nextUnfinalizedQueueIndex": 949286,
+        "nextCrossDomainMessageIndex": 949717,
+        "nextUnfinalizedQueueIndex": 949715,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 949290,
+        "pendingQueueIndex": 949717,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -1185,15 +1185,13 @@
           ]
         ],
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 351324,
+        "lastFinalizedBatchIndex": 352141,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "paused": false,
         "provers": [
-          "0x356483dC32B004f32Ea0Ce58F7F88879886e9074",
-          "0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06",
           "0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c",
           "0x74b286304576625557629C47E9E8702383D9eF92"
         ],
@@ -1259,8 +1257,6 @@
           { "batchIndex": 346815 }
         ],
         "sequencers": [
-          "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f",
-          "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7",
           "0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B",
           "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
         ],
@@ -1381,7 +1377,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 151,
+        "nonce": 152,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1615,7 +1611,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1665,7 +1661,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 19961387473010,
+        "totalBridgedUSDC": 21401742674233,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -1717,22 +1713,18 @@
     { "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4" },
     { "address": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774" },
     { "address": "0x21b8a9F5a4640c3FC13E19C48e776173e1210995" },
-    { "address": "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7" },
     {
       "name": "L2USDCGatewayFallback",
       "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142"
     },
-    { "address": "0x356483dC32B004f32Ea0Ce58F7F88879886e9074" },
     { "address": "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4" },
     { "address": "0x5300000000000000000000000000000000000004" },
     { "address": "0x568993632c34604098e35a184C52aD390c70f754" },
-    { "address": "0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06" },
     { "address": "0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c" },
     { "address": "0x74b286304576625557629C47E9E8702383D9eF92" },
     { "address": "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9" },
     { "address": "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0" },
     { "address": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC" },
-    { "address": "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f" },
     { "address": "0xE2e6345baAD18f779167443Dc4886495507b3249" },
     { "address": "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858" },
     { "address": "0xEbbeeAA424AE904508465a41c927Be594C43Dc68" },

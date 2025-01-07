@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -7,6 +8,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
@@ -27,6 +29,17 @@ export function ScalingLivenessTables(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others.filter(includeFilters),
   }
+
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [props.others, props.rollups, props.validiumsAndOptimiums],
+  )
 
   const initialSort = {
     id: '#',
@@ -64,6 +77,10 @@ export function ScalingLivenessTables(props: Props) {
             <DirectoryTabsContent value="others">
               <OthersInfo />
               <ScalingLivenessTable entries={filteredEntries.others} />
+              <OtherMigrationTabNotice
+                projectsToBeMigrated={projectToBeMigratedToOthers}
+                className="mt-2"
+              />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

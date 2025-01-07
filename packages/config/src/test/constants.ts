@@ -48,6 +48,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'sophon',
   'sorare',
   'starknet',
+  'swell',
   'taiko',
   'treasure',
   'brine',

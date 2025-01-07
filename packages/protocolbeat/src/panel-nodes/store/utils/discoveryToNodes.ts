@@ -67,11 +67,14 @@ function mapFields(
   }
   return Object.entries(values).flatMap(
     ([key, value]: [string, unknown]): Field[] => {
+      if (IGNORED_FIELDS.includes(key)) {
+        return []
+      }
+
       if (
         typeof value === 'string' &&
         (isAddress(value) || isChainAddress(value)) &&
-        !implementations.includes(value) &&
-        !IGNORED_FIELDS.includes(key)
+        !implementations.includes(value)
       ) {
         if (value === ZERO_ADDRESS) {
           return []

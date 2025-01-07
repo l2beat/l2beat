@@ -17,7 +17,7 @@ export async function getTvlValuesForProjects(
   const target = getTvlTargetTimestamp()
 
   const from =
-    days !== Infinity &&
+    days !== null &&
     target
       .toStartOf(resolution === 'hourly' ? 'hour' : 'day')
       .add(-days, 'days')

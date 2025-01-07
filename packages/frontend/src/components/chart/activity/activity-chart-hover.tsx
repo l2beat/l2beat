@@ -71,9 +71,7 @@ export function ActivityChartHover(props: Props) {
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatActivityCount(countPerSecond(props.ethereumCount), {
-              decimals,
-            })}
+            {formatActivityCount(countPerSecond(props.ethereumCount))}
           </span>
         </div>
       )}

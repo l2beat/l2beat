@@ -1,6 +1,7 @@
 'use client'
 import { type Milestone } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ActivityChart } from '~/components/chart/activity/activity-chart'
 import {
@@ -10,6 +11,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import {
   OthersInfo,
   RollupsInfo,
@@ -39,6 +41,17 @@ export function ScalingActivityTabs({
     validiumsAndOptimiums: validiumsAndOptimiums.filter(includeFilters),
     others: others.filter(includeFilters),
   }
+
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...rollups, ...validiumsAndOptimiums, ...others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [others, rollups, validiumsAndOptimiums],
+  )
 
   const initialSort = {
     id: 'data_pastDayCount',
@@ -122,6 +135,10 @@ export function ScalingActivityTabs({
               <HorizontalSeparator className="mb-3 mt-5" />
               <OthersInfo />
               <ScalingActivityTable entries={filteredEntries.others} />
+              <OtherMigrationTabNotice
+                projectsToBeMigrated={projectToBeMigratedToOthers}
+                className="mt-2"
+              />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

@@ -35,7 +35,7 @@ export function OthersInfo() {
   return (
     <InfoWithMobileDrawer
       title="What are Others?"
-      content="OTHERS are L2s that either do not have a working proof system or they
+      content="Others are L2s that either do not have a working proof system or they
       don&apos;t have an external DA sufficiently decentralised (ie at least 5
       independent attesters)"
     />
