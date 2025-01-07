@@ -5,7 +5,7 @@
   "main": "./build/data.json",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "./scripts/build.sh",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "clean": "rm -rf build",
     "discover": "ts-node --transpile-only scripts/discoveryWrapperCli.ts",
