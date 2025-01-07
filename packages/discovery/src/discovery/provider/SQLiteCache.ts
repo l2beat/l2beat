@@ -7,6 +7,7 @@ const DEFAULT_DATABASE_FILENAME = 'discovery.sqlite'
 
 export class SQLiteCache implements DiscoveryCache {
   private readonly db: sqlite3.Database
+  private initialized: boolean = false
 
   constructor(databaseUrl?: string) {
     if (databaseUrl === undefined) {
@@ -18,16 +19,9 @@ export class SQLiteCache implements DiscoveryCache {
     this.db = new sqlite3.Database(databaseUrl)
   }
 
-  async init(): Promise<void> {
-    await this.query(`
-      CREATE TABLE IF NOT EXISTS cache (
-        key TEXT PRIMARY KEY,
-        value TEXT
-      )
-    `)
-  }
-
   async get(key: string): Promise<string | undefined> {
+    await this.init()
+
     try {
       const result = (await this.query('SELECT value FROM cache WHERE key=$1', [
         key,
@@ -39,6 +33,8 @@ export class SQLiteCache implements DiscoveryCache {
   }
 
   async set(key: string, value: string): Promise<void> {
+    await this.init()
+
     try {
       await this.query(
         `
@@ -50,6 +46,20 @@ export class SQLiteCache implements DiscoveryCache {
     } catch (error) {
       console.error('Error writing to cache', error)
     }
+  }
+
+  private async init(): Promise<void> {
+    if (this.initialized) {
+      return
+    }
+
+    this.initialized = true
+    await this.query(`
+      CREATE TABLE IF NOT EXISTS cache (
+        key TEXT PRIMARY KEY,
+        value TEXT
+      )
+    `)
   }
 
   private query(query: string, values?: unknown[]): Promise<unknown[]> {
