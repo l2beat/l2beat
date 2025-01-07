@@ -27,7 +27,7 @@ export function createDiscoveryRunner(
     set: async () => {},
   }
   if (enableCache) {
-    const l1Cache = new InMemoryCache()
+    const l1Cache = new InMemoryCache(5000)
     const l2Cache = new DiscoveryCache(peripherals.database)
     discoveryCache = new LeveledCache(l1Cache, l2Cache)
   }
