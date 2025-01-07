@@ -1921,6 +1921,13 @@
   ],
   "arbitrum": [
     {
+      "symbol": "USDX",
+      "address": "0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
+      "source": "native",
+      "supply": "totalSupply", // minted natively on multiple chains, no bridging
+      "category": "stablecoin"
+    },
+    {
       "symbol": "LINK",
       "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
       "source": "canonical",

@@ -9720,6 +9720,20 @@
       }
     },
     {
+      "name": "USDX",
+      "coingeckoId": "usdx-money-usdx",
+      "address": "0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
+      "symbol": "USDX",
+      "decimals": 18,
+      "deploymentTimestamp": 1710730183,
+      "coingeckoListingTimestamp": 1727308800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50360/large/USDX200px.png?1731906044",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "VelaToken",
       "coingeckoId": "vela-token",
       "address": "0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
