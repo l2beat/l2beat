@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x16c05b9aad122da9bb70b5a2bef9a422726b1ce1
+
+# Diff at Wed, 08 Jan 2025 11:14:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21543805
+- current block number: 21579385
+
+## Description
+
+One address removed from the whitelist (for actors that can set the l2 base fee on L1).
+
+## Watched changes
+
+```diff
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
+    +++ description: None
+      values.whitelisted.1:
+-        "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"
+      values.whitelisted.0:
+-        "0x21b8a9F5a4640c3FC13E19C48e776173e1210995"
++        "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"
+    }
+```
+
 Generated with discovered.json: 0x92c5aa762d09f5cd371ec95e75a5e9d0e39f8600
 
 # Diff at Fri, 03 Jan 2025 11:58:37 GMT:
