@@ -2,6 +2,159 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+export default function Page() {
+  const [sizes, setSizes] = useState<number[]>([])
+  const headRowRef = useRef<HTMLTableRowElement>(null)
+  const [shortName, setShortName] = useState(false)
+  const scrollableRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!headRowRef.current) return
+    function updateSizes() {
+      const sizes = Array.from(headRowRef.current?.children ?? []).map(
+        (child) => {
+          return child.getBoundingClientRect().width
+        },
+      )
+      setSizes(sizes)
+    }
+
+    updateSizes()
+
+    const observer = new ResizeObserver(updateSizes)
+    observer.observe(headRowRef.current)
+    window.addEventListener('resize', updateSizes)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateSizes)
+    }
+  }, [])
+
+  return (
+    <main className="mx-auto mt-10 h-[200vh] max-w-screen-lg">
+      Table POC
+      <div className="sticky top-0 z-[200] h-10 bg-brand text-white">Tabs</div>
+      Some text describing the table Some text describing the table Some text
+      describing the table.
+      <button onClick={() => setShortName(!shortName)}>Short Name</button>
+      <StickyHeader sizes={sizes} scrollableRef={scrollableRef} />
+      <div
+        className="relative -top-10 w-full overflow-x-auto"
+        ref={scrollableRef}
+      >
+        <table
+          className="w-full border-separate"
+          cellSpacing={0}
+          cellPadding={0}
+        >
+          <thead>
+            <tr ref={headRowRef}>
+              <TableHeading>#</TableHeading>
+              <TableHeading>Name</TableHeading>
+              <TableHeading>Position</TableHeading>
+              <TableHeading>Salary</TableHeading>
+              <TableHeading>Age</TableHeading>
+              <TableHeading>City</TableHeading>
+            </tr>
+          </thead>
+          <tbody>
+            {employees.map((employee) => (
+              <tr key={employee.id}>
+                <TableData style={{ position: 'sticky', left: 0 }}>
+                  {employee.id}
+                </TableData>
+                <TableData
+                  style={{
+                    position: 'sticky',
+                    left: sizes[0],
+                  }}
+                >
+                  {shortName ? employee.name.slice(0, 10) : employee.name}
+                </TableData>
+                <TableData>{employee.position}</TableData>
+                <TableData>{employee.salary}</TableData>
+                <TableData>61</TableData>
+                <TableData>New York</TableData>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  )
+}
+
+function StickyHeader({
+  sizes,
+  scrollableRef,
+}: { sizes: number[]; scrollableRef: React.RefObject<HTMLDivElement | null> }) {
+  const [scrollLeft, setScrollLeft] = useState(0)
+
+  useEffect(() => {
+    if (!scrollableRef.current) return
+    const container = scrollableRef.current
+    function handleScroll() {
+      setScrollLeft(container.scrollLeft)
+    }
+
+    container.addEventListener('scroll', handleScroll)
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll)
+    }
+  }, [scrollableRef])
+
+  return (
+    <div
+      className="sticky top-10 z-100 w-full overflow-hidden "
+      aria-hidden="true"
+    >
+      <table className="relative" style={{ left: -scrollLeft }}>
+        <thead>
+          <tr>
+            <TableHeading
+              style={{
+                minWidth: sizes[0],
+                position: 'sticky',
+                left: 0,
+              }}
+            >
+              #
+            </TableHeading>
+            <TableHeading
+              style={{ minWidth: sizes[1], position: 'sticky', left: sizes[0] }}
+            >
+              Name
+            </TableHeading>
+            <TableHeading style={{ minWidth: sizes[2] }}>Position</TableHeading>
+            <TableHeading style={{ minWidth: sizes[3] }}>Salary</TableHeading>
+            <TableHeading style={{ minWidth: sizes[4] }}>Age</TableHeading>
+            <TableHeading style={{ minWidth: sizes[5] }}>City</TableHeading>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  )
+}
+
+function TableHeading(props: React.ComponentProps<'th'>) {
+  return (
+    <th
+      className="h-10 border-b-2 border-black bg-white px-2 text-left"
+      {...props}
+    />
+  )
+}
+
+function TableData(props: React.ComponentProps<'td'>) {
+  return (
+    <td
+      className="h-10 whitespace-pre border-b border-black bg-white px-2"
+      {...props}
+    />
+  )
+}
+
 const employees = [
   {
     id: 1,
@@ -82,85 +235,3 @@ const employees = [
     salary: '$470,600',
   },
 ]
-
-export default function Page() {
-  const [sizes, setSizes] = useState<number[]>([])
-  const headRowRef = useRef<HTMLTableRowElement>(null)
-
-  useEffect(() => {
-    if (!headRowRef.current) return
-
-    const observer = new ResizeObserver((entries) => {
-      const sizes = entries.map((entry) => entry.contentRect.width)
-      console.log(entries)
-      setSizes(sizes)
-    })
-
-    observer.observe(headRowRef.current)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-  console.log(sizes)
-  return (
-    <main className="mx-auto mt-10 h-[200vh] max-w-screen-sm">
-      Table POC Some text describing the table Some text describing the table
-      Some text describing the table
-      <table className="sticky top-0 z-100">
-        <thead>
-          <tr>
-            <TableHeading>#</TableHeading>
-            <TableHeading>Name</TableHeading>
-            <TableHeading>Position</TableHeading>
-            <TableHeading>Salary</TableHeading>
-            <TableHeading>Age</TableHeading>
-            <TableHeading>City</TableHeading>
-          </tr>
-        </thead>
-      </table>
-      <div className="relative -top-10 w-full overflow-x-auto">
-        <table
-          className="w-full border-separate"
-          cellSpacing={0}
-          cellPadding={0}
-        >
-          <thead>
-            <tr ref={headRowRef}>
-              <TableHeading>#</TableHeading>
-              <TableHeading>Name</TableHeading>
-              <TableHeading>Position</TableHeading>
-              <TableHeading>Salary</TableHeading>
-              <TableHeading>Age</TableHeading>
-              <TableHeading>City</TableHeading>
-            </tr>
-          </thead>
-          <tbody>
-            {employees.map((employee) => (
-              <tr key={employee.id}>
-                <TableData>{employee.id}</TableData>
-                <TableData>{employee.name}</TableData>
-                <TableData>{employee.position}</TableData>
-                <TableData>{employee.salary}</TableData>
-                <TableData>61</TableData>
-                <TableData>New York</TableData>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </main>
-  )
-}
-
-function TableHeading(props: React.ComponentProps<'th'>) {
-  return (
-    <th className="h-10 border-b-2 border-black bg-white px-2" {...props} />
-  )
-}
-
-function TableData(props: React.ComponentProps<'td'>) {
-  return (
-    <td className="h-10 whitespace-pre border-b border-black px-2" {...props} />
-  )
-}
