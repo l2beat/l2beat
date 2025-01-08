@@ -120,6 +120,15 @@ export const grvt: Layer2 = zkStackL2({
       description:
         'Permissioned address that must approve each deposit to GRVT.',
     },
+    {
+      name: 'L2 transaction sender role',
+      accounts: discovery.getAccessControlRolePermission(
+        'GRVTTransactionFilterer',
+        'L2_TX_SENDER_ROLE',
+      ),
+      description:
+        'Whitelisted addresses that are permissioned to deposit to deposit via the canonical shared bridge (gated by the GRVTTransactionFilterer).',
+    },
   ],
   milestones: [
     {
