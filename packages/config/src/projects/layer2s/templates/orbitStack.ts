@@ -481,9 +481,9 @@ function orbitStackCommon(
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
-        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
         description:
-          FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
+          FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract').description +
           ` After a delay of ${formatSeconds(
             selfSequencingDelaySeconds,
           )} in which a Sequencer has failed to include a transaction that was directly posted to the smart contract, it can be forcefully included by anyone on the host chain, which finalizes its ordering.`,
