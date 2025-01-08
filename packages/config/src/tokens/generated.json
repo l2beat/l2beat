@@ -437,6 +437,20 @@
       "supply": "zero"
     },
     {
+      "name": "Axelar",
+      "coingeckoId": "axelar",
+      "address": "0x467719aD09025FcC6cF6F8311755809d45a5E5f3",
+      "symbol": "AXL",
+      "decimals": 6,
+      "deploymentTimestamp": 1661795465,
+      "coingeckoListingTimestamp": 1664236800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/27277/large/V-65_xQ1_400x400.jpeg?1696526329",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Axie Infinity Shard",
       "coingeckoId": "axie-infinity",
       "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
@@ -2453,6 +2467,20 @@
       "supply": "zero"
     },
     {
+      "name": "JasmyCoin",
+      "coingeckoId": "jasmycoin",
+      "address": "0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC",
+      "symbol": "JASMY",
+      "decimals": 18,
+      "deploymentTimestamp": 1577339992,
+      "coingeckoListingTimestamp": 1612396800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13876/large/JASMY200x200.jpg?1696513620",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "KEEP Token",
       "coingeckoId": "keep-network",
       "address": "0x85Eee30c52B0b379b046Fb0F85F4f3Dc3009aFEC",
@@ -2854,6 +2882,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Maverick Token",
+      "coingeckoId": "maverick-protocol",
+      "address": "0x7448c7456a97769F6cD04F1E83A4a23cCdC46aBD",
+      "symbol": "MAV",
+      "decimals": 18,
+      "deploymentTimestamp": 1686643043,
+      "coingeckoListingTimestamp": 1687910400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30850/large/MAV_Logo.png?1696529701",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4287,6 +4329,20 @@
       "supply": "zero"
     },
     {
+      "name": "SSV Token",
+      "coingeckoId": "ssv-network",
+      "address": "0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54",
+      "symbol": "SSV",
+      "decimals": 18,
+      "deploymentTimestamp": 1629366524,
+      "coingeckoListingTimestamp": 1634601600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/19155/large/ssv.png?1696518606",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Stake DAO Token",
       "coingeckoId": "stake-dao",
       "address": "0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F",
@@ -4576,6 +4632,20 @@
       "coingeckoListingTimestamp": 1598572800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Swell Governance Token",
+      "coingeckoId": "swell-network",
+      "address": "0x0a6E7Ba5042B38349e437ec6Db6214AEC7B35676",
+      "symbol": "SWELL",
+      "decimals": 18,
+      "deploymentTimestamp": 1721403287,
+      "coingeckoListingTimestamp": 1730937600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28777/large/swell1.png?1727899715",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5038,6 +5108,20 @@
       "coingeckoListingTimestamp": 1727136000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "USUAL",
+      "coingeckoId": "usual",
+      "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E",
+      "symbol": "USUAL",
+      "decimals": 18,
+      "deploymentTimestamp": 1731492515,
+      "coingeckoListingTimestamp": 1734480000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51091/large/USUAL.jpg?1730035787",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
