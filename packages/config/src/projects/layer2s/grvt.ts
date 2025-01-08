@@ -26,11 +26,11 @@ export const grvt: Layer2 = zkStackL2({
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'GRVT',
     slug: 'grvt',
-    // tvlWarning: {
-    //   content:
-    //     'The total TVL includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. The L2 escrow of these tokens [can be found here](https://treasurescan.io/address/0x24DF29723B54DE65f5fbC66a610053e90534631d). L2BEAT is working on a fix.',
-    //   sentiment: 'warning',
-    // },
+    tvlWarning: {
+      content:
+        'L2BEAT is currently unable to track the TVL of the GRVT Validium due to the lack of a public rpc / explorer.',
+      sentiment: 'neutral',
+    },
     description:
       'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being decentralized, featuring self-custodial funds and wallets.',
     links: {
@@ -94,7 +94,7 @@ export const grvt: Layer2 = zkStackL2({
     }),
     discovery.getContractDetails('GRVTBridgeProxy', {
       description:
-        "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds to the L1SharedBridge contract to deposit to GRVT.",
+        "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
     }),
   ],
   nonTemplatePermissions: [
