@@ -6,10 +6,12 @@ export interface DiscoveredTokens {
       address: string
       balance?: number
       value?: number
+      preminted?: true
     }[]
     coingeckoId?: string
     symbol?: string
     marketCap?: number
+    exceedsCirculatingSupply?: true
   }[]
 }
 

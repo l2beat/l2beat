@@ -83,7 +83,10 @@ async function main() {
   const allFoundTokens = new Map<
     string,
     {
-      escrows: Map<string, { balance: number; project: string }>
+      escrows: Map<
+        string,
+        { balance: number; project: string; preminted?: true }
+      >
       coingeckoId?: string
       symbol?: string
     }
@@ -94,7 +97,11 @@ async function main() {
         escrows: new Map(
           t.escrows.map((e) => [
             e.address,
-            { balance: e.balance ?? 0, project: e.project },
+            {
+              balance: e.balance ?? 0,
+              project: e.project,
+              preminted: e.preminted,
+            },
           ]),
         ),
         coingeckoId: t.coingeckoId,
@@ -196,6 +203,7 @@ async function main() {
             address: addr,
             balance: data.balance,
             project: data.project,
+            preminted: data.preminted,
           })),
           coingeckoId: data.coingeckoId,
           symbol: data.symbol,
@@ -275,7 +283,9 @@ async function main() {
           balance: adjustedBalance,
           value: Math.floor(adjustedBalance * tokenPrice),
           project: data.project,
-          preminted: data.balance > circulatingSupply ? true : undefined,
+          preminted:
+            data.preminted ??
+            (data.balance > circulatingSupply ? true : undefined),
         }
       })
       const escrowsBalance = escrows.reduce(
