@@ -996,7 +996,7 @@ export class ProjectDiscovery {
         permission.description,
       )
     })
-    return result
+    return result.map((p) => ({ ...p, discoveryDrivenData: true }))
   }
 
   getDiscoveredContracts(): ScalingProjectContractSingleAddress[] {
@@ -1043,6 +1043,7 @@ export class ProjectDiscovery {
             this.describeContractOrEoa(contract, true),
           ),
           ...upgradableBy,
+          discoveryDrivenData: true,
         })
       })
 

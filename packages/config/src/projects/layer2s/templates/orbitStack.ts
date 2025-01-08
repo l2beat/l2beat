@@ -561,7 +561,6 @@ function orbitStackCommon(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
       templateVars.additionalBadges ?? [],
     ),
-    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 

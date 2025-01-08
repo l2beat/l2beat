@@ -405,7 +405,6 @@ function opStackCommon(
       [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
       templateVars.additionalBadges ?? [],
     ),
-    discoveryDrivenData: templateVars.discoveryDrivenData,
   }
 }
 
