@@ -118,5 +118,5 @@ export interface WarningWithSentiment {
   /** Content of the warning */
   content: string
   /** Color with which the warning should be displayed */
-  sentiment: Extract<Sentiment, 'bad' | 'warning'>
+  sentiment: Extract<Sentiment, 'bad' | 'warning' | 'neutral'>
 }

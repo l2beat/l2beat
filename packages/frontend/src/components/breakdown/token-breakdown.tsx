@@ -3,7 +3,7 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { languageJoin } from '~/utils/language-join'
 import { Square } from '../square'
-import { WarningBar } from '../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../warning-bar'
 import { Breakdown } from './breakdown'
 
 export interface TokenBreakdownProps {
@@ -97,7 +97,7 @@ export function TokenBreakdownTooltipContent({
           key={`tvl-warning-${i}`}
           icon={RoundedWarningIcon}
           text={warning.content}
-          color={warning.sentiment === 'warning' ? 'yellow' : 'red'}
+          color={sentimentToWarningBarColor(warning.sentiment)}
           // Cell itself is a href.
           // Markdown might contain links - nesting them in a tooltip
           // breaks semantics apart causing significant layout shifts.
