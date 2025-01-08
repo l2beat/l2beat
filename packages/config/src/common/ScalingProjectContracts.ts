@@ -50,6 +50,8 @@ export interface ScalingProjectContractSingleAddress {
   }
   /** List of references */
   references?: ScalingProjectReference[]
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
 }
 
 export function isSingleAddress(
