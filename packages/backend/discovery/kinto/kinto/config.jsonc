@@ -309,6 +309,7 @@
         "tokenIdToApp"
       ],
       "ignoreRelatives": ["getReservedContracts", "getSystemContracts"],
+      "ignoreInWatchMode": ["totalSupply", "appCount"],
       "fields": {
         "owner": {
           "severity": "HIGH",
