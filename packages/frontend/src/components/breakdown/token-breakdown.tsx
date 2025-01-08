@@ -67,31 +67,31 @@ export function TokenBreakdownTooltipContent({
     { title: 'Other', value: other, variant: 'other' as const },
   ]
 
-  if (total === 0) {
-    return 'No tokens'
-  }
-
   return (
     <div className="space-y-2">
-      <div>
-        {values.map(
-          (v, i) =>
-            v.value > 0 && (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-x-6"
-              >
-                <span className="flex items-center gap-1">
-                  <Square variant={v.variant} size="small" />
-                  <span>{v.title}</span>
-                </span>
-                <span className="font-medium">
-                  {((v.value / total) * 100).toFixed(2)}%
-                </span>
-              </div>
-            ),
-        )}
-      </div>
+      {total === 0 ? (
+        <span>No tokens</span>
+      ) : (
+        <div>
+          {values.map(
+            (v, i) =>
+              v.value > 0 && (
+                <div
+                  key={i}
+                  className="flex items-center justify-between gap-x-6"
+                >
+                  <span className="flex items-center gap-1">
+                    <Square variant={v.variant} size="small" />
+                    <span>{v.title}</span>
+                  </span>
+                  <span className="font-medium">
+                    {((v.value / total) * 100).toFixed(2)}%
+                  </span>
+                </div>
+              ),
+          )}
+        </div>
+      )}
       {tvlWarnings?.map((warning, i) => (
         <WarningBar
           key={`tvl-warning-${i}`}
