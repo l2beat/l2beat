@@ -157,6 +157,16 @@ export const xlayer: Layer2 = polygonCDKStack({
         'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
     },
     {
+      name: 'RollupManager',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('XLayerValidium', 'rollupManager'),
+        ),
+      ],
+      description:
+        'Permissioned to revert batches that are not yet finalized and to initialize / upgrade the validium contract to a new (existing) version.',
+    },
+    {
       name: 'DACProxyAdminOwner',
       accounts: [
         discovery.formatPermissionedAccount(
