@@ -11,6 +11,7 @@ import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
+import { DaLayerThroughput } from './DaLayerThroughput'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
@@ -21,28 +22,33 @@ export type DaLayer = BlockchainDaLayer | DacDaLayer | EthereumDaLayer
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'PublicBlockchain'
   bridges: (OnChainDaBridge | NoDaBridge)[]
-  /** The period within which full nodes must store and distribute data. @unit seconds */
-  pruningWindow: number
-  /** Details about data availability sampling. */
-  dataAvailabilitySampling?: DataAvailabilitySampling
-  /** The consensus algorithm used by the data availability layer. */
-  consensusAlgorithm: DaConsensusAlgorithm
-  /** Economic security configuration. */
-  economicSecurity?: DaEconomicSecurity
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow: number
+  /** The consensus algorithm used by the data availability layer. */
+  consensusAlgorithm: DaConsensusAlgorithm
+  /** Details about data availability throughput. */
+  throughput?: DaLayerThroughput
+  /** Details about data availability sampling. */
+  dataAvailabilitySampling?: DataAvailabilitySampling
+  /** Economic security configuration. */
+  economicSecurity?: DaEconomicSecurity
 }
 
 export type EthereumDaLayer = CommonDaLayer & {
   kind: 'EthereumDaLayer'
   bridges: [EnshrinedBridge]
+  /** Risks associated with the data availability layer. */
   risks: EthereumDaLayerRisks
-  /** The consensus algorithm used by the data availability layer. */
-  consensusAlgorithm: DaConsensusAlgorithm
-  /** Economic security configuration. */
-  economicSecurity?: DaEconomicSecurity
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
+  /** The consensus algorithm used by the data availability layer. */
+  consensusAlgorithm: DaConsensusAlgorithm
+  /** Details about data availability throughput. */
+  throughput?: DaLayerThroughput
+  /** Economic security configuration. */
+  economicSecurity?: DaEconomicSecurity
 }
 
 export type DacDaLayer = CommonDaLayer & {
