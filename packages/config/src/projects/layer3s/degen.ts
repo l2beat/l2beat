@@ -20,7 +20,7 @@ export const degen: Layer3 = orbitStackL3({
     Badge.RaaS.Alchemy,
   ],
   additionalPurposes: ['Social'],
-  nativeToken: 'DEGEN',
+  gasTokens: ['DEGEN'],
   display: {
     reasonsForBeingOther: [
       REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

@@ -44,7 +44,7 @@ export const molten: Layer3 = orbitStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  nativeToken: 'MOLTEN',
+  gasTokens: ['MOLTEN'],
   associatedTokens: ['MOLTEN'],
   rpcUrl: 'https://molten.calderachain.xyz/http',
   bridge: discovery.getContract('ERC20Bridge'),
