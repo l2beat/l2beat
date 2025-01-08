@@ -148,6 +148,7 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
+  gasTokens?: string[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -156,14 +157,12 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
   hostChain: ProjectId
-  gasTokens?: string[]
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
-  gasTokens?: string[]
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {

@@ -96,6 +96,7 @@ export interface ZkStackConfigCommon {
   additionalBadges?: BadgeId[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  gasTokens?: string[]
 }
 
 export type Upgradeability = {
@@ -319,6 +320,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
