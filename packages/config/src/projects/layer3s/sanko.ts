@@ -64,7 +64,7 @@ export const sanko: Layer3 = orbitStackL3({
     minTimestampForTvl: new UnixTime(1712970000),
     coingeckoPlatform: 'sanko',
   },
-  nativeToken: 'DMT',
+  gasTokens: ['DMT'],
   associatedTokens: ['DMT'],
   rpcUrl: 'https://mainnet.sanko.xyz',
   bridge: discovery.getContract('ERC20Bridge'),

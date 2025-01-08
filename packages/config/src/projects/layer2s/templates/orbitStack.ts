@@ -148,6 +148,7 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
+  gasTokens?: string[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -156,14 +157,12 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
   hostChain: ProjectId
-  nativeToken?: string
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
-  nativeToken?: string
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -802,11 +801,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             templateVars.discovery.getEscrowDetails({
               includeInTotal: false,
               address: templateVars.bridge.address,
-              tokens: templateVars.nativeToken
-                ? [templateVars.nativeToken]
-                : ['ETH'],
-              description: templateVars.nativeToken
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+              tokens: templateVars.gasTokens ?? ['ETH'],
+              description: templateVars.gasTokens
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
@@ -1046,11 +1043,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: templateVars.nativeToken
-            ? [templateVars.nativeToken]
-            : ['ETH'],
-          description: templateVars.nativeToken
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+          tokens: templateVars.gasTokens ?? ['ETH'],
+          description: templateVars.gasTokens
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
             : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
           ...upgradeability,
         }),

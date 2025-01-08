@@ -78,6 +78,7 @@ export interface PolygonCDKStackConfig {
   associatedTokens?: string[]
   additionalBadges?: BadgeId[]
   additionalPurposes?: ScalingProjectPurpose[]
+  gasTokens?: string[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -174,6 +175,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
       escrows: templateVars.nonTemplateEscrows,
       transactionApi:
         templateVars.transactionApi ??
