@@ -1,8 +1,8 @@
 {
   "name": "grvt",
   "chain": "ethereum",
-  "blockNumber": 21573781,
-  "configHash": "0xddb918a011c556bfee51b30bd9ab561a2cf193247712dd004fcd20863fb5ce10",
+  "blockNumber": 21578866,
+  "configHash": "0x35ca969755d07174650f2df892e33267574c94be867916fe1ef2befba2b307b2",
   "contracts": [
     {
       "name": "GrvtChainAdminMultisig",
@@ -74,9 +74,25 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xF29bFff344c7ef0186432fE30C39fda0cca0550b"]
+          },
+          "L2_TX_SENDER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0xe81d64195072e4d09639b31Abb257d0096FEa9d1",
+              "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+              "0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
+              "0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
+            ]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_TX_SENDER_ROLE": "0xe2cf43bd009fb6c7b5c7b6d5cae83b0c49a676ef5ee3c3e94016e6c31e8b6fd2"
-      }
+      },
+      "derivedName": "GRVTTransactionFilterer"
     },
     {
       "name": "GrvtZkEvmAdmin",
@@ -150,7 +166,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "GRVTBaseToken",
         "symbol": "GBT",
-        "totalSupply": "5300541194335152988749892502228755547482451690626866874482736303147759325"
+        "totalSupply": "5300541194335152988749892502228755547482451690626866874483625941399759325"
       }
     },
     {
@@ -352,19 +368,19 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
+        "getPriorityQueueSize": 2,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 205,
-        "getTotalBatchesExecuted": 199,
-        "getTotalBatchesVerified": 203,
-        "getTotalBlocksCommitted": 205,
-        "getTotalBlocksExecuted": 199,
-        "getTotalBlocksVerified": 203,
-        "getTotalPriorityTxs": 265,
+        "getTotalBatchesCommitted": 210,
+        "getTotalBatchesExecuted": 202,
+        "getTotalBatchesVerified": 210,
+        "getTotalBlocksCommitted": 210,
+        "getTotalBlocksExecuted": 202,
+        "getTotalBlocksVerified": 210,
+        "getTotalPriorityTxs": 267,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -396,6 +412,21 @@
         "daMode": { "description": "0 = rollup; 1 = Validium" }
       },
       "derivedName": "DiamondProxy"
+    },
+    {
+      "name": "Governance",
+      "address": "0xe81d64195072e4d09639b31Abb257d0096FEa9d1",
+      "sourceHashes": [
+        "0x200762223206dfe40a648627db22f3403b1bdb04c59d8753a1e7525591876fda"
+      ],
+      "sinceTimestamp": 1730964035,
+      "values": {
+        "$immutable": true,
+        "minDelay": 0,
+        "owner": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "securityCouncil": "0x0000000000000000000000000000000000000000"
+      }
     }
   ],
   "eoas": [
@@ -627,6 +658,38 @@
       "function priorityQueueFrontOperation() view returns (tuple(bytes32 canonicalTxHash, uint64 expirationTimestamp, uint192 layer2Tip))",
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
+    ],
+    "0xe81d64195072e4d09639b31Abb257d0096FEa9d1": [
+      "constructor(address _admin, address _securityCouncil, uint256 _minDelay)",
+      "event ChangeMinDelay(uint256 _delayBefore, uint256 _delayAfter)",
+      "event ChangeSecurityCouncil(address _securityCouncilBefore, address _securityCouncilAfter)",
+      "event OperationCancelled(bytes32 indexed _id)",
+      "event OperationExecuted(bytes32 indexed _id)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ShadowOperationScheduled(bytes32 indexed _id, uint256 delay)",
+      "event TransparentOperationScheduled(bytes32 indexed _id, uint256 delay, tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation)",
+      "function acceptOwnership()",
+      "function cancel(bytes32 _id)",
+      "function execute(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation) payable",
+      "function executeInstant(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation) payable",
+      "function getOperationState(bytes32 _id) view returns (uint8)",
+      "function hashOperation(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation) pure returns (bytes32)",
+      "function isOperation(bytes32 _id) view returns (bool)",
+      "function isOperationDone(bytes32 _id) view returns (bool)",
+      "function isOperationPending(bytes32 _id) view returns (bool)",
+      "function isOperationReady(bytes32 _id) view returns (bool)",
+      "function minDelay() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function scheduleShadow(bytes32 _id, uint256 _delay)",
+      "function scheduleTransparent(tuple(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) _operation, uint256 _delay)",
+      "function securityCouncil() view returns (address)",
+      "function timestamps(bytes32 operationId) view returns (uint256 executionTimestamp)",
+      "function transferOwnership(address newOwner)",
+      "function updateDelay(uint256 _newDelay)",
+      "function updateSecurityCouncil(address _newSecurityCouncil)"
     ],
     "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a": [
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)",

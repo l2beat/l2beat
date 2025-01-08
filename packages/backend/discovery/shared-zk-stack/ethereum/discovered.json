@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21543858,
-  "configHash": "0xa25551c44b45705357b49bfa42e1c5ba88292bdf03753ba9f7423b62f86983f1",
+  "blockNumber": 21578989,
+  "configHash": "0x6df0ac5890932228ef162e50fab913768c569d091daad0bb753a87dd4a00c8f3",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -1081,6 +1081,7 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
+    { "address": "0x0b114d4675Cb79507e68F2616c93e124122c6ef0" },
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },

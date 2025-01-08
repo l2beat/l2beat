@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcb9e6d5baff3edaf921a71207f19d4ff84aff2f1
+Generated with discovered.json: 0xaedfc8672ed8643c080361541d55306a954dc25e
 
-# Diff at Tue, 07 Jan 2025 16:27:30 GMT:
+# Diff at Wed, 08 Jan 2025 09:29:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21573781
+- current block number: 21578866
 
 ## Description
 
@@ -50,5 +50,11 @@ Initial discovery of a standard ZK stack Validium.
 ```diff
 +   Status: CREATED
     contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0xe81d64195072e4d09639b31Abb257d0096FEa9d1)
     +++ description: None
 ```

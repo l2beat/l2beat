@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,7 +11,6 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
   'shared-zk-stack',
   'zksync2',
 )
-const bridge = discovery.getContract('L1SharedBridge')
 
 export const grvt: Layer2 = zkStackL2({
   discovery,
@@ -48,34 +47,7 @@ export const grvt: Layer2 = zkStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  // associatedTokens: [''],
-  // rpcUrl: '',
-  // chainConfig: {
-  //   name: 'grvt',
-  //   chainId: 325,
-  //   explorerUrl: '',
-  //   minTimestampForTvl: new UnixTime(),
-  // },
   diamondContract: discovery.getContract('GrvtZkEvm'),
-  nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
-    discovery.getEscrowDetails({
-      address: bridge.address,
-      tokens: ['MAGIC'],
-      description:
-        'Shared bridge for depositing tokens to GRVT and other ZK stack chains.',
-      sharedEscrow: {
-        type: 'ElasticChain',
-        l2BridgeAddress: EthereumAddress(
-          '0xfC1d5dCD080121DaAF366625581ad490414EF294',
-        ),
-        l2EtherAddress: EthereumAddress(
-          '0x650BE505C391d396A1e0b1f2337EaE77F064fF7f', // unverified
-        ),
-        tokensToAssignFromL1: ['MAGIC'], // will apparently be bridged externally at a later point
-      },
-      ...zkStackUpgrades,
-    }),
-  ],
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
@@ -143,21 +115,19 @@ export const grvt: Layer2 = zkStackL2({
     {
       name: 'DepositApprover',
       accounts: [
-        discovery.getPermissionedAccount(
-          'GRVTBridgeProxy',
-          'depositApprover',
-        ),
+        discovery.getPermissionedAccount('GRVTBridgeProxy', 'depositApprover'),
       ],
-      description: 'Permissioned address that must approve each deposit to GRVT.',
+      description:
+        'Permissioned address that must approve each deposit to GRVT.',
     },
   ],
   milestones: [
-    // {
-    //   name: 'Mainnet launch',
-    //   link: '',
-    //   date: '2024-12-00T00:00:00Z',
-    //   description: 'GRVT mainnet launches for all users.',
-    //   type: 'general',
-    // },
+    {
+      name: 'Mainnet alpha launch',
+      link: 'https://grvt.io/blog/grvt-mainnet-alpha-first-hour-15-million/',
+      date: '2024-12-20T00:00:00Z',
+      description: 'GRVT mainnet alpha launches for all users.',
+      type: 'general',
+    },
   ],
 })
