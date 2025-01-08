@@ -78,7 +78,7 @@ export function ScalingActivityTabs({
             Rollups{' '}
             <CountBadge>{filteredEntries.rollups.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length - 1}
@@ -104,7 +104,7 @@ export function ScalingActivityTabs({
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent
-            value="validiums-and-optimiums"
+            value="validiumsAndOptimiums"
             className="main-page-card pt-5"
           >
             <ActivityChart

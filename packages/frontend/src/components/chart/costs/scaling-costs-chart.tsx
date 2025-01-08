@@ -71,7 +71,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
       type: 'projects',
       projectIds: filteredEntries.map((project) => project.id),
     }
-  }, [filteredEntries, filters, tab])
+  }, [filteredEntries, filters.isEmpty, tab])
 
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
