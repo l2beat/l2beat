@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 import { SentimentText } from '../../sentiment-text'
-import { WarningBar } from '../../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { PizzaRosetteLabels } from '../pizza/pizza-rosette-labels'
 import {
   IndividualPizzaRosetteIcon,
@@ -117,7 +117,7 @@ function RosetteTooltipContent() {
           <WarningBar
             icon={RoundedWarningIcon}
             text={content.outer.warning.value}
-            color={content.outer.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+            color={sentimentToWarningBarColor(content.outer.warning.sentiment)}
           />
         )}
         <span className="text-xs">{content.outer.description}</span>
@@ -136,7 +136,7 @@ function RosetteTooltipContent() {
           <WarningBar
             icon={RoundedWarningIcon}
             text={content.inner.warning.value}
-            color={content.inner.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+            color={sentimentToWarningBarColor(content.inner.warning.sentiment)}
           />
         )}
 
