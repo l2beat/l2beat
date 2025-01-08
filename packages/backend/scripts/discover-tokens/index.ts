@@ -123,8 +123,6 @@ async function main() {
     assert(etherscanClient, `Etherscan client for chain ${chain} not found`)
 
     for (const escrow of chainEscrows) {
-      if (escrow.address === '0x4e798659b9846F1da7B6D6B5d09d581270aB6FEC')
-        continue
       console.log(
         `Checking logs for escrow: ${escrow.address} - ${chainEscrows.findIndex((e) => e.address === escrow.address) + 1}/${chainEscrows.length} on ${escrow.chain}`,
       )
