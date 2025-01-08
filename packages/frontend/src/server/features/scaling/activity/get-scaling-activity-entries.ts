@@ -22,7 +22,7 @@ import {
 import { getActivityProjects } from './utils/get-activity-projects'
 
 export async function getScalingActivityEntries() {
-  const projects = getActivityProjects()
+  const projects = getActivityProjects().filter((p) => !p.isArchived)
   const [projectsChangeReport, activityData] = await Promise.all([
     getProjectsChangeReport(),
     getActivityTable(projects),
