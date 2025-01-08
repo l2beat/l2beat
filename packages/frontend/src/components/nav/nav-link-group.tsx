@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import {
@@ -59,7 +59,7 @@ function NavLinkMultipleGroup({
 }: { group: Extract<NavGroup, { type: 'multiple' }> }) {
   const pathname = usePathname()
   const isActive = getIsActive({ pathname, group })
-  const isMobile = useIsMobile()
+  const breakpoint = useBreakpoint()
 
   const [open, setOpen] = useState(isActive)
 
@@ -70,7 +70,7 @@ function NavLinkMultipleGroup({
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
-      {isMobile ? (
+      {breakpoint === 'mobile' || breakpoint === 'tablet' ? (
         <CollapsibleTrigger
           className="group flex cursor-pointer items-center gap-1.5 p-1.5"
           data-active={isActive}
@@ -88,14 +88,14 @@ function NavLinkMultipleGroup({
           </div>
           <ChevronIcon
             className={cn(
-              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 data-[state=open]:rotate-0',
+              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
               isActive && 'fill-brand',
             )}
           />
         </CollapsibleTrigger>
       ) : (
         <div
-          className="group flex cursor-pointer items-center gap-1.5 p-1.5"
+          className="group flex cursor-pointer items-center p-1.5"
           data-active={isActive}
         >
           <Link
@@ -113,10 +113,10 @@ function NavLinkMultipleGroup({
               {group.title}
             </span>
           </Link>
-          <CollapsibleTrigger asChild>
+          <CollapsibleTrigger className="group size-6">
             <ChevronIcon
               className={cn(
-                'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 data-[state=open]:rotate-0',
+                'm-auto size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
                 isActive && 'fill-brand',
               )}
             />
