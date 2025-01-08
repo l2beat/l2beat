@@ -35,7 +35,7 @@ export const playblock: Layer3 = orbitStackL3({
     activityDataSource: 'Blockchain RPC',
   },
   // not on coingecko
-  // nativeToken: 'PBG',
+  // gasTokens: ['PBG'],
   // associatedTokens: ['PBG'],
   rpcUrl: 'https://playnance.drpc.org/',
   bridge: discovery.getContract('Bridge'),

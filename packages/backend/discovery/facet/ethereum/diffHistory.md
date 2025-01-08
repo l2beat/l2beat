@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7cf027e6e1d79c780e4032052354bca1a07a911b
+
+# Diff at Wed, 08 Jan 2025 09:39:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3870091bac574174d64874eed9f76e846e3c3c9e block: 21543602
+- current block number: 21543602
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543602 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
 Generated with discovered.json: 0x54e0eea976975dbaf70c242572171682ad00ba8a
 
 # Diff at Fri, 03 Jan 2025 11:17:26 GMT:

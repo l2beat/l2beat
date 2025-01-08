@@ -1,12 +1,12 @@
 import { ScalingProjectRiskViewEntry } from '../../../common'
 
 function NATIVE_AND_CANONICAL(
-  nativeTokens: string,
+  gasTokens: string[],
   isAre: 'is' | 'are' = 'is',
 ): ScalingProjectRiskViewEntry {
   return {
     value: 'Native & Canonical',
-    description: `${nativeTokens} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
+    description: `${gasTokens.join(', ')} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
     sentiment: 'good',
   }
 }

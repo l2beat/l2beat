@@ -169,6 +169,12 @@ export const swell: Layer2 = {
     },
     finality: { finalizationPeriod: maxClockDuration },
   },
+  chainConfig: {
+    name: 'swell',
+    chainId: 1923,
+    // coingeckoPlatform: '',
+    minTimestampForTvl: new UnixTime(1732696703),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -317,7 +323,7 @@ export const swell: Layer2 = {
     },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
           text: 'Sequencing Window - OP Mainnet Specs',

@@ -46,17 +46,7 @@ export const skaleIMA: Bridge = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
         sinceTimestamp: new UnixTime(1626719900),
-        tokens: [
-          'RAZOR',
-          'USDP',
-          'USDC',
-          'SKL',
-          'DAI',
-          'USDT',
-          'WBTC',
-          // 'HMT',
-          'LINK',
-        ],
+        tokens: '*',
       }),
     ],
   },

@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure/build/types/UnixTime'
-import { OPERATOR, RISK_VIEW } from '../../common'
+import { FORCE_TRANSACTIONS, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -18,7 +18,6 @@ export const facet: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.Other.BasedSequencing],
   display: {
-    category: 'Other',
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Facet',
     slug: 'facet',
@@ -27,7 +26,7 @@ export const facet: Layer2 = opStackL2({
     links: {
       websites: ['https://facet.org/'],
       apps: ['https://facetswap.com/bridge'],
-      documentation: ['https://docs.facet.org/docs/facet-network/intro'],
+      documentation: ['https://docs.facet.org/'],
       explorers: ['https://explorer.facet.org/'],
       repositories: ['https://github.com/0xFacet'],
       socialMedia: [
@@ -53,6 +52,7 @@ export const facet: Layer2 = opStackL2({
   },
   nonTemplateTechnology: {
     operator: OPERATOR.DECENTRALIZED_OPERATOR,
+    forceTransactions: FORCE_TRANSACTIONS.CANONICAL_ORDERING('EOA inbox'),
     exitMechanisms: [
       {
         name: 'Withdrawals are initiated on L1',
@@ -93,5 +93,6 @@ export const facet: Layer2 = opStackL2({
   ],
   discoveryDrivenData: true,
   usesBlobs: false, // uses calldata
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
+  nodeSourceLink: 'https://github.com/0xFacet/facet-node',
 })

@@ -81,7 +81,6 @@ async function withTemporaryFile<T>(
   const file = randomSqlFile()
   const sqlCache = new SQLiteCache(file)
   const rqe = rawQueryExecutor(file)
-  await sqlCache.init()
 
   return fn(sqlCache, rqe).finally(() => destroyFile(file))
 }

@@ -1,7 +1,7 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
-import { WarningBar } from '../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../warning-bar'
 import { Breakdown } from './breakdown'
 
 export interface ValueLockedBreakdownProps {
@@ -95,7 +95,7 @@ export function ValueLockedBreakdownTooltipContent({
           key={`tvl-warning-${i}`}
           icon={RoundedWarningIcon}
           text={warning.content}
-          color={warning.sentiment === 'warning' ? 'yellow' : 'red'}
+          color={sentimentToWarningBarColor(warning.sentiment)}
           // Cell itself is a href.
           // Markdown might contain links - nesting them in a tooltip
           // breaks semantics apart causing significant layout shifts.

@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 21388295,
-  "configHash": "0x79d49d9effb8a6c58de654b752c387415fcda5505d682b2eac7dc0d4b0c478bc",
+  "blockNumber": 21573134,
+  "configHash": "0x1ce9d91b7f610fbffec3e6c021c94415233838f9ad2e4ae3992123728bd79f31",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -219,7 +219,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 11 (27%)",
-        "nonce": 45,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -311,7 +311,7 @@
         "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
@@ -412,7 +412,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 45,
+        "nonce": 49,
         "VERSION": "1.3.0"
       }
     },
@@ -451,7 +451,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 1034,
+        "gameCount": 1649,
         "gameImpls": [
           "0xCd3c0194db74C23807D4B90A5181e1B28cF7007C",
           "0x19009dEBF8954B610f207D5925EEDe827805986e",
@@ -526,8 +526,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 21388295
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 21573133
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -754,7 +754,7 @@
         "batchInbox": "0xFf00000000000000000000000000000000008453",
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-        "gasLimit": 216000000,
+        "gasLimit": 240000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -886,6 +886,15 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "Escrow",
+      "address": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+      "sourceHashes": [
+        "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50"
+      ],
+      "sinceTimestamp": 1728571115,
+      "values": { "$immutable": true }
+    },
+    {
       "name": "OpFoundationUpgradeSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
@@ -958,7 +967,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292950325",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292973075",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2033,6 +2042,16 @@
     "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": [
       "constructor(address _singleton)"
     ],
+    "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3": [
+      "constructor()",
+      "event Approve(address indexed token, address indexed spender, uint256 value)",
+      "event Deny(address indexed usr)",
+      "event Rely(address indexed usr)",
+      "function approve(address token, address spender, uint256 value)",
+      "function deny(address usr)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
+    ],
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": [
       "constructor(address _singleton)"
     ],
@@ -2466,7 +2485,7 @@
     "opstack/FaultDisputeGame": "0x13c00629d1406189585916b7c064866ef28d46eca1386f94420d952f0b5e4199",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L1StandardBridge": "0x7646e8d311af4d3b67dc674e167b6f42a20accc7ae822efd2d49ad8ab877f7bf",
     "opstack/MIPS": "0x2c304ef99a23cb31331231c111188b04a54bacddeaac088b13abd2c81ff74217",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal2": "0xdb11d2f7a8ea7a7cf25298feb8edc6f567ae5eca0d6f3acde5323cd958b9a50f",

@@ -135,7 +135,7 @@ export const bugbuster: Layer3 = {
       references: [],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [],
     },
     exitMechanisms: [

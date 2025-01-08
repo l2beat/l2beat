@@ -6,7 +6,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { WarningBar } from '~/components/warning-bar'
+import {
+  WarningBar,
+  sentimentToWarningBarColor,
+} from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type FinalityDataPoint } from '~/server/features/scaling/finality/schema'
 import { type SyncStatus } from '~/types/sync-status'
@@ -103,15 +106,7 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           <WarningBar
             className="mt-2"
             icon={RoundedWarningIcon}
-            color={
-              (
-                {
-                  bad: 'red',
-                  neutral: 'gray',
-                  warning: 'yellow',
-                } as const
-              )[props.warning.sentiment]
-            }
+            color={sentimentToWarningBarColor(props.warning.sentiment)}
             text={props.warning.value}
             ignoreMarkdown
           />

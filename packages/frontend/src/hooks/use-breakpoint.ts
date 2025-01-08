@@ -21,3 +21,8 @@ export function useBreakpoint() {
 
   return breakpoint
 }
+
+export function useIsMobile() {
+  const breakpoint = useBreakpoint()
+  return breakpoint === 'mobile'
+}

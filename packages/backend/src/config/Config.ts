@@ -169,7 +169,8 @@ export interface MetricsAuthConfig {
 
 export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
-  readonly enableCache?: boolean
+  readonly cacheEnabled?: boolean
+  readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
 }

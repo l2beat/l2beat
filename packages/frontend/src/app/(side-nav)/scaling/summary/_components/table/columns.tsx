@@ -74,9 +74,6 @@ export const scalingSummaryColumns = [
       header: 'Total value locked',
       cell: (ctx) => {
         const value = ctx.row.original.tvl
-        if (value.breakdown?.total === undefined) {
-          return <NoDataBadge />
-        }
 
         return (
           <TotalCell
