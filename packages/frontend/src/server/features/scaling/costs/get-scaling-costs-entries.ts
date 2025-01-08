@@ -17,7 +17,7 @@ export async function getScalingCostsEntries() {
     getProjectsLatestTvlUsd(),
     getProjectsChangeReport(),
   ])
-  const projects = getCostsProjects()
+  const projects = getCostsProjects().filter((p) => !p.isArchived)
 
   const entries = projects
     .map((project) =>
