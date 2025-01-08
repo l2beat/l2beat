@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1708aa733e79961423c6d5c1028f063e43411f09
+Generated with discovered.json: 0x5c17c6f6b6df18d014267565224c68e1ed6b123f
 
-# Diff at Wed, 08 Jan 2025 10:44:51 GMT:
+# Diff at Wed, 08 Jan 2025 15:07:42 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@20bf0eaa1dce373e2c004314fef59d2d1bdf5502 block: 21465190
-- current block number: 21465190
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21465190
+- current block number: 21580548
 
 ## Description
 
