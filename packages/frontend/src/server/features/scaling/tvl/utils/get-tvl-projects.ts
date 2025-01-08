@@ -77,13 +77,15 @@ const backendProjects = [
 ]
 
 export function getTvlProjects(
-  filter: (p: BaseProject) => boolean,
+  filter: (p: Layer2 | Layer3 | Bridge) => boolean,
 ): TvlProject[] {
-  const filteredProjects = backendProjects
+  const filteredProjects = projects
     .filter((p) => filter(p))
+    .map(toBackendProject)
     .filter(
       (project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.projectId),
     )
+  console.log(projects.filter((p) => filter(p)))
 
   const tvlAmounts = getTvlAmountsConfig(backendProjects)
   const tvlAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
