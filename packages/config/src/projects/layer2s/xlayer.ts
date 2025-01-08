@@ -72,7 +72,7 @@ export const xlayer: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          text: 'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
           href: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
