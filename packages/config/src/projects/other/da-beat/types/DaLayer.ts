@@ -11,7 +11,7 @@ import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
-import { DaLayerBatch } from './DaLayerBatch'
+import { DaLayerThroughput } from './DaLayerThroughput'
 import { DaLinks } from './DaLinks'
 import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
@@ -28,8 +28,8 @@ export type BlockchainDaLayer = CommonDaLayer & {
   pruningWindow: number
   /** The consensus algorithm used by the data availability layer. */
   consensusAlgorithm: DaConsensusAlgorithm
-  /** Details about data availability batch. */
-  batch?: DaLayerBatch
+  /** Details about data availability throughput. */
+  throughput?: DaLayerThroughput
   /** Details about data availability sampling. */
   dataAvailabilitySampling?: DataAvailabilitySampling
   /** Economic security configuration. */
@@ -45,8 +45,8 @@ export type EthereumDaLayer = CommonDaLayer & {
   pruningWindow: number
   /** The consensus algorithm used by the data availability layer. */
   consensusAlgorithm: DaConsensusAlgorithm
-  /** Details about data availability batch. */
-  batch?: DaLayerBatch
+  /** Details about data availability throughput. */
+  throughput?: DaLayerThroughput
   /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
 }

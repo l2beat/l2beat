@@ -142,7 +142,7 @@ export const celestia: BlockchainDaLayer = {
     erasureCodingProof: DasErasureCodingProof.FraudProofs,
   },
   pruningWindow: 86400 * 30, // 30 days in seconds
-  batch: {
+  throughput: {
     size: 2000, // 2 MB
     frequency: 6, // 6 seconds
   },

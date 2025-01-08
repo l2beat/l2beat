@@ -1,4 +1,4 @@
-export type DaLayerBatch = {
+export type DaLayerThroughput = {
   /**
    * Batch size for data availability. Together with batchFrequency it determines max throughput.
    * @unit KB - kilobytes
