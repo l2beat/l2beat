@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 21579375,
+  "blockNumber": 21579692,
   "configHash": "0x9cd35feb2e6a028f535bd6c9bb9f33a3b5b0009302094f91a91ee7a540544d68",
   "contracts": [
     {
@@ -125,7 +125,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 171254,
+        "batchCount": 171274,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -163,7 +163,7 @@
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 416661,
+        "totalDelayedMessagesRead": 416682,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -948,11 +948,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 416664,
+        "delayedMessageCount": 416684,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 171254,
-        "sequencerReportedSubMessageCount": 81431349
+        "sequencerMessageCount": 171274,
+        "sequencerReportedSubMessageCount": 81433196
       }
     },
     {
@@ -1680,12 +1680,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 21707,
+        "firstUnresolvedNode": 21708,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 21706,
-        "latestNodeCreated": 21859,
+        "latestConfirmed": 21707,
+        "latestNodeCreated": 21860,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",

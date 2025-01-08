@@ -1,14 +1,52 @@
-Generated with discovered.json: 0xe968c621aaa2623e1daccbecc30444f042dc1a30
+Generated with discovered.json: 0x9bfed01e3eec698c905f63e740b988a76f5e376f
 
-# Diff at Wed, 08 Jan 2025 10:44:52 GMT:
+# Diff at Wed, 08 Jan 2025 12:15:39 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@20bf0eaa1dce373e2c004314fef59d2d1bdf5502 block: 21465192
-- current block number: 21465192
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21465192
+- current block number: 21579692
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+SC sync / member address rotation.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.$members.9:
+-        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+      values.$members.8:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
+      values.$members.7:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+      values.$members.6:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.$members.5:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+      values.$members.4:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+      values.$members.3:
+-        "0xeA4A4A886aCA47DD0167B4aEE5B1345e18D20Ee5"
++        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+      values.$members.2:
+-        "0x1716C1C037e4968D5A06d4d080904F9B7a6508f2"
++        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.1:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.0:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
+    }
+```
 
 ## Config/verification related changes
 
