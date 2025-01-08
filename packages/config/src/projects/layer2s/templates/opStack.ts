@@ -285,7 +285,7 @@ function opStackCommon(
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
-        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
         references: [
           {
             text: 'Sequencing Window - OP Mainnet Specs',
