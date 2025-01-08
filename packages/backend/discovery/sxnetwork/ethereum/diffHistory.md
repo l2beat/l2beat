@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc23d6aad76ddbfabbbbc158f26e88d9575b3c638
+
+# Diff at Wed, 08 Jan 2025 10:44:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@20bf0eaa1dce373e2c004314fef59d2d1bdf5502 block: 21465245
+- current block number: 21465245
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465245 (main branch discovery), not current.
+
+```diff
+    contract ERC20Bridge (0xa104C0426e95a5538e89131DbB4163d230C35f86) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      description:
+-        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
++        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0xf1a7ffa950d9d7ed2332e2d1cf0bda05022be80b
 
 # Diff at Mon, 23 Dec 2024 12:40:44 GMT:
