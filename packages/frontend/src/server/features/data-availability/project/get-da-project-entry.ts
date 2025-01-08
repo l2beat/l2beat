@@ -2,6 +2,7 @@ import {
   type BlockchainDaLayer,
   type DaBridge,
   type DaLayer,
+  type DaLayerBatch,
   type DacBridge,
   type DacDaLayer,
   type EthereumDaLayer,
@@ -75,7 +76,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     links: ProjectLink[]
     economicSecurity: EconomicSecurityData | undefined
     durationStorage: number | undefined
-    spaceAvailable: number | undefined
+    batch: DaLayerBatch | undefined
     numberOfOperators: number | undefined
     usedIn: UsedInProject[]
   }
@@ -88,7 +89,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     tvs: number
     economicSecurity: EconomicSecurityData | undefined
     durationStorage: number
-    spaceAvailable: number | undefined
+    batch: DaLayerBatch | undefined
     usedIn: UsedInProject[]
     bridgeName: string
     callout: {
@@ -197,10 +198,7 @@ export async function getDaProjectEntry(
       economicSecurity,
       durationStorage:
         daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
-      spaceAvailable:
-        daLayer.kind === 'PublicBlockchain'
-          ? daLayer.spaceAvailable
-          : undefined,
+      batch: daLayer.kind === 'PublicBlockchain' ? daLayer.batch : undefined,
       numberOfOperators: daLayer.numberOfOperators,
       usedIn: daLayer.bridges
         .flatMap((bridge) => bridge.usedIn)
@@ -259,7 +257,7 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: daLayer.pruningWindow,
-      spaceAvailable: daLayer.spaceAvailable,
+      batch: daLayer.batch,
       usedIn: usedInByTvlDesc,
       bridgeName: daBridge.display.name,
       callout: {

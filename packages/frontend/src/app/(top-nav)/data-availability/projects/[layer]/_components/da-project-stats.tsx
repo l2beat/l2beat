@@ -17,7 +17,7 @@ import {
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { formatSize } from '~/utils/number-format/format-size'
+import { formatThroughput } from '~/utils/number-format/format-throughput'
 
 interface Props {
   stats: ProjectStat[]
@@ -162,10 +162,14 @@ export function getCommonDaProjectStats(
     ...durationOfStorage,
   })
 
-  if (project.header.spaceAvailable) {
+  if (project.header.batch) {
     stats.push({
-      title: 'Space available',
-      value: formatSize(project.header.spaceAvailable, { fromUnit: 'KB' }),
+      title: 'Max throughput',
+      value: formatThroughput(
+        project.header.batch.size,
+        project.header.batch.frequency,
+        { fromUnit: 'KB' },
+      ),
     })
   }
 
