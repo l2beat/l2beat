@@ -1,4 +1,5 @@
 import { type Layer2, layer2s } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { isProjectOther } from '../../utils/is-project-other'
 
@@ -30,15 +31,19 @@ export function getCostsProjects(
 function filterToCondition(
   filter: CostsProjectsFilter,
 ): (p: Layer2) => boolean {
-  if (filter.type === 'others') {
-    return (p) => isProjectOther(p)
+  switch (filter.type) {
+    case 'all':
+      return () => true
+    case 'rollups':
+      return (p) =>
+        (p.display.category === 'Optimistic Rollup' ||
+          p.display.category === 'ZK Rollup') &&
+        !isProjectOther(p)
+    case 'others':
+      return (p) => isProjectOther(p)
+    case 'projects':
+      return (p) => new Set(filter.projectIds).has(p.id)
+    default:
+      assertUnreachable(filter)
   }
-  if (filter.type === 'rollups') {
-    return (p) =>
-      p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup'
-  }
-
-  // All projects
-  return () => true
 }
