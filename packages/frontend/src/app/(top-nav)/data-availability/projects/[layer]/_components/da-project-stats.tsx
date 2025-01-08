@@ -162,12 +162,12 @@ export function getCommonDaProjectStats(
     ...durationOfStorage,
   })
 
-  if (project.header.batch) {
+  if (project.header.throughput) {
     stats.push({
       title: 'Max throughput',
       value: formatThroughput(
-        project.header.batch.size,
-        project.header.batch.frequency,
+        project.header.throughput.size,
+        project.header.throughput.frequency,
         { fromUnit: 'KB' },
       ),
     })
