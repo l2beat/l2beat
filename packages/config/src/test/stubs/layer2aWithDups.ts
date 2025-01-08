@@ -95,7 +95,9 @@ export const layer2aWithDups: Layer2 = {
     },
     dataAvailability: { ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL },
     operator: { ...OPERATOR.CENTRALIZED_SEQUENCER },
-    forceTransactions: { ...FORCE_TRANSACTIONS.CANONICAL_ORDERING },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+    },
     exitMechanisms: [],
     otherConsiderations: [
       {
