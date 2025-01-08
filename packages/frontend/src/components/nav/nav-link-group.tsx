@@ -65,9 +65,7 @@ function NavLinkMultipleGroup({
 
   useEffect(() => {
     const isActive = getIsActive({ pathname, group })
-    if (isActive) {
-      setOpen(true)
-    }
+    setOpen(isActive)
   }, [group, pathname])
 
   return (
