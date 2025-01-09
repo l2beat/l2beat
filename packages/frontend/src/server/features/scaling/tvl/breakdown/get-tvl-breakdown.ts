@@ -85,9 +85,16 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
               isSharedEscrow,
             })
           } else {
+            if (
+              priceConfig.assetId ===
+              'ethereum-0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC'
+            ) {
+              console.log(config.chain, chainConverter.toChainId(config.chain))
+            }
+
             breakdown.canonical.set(priceConfig.assetId, {
               assetId: priceConfig.assetId,
-              chainId: chainConverter.toChainId(config.chain),
+              chainId: chainConverter.toChainId(priceConfig.chain),
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
