@@ -27,6 +27,7 @@ import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
+import { corn } from './corn'
 import { coti } from './coti'
 import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
@@ -223,6 +224,7 @@ export const layer2s: Layer2[] = [
   cyber,
   canvasconnect,
   coti,
+  corn,
   creator,
   cronoszkevm,
   dbk,
