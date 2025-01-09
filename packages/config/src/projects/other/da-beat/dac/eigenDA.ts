@@ -2,11 +2,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DacDaLayer } from '../types/DaLayer'
+import { DaServiceDaLayer } from '../types/DaLayer'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './bridges/eigenDABridge'
 
-export const eigenDA: DacDaLayer = {
+export const eigenDA: DaServiceDaLayer = {
   id: 'eigen-da',
   type: 'DaLayer',
   kind: 'DA Service',

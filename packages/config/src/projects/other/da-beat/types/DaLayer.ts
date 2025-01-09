@@ -17,7 +17,11 @@ import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { EthereumDaLayerRisks } from './EthereumDaRisks'
 
-export type DaLayer = BlockchainDaLayer | DacDaLayer | EthereumDaLayer
+export type DaLayer =
+  | BlockchainDaLayer
+  | DacDaLayer
+  | EthereumDaLayer
+  | DaServiceDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'PublicBlockchain'
@@ -52,7 +56,14 @@ export type EthereumDaLayer = CommonDaLayer & {
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: 'DAC' | 'DA Service' | 'No DAC'
+  kind: 'DAC' | 'No DAC'
+  bridges: (DacBridge | NoDaBridge)[]
+  /** Risks associated with the data availability layer. */
+  risks: DaLayerRisks
+}
+
+export type DaServiceDaLayer = CommonDaLayer & {
+  kind: 'DA Service'
   bridges: (DacBridge | NoDaBridge)[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks

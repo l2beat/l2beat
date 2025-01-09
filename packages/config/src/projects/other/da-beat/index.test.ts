@@ -24,7 +24,7 @@ describe('DA-BEAT', () => {
       const getFlatLinks = (links: Record<string, string[]>) =>
         Object.values(links).flatMap((link) => link)
 
-      const links = getFlatLinks(layer.display.links)
+      const links = getFlatLinks(layer.display?.links ?? {})
       const uniqueLinks = new Set(links)
 
       for (const bridge of layer.bridges) {

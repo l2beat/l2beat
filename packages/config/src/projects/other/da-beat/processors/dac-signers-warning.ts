@@ -1,8 +1,14 @@
 import { DaBeatProjectProcessor } from '.'
-import { BlockchainDaLayer, DacBridge, DacDaLayer, NoDaBridge } from '../types'
+import {
+  BlockchainDaLayer,
+  DaServiceDaLayer,
+  DacBridge,
+  DacDaLayer,
+  NoDaBridge,
+} from '../types'
 
 export const dacSignersWarning: DaBeatProjectProcessor<
-  DacDaLayer | BlockchainDaLayer
+  DacDaLayer | BlockchainDaLayer | DaServiceDaLayer
 > = (layer) => {
   if (layer.kind !== 'DAC') {
     return layer
