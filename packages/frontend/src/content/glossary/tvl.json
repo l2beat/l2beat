@@ -1,5 +1,0 @@
-{
-  "term": "TVL",
-  "definition": "We define TVL to be the total amount of value that can be accessed on a project. Currently, L2BEAT only tracks fungible assets, but it could be extended in the future. Currently, TVL is calculated as the sum of canonical bridged tokens, externally bridged tokens and native tokens.",
-  "isSpicy": false
-}

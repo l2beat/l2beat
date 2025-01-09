@@ -137,7 +137,7 @@ export async function getL3ProjectDetails({
       props: {
         id: 'tvl',
         stacked: true,
-        title: 'Value Locked',
+        title: 'Value Secured',
         projectId: project.id,
         milestones: sortedMilestones,
         tokens,

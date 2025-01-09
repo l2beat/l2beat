@@ -102,8 +102,13 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/scaling/tvl',
+        destination: '/scaling/tvs',
+        permanent: true,
+      },
+      {
         source: '/scaling/detailedTvl',
-        destination: '/scaling/tvl',
+        destination: '/scaling/tvs',
         permanent: true,
       },
       {

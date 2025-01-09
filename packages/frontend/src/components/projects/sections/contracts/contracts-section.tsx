@@ -146,7 +146,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.escrows.length > 0 && (
         <>
           <h3 className="font-bold">
-            Value Locked is calculated based on these smart contracts and
+            Value Secured is calculated based on these smart contracts and
             tokens:
           </h3>
           <div className="my-4">
