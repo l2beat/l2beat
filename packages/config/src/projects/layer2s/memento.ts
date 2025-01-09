@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure';
-import { upcomingL2 } from './templates/upcoming';
-import { Layer2 } from './types';
+import { UnixTime } from '@l2beat/shared-pure'
+import { upcomingL2 } from './templates/upcoming'
+import { Layer2 } from './types'
 
 export const memento: Layer2 = upcomingL2({
   id: 'memento',
@@ -25,4 +25,4 @@ export const memento: Layer2 = upcomingL2({
       ],
     },
   },
-});
+})
