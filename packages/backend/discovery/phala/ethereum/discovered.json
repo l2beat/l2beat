@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 21586240,
-  "configHash": "0x20ad9ed8fd3a89f1401b4780bbf0e7785787de232fce36af18095174a2859792",
+  "blockNumber": 21588552,
+  "configHash": "0xad283a376756730f21ef50e8ec434d5e6859425e8292657c6519cad79f3c6c2e",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -623,6 +623,12 @@
           ]
         }
       ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
       "sinceTimestamp": 1734387323,
       "values": {
         "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
@@ -648,10 +654,10 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 198900,
-        "latestOutputIndex": 92,
-        "nextBlockNumber": 203220,
-        "nextOutputIndex": 93,
+        "latestBlockNumber": 203250,
+        "latestOutputIndex": 93,
+        "nextBlockNumber": 207570,
+        "nextOutputIndex": 94,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
