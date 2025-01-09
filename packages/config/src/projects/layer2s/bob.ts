@@ -20,7 +20,7 @@ export const bob: Layer2 = opStackL2({
     slug: 'bob',
     tvlWarning: {
       content:
-        'The total TVL doublecounts underlying assets for solvBTC.BBN, solvBTC and uniBTC since they are locked on BOB. We are working on a fix.',
+        'The total TVS doublecounts underlying assets for solvBTC.BBN, solvBTC and uniBTC since they are locked on BOB. We are working on a fix.',
       sentiment: 'warning',
     },
     description:

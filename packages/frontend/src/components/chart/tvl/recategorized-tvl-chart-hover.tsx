@@ -43,7 +43,7 @@ export function RecategorizedTvlChartHover(props: Props) {
           Total
         </span>
         <span className="hidden text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:inline">
-          Total value locked
+          Total value secured
         </span>
         {total}
       </div>
