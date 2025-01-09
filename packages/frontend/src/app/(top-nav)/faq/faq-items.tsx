@@ -14,15 +14,20 @@ export const faqItems: FaqItem[] = [
     question:
       'Why do you need L2BEAT when you already have DeFiLlama, growthepie and other analytics platforms?',
     answer:
-      'While those platforms are great, they primarily focus on tracking TVL (Total Value Locked) in DeFi projects and other performance metrics across various chains. In comparison, L2BEAT focuses exclusively on the decentralization and trust assumptions of Ethereum scaling projects (L2s and L3s) and reports not just TVL but also various metrics related to the liveness and security of these projects.',
+      'While those platforms are great, they primarily focus on tracking value locked in DeFi projects and other performance metrics across various chains. In comparison, L2BEAT focuses exclusively on the decentralization and trust assumptions of Ethereum scaling projects (L2s and L3s) and reports not just TVS but also various metrics related to the liveness and security of these projects.',
+  },
+  {
+    question: 'Why was TVL renamed to TVS?',
+    answer: [
+      'The term TVL (Total Value Locked) is often associated with value locked in DeFi projects, or in general in some smart contracts. When we started, we only tracked value locked in canonical bridges, but as we expanded our scope to include externally bridged and natively minted assets, which are not necessarily locked, we decided to rename the metric to Total Value Secured (TVS) to better reflect the broader scope of assets we track, i.e. assets managed in some form by the project.',
+    ],
   },
   {
     question:
-      'Why does the Total Value Locked (TVL) on L2BEAT differ from the one on DefiLlama?',
+      'Why does the Total Value Secured (TVS) on L2BEAT differ from DefiLlama TVL?',
     answer: [
-      'L2BEAT and DefiLlama use different methodologies for calculating TVL. The TVL on L2BEAT is a sum of canonically bridged, externally bridged, and natively minted assets (e.g. L2-native governance tokens like ARB and OP), while DefiLlama focuses on assets actively engaged in dApps on specific networks.',
-      "Example: let's assume L2BEAT reports a TVL of 2.5 billion, while DefiLlama reports a TVL of 1 billion for the same Layer 2 network (e.g., Arbitrum). This suggests that 1.5 billion worth of assets have been bridged (canonically or externally) or natively minted on Arbitrum, but are not yet being used in any dApps listed by DefiLlama. For instance, if you deposit 1 ETH to Optimism, L2BEAT would include it in their TVL calculation, but DefiLlama would not. However, if you use that 1 ETH on Optimism to provide liquidity on Uniswap, DefiLlama would then include it in their TVL calculation.",
-      'The discrepancy in reported TVL between L2BEAT and DefiLlama is due to different interpretations of "Total Value Locked." L2BEAT considers the entire Ethereum ecosystem, while DefiLlama emphasizes assets used in dApps on individual blockchain networks.',
+      'L2BEAT and DefiLlama use different methodologies for calculating TVS and TVL. The TVS on L2BEAT is a sum of canonically bridged, externally bridged, and natively minted assets (e.g. L2-native governance tokens like ARB and OP), while DefiLlama TVL focuses on assets actively engaged in dApps on specific networks.',
+      "Example: let's assume L2BEAT reports a TVS of 2.5 billion, while DefiLlama reports a TVL of 1 billion for the same Layer 2 network (e.g., Arbitrum). This suggests that 1.5 billion worth of assets have been bridged (canonically or externally) or natively minted on Arbitrum, but are not yet being used in any dApps listed by DefiLlama. For instance, if you deposit 1 ETH to Optimism, L2BEAT would include it in their TVS calculation, but DefiLlama TVL would not. However, if you use that 1 ETH on Optimism to provide liquidity on Uniswap, DefiLlama would then include it in their TVL calculation.",
     ],
   },
   {
@@ -94,9 +99,9 @@ export const faqItems: FaqItem[] = [
     answer: 'They got renamed to Optimiums for clarity.',
   },
   {
-    question: 'How exactly do you calculate metrics like TVL?',
+    question: 'How exactly do you calculate metrics like TVS?',
     answer: [
-      'It varies from project to project but in general, the TVL is defined as the sum of canonically bridged, externally bridged, and native assets of a given L2. Depending on the token type we might apply a different formula to count the value of this particular token:',
+      'It varies from project to project but in general, the TVS is defined as the sum of canonically bridged, externally bridged, and native assets of a given L2. Depending on the token type we might apply a different formula to count the value of this particular token:',
       '- **Canonically bridged token:** tokens_locked_on_L1 * price',
       '- **Externally bridged token:** total_supply_on_L2 * price',
       '- **Omnichain native token:** total_supply_on_L2 * price',
@@ -105,7 +110,7 @@ export const faqItems: FaqItem[] = [
     ],
   },
   {
-    question: 'What do the values in the TVL breakdown mean?',
+    question: 'What do the values in the TVS breakdown mean?',
     answer: [
       '- **Canonically Bridged Value (CBV)** is the value of assets that use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token.',
       '- **Externally Bridged Value (EBV)** is the value of assets that use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token.',
@@ -114,9 +119,9 @@ export const faqItems: FaqItem[] = [
     ],
   },
   {
-    question: 'Apart from TVL, what is L2BEAT aiming to track?',
+    question: 'Apart from TVS, what is L2BEAT aiming to track?',
     answer:
-      "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try to highlight the main risks related to their implementation that may affect user's funds security.",
+      "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVS, frequency of state root commits, number of transactions, gas cost, etc...) but we will try to highlight the main risks related to their implementation that may affect user's funds security.",
   },
   {
     question: 'Is L2BEAT performing a security audit for each L2?',
@@ -132,7 +137,7 @@ export const faqItems: FaqItem[] = [
       "Why aren't state channel based solutions like Raiden or Nahmii included?",
     answer: [
       'We are currently focused mainly on rollups, but would love to expand our research to state channels in the future. For the time being we lack resources to properly evaluate those systems.',
-      'Nahmii was actually listed on L2BEAT for a time, but was removed for the reason stated above. If you want to check TVL for Nahmii you can do that [on etherscan](https://etherscan.io/address/0xCc8D82f6ba952966E63001c7B320EEF2Ae729099).',
+      'Nahmii was actually listed on L2BEAT for a time, but was removed for the reason stated above. If you want to check TVS for Nahmii you can do that [on etherscan](https://etherscan.io/address/0xCc8D82f6ba952966E63001c7B320EEF2Ae729099).',
     ],
   },
   {
