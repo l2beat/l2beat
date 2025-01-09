@@ -3,6 +3,7 @@ import {
   type DaBridge,
   type DaLayer,
   type DaLayerThroughput,
+  type DaServiceDaLayer,
   type DacBridge,
   type DacDaLayer,
   type EthereumDaLayer,
@@ -119,7 +120,7 @@ export async function getCommonDaProjectPageEntry(
 }
 
 export async function getDaProjectEntry(
-  daLayer: BlockchainDaLayer | DacDaLayer,
+  daLayer: BlockchainDaLayer | DacDaLayer | DaServiceDaLayer,
   daBridge: OnChainDaBridge | DacBridge | NoDaBridge,
 ): Promise<DaProjectPageEntry> {
   const common = await getCommonDaProjectPageEntry(daLayer, daBridge)

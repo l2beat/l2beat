@@ -3,6 +3,7 @@ import {
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
+  type DaServiceDaLayer,
   type DaUpgradeabilityRisk,
   type DacDaLayer,
   daLayers,
@@ -48,7 +49,7 @@ export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaRiskEntry(
-  daLayer: BlockchainDaLayer | DacDaLayer,
+  daLayer: BlockchainDaLayer | DacDaLayer | DaServiceDaLayer,
   getTvs: (projects: ProjectId[]) => number,
 ): DaRiskEntry {
   const bridges = daLayer.bridges

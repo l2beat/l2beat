@@ -3,6 +3,7 @@ import {
   type DaBridgeRisks,
   type DaEconomicSecurityRisk,
   type DaLayerRisks,
+  type DaServiceDaLayer,
   type DacBridge,
   type DacDaLayer,
   type NoDaBridge,
@@ -10,7 +11,7 @@ import {
 } from '@l2beat/config'
 import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 
-type Layer = BlockchainDaLayer | DacDaLayer
+type Layer = BlockchainDaLayer | DacDaLayer | DaServiceDaLayer
 type Bridge = NoDaBridge | OnChainDaBridge | DacBridge
 
 export function getDaRisks(
@@ -26,7 +27,7 @@ export function getDaRisks(
 }
 
 export function getDaLayerRisks(
-  daLayer: BlockchainDaLayer | DacDaLayer,
+  daLayer: Layer,
   totalValueSecured: number,
   economicSecurity?: EconomicSecurityData,
 ) {
@@ -50,7 +51,7 @@ export function getDaBridgeRisks(daBridge: Bridge) {
 }
 
 function getEconomicSecurity(
-  daLayer: BlockchainDaLayer | DacDaLayer,
+  daLayer: Layer,
   totalValueSecured: number,
   economicSecurity?: EconomicSecurityData,
 ) {

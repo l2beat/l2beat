@@ -1,5 +1,6 @@
 import {
   type BlockchainDaLayer,
+  type DaServiceDaLayer,
   type DacBridge,
   type DacDaLayer,
   type EnshrinedBridge,
@@ -23,7 +24,7 @@ import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-se
 import { getPermissionedEntities } from './get-permissioned-entities'
 
 type RegularDetailsParams = {
-  daLayer: BlockchainDaLayer | DacDaLayer
+  daLayer: BlockchainDaLayer | DacDaLayer | DaServiceDaLayer
   daBridge: OnChainDaBridge | DacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
