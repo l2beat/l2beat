@@ -44,5 +44,11 @@ export const phala: Layer2 = underReviewL2({
       tokens: '*',
       chain: 'ethereum',
     },
+    {
+      address: EthereumAddress('0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A'),
+      sinceTimestamp: new UnixTime(1734388655),
+      tokens: ['ETH'],
+      chain: 'ethereum',
+    }
   ],
 })
