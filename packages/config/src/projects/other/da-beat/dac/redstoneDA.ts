@@ -33,14 +33,6 @@ export const redstoneDA: DacDaLayer = {
     slug: 'redstone',
     description:
       'RedstoneDA is a data availability solution using data availability challenges (DA Challenges).',
-    links: {
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {

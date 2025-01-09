@@ -33,14 +33,6 @@ export const xterioDA: DacDaLayer = {
     slug: 'xterio',
     description:
       'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
-    links: {
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {

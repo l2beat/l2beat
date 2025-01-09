@@ -12,15 +12,6 @@ export const fraxtalDA: DacDaLayer = {
     slug: 'fraxtal',
     description:
       'FraxtalDA is a custom data availability solution built by the Fraxtal team.',
-    links: {
-      // was duplicated
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
   },
   technology: {
     description: `

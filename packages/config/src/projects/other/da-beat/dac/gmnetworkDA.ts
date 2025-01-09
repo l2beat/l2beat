@@ -33,15 +33,6 @@ export const gmnetworkDA: DacDaLayer = {
     slug: 'gmnetwork',
     description:
       'GM Network DA is a data availability solution using data availability challenges (DA Challenges).',
-    links: {
-      // was duplicated
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {

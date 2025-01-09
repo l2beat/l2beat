@@ -33,14 +33,6 @@ export const automataDA: DacDaLayer = {
     slug: 'automata',
     description:
       'Automata DA is a data availability solution using data availability challenges (DA Challenges).',
-    links: {
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
   },
   challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {

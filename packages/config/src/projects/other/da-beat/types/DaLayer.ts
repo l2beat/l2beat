@@ -60,6 +60,12 @@ export type DacDaLayer = CommonDaLayer & {
   bridges: (DacBridge | NoDaBridge)[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
+  /** Fallback */
+  fallback?: ScalingDaLayerOption
+  /** Supported challenge mechanism in place */
+  challengeMechanism?: DaChallengeMechanism
+  /** Number of operators in the data availability layer. */
+  numberOfOperators?: number
 }
 
 export type DaServiceDaLayer = CommonDaLayer & {
@@ -75,12 +81,6 @@ export type CommonDaLayer = {
   id: string
   /** Classification layers will be split based on */
   systemCategory: 'public' | 'custom'
-  /** Supported challenge mechanism in place */
-  challengeMechanism?: DaChallengeMechanism
-  /** Fallback */
-  fallback?: ScalingDaLayerOption
-  /** Number of operators in the data availability layer. */
-  numberOfOperators?: number
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */
