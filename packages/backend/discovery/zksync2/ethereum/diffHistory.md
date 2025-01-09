@@ -10,7 +10,7 @@ Generated with discovered.json: 0x995ecd648c3af31da05c3286480b2c916139cf74
 
 Upgrade L1ERC20Bridge.
 
-Minor changes only (replacing `require()` with `if(revert()))` and adding docs).
+Minor changes only (replacing `require()` with `if(revert()))` and adding docs). [Tally proposal](https://www.tally.xyz/gov/zksync/proposal/39897055470405054808751466940888279812739313934036970931300785151980460250983?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
 
 ## Watched changes
 

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x403fce2f16a4bdb19d6487a08be2ae753e9a6875
 
 ## Description
 
-Upgrade BridgeHub, StateTransitionManager, L1SharedBridge.
+Upgrade BridgeHub, StateTransitionManager, L1SharedBridge. [Tally proposal](https://www.tally.xyz/gov/zksync/proposal/39897055470405054808751466940888279812739313934036970931300785151980460250983?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
 
 Minor changes only (replacing `require()` with `if(revert()))` and adding docs).
 
