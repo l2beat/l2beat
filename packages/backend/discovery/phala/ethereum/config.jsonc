@@ -17,6 +17,12 @@
         "getL2OutputAfter",
         "getL2OutputIndexAfter",
         "historicBlockHashes"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
       ]
     },
     "PermissionedDisputeGame": {
