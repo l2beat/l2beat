@@ -11,15 +11,14 @@ export function getContractsVerificationStatuses(
   if ('contracts' in project) {
     contracts.push(...(project.contracts?.addresses ?? []))
   }
+
   const result: Record<string, Record<string, boolean>> = {}
   for (const contract of contracts) {
-    if ('address' in contract) {
-      const chain = contract.chain ?? 'ethereum'
-      result[chain] ??= {}
-      result[chain][contract.address.toString()] =
-        contract.address.toString() in (manual[chain] ?? {}) ||
-        contract.isVerified
-    }
+    const chain = contract.chain ?? 'ethereum'
+    result[chain] ??= {}
+    result[chain][contract.address.toString()] =
+      contract.address.toString() in (manual[chain] ?? {}) ||
+      contract.isVerified
   }
 
   return result

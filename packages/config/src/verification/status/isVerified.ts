@@ -13,22 +13,23 @@ export function isVerified(
   const manual = getManuallyVerifiedContracts()
   const contractsVerification =
     project.contracts?.addresses.every((c) => {
-      const isAutoVerified = 'isVerified' in c && c.isVerified
+      const isAutoVerified = c.isVerified
       const isManuallyVerified =
-        'address' in c && c.address in (manual[c.chain ?? 'ethereum'] ?? {})
+        c.address in (manual[c.chain ?? 'ethereum'] ?? {})
       return isAutoVerified || isManuallyVerified
     }) ?? true
   const escrowVerifications =
-    project.config.escrows.every((c) => {
-      if (!('contract' in c)) {
+    project.config.escrows.every((e) => {
+      if (!('contract' in e)) {
         return true
       }
-      const isManuallyVerified =
-        'address' in c.contract &&
-        typeof c.contract.address === 'string' &&
-        c.contract.address in (manual[c.chain] ?? {})
 
-      return c.contract.isVerified || isManuallyVerified
+      const isManuallyVerified =
+        'address' in e.contract &&
+        typeof e.contract.address === 'string' &&
+        e.contract.address in (manual[e.chain] ?? {})
+
+      return e.contract.isVerified || isManuallyVerified
     }) ?? true
 
   const newVerification = escrowVerifications && contractsVerification
@@ -43,7 +44,7 @@ export function isDaBridgeVerified(_: DaLayer, daBridge: DaBridge): boolean {
     verification =
       Object.values(daBridge.contracts?.addresses)
         .flat()
-        .every((c) => 'isVerified' in c && c.isVerified) ?? false
+        .every((c) => c.isVerified) ?? false
   }
 
   return verification

@@ -117,12 +117,12 @@ export const lzOmnichain: Bridge = {
         'LayerZero Relayer',
         'Contract used to provide the merkle proof for the transfers on source chains.',
       ),
-      {
-        multipleAddresses: INBOUND_PROOF_LIBRARIES,
-        name: 'Default LayerZero Inbound Proof Libraries',
-        description:
+      ...INBOUND_PROOF_LIBRARIES.map((l) =>
+        discovery.getContractDetails(
+          l,
           'Contracts used to validate messages coming from source chains.',
-      },
+        ),
+      ),
       discovery.getContractDetails(
         'Endpoint',
         'Contract used for cross-chain messaging.',
