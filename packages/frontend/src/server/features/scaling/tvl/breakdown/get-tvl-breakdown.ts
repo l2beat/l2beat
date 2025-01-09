@@ -55,6 +55,9 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
       }
 
       const priceConfig = configMapping.getPriceConfigFromAmountConfig(config)
+      if (priceConfig.chain !== config.chain) {
+        console.error('Not equal', config.chain, priceConfig.chain)
+      }
       if (prices.excluded.has(priceConfig.configId)) {
         continue
       }
