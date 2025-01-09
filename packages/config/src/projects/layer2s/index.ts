@@ -118,6 +118,7 @@ import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
 import { payy } from './payy'
+import { phala } from './phala'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
@@ -312,6 +313,7 @@ export const layer2s: Layer2[] = [
   parallel,
   patex,
   payy,
+  phala,
   playchain,
   plumenetwork,
   polygonmiden,
