@@ -9,7 +9,7 @@ import { ScalingTvlTabs } from './_components/scaling-tvl-tabs'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
-    url: '/scaling/tvl',
+    url: '/scaling/tvs',
   },
 })
 

@@ -47,7 +47,7 @@ export async function NavLayout({
         {
           title: 'Value Locked',
           shortTitle: 'Value',
-          href: '/scaling/tvl',
+          href: '/scaling/tvs',
         },
         {
           title: 'Activity',

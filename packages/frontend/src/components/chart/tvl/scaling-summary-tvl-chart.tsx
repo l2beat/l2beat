@@ -84,14 +84,14 @@ function Header({ total, unit, change, timeRange }: Props) {
           <span className="text-xl font-bold">Value Locked</span>
           <Link
             className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
-            href="/scaling/tvl"
+            href="/scaling/tvs"
           >
             View details
             <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
           </Link>
         </div>
         <CustomLink
-          href="/scaling/tvl"
+          href="/scaling/tvs"
           className="flex items-center gap-1 text-xs leading-[1.15] md:hidden"
           underline={false}
         >
