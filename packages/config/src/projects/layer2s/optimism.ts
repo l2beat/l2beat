@@ -397,7 +397,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xA6f3DFdbf4855a43c529bc42EDE96797252879af#code',
+          href: 'https://etherscan.io/address/0x27B81db41F586016694632193b99E45b1a27B8f8#code',
         },
       ],
     },

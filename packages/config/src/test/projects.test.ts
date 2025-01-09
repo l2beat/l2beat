@@ -2,6 +2,7 @@ import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { Layer2, Layer3, bridges, layer2s, layer3s } from '../'
+import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
 import { checkRisk } from './helpers'
 
@@ -84,7 +85,7 @@ describe('projects', () => {
             })
           }
 
-          if ('address' in contract && project.permissions !== 'UnderReview') {
+          if (project.permissions !== 'UnderReview') {
             const upgradableBy = contract.upgradableBy
             const actors =
               project.permissions?.map((x) => {
@@ -203,7 +204,7 @@ describe('projects', () => {
     for (const p of projects) {
       it(`${p.id.toString()} is discovery driven`, () => {
         assert(
-          p.discoveryDrivenData === true,
+          isDiscoveryDriven(p),
           'New projects are expected to be discovery driven. Read the comment in constants.ts',
         )
       })

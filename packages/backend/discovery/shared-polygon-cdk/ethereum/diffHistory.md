@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x85284e06ab48b8f6616195c93ae7fe0699bb3b2b
+
+# Diff at Wed, 08 Jan 2025 11:18:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21543818
+- current block number: 21579404
+
+## Description
+
+xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the varifier differs.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.3:
+-        4
++        8
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.rollupTypeCount:
+-        7
++        8
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.7:
++        ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"]
+    }
+```
+
 Generated with discovered.json: 0xb01359e6b262fce04a47953690d9596f2a9a9aff
 
 # Diff at Fri, 03 Jan 2025 12:00:56 GMT:

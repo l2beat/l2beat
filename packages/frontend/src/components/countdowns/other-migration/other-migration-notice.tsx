@@ -3,14 +3,13 @@ import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CloseIcon } from '~/icons/close'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 
 type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>
 export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
+  const isMobile = useIsMobile()
   return (
     <div className="border-brand p-4 max-md:border-x-0 max-md:bg-brand/25 max-md:dark:bg-brand/15 md:mt-10 md:rounded-lg md:border-2 md:p-8">
       <div className="flex flex-wrap items-center justify-center gap-4">

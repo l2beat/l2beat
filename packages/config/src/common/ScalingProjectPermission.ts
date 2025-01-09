@@ -17,6 +17,8 @@ export interface ScalingProjectPermission {
   participants?: ScalingProjectPermissionedAccount[]
   /** Indicates whether the permission comes from a role like Proposer or Guardian */
   fromRole?: boolean
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
 }
 
 export interface ScalingProjectPermissionedAccount {

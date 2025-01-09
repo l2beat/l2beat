@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xcdb21ec3f81c1b0d5b8ad9ff39508b89fb9a4892
+
+# Diff at Wed, 08 Jan 2025 11:41:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 20832964
+- current block number: 21579520
+
+## Description
+
+Upgrade to rollupType 8 (same implementation as [rollupType 7 from the servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta) but different verifier code).
+
+The previous rollupType was 4.
+
+## Watched changes
+
+```diff
+    contract XLayerValidium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      values.$implementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.$pastUpgrades.1:
++        ["2025-01-07T13:41:23.000Z","0x9d23f56225d22a2a1b82c2aa6122b1a29896686b30bb1f3def0189043699d46f",["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]]
+      values.$upgradeCount:
+-        1
++        2
+      derivedName:
+-        "PolygonValidiumStorageMigration"
++        "PolygonValidiumEtrog"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract XLayerVerifier (0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../XLayerValidium/PolygonValidiumEtrog.sol}       |  203 ++--
+ .../xlayer/ethereum/.flat/XLayerVerifier.sol       | 1225 ++++++++++++++++++++
+ 2 files changed, 1336 insertions(+), 92 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20832964 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract XLayerVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x146dcaf500c70a6bd92e607fa08868ab8a97ece3
 
 # Diff at Mon, 21 Oct 2024 11:12:12 GMT:

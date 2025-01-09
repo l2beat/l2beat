@@ -328,7 +328,7 @@ export const base: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xCd3c0194db74C23807D4B90A5181e1B28cF7007C#code',
+          href: 'https://etherscan.io/address/0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e#code',
         },
       ],
     },
