@@ -49,6 +49,6 @@ export const phala: Layer2 = underReviewL2({
       sinceTimestamp: new UnixTime(1734388655),
       tokens: ['ETH'],
       chain: 'ethereum',
-    }
+    },
   ],
 })
