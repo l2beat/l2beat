@@ -1,3 +1,114 @@
+Generated with discovered.json: 0x403fce2f16a4bdb19d6487a08be2ae753e9a6875
+
+# Diff at Thu, 09 Jan 2025 06:50:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 21543858
+- current block number: 21585244
+
+## Description
+
+Upgrade BridgeHub, StateTransitionManager, L1SharedBridge.
+
+Minor changes only (replacing `require()` with `if(revert()))` and adding docs).
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x0d42e482e85877d75871eacd767228a9e735bb3e0478cb2b80235d6f428ba055"
++        "0x568d6f26c34f7da5f4ac55957f99d9e66cbf967d550fa27ec431fb66bbd36a0b"
+      values.$implementation:
+-        "0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"
++        "0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"
+      values.$pastUpgrades.2:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GenesisUpgrade (0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2)
+    +++ description: None
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x96877e17c5bb84aa94de97c0a9764405e673c26bbf2c649349984d825b326940"
++        "0x2322249822d1ffda838f7005dd4137d161f15f2cc3553e9bffba7c04a44d9226"
+      values.$implementation:
+-        "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"
++        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
+      values.$pastUpgrades.2:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.genesisUpgrade:
+-        "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2"
++        "0x6e2BC597F1e83F9fC7c1f69157F2C12476873971"
+      values.getSemverProtocolVersion.2:
+-        2
++        0
+      values.getSemverProtocolVersion.1:
+-        24
++        25
+      values.initialCutHash:
+-        "0x88acf7bca5d9b0309546e053ad035bd6d8da5f13f39ca1d8f8ffab1a8d4aa60f"
++        "0x0b30ec2102ea8e2cf92d22857c347d3b29bde8dfaf6f2ae19045f19c5a94ba5a"
+      values.protocolVersion:
+-        103079215106
++        107374182400
+      values.storedBatchZero:
+-        "0x1574fa776dec8da2071e5f20d71840bfcbd82c2bca9ad68680edfedde1710bc4"
++        "0x83325e26523f69ee6ea60aea582325d22f3c6a85db5e4890e14d62a377635a6b"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xee3958605e4357a1803d3eb2c6d0d455fdbcc9c550a55b801834030d2a39cef8"
++        "0x23ebe4dfc517328a5acc1f6f8aa84be593be5db9d6357fcdcd69c62ca60853f7"
+      values.$implementation:
+-        "0xb56A8225A745756DD215faf22E4796f373561AcD"
++        "0xF5A14DCdde1143443f06033200D345c2a2828A99"
+      values.$pastUpgrades.2:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0xF5A14DCdde1143443f06033200D345c2a2828A99"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.ERA_CHAIN_ID:
+-        324
+      values.ERA_DIAMOND_PROXY:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GenesisUpgrade (0x6e2BC597F1e83F9fC7c1f69157F2C12476873971)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../BridgeHub/Bridgehub.sol                        | 143 ++++++---
+ .../{.flat@21543858 => .flat}/GenesisUpgrade.sol   | 352 +++++++++++++++------
+ .../L1SharedBridge/L1SharedBridge.sol              | 278 +++++++++++-----
+ .../StateTransitionManager.sol                     | 126 ++++++--
+ 4 files changed, 645 insertions(+), 254 deletions(-)
+```
+
 Generated with discovered.json: 0x630ceb70bec843b173e2618cf268f7e1adda1539
 
 # Diff at Fri, 03 Jan 2025 12:08:58 GMT:
