@@ -95,5 +95,5 @@ interface DaLayerDisplay {
   /** A short description of the data availability layer. */
   description: string
   /** Links related to the data availability layer. */
-  links: DaLinks
+  links?: DaLinks
 }

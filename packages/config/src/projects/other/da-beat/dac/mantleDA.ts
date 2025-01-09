@@ -33,15 +33,6 @@ export const mantleDA: DacDaLayer = {
     slug: 'mantle',
     description:
       'Mantle DA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
-    links: {
-      // was duplicated
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
   },
   technology: {
     description: `
