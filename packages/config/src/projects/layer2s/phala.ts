@@ -9,7 +9,7 @@ export const phala: Layer2 = underReviewL2({
   display: {
     name: 'Phala',
     slug: 'phala',
-    description: `Phala is cloud computing protocol which aims at offering developers a secure and efficient platform for deploying and managing AI-ready applications in a trusted environment through TEE.
+    description: `Phala is cloud computing protocol which aims at offering developers a secure and efficient platform for deploying and managing AI-ready applications in a trusted environment (TEE).
       Phala rollup on Ethereum leverages the Op-Succinct stack, a combination of Optimistic Rollup (Op) and Zero-Knowledge Proofs (ZK) with the SP1 zkVM.`,
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
