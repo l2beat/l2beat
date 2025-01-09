@@ -28,7 +28,7 @@ export const blast: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
     tvlWarning: {
-      content: 'The TVL does account for rehypothecated tokens.',
+      content: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
