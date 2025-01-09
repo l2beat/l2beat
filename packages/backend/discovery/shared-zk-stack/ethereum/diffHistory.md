@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x8af0449318cbc53ebbc149ea1d61228b4050dc01
+
+# Diff at Thu, 09 Jan 2025 10:24:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@78b21311521c2b9536b16ea30cdd1536bd179b34 block: 21585244
+- current block number: 21586306
+
+## Description
+
+Add GRVT tracking after the chain launch.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585244 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.GrvtDiamond:
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.GrvtSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.grvtThirdBatchTS:
+-        1733327159
+      values.grvtValidatorsAdded:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
++        []
+      fieldMeta.grvtThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
 Generated with discovered.json: 0x403fce2f16a4bdb19d6487a08be2ae753e9a6875
 
 # Diff at Thu, 09 Jan 2025 06:50:39 GMT:
