@@ -29,8 +29,8 @@ export async function generateMetadata(props: Props) {
   }
 
   return getDefaultMetadata({
-    title: `${project.display.name} | TVL Breakdown – L2BEAT`,
-    description: `${project.display.name} project TVL Breakdown overview on L2BEAT. In depth scaling protocol analysis. Ethereum scaling analytics and research.`,
+    title: `${project.display.name} | TVS Breakdown – L2BEAT`,
+    description: `${project.display.name} project TVS Breakdown overview on L2BEAT. In depth scaling protocol analysis. Ethereum scaling analytics and research.`,
   })
 }
 

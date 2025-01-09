@@ -24,9 +24,9 @@ export function TvlBreakdownSummaryBox(props: Props) {
   return (
     <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 dark:bg-purple-700 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:p-6 md:dark:border-pink-900">
       <StatsItem
-        title="Total Value Locked"
-        tooltip="Total value locked displayed together with a percentage change compared to 7D ago."
-        mobileTitle="Total Value Locked"
+        title="Total value secured"
+        tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
+        mobileTitle="Total value secured"
         value={props.tvl.value}
         change={props.tvl.change}
         big
@@ -47,7 +47,7 @@ export function TvlBreakdownSummaryBox(props: Props) {
       />
       <StatsItem
         title="Canonically Bridged"
-        tooltip="Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
+        tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         mobileTitle="Canonically Bridged Value"
         value={props.canonical.value}
         change={props.canonical.change}

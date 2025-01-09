@@ -15,7 +15,7 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'scaling',
-    name: 'Value Locked',
+    name: 'Value Secured',
     tags: ['pages', 'scaling', 'tvl'],
     href: '/scaling/tvs',
   },
