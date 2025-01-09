@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { ScalingProjectContractSingleAddress } from './ScalingProjectContracts'
+import { ScalingProjectContract } from './ScalingProjectContracts'
 
 export type ScalingProjectEscrow = OldProjectEscrow | NewProjectEscrow
 
@@ -69,7 +69,7 @@ interface NewProjectEscrow {
   /** Address of the escrow. Use etherscan to verify its correctness. */
   address: EthereumAddress
   /** All the data about the escrow contract */
-  contract: Omit<ScalingProjectContractSingleAddress, 'address'>
+  contract: Omit<ScalingProjectContract, 'address'>
   /** Timestamp of the deployment transaction of the escrow contract. */
   sinceTimestamp: UnixTime
   /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */

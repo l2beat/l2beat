@@ -2,7 +2,6 @@ import {
   ProjectDiscovery,
   ScalingProjectContract,
   ScalingProjectPermission,
-  isSingleAddress,
 } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractsMeta, getMeta } from './getMeta'
@@ -91,11 +90,8 @@ function getContractsPreview(
   return contractsPerChain.map(({ chain, contracts }) => ({
     chain,
     contracts: contracts.map((c) => {
-      const addresses = isSingleAddress(c) ? [c.address] : c.multipleAddresses
       return {
-        addresses: addresses.map((a) =>
-          toAddressFieldValue(a, chain, metaPerChain),
-        ),
+        addresses: [toAddressFieldValue(c.address, chain, metaPerChain)],
         name: c.name,
         description: c.description ?? '',
       }
