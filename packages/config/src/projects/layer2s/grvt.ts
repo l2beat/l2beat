@@ -35,7 +35,7 @@ export const grvt: Layer2 = zkStackL2({
       'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being decentralized, featuring self-custodial funds and wallets.',
     links: {
       websites: ['https://grvt.io'],
-      apps: [],
+      apps: ['https://grvt.io/exchange/perpetual/BTC-USDT'],
       documentation: ['https://help.grvt.io/en'], // https://docs.grvt.io/ is private
       explorers: [],
       repositories: [],
@@ -45,7 +45,6 @@ export const grvt: Layer2 = zkStackL2({
         'https://grvt.io/blog/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   diamondContract: discovery.getContract('GrvtZkEvm'),
   daProvider: {
