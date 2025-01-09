@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x995ecd648c3af31da05c3286480b2c916139cf74
+
+# Diff at Thu, 09 Jan 2025 07:00:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 21035830
+- current block number: 21585292
+
+## Description
+
+Upgrade L1ERC20Bridge.
+
+Minor changes only (replacing `require()` with `if(revert()))` and adding docs).
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xddcdd4b758b565f39e4924d6a66afc27850a66e5f1022fb1c008d10f85af1028"
++        "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
+      values.$implementation:
+-        "0x8191975d8B0851C7f0740918896Cf298c09aA05E"
++        "0x8D231E4097C3cb200Ed62134B466AA615cE60336"
+      values.$pastUpgrades.8:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]]
+      values.$upgradeCount:
+-        8
++        9
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1ERC20Bridge/L1ERC20Bridge.sol                | 88 ++++++++++++++++------
+ 1 file changed, 67 insertions(+), 21 deletions(-)
+```
+
 Generated with discovered.json: 0x767c7f8e45564a97713452f286e26f4afaf38104
 
 # Diff at Mon, 21 Oct 2024 11:24:13 GMT:
