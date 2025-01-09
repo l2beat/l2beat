@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { everclear } from '../../../layer2s/everclear'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -60,7 +60,6 @@ export const everclearDac = AnytrustDAC({
         },
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

@@ -37,7 +37,6 @@ type Optionals = {
   } & Pick<
     DacBridge,
     | 'createdAt'
-    | 'chain'
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
@@ -77,26 +76,15 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
 
   const bridgeTechnology =
     template.bridge.technology?.description ??
-    (template.bridge.chain === 1
-      ? `
+    `
     ## DA Bridge Architecture
     ![starkex bridge architecture](/images/da-bridge-technology/starkex/architectureL2.png#center)
-      The DA commitments are posted to the L1 chain, using the Committee Verifier contract as a DA bridge.
+      The DA commitments are posted to the destination chain, using the Committee Verifier contract as a DA bridge.
       The DA commitment consists of a data hash of the transaction batch the Committee has signed off on and a concatenation of ec-signatures by signatories.
       The Committee Verifier contract verifies the signatures and the data hash and if the required threshold of Committee members has signed off on the data, the hash is stored as a registeredFact in the StarkEx contract.
       In a separate transaction, the operator calls the updateState() function on the StarkEx contract to update the state.
       Before the state update is accepted, the StarkEx contract verifies the transaction public inputs by calling the isValid() function, which verifies the hash derived from state update inputs matches the hash stored by the Committee Verifier contract.
     `
-      : `
-    ## DA Bridge Architecture
-    ![starkex bridge architecture](/images/da-bridge-technology/starkex/architectureL3.png#center)
-
-    The DA commitments are posted to the L2 chain, using the Committee Verifier contract as a DA bridge.
-    The DA commitment consists of a data hash of the transaction batch the Committee has signed off on and a concatenation of ec-signatures by signatories.
-    The Committee Verifier contract verifies the signatures and the data hash and if the required threshold of Committee members has signed off on the data, the hash is stored as a registeredFact in the StarkEx contract.
-    In a separate transaction, the operator calls the updateState() function on the StarkEx contract to update the state.
-    Before the state update is accepted, the StarkEx contract verifies the transaction public inputs by calling the isValid() function, which verifies the hash derived from state update inputs matches the hash stored by the Committee Verifier contract.
-    `)
   const bridgeDisplay: DacBridge['display'] = {
     name: 'DA Bridge',
     slug: 'dac',

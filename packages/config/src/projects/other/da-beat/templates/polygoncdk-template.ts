@@ -37,7 +37,6 @@ type Optionals = {
   } & Pick<
     DacBridge,
     | 'createdAt'
-    | 'chain'
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
@@ -77,23 +76,14 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
 
   const bridgeTechnology =
     template.bridge.technology?.description ??
-    (template.bridge.chain === 1
-      ? `
+    `
     ## DA Bridge Architecture
     ![polygoncdk bridge architecture](/images/da-bridge-technology/polygoncdk/architectureL2.png#center)
-    The DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
+    The DA commitments are posted to the destination chain through the sequencer inbox, using the inbox as a DA bridge.
     The DA commitment consists of a data availability message provided as transaction input, made up of a byte array containing the signatures and all the addresses of the committee in ascending order.
-    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DA message is posted by the sequencer to the L1 chain inbox (the DA bridge).
+    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DA message is posted by the sequencer to the destination chain inbox (the DA bridge).
     A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
     `
-      : `
-    ## DA Bridge Architecture
-    ![polygoncdk bridge architecture](/images/da-bridge-technology/polygoncdk/architectureL3.png#center)
-    The DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
-    The DA commitment consists of a data availability message provided as transaction input, made up of a byte array containing the signatures and all the addresses of the committee in ascending order.
-    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DA message is posted by the sequencer to the L2 chain inbox (the DA bridge).
-    A separate contract, the PolygonCommittee contract, is used to manage the committee members list and verify the signatures before accepting the DA commitment.
-   `)
   const bridgeDisplay: DacBridge['display'] = {
     name: 'DA Bridge',
     slug: 'dac',

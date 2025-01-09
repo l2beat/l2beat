@@ -201,7 +201,10 @@ export async function getDaProjectEntry(
         daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
       throughput:
         daLayer.kind === 'PublicBlockchain' ? daLayer.throughput : undefined,
-      numberOfOperators: daLayer.numberOfOperators,
+      numberOfOperators:
+        daLayer.kind === 'DAC' || daLayer.kind === 'No DAC'
+          ? daLayer.numberOfOperators
+          : undefined,
       usedIn: daLayer.bridges
         .flatMap((bridge) => bridge.usedIn)
         .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),

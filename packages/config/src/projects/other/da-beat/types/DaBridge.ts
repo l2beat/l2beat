@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   ScalingProjectPermission,
   ScalingProjectTechnologyChoice,
@@ -45,8 +45,6 @@ export type EnshrinedBridge = CommonDaBridge & {
 
 export type OnChainDaBridge = CommonDaBridge & {
   type: 'OnChainBridge'
-  /** The chain name the data availability bridge lives on. */
-  chain: string
   /** Data about related permissions - preferably from discovery. */
   permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Data about the validation type of the bridge */
@@ -61,8 +59,6 @@ export type OnChainDaBridge = CommonDaBridge & {
 
 export type DacBridge = CommonDaBridge & {
   type: 'DAC'
-  /** The chain the DAC attests data on. */
-  chain: ChainId
   /**  Total members count.  */
   membersCount: number
   /** Data about the DAC members. */

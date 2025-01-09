@@ -38,7 +38,6 @@ type Optionals = {
   } & Pick<
     DacBridge,
     | 'createdAt'
-    | 'chain'
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
@@ -78,25 +77,16 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
 
   const bridgeTechnology =
     template.bridge.technology?.description ??
-    (template.bridge.chain === 1
-      ? `
+    `
     ## DA Bridge Architecture
     ![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architectureL2.png#center)
 
 
-    The DA commitments are posted to the L1 through the sequencer inbox, using the inbox as a DA bridge.
+    The DA commitments are posted to the destination chain through the sequencer inbox, using the inbox as a DA bridge.
     The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
-    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L1 chain inbox (the DA bridge), achieving L2 transaction ordering finality in a single onchain transaction.
+    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the destination chain inbox (the DA bridge), achieving destination chain transaction ordering finality in a single onchain transaction.
     `
-      : `
-    ## DA Bridge Architecture
-    ![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architectureL3.png#center)
 
-
-    The DA commitments are posted to the L2 through the sequencer inbox, using the inbox as a DA bridge.
-    The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.
-    The sequencer distributes the data and collects signatures from Committee members offchain. Only the DACert is posted by the sequencer to the L2 chain inbox (the DA bridge), achieving L3 transaction ordering finality in a single onchain transaction.
-    `)
   const bridgeDisplay: DacBridge['display'] = {
     name: 'DA Bridge',
     slug: 'dac',

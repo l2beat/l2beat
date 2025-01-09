@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { oev } from '../../../layer2s/oev'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -61,7 +61,6 @@ export const oevnetworkDac = AnytrustDAC({
         },
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

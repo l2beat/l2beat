@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { silicon } from '../../../layer2s/silicon'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
@@ -64,7 +64,6 @@ export const siliconDac = PolygoncdkDAC({
         },
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,

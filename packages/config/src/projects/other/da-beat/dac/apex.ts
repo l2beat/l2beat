@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { apex } from '../../../layer2s/apex'
@@ -38,7 +38,6 @@ export const apexDac = StarkexDAC({
   project: apex,
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    chain: ChainId.ETHEREUM,
     requiredMembers: dacConfig.requiredSignatures,
     membersCount: dacConfig.membersCount,
     transactionDataType: DacTransactionDataType.StateDiffs,

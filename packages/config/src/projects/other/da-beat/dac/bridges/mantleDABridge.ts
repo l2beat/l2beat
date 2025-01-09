@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
@@ -126,7 +126,6 @@ export const mantleDABridge = {
       },
     ],
   },
-  chain: ChainId.ETHEREUM,
   transactionDataType: DacTransactionDataType.TransactionData,
   requiredMembers: threshold,
   membersCount: committeeMembers,

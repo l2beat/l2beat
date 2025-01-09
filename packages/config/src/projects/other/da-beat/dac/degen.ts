@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { degen } from '../../../layer3s/degen'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -55,7 +55,6 @@ export const degenDac = AnytrustDAC({
         ),
       ],
     },
-    chain: ChainId.BASE,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

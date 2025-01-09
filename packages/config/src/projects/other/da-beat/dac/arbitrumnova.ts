@@ -1,9 +1,4 @@
-import {
-  ChainId,
-  EthereumAddress,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { nova } from '../../../layer2s/nova'
 import { DAC } from '../templates/dac-template'
@@ -71,7 +66,6 @@ export const arbitrumNovaDac = DAC({
   },
   bridge: {
     createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

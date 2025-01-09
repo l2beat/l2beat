@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { cyber } from '../../../../layer2s/cyber'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
@@ -18,7 +18,6 @@ export const cyberDABridge = {
   id: 'cyberDABridge',
   createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
   type: 'DAC',
-  chain: ChainId.ETHEREUM,
   display: {
     name: 'DA Bridge',
     slug: 'da',

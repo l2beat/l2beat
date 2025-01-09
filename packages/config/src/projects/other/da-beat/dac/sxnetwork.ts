@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { sxnetwork } from '../../../layer2s/sxnetwork'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -61,7 +61,6 @@ export const sxnetworkDac = AnytrustDAC({
         },
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

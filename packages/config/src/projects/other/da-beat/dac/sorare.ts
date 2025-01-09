@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../discovery/starkware'
 import { sorare } from '../../../layer2s/sorare'
@@ -35,7 +35,6 @@ export const sorareDac = StarkexDAC({
         },
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: committee.minSigners,
     membersCount: committee.accounts.length,
     transactionDataType: DacTransactionDataType.StateDiffs,

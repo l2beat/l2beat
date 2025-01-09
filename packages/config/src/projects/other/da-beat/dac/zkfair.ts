@@ -1,9 +1,4 @@
-import {
-  ChainId,
-  EthereumAddress,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { zkfair } from '../../../layer2s/zkfair'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
@@ -92,7 +87,6 @@ export const zkfairDac = PolygoncdkDAC({
         },
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.StateDiffs,

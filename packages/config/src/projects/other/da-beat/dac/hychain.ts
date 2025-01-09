@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { hychain } from '../../../layer2s/hychain'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -75,7 +75,6 @@ export const hychainDac = AnytrustDAC({
         ),
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

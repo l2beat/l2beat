@@ -1,18 +1,9 @@
-import { assert } from '@l2beat/shared-pure'
-import capitalize from 'lodash/capitalize'
-import { chains } from '../../../../../../..'
 import { OnChainDaBridge } from '../../../../types'
 import { DaLinks } from '../../../../types/DaLinks'
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  | 'createdAt'
-  | 'chain'
-  | 'contracts'
-  | 'permissions'
-  | 'usedIn'
-  | 'technology'
-  | 'risks'
+  'createdAt' | 'contracts' | 'permissions' | 'usedIn' | 'technology' | 'risks'
 > & {
   display: {
     links: DaLinks
@@ -20,20 +11,11 @@ type TemplateVars = Pick<
 }
 
 export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
-  const chain = chains.find((chain) => chain.name === base.chain)
-
-  assert(
-    chain,
-    `Cannot template CELESTIA_BLOBSTREAM - chain ${base.chain} not found among known chains`,
-  )
-
   const id = `blobstream`
   const display = {
     name: `Blobstream`,
     slug: id,
-    description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and ${capitalize(
-      chain.name,
-    )}.`,
+    description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.`,
     links: base.display.links,
   }
 
@@ -49,7 +31,6 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     createdAt: base.createdAt,
     display,
     risks: base.risks,
-    chain: chain.name,
     validation: validation,
     contracts: base.contracts,
     technology: base.technology,

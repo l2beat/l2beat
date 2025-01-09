@@ -38,7 +38,6 @@ type Optionals = {
   } & Pick<
     DacBridge,
     | 'createdAt'
-    | 'chain'
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'

@@ -1,9 +1,4 @@
-import {
-  ChainId,
-  EthereumAddress,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
@@ -115,7 +110,6 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
   createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
-  chain: ChainId.ETHEREUM,
   type: 'DAC',
   display: {
     name: 'ServiceManager',

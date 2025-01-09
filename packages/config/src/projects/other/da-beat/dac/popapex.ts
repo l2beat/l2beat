@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { popapex } from '../../../layer3s/popapex'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -65,7 +65,6 @@ export const popapexDac = AnytrustDAC({
         ),
       ],
     },
-    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

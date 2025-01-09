@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { playblock } from '../../../layer3s/playblock'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -60,7 +60,6 @@ export const playblockDac = AnytrustDAC({
         },
       ],
     },
-    chain: ChainId.NOVA,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

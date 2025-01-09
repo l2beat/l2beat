@@ -134,8 +134,14 @@ function getDaSummaryEntry(
     isPublic: daLayer.systemCategory === 'public',
     economicSecurity,
     risks: getDaLayerRisks(daLayer, tvs, economicSecurity),
-    fallback: daLayer.fallback,
-    challengeMechanism: daLayer.challengeMechanism,
+    fallback:
+      daLayer.kind === 'DAC' || daLayer.kind === 'No DAC'
+        ? daLayer.fallback
+        : undefined,
+    challengeMechanism:
+      daLayer.kind === 'DAC' || daLayer.kind === 'No DAC'
+        ? daLayer.challengeMechanism
+        : undefined,
     tvs,
     bridges,
   }

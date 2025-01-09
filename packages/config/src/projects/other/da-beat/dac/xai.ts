@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { xai } from '../../../layer3s/xai'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -67,7 +67,6 @@ export const xaiDac = AnytrustDAC({
         ),
       ],
     },
-    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

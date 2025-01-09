@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { inevm } from '../../../layer3s/inevm'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -56,7 +56,6 @@ export const inEVMDac = AnytrustDAC({
         ),
       ],
     },
-    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,

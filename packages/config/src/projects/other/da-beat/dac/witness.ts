@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { witness } from '../../../layer2s/witness'
 import { PolygoncdkDAC } from '../templates/polygoncdk-template'
@@ -93,7 +93,6 @@ export const witnessDac = PolygoncdkDAC({
         },
       ],
     },
-    chain: ChainId.ETHEREUM,
     requiredMembers: requiredSignaturesDAC,
     membersCount: membersCountDAC,
     transactionDataType: DacTransactionDataType.TransactionData,

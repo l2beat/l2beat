@@ -1,4 +1,4 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { apechain } from '../../../layer3s/apechain'
 import { AnytrustDAC } from '../templates/anytrust-template'
@@ -30,7 +30,6 @@ export const apechainDac = AnytrustDAC({
     permissions: {
       // BLS sigs, not EOAs
     },
-    chain: ChainId.ARBITRUM,
     requiredMembers: requiredSignatures,
     membersCount: membersCount,
     transactionDataType: DacTransactionDataType.TransactionDataCompressed,
