@@ -26,7 +26,7 @@ type ActivityTableData = Awaited<ReturnType<typeof getActivityTableData>>
 
 async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
   const db = getDb()
-  const range = getFullySyncedActivityRange('30d')
+  const range = getFullySyncedActivityRange('max')
   const records = await db.activity.getByProjectsAndTimeRange(
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
     range,
@@ -55,7 +55,7 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
           tps: {
             change: getTpsWeeklyChange(records),
             pastDayCount: getLastDayTps(records),
-            summedCount: sumTpsCount(records),
+            summedCount: sumTpsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.count),
               timestamp: maxCount.countTimestamp.toNumber(),
@@ -64,7 +64,7 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
           uops: {
             change: getUopsWeeklyChange(records),
             pastDayCount: getLastDayUops(records),
-            summedCount: sumUopsCount(records),
+            summedCount: sumUopsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
               timestamp: maxCount.uopsTimestamp.toNumber(),
