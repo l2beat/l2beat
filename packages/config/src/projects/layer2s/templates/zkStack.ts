@@ -19,7 +19,6 @@ import {
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   Milestone,
-  NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
@@ -493,7 +492,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             },
           )),
     technology: {
-      newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
       dataAvailability: technologyDA(daProvider),
       operator: OPERATOR.CENTRALIZED_OPERATOR,
       forceTransactions: {
