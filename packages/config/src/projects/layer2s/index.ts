@@ -90,6 +90,7 @@ import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
+import { memento } from './memento'
 import { metal } from './metal'
 import { metis } from './metis'
 import { millicent } from './millicent'
@@ -283,6 +284,7 @@ export const layer2s: Layer2[] = [
   eclipse,
   mantapacific,
   mantle,
+  memento,
   metal,
   metis,
   mint,
