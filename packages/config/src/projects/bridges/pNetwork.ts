@@ -15,7 +15,7 @@ export const pNetwork: Bridge = {
     name: 'pNetwork',
     slug: 'pnetwork',
     warning:
-      'TVL of the bridge does not take into the account pTokens minted on Ethereum. These are wrapped tokens that should be backed 1:1 with their native counterparts on\
+      'TVS of the bridge does not take into the account pTokens minted on Ethereum. These are wrapped tokens that should be backed 1:1 with their native counterparts on\
     other chains, for example pBTC being backed by BTC on  Bitcoin or pFTM backed by FTM on Fantom.',
     category: 'Token Bridge',
     links: {

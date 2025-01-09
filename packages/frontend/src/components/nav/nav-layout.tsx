@@ -45,9 +45,9 @@ export async function NavLayout({
           href: '/scaling/risk',
         },
         {
-          title: 'Value Locked',
+          title: 'Value Secured',
           shortTitle: 'Value',
-          href: '/scaling/tvl',
+          href: '/scaling/tvs',
         },
         {
           title: 'Activity',

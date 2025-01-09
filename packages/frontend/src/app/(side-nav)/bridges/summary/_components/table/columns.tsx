@@ -60,7 +60,7 @@ export const bridgesSummaryActiveColumns = [
       meta: {
         align: 'right',
         tooltip:
-          'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
+          'Total value secured in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
       },
     },
   ),
