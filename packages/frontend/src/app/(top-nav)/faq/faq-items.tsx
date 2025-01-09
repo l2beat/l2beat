@@ -19,7 +19,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Why was TVL renamed to TVS?',
     answer: [
-      'The term TVL (Total Value Locked) is often associated with value locked in DeFi projects, or in general in some smart contracts. When we started, we only tracked value locked in canonical bridges, but as we expanded our scope to include externally bridged and natively minted assets, which are not necessarily locked, we decided to rename the metric to Total Value Secured (TVS) to better reflect the broader scope of assets we track, i.e. assets managed in some form by the project.',
+      'The term TVL (Total Value Locked) is often associated with value locked in DeFi projects, or in general in some smart contracts. When we started, we only tracked value locked in canonical bridges, but as we expanded our scope to include externally bridged and natively minted assets, which are not necessarily locked, we decided to rename the metric to Total Value Secured (TVS) to better reflect the broader scope of assets we track, i.e. all assets managed in some form by the project.',
     ],
   },
   {
