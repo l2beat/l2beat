@@ -39,7 +39,6 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .filter((entry) => entry !== undefined)
     .concat(
       compact([
         getEthereumEntry(ethereumData, 'Rollups'),
@@ -61,7 +60,7 @@ function getScalingProjectActivityEntry(
   project: Layer2 | Layer3,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
-): ScalingActivityEntry | undefined {
+): ScalingActivityEntry {
   return {
     ...getCommonScalingEntry({
       project,
