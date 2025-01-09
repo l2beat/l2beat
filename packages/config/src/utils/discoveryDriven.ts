@@ -1,4 +1,4 @@
-import { Layer2, Layer3, isSingleAddress } from '../'
+import { Layer2, Layer3 } from '../'
 
 export function arePermissionsDiscoveryDriven(
   project: Layer2 | Layer3,
@@ -38,13 +38,13 @@ export function arePermissionsDiscoveryDriven(
 export function areContractsDiscoveryDriven(project: Layer2 | Layer3): boolean {
   const checkContracts = (project: Layer2 | Layer3): boolean => {
     return project.contracts.addresses.every(
-      (a) => isSingleAddress(a) && a.discoveryDrivenData === true,
+      (a) => a.discoveryDrivenData === true,
     )
   }
 
   const checkNativeContracts = (project: Layer2 | Layer3): boolean => {
     return Object.values(project.contracts.nativeAddresses ?? {}).every((e) =>
-      e.every((a) => isSingleAddress(a) && a.discoveryDrivenData === true),
+      e.every((a) => a.discoveryDrivenData === true),
     )
   }
 

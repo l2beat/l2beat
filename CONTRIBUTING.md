@@ -92,7 +92,7 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
    data format for the project definition.
 2. Add a .ts file to describe your project inside `packages/config/src/projects/layer3s`. You can use the
    existing projects and templates (e.g. OP stack and Orbit stack templates in `packages/config/src/projects/layer2s/templates/`) as reference. Remember to specify host chain on which your project is based on.
-   Take `projectId` of host chian and add it to `hostChain` property.
+   Take `projectId` of host chain and add it to `hostChain` property.
 3. Add your project to `packages/config/src/projects/layer3s/index.ts`. The order of the projects should be
    kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels into

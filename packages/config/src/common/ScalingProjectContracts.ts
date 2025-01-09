@@ -18,11 +18,7 @@ export interface ScalingProjectContracts {
   isUnderReview?: boolean
 }
 
-export type ScalingProjectContract =
-  | ScalingProjectContractSingleAddress
-  | ScalingProjectContractMultipleAddresses
-
-export interface ScalingProjectContractSingleAddress {
+export interface ScalingProjectContract {
   /** Address of the contract */
   address: EthereumAddress
   /** Verification status of the contract */
@@ -52,25 +48,6 @@ export interface ScalingProjectContractSingleAddress {
   references?: ScalingProjectReference[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
-}
-
-export function isSingleAddress(
-  c: ScalingProjectContract,
-): c is ScalingProjectContractSingleAddress {
-  return (c as ScalingProjectContractSingleAddress).address !== undefined
-}
-
-export interface ScalingProjectContractMultipleAddresses {
-  /** Address of the contract */
-  multipleAddresses: EthereumAddress[]
-  /** Solidity name of the contract */
-  name: string
-  /** Description of the contract's role in the system */
-  description?: string
-  /** Url to chain's etherscan */
-  etherscanUrl?: string
-  /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
 }
 
 export interface ScalingProjectUpgradeability {
