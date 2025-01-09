@@ -15,6 +15,14 @@ export function compareActivityEntry(
       return stageDiff
     }
   }
+
+  if (a.slug === 'ethereum') {
+    return -1
+  }
+  if (b.slug === 'ethereum') {
+    return 1
+  }
+
   const metric = opts?.metric ?? 'uops'
   const diff =
     (b.data?.[metric].pastDayCount ?? 0) - (a.data?.[metric].pastDayCount ?? 0)

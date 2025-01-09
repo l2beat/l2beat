@@ -4,17 +4,16 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
-import { getEthereumFirstSortedRowModel } from '~/components/table/sorting/get-ethereum-first-sorted-row-model'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { featureFlags } from '~/consts/feature-flags'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { compareActivityEntry } from '~/server/features/scaling/activity/utils/compare-activity-entry'
 import {
   type ActivityMetric,
   useActivityMetricContext,
 } from '../activity-metric-context'
 import { getScalingActivityColumns } from './columns'
+import { compareActivityEntry } from '~/server/features/scaling/activity/utils/compare-activity-entry'
 
 interface Props {
   entries: ScalingActivityEntry[]
@@ -38,9 +37,7 @@ export function ScalingActivityTable({ entries, rollups }: Props) {
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: featureFlags.stageSorting
-      ? getEthereumFirstSortedRowModel()
-      : getSortedRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
     },
