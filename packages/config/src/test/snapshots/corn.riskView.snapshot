@@ -18,8 +18,9 @@
     value: "Under Review"
   }
   sequencerFailure: {
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a [INSERT] delay on this operation."
-    secondLine: "1000d delay"
+    definingMetric: 86400
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation."
+    secondLine: "1d delay"
     sentiment: "good"
     value: "Self sequence"
   }
