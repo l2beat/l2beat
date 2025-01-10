@@ -60,10 +60,10 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
     <div className="bg-gray-100 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
       <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
-          Value Locked
+          Value secured
         </span>
         <span className="hidden text-lg font-bold text-gray-500 dark:text-gray-600 md:block md:text-xs md:font-normal">
-          TVL
+          TVS
         </span>
 
         <div className="flex items-center gap-1">
@@ -124,7 +124,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
       {params.breakdown.total > 0 ? (
         <div className="mt-2 flex justify-center md:mt-0">
           <CustomLink href={props.detailedBreakdownHref} className="text-xs">
-            View TVL Breakdown
+            View TVS Breakdown
           </CustomLink>
         </div>
       ) : null}

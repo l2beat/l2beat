@@ -44,7 +44,7 @@ function getScalingTvlEntry(
 ) {
   return {
     ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
-    href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
+    href: `/scaling/projects/${project.display.slug}/tvs-breakdown`,
     tvl: {
       data: latestTvl && {
         total: latestTvl.total,

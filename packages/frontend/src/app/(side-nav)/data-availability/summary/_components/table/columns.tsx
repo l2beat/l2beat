@@ -71,7 +71,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
   ),
   meta: {
     tooltip:
-      'Total value secured (TVS) is the sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVL of sovereign rollups.',
+      'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
     align: 'right',
   },
 })
@@ -177,10 +177,10 @@ const bridgeRisksColumn = virtual(
 const bridgeTvsColumn = virtual(
   columnHelper.display({
     id: 'bridge-tvs',
-    header: 'Value Secured',
+    header: 'Value secured',
     meta: {
       tooltip:
-        'The sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and DA bridge, and are listed on L2BEAT.',
+        'The sum of the total value secured (TVS) across all L2s & L3s that use this DA layer and DA bridge, and are listed on L2BEAT.',
     },
   }),
 )

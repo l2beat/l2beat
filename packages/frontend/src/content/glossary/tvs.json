@@ -1,0 +1,5 @@
+{
+  "term": "TVS",
+  "definition": "We define TVS to be the total amount of value that can be accessed on a project. Currently, L2BEAT only tracks fungible assets, but it could be extended in the future. Currently, TVS is calculated as the sum of canonical bridged tokens, externally bridged tokens and native tokens.",
+  "isSpicy": false
+}

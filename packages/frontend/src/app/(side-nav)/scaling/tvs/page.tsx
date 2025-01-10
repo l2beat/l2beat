@@ -9,7 +9,7 @@ import { ScalingTvlTabs } from './_components/scaling-tvl-tabs'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
-    url: '/scaling/tvl',
+    url: '/scaling/tvs',
   },
 })
 
@@ -29,7 +29,7 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <MainPageHeader>Value Locked</MainPageHeader>
+          <MainPageHeader>Value Secured</MainPageHeader>
           <ScalingTvlTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
