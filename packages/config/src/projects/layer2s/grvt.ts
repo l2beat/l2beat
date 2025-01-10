@@ -170,7 +170,6 @@ export const grvt: Layer2 = zkStackL2({
         {
           category: 'Users can be censored if',
           text: 'the Operator does not specifically whitelist them in the TransactionFilterer.',
-          isCritical: true,
         },
       ],
       references: [
