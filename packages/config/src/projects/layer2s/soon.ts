@@ -6,7 +6,8 @@ export const soon: Layer2 = underReviewL2({
   id: 'soon',
   createdAt: new UnixTime(1726836904), // 2024-09-20T12:55:04Z
   display: {
-    name: 'Soon Mainet',
+    name: 'Soon Alpha Mainnet',
+    shortName: 'Soon',
     slug: 'soon',
     description:
       'SOON is a Layer 2 chain built on top of the SOON Stack, which itself is based on the OP Stack, but introduces the Decoupled Solana Virtual Machine (SVM).',
