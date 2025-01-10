@@ -1,14 +1,25 @@
-Generated with discovered.json: 0x8af0449318cbc53ebbc149ea1d61228b4050dc01
+Generated with discovered.json: 0x00183df4bddf13131c46824ba2b1eee2fdc79f44
 
-# Diff at Thu, 09 Jan 2025 10:24:30 GMT:
+# Diff at Fri, 10 Jan 2025 11:44:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@78b21311521c2b9536b16ea30cdd1536bd179b34 block: 21585244
-- current block number: 21586306
+- comparing to: main@e594a564c9c62a7edef1a6e3f64f955bf70aa8eb block: 21585244
+- current block number: 21593851
 
 ## Description
 
-Add GRVT tracking after the chain launch.
+UpgradeTimestamp added for the latest ZKsync Protocol Upgrade v25 (QoL upgrade, partly reviewed below).
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.1:
++        {"_protocolVersion":107374182400,"_upgradeTimestamp":1736517600}
+    }
+```
 
 ## Config/verification related changes
 
