@@ -61,6 +61,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
+    livenessInfo: p.type === 'layer2' ? p.display.liveness : undefined,
     proofVerification: p.stateValidation?.proofVerification,
     countdowns: otherMigrationContext
       ? {
