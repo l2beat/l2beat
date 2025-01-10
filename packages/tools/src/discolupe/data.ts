@@ -1,0 +1,33 @@
+import { z } from 'zod'
+
+export const DiscoLupeProject = z.object({
+  id: z.string(),
+  display: z.object({
+    name: z.string(),
+    slug: z.string(),
+  }),
+  tvl: z.number(),
+  arePermissionsDiscoveryDriven: z.boolean(),
+  areContractsDiscoveryDriven: z.boolean(),
+  milestones: z.array(z.object({})).optional(),
+})
+export type DiscoLupeProject = z.infer<typeof DiscoLupeProject>
+
+export const DiscoLupeModel = z.object({
+  success: z.boolean(),
+  data: z.object({
+    projects: z.array(DiscoLupeProject),
+  }),
+})
+
+export async function fetchData() {
+  const req = await fetch('http://localhost:3000/api/discolupe')
+
+  const result = await req.json()
+  const parsed = DiscoLupeModel.parse(result)
+  if (!parsed.success) {
+    throw new Error('expected it to succeed')
+  }
+
+  return parsed
+}
