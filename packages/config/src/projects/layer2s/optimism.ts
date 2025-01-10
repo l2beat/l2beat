@@ -260,7 +260,7 @@ export const optimism: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(105235064),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       // timestamp of the first blob tx
       minTimestamp: new UnixTime(1710375155),
       l2BlockTimeSeconds: 2,

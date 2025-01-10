@@ -215,7 +215,7 @@ export const kroma: Layer2 = {
       },
     ],
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       // timestamp of the first blob tx
       minTimestamp: new UnixTime(1714032407),
       l2BlockTimeSeconds: 2,

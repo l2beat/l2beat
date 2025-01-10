@@ -192,7 +192,7 @@ export const ink: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       minTimestamp: new UnixTime(1733502012),
       genesisTimestamp: new UnixTime(1733498411),
       l2BlockTimeSeconds: 2,
