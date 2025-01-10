@@ -1,5 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  RISK_VIEW,
+} from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -133,6 +137,62 @@ export const grvt: Layer2 = zkStackL2({
         'Whitelisted addresses that are permissioned to deposit via the canonical shared bridge (gated by the GRVTTransactionFilterer).',
     },
   ],
+  nonTemplateRiskView: {
+    sequencerFailure: {
+      value: 'No mechanism',
+      description:
+        'There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 to be whitelisted.',
+      sentiment: 'bad',
+      sources: [
+        {
+          contract: 'GrvtZkEvm',
+          references: [
+            'https://etherscan.io/address//0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L240',
+            'https://etherscan.io/address//0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
+          ],
+        },
+        {
+          contract: 'GRVTTransactionFilterer',
+          references: [
+            'https://etherscan.io/address/0x8319fede99061c6723c86d366a903e8fa3a0f541#code#F1#L29',
+          ],
+        },
+      ],
+    },
+  },
+  nonTemplateTechnology: {
+    forceTransactions: {
+      name: "Users can't force any transaction",
+      description:
+        'If a user is censored by the L2 Sequencer, they cannot by default force their transaction via the L1 queue. An an active TransactionFilterer contract which allows only whitelisted accounts to enqueue, prevents it. Even if a user was specifically whitelisted, there is no mechanism that forces L2 Sequencer to include\
+            transactions from the queue in an L2 block.',
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the operator refuses to include their transactions.',
+        },
+        {
+          category: 'Users can be censored if',
+          text: 'the Operator does not specifically whitelist them in the TransactionFilterer.',
+          isCritical: true,
+        },
+      ],
+      references: [
+        {
+          text: "L1 - L2 interoperability - Developer's documentation",
+          href: 'https://docs.zksync.io/zksync-protocol/rollup/l1_l2_communication#priority-operations-1',
+        },
+        {
+          text: 'Mailbox facet',
+          href: 'https://etherscan.io/address//0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L240',
+        },
+        {
+          text: 'TransactionFilterer',
+          href: 'https://etherscan.io/address/0x8319fede99061c6723c86d366a903e8fa3a0f541#code#F1#L29',
+        },
+      ],
+    },
+  },
   milestones: [
     {
       name: 'Mainnet alpha launch',

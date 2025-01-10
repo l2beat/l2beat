@@ -52,18 +52,24 @@
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
-    sentiment: "warning"
+    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 to be whitelisted."
+    sentiment: "bad"
     sources: [
       {
         contract: "GrvtZkEvm"
         references: [
-          "https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53"
-          "https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95"
+          "https://etherscan.io/address//0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L240"
+          "https://etherscan.io/address//0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95"
+        ]
+      }
+      {
+        contract: "GRVTTransactionFilterer"
+        references: [
+          "https://etherscan.io/address/0x8319fede99061c6723c86d366a903e8fa3a0f541#code#F1#L29"
         ]
       }
     ]
-    value: "Enqueue via L1"
+    value: "No mechanism"
   }
   stateValidation: {
     definingMetric: Infinity
