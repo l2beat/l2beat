@@ -203,7 +203,7 @@ export const swell: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       minTimestamp: new UnixTime(1732701647),
       genesisTimestamp: new UnixTime(1732696703),
       l2BlockTimeSeconds: 2,

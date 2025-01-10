@@ -91,7 +91,7 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     // timestamp of the first blob tx
     minTimestamp: new UnixTime(1716846455),
     l2BlockTimeSeconds: 2,

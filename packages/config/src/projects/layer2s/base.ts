@@ -205,7 +205,7 @@ export const base: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       minTimestamp: new UnixTime(1710375515),
       genesisTimestamp: new UnixTime(1686789347),
       l2BlockTimeSeconds: 2,

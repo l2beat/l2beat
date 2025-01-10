@@ -116,7 +116,7 @@ function initializeConfigurations(
             minTimestamp: configuration.minTimestamp,
             stateUpdateMode: configuration.stateUpdate,
           }
-        case 'OPStack-blob':
+        case 'OPStack':
           return {
             projectId: configuration.projectId,
             analyzers: {
