@@ -36,6 +36,7 @@ export interface Edge<T = EthereumAddress> {
   permission: Permission
   delay: number
   description?: string
+  condition?: string
   toNode: T
 }
 

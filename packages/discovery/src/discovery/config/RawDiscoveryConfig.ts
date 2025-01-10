@@ -39,6 +39,7 @@ export type RawPermissionConfiguration = z.infer<
 export const RawPermissionConfiguration = z.object({
   type: Permission,
   delay: z.union([z.number(), z.string()]).default(0),
+  condition: z.string().optional(),
   description: z.string().optional(),
 })
 

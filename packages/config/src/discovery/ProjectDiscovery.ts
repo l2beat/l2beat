@@ -825,13 +825,15 @@ export class ProjectDiscovery {
             value.permission,
             value.via !== undefined ? formatVia(value.via) : '',
             value.description ?? '',
+            value.condition ?? '',
           ].join(':')
         },
       ),
     ).map(([key, entries]) => {
       const permission = key.split(':')[0] as PermissionType
       const via = key.split(':')[1] ?? ''
-      const description = key.split(':', 3)[2] ?? ''
+      const description = key.split(':')[2] ?? ''
+      const condition = key.split(':')[3] ?? ''
       const prefix = ultimatePermissionToPrefix[permission]
       if (prefix === undefined) {
         return ''
@@ -845,7 +847,10 @@ export class ProjectDiscovery {
         : ''
 
       const detailsString =
-        addressesString + via + formatPermissionDescription(description)
+        addressesString +
+        via +
+        formatPermissionDescription(description) +
+        formatConditionDescription(condition)
       return `${[
         ultimatePermissionToPrefix[permission as PermissionType],
         detailsString,
@@ -877,11 +882,16 @@ export class ProjectDiscovery {
       groupBy(
         contractOrEoa.directlyReceivedPermissions ?? [],
         (value: ResolvedPermission) =>
-          value.permission + ':' + (value.description ?? ''),
+          value.permission +
+          ':' +
+          (value.description ?? '') +
+          ':' +
+          (value.condition ?? ''),
       ),
     ).map(([key, entries]) => {
       const permission = key.split(':')[0] as PermissionType
-      const description = key.split(':', 2)[1] ?? ''
+      const description = key.split(':')[1] ?? ''
+      const condition = key.split(':')[2] ?? ''
       const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
       const addressesString = showTargets
         ? entries
@@ -893,6 +903,7 @@ export class ProjectDiscovery {
         directPermissionToPrefix[permission],
         addressesString,
         formatPermissionDescription(description),
+        formatConditionDescription(condition),
       ]
         .join(' ')
         .trim()}.`
@@ -1142,4 +1153,8 @@ export function trimTrailingDots(s: string): string {
 
 function formatPermissionDescription(description: string): string {
   return description !== '' ? ` - ${trimTrailingDots(description)}` : ''
+}
+
+function formatConditionDescription(condition: string): string {
+  return condition !== '' ? ` if ${trimTrailingDots(condition)}` : ''
 }

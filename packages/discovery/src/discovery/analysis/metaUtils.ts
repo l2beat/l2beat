@@ -190,6 +190,9 @@ function linkPermission(
     description: rawPermission.description
       ? interpolateDescription(rawPermission.description, analysis)
       : undefined,
+    condition: rawPermission.condition
+      ? interpolateDescription(rawPermission.condition, analysis)
+      : undefined,
     target: self,
   }
 }

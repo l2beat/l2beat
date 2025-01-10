@@ -69,6 +69,7 @@ export function transformToReceived(
         target: p.target,
         delay: zeroToUndefined(p.delay),
         description: p.description,
+        condition: p.condition,
         via: undefined,
       }))
       .filter((p) => !ultimate.some((m) => isEqual(m, p))),
