@@ -57,7 +57,7 @@ export default async function Image({ params }: Props) {
       name={project.display.name}
       size={size}
     >
-      SCALING | PROJECT PAGE
+      ZK CATALOG | PROJECT PAGE
     </ProjectOpengraphImage>,
     {
       ...size,

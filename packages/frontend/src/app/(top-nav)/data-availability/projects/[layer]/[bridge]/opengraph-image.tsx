@@ -57,7 +57,9 @@ export default async function Image({ params }: Props) {
       slug={project.display.slug}
       name={project.display.name}
       size={size}
-    />,
+    >
+      DATA AVAILABILITY | PROJECT PAGE
+    </ProjectOpengraphImage>,
     {
       ...size,
       fonts: [
