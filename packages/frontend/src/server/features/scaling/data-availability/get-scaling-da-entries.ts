@@ -1,10 +1,19 @@
-import { ProjectService, type ProjectWith } from '@l2beat/config'
+import {
+  type ProjectDataAvailability,
+  ProjectService,
+  type ProjectWith,
+  type ScalingProjectCategory,
+  type ScalingProjectStack,
+} from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCommonScalingEntry2 } from '../get-common-scaling-entry'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry2,
+} from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
@@ -22,7 +31,7 @@ export async function getScalingDaEntries() {
 
   const entries = projects
     .map((project) =>
-      getScalingDataAvailabilityEntry(
+      getScalingDaEntry(
         project,
         projectsChangeReport.getChanges(project.id),
         tvl[project.id] ?? 0,
@@ -34,11 +43,18 @@ export async function getScalingDaEntries() {
   return groupByTabs(entries)
 }
 
-function getScalingDataAvailabilityEntry(
+export interface ScalingDaEntry extends CommonScalingEntry {
+  category: ScalingProjectCategory
+  dataAvailability: ProjectDataAvailability
+  provider: ScalingProjectStack | undefined
+  tvlOrder: number
+}
+
+function getScalingDaEntry(
   project: ProjectWith<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
   changes: ProjectChanges,
   tvl: number,
-) {
+): ScalingDaEntry {
   return {
     ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
     category: project.scalingInfo.type,
@@ -47,8 +63,3 @@ function getScalingDataAvailabilityEntry(
     tvlOrder: tvl,
   }
 }
-
-export type ScalingDataAvailabilityEntry = Exclude<
-  ReturnType<typeof getScalingDataAvailabilityEntry>,
-  undefined
->

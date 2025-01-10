@@ -7,7 +7,7 @@ import {
   DataAvailabilityMode,
 } from './ScalingProjectDataAvailability'
 
-export interface DataAvailabilityWithSentiment {
+export interface ProjectDataAvailability {
   layer: ValueWithSentiment<string> & { secondLine?: string }
   bridge: DataAvailabilityBridge
   mode: DataAvailabilityMode
@@ -252,7 +252,7 @@ function DAC_SENTIMENT(config?: {
 
 export function addSentimentToDataAvailability(
   data: DataAvailabilityConfig,
-): DataAvailabilityWithSentiment {
+): ProjectDataAvailability {
   return {
     layer: addSentimentToLayers(data.layers),
     bridge: data.bridge,
