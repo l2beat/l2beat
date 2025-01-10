@@ -68,7 +68,7 @@ export default async function Page(props: Props) {
       />
       <TvlBreakdownSummaryBox
         tvl={{
-          value: project7dData.total,
+          value: project7dData.breakdown.total,
           change: project7dData.change.total,
         }}
         canonical={{
