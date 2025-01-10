@@ -57,6 +57,10 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       stacked: undefined,
     },
     scalingDa: p.dataAvailability,
+    tvlInfo: {
+      associatedTokens: p.config.associatedTokens ?? [],
+      warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
+    },
     proofVerification: p.stateValidation?.proofVerification,
     countdowns: otherMigrationContext
       ? {
@@ -88,6 +92,10 @@ function bridgeToProject(p: Bridge): Project {
       redWarning: undefined,
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
+    },
+    tvlInfo: {
+      associatedTokens: p.config.associatedTokens ?? [],
+      warnings: [],
     },
     // tags
     isBridge: true,
