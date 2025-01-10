@@ -1,4 +1,5 @@
 import { ContentWrapper } from '~/components/content-wrapper'
+import { FullPageHeader } from '~/components/full-page-header'
 import { CustomLink } from '~/components/link/custom-link'
 
 export default function Page() {
@@ -62,18 +63,16 @@ export default function Page() {
 
 function Header() {
   return (
-    <header className="bg-pure-white py-24 dark:bg-zinc-900">
-      <ContentWrapper className="flex items-center justify-center leading-[1.15]">
-        <div className="w-full">
-          <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
-            <h1 className="text-6xl font-bold">About L2BEAT</h1>
-            <p className="w-full text-lg font-light lg:w-3/5">
-              We are a public goods company dedicated to providing onchain
-              transparency.
-            </p>
-          </div>
+    <FullPageHeader>
+      <div className="w-full">
+        <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
+          <h1 className="text-6xl font-bold">About L2BEAT</h1>
+          <p className="w-full text-lg font-light leading-[1.15] lg:w-3/5">
+            We are a public goods company dedicated to providing onchain
+            transparency.
+          </p>
         </div>
-      </ContentWrapper>
-    </header>
+      </div>
+    </FullPageHeader>
   )
 }
