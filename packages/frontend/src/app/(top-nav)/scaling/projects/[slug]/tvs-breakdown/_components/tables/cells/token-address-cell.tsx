@@ -18,8 +18,12 @@ export function TokenAddressCell(props: Props) {
     )
   }
 
+  const explorerUrl = props.explorer.endsWith('/')
+    ? props.explorer.slice(0, -1)
+    : props.explorer
+
   return (
-    <CustomLink href={`${props.explorer}/address/${props.address.toString()}`}>
+    <CustomLink href={`${explorerUrl}/address/${props.address.toString()}`}>
       <span className="flex items-center gap-1 text-xs">
         {formatAddress(props.address.toString())}
         <CustomLinkIcon className="fill-blue-700 dark:fill-blue-500" />
