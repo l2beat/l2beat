@@ -6,7 +6,7 @@ export default function Page() {
     <>
       <Header />
       <ContentWrapper>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="mt-8 grid gap-4 md:mt-20 md:grid-cols-2">
           <div className="flex flex-col gap-4">
             <p>
               What sets L2BEAT apart is our unwavering commitment to delivering
