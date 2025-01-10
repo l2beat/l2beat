@@ -58,11 +58,6 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: '/bridges/tvl',
-        destination: '/bridges/summary',
-        permanent: false,
-      },
-      {
         source: '/bridges',
         destination: '/bridges/summary',
         permanent: false,
@@ -112,33 +107,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/project/layer2.finance',
-        destination: '/scaling/projects/layer2finance',
-        permanent: true,
-      },
-      {
-        source: '/project/leverj',
-        destination: '/scaling/projects/gluon',
-        permanent: true,
-      },
-      {
-        source: '/projects/leverj',
-        destination: '/scaling/projects/gluon',
-        permanent: true,
-      },
-      {
-        source: '/projects/fuel',
-        destination: '/scaling/projects/fuelv1',
-        permanent: true,
-      },
-      {
-        source: '/projects/zkswapv2',
-        destination: '/scaling/projects/zkspace',
-        permanent: true,
-      },
-      {
-        source: '/projects/deversifi',
-        destination: '/scaling/projects/rhinofi',
+        source: '/scaling/projects/:name/tvl-breakdown',
+        destination: '/scaling/projects/:name/tvs-breakdown',
         permanent: true,
       },
     ]
