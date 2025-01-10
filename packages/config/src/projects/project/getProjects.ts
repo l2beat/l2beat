@@ -56,6 +56,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       host: undefined,
       stacked: undefined,
     },
+    scalingDa: p.dataAvailability,
     proofVerification: p.stateValidation?.proofVerification,
     countdowns: otherMigrationContext
       ? {
