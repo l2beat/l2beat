@@ -1,7 +1,7 @@
 {
   "name": "grvt",
   "chain": "ethereum",
-  "blockNumber": 21578866,
+  "blockNumber": 21593895,
   "configHash": "0x35ca969755d07174650f2df892e33267574c94be867916fe1ef2befba2b307b2",
   "contracts": [
     {
@@ -166,7 +166,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "GRVTBaseToken",
         "symbol": "GBT",
-        "totalSupply": "5300541194335152988749892502228755547482451690626866874483625941399759325"
+        "totalSupply": "5300541194335152988749892502228755547482451690626866874486667604731359325"
       }
     },
     {
@@ -361,26 +361,26 @@
         "getBaseToken": "0xAB3B124052F0389D1cbED221d912026Ac995bb95",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 265,
+        "getFirstUnprocessedPriorityTx": 270,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 2,
+        "getPriorityQueueSize": 4,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 210,
-        "getTotalBatchesExecuted": 202,
-        "getTotalBatchesVerified": 210,
-        "getTotalBlocksCommitted": 210,
-        "getTotalBlocksExecuted": 202,
-        "getTotalBlocksVerified": 210,
-        "getTotalPriorityTxs": 267,
+        "getTotalBatchesCommitted": 222,
+        "getTotalBatchesExecuted": 218,
+        "getTotalBatchesVerified": 221,
+        "getTotalBlocksCommitted": 222,
+        "getTotalBlocksExecuted": 218,
+        "getTotalBlocksVerified": 221,
+        "getTotalPriorityTxs": 274,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",

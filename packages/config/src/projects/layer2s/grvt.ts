@@ -32,7 +32,7 @@ export const grvt: Layer2 = zkStackL2({
       sentiment: 'neutral',
     },
     description:
-      'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being decentralized, featuring self-custodial funds and wallets.',
+      'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being based on the ZK stack Validium codebase with confidential data availability and transaction filtering enabled.',
     links: {
       websites: ['https://grvt.io'],
       apps: ['https://grvt.io/exchange/perpetual/BTC-USDT'],
