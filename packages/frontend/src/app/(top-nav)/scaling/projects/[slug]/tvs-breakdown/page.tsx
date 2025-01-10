@@ -14,6 +14,7 @@ import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
 const scalingProjects = [...layer2s, ...layer3s]
 
 export async function generateStaticParams() {
+  if (env.VERCEL_ENV !== 'production') return []
   return scalingProjects.map((project) => ({ slug: project.display.slug }))
 }
 

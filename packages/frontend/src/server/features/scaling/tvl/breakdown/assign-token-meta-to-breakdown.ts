@@ -19,9 +19,6 @@ function assignTokenMeta<T extends { assetId: AssetId; chainId: ChainId }>(
   token: T,
 ) {
   const fullTokenInfo = safeGetTokenByAssetId(token.assetId)
-  if (fullTokenInfo?.symbol === 'HOP') {
-    console.log(token, fullTokenInfo)
-  }
   return {
     ...token,
     iconUrl: fullTokenInfo!.iconUrl!,
