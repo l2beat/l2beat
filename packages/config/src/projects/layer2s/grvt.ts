@@ -95,6 +95,10 @@ export const grvt: Layer2 = zkStackL2({
       description:
         "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
     }),
+    discovery.getContractDetails('GRVTTransactionFilterer', {
+      description:
+        'Referenced by the mailbox facet of the systems diamond contract, defining a whitelist that gets checked on every call of `requestL2Transaction()`. This prevents non-whitelisted addresses from depositing the gas token and from forcing transactions from L1.',
+    }),
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
