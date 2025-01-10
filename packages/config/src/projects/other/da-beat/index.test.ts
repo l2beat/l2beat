@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { daLayers } from '.'
 import { layer2s } from '../../layer2s'
@@ -55,9 +54,7 @@ describe('DA-BEAT', () => {
         )
         .filter(
           // It makes no sense to list them on the DA-BEAT
-          (scaling) =>
-            getLatestDataAvailabilityEntry(scaling.dataAvailability)?.layer
-              .value !== 'None',
+          (scaling) => scaling.dataAvailability?.layer.value !== 'None',
         )
 
       const daBeatProjectIds = daLayers.flatMap((daLayer) =>
@@ -85,14 +82,3 @@ describe('DA-BEAT', () => {
     })
   })
 })
-
-function getLatestDataAvailabilityEntry<
-  T extends { sinceTimestamp?: UnixTime; untilTimestamp?: UnixTime },
->(entries: T[] | null | undefined) {
-  const now = UnixTime.now()
-  return entries?.find(
-    (entry) =>
-      (!entry.sinceTimestamp || entry.sinceTimestamp.lte(now)) &&
-      (!entry.untilTimestamp || entry.untilTimestamp.gt(now)),
-  )
-}

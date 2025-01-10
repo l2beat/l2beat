@@ -578,7 +578,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    dataAvailability: [
+    dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -596,7 +596,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
-    ],
     riskView: templateVars.riskView ?? {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
@@ -877,15 +876,13 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         : templateVars.stage,
     dataAvailability:
       daProvider !== undefined
-        ? [
-            addSentimentToDataAvailability({
-              layers: daProvider.fallback
-                ? [daProvider.layer, daProvider.fallback]
-                : [daProvider.layer],
-              bridge: daProvider.bridge,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }),
-          ]
+        ? addSentimentToDataAvailability({
+            layers: daProvider.fallback
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
+            bridge: daProvider.bridge,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+          })
         : baseChain.dataAvailability,
     config: {
       associatedTokens: templateVars.associatedTokens,

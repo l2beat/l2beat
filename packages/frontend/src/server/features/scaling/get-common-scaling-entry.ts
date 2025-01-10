@@ -5,7 +5,6 @@ import {
   type ProjectWith,
   type StageConfig,
   badges,
-  getCurrentEntry,
   isUnderReview,
   isVerified,
 } from '@l2beat/config'
@@ -163,8 +162,7 @@ export function getCommonScalingEntry({
       stage: getStage(stage),
       purposes: project.display.purposes,
       hostChain: project.type === 'layer2' ? 'Ethereum' : getHostChain(project),
-      daLayer:
-        getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
+      daLayer: project.dataAvailability?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
     },
   }
