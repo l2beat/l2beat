@@ -7,7 +7,6 @@ import { Layer3, layer3s } from '../layer3s'
 import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
 import { Project } from './Project'
-import { getCurrentEntry } from './utils/getCurrentEntry'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -48,7 +47,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       ),
       stack: p.display.provider,
       raas: getRaas(p.badges),
-      daLayer: getCurrentEntry(p.dataAvailability)?.layer.value ?? 'Unknown',
+      daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
     },

@@ -1,10 +1,4 @@
-import {
-  type Layer2,
-  type Layer3,
-  getCurrentEntry,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
+import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'
@@ -69,7 +63,6 @@ function getScalingSummaryEntry(
         })
       : undefined
   const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
-  const dataAvailability = getCurrentEntry(project.dataAvailability)
 
   return {
     ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
@@ -81,7 +74,7 @@ function getScalingSummaryEntry(
         : project.stage,
     category: project.display.category,
     provider: project.display.provider,
-    dataAvailability,
+    dataAvailability: project.dataAvailability,
     mainPermissions: project.display.mainPermissions,
     reasonsForBeingOther: project.display.reasonsForBeingOther,
     tvl: {

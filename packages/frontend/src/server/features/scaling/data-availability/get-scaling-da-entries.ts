@@ -1,10 +1,4 @@
-import {
-  type Layer2,
-  type Layer3,
-  getCurrentEntry,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
+import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -42,17 +36,12 @@ function getScalingDataAvailabilityEntry(
   changes: ProjectChanges,
   tvl: number | undefined,
 ) {
-  const dataAvailability = getCurrentEntry(project.dataAvailability)
-  if (!dataAvailability) return
+  if (!project.dataAvailability) return
 
   return {
     ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     category: project.display.category,
-    dataAvailability: {
-      layer: dataAvailability.layer,
-      bridge: dataAvailability.bridge,
-      mode: dataAvailability.mode,
-    },
+    dataAvailability: project.dataAvailability,
     provider: project.display.provider,
     tvlOrder: tvl ?? 0,
   }

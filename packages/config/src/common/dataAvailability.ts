@@ -1,4 +1,4 @@
-import { UnixTime, ValueWithSentiment } from '@l2beat/shared-pure'
+import { ValueWithSentiment } from '@l2beat/shared-pure'
 
 import {
   DataAvailabilityBridge,
@@ -6,13 +6,6 @@ import {
   DataAvailabilityLayer,
   DataAvailabilityMode,
 } from './ScalingProjectDataAvailability'
-
-export type DataAvailabilityHistory = DataAvailabilityHistoryEntry[]
-
-export type DataAvailabilityHistoryEntry = DataAvailabilityWithSentiment & {
-  sinceTimestamp?: UnixTime
-  untilTimestamp?: UnixTime
-}
 
 export interface DataAvailabilityWithSentiment {
   layer: ValueWithSentiment<string> & { secondLine?: string }

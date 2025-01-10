@@ -317,7 +317,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             },
     },
     chainConfig: templateVars.chainConfig,
-    dataAvailability: [
+    dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -331,7 +331,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA,
           }),
-    ],
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

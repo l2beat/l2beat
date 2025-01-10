@@ -156,16 +156,14 @@ export const zkfair: Layer2 = {
     ],
     coingeckoPlatform: 'zkfair',
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.DAC],
-      bridge: DA_BRIDGES.DAC_MEMBERS({
-        requiredSignatures,
-        membersCount,
-      }),
-      mode: DA_MODES.STATE_DIFFS,
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.DAC],
+    bridge: DA_BRIDGES.DAC_MEMBERS({
+      requiredSignatures,
+      membersCount,
     }),
-  ],
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,

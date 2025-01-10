@@ -44,13 +44,11 @@ const challengePeriod = discovery.getContractValue<number>(
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
   createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   display: {
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Fuel Ignition',
