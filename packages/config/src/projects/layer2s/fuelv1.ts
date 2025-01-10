@@ -13,9 +13,12 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('fuelv1')
 
 export const fuelv1: Layer2 = {
   type: 'layer2',
@@ -163,14 +166,7 @@ export const fuelv1: Layer2 = {
       'The data format details are documented in the Data Structure subsection [here](https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/System%20Description%20Primer.html).',
   },
   contracts: {
-    addresses: [
-      {
-        address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'),
-        name: 'Fuel',
-        // Verified manually
-        isVerified: true,
-      },
-    ],
+    addresses: [discovery.getContractDetails('Fuel')],
     risks: [],
   },
   milestones: [

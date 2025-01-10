@@ -47,7 +47,7 @@ describe(SourceCodeService.name, () => {
 
     const service = new SourceCodeService()
 
-    const result = await service.getSources(provider, FOO_ADDRESS)
+    const result = await service.getSources(provider, FOO_ADDRESS, [], {})
     expect(result).toEqual({
       abi: [],
       abis: {},
@@ -72,7 +72,7 @@ describe(SourceCodeService.name, () => {
 
     const service = new SourceCodeService()
 
-    const result = await service.getSources(provider, BAR_ADDRESS)
+    const result = await service.getSources(provider, BAR_ADDRESS, [], {})
     expect(result).toEqual({
       abi: ['function bar()'],
       abis: {
@@ -101,9 +101,12 @@ describe(SourceCodeService.name, () => {
 
     const service = new SourceCodeService()
 
-    const result = await service.getSources(provider, BAR_ADDRESS, [
-      BAZ_ADDRESS,
-    ])
+    const result = await service.getSources(
+      provider,
+      BAR_ADDRESS,
+      [BAZ_ADDRESS],
+      {},
+    )
     expect(result).toEqual({
       abi: ['function bar()', 'function baz()'],
       abis: {
@@ -141,9 +144,12 @@ describe(SourceCodeService.name, () => {
 
     const service = new SourceCodeService()
 
-    const result = await service.getSources(provider, BAR_ADDRESS, [
-      FOO_ADDRESS,
-    ])
+    const result = await service.getSources(
+      provider,
+      BAR_ADDRESS,
+      [FOO_ADDRESS],
+      {},
+    )
     expect(result).toEqual({
       abi: ['function bar()'],
       abis: {

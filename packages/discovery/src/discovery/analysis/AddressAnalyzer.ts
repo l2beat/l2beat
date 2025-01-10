@@ -130,6 +130,7 @@ export class AddressAnalyzer {
       provider,
       address,
       implementations,
+      overrides?.manualSourcePaths ?? {},
     )
 
     const name = overrides?.name ?? sources.name

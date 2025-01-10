@@ -15,7 +15,11 @@
   "ignoreDiscovery": "0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9", // idk why it get discovered, should be ignored
   "overrides": {
     "FacetEtherBridgeV6": {
-      "extends": "facet/FacetEtherBridge"
+      "extends": "facet/FacetEtherBridge",
+      "manualSourcePaths": {
+        // Facet proxy deployed through ERC1967 factory by Solady
+        "0x0000000000000b07ED001607f5263D85bf28Ce4C": "https://github.com/vectorized/solady/blob/main/src/utils/ERC1967Factory.sol"
+      }
     },
     "SystemConfig": {
       "ignoreInWatchMode": ["scalar", "overhead"],
