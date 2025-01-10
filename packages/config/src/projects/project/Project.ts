@@ -6,7 +6,7 @@ import {
   ScalingProjectStack,
 } from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
-import { WarningWithSentiment } from '../layer2s'
+import { ProjectLivenessInfo, WarningWithSentiment } from '../layer2s'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -27,6 +27,7 @@ export interface Project {
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
+  livenessInfo?: ProjectLivenessInfo
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
   countdowns?: ProjectCountdowns
