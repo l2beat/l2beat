@@ -16,6 +16,7 @@ interface LupeColumn {
   id: string
   fn: (project: DiscoLupeProject) => string
   displayFn: (project: DiscoLupeProject, str: string) => ReactElement
+  align: 'right' | 'left'
 }
 
 interface Row {
@@ -30,6 +31,7 @@ function divContainer(_: DiscoLupeProject, str: string) {
 const CONFIGURED_HEADERS: LupeColumn[] = [
   {
     header: 'Name',
+    align: 'left',
     id: 'qx',
     fn: (project: DiscoLupeProject) => project.display.name,
     displayFn: (project: DiscoLupeProject, str: string) => {
@@ -50,6 +52,7 @@ const CONFIGURED_HEADERS: LupeColumn[] = [
   {
     header: 'TVL',
     id: 'ig',
+    align: 'right',
     fn: (project: DiscoLupeProject) =>
       formatCurrencyExactValue(project.tvl, 'usd'),
     displayFn: divContainer,
@@ -57,6 +60,7 @@ const CONFIGURED_HEADERS: LupeColumn[] = [
   {
     header: 'Permissions',
     id: 'td',
+    align: 'right',
     fn: (project: DiscoLupeProject) =>
       project.arePermissionsDiscoveryDriven ? '✅' : '❌',
     displayFn: divContainer,
@@ -64,6 +68,7 @@ const CONFIGURED_HEADERS: LupeColumn[] = [
   {
     header: 'Smart contracts',
     id: 'i9',
+    align: 'right',
     fn: (project: DiscoLupeProject) =>
       project.areContractsDiscoveryDriven ? '✅' : '❌',
     displayFn: divContainer,
@@ -71,6 +76,7 @@ const CONFIGURED_HEADERS: LupeColumn[] = [
   {
     header: 'Milestones & Incidents',
     id: 'vl',
+    align: 'right',
     fn: (project: DiscoLupeProject) =>
       project.milestones && project.milestones.length > 0 ? '✅' : '❌',
     displayFn: divContainer,
@@ -109,14 +115,14 @@ export function DiscoLupe() {
             {selectedColumns.map((c) => (
               <th
                 key={c.header}
-                className="whitespace-nowrap bg-black px-4 py-2 text-left font-medium text-sm text-white"
+                className="whitespace-nowrap bg-black px-4 py-2 text-left font-semibold text-base text-orange-300"
               >
                 <NavLink
                   to={`?sort=${c.id}&dir=${getSortDirection(c.id, sortBy, direction)}`}
-                  className="hover:text-gray-700"
+                  className="hover:text-orange-500"
                 >
                   {c.header.charAt(0).toUpperCase() + c.header.slice(1)}
-                  <span className="ml-2 inline-block align-middle">
+                  <span className="ml-2 inline-block align-middle text-gray-500">
                     {getSortIcon(c.id, sortBy, direction)}
                   </span>
                 </NavLink>
@@ -130,14 +136,17 @@ export function DiscoLupe() {
               <tr
                 key={row.project.id.toString()}
                 className={clsx(
-                  'border-t',
-                  i % 2 === 1 ? 'bg-gray-500' : 'bg-white',
+                  'border-gray-400 border-y',
+                  i % 2 === 1 ? 'bg-gray-600' : 'bg-gray-800',
                 )}
               >
                 {row.columns.map((c, j) => (
                   <td
                     key={j}
-                    className="whitespace-nowrap px-4 py-1 text-gray-900 text-sm"
+                    className={clsx(
+                        'whitespace-nowrap px-4 py-1 text-gray-200',
+                        selectedColumns[j]?.align === 'left' ? 'text-left' : 'text-right'
+                    )}
                   >
                     {selectedColumns[j]?.displayFn(row.project, c)}
                   </td>
