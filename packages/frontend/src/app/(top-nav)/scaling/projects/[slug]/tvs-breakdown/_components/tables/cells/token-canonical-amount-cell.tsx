@@ -29,7 +29,7 @@ export function TokenCanonicalAmountCell({
       </TooltipTrigger>
       <TooltipContent>
         {isPreminted
-          ? 'The lower value between circulating supply and the value locked in the escrow'
+          ? 'The lower value between circulating supply and the value secured in the escrow'
           : 'Tokens locked in the escrow'}
       </TooltipContent>
     </Tooltip>

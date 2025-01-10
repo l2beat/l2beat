@@ -73,7 +73,7 @@ export async function getBridgeProjectDetails(
       type: 'ChartSection',
       props: {
         id: 'tvl',
-        title: 'Value Locked',
+        title: 'Value Secured',
         projectId: bridge.id,
         tokens: tokens,
         isBridge: true,
