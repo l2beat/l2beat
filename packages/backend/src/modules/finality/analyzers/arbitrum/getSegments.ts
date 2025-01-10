@@ -7,9 +7,22 @@ import { RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
 import { blobsToData } from './blobsToData'
 import { numberToByteArr } from './utils'
 
-export function getSegments(relevantBlobs: Blob[]): RlpSerializable[] {
+export function getSegmentsFromBlobs(relevantBlobs: Blob[]): RlpSerializable[] {
   const blobs = relevantBlobs.map(({ data }) => byteArrFromHexStr(data))
   const payload = blobsToData(blobs)
+  const decompressed = decompressPayload(payload)
+  // I do not understand why this is necessary, but it is
+  // My guess is that the shape of the data is always the same,
+  // so it's an optimization technique to save couple of bytes
+  const rlpEncoded = concatWithLengthForRlp(decompressed)
+  const segments = rlpDecode(rlpEncoded)
+  assert(Array.isArray(segments), 'Expected segments to be an array')
+
+  return segments
+}
+
+export function getSegmentsFromCalldata(data: string): RlpSerializable[] {
+  const payload = byteArrFromHexStr(data)
   const decompressed = decompressPayload(payload)
   // I do not understand why this is necessary, but it is
   // My guess is that the shape of the data is always the same,
