@@ -44,7 +44,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
       </header>
       <div className="flex w-full gap-10">
         <div className="w-full">
-          <div className="flex flex-col gap-6 md:gap-10">
+          <div className="flex flex-col gap-6 md:gap-8">
             <div className="flex flex-row items-end gap-10">
               <div className="w-full">
                 <div className="!mb-8 !mt-4 hidden md:flex">

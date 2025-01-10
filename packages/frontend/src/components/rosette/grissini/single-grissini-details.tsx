@@ -22,17 +22,22 @@ export function SingleGrissiniDetails({
   return (
     <div
       className={cn(
-        'flex h-[5.125rem] flex-row items-stretch rounded-[4px]',
+        'flex h-12 flex-row items-stretch rounded md:h-[5.125rem]',
         sentimentToTransparentBgColor(sentiment),
         className,
       )}
     >
-      <SingleGrissini sentiment={sentiment} className="h-full" />
+      <SingleGrissini
+        sentiment={sentiment}
+        className="h-full shrink-0 max-md:w-1"
+      />
       <div className="flex flex-1 flex-col justify-center gap-1 p-4">
-        <div className="text-2xs font-semibold uppercase">{name}</div>
+        <div className="text-3xs font-semibold uppercase md:text-2xs">
+          {name}
+        </div>
         <div
           className={cn(
-            'text-lg font-bold leading-none',
+            'text-sm font-bold !leading-none md:text-lg',
             sentimentToTextColor(sentiment, { vibrant: true }),
           )}
         >

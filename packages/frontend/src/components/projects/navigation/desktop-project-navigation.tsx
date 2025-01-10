@@ -90,7 +90,7 @@ export function DesktopProjectNavigation({
           {project.isUnderReview && (
             <UnderReviewCallout small className="mt-2" />
           )}
-          {projectVariants && (
+          {projectVariants && projectVariants.length > 1 && (
             <div className="mt-2 pl-12">
               <Select
                 defaultValue={
