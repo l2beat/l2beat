@@ -1,7 +1,0 @@
-/**
- * Manually verified contracts
- * In case a contract is not verified on Etherscan, but is verified by other means, it can be added here.
- */
-{
-  "$schema": "../manuallyVerifiedContracts.schema.json"
-}
