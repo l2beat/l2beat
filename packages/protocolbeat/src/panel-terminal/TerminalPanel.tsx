@@ -96,7 +96,7 @@ export function TerminalPanel() {
             disabled={command.inFlight}
             className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
           >
-            Run discovery
+            Run discovery 
           </button>
           <div className="h-6 w-px bg-coffee-600" />
           <button
