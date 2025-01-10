@@ -1,15 +1,21 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
-import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
+import { underReviewL2 } from './templates/underReview'
+import { orbitStackL2 } from './templates/orbitStack'
 
 export const corn: Layer2 = underReviewL2({
   id: 'corn',
   createdAt: new UnixTime(1733880840),
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'Corn',
     slug: 'corn',
-    category: 'Optimistic Rollup',
+    category: 'Optimium',
     provider: 'Arbitrum',
     description:
       'Corn is an Orbit Stack-based Layer 2 chain focused on Bitcoin-centric DeFi applications. Corn uses Bitcorn (BTCN) as its gas token, the popCORN System for long-term incentives, and LayerZero for cross-chain asset transfers.',
