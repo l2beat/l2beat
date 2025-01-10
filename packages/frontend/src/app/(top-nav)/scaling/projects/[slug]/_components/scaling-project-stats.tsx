@@ -32,9 +32,7 @@ export function ScalingProjectStats({ project, className }: Props) {
     >
       <ProjectStat
         title="Tokens"
-        value={
-          <TokenBreakdownStat breakdown={project.header.tvl?.tokenBreakdown} />
-        }
+        value={<TokenBreakdownStat tokenTvl={project.header.tvl?.tokens} />}
       />
       <ProjectStat
         title="Daily UOPS"
