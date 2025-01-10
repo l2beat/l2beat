@@ -239,4 +239,20 @@ export class ActivityRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
     }))
   }
+
+  async getProjectBlockNumberBeforeCutOffPoint(
+    projectId: ProjectId,
+    cutOffPoint: number,
+  ): Promise<number> {
+    const result = await this.db
+      .selectFrom('Activity')
+      .select('end')
+      .where('projectId', '=', projectId.toString())
+      .where('start', '<', cutOffPoint)
+      .orderBy('end', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return result ? result.end : 0
+  }
 }

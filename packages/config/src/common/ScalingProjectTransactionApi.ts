@@ -6,6 +6,8 @@ export interface SimpleTransactionApi<T extends string> {
   type: T
   defaultUrl: string
   defaultCallsPerMinute?: number
+  startBlock?: number
+  cutOffPoint?: number
 }
 
 export interface RpcTransactionApi {
@@ -14,6 +16,7 @@ export interface RpcTransactionApi {
   defaultCallsPerMinute?: number
   assessCount?: AssessCount
   startBlock?: number
+  cutOffPoint?: number
 }
 
 export interface StarkexTransactionApi {
