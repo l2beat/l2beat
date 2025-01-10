@@ -119,7 +119,7 @@ export function getSelfMeta(
     }
   }
 
-  return {
+  const result = {
     canActIndependently: overrides?.canActIndependently,
     displayName: overrides?.displayName,
     description,
@@ -129,6 +129,8 @@ export function getSelfMeta(
     severity: undefined,
     types: undefined,
   }
+
+  return isEmptyObject(result) ? undefined : result
 }
 
 export function getTargetsMeta(
