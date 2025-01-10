@@ -152,7 +152,7 @@ export const pNetwork: Bridge = {
     {
       name: 'PNETWORK',
       description:
-        'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in a MPC network.',
+        'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
       accounts: [
         discovery.getPermissionedAccount('ERC20 Vault V2', 'PNETWORK'),
         discovery.getPermissionedAccount('ERC20 Vault V1', 'PNETWORK'),

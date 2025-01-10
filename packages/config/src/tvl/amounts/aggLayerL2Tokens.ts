@@ -34,7 +34,7 @@ export function getAggLayerL2TokenEntry(
     : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-  // We are hardcoding assetId because aggLayerL2Token is an canonical token
+  // We are hardcoding assetId because aggLayerL2Token is a canonical token
   const assetId = AssetId.create(ethereum.name, token.address)
   const type = 'aggLayerL2Token'
   const originNetwork = 0
