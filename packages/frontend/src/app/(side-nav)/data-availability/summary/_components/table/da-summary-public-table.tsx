@@ -11,7 +11,7 @@ import {
   type DaBridgeSummaryEntry,
   type DaSummaryEntry,
 } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import {
   BasicDaTable,
   getRowTypeClassNames,
@@ -92,7 +92,7 @@ function BridgeCells({
         className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]"
         href={bridge.href}
       >
-        {formatTvlTableNumber(bridge.tvs)}
+        {formatDollarValueNumber(bridge.tvs)}
       </TableCell>
       <TableCell className="text-sm font-medium">
         <ProjectsUsedIn usedIn={bridge.usedIn} />

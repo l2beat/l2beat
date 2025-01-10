@@ -5,7 +5,7 @@ import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
@@ -66,7 +66,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
   cell: (ctx) => (
     <div className="w-full pr-5 text-right text-sm font-medium">
-      {formatTvlTableNumber(ctx.row.original.tvs)}
+      {formatDollarValueNumber(ctx.row.original.tvs)}
     </div>
   ),
   meta: {
@@ -83,7 +83,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
       return (
         <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-          {formatTvlTableNumber(0)}
+          {formatDollarValueNumber(0)}
         </div>
       )
     }
