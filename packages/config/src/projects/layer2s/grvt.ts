@@ -130,7 +130,7 @@ export const grvt: Layer2 = zkStackL2({
         'L2_TX_SENDER_ROLE',
       ),
       description:
-        'Whitelisted addresses that are permissioned to deposit to deposit via the canonical shared bridge (gated by the GRVTTransactionFilterer).',
+        'Whitelisted addresses that are permissioned to deposit via the canonical shared bridge (gated by the GRVTTransactionFilterer).',
     },
   ],
   milestones: [
