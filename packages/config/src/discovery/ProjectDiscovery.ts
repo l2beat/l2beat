@@ -109,6 +109,7 @@ export class ProjectDiscovery {
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
+      references: contract.references,
       ...descriptionOrOptions,
     }
   }

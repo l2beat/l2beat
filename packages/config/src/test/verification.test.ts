@@ -4,7 +4,6 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { bridges, daLayers, layer2s, layer3s } from '../projects'
 import { getChainNames, getChainNamesForDA } from '../utils/chains'
-import { getManuallyVerifiedContracts } from '../verification/manuallyVerifiedContracts'
 import {
   getUniqueAddressesForDaBridge,
   getUniqueContractsForProject,
@@ -18,11 +17,7 @@ describe('verification status', () => {
       for (const chain of getChainNames(project)) {
         const projectId = project.id.toString()
         it(`${projectId}:${chain}`, () => {
-          const manuallyVerified = getManuallyVerifiedContracts(chain)
-          const addressesOnChain = getUniqueContractsForProject(project, chain)
-          const unverified = addressesOnChain.filter(
-            (a) => manuallyVerified[a] === undefined,
-          )
+          const unverified = getUniqueContractsForProject(project, chain)
 
           if (unverified.length <= 0) {
             return
@@ -56,14 +51,7 @@ describe('verification status', () => {
                 ? [bridge.id]
                 : bridge.usedIn.map((u) => u.id.toString())
             for (const projectId of projectIds) {
-              const manuallyVerified = getManuallyVerifiedContracts(chain)
-              const addressesOnChain = getUniqueAddressesForDaBridge(
-                bridge,
-                chain,
-              )
-              const unverified = addressesOnChain.filter(
-                (a) => manuallyVerified[a] === undefined,
-              )
+              const unverified = getUniqueAddressesForDaBridge(bridge, chain)
 
               if (unverified.length <= 0) {
                 return

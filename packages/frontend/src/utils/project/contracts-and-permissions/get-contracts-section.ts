@@ -13,7 +13,6 @@ import {
   assert,
   type ContractsVerificationStatuses,
   type EthereumAddress,
-  type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { type ProjectSectionProps } from '~/components/projects/sections/types'
@@ -58,7 +57,6 @@ type ContractsSection = Omit<
 export function getContractsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
   if (projectParams.contracts.addresses.length === 0) {
@@ -77,7 +75,6 @@ export function getContractsSection(
       projectParams,
       isUnverified,
       contractsVerificationStatuses,
-      manuallyVerifiedContracts,
       projectChangeReport,
     )
   })
@@ -98,7 +95,6 @@ export function getContractsSection(
               projectParams,
               isUnverified,
               contractsVerificationStatuses,
-              manuallyVerifiedContracts,
               projectChangeReport,
             )
           }),
@@ -123,7 +119,6 @@ export function getContractsSection(
           projectParams,
           isUnverified,
           contractsVerificationStatuses,
-          manuallyVerifiedContracts,
           projectChangeReport,
           true,
         )
@@ -173,14 +168,11 @@ function makeTechnologyContract(
   projectParams: ProjectParams,
   isUnverified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = getChain(projectParams, item)
   const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
-  const manuallyVerifiedContractsForChain =
-    manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
 
   const getAddress = (opts: {
@@ -264,16 +256,6 @@ function makeTechnologyContract(
   )
 
   const additionalReferences: Reference[] = []
-  addresses.forEach((address) => {
-    const manuallyVerified = manuallyVerifiedContractsForChain[address.address]
-    if (manuallyVerified) {
-      additionalReferences.push({
-        text: 'Source code',
-        href: manuallyVerified,
-      })
-    }
-  })
-
   const mainAddresses = [getAddress({ address: item.address })]
   const implementationAddresses =
     item.upgradeability?.implementations.map((implementation) =>

@@ -2,13 +2,16 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 21543602,
-  "configHash": "0xb17117f134aeb02ea7d123883473d6bcfd48f2a01e602ec918a54a66b843cb92",
+  "configHash": "0x38e0253de43145a7104864a81f16b768188735fa8411e674e9ba710546c1657f",
   "contracts": [
     {
       "name": "FacetEtherBridgeV6",
       "address": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
-      "unverified": true,
       "template": "facet/FacetEtherBridge",
+      "sourceHashes": [
+        "0x60cd8a11d99e2d3ed98fa2bbd47ef1096acb4bc535c5520343ae45cea6436e7b",
+        "0xc6fc9d901cf59527db2a86ff96ebd61f6a469b56100f1a94498e2f068a91f50b"
+      ],
       "proxyType": "EIP1967 proxy",
       "displayName": "FacetEtherBridge",
       "description": "Official Facet implementation of the Ether Bridge.",
@@ -65,7 +68,13 @@
         "getDumbContract": "0x1673540243E793B0e77C038D4a88448efF524DcE",
         "getSigner": "0x314d660b083675f415cCAA9c545FeedF377d1006"
       },
-      "derivedName": "FacetEtherBridgeV6"
+      "derivedName": "FacetEtherBridgeV6",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/vectorized/solady/blob/main/src/utils/ERC1967Factory.sol"
+        }
+      ]
     },
     {
       "name": "AddressManager",
@@ -536,6 +545,7 @@
         "0x77a8405865bba6fd2e1d9522ac1279c1c7c1a325530ad51f3d2ba686e8a6b057"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "SystemConfig_facet",
       "issuedPermissions": [
         {
           "permission": "configure",

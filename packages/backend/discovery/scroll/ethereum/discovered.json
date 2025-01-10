@@ -2,15 +2,23 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 21579385,
-  "configHash": "0x5f7370f4a07a8cc3494a93546960c459fd25377b9c259ccbbcc8e1de5fd48b40",
+  "configHash": "0x840336bb532b6d94e95bb7ed6ab0acb78c062e6cb924c89543cadb1c9524f704",
   "contracts": [
     {
       "name": "PlonkVerifierV1-1",
       "address": "0x03a72B00D036C479105fF98A1953b15d9c510110",
-      "unverified": true,
+      "sourceHashes": [
+        "0xc98f03651ddf430db5e0fa5d49b57551e01975529019ff3fbc1897109cd6dc9e"
+      ],
       "sinceTimestamp": 1719379319,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "L1MessageQueue",
@@ -193,10 +201,18 @@
     {
       "name": "PlonkVerifierV1",
       "address": "0x2293cd12e8564e8219d314b075867c2f66ac6941",
-      "unverified": true,
+      "sourceHashes": [
+        "0xcd6a67da07fdd0ff4f75a99bf03d70659a6a00d98f1219b1aff2756b7ce971bd"
+      ],
       "sinceTimestamp": 1712907503,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "Whitelist",
@@ -242,10 +258,18 @@
     {
       "name": "PlonkVerifierV0",
       "address": "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1",
-      "unverified": true,
+      "sourceHashes": [
+        "0x29ee0fd7e29697f9960266e0f8fc2b84b927300952d489ee40ea3cff695bd819"
+      ],
       "sinceTimestamp": 1696780751,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "MultipleVersionRollupVerifier",
@@ -1004,18 +1028,34 @@
     {
       "name": "PlonkVerifierV2",
       "address": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
-      "unverified": true,
+      "sourceHashes": [
+        "0x438a888895bdfdd405a223087c58ce76dcd866a0c5e208b94c63e83922724cb3"
+      ],
       "sinceTimestamp": 1722833027,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "PlonkVerifierV2-1",
       "address": "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
-      "unverified": true,
+      "sourceHashes": [
+        "0xdd6da115b0a4c879746bcca2a71fa1daa79f7e3a074369d9246f614b327e9322"
+      ],
       "sinceTimestamp": 1724898419,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "FeeVaultMultisig",

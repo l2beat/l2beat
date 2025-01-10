@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xff6fd8a4c854beb6a880cda7353de79d84875215
+
+# Diff at Fri, 10 Jan 2025 15:24:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13c134b0211f75779d58c36868cbda90565479ce block: 21141582
+- current block number: 21141582
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141582 (main branch discovery), not current.
+
+```diff
+    contract Poseidon2 (0xFd234971881a7c72965175fA8E438c97B2Dcd273) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xa3600b2900d8b1fef0f3e6e58b0a56f5639eee39776eb2d7bce841b245fdf288"]
+      references:
++        [{"text":"Source Code","href":"https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js"}]
+    }
+```
+
 Generated with discovered.json: 0x1d83f3fa814362ea0a7cae6d80b8ece3290603e1
 
 # Diff at Fri, 08 Nov 2024 08:00:26 GMT:

@@ -39,6 +39,10 @@ describe('metaUtils', () => {
         categories: new Set(['Gateways&Escrows', 'Core']),
         types: new Set(['CODE_CHANGE', 'EXTERNAL']),
         severity: 'LOW',
+        references: [
+          { text: 'Source Code', href: 'link1' },
+          { text: 'Source Code', href: 'link2' },
+        ],
       }
       const b: ContractMeta = {
         displayName: undefined,
@@ -59,6 +63,10 @@ describe('metaUtils', () => {
         categories: new Set(['Upgrades&Governance', 'Core']),
         types: new Set(['PERMISSION', 'L2', 'EXTERNAL']),
         severity: 'MEDIUM',
+        references: [
+          { text: 'Some docs', href: 'link1' },
+          { text: 'Source Code', href: 'link2' },
+        ],
       }
 
       const result = mergeContractMeta(a, b)
@@ -92,6 +100,11 @@ describe('metaUtils', () => {
         ]),
         types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2', 'PERMISSION']),
         severity: 'MEDIUM',
+        references: [
+          { text: 'Source Code', href: 'link1' },
+          { text: 'Source Code', href: 'link2' },
+          { text: 'Some docs', href: 'link1' },
+        ],
       })
     })
   })
@@ -240,6 +253,7 @@ describe('metaUtils', () => {
           categories: new Set(['Core']),
           severity: 'LOW',
           types: new Set(['CODE_CHANGE']),
+          references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           canActIndependently: false,
@@ -264,6 +278,7 @@ describe('metaUtils', () => {
           ],
           severity: 'HIGH',
           types: new Set(['EXTERNAL', 'L2']),
+          references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           canActIndependently: false,
@@ -288,6 +303,7 @@ describe('metaUtils', () => {
           ],
           severity: 'HIGH',
           types: new Set(['EXTERNAL', 'L2']),
+          references: undefined,
         },
       })
     })
@@ -405,6 +421,7 @@ describe('metaUtils', () => {
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
           severity: 'MEDIUM',
+          references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           canActIndependently: false,
@@ -425,6 +442,7 @@ describe('metaUtils', () => {
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
+          references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           canActIndependently: false,
@@ -445,6 +463,7 @@ describe('metaUtils', () => {
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
+          references: undefined,
         },
       })
     })

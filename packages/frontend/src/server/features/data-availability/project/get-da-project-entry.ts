@@ -11,7 +11,6 @@ import {
   isDaBridgeVerified,
 } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
-import { getManuallyVerifiedContracts } from '@l2beat/config'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
@@ -130,13 +129,11 @@ export async function getDaProjectEntry(
     economicSecurity,
     tvlPerProject,
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
     projectsChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
     getDaProjectsTvl(uniqueProjectsInUse),
     getContractsVerificationStatuses(daLayer),
-    getManuallyVerifiedContracts(),
     getProjectsChangeReport(),
   ])
 
@@ -165,7 +162,6 @@ export async function getDaProjectEntry(
     daBridge,
     isVerified: common.isVerified,
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
     projectsChangeReport,
     evaluatedGrissiniValues,
   })

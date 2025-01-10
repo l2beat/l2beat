@@ -1,0 +1,27 @@
+{
+  "name": "fuelv1",
+  "chain": "ethereum",
+  "blockNumber": 21594621,
+  "configHash": "0xd928f07438c1ccc8482cffe32d1f94d3fb916188566088d41a42a19cc5671615",
+  "contracts": [
+    {
+      "name": "Fuel",
+      "address": "0x6880f6Fd960D1581C2730a451A22EED1081cfD72",
+      "sourceHashes": [
+        "0x882649168abfdfff5ebf9fbcaa09f8d7025c4b394b2ca7f4f4325f3eba030292"
+      ],
+      "sinceTimestamp": 1612414780,
+      "values": { "$immutable": true },
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Fuel.yulp"
+        }
+      ]
+    }
+  ],
+  "eoas": [],
+  "abis": {},
+  "usedTemplates": {}
+}

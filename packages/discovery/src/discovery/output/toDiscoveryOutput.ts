@@ -45,9 +45,6 @@ function collectUsedTemplatesWithHashes(
 export function processAnalysis(
   results: Analysis[],
 ): Pick<DiscoveryOutput, 'contracts' | 'eoas' | 'abis'> {
-  // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
-  // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
-
   const resolvedPermissions = resolveAnalysis(results)
 
   const { contracts, abis } = getContracts(results)
@@ -94,6 +91,7 @@ export function processAnalysis(
             Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
+          references: x.selfMeta?.references,
         } satisfies ContractParameters)
       }),
     eoas: results

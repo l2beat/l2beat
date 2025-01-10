@@ -1,5 +1,4 @@
 import { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../../projects'
-import { getManuallyVerifiedContracts } from './getManuallyVerifiedContracts'
 
 export function isVerified(
   project: Layer2 | Layer3 | Bridge | DaLayer,
@@ -10,26 +9,15 @@ export function isVerified(
     )
   }
 
-  const manual = getManuallyVerifiedContracts()
   const contractsVerification =
-    project.contracts?.addresses.every((c) => {
-      const isAutoVerified = c.isVerified
-      const isManuallyVerified =
-        c.address in (manual[c.chain ?? 'ethereum'] ?? {})
-      return isAutoVerified || isManuallyVerified
-    }) ?? true
+    project.contracts?.addresses.every((c) => c.isVerified) ?? true
   const escrowVerifications =
     project.config.escrows.every((e) => {
       if (!('contract' in e)) {
         return true
       }
 
-      const isManuallyVerified =
-        'address' in e.contract &&
-        typeof e.contract.address === 'string' &&
-        e.contract.address in (manual[e.chain] ?? {})
-
-      return e.contract.isVerified || isManuallyVerified
+      return e.contract.isVerified
     }) ?? true
 
   const newVerification = escrowVerifications && contractsVerification

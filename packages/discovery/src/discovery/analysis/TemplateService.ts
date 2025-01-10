@@ -220,7 +220,7 @@ function listAllPaths(path: string): string[] {
 }
 
 export function hashFirstSource(sources: ContractSources): Hash256 | undefined {
-  if (!sources.isVerified) {
+  if (!sources.isVerified || sources.sources.length < 1) {
     return
   }
 
