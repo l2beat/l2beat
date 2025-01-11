@@ -76,6 +76,7 @@ import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
+import { koi } from './koi'
 import { kontos } from './kontos'
 import { kroma } from './kroma'
 import { lambda } from './lambda'
@@ -270,6 +271,7 @@ export const layer2s: Layer2[] = [
   kakarotzkevm,
   karak,
   kinto,
+  koi,
   kontos,
   kroma,
   lambda,
