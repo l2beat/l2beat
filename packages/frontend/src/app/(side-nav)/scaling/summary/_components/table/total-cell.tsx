@@ -15,7 +15,7 @@ import {
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 
 export interface TotalCellProps {
   breakdown:
@@ -79,7 +79,7 @@ export function TotalCell(data: TotalCellProps) {
           <div className="flex items-center">
             {icon}
             <ValueWithPercentageChange change={data.change}>
-              {formatTvlTableNumber(totalTvl)}
+              {formatDollarValueNumber(totalTvl)}
             </ValueWithPercentageChange>
           </div>
           <TokenBreakdown

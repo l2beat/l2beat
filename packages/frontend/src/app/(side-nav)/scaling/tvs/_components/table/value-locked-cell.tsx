@@ -1,5 +1,5 @@
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 
 export interface ValueLockedCellProps {
   value: number
@@ -9,7 +9,7 @@ export interface ValueLockedCellProps {
 export function ValueLockedCell(data: ValueLockedCellProps) {
   return (
     <ValueWithPercentageChange change={data.change}>
-      {formatTvlTableNumber(data.value)}
+      {formatDollarValueNumber(data.value)}
     </ValueWithPercentageChange>
   )
 }

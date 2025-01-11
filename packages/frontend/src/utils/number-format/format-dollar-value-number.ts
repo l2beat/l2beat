@@ -1,11 +1,11 @@
 import { formatCurrency } from './format-currency'
 import { formatNumber } from './format-number'
 
-export function formatTvlTableNumber(value: number): string {
-  return formatCurrency(value, 'usd', { formatFn: formatTvl })
+export function formatDollarValueNumber(value: number): string {
+  return formatCurrency(value, 'usd', { formatFn: formatValue })
 }
 
-function formatTvl(value: number) {
+function formatValue(value: number) {
   if (value >= 1_000_000) {
     return formatNumber(value, 2)
   }

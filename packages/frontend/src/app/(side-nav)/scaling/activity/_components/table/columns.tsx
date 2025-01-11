@@ -51,7 +51,7 @@ export const getScalingActivityColumns = (
     sortUndefined: 'last',
     meta: {
       align: 'right',
-      headClassName: 'max-w-[60px]',
+      headClassName: 'max-w-[110px]',
       tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`,
       colSpan: (cell) => (cell.row.original.data ? 1 : 100),
     },

@@ -27,7 +27,7 @@ export type Layer2FinalityConfig =
       stateUpdate: StateUpdateMode
     }
   | {
-      type: 'OPStack-blob'
+      type: 'OPStack'
       minTimestamp: UnixTime
       lag: number
       // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches

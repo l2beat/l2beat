@@ -12,31 +12,27 @@ import {
   type CommonScalingEntry,
   getCommonScalingEntry2,
 } from '../get-common-scaling-entry'
-import {
-  type ProjectsLatestTvlUsd,
-  getProjectsLatestTvlUsd,
-} from '../tvl/utils/get-latest-tvl-usd'
+import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export async function getScalingRiskEntries() {
-  const [tvl, projectsChangeReport] = await Promise.all([
+  const [tvl, projectsChangeReport, projects] = await Promise.all([
     getProjectsLatestTvlUsd(),
     getProjectsChangeReport(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'scalingInfo', 'scalingRisks'],
+      optional: ['countdowns'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
   ])
-
-  const projects = await ProjectService.STATIC.getProjects({
-    select: ['statuses', 'scalingInfo', 'scalingRisks'],
-    optional: ['countdowns'],
-    where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
-  })
 
   const entries = projects
     .map((project) =>
       getScalingRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl,
+        tvl[project.id] ?? 0,
       ),
     )
     .sort(compareStageAndTvl)
@@ -55,11 +51,11 @@ function getScalingRiskEntry(
     'countdowns'
   >,
   changes: ProjectChanges,
-  tvl: ProjectsLatestTvlUsd,
+  tvl: number,
 ) {
   return {
     ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
-    tvlOrder: tvl[project.id] ?? 0,
+    tvlOrder: tvl,
   }
 }

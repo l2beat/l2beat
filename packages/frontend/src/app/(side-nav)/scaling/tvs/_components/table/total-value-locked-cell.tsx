@@ -10,7 +10,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 
 export interface TotalValueLockedCellProps {
   breakdown: {
@@ -40,7 +40,7 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
               />
             ) : null}
             <ValueWithPercentageChange change={data.change}>
-              {formatTvlTableNumber(total)}
+              {formatDollarValueNumber(total)}
             </ValueWithPercentageChange>
           </div>
           <ValueLockedBreakdown

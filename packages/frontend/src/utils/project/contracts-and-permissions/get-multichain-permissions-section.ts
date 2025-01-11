@@ -194,6 +194,23 @@ function toTechnologyContract(
       ? concat(permission.references, manuallyVerifiedReferences)
       : manuallyVerifiedReferences
 
+  const participants = permission.participants?.map((account) => {
+    const name = resolvePermissionedName(
+      permission.name,
+      account,
+      projectParams.permissions,
+      chain,
+    )
+
+    return {
+      name,
+      href: `${etherscanUrl}/address/${account.address.toString()}#code`,
+      verificationStatus: toVerificationStatus(
+        verificationStatusForChain[account.address.toString()],
+      ),
+    }
+  })
+
   const result: TechnologyContract[] = [
     {
       name,
@@ -201,46 +218,12 @@ function toTechnologyContract(
       usedInProjects,
       chain,
       description: permission.description,
+      participants,
       references,
       implementationChanged: false,
       highSeverityFieldChanged: false,
     },
   ]
-
-  if (permission.participants) {
-    const addresses: TechnologyContractAddress[] = permission.participants.map(
-      (account) => {
-        const name = resolvePermissionedName(
-          permission.name,
-          account,
-          projectParams.permissions,
-          chain,
-        )
-        const address = account.address.toString()
-
-        return {
-          name,
-          address,
-          href: `${etherscanUrl}/address/${account.address.toString()}#code`,
-          isAdmin: false,
-          verificationStatus: toVerificationStatus(
-            verificationStatusForChain[account.address.toString()],
-          ),
-        }
-      },
-    )
-
-    result.push({
-      name: `${permission.name} participants (${permission.participants.length})`,
-      addresses,
-      chain,
-      description: `Those are the participants of the ${permission.name}.`,
-      references: permission.references ?? [],
-      usedInProjects: undefined,
-      implementationChanged: false,
-      highSeverityFieldChanged: false,
-    })
-  }
 
   return result
 }

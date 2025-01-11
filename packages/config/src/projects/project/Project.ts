@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
+  ProjectDataAvailability,
   ScalingProjectCategory,
   ScalingProjectRiskView,
   ScalingProjectStack,
@@ -23,6 +24,7 @@ export interface Project {
   statuses?: ProjectStatuses
   scalingInfo?: ProjectScalingInfo
   scalingRisks?: ProjectScalingRisks
+  scalingDa?: ProjectDataAvailability
   proofVerification?: ProofVerification
   daBridges?: (
     | OnChainDaBridge

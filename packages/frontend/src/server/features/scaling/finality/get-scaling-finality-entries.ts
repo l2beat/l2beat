@@ -1,4 +1,4 @@
-import { type Layer2, getCurrentEntry, layer2s } from '@l2beat/config'
+import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
@@ -102,7 +102,6 @@ function getScalingFinalityEntry(
   finalityProjectData: FinalityProjectData | undefined,
   tvl: ProjectsLatestTvlUsd,
 ) {
-  const dataAvailability = getCurrentEntry(project.dataAvailability)
   const data = getFinalityData(finalityProjectData, project)
   if (!data) {
     return
@@ -115,7 +114,7 @@ function getScalingFinalityEntry(
     }),
     category: project.display.category,
     provider: project.display.provider,
-    dataAvailabilityMode: dataAvailability?.mode,
+    dataAvailabilityMode: project.dataAvailability?.mode,
     data,
     finalizationPeriod: project.display.finality?.finalizationPeriod,
     tvlOrder: tvl[project.id] ?? 0,

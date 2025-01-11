@@ -51,13 +51,11 @@ const vaultWeight =
 export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
   createdAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
