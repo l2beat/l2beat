@@ -70,7 +70,7 @@ export const gmnetworkDA: DacDaLayer = {
       },
     ],
   },
-  bridges: [gmnetworkDABridge],
+  bridge: gmnetworkDABridge,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

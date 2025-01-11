@@ -43,7 +43,7 @@ export const fraxtalDA: DacDaLayer = {
       },
     ],
   },
-  bridges: [fraxtalDABridge],
+  bridge: fraxtalDABridge,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

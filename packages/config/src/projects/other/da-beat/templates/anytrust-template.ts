@@ -188,7 +188,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
       ],
       risks: template.layer?.technology?.risks,
     },
-    bridges: [dacBridge],
+    bridge: dacBridge,
     risks: {
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,

@@ -70,7 +70,7 @@ export const cyberDA: DacDaLayer = {
       },
     ],
   },
-  bridges: [cyberDABridge],
+  bridge: cyberDABridge,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

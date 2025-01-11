@@ -110,7 +110,7 @@ function daLayerToProject(p: DaLayer): Project {
       isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p),
     },
-    daBridges: p.bridges,
+    daBridges: 'bridges' in p ? p.bridges : [p.bridge],
     // tags
     isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,

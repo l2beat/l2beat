@@ -70,7 +70,7 @@ export const xterioDA: DacDaLayer = {
       },
     ],
   },
-  bridges: [xterioDABridge],
+  bridge: xterioDABridge,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

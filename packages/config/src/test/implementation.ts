@@ -135,10 +135,15 @@ function getDaBridgePermissionsForChain(
 
       return Object.values(b.permissions).flatMap((perChain) => {
         return perChain.flatMap((p) =>
-          p.accounts.map((a) => ({
-            chain: (p.chain ?? b.chain).toString(),
-            address: a.address,
-          })),
+          p.accounts.flatMap((a) => {
+            if (!p.chain) {
+              return []
+            }
+            return {
+              chain: p.chain.toString(),
+              address: a.address,
+            }
+          }),
         )
       })
     })

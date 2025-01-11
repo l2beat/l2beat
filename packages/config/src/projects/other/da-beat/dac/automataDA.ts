@@ -70,7 +70,7 @@ export const automataDA: DacDaLayer = {
       },
     ],
   },
-  bridges: [automataDABridge],
+  bridge: automataDABridge,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

@@ -16,7 +16,7 @@ export const dacSignersWarning: DaBeatProjectProcessor<
 
   return {
     ...layer,
-    bridges: layer.bridges.map(attachSignersWarning),
+    bridge: attachSignersWarning(layer.bridge),
   }
 }
 

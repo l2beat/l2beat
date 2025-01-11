@@ -10,28 +10,29 @@ export const committeeSecurityRisk: DaBeatProjectProcessor<
     return layer
   }
 
+  if (
+    layer.bridge.type !== 'DAC' ||
+    layer.bridge.risks.committeeSecurity.type !== 'Auto'
+  )
+    return {
+      ...layer,
+      bridge: layer.bridge,
+    }
+
   return {
     ...layer,
-    bridges: layer.bridges.map((bridge) => {
-      if (
-        bridge.type !== 'DAC' ||
-        bridge.risks.committeeSecurity.type !== 'Auto'
-      )
-        return bridge
-
-      return {
-        ...bridge,
-        risks: {
-          ...bridge.risks,
-          committeeSecurity: DaCommitteeSecurityRisk.Auto({
-            resolved: {
-              value: `${bridge.requiredMembers}/${bridge.membersCount}`,
-              sentiment: getDacSentiment(bridge),
-            },
-          }),
-        },
-      }
-    }),
+    bridge: {
+      ...layer.bridge,
+      risks: {
+        ...layer.bridge.risks,
+        committeeSecurity: DaCommitteeSecurityRisk.Auto({
+          resolved: {
+            value: `${layer.bridge.requiredMembers}/${layer.bridge.membersCount}`,
+            sentiment: getDacSentiment(layer.bridge),
+          },
+        }),
+      },
+    },
   }
 }
 

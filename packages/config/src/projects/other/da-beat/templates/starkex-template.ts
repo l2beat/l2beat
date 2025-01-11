@@ -182,7 +182,7 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
         },
       ],
     },
-    bridges: [dacBridge],
+    bridge: dacBridge,
     risks: {
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,

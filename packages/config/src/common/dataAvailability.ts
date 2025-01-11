@@ -7,7 +7,9 @@ import {
   DataAvailabilityMode,
 } from './ScalingProjectDataAvailability'
 
-export type DataAvailabilityHistory = DataAvailabilityHistoryEntry[]
+export type DataAvailabilityHistory = DataAvailabilityHistoryEntry[] & {
+  solutionDetails?: any
+}
 
 export type DataAvailabilityHistoryEntry = DataAvailabilityWithSentiment & {
   sinceTimestamp?: UnixTime

@@ -70,7 +70,7 @@ export const redstoneDA: DacDaLayer = {
       },
     ],
   },
-  bridges: [redstoneDABridge],
+  bridge: redstoneDABridge,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

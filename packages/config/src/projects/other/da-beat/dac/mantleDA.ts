@@ -48,7 +48,7 @@ export const mantleDA: DacDaLayer = {
     To become members of the DA network, node operators are required to stake ${requiredStakeFormatted} MNT tokens, and can only be registered by an authorized entity. There is no slashing mechanism in place for misbehaving nodes.
     `,
   },
-  bridges: [mantleDABridge],
+  bridge: mantleDABridge,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MNT'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

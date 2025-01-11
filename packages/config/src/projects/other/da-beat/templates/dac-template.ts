@@ -154,7 +154,7 @@ export function DAC(template: TemplateVars): DacDaLayer {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
     },
-    bridges: [dacBridge],
+    bridge: dacBridge,
     risks: {
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,

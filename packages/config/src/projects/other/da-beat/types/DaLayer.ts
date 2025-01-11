@@ -57,7 +57,7 @@ export type EthereumDaLayer = CommonDaLayer & {
 
 export type DacDaLayer = CommonDaLayer & {
   kind: 'DAC' | 'No DAC'
-  bridges: (DacBridge | NoDaBridge)[]
+  bridge: DacBridge | NoDaBridge
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
   /** Fallback */
