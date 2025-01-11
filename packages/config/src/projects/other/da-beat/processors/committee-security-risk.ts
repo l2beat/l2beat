@@ -1,17 +1,16 @@
 import { DaBeatProjectProcessor } from '.'
-import { BlockchainDaLayer, DaServiceDaLayer, DacDaLayer } from '../types'
-import { DacBridge } from '../types/DaBridge'
+import { DacDaLayer, IntegratedDacBridge } from '../types'
 import { DaCommitteeSecurityRisk } from '../types/DaCommitteeSecurityRisk'
 
-export const committeeSecurityRisk: DaBeatProjectProcessor<
-  DacDaLayer | BlockchainDaLayer | DaServiceDaLayer
-> = (layer) => {
+export const committeeSecurityRisk: DaBeatProjectProcessor<DacDaLayer> = (
+  layer,
+) => {
   if (layer.kind !== 'DAC') {
     return layer
   }
 
   if (
-    layer.bridge.type !== 'DAC' ||
+    layer.bridge.type !== 'IntegratedDacBridge' ||
     layer.bridge.risks.committeeSecurity.type !== 'Auto'
   )
     return {
@@ -38,7 +37,7 @@ export const committeeSecurityRisk: DaBeatProjectProcessor<
 
 function getDacSentiment(config?: {
   membersCount: number
-  knownMembers?: DacBridge['knownMembers']
+  knownMembers?: IntegratedDacBridge['knownMembers']
   requiredMembers: number
 }) {
   if (!config || !config.knownMembers) return 'bad'

@@ -6,10 +6,10 @@ import {
 } from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
 import {
-  DacBridge,
   EnshrinedBridge,
   NoDaBridge,
   OnChainDaBridge,
+  StandaloneDacBridge,
 } from '../other'
 import { ProofVerification } from '../types'
 
@@ -24,7 +24,12 @@ export interface Project {
   scalingInfo?: ProjectScalingInfo
   scalingRisks?: ProjectScalingRisks
   proofVerification?: ProofVerification
-  daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
+  daBridges?: (
+    | OnChainDaBridge
+    | EnshrinedBridge
+    | NoDaBridge
+    | StandaloneDacBridge
+  )[]
   countdowns?: ProjectCountdowns
   // tags
   isBridge?: true

@@ -23,17 +23,11 @@ const daResolveWindow = formatSeconds(
 )
 
 export const xterioDA: DacDaLayer = {
-  id: 'xterio-da',
+  name: 'XterioDA',
   type: 'DaLayer',
   kind: 'No DAC',
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
-  display: {
-    name: 'XterioDA',
-    slug: 'xterio',
-    description:
-      'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
-  },
   challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {
     description: `

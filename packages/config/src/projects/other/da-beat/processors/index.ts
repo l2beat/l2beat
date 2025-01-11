@@ -1,16 +1,11 @@
-import { BlockchainDaLayer, DaServiceDaLayer, DacDaLayer } from '../types'
+import { DacDaLayer } from '../types'
 import { committeeSecurityRisk } from './committee-security-risk'
-import { dacSignersWarning } from './dac-signers-warning'
 
-export type DaBeatProjectProcessor<
-  T extends BlockchainDaLayer | DacDaLayer | DaServiceDaLayer,
-> = (layer: T) => T
+export type DaBeatProjectProcessor<T extends DacDaLayer> = (layer: T) => T
 
-const processors = [dacSignersWarning, committeeSecurityRisk]
+const processors = [committeeSecurityRisk]
 
-export function applyProcessor(
-  layers: (BlockchainDaLayer | DacDaLayer | DaServiceDaLayer)[],
-): (BlockchainDaLayer | DacDaLayer | DaServiceDaLayer)[] {
+export function applyProcessor(layers: DacDaLayer[]): DacDaLayer[] {
   return layers.map((layer) => {
     return processors.reduce((layer, processor) => processor(layer), layer)
   })

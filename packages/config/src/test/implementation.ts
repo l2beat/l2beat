@@ -5,11 +5,11 @@ import { z } from 'zod'
 import {
   Bridge,
   DaBridge,
-  DacBridge,
   Layer2,
   Layer3,
   OnChainDaBridge,
   ScalingProjectContract,
+  StandaloneDacBridge,
 } from '../../src'
 
 export type Project = Layer2 | Layer3 | Bridge
@@ -111,8 +111,8 @@ function getDaBridgeContractsForChain(
 ): AddressOnChain[] {
   const contracts = [bridge]
     .filter(
-      (b): b is OnChainDaBridge | DacBridge =>
-        b.type === 'OnChainBridge' || b.type === 'DAC',
+      (b): b is OnChainDaBridge | StandaloneDacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
     )
     .flatMap((b) => Object.values(b.contracts.addresses))
   const addresses = getUniqueContractsFromList(contracts.flat())
@@ -125,8 +125,8 @@ function getDaBridgePermissionsForChain(
 ): AddressOnChain[] {
   const permissions: AddressOnChain[] = [bridge]
     .filter(
-      (b): b is OnChainDaBridge | DacBridge =>
-        b.type === 'OnChainBridge' || b.type === 'DAC',
+      (b): b is OnChainDaBridge | StandaloneDacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
     )
     .flatMap((b) => {
       if (b.permissions === 'UnderReview') {

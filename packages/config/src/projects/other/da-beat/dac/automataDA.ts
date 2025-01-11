@@ -23,17 +23,11 @@ const daResolveWindow = formatSeconds(
 )
 
 export const automataDA: DacDaLayer = {
-  id: 'automata-da',
   type: 'DaLayer',
   kind: 'No DAC',
+  name: 'Automata',
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
-  display: {
-    name: 'Automata DA',
-    slug: 'automata',
-    description:
-      'Automata DA is a data availability solution using data availability challenges (DA Challenges).',
-  },
   challengeMechanism: DaChallengeMechanism.DaChallenges,
   technology: {
     description: `

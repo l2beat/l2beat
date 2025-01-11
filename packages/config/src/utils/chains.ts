@@ -47,9 +47,7 @@ export function getChainNamesForDA(...daLayers: DaLayer[]): string[] {
 }
 
 export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
-  const bridges = daLayer.bridges.filter(
-    (b) => b.type === 'OnChainBridge' || b.type === 'DAC',
-  )
+  const bridges = daLayer.bridges.filter((b) => b.type === 'OnChainBridge')
   const addresses = bridges.flatMap((b) =>
     Object.values(b.contracts.addresses).flat(),
   )

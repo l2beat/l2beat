@@ -1,6 +1,5 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { nova } from '../../../layer2s/nova'
 import { DAC } from '../templates/dac-template'
 import { DaEconomicSecurityRisk, DaUpgradeabilityRisk } from '../types'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
@@ -27,17 +26,8 @@ const dac = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = dac
 
-const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by Security Council.`,
-  upgradeConsiderations:
-    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
-}
-
 export const arbitrumNovaDac = DAC({
-  project: nova,
+  project: 'Arbitrum Nova',
   layer: {
     technology: {
       description: `
@@ -119,67 +109,6 @@ export const arbitrumNovaDac = DAC({
 
       Operator roles like the Sequencers and Validators are managed using the same paths. Sequencer changes can be delegated to a Batch Poster Manager.
       `,
-    },
-    permissions: {
-      ethereum: [
-        // Members: DAC uses BLS sigs, not EOAs
-        {
-          name: 'Sequencers',
-          accounts: discovery.getPermissionsByRole('sequence'),
-          description:
-            'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-          chain: discovery.chain,
-        },
-        ...discovery.getMultisigPermission(
-          'BatchPosterManagerMultisig',
-          'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-        ),
-        ...discovery.getMultisigPermission(
-          'SecurityCouncil',
-          'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
-          [
-            {
-              text: 'Security Council members - Arbitrum DAO Governance Docs',
-              href: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
-            },
-          ],
-        ),
-        {
-          name: 'UpgradeExecutor',
-          accounts: [
-            {
-              address: EthereumAddress(
-                discovery.getContractValue<string>('RollupProxy', 'owner'),
-              ),
-              type: 'Contract',
-            },
-          ],
-          description:
-            'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
-        },
-      ],
-    },
-    contracts: {
-      addresses: {
-        ethereum: [
-          discovery.getContractDetails('SequencerInbox', {
-            description:
-              'The DA bridge of the DAC, the main entry point for the Sequencer submitting transaction batches commitments.',
-            ...upgradeExecutorUpgradeability,
-          }),
-          discovery.getContractDetails('UpgradeExecutor', {
-            description:
-              "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
-            ...upgradeExecutorUpgradeability,
-          }),
-          discovery.getContractDetails('L1Timelock', {
-            description:
-              'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-            ...upgradeExecutorUpgradeability,
-          }),
-        ],
-      },
-      risks: [],
     },
   },
   risks: {

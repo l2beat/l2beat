@@ -45,7 +45,10 @@ describe('verification status', () => {
   })
 
   describe('DABEAT', () => {
-    for (const daLayer of daLayers) {
+    for (const daLayer of daLayers.filter(
+      (layer) =>
+        layer.kind === 'DA Service' || layer.kind === 'PublicBlockchain',
+    )) {
       const chains = getChainNamesForDA(daLayer)
       for (const bridge of daLayer.bridges) {
         const bridgeId = bridge.id.toString()

@@ -52,12 +52,12 @@ import { xchainDac } from './dac/xchain'
 import { xlayerDac } from './dac/xlayer'
 import { xterioDA } from './dac/xterioDA'
 import { zkfairDac } from './dac/zkfair'
-import { applyProcessor } from './processors'
 
 export * from './types'
 
 export const ethereumDaLayer = ethereum
-export const daLayers = applyProcessor([
+
+export const permissionedDacs = [
   // Permissioned DACs
   alienxDac,
   alephzeroDac,
@@ -72,6 +72,7 @@ export const daLayers = applyProcessor([
   edgelessDac,
   everclearDac,
   fluenceDac,
+  fraxtalDA,
   galxegravityDac,
   gptProtocolDac,
   hychainDac,
@@ -101,17 +102,8 @@ export const daLayers = applyProcessor([
   xchainDac,
   xlayerDac,
   zkfairDac,
-  // DA Challenges
-  automataDA,
-  gmnetworkDA,
-  redstoneDA,
-  xterioDA,
-  // DA Layers
-  avail,
-  celestia,
-  near,
-  memo,
-  espressoDA,
-  eigenDA,
-  fraxtalDA,
-])
+]
+
+export const daChallenges = [automataDA, gmnetworkDA, redstoneDA, xterioDA]
+
+export const daLayers = [avail, celestia, near, memo, espressoDA, eigenDA]

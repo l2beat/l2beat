@@ -1,10 +1,11 @@
 import { ScalingProjectTechnologyChoice } from '../../../../common'
 import { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../../common'
 import {
-  DacBridge,
   EnshrinedBridge,
+  IntegratedDacBridge,
   NoDaBridge,
   OnChainDaBridge,
+  StandaloneDacBridge,
 } from './DaBridge'
 import { DaChallengeMechanism } from './DaChallengeMechanism'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
@@ -17,11 +18,7 @@ import { DaTechnology } from './DaTechnology'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { EthereumDaLayerRisks } from './EthereumDaRisks'
 
-export type DaLayer =
-  | BlockchainDaLayer
-  | DacDaLayer
-  | EthereumDaLayer
-  | DaServiceDaLayer
+export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'PublicBlockchain'
@@ -55,9 +52,10 @@ export type EthereumDaLayer = CommonDaLayer & {
   economicSecurity?: DaEconomicSecurity
 }
 
-export type DacDaLayer = CommonDaLayer & {
+export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
+  name: string
   kind: 'DAC' | 'No DAC'
-  bridge: DacBridge | NoDaBridge
+  bridge: IntegratedDacBridge | NoDaBridge
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
   /** Fallback */
@@ -70,7 +68,7 @@ export type DacDaLayer = CommonDaLayer & {
 
 export type DaServiceDaLayer = CommonDaLayer & {
   kind: 'DA Service'
-  bridges: (DacBridge | NoDaBridge)[]
+  bridges: (StandaloneDacBridge | NoDaBridge)[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
 }

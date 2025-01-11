@@ -13,7 +13,7 @@ const updateInterval = 12 // hours
 export const HotShotLightClient = {
   id: 'HotShotLightClient',
   createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
-  type: 'DAC',
+  type: 'StandaloneDacBridge',
   display: {
     name: 'HotShot Light Client',
     slug: 'hotshot',

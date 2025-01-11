@@ -1,55 +1,44 @@
-import { Layer2 } from '../../../layer2s'
-import { Layer3 } from '../../../layer3s'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaUpgradeabilityRisk,
-  DacBridge,
   DacDaLayer,
+  IntegratedDacBridge,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
-import { toUsedInProject } from '../utils/to-used-in-project'
 
 type TemplateSpecific = {
   /** Project DAC is associated with */
-  project: Layer2 | Layer3
+  project: string
 }
 
 type Optionals = {
   /** Overwrite some of the risks, check defaults below */
-  risks?: Partial<DacDaLayer['risks'] & DacBridge['risks']>
+  risks?: Partial<DacDaLayer['risks'] & IntegratedDacBridge['risks']>
   /** Links for given DAC, defaults to Project's main links */
   links?: Partial<DaLinks>
   /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
   layer?: {
     technology?: DacDaLayer['technology']
-    description?: DacDaLayer['display']['description']
     otherConsiderations?: DacDaLayer['otherConsiderations']
   }
   /**
    * Optional layer description and technology, defaults to generic ones
    */
   bridge: {
-    technology?: DacBridge['technology']
-    description?: DacBridge['display']['description']
+    technology?: IntegratedDacBridge['technology']
   } & Pick<
-    DacBridge,
+    IntegratedDacBridge,
     | 'createdAt'
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
-    | 'permissions'
-    | 'contracts'
     | 'transactionDataType'
     | 'isUnderReview'
     | 'otherConsiderations'
   >
-  /** Optional warning, defaults to undefined */
-  warning?: DacBridge['display']['warning']
-  /** Optional red warning, defaults to undefined */
-  redWarning?: DacBridge['display']['redWarning']
   /** Optional challenge mechanism, defaults to undefined */
   challengeMechanism?: DacDaLayer['challengeMechanism']
   /** Optional fallback, defaults to undefined */
@@ -66,13 +55,9 @@ type TemplateVars = Optionals & TemplateSpecific
  */
 export function StarkexDAC(template: TemplateVars): DacDaLayer {
   // Common
-  const name = `${template.project.display.name} DAC`
-  const usedIn = toUsedInProject([template.project])
+  const name = `${template.project} DAC`
 
   // "Bridge" backfill for DAC
-  const bridgeDescription =
-    template.bridge?.description ??
-    `${template.project.display.name} DAC on Ethereum.`
 
   const bridgeTechnology =
     template.bridge.technology?.description ??
@@ -85,28 +70,10 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
       In a separate transaction, the operator calls the updateState() function on the StarkEx contract to update the state.
       Before the state update is accepted, the StarkEx contract verifies the transaction public inputs by calling the isValid() function, which verifies the hash derived from state update inputs matches the hash stored by the Committee Verifier contract.
     `
-  const bridgeDisplay: DacBridge['display'] = {
-    name: 'DA Bridge',
-    slug: 'dac',
-    description: bridgeDescription,
-    warning: template.warning,
-    redWarning: template.redWarning,
-    links: {
-      apps: template.links?.apps ?? [],
-      documentation: template.links?.documentation ?? [],
-      explorers: template.links?.explorers ?? [],
-      repositories: template.links?.repositories ?? [],
-      socialMedia: template.links?.socialMedia ?? [],
-      websites: template.links?.websites ?? [],
-    },
-  }
 
-  const dacBridge: DacBridge = {
-    id: `${template.project.display.slug}-dac-bridge`,
-    type: 'DAC',
-    usedIn,
+  const dacBridge: IntegratedDacBridge = {
+    type: 'IntegratedDacBridge',
     ...template.bridge,
-    display: bridgeDisplay,
     technology: {
       description: bridgeTechnology,
       risks: [
@@ -130,10 +97,6 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
   }
 
   // DAC "DA-Layer"
-  const layerDescription =
-    template.layer?.description ??
-    'Set of parties responsible for signing and attesting to the availability of data.'
-
   const layerTechnology =
     template.layer?.technology?.description ??
     `
@@ -155,23 +118,14 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     Committee members are expected to maintain a database that stores the data associated with each batch, making use of storage solutions with a replication factor of at least 2.
   
     `
-
-  const layerDisplay: DacDaLayer['display'] = {
-    name,
-    slug: template.project.display.slug,
-    description: layerDescription,
-    links: template.project.display.links,
-  }
-
   const dacLayer: DacDaLayer = {
-    id: `${template.project.display.slug}-dac-layer`,
+    name: name,
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback, // Currently none?
     // https://github.com/starkware-libs/starkex-data-availability-committee?tab=readme-ov-file#publishing-committee-members-data
     challengeMechanism: template.challengeMechanism,
-    display: layerDisplay,
     technology: {
       description: layerTechnology,
       risks: template.layer?.technology?.risks,
