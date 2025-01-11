@@ -5,7 +5,6 @@ import {
   type DaFraudDetectionRisk,
   type DaServiceDaLayer,
   type DaUpgradeabilityRisk,
-  type DacDaLayer,
   type DataAvailabilityLayer,
   daLayers,
   ethereumDaLayer,
@@ -76,7 +75,7 @@ export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaSummaryEntry(
-  daLayer: BlockchainDaLayer | DacDaLayer | DaServiceDaLayer,
+  daLayer: BlockchainDaLayer | DaServiceDaLayer,
   economicSecurity: EconomicSecurityData | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
@@ -100,17 +99,18 @@ function getDaSummaryEntry(
         tvs: getTvs(daBridge.usedIn.map((project) => project.id)),
         risks: getDaBridgeRisks(daBridge),
         usedIn: daBridge.usedIn.sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
-        dacInfo:
-          daBridge.type === 'DAC'
-            ? {
-                memberCount: daBridge.membersCount,
-                requiredMemebers: daBridge.requiredMembers,
-                membersArePublic:
-                  !!daBridge.knownMembers &&
-                  daBridge.knownMembers.length > 0 &&
-                  !daBridge.hideMembers,
-              }
-            : undefined,
+        dacInfo: undefined,
+        // dacInfo:
+        //   daBridge.type === 'DAC'
+        //     ? {
+        //         memberCount: daBridge.membersCount,
+        //         requiredMemebers: daBridge.requiredMembers,
+        //         membersArePublic:
+        //           !!daBridge.knownMembers &&
+        //           daBridge.knownMembers.length > 0 &&
+        //           !daBridge.hideMembers,
+        //       }
+        //     : undefined,
       }
     })
     .sort((a, b) => b.tvs - a.tvs)
@@ -134,14 +134,16 @@ function getDaSummaryEntry(
     isPublic: daLayer.systemCategory === 'public',
     economicSecurity,
     risks: getDaLayerRisks(daLayer, tvs, economicSecurity),
-    fallback:
-      daLayer.kind === 'DAC' || daLayer.kind === 'No DAC'
-        ? daLayer.fallback
-        : undefined,
-    challengeMechanism:
-      daLayer.kind === 'DAC' || daLayer.kind === 'No DAC'
-        ? daLayer.challengeMechanism
-        : undefined,
+    fallback: undefined,
+    challengeMechanism: undefined,
+    // fallback:
+    //   daLayer.kind === '' || daLayer.kind === 'No DAC'
+    //     ? daLayer.fallback
+    //     : undefined,
+    // challengeMechanism:
+    //   daLayer.kind === 'DAC' || daLayer.kind === 'No DAC'
+    //     ? daLayer.challengeMechanism
+    //     : undefined,
     tvs,
     bridges,
   }

@@ -1,12 +1,11 @@
 import {
   type BlockchainDaLayer,
   type DaServiceDaLayer,
-  type DacBridge,
-  type DacDaLayer,
   type EnshrinedBridge,
   type EthereumDaLayer,
   type NoDaBridge,
   type OnChainDaBridge,
+  type StandaloneDacBridge,
 } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
@@ -24,8 +23,8 @@ import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-se
 import { getPermissionedEntities } from './get-permissioned-entities'
 
 type RegularDetailsParams = {
-  daLayer: BlockchainDaLayer | DacDaLayer | DaServiceDaLayer
-  daBridge: OnChainDaBridge | DacBridge | NoDaBridge
+  daLayer: BlockchainDaLayer | DaServiceDaLayer
+  daBridge: OnChainDaBridge | StandaloneDacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
@@ -42,18 +41,12 @@ export function getRegularDaProjectSections({
   projectsChangeReport,
   evaluatedGrissiniValues,
 }: RegularDetailsParams) {
-  const relatedScalingProject =
-    daBridge.type === 'DAC' && daBridge.usedIn.length === 1
-      ? daBridge.usedIn[0]
-      : undefined
-
   const permissionsSection = getMultichainPermissionsSection(
     {
       id: daLayer.id,
       bridge: daBridge,
       isUnderReview: !!daLayer.isUnderReview,
       permissions: daBridge.permissions,
-      dacUsedIn: relatedScalingProject,
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
@@ -66,7 +59,6 @@ export function getRegularDaProjectSections({
       slug: daBridge.display.slug,
       contracts: daBridge.contracts,
       isUnderReview: daLayer.isUnderReview,
-      dacUsedIn: relatedScalingProject,
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
