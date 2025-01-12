@@ -56,6 +56,10 @@ describe('DA-BEAT', () => {
           // It makes no sense to list them on the DA-BEAT
           (scaling) => scaling.dataAvailability?.layer.value !== 'None',
         )
+        .filter(
+          // If project has custom DA described in the project, it will be listed on the DA-BEAT automatically
+          (project) => !project.dataAvailabilitySolution,
+        )
 
       const daBeatProjectIds = daLayers.flatMap((daLayer) =>
         daLayer.bridges.flatMap((bridge) =>
