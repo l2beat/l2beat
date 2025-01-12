@@ -77,6 +77,7 @@ type CommonDacBridge = {
   risks: DaBridgeRisks
 }
 
+// Used in DacDaLayers integrated into projects
 export type IntegratedDacBridge = Omit<
   CommonDaBridge,
   'id' | 'display' | 'usedIn'
@@ -85,6 +86,7 @@ export type IntegratedDacBridge = Omit<
     type: 'IntegratedDacBridge'
   }
 
+// Used in DaServices
 export type StandaloneDacBridge = CommonDaBridge &
   CommonDacBridge & {
     type: 'StandaloneDacBridge'

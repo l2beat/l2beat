@@ -23,9 +23,14 @@ const daResolveWindow = formatSeconds(
 )
 
 export const cyberDA: DacDaLayer = {
-  name: 'CyberDA',
   type: 'DaLayer',
   kind: 'No DAC',
+  display: {
+    name: 'CyberDA',
+    slug: 'cyber-da',
+    description:
+      'CyberDA is a data availability solution using data availability challenges (DA Challenges).',
+  },
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
   challengeMechanism: DaChallengeMechanism.DaChallenges,

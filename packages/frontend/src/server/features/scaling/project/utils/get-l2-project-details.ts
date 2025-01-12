@@ -3,6 +3,7 @@ import {
   type ContractsVerificationStatuses,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
+import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -15,6 +16,7 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
+import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
@@ -73,6 +75,7 @@ export async function getL2ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
+  const dataAvailabilitySection = getDataAvailabilitySection(project)
 
   await Promise.all([
     api.tvl.chart.prefetch({
@@ -241,6 +244,18 @@ export async function getL2ProjectDetails({
     })
   }
 
+  if (dataAvailabilitySection) {
+    items.push({
+      type: 'Group',
+      props: {
+        id: 'da-layer',
+        title: 'Data availability',
+        items: dataAvailabilitySection,
+        description: project.dataAvailabilitySolution?.display.description,
+      },
+    })
+  }
+
   if (project.stateDerivation) {
     items.push({
       type: 'StateDerivationSection',
@@ -321,12 +336,17 @@ export async function getL2ProjectDetails({
   }
 
   if (permissionsSection) {
+    const permissionedEntities = project.dataAvailabilitySolution
+      ? getPermissionedEntities(project.dataAvailabilitySolution.bridge)
+      : undefined
+
     items.push({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
+        permissionedEntities,
       },
     })
   }

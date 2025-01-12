@@ -117,7 +117,11 @@ export function PolygoncdkDAC(template: TemplateVars): DacDaLayer {
     `
 
   const dacLayer: DacDaLayer = {
-    name,
+    display: {
+      name: name,
+      slug: template.project,
+      description: '',
+    },
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',

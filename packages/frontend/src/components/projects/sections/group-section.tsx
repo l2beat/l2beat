@@ -12,10 +12,11 @@ export interface GroupSectionProps extends ProjectSectionProps {
 export function GroupSection({
   description,
   items,
+  as = 'div',
   ...sectionProps
 }: GroupSectionProps) {
   return (
-    <ProjectSection {...sectionProps} as="div">
+    <ProjectSection {...sectionProps} as={as}>
       <div className="flex flex-1 flex-col gap-2 lg:min-w-[400px]">
         {description && <Markdown>{description}</Markdown>}
         <ProjectDetails

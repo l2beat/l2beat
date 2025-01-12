@@ -119,7 +119,11 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
   
     `
   const dacLayer: DacDaLayer = {
-    name: name,
+    display: {
+      name: name,
+      slug: template.project,
+      description: '',
+    },
     kind: 'DAC',
     type: 'DaLayer',
     systemCategory: 'custom',

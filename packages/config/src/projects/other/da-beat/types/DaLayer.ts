@@ -52,8 +52,7 @@ export type EthereumDaLayer = CommonDaLayer & {
   economicSecurity?: DaEconomicSecurity
 }
 
-export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
-  name: string
+export type DacDaLayer = Omit<CommonDaLayer, 'id'> & {
   kind: 'DAC' | 'No DAC'
   bridge: IntegratedDacBridge | NoDaBridge
   /** Risks associated with the data availability layer. */
@@ -99,7 +98,7 @@ export type DaLayerRisks = {
 interface DaLayerDisplay {
   /** The name of the data availability layer. */
   name: string
-  /** Slug of the data availability bridge. */
+  /** Slug of the data availability layer. */
   slug: string
   /** A short description of the data availability layer. */
   description: string

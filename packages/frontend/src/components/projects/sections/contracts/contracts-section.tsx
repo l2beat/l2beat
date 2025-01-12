@@ -94,9 +94,9 @@ export function ContractsSection(props: ContractsSectionProps) {
             chain ({props.chainName}):
           </h3>
           <div className="my-4">
-            {unchangedContracts.map((contract) => (
+            {unchangedContracts.map((contract, index) => (
               <ContractEntry
-                key={`${contract.name}-${contract.chain}`}
+                key={`${contract.name}-${contract.chain}-${index}`}
                 contract={contract}
                 className="my-4"
                 type="contract"

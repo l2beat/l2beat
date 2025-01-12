@@ -37,9 +37,14 @@ const requiredStakeFormatted = parseFloat(
 ).toLocaleString()
 
 export const mantleDA: DacDaLayer = {
-  name: 'Mantle DA',
   type: 'DaLayer',
   kind: 'DAC',
+  display: {
+    name: 'Mantle DA',
+    slug: 'mantle-da',
+    description:
+      'Mantle DA is an independent DA module that is built on top of an early version of EigenDA smart contracts.',
+  },
   systemCategory: 'custom',
   technology: {
     description: `

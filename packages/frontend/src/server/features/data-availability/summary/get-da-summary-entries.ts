@@ -161,7 +161,7 @@ function getDacEntries(
         : undefined
 
     const bridgeEntry: DaBridgeSummaryEntry = {
-      name: daLayer.name,
+      name: daLayer.display.name,
       slug: parentProject.display.slug,
       href: `/scaling/projects/${parentProject.display.slug}`,
       statuses: {},
@@ -174,7 +174,7 @@ function getDacEntries(
     const projectEntry: DaSummaryEntry = {
       id: parentProject.id,
       slug: parentProject.display.slug,
-      name: daLayer.name,
+      name: daLayer.display.name,
       nameSecondLine: kindToType(daLayer.kind),
       href: `/scaling/projects/${parentProject.display.slug}`,
       statuses: {},

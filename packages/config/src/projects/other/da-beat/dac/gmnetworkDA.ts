@@ -23,9 +23,14 @@ const daResolveWindow = formatSeconds(
 )
 
 export const gmnetworkDA: DacDaLayer = {
-  name: 'GM Network DA',
   type: 'DaLayer',
   kind: 'No DAC',
+  display: {
+    name: 'GM Network DA',
+    slug: 'gmnetworkda',
+    description:
+      'GM Network DA is a data availability solution using data availability challenges (DA Challenges).',
+  },
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
   challengeMechanism: DaChallengeMechanism.DaChallenges,

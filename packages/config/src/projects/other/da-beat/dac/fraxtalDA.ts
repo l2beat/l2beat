@@ -3,9 +3,14 @@ import { DacDaLayer } from '../types/DaLayer'
 import { fraxtalDABridge } from './bridges/fraxtalDABridge'
 
 export const fraxtalDA: DacDaLayer = {
-  name: 'FraxtalDA',
   type: 'DaLayer',
   kind: 'No DAC',
+  display: {
+    name: 'FraxtalDA',
+    slug: 'FraxtalDA',
+    description:
+      'FraxtalDA is a custom data availability solution built by the Fraxtal team.',
+  },
   systemCategory: 'custom',
   technology: {
     description: `

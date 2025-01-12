@@ -16,6 +16,7 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
+import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
@@ -87,6 +88,7 @@ export async function getL3ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
+  const dataAvailabilitySection = getDataAvailabilitySection(project)
 
   await Promise.all([
     api.tvl.chart.prefetch({
@@ -268,6 +270,18 @@ export async function getL3ProjectDetails({
         title: 'Technology',
         ...technologySection,
         hostChainWarning,
+      },
+    })
+  }
+
+  if (dataAvailabilitySection) {
+    items.push({
+      type: 'Group',
+      props: {
+        id: 'da-layer',
+        title: 'Data availability',
+        items: dataAvailabilitySection,
+        description: project.dataAvailabilitySolution?.display.description,
       },
     })
   }

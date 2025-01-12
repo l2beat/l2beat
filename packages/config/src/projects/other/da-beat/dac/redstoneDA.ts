@@ -23,9 +23,14 @@ const daResolveWindow = formatSeconds(
 )
 
 export const redstoneDA: DacDaLayer = {
-  name: 'RedstoneDA',
   type: 'DaLayer',
   kind: 'No DAC',
+  display: {
+    name: 'RedstoneDA',
+    slug: 'redstone-da',
+    description:
+      'RedstoneDA is a data availability solution using data availability challenges (DA Challenges).',
+  },
   systemCategory: 'custom',
   fallback: DA_LAYERS.ETH_CALLDATA,
   challengeMechanism: DaChallengeMechanism.DaChallenges,
