@@ -3,6 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { resolveAnalysis } from './resolveAnalysis'
+import { PathElement } from './resolvePermissions'
 
 const BASE_CONTRACT: AnalyzedContract = {
   type: 'Contract',
@@ -60,16 +61,8 @@ describe(resolveAnalysis.name, () => {
       {
         permission: 'configure',
         path: [
-          {
-            address: vaultAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: msigAddress,
-            delay: 0,
-            description: undefined,
-          },
+          pathElem({ address: vaultAddress }),
+          pathElem({ address: msigAddress }),
         ],
       },
     ])
@@ -115,16 +108,8 @@ describe(resolveAnalysis.name, () => {
       {
         permission: 'configure',
         path: [
-          {
-            address: vaultAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: msigAddress,
-            delay: 0,
-            description: undefined,
-          },
+          pathElem({ address: vaultAddress }),
+          pathElem({ address: msigAddress }),
         ],
       },
     ])
@@ -170,21 +155,9 @@ describe(resolveAnalysis.name, () => {
       members.map((m) => ({
         permission: 'configure',
         path: [
-          {
-            address: vaultAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: msigAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: m,
-            delay: 0,
-            description: undefined,
-          },
+          pathElem({ address: vaultAddress }),
+          pathElem({ address: msigAddress }),
+          pathElem({ address: m }),
         ],
       })),
     )
@@ -230,21 +203,9 @@ describe(resolveAnalysis.name, () => {
       members.map((m) => ({
         permission: 'configure',
         path: [
-          {
-            address: vaultAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: msigAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: m,
-            delay: 0,
-            description: undefined,
-          },
+          pathElem({ address: vaultAddress }),
+          pathElem({ address: msigAddress }),
+          pathElem({ address: m }),
         ],
       })),
     )
@@ -290,21 +251,9 @@ describe(resolveAnalysis.name, () => {
       members.map((m) => ({
         permission: 'configure',
         path: [
-          {
-            address: vaultAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: msigAddress,
-            delay: 0,
-            description: undefined,
-          },
-          {
-            address: m,
-            delay: 0,
-            description: undefined,
-          },
+          pathElem({ address: vaultAddress }),
+          pathElem({ address: msigAddress }),
+          pathElem({ address: m }),
         ],
       })),
     )
@@ -333,16 +282,8 @@ describe(resolveAnalysis.name, () => {
       {
         permission: 'configure',
         path: [
-          {
-            address: targetAddress,
-            delay: 10,
-            description: undefined,
-          },
-          {
-            address: contractAddress,
-            delay: 0,
-            description: undefined,
-          },
+          pathElem({ address: targetAddress, delay: 10 }),
+          pathElem({ address: contractAddress }),
         ],
       },
     ])
@@ -382,16 +323,8 @@ describe(resolveAnalysis.name, () => {
       {
         permission: 'configure',
         path: [
-          {
-            address: targetAddress,
-            delay: 10,
-            description: undefined,
-          },
-          {
-            address: eoaAddress,
-            delay: 0,
-            description: undefined,
-          },
+          pathElem({ address: targetAddress, delay: 10 }),
+          pathElem({ address: eoaAddress }),
         ],
       },
     ])
@@ -413,3 +346,15 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toBeEmpty()
   })
 })
+
+function pathElem<T>(elem: Partial<PathElement<T>>): PathElement<T> {
+  if (elem.address === undefined) {
+    throw new Error('Address is required')
+  }
+  return {
+    address: elem.address,
+    delay: elem.delay ?? 0,
+    description: elem.description,
+    condition: elem.condition,
+  }
+}
