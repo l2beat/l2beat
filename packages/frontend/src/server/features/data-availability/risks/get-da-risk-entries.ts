@@ -7,6 +7,8 @@ import {
   type DaUpgradeabilityRisk,
   daLayers,
   isDaBridgeVerified,
+  layer2s,
+  layer3s,
 } from '@l2beat/config'
 import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { ProjectId } from '@l2beat/shared-pure'
@@ -16,16 +18,21 @@ import {
   getDaProjectsTvl,
   pickTvlForProjects,
 } from '../utils/get-da-projects-tvl'
-import { getDaBridgeRisks } from '../utils/get-da-risks'
+import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaRiskEntries() {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getTvs = pickTvlForProjects(tvlPerProject)
-  return daLayers
+
+  const entries = daLayers
     .map((daLayer) => getDaRiskEntry(daLayer, getTvs))
     .sort((a, b) => b.tvs - a.tvs)
+
+  const dacEntries = getDacEntries(getTvs)
+
+  return [...entries, ...dacEntries]
 }
 
 export interface DaRiskEntry extends CommonProjectEntry {
@@ -91,4 +98,43 @@ function getDaRiskEntry(
     },
     bridges,
   }
+}
+
+function getDacEntries(
+  getTvs: (projectIds: ProjectId[]) => number,
+): DaRiskEntry[] {
+  const projects = [...layer2s, ...layer3s]
+    .filter((project) => project.dataAvailabilitySolution)
+    .map((project) => ({
+      parentProject: project,
+      daLayer: project.dataAvailabilitySolution!,
+    }))
+
+  return projects.map(({ parentProject, daLayer }) => {
+    const tvs = getTvs([parentProject.id])
+
+    const bridgeEntry: DaBridgeRiskEntry = {
+      name: daLayer.name,
+      slug: parentProject.display.slug,
+      href: `/scaling/projects/${parentProject.display.slug}`,
+      statuses: {},
+      tvs,
+      risks: getDaBridgeRisks(daLayer.bridge),
+    }
+
+    const projectEntry: DaRiskEntry = {
+      id: parentProject.id,
+      slug: parentProject.display.slug,
+      name: daLayer.name,
+      nameSecondLine: kindToType(daLayer.kind),
+      href: `/scaling/projects/${parentProject.display.slug}`,
+      statuses: {},
+      risks: getDaLayerRisks(daLayer, tvs),
+      isPublic: daLayer.systemCategory === 'public',
+      tvs,
+      bridges: [bridgeEntry],
+    }
+
+    return projectEntry
+  })
 }

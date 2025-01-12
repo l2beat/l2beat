@@ -18,6 +18,7 @@ import { ScalingProjectStateValidation } from '../../../common/ScalingProjectSta
 import { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
 import { type BadgeId } from '../../badges'
 import { StageConfig } from '../../layer2s'
+import { DacDaLayer } from '../../other'
 
 export interface Layer3 {
   type: 'layer3'
@@ -47,6 +48,8 @@ export interface Layer3 {
   stage?: StageConfig
   /** Data availability of scaling project */
   dataAvailability?: ProjectDataAvailability
+  /** Data availability solution */
+  dataAvailabilitySolution?: DacDaLayer
   /** Deep dive into layer3 technology */
   technology: ScalingProjectTechnology
   /** Open-source node details */

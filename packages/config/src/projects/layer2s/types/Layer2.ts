@@ -22,6 +22,7 @@ import type { ScalingProjectStateDerivation } from '../../../common/ScalingProje
 import type { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import type { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
 import { type BadgeId } from '../../badges'
+import { DacDaLayer } from '../../other'
 import type { StageConfig } from '../common/stages/types'
 import type { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import type { Layer2LivenessConfig } from './Layer2LivenessConfig'
@@ -47,6 +48,8 @@ export interface Layer2 {
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
   dataAvailability?: ProjectDataAvailability
+  /** Data availability solution */
+  dataAvailabilitySolution?: DacDaLayer
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */

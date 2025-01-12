@@ -1,5 +1,4 @@
 import { ValueWithSentiment } from '@l2beat/shared-pure'
-
 import {
   DataAvailabilityBridge,
   DataAvailabilityConfig,

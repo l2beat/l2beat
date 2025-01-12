@@ -5,6 +5,7 @@ import {
   type DaLayerRisks,
   type DaServiceDaLayer,
   type DacDaLayer,
+  type IntegratedDacBridge,
   type NoDaBridge,
   type OnChainDaBridge,
   type StandaloneDacBridge,
@@ -12,7 +13,11 @@ import {
 import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 
 type Layer = BlockchainDaLayer | DacDaLayer | DaServiceDaLayer
-type Bridge = NoDaBridge | OnChainDaBridge | StandaloneDacBridge
+type Bridge =
+  | NoDaBridge
+  | OnChainDaBridge
+  | StandaloneDacBridge
+  | IntegratedDacBridge
 
 export function getDaRisks(
   daLayer: Layer,
