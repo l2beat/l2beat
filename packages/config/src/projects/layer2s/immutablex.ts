@@ -35,7 +35,6 @@ import { StarkexDAC } from '../other/da-beat/templates/starkex-template'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
-  DacTransactionDataType,
 } from '../other/da-beat/types'
 import { Layer2 } from './types'
 
@@ -224,9 +223,6 @@ export const immutablex: Layer2 = {
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: committee.minSigners,
-      membersCount: committee.accounts.length,
-      transactionDataType: DacTransactionDataType.StateDiffs,
       knownMembers: [
         {
           external: false,
@@ -270,6 +266,7 @@ export const immutablex: Layer2 = {
         },
       ],
     },
+    discovery,
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       committeeSecurity:

@@ -1,3 +1,4 @@
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import {
   DaBridgeRisks,
   DaCommitteeSecurityRisk,
@@ -6,6 +7,7 @@ import {
   DaLayerRisks,
   DaUpgradeabilityRisk,
   DacDaLayer,
+  DacTransactionDataType,
   IntegratedDacBridge,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
@@ -50,6 +52,18 @@ type Optionals = {
 }
 
 export type DacTemplateVars = Optionals & TemplateSpecific
+
+export type DacTemplateVarsWithDiscovery = Omit<DacTemplateVars, 'bridge'> & {
+  bridge: Pick<
+    IntegratedDacBridge,
+    'createdAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
+  > & {
+    membersCount?: number
+    requiredMembers?: number
+    transactionDataType?: DacTransactionDataType
+  }
+  discovery?: ProjectDiscovery
+}
 
 /**
  * Template function for DA-BEAT DACs.

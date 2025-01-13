@@ -1,8 +1,33 @@
-import { DaTechnology, DaUpgradeabilityRisk, DacDaLayer } from '../types'
+import { assert } from '@l2beat/shared-pure'
+import { getCommittee } from '../../../../discovery/starkware/getCommittee'
+import {
+  DaTechnology,
+  DaUpgradeabilityRisk,
+  DacDaLayer,
+  DacTransactionDataType,
+} from '../types'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
-import { DAC, DacTemplateVars } from './dac-template'
+import { DAC, DacTemplateVarsWithDiscovery } from './dac-template'
 
-export function StarkexDAC(template: DacTemplateVars): DacDaLayer {
+export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
+  const committee = template.discovery
+    ? getCommittee(template.discovery)
+    : undefined
+
+  const membersCount =
+    committee?.accounts.length ?? template.bridge.membersCount
+  const requiredMembers =
+    committee?.minSigners ?? template.bridge.requiredMembers
+
+  assert(
+    membersCount,
+    'Members count is required, provide either discovery or bridge.membersCount',
+  )
+  assert(
+    requiredMembers,
+    'Required members is required, provide either discovery or bridge.requiredMembers',
+  )
+
   const bridgeTechnology: DaTechnology = {
     description: `
     ## DA Bridge Architecture
@@ -64,6 +89,11 @@ export function StarkexDAC(template: DacTemplateVars): DacDaLayer {
     },
     bridge: {
       ...template.bridge,
+      membersCount: membersCount,
+      requiredMembers: requiredMembers,
+      transactionDataType:
+        template.bridge.transactionDataType ??
+        DacTransactionDataType.StateDiffs,
       technology: bridgeTechnology,
     },
     risks: {

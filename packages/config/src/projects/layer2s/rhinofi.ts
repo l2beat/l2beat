@@ -33,7 +33,6 @@ import {
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../other/da-beat/templates/starkex-template'
-import { DacTransactionDataType } from '../other/da-beat/types'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('deversifi')
@@ -249,9 +248,7 @@ export const rhinofi: Layer2 = {
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: committee.minSigners,
-      membersCount: committee.accounts.length,
-      transactionDataType: DacTransactionDataType.StateDiffs,
     },
+    discovery,
   }),
 }
