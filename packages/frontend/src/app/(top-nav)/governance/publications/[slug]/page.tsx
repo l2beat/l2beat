@@ -54,7 +54,7 @@ export default async function Page(props: Props) {
   }
   const publicationEntry = getGovernancePublicationEntry(publication)
   return (
-    <>
+    <div className="reading">
       <Header publication={publicationEntry} />
       <ContentWrapper
         className={cn(
@@ -79,7 +79,7 @@ export default async function Page(props: Props) {
           <Article>{publicationEntry.content}</Article>
         </main>
       </ContentWrapper>
-    </>
+    </div>
   )
 }
 

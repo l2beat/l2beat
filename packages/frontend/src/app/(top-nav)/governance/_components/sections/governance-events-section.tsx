@@ -1,6 +1,6 @@
 'use client'
 import { CustomLink } from '~/components/link/custom-link'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { CustomLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { type GovernanceEventEntry } from '../../_utils/get-governance-event-entries'

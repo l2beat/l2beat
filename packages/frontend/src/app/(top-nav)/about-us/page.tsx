@@ -4,7 +4,7 @@ import { CustomLink } from '~/components/link/custom-link'
 
 export default function Page() {
   return (
-    <>
+    <div className="reading">
       <Header />
       <ContentWrapper>
         <div className="mt-8 grid gap-4 md:mt-20 md:grid-cols-2">
@@ -61,7 +61,7 @@ export default function Page() {
           just for you.
         </div>
       </ContentWrapper>
-    </>
+    </div>
   )
 }
 
