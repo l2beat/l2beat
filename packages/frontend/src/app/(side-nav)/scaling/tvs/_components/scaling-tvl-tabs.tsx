@@ -67,7 +67,7 @@ export function ScalingTvlTabs(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length}
@@ -82,6 +82,7 @@ export function ScalingTvlTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="primary-card pt-5">
             <ScalingStackedTvlChart
+              tab="rollups"
               milestones={props.milestones}
               entries={props.rollups}
             />
@@ -92,10 +93,11 @@ export function ScalingTvlTabs(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent
-            value="validiums-and-optimiums"
+            value="validiumsAndOptimiums"
             className="primary-card pt-5"
           >
             <ScalingStackedTvlChart
+              tab="validiumsAndOptimiums"
               milestones={props.milestones}
               entries={props.validiumsAndOptimiums}
             />
@@ -107,6 +109,7 @@ export function ScalingTvlTabs(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others" className="primary-card pt-5">
             <ScalingStackedTvlChart
+              tab="others"
               milestones={props.milestones}
               entries={props.others ?? []}
             />

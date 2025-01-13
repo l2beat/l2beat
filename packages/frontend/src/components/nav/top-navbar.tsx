@@ -59,7 +59,7 @@ export function TopNavbar({
             <SocialLinks />
           </ul>
           <VerticalSeparator className="hidden h-8 xl:block" />
-          <ul className="flex h-full items-center gap-1.5">
+          <ul className="flex h-full items-center">
             <TopNavLink title="About Us" href="/about-us" />
             <TopNavLink title="Forum" href={externalLinks.forum} />
             <TopNavLink title="Donate" href="/donate" />

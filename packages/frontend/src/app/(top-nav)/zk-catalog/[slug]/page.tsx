@@ -10,7 +10,7 @@ import { ZkCatalogProjectPage } from './_components/zk-catalog-project-page'
 import { getZkCatalogProjectDetails } from './_utils/get-zk-catalog-project-details'
 
 interface Params {
-  project: string
+  slug: string
 }
 
 interface Props {
@@ -23,13 +23,13 @@ export async function generateStaticParams(): Promise<Params[]> {
     where: ['proofVerification'],
     whereNot: ['isArchived'],
   })
-  return projects.map((p) => ({ project: p.slug }))
+  return projects.map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata | null> {
   const params = await props.params
   const project = await ProjectService.STATIC.getProject({
-    slug: params.project,
+    slug: params.slug,
     where: ['proofVerification'],
     whereNot: ['isArchived'],
   })
@@ -44,7 +44,7 @@ export async function generateMetadata(props: Props): Promise<Metadata | null> {
 export default async function Page(props: Props) {
   const params = await props.params
   const project = await ProjectService.STATIC.getProject({
-    slug: params.project,
+    slug: params.slug,
     select: ['proofVerification'],
     optional: ['isScaling'],
     whereNot: ['isArchived'],

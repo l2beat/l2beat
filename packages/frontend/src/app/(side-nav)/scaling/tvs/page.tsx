@@ -18,8 +18,7 @@ export default async function Page() {
 
   await api.tvl.chart.prefetch({
     filter: {
-      type: 'projects',
-      projectIds: entries.rollups.map((project) => project.id),
+      type: 'rollups',
     },
     range: '1y',
     excludeAssociatedTokens: false,

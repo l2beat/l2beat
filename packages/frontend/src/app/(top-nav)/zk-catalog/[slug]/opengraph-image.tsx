@@ -1,4 +1,4 @@
-import { daLayers, ethereumDaLayer } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
@@ -10,20 +10,23 @@ const size = {
   width: 1200,
   height: 630,
 }
-const projects = [...daLayers, ethereumDaLayer]
 
 export async function generateStaticParams() {
-  return projects.flatMap((layer) => ({
-    layer: layer.display.slug,
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['proofVerification'],
+    whereNot: ['isArchived'],
+  })
+  return projects.map((project) => ({
+    slug: project.slug,
   }))
 }
 
 export async function generateImageMetadata({ params }: Props) {
   return [
     {
-      id: params.layer,
+      id: params.slug,
       size,
-      alt: `Project page for ${params.layer}`,
+      alt: `Project page for ${params.slug}`,
       contentType: 'image/png',
     },
   ]
@@ -31,12 +34,14 @@ export async function generateImageMetadata({ params }: Props) {
 
 interface Props {
   params: {
-    layer: string
+    slug: string
   }
 }
 
 export default async function Image({ params }: Props) {
-  const project = projects.find((p) => p.display.slug === params.layer)
+  const project = await ProjectService.STATIC.getProject({
+    slug: params.slug,
+  })
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
@@ -52,12 +57,17 @@ export default async function Image({ params }: Props) {
   return new ImageResponse(
     <ProjectOpengraphImage
       baseUrl={baseUrl}
-      slug={project.display.slug}
-      name={project.display.name}
+      slug={project.slug}
+      name={project.name}
       size={size}
     >
-      {/* See comment in zk-catalog/[slug]/opengraph-image.tsx for explanation why we use &nbsp; */}
-      DATA&nbsp;AVAILABILITY&nbsp;•&nbsp;PROJECT&nbsp;PAGE
+      {/* 
+        Because of the way vercel/satori code is implemented, we need to use &nbsp; to not let the text
+        be splitted by whitespaces because if it is then the text is not rendered correctly.
+        Probably only in this specific case where "T" and "A" are next to each because vercel/satori,
+        does not take into account the font kerning.
+      */}
+      ZK&nbsp;CATALOG&nbsp;•&nbsp;PROJECT&nbsp;PAGE
     </ProjectOpengraphImage>,
     {
       ...size,
@@ -75,6 +85,7 @@ export default async function Image({ params }: Props) {
           weight: 700,
         },
       ],
+      debug: true,
     },
   )
 }
