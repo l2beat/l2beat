@@ -10,6 +10,10 @@ export default function Page() {
         <div className="mt-8 grid gap-4 md:mt-20 md:grid-cols-2">
           <div className="flex flex-col gap-4">
             <p>
+              We are a public goods company dedicated to providing onchain
+              transparency.
+            </p>
+            <p>
               What sets L2BEAT apart is our unwavering commitment to delivering
               accurate and reliable information. We strive to be an impartial
               and independent watchdog that acts in the best interest of users
@@ -64,15 +68,7 @@ export default function Page() {
 function Header() {
   return (
     <FullPageHeader>
-      <div className="w-full">
-        <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
-          <h1 className="text-6xl font-bold">About L2BEAT</h1>
-          <p className="w-full text-lg font-light leading-[1.15] lg:w-3/5">
-            We are a public goods company dedicated to providing onchain
-            transparency.
-          </p>
-        </div>
-      </div>
+      <h1 className="w-full text-left text-6xl font-bold">About L2BEAT</h1>
     </FullPageHeader>
   )
 }
