@@ -5,7 +5,6 @@ import {
   type Layer3,
   type ScalingProjectPermission,
   type ScalingProjectPermissionedAccount,
-  type ScalingProjectReference,
 } from '@l2beat/config'
 import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
