@@ -19,7 +19,7 @@ export function BridgesProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="pt-6 max-md:bg-surface-primary max-md:px-4"
+      className="border-divider pt-6 max-md:border-b max-md:bg-surface-header max-md:px-4"
     >
       <div className="w-full space-y-4 md:space-y-6">
         <div className="flex flex-col gap-2">
