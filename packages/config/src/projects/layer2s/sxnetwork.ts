@@ -3,10 +3,18 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
+import { DacTransactionDataType } from '../other/da-beat/types'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
+
+const dac = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = dac
 
 export const sxnetwork: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1722430544), // 2024-07-31T12:55:44Z
@@ -69,4 +77,16 @@ export const sxnetwork: Layer2 = orbitStackL2({
         "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    display: {
+      name: 'SX Network',
+      slug: 'sxnetwork',
+    },
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignatures,
+      membersCount: membersCount,
+      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    },
+  }),
 })
