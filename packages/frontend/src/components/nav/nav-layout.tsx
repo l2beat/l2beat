@@ -141,7 +141,7 @@ export async function NavLayout({
       <div
         className={cn(
           'relative flex flex-col overflow-x-clip lg:flex-row',
-          topNavbar ? 'topbar lg:flex-col' : 'sidebar',
+          topNavbar && 'lg:flex-col',
           className,
         )}
       >
@@ -154,7 +154,11 @@ export async function NavLayout({
         {!topNavbar && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileNavbar groups={groups} logoLink={logoLink} />
+        <MobileNavbar
+          groups={groups}
+          logoLink={logoLink}
+          className={cn(!topNavbar && 'md:mb-5')}
+        />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}

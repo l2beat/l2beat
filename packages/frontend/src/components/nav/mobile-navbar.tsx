@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { cn } from '~/utils/cn'
 import { Logo } from '../logo'
 import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { MobileNavTabs } from './mobile-nav-tabs'
@@ -12,9 +13,10 @@ import { type NavGroup } from './types'
 export function MobileNavbar({
   groups,
   logoLink,
-}: { groups: NavGroup[]; logoLink: string }) {
+  className,
+}: { groups: NavGroup[]; logoLink: string; className?: string }) {
   return (
-    <div className="sidebar:md:mb-5 lg:hidden">
+    <div className={cn('lg:hidden', className)}>
       <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-divider bg-surface-header px-3.5">
         {/* Left side */}
         <div className="flex items-center gap-3">

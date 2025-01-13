@@ -300,9 +300,6 @@ const config: Config = {
   },
   plugins: [
     plugin((creator) => {
-      creator.addVariant('sidebar', '.sidebar &')
-    }),
-    plugin((creator) => {
       creator.addVariant('primary-card', '.primary-card &')
     }),
     tailwindcssAnimate,
