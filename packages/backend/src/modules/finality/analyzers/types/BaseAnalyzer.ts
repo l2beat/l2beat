@@ -31,7 +31,7 @@ export abstract class BaseAnalyzer {
     protected readonly provider: RpcClient,
     protected readonly db: Database,
     protected readonly projectId: ProjectId,
-  ) {}
+  ) { }
 
   async analyzeInterval(
     from: UnixTime,
@@ -90,8 +90,11 @@ export abstract class BaseAnalyzer {
     )
 
     assert(firstInRange !== 0, 'Assumption from above comment is not met')
-    const transactions =
-      firstInRange !== -1 ? sortedSafeTransactions.slice(firstInRange - 1) : []
+
+    if (firstInRange === -1) {
+      return undefined
+    }
+    const transactions = sortedSafeTransactions.slice(firstInRange - 1)
     const windowedTransactions = slidingWindow(transactions, 2, 1)
 
     const finalityBatches = []
@@ -169,7 +172,7 @@ export function batchesToStateUpdateDelays(
         oldestBlock.timestamp,
         newestBlock.timestamp,
         (l2BlockNumber - oldestBlock.blockNumber) /
-          (newestBlock.blockNumber - oldestBlock.blockNumber),
+        (newestBlock.blockNumber - oldestBlock.blockNumber),
       )
     )
   }
