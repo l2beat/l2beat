@@ -70,7 +70,7 @@ async function Header(props: HeaderProps) {
     <FullPageHeader contentWrapperClassName="leading-[1.15]">
       <div className="grid md:grid-cols-12">
         <div className="relative leading-normal md:col-span-7">
-          <h1 className="text-6xl font-bold">Donate</h1>
+          <h1 className="text-5xl font-bold md:text-6xl">Donate</h1>
           <div className="mt-6 space-y-6">
             <p>
               Thank you for supporting L2BEAT&apos;s mission to bring education

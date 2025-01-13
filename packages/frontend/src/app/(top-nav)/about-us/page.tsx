@@ -68,7 +68,9 @@ export default function Page() {
 function Header() {
   return (
     <FullPageHeader>
-      <h1 className="w-full text-left text-6xl font-bold">About L2BEAT</h1>
+      <h1 className="w-full text-left text-5xl font-bold md:text-6xl">
+        About L2BEAT
+      </h1>
     </FullPageHeader>
   )
 }

@@ -70,7 +70,7 @@ function Header() {
     <FullPageHeader>
       <div className="w-full">
         <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
-          <h1 className="text-6xl font-bold">FAQ</h1>
+          <h1 className="text-5xl font-bold md:text-6xl">FAQ</h1>
           <p className="w-full text-lg font-light lg:w-2/3">
             Hi! We are glad you&apos;ve made it here. Below you will find
             answers to most frequently asked questions about L2BEAT.
