@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
-import { DiscoLupeProject } from './data'
+import { DivContainer } from './DivContainer'
 import { ProjectName } from './ProjectName'
-import { divContainer } from './DiscoLupe'
+import { DiscoLupeProject } from './data'
 import { formatCurrencyExactValue } from './utils'
 
 export interface LupeColumn {
@@ -27,7 +27,7 @@ export const AVAILABLE_COLUMNS: LupeColumn[] = [
     align: 'right',
     fn: (project: DiscoLupeProject) =>
       formatCurrencyExactValue(project.tvl, 'usd'),
-    displayFn: divContainer,
+    displayFn: DivContainer,
   },
   {
     header: 'Discovery driven',
@@ -38,7 +38,7 @@ export const AVAILABLE_COLUMNS: LupeColumn[] = [
       project.areContractsDiscoveryDriven
         ? '✅'
         : '❌',
-    displayFn: divContainer,
+    displayFn: DivContainer,
   },
   {
     header: 'Permissions',
@@ -46,7 +46,7 @@ export const AVAILABLE_COLUMNS: LupeColumn[] = [
     align: 'right',
     fn: (project: DiscoLupeProject) =>
       project.arePermissionsDiscoveryDriven ? '✅' : '❌',
-    displayFn: divContainer,
+    displayFn: DivContainer,
   },
   {
     header: 'Smart contracts',
@@ -54,7 +54,7 @@ export const AVAILABLE_COLUMNS: LupeColumn[] = [
     align: 'right',
     fn: (project: DiscoLupeProject) =>
       project.areContractsDiscoveryDriven ? '✅' : '❌',
-    displayFn: divContainer,
+    displayFn: DivContainer,
   },
   {
     header: 'Milestones & Incidents',
@@ -62,6 +62,6 @@ export const AVAILABLE_COLUMNS: LupeColumn[] = [
     align: 'right',
     fn: (project: DiscoLupeProject) =>
       project.milestones && project.milestones.length > 0 ? '✅' : '❌',
-    displayFn: divContainer,
+    displayFn: DivContainer,
   },
 ]

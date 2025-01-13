@@ -1,5 +1,5 @@
-import { FilterIcon } from './icons/FilterIcon'
 import Popover from './Popover'
+import { FilterIcon } from './icons/FilterIcon'
 
 export interface FilterButtonProps {
   values: string[]

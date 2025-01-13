@@ -1,4 +1,3 @@
-
 export function formatCurrencyExactValue(value: number, currency: string) {
   const string =
     currency === 'usd' || currency === 'USD'
