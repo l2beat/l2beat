@@ -25,17 +25,17 @@ export function Verifiers(props: Props) {
     <Accordion type="multiple" asChild>
       <table className="w-full">
         <thead>
-          <tr className="border-b border-gray-200 align-bottom dark:border-zinc-700">
-            <th className="px-4 py-2 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50">
+          <tr className="border-b border-divider align-bottom text-zinc-500 dark:text-n-zinc-300">
+            <th className="px-4 py-2 text-start text-xs font-medium uppercase">
               Name
             </th>
-            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50 md:table-cell">
+            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase md:table-cell">
               Verifier
             </th>
-            <th className="py-2 pr-4 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50">
+            <th className="py-2 pr-4 text-start text-xs font-medium uppercase">
               Verification status
             </th>
-            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase text-gray-500 dark:text-gray-50 md:table-cell">
+            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase md:table-cell">
               Last used
             </th>
             <th />
@@ -53,7 +53,7 @@ export function Verifiers(props: Props) {
             >
               <AccordionHeader asChild>
                 <AccordionTrigger asChild>
-                  <tr className="group/trigger h-14 cursor-pointer border-b border-gray-200 data-[state=open]:border-none dark:border-zinc-700">
+                  <tr className="group/trigger h-14 cursor-pointer border-b border-divider data-[state=open]:border-none">
                     <td className="px-4 text-base font-medium md:text-lg">
                       {item.name}
                     </td>
@@ -79,7 +79,7 @@ export function Verifiers(props: Props) {
                 </AccordionTrigger>
               </AccordionHeader>
               <AccordionContent asChild>
-                <tr className="border-b border-gray-200 dark:border-zinc-700">
+                <tr className="border-b border-divider">
                   <td
                     colSpan={3}
                     className="mt-1 space-y-5 px-4 pb-5 md:hidden"
@@ -98,7 +98,7 @@ export function Verifiers(props: Props) {
                       </p>
                     ) : null}
                     <div>
-                      <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-50">
+                      <p className="mb-2 text-xs font-medium text-zinc-500 dark:text-n-zinc-300">
                         Verifier
                       </p>
                       <EtherscanLink
@@ -107,13 +107,13 @@ export function Verifiers(props: Props) {
                       />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-50">
+                      <p className="mb-2 text-xs font-medium text-zinc-500 dark:text-n-zinc-300">
                         Last used
                       </p>
                       <LastUsedCell days={item.lastUsedDaysAgo} />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-50">
+                      <p className="mb-2 text-xs font-medium text-zinc-500 dark:text-n-zinc-300">
                         Description
                       </p>
                       <Markdown className="text-xs">
