@@ -97,6 +97,7 @@ export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
       technology: bridgeTechnology,
     },
     risks: {
+      ...template.risks,
       ...bridgeRisks,
     },
   })

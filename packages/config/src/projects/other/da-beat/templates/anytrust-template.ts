@@ -90,6 +90,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
       requiredMembers: requiredSignatures,
     },
     risks: {
+      ...template.risks,
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(),
     },

@@ -63,6 +63,7 @@ export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
       technology: bridgeTechnology,
     },
     risks: {
+      ...template.risks,
       ...bridgeRisks,
     },
   })
