@@ -20,7 +20,7 @@ export const NavSideBarWrapper = ({
     'h-screen w-full lg:w-60 [@supports(height:100dvh)]:h-dvh',
     topNavbar && 'lg:hidden',
   )
-  console.log(sharedSizeClasses)
+
   const onResize = useEventCallback(() => {
     clearTimeout(timeout.current)
     setResizing(true)
