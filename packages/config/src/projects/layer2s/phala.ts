@@ -4,14 +4,26 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  EXITS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'
+import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 
 const discovery = new ProjectDiscovery('phala')
+
+const finalizationPeriod = discovery.getContractValue<number>('OPSuccinctL2OutputOracle', 'finalizationPeriodSeconds')
+const upgradeDelay = 0
+const forcedWithdrawalDelay = 0
+const SEQUENCING_WINDOW_SECONDS = 3600 * 12
 
 export const phala: Layer2 = {
   id: ProjectId('phala'),
@@ -73,28 +85,33 @@ export const phala: Layer2 = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description:
-        'State transitions are validated using the SP1 zkVM validity proofs.',
-      sentiment: 'good',
-      value: 'ZK Proofs',
+      ...RISK_VIEW.STATE_ZKP_SN,
+      secondLine: formatExecutionDelay(finalizationPeriod),
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
     },
-    exitWindow: {
-      description: 'No delay on upgrades.',
-      sentiment: 'bad',
-      value: 'None',
-    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {
-      description: 'Currently only one sequencer can submit blocks.',
-      sentiment: 'bad',
-      value: 'Centralized',
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        SEQUENCING_WINDOW_SECONDS,
+      ),
+      secondLine: formatDelay(SEQUENCING_WINDOW_SECONDS),
+      sources: [
+        {
+          contract: 'OptimismPortal',
+          references: [],
+        },
+      ],
     },
     proposerFailure: {
-      description: 'Only designated proposers can submit proofs.',
-      sentiment: 'bad',
-      value: 'Centralized',
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      sources: [
+        {
+          contract: 'OPSuccinctL2OutputOracle',
+          references: [],
+        },
+      ],
     },
   },
   stage: getStage(
@@ -124,15 +141,17 @@ export const phala: Layer2 = {
   ),
   technology: {
     stateCorrectness: {
-      name: 'ZK Rollup using SP1',
-      description:
-        'State transitions are proven using the SP1 zkVM validity proofs.',
+      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      references: [],
+      risks: [],
+    },
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [],
       risks: [],
     },
     dataAvailability: {
-      name: 'All data required for proofs is published on chain',
-      description: 'All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.',
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           href: 'https://etherscan.io/address/0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b',
@@ -142,18 +161,18 @@ export const phala: Layer2 = {
       risks: [],
     },
     operator: {
-      name: 'Centralized Sequencer',
-      description: 'Currently only one sequencer can submit blocks.',
+      ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [],
       risks: [],
     },
     exitMechanisms: [
       {
-        name: 'Regular exit',
-        description:
-          'Users can withdraw their assets through the bridge contracts.',
-        risks: [],
+        ...EXITS.REGULAR_YIELDING(
+          'zk',
+          finalizationPeriod,
+        ),
         references: [],
+        risks: [],
       },
     ],
   },
