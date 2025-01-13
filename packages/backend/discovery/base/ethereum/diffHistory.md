@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x8162b70f249c2ffb273240611d6848b12ba7114e
+
+# Diff at Thu, 09 Jan 2025 06:32:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 21573134
+- current block number: 21585153
+
+## Description
+
+Note: The PermissionedDisputeGame and FaultDisputeGame contracts are not identical to the ones used by OP mainnet (minor changes).
+
+New MIPS, PermissionedDisputeGame, FaultDisputeGame contracts.
+
+- interop: add `hashL2toL2CrossDomainMessage()` and `_dependencySet` (in 'encoding' and 'hashing' libraries)
+- formatting and doc changes
+- removal of interfaces (IDisputeGame, IFaultDisputeGame)
+- no changes in DelayedWETH
+
+### MIPS
+
+Refactor: [64bit architecture and multithreading support](https://github.com/ethereum-optimism/docs/issues/1066).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x19009dEBF8954B610f207D5925EEDe827805986e)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract DisputeGameFactory (0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0x19009dEBF8954B610f207D5925EEDe827805986e"
++        "0xF62c15e2F99d4869A925B8F57076cD85335832A2"
+      values.gameImpls.0:
+-        "0xCd3c0194db74C23807D4B90A5181e1B28cF7007C"
++        "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0xCd3c0194db74C23807D4B90A5181e1B28cF7007C)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0xF62c15e2F99d4869A925B8F57076cD85335832A2)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21573134 => .flat}/FaultDisputeGame.sol | 601 +++++++++++---------
+ .../ethereum/{.flat@21573134 => .flat}/MIPS.sol    | 444 +++++++++++----
+ .../PermissionedDisputeGame.sol                    | 623 ++++++++++++---------
+ 3 files changed, 1009 insertions(+), 659 deletions(-)
+```
+
+Generated with discovered.json: 0x374c33b6877ee2614be249fc8b8cbe8105b4f807
+
+# Diff at Wed, 08 Jan 2025 08:58:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 21573134
+- current block number: 21573134
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21573134 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
 Generated with discovered.json: 0x9bb8d6009e9f1a4109085ffc2c21b7eab10d0e29
 
 # Diff at Tue, 07 Jan 2025 14:18:03 GMT:

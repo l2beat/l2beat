@@ -20,7 +20,7 @@ export function getAggLayerNativeEtherWrappedEntry(
   assert(escrow.sharedEscrow.wethAddress, 'WETH address is required')
   assert(l1WETH.address, 'Ethereum WETH token not found')
 
-  // We are hardcoding assetId because aggLayerNativeEtherWrapped is an canonical token
+  // We are hardcoding assetId because aggLayerNativeEtherWrapped is a canonical token
   const assetId = AssetId.create(ethereum.name, l1WETH.address)
   const type = 'aggLayerNativeEtherWrapped'
   const dataSource = `${chain.name}_agglayer`

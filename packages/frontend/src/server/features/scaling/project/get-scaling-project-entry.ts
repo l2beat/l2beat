@@ -3,7 +3,6 @@ import {
   type Layer3,
   badgesCompareFn,
   getContractsVerificationStatuses,
-  getManuallyVerifiedContracts,
   isVerified,
   layer2s,
 } from '@l2beat/config'
@@ -28,17 +27,12 @@ export type ScalingProjectEntry = Awaited<
 >
 
 export async function getScalingProjectEntry(project: ScalingProject) {
-  const [
-    contractsVerificationStatuses,
-    manuallyVerifiedContracts,
-    projectsChangeReport,
-    header,
-  ] = await Promise.all([
-    getContractsVerificationStatuses(project),
-    getManuallyVerifiedContracts(),
-    getProjectsChangeReport(),
-    getHeader(project),
-  ])
+  const [contractsVerificationStatuses, projectsChangeReport, header] =
+    await Promise.all([
+      getContractsVerificationStatuses(project),
+      getProjectsChangeReport(),
+      getHeader(project),
+    ])
 
   const changes = projectsChangeReport.getChanges(project.id)
 
@@ -65,7 +59,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
       project,
       isVerified: isProjectVerified,
       contractsVerificationStatuses,
-      manuallyVerifiedContracts,
       projectsChangeReport,
       rosetteValues,
     })
@@ -100,7 +93,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     isVerified: isProjectVerified,
     rosetteValues,
     isHostChainVerified,
-    manuallyVerifiedContracts,
     projectsChangeReport,
     contractsVerificationStatuses,
     combinedRosetteValues: stackedRosetteValues,

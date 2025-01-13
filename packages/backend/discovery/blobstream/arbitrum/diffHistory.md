@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xdec784644d4c02d5cdca179e038695d5b0d47320
+
+# Diff at Wed, 08 Jan 2025 11:10:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 282615739
+- current block number: 293252435
+
+## Description
+
+Remove relayer1 as it is no longer approved.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.isRelayer1Approved:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 282615739 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      issuedPermissions.4:
+-        {"permission":"upgrade","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}
+      issuedPermissions.3.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.3.target:
+-        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
++        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
+      issuedPermissions.2.target:
+-        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
++        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
+      issuedPermissions.1.target:
+-        "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d"
++        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
+      values.relayers.2:
+-        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.1:
+-        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
++        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.0:
+-        "0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"
++        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
+    }
+```
+
 Generated with discovered.json: 0xc37c9a7827e8491dac4b8ea540fa17c6abe038e5
 
 # Diff at Thu, 19 Dec 2024 11:57:29 GMT:

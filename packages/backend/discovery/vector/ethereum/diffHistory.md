@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x69c3f8489c736f7f92feded9f8328a32067bed91
+
+# Diff at Thu, 09 Jan 2025 06:59:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 21386151
+- current block number: 21585288
+
+## Description
+
+AvailMultisig single signer rotated.
+
+## Watched changes
+
+```diff
+    contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      values.$members.6:
+-        "0xb9274De2305B377b437a9297D6c84eBD69f7aaCE"
++        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+    }
+```
+
 Generated with discovered.json: 0x3623d610bce0f7225855a7008102a289a89e0d0d
 
 # Diff at Thu, 12 Dec 2024 15:07:34 GMT:

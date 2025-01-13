@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   }
 
   revalidatePath('/scaling/summary')
-  revalidatePath('/scaling/tvl')
+  revalidatePath('/scaling/tvs')
   revalidatePath('/scaling/costs')
   revalidatePath('/scaling/archived')
   revalidatePath('/bridges/summary')
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   revalidatePath('/data-availability/summary')
 
   revalidatePath('/scaling/projects/[slug]')
-  revalidatePath('/scaling/projects/[slug]/tvl-breakdown')
+  revalidatePath('/scaling/projects/[slug]/tvs-breakdown')
   revalidatePath('/bridges/projects/[slug]')
   revalidatePath('/data-availability/projects/[layer]/[bridge]')
 

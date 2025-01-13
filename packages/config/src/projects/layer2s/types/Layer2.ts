@@ -6,9 +6,9 @@ import type {
 } from '@l2beat/shared-pure'
 
 import type {
-  DataAvailabilityHistory,
   KnowledgeNugget,
   Milestone,
+  ProjectDataAvailability,
   ScalingProjectConfig,
   ScalingProjectContracts,
   ScalingProjectDisplay,
@@ -46,7 +46,7 @@ export interface Layer2 {
   /** Technical chain configuration */
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
-  dataAvailability?: DataAvailabilityHistory
+  dataAvailability?: ProjectDataAvailability
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
@@ -71,8 +71,6 @@ export interface Layer2 {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: BadgeId[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
 }
 
 export type Layer2Display = ScalingProjectDisplay & {
@@ -118,5 +116,5 @@ export interface WarningWithSentiment {
   /** Content of the warning */
   content: string
   /** Color with which the warning should be displayed */
-  sentiment: Extract<Sentiment, 'bad' | 'warning'>
+  sentiment: Extract<Sentiment, 'bad' | 'warning' | 'neutral'>
 }

@@ -67,13 +67,11 @@ export const eclipse: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.CELESTIA],
-      bridge: DA_BRIDGES.NONE,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.CELESTIA],
+    bridge: DA_BRIDGES.NONE,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,

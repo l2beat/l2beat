@@ -59,7 +59,13 @@ export class RpcUopsAnalyzer {
         return 1
       }
 
-      const operations = method.count(operation.calldata)
+      let operations = []
+      try {
+        operations = method.count(operation.calldata)
+      } catch {
+        return 1
+      }
+
       let count = 0
       for (const operation of operations) {
         const result = countOperationsRecursive(operation, methods)

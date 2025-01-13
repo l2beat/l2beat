@@ -1,8 +1,5 @@
 import { type Bridge } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type ManuallyVerifiedContracts,
-} from '@l2beat/shared-pure'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
@@ -17,7 +14,6 @@ export async function getBridgeProjectDetails(
   bridge: Bridge,
   isVerified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   projectsChangeReport: ProjectsChangeReport,
 ) {
   const permissionsSection = bridge.permissions
@@ -30,7 +26,6 @@ export async function getBridgeProjectDetails(
           nativePermissions: bridge.nativePermissions,
         },
         contractsVerificationStatuses,
-        manuallyVerifiedContracts,
       )
     : undefined
   const contractsSection = bridge.contracts
@@ -45,7 +40,6 @@ export async function getBridgeProjectDetails(
           escrows: bridge.config.escrows,
         },
         contractsVerificationStatuses,
-        manuallyVerifiedContracts,
         projectsChangeReport,
       )
     : undefined
@@ -73,7 +67,7 @@ export async function getBridgeProjectDetails(
       type: 'ChartSection',
       props: {
         id: 'tvl',
-        title: 'Value Locked',
+        title: 'Value Secured',
         projectId: bridge.id,
         tokens: tokens,
         isBridge: true,

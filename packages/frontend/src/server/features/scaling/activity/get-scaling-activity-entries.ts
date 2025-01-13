@@ -5,7 +5,6 @@ import {
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { featureFlags } from '~/consts/feature-flags'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -19,6 +18,7 @@ import {
   type ActivityProjectTableData,
   getActivityTable,
 } from './get-activity-table-data'
+import { compareActivityEntry } from './utils/compare-activity-entry'
 import { getActivityProjects } from './utils/get-activity-projects'
 
 export async function getScalingActivityEntries() {
@@ -39,7 +39,6 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .filter((entry) => entry !== undefined)
     .concat(
       compact([
         getEthereumEntry(ethereumData, 'Rollups'),
@@ -61,7 +60,7 @@ function getScalingProjectActivityEntry(
   project: Layer2 | Layer3,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
-): ScalingActivityEntry | undefined {
+): ScalingActivityEntry {
   return {
     ...getCommonScalingEntry({
       project,
@@ -92,22 +91,4 @@ function getEthereumEntry(
     data,
     statuses: undefined,
   }
-}
-
-function compareActivityEntry(
-  a: ScalingActivityEntry,
-  b: ScalingActivityEntry,
-) {
-  if (featureFlags.stageSorting) {
-    const stageDiff = b.stageOrder - a.stageOrder
-    if (stageDiff !== 0) {
-      return stageDiff
-    }
-  }
-  const diff =
-    (b.data?.uops.pastDayCount ?? 0) - (a.data?.uops.pastDayCount ?? 0)
-  if (diff !== 0) {
-    return diff
-  }
-  return a.name.localeCompare(b.name)
 }

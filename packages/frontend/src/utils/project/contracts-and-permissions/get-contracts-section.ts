@@ -7,14 +7,12 @@ import {
   type ScalingProjectContract,
   type ScalingProjectContracts,
   type ScalingProjectEscrow,
-  isSingleAddress,
   layer2s,
 } from '@l2beat/config'
 import {
   assert,
   type ContractsVerificationStatuses,
   type EthereumAddress,
-  type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { type ProjectSectionProps } from '~/components/projects/sections/types'
@@ -59,7 +57,6 @@ type ContractsSection = Omit<
 export function getContractsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
   if (projectParams.contracts.addresses.length === 0) {
@@ -78,7 +75,6 @@ export function getContractsSection(
       projectParams,
       isUnverified,
       contractsVerificationStatuses,
-      manuallyVerifiedContracts,
       projectChangeReport,
     )
   })
@@ -99,7 +95,6 @@ export function getContractsSection(
               projectParams,
               isUnverified,
               contractsVerificationStatuses,
-              manuallyVerifiedContracts,
               projectChangeReport,
             )
           }),
@@ -124,7 +119,6 @@ export function getContractsSection(
           projectParams,
           isUnverified,
           contractsVerificationStatuses,
-          manuallyVerifiedContracts,
           projectChangeReport,
           true,
         )
@@ -174,14 +168,11 @@ function makeTechnologyContract(
   projectParams: ProjectParams,
   isUnverified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = getChain(projectParams, item)
   const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
-  const manuallyVerifiedContractsForChain =
-    manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
 
   const getAddress = (opts: {
@@ -207,19 +198,7 @@ function makeTechnologyContract(
   let description = item.description
 
   if (isUnverified) {
-    let unverifiedText = ''
-    if (isSingleAddress(item) || item.multipleAddresses.length === 1) {
-      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
-    } else if (
-      areAllAddressesUnverified(
-        item.multipleAddresses,
-        verificationStatusForChain,
-      )
-    ) {
-      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION_ALL
-    } else {
-      unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION_SOME
-    }
+    const unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
 
     if (!description) {
       description = unverifiedText
@@ -241,21 +220,19 @@ function makeTechnologyContract(
     }
   }
 
-  if (isSingleAddress(item)) {
-    const tokens = projectParams.escrows?.find(
-      (x) => x.address === item.address,
-    )?.tokens
-    // if contract is an escrow we already tweak it's name so we don't need to add this
-    if (tokens && !isEscrow) {
-      const tokenText =
-        tokens === '*'
-          ? 'This contract can store any token.'
-          : `This contract stores the following tokens: ${tokens.join(', ')}.`
-      if (!description) {
-        description = tokenText
-      } else {
-        description += ' ' + tokenText
-      }
+  const tokens = projectParams.escrows?.find(
+    (x) => x.address === item.address,
+  )?.tokens
+  // if contract is an escrow we already tweak it's name so we don't need to add this
+  if (tokens && !isEscrow) {
+    const tokenText =
+      tokens === '*'
+        ? 'This contract can store any token.'
+        : `This contract stores the following tokens: ${tokens.join(', ')}.`
+    if (!description) {
+      description = tokenText
+    } else {
+      description += ' ' + tokenText
     }
   }
 
@@ -279,53 +256,30 @@ function makeTechnologyContract(
   )
 
   const additionalReferences: Reference[] = []
-  addresses.forEach((address) => {
-    const manuallyVerified = manuallyVerifiedContractsForChain[address.address]
-    if (manuallyVerified) {
-      additionalReferences.push({
-        text: 'Source code',
-        href: manuallyVerified,
-      })
-    }
-  })
+  const mainAddresses = [getAddress({ address: item.address })]
+  const implementationAddresses =
+    item.upgradeability?.implementations.map((implementation) =>
+      getAddress({ address: implementation }),
+    ) ?? []
 
-  if (isSingleAddress(item)) {
-    const mainAddresses = getContractMainAddresses(item, getAddress)
-    const implementationAddresses =
-      item.upgradeability?.implementations.map((implementation) =>
-        getAddress({ address: implementation }),
-      ) ?? []
-
-    const usedInProjects = getUsedInProjects(
-      projectParams,
-      mainAddresses,
-      implementationAddresses,
-    )
-
-    return {
-      name: item.name,
-      addresses,
-      description,
-      usedInProjects,
-      references: concat(item.references ?? [], additionalReferences),
-      chain,
-      implementationChanged,
-      highSeverityFieldChanged,
-      upgradeableBy: item.upgradableBy,
-      upgradeDelay: item.upgradeDelay,
-      upgradeConsiderations: item.upgradeConsiderations,
-    }
-  }
+  const usedInProjects = getUsedInProjects(
+    projectParams,
+    mainAddresses,
+    implementationAddresses,
+  )
 
   return {
     name: item.name,
     addresses,
     description,
-    usedInProjects: [],
-    references: additionalReferences,
+    usedInProjects,
+    references: concat(item.references ?? [], additionalReferences),
     chain,
     implementationChanged,
     highSeverityFieldChanged,
+    upgradeableBy: item.upgradableBy,
+    upgradeDelay: item.upgradeDelay,
+    upgradeConsiderations: item.upgradeConsiderations,
   }
 }
 
@@ -337,59 +291,35 @@ function getAddresses(
     isAdmin?: boolean
   }) => TechnologyContractAddress,
 ): TechnologyContractAddress[] {
-  const addresses = getContractMainAddresses(contract, getAddress)
+  const addresses = [getAddress({ address: contract.address })]
 
-  if (isSingleAddress(contract)) {
-    const implementations = contract.upgradeability?.implementations ?? []
-    for (const [i, implementation] of implementations.entries()) {
-      const upgradable = !contract.upgradeability?.immutable
-      const upgradeableText = upgradable ? ' (Upgradable)' : ''
-      addresses.push(
-        getAddress({
-          name:
-            implementations.length > 1
-              ? `Implementation #${i + 1}${upgradeableText}`
-              : `Implementation${upgradeableText}`,
-          address: implementation,
-        }),
-      )
-    }
-
-    const admins = contract.upgradeability?.admins ?? []
-    for (const [i, admin] of admins.entries()) {
-      addresses.push(
-        getAddress({
-          name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
-          address: admin,
-          isAdmin: true,
-        }),
-      )
-    }
+  const implementations = contract.upgradeability?.implementations ?? []
+  for (const [i, implementation] of implementations.entries()) {
+    const upgradable = !contract.upgradeability?.immutable
+    const upgradeableText = upgradable ? ' (Upgradable)' : ''
+    addresses.push(
+      getAddress({
+        name:
+          implementations.length > 1
+            ? `Implementation #${i + 1}${upgradeableText}`
+            : `Implementation${upgradeableText}`,
+        address: implementation,
+      }),
+    )
   }
-  return addresses
-}
 
-function getContractMainAddresses(
-  contract: ScalingProjectContract,
-  getAddress: (opts: {
-    address: EthereumAddress
-    name?: string
-    isAdmin?: boolean
-  }) => TechnologyContractAddress,
-): TechnologyContractAddress[] {
-  return isSingleAddress(contract)
-    ? [
-        getAddress({
-          address: contract.address,
-        }),
-      ]
-    : [
-        ...contract.multipleAddresses.map((address) =>
-          getAddress({
-            address: address,
-          }),
-        ),
-      ]
+  const admins = contract.upgradeability?.admins ?? []
+  for (const [i, admin] of admins.entries()) {
+    addresses.push(
+      getAddress({
+        name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
+        address: admin,
+        isAdmin: true,
+      }),
+    )
+  }
+
+  return addresses
 }
 
 function isContractUnverified(
@@ -397,16 +327,9 @@ function isContractUnverified(
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
   const chain = contract.chain ?? 'ethereum'
-  if (isSingleAddress(contract)) {
-    return (
-      contractsVerificationStatuses[chain]?.[contract.address.toString()] ===
-      false
-    )
-  }
-
-  return contract.multipleAddresses.some(
-    (address) =>
-      contractsVerificationStatuses[chain]?.[address.toString()] === false,
+  return (
+    contractsVerificationStatuses[chain]?.[contract.address.toString()] ===
+    false
   )
 }
 
@@ -445,13 +368,4 @@ function moreTokensFirst(a: ScalingProjectEscrow, b: ScalingProjectEscrow) {
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 
   return bTokens - aTokens
-}
-
-function areAllAddressesUnverified(
-  addresses: EthereumAddress[],
-  verificationStatus: Partial<Record<string, boolean>>,
-) {
-  return addresses.every((address) => {
-    return verificationStatus[address.toString()] === false
-  })
 }

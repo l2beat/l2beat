@@ -1,8 +1,8 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 20832964,
-  "configHash": "0x44089e74887a0b7cff4d60e42ec30908ccc4bbda5a190d87b0b495495d3902ab",
+  "blockNumber": 21579520,
+  "configHash": "0x41f7202e7223768d95de7a663ef06fc1542f47bf61b335cdaae8febae517cd75",
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
@@ -55,16 +55,6 @@
       "derivedName": "PolygonDataCommittee"
     },
     {
-      "name": "XLayerVerifier",
-      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-      "sourceHashes": [
-        "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
-      ],
-      "sinceTimestamp": 1711291211,
-      "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier"
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
       "template": "global/ProxyAdmin",
@@ -88,22 +78,27 @@
       "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1711785755,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
         "$pastUpgrades": [
           [
             "2024-03-30T08:02:35.000Z",
             "0x35215d1a6f4ad41bedfbfc481d53b9d508864a6ace025f243264978e1a755f81",
             ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+          ],
+          [
+            "2025-01-07T13:41:23.000Z",
+            "0x9d23f56225d22a2a1b82c2aa6122b1a29896686b30bb1f3def0189043699d46f",
+            ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "admin": "0x491619874b866c3cDB7C8553877da223525ead01",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
@@ -123,7 +118,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x840f76b0a9670a3a164fdb1dd7c3604b272176d7f9fb60bc1dc10169e7804853",
+        "lastAccInputHash": "0xa586790a94da1daa575462b222a666e4eebf9de5ae44275bdbed058e14844e8e",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
@@ -137,7 +132,17 @@
         "trustedSequencer": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
         "trustedSequencerURL": "https://rpc.xlayer.tech"
       },
-      "derivedName": "PolygonValidiumStorageMigration"
+      "derivedName": "PolygonValidiumEtrog"
+    },
+    {
+      "name": "XLayerVerifier",
+      "address": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+      "sourceHashes": [
+        "0x88e9672f9076cd809934d036a15eb65c30e0e253eccbfc4a15962b6580c8fcd3"
+      ],
+      "sinceTimestamp": 1734710375,
+      "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier_13"
     }
   ],
   "eoas": [
@@ -175,14 +180,33 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
+    "0x1e37EA18e9515db29b3E94A00eD31484A3130204": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
+    "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
       "error ExceedMaxVerifyBatches()",
+      "error FinalAccInputHashDoesNotMatch()",
       "error FinalNumBatchBelowLastVerifiedBatch()",
       "error FinalNumBatchDoesNotMatchPendingState()",
       "error FinalPendingStateNumInvalid()",
@@ -206,6 +230,7 @@
       "error InvalidRangeBatchTimeTarget()",
       "error InvalidRangeForceBatchTimeout()",
       "error InvalidRangeMultiplierBatchFee()",
+      "error L1InfoTreeLeafCountInvalid()",
       "error MaxTimestampSequenceInvalid()",
       "error NewAccInputHashDoesNotExist()",
       "error NewPendingStateTimeoutMustBeLower()",
@@ -237,6 +262,7 @@
       "event ForceBatch(uint64 indexed forceBatchNum, bytes32 lastGlobalExitRoot, address sequencer, bytes transactions)",
       "event InitialSequenceBatches(bytes transactions, bytes32 lastGlobalExitRoot, address sequencer)",
       "event Initialized(uint8 version)",
+      "event RollbackBatches(uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
       "event SequenceBatches(uint64 indexed numBatch, bytes32 l1InfoRoot)",
       "event SequenceForceBatches(uint64 indexed numBatch)",
       "event SetDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
@@ -274,7 +300,6 @@
       "function generateInitializeTransaction(uint32 networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, bytes _gasTokenMetadata) view returns (bytes)",
       "function globalExitRootManager() view returns (address)",
       "function initialize(address _admin, address sequencer, uint32 networkID, address _gasTokenAddress, string sequencerURL, string _networkName)",
-      "function initializeMigration()",
       "function isSequenceWithDataAvailabilityAllowed() view returns (bool)",
       "function lastAccInputHash() view returns (bytes32)",
       "function lastForceBatch() view returns (uint64)",
@@ -283,9 +308,10 @@
       "function onVerifyBatches(uint64 lastVerifiedBatch, bytes32 newStateRoot, address aggregator)",
       "function pendingAdmin() view returns (address)",
       "function pol() view returns (address)",
+      "function rollbackBatches(uint64 targetBatch, bytes32 accInputHashToRollback)",
       "function rollupManager() view returns (address)",
-      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)",
-      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase, bytes dataAvailabilityMessage)",
+      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)",
+      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase, bytes dataAvailabilityMessage)",
       "function sequenceForceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches)",
       "function setDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
       "function setForceBatchAddress(address newForceBatchAddress)",
@@ -297,26 +323,8 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x1e37EA18e9515db29b3E94A00eD31484A3130204": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
+    "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB": [
+      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
     "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": [
       "constructor()",

@@ -106,13 +106,11 @@ export const metis: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.MEMO],
-      bridge: DA_BRIDGES.NONE,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.MEMO],
+    bridge: DA_BRIDGES.NONE,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,

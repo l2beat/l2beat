@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
-import { layer2s, layer3s } from '@l2beat/config'
+import { isDiscoveryDriven, layer2s, layer3s } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import {
   Channel,
@@ -266,11 +266,11 @@ export function generateTemplatizedStatus(): string {
     const isFullyTemplatizedL2 = layer2s
       .filter((l2) => l2.display.provider === provider)
       .filter((l2) => !l2.isUpcoming && !l2.isArchived && !l2.isUnderReview)
-      .map((l2) => l2.discoveryDrivenData === true)
+      .map((l2) => isDiscoveryDriven(l2))
     const isFullyTemplatizedL3 = layer3s
       .filter((l3) => l3.display.provider === provider)
       .filter((l3) => !l3.isUpcoming && !l3.isArchived && !l3.isUnderReview)
-      .map((l3) => l3.discoveryDrivenData === true)
+      .map((l3) => isDiscoveryDriven(l3))
     const isFullyTemplatized = isFullyTemplatizedL2.concat(isFullyTemplatizedL3)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length

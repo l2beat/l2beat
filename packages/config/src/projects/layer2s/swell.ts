@@ -203,7 +203,7 @@ export const swell: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       minTimestamp: new UnixTime(1732701647),
       genesisTimestamp: new UnixTime(1732696703),
       l2BlockTimeSeconds: 2,
@@ -239,13 +239,11 @@ export const swell: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: (() => {
       assert(
@@ -323,7 +321,7 @@ export const swell: Layer2 = {
     },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
           text: 'Sequencing Window - OP Mainnet Specs',
