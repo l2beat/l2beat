@@ -18,6 +18,7 @@
     --surface-secondary: 230deg 13.6% 91.4%;
     --surface-tertiary: 223deg 15.9% 82.7%;
     --surface-table-group: 230deg 21.4% 94.5%;
+    --surface-header: 0deg 0% 100%;
     --icon-secondary: 222deg 8.21% 40.6%;
     --overlay: 231deg 30.4% 13.5% / 60%;
     --divider: 223deg 15.9% 82.7%;
@@ -42,6 +43,7 @@
     --surface-secondary: 222deg 8.06% 24.3%;
     --surface-tertiary: 220deg 7.89% 29.8%;
     --surface-table-group: 222deg 16% 15.9%;
+    --surface-header: 225deg 14.8% 10.6%;
     --icon-secondary: 222deg 8.21% 40.6%;
     --overlay: 0deg 0% 0% / 60%;
     --divider: 226deg 14.3% 28.8%;

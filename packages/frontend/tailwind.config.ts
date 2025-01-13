@@ -181,6 +181,7 @@ const config: Config = {
       'surface-secondary': 'hsl(var(--surface-secondary))',
       'surface-tertiary': 'hsl(var(--surface-tertiary))',
       'surface-table-group': 'hsl(var(--surface-table-group))',
+      'surface-header': 'hsl(var(--surface-header))',
       'icon-secondary': 'hsl(var(--icon-secondary))',
       overlay: 'hsl(var(--overlay))',
       divider: 'hsl(var(--divider))',
