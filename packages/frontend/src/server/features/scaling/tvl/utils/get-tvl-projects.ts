@@ -85,7 +85,6 @@ export function getTvlProjects(
     .filter(
       (project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.projectId),
     )
-  console.log(projects.filter((p) => filter(p)))
 
   const tvlAmounts = getTvlAmountsConfig(backendProjects)
   const tvlAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
