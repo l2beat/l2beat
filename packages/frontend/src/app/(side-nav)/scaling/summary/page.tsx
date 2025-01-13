@@ -1,7 +1,7 @@
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
 import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
-import { PrimaryCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
+import { PrimaryCard } from '~/components/primary-card'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'

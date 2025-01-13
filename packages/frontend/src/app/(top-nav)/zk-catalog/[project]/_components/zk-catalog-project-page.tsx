@@ -11,13 +11,13 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { CustomLink } from '~/components/link/custom-link'
 import { Markdown } from '~/components/markdown/markdown'
+import { PrimaryCard } from '~/components/primary-card'
 import { InfoIcon } from '~/icons/info'
 import { type ZkCatalogProofVerification } from '../../_utils/types'
 import { ProjectHeader } from './project-header'
 import { RequiredTools } from './required-tools'
 import { VerifiedCountWithDetails } from './verified-count-with-details'
 import { Verifiers } from './verifiers'
-import { PrimaryCard } from '~/components/main-page-card'
 
 export interface ZkCatalogProjectPageProps {
   details: ZkCatalogProjectDetails
