@@ -34,14 +34,14 @@ export function MobileProjectNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="flex justify-center bg-surface-primary"
+      className="flex justify-center bg-surface-header"
     >
       <div className="flex items-center">
         <a
           href="#"
           ref={isSummarySection ? selectedItem : undefined}
           className={cn(
-            'whitespace-nowrap p-4 text-xs transition-colors',
+            'whitespace-nowrap border-b border-divider p-4 text-xs transition-colors',
             isSummarySection && 'border-b-2 border-current text-brand',
           )}
         >
@@ -58,7 +58,7 @@ export function MobileProjectNavigation({ sections }: Props) {
               ref={selected ? selectedItem : undefined}
               href={`#${section.id}`}
               className={cn(
-                'whitespace-nowrap p-4 text-xs transition-colors',
+                'whitespace-nowrap border-b border-divider p-4 text-xs transition-colors',
                 selected && 'border-b-2 border-current text-brand',
               )}
             >
