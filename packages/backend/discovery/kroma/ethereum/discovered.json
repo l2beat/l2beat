@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21141582,
-  "configHash": "0x6c2712ac1d4fef52bb9881f83a79190df0d538e581aaa885af6ddb9fd2f6a9f2",
+  "configHash": "0x8306cca6df0128b8f1deddcef59957bfdbf980c11692808977427ab75ed0e0a5",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -1248,10 +1248,18 @@
     {
       "name": "Poseidon2",
       "address": "0xFd234971881a7c72965175fA8E438c97B2Dcd273",
-      "unverified": true,
+      "sourceHashes": [
+        "0xa3600b2900d8b1fef0f3e6e58b0a56f5639eee39776eb2d7bce841b245fdf288"
+      ],
       "sinceTimestamp": 1693288007,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js"
+        }
+      ]
     },
     {
       "name": "ValidatorPool",

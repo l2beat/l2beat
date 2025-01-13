@@ -2,15 +2,9 @@ import {
   type DaBridge,
   type ScalingProjectPermission,
   type ScalingProjectPermissionedAccount,
-  type ScalingProjectReference,
 } from '@l2beat/config'
 import { type UsedInProject as ConfigUsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
-import {
-  type ContractsVerificationStatuses,
-  type ManuallyVerifiedContracts,
-  notUndefined,
-} from '@l2beat/shared-pure'
-import { concat } from 'lodash'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import { type MultichainPermissionsSectionProps } from '~/components/projects/sections/permissions/multichain-permissions-section'
 import { type UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
@@ -40,7 +34,6 @@ type PermissionSection = Omit<
 export function getMultichainPermissionsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): PermissionSection | undefined {
   const hasAnyPermissions =
     Object.values(projectParams.permissions).flat().length > 0
@@ -77,7 +70,6 @@ export function getMultichainPermissionsSection(
                 projectParams,
                 p,
                 contractsVerificationStatuses,
-                manuallyVerifiedContracts,
               ),
             ),
           ]
@@ -127,12 +119,9 @@ function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ScalingProjectPermission,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): TechnologyContract[] {
   const chain = permission.chain ?? 'ethereum'
   const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
-  const manuallyVerifiedContractsForChain =
-    manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
@@ -175,24 +164,10 @@ function toTechnologyContract(
       ? `${permission.name} (${permission.accounts.length})`
       : permission.name
 
-  const manuallyVerifiedReferences: ScalingProjectReference[] = addresses
-    .map((address) => {
-      const manuallyVerified =
-        manuallyVerifiedContractsForChain[address.address]
-      if (!manuallyVerified) {
-        return
-      }
-      return {
-        text: 'Source code',
-        href: manuallyVerified,
-      }
-    })
-    .filter(notUndefined)
-
   const references =
     permission.participants === undefined && permission.references
-      ? concat(permission.references, manuallyVerifiedReferences)
-      : manuallyVerifiedReferences
+      ? permission.references
+      : []
 
   const participants = permission.participants?.map((account) => {
     const name = resolvePermissionedName(
