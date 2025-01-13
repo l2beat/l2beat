@@ -7,6 +7,7 @@ import {
   type DacDaLayer,
   type IntegratedDacBridge,
   type NoDaBridge,
+  type NoDacBridge,
   type OnChainDaBridge,
   type StandaloneDacBridge,
 } from '@l2beat/config'
@@ -18,6 +19,7 @@ type Bridge =
   | OnChainDaBridge
   | StandaloneDacBridge
   | IntegratedDacBridge
+  | NoDacBridge
 
 export function getDaRisks(
   daLayer: Layer,
@@ -48,7 +50,7 @@ export function getDaLayerRisks(
 
 export function getDaBridgeRisks(daBridge: Bridge) {
   return {
-    isNoBridge: daBridge.type === 'NoBridge',
+    isNoBridge: daBridge.type === 'NoBridge' || daBridge.type === 'NoDacBridge',
     relayerFailure: daBridge.risks.relayerFailure,
     upgradeability: daBridge.risks.upgradeability,
     committeeSecurity: daBridge.risks.committeeSecurity,

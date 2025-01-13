@@ -41,29 +41,35 @@ export function getRegularDaProjectSections({
   projectsChangeReport,
   evaluatedGrissiniValues,
 }: RegularDetailsParams) {
-  const permissionsSection = getMultichainPermissionsSection(
-    {
-      id: daLayer.id,
-      bridge: daBridge,
-      isUnderReview: !!daLayer.isUnderReview,
-      permissions: daBridge.permissions,
-    },
-    contractsVerificationStatuses,
-    manuallyVerifiedContracts,
-  )
+  const permissionsSection =
+    daBridge.type === 'NoBridge'
+      ? undefined
+      : getMultichainPermissionsSection(
+          {
+            id: daLayer.id,
+            bridge: daBridge,
+            isUnderReview: !!daLayer.isUnderReview,
+            permissions: daBridge.permissions,
+          },
+          contractsVerificationStatuses,
+          manuallyVerifiedContracts,
+        )
 
-  const contractsSection = getMultiChainContractsSection(
-    {
-      id: daBridge.id,
-      isVerified,
-      slug: daBridge.display.slug,
-      contracts: daBridge.contracts,
-      isUnderReview: daLayer.isUnderReview,
-    },
-    contractsVerificationStatuses,
-    manuallyVerifiedContracts,
-    projectsChangeReport,
-  )
+  const contractsSection =
+    daBridge.type === 'NoBridge'
+      ? undefined
+      : getMultiChainContractsSection(
+          {
+            id: daBridge.id,
+            isVerified,
+            slug: daBridge.display.slug,
+            contracts: daBridge.contracts,
+            isUnderReview: daLayer.isUnderReview,
+          },
+          contractsVerificationStatuses,
+          manuallyVerifiedContracts,
+          projectsChangeReport,
+        )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,

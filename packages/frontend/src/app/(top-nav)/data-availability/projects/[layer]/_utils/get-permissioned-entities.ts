@@ -1,6 +1,10 @@
-import { type DaBridge, type IntegratedDacBridge } from '@l2beat/config'
+import {
+  type DaBridge,
+  type IntegratedDacBridge,
+  type NoDacBridge,
+} from '@l2beat/config'
 export function getPermissionedEntities(
-  bridge: DaBridge | IntegratedDacBridge,
+  bridge: DaBridge | IntegratedDacBridge | NoDacBridge,
 ) {
   if (
     bridge.type === 'IntegratedDacBridge' ||

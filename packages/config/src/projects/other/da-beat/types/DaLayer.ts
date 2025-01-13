@@ -4,6 +4,7 @@ import {
   EnshrinedBridge,
   IntegratedDacBridge,
   NoDaBridge,
+  NoDacBridge,
   OnChainDaBridge,
   StandaloneDacBridge,
 } from './DaBridge'
@@ -54,7 +55,7 @@ export type EthereumDaLayer = CommonDaLayer & {
 
 export type DacDaLayer = Omit<CommonDaLayer, 'id'> & {
   kind: 'DAC' | 'No DAC'
-  bridge: IntegratedDacBridge | NoDaBridge
+  bridge: IntegratedDacBridge | NoDacBridge
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
   /** Fallback */
