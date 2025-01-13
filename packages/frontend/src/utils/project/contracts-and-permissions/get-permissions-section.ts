@@ -5,6 +5,7 @@ import {
   type Layer3,
   type ScalingProjectPermission,
   type ScalingProjectPermissionedAccount,
+  type ScalingProjectReference,
 } from '@l2beat/config'
 import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
@@ -179,11 +180,6 @@ function toTechnologyContract(
       ? `${permission.name} (${permission.accounts.length})`
       : permission.name
 
-  const references =
-    permission.participants === undefined && permission.references
-      ? permission.references
-      : []
-
   const participants = permission.participants?.map((account) => {
     const name = resolvePermissionedName(
       permission.name,
@@ -208,7 +204,7 @@ function toTechnologyContract(
       chain,
       description: permission.description,
       participants,
-      references,
+      references: permission.references ?? [],
       implementationChanged: false,
       highSeverityFieldChanged: false,
     },

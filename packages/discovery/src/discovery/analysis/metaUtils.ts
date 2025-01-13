@@ -4,7 +4,6 @@ import {
   ContractFieldSeverity,
   ContractValue,
   ContractValueType,
-  ExternalReference,
   StackCategory,
   get$Admins,
   get$Implementations,
@@ -13,6 +12,7 @@ import { uniqBy } from 'lodash'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContractField,
+  ExternalReference,
   PermissionConfiguration,
   RawPermissionConfiguration,
 } from '../config/RawDiscoveryConfig'

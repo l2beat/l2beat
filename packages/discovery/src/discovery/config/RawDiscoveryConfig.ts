@@ -76,6 +76,12 @@ export const DiscoveryCustomType = z
     path: ['typeCaster'],
   })
 
+export type ExternalReference = z.infer<typeof ExternalReference>
+export const ExternalReference = z.object({
+  text: z.string(),
+  href: z.string(),
+})
+
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
@@ -94,6 +100,7 @@ export const DiscoveryContract = z.object({
   methods: z.optional(z.record(z.string(), z.string())),
   types: z.optional(z.record(z.string(), DiscoveryCustomType)),
   manualSourcePaths: z.optional(z.record(z.string())),
+  references: z.optional(z.array(ExternalReference)),
 })
 
 export type GlobalTypes = z.infer<typeof GlobalTypes>
