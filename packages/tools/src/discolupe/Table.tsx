@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 import { NavLink } from 'react-router'
+import { ColumnSelector } from './ColumnSelector'
 import { FilterButton } from './FilterButton'
 import { AVAILABLE_COLUMNS, ColumnId, LupeColumn } from './columns'
 import { DiscoLupeProject } from './data'
@@ -37,7 +38,8 @@ export interface TableProps {
 }
 
 export function Table({ projects, sort }: TableProps) {
-  const selectedColumns = AVAILABLE_COLUMNS
+  const [selectedColumns, setSelectedColumns] =
+    useState<LupeColumn[]>(AVAILABLE_COLUMNS)
   const defaultFilterState = Object.fromEntries(
     selectedColumns.map((c) => [c.id, undefined]),
   ) as ColumnFilter
@@ -48,6 +50,13 @@ export function Table({ projects, sort }: TableProps) {
 
   return (
     <div>
+      <ColumnSelector
+        available={AVAILABLE_COLUMNS}
+        selected={selectedColumns}
+        onChange={(newSelection: LupeColumn[]) =>
+          setSelectedColumns(newSelection)
+        }
+      />
       <div className="py-4">
         <button
           onClick={() => setFilter(defaultFilterState)}
