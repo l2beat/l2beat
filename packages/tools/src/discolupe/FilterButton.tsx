@@ -1,10 +1,11 @@
+import clsx from 'clsx'
 import Popover from './Popover'
 import { FilterIcon } from './icons/FilterIcon'
 
 export interface FilterButtonProps {
   values: string[]
-  selected: string[]
-  onValueChange: (selectedValues: string[]) => void
+  selected: string[] | undefined
+  onValueChange: (selectedValues: string[] | undefined) => void
 }
 
 export function FilterButton({
@@ -12,7 +13,6 @@ export function FilterButton({
   selected,
   onValueChange,
 }: FilterButtonProps) {
-  console.log(values, selected)
   return (
     <Popover
       content={
@@ -23,7 +23,12 @@ export function FilterButton({
         />
       }
     >
-      <FilterIcon className="stroke-2 stroke-white" />
+      <FilterIcon
+        className={clsx(
+          selected !== undefined ? 'stroke-blue-500' : 'stroke-white',
+          'stroke-2',
+        )}
+      />
     </Popover>
   )
 }
@@ -43,14 +48,14 @@ function SelectionContent({
           Clear
         </button>
         <button
-          onClick={() => onValueChange(values)}
+          onClick={() => onValueChange(undefined)}
           className="h-8 w-16 rounded bg-zinc-700 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
         >
           All
         </button>
       </div>
       <select
-        className="w-full"
+        className="w-full appearance-none rounded bg-zinc-700 p-2 text-white focus:outline-none focus:ring-2 focus:ring-orange-400"
         multiple
         onChange={(event) => {
           const selectedValues = Array.from(event.target.selectedOptions).map(
@@ -60,7 +65,11 @@ function SelectionContent({
         }}
       >
         {values.map((v) => (
-          <option key={v} selected={selected.includes(v)}>
+          <option
+            className="border-b"
+            key={v}
+            selected={(selected ?? []).includes(v)}
+          >
             {v}
           </option>
         ))}

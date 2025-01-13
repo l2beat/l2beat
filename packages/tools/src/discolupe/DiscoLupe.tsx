@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router'
 import { SortDirection, Table } from './Table'
+import { ColumnId } from './columns'
 import { DiscoLupeProject, fetchData } from './data'
 
 export interface Props {
@@ -25,7 +26,7 @@ export function DiscoLupe() {
   }
 
   const sort = {
-    byColumnId: searchParams.get('sort') ?? 'qx',
+    byColumnId: (searchParams.get('sort') ?? 'qx') as ColumnId,
     direction: (searchParams.get('dir') as SortDirection) ?? 'asc',
   }
 

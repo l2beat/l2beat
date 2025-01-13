@@ -4,15 +4,17 @@ import { ProjectName } from './ProjectName'
 import { DiscoLupeProject } from './data'
 import { formatCurrencyExactValue } from './utils'
 
+export type ColumnId = (typeof AVAILABLE_COLUMNS_RAW)[number]['id']
+
 export interface LupeColumn {
   header: string
-  id: string
+  id: ColumnId
   fn: (project: DiscoLupeProject) => string
   displayFn: (project: DiscoLupeProject, str: string) => ReactElement
   align: 'right' | 'left'
 }
 
-export const AVAILABLE_COLUMNS: LupeColumn[] = [
+const AVAILABLE_COLUMNS_RAW = [
   {
     header: 'Name',
     align: 'left',
@@ -64,4 +66,7 @@ export const AVAILABLE_COLUMNS: LupeColumn[] = [
       project.milestones && project.milestones.length > 0 ? '✅' : '❌',
     displayFn: DivContainer,
   },
-]
+] as const
+
+export const AVAILABLE_COLUMNS =
+  AVAILABLE_COLUMNS_RAW as unknown as LupeColumn[]

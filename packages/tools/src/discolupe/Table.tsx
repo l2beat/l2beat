@@ -2,19 +2,32 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { NavLink } from 'react-router'
 import { FilterButton } from './FilterButton'
-import { AVAILABLE_COLUMNS, LupeColumn } from './columns'
+import { AVAILABLE_COLUMNS, ColumnId, LupeColumn } from './columns'
 import { DiscoLupeProject } from './data'
 import { SortingArrowIcon } from './icons/SortingArrowIcon'
+
+interface Matrix {
+  rowCount: number
+  projects: DiscoLupeProject[]
+  columns: Column[]
+}
+
+type ColumnFilter = Record<ColumnId, string[] | undefined>
 
 interface Row {
   project: DiscoLupeProject
   columns: string[]
 }
 
+interface Column {
+  config: LupeColumn
+  values: string[]
+}
+
 export type SortDirection = 'asc' | 'desc'
 
 export interface SortConfig {
-  byColumnId: string
+  byColumnId: ColumnId
   direction: SortDirection
 }
 
@@ -24,97 +37,135 @@ export interface TableProps {
 }
 
 export function Table({ projects, sort }: TableProps) {
-  const [filterState, setFilterState] = useState<Record<string, string[]>>({})
   const selectedColumns = AVAILABLE_COLUMNS
+  const defaultFilterState = Object.fromEntries(
+    selectedColumns.map((c) => [c.id, undefined]),
+  ) as ColumnFilter
+  const [filter, setFilter] = useState<ColumnFilter>(defaultFilterState)
 
-  const rows = getRows(
-    projects,
-    selectedColumns,
-    sort.byColumnId,
-    sort.direction,
-  )
-  const filteredRows = filterRows(selectedColumns, rows, filterState)
+  const matrix = toMatrix(projects, selectedColumns)
+  const visibleRows = toVisibleRows(matrix, sort, filter)
 
   return (
-    <table className="table-auto border-collapse">
-      <thead className="bg-gray-100">
-        <tr>
-          {selectedColumns.map((c, j) => (
-            <th
-              key={c.header}
-              className="whitespace-nowrap bg-black px-4 py-2 text-left font-semibold text-base text-orange-300"
-            >
-              <div className="flex flex-row">
-                <FilterButton
-                  values={[...new Set(rows.map((r) => r.columns[j] ?? ''))]}
-                  selected={filterState[c.id] ?? []}
-                  onValueChange={(values: string[]) => {
-                    setFilterState((filterState) => {
-                      return {
-                        ...filterState,
-                        [c.id]: values,
-                      }
-                    })
-                  }}
-                />
-                <NavLink
-                  to={`?sort=${c.id}&dir=${getSortDirection(c.id, sort.byColumnId, sort.direction)}`}
-                  className="hover:text-orange-500"
-                >
-                  {c.header.charAt(0).toUpperCase() + c.header.slice(1)}
-                  <span className="ml-2 inline-block align-middle text-gray-500">
-                    {getSortIcon(c.id, sort.byColumnId, sort.direction)}
-                  </span>
-                </NavLink>
-              </div>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {filteredRows.map((row, i) => {
-          return (
-            <tr
-              key={row.project.id.toString()}
-              className={clsx(
-                'border-gray-400 border-y',
-                i % 2 === 1 ? 'bg-gray-600' : 'bg-gray-800',
-              )}
-            >
-              {row.columns.map((c, j) => (
-                <td
-                  key={j}
-                  className={clsx(
-                    'whitespace-nowrap px-4 py-1 text-gray-200',
-                    selectedColumns[j]?.align === 'left'
-                      ? 'text-left'
-                      : 'text-right',
-                  )}
-                >
-                  {selectedColumns[j]?.displayFn(row.project, c)}
-                </td>
-              ))}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
+    <div>
+      <div className="py-4">
+        <button
+          onClick={() => setFilter(defaultFilterState)}
+          className="rounded bg-zinc-700 px-4 py-2 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
+        >
+          Reset all filters
+        </button>
+      </div>
+      <table className="table-auto border-collapse">
+        <thead className="bg-gray-100">
+          <tr>
+            {matrix.columns.map((c) => (
+              <th
+                key={c.config.header}
+                className="whitespace-nowrap bg-black px-4 py-2 text-left font-semibold text-base text-orange-300"
+              >
+                <div className="flex flex-row">
+                  <FilterButton
+                    values={[...new Set(c.values)]}
+                    selected={filter[c.config.id]}
+                    onValueChange={(values: string[] | undefined) => {
+                      setFilter((filterState) => {
+                        return { ...filterState, [c.config.id]: values }
+                      })
+                    }}
+                  />
+                  <NavLink
+                    to={`?sort=${c.config.id}&dir=${getSortDirection(c.config.id, sort.byColumnId, sort.direction)}`}
+                    className="hover:text-orange-500"
+                  >
+                    {c.config.header}
+                    <span className="ml-2 inline-block align-middle text-gray-500">
+                      {getSortIcon(
+                        c.config.id,
+                        sort.byColumnId,
+                        sort.direction,
+                      )}
+                    </span>
+                  </NavLink>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {visibleRows.map((row, i) => {
+            return (
+              <tr
+                key={row.project.id.toString()}
+                className={clsx(
+                  'border-gray-400 border-y',
+                  i % 2 === 1 ? 'bg-gray-600' : 'bg-gray-800',
+                )}
+              >
+                {row.columns.map((c, j) => (
+                  <td
+                    key={j}
+                    className={clsx(
+                      'whitespace-nowrap px-4 py-1 text-gray-200',
+                      selectedColumns[j]?.align === 'left'
+                        ? 'text-left'
+                        : 'text-right',
+                    )}
+                  >
+                    {selectedColumns[j]?.displayFn(row.project, c)}
+                  </td>
+                ))}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
   )
 }
 
-function filterRows(
-  selectedColumns: LupeColumn[],
-  rows: Row[],
-  filter: Record<string, string[]>,
+function toVisibleRows(
+  matrix: Matrix,
+  sort: SortConfig,
+  filter: ColumnFilter,
 ): Row[] {
+  let rows: Row[] = matrix.projects.map((project) => ({
+    project,
+    columns: [],
+  }))
+
+  for (const column of matrix.columns) {
+    for (const [rowIndex, value] of column.values.entries()) {
+      rows[rowIndex]?.columns.push(value)
+    }
+  }
+
+  const columnConfigs = matrix.columns.map((c) => c.config)
+  const columnIndex = columnIDToIndex(columnConfigs, sort.byColumnId)
+
+  rows.sort((r1, r2) => {
+    if (
+      r1.columns[columnIndex] === undefined ||
+      r2.columns[columnIndex] === undefined
+    ) {
+      return 0
+    }
+
+    return r1.columns[columnIndex].localeCompare(r2.columns[columnIndex])
+  })
+
+  if (sort.direction === 'desc') {
+    rows = rows.reverse()
+  }
+
   return rows.filter((r) => {
     for (const columnID in filter) {
-      const filterValues = filter[columnID]
+      const filterValues = filter[columnID as keyof ColumnFilter]
       if (filterValues === undefined) {
         continue
       }
 
-      const index = columnIDToIndex(selectedColumns, columnID)
+      const index = columnIDToIndex(columnConfigs, columnID)
       const value = r.columns[index]
       if (value === undefined) {
         console.error(`Expected to find a column value at index ${index}`)
@@ -134,36 +185,25 @@ function columnIDToIndex(columns: LupeColumn[], columnId: string): number {
   return columns.findIndex((c) => c.id === columnId)
 }
 
-function getRows(
+function toMatrix(
   projects: DiscoLupeProject[],
   selectedColumns: LupeColumn[],
-  sortColumn: string | undefined,
-  sortDirection: SortDirection,
-): Row[] {
-  let rows: Row[] = projects.map((l2) => ({
-    project: l2,
-    columns: selectedColumns.map((c) => c.fn(l2)),
-  }))
-
-  if (sortColumn) {
-    const columnIndex = columnIDToIndex(selectedColumns, sortColumn)
-    rows.sort((r1, r2) => {
-      if (
-        r1.columns[columnIndex] === undefined ||
-        r2.columns[columnIndex] === undefined
-      ) {
-        return 0
-      }
-
-      return r1.columns[columnIndex].localeCompare(r2.columns[columnIndex])
-    })
-
-    if (sortDirection === 'desc') {
-      rows = rows.reverse()
-    }
+): Matrix {
+  const result: Matrix = {
+    rowCount: projects.length,
+    projects,
+    columns: [],
   }
 
-  return rows
+  for (const columnConfiguration of selectedColumns) {
+    const column: Column = {
+      config: columnConfiguration,
+      values: projects.map((p) => columnConfiguration.fn(p)),
+    }
+    result.columns.push(column)
+  }
+
+  return result
 }
 
 function getSortDirection(
