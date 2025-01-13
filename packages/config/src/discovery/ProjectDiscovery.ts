@@ -590,6 +590,7 @@ export class ProjectDiscovery {
         },
       ],
       chain: this.chain,
+      references: contract.references,
       description,
     }
   }
@@ -959,7 +960,7 @@ export class ProjectDiscovery {
           ...this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
-            undefined,
+            contract.references,
             true,
           ),
         )

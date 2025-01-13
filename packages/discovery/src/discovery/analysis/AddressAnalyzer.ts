@@ -10,6 +10,7 @@ import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContractField,
   DiscoveryCustomType,
+  ExternalReference,
 } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
@@ -47,6 +48,7 @@ export interface AnalyzedContract {
   targetsMeta?: Record<string, ContractMeta>
   combinedMeta?: ContractMeta
   usedTypes?: DiscoveryCustomType[]
+  references?: ExternalReference[]
 }
 
 export interface ExtendedTemplate {
@@ -213,6 +215,7 @@ export class AddressAnalyzer {
       sourceBundles: sources.sources,
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
+      references: overrides?.references,
       relatives,
       usedTypes,
     }
