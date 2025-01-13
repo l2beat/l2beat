@@ -5,7 +5,7 @@ interface Props {
   className?: string
 }
 
-export function MainPageCard({ children, className }: Props) {
+export function PrimaryCard({ children, className }: Props) {
   return (
     <div
       className={cn(

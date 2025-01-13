@@ -17,6 +17,7 @@ import { ProjectHeader } from './project-header'
 import { RequiredTools } from './required-tools'
 import { VerifiedCountWithDetails } from './verified-count-with-details'
 import { Verifiers } from './verifiers'
+import { PrimaryCard } from '~/components/main-page-card'
 
 export interface ZkCatalogProjectPageProps {
   details: ZkCatalogProjectDetails
@@ -147,9 +148,9 @@ function HeaderItem({
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section>
+    <PrimaryCard>
       <h2 className="mb-4 text-2xl font-bold">{title}</h2>
       {children}
-    </section>
+    </PrimaryCard>
   )
 }

@@ -1,4 +1,4 @@
-import { MainPageCard } from '~/components/main-page-card'
+import { PrimaryCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -18,9 +18,9 @@ export default async function Page() {
     <BridgesFilterContextProvider>
       <MainPageHeader>Archived</MainPageHeader>
       <BridgesMvpWarning className="md:mb-3" sidebar />
-      <MainPageCard>
+      <PrimaryCard>
         <BridgesArchivedTable entries={entries} />
-      </MainPageCard>
+      </PrimaryCard>
     </BridgesFilterContextProvider>
   )
 }

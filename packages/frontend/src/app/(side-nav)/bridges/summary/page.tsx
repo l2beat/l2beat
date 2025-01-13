@@ -1,5 +1,5 @@
 import { BridgesTvlChart } from '~/components/chart/tvl/bridges-tvl-chart'
-import { MainPageCard } from '~/components/main-page-card'
+import { PrimaryCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
@@ -30,12 +30,12 @@ export default async function Page() {
         <BridgesFilterContextProvider>
           <MainPageHeader>Summary</MainPageHeader>
           <BridgesMvpWarning className="md:mb-3" sidebar />
-          <MainPageCard>
+          <PrimaryCard>
             <BridgesTvlChart />
-          </MainPageCard>
-          <MainPageCard className="md:mt-6">
+          </PrimaryCard>
+          <PrimaryCard className="md:mt-6">
             <BridgesSummaryTable entries={entries} />
-          </MainPageCard>
+          </PrimaryCard>
         </BridgesFilterContextProvider>
       </HydrateClient>
     </>
