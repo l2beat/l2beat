@@ -7,7 +7,8 @@
     "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8": "OPSuccinctL2OutputOracle",
     "0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743": "PermissionedDisputeGame",
     "0xB6846927447e4764acd53b0b354BEd939f9220d7": "FaultDisputeGame",
-    "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44": "PreimageOracle"
+    "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44": "PreimageOracle",
+    "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SuccinctGateway"
   },
   "overrides": {
     "OPSuccinctL2OutputOracle": {
@@ -34,6 +35,17 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ]
+    },
+    "SuccinctGateway": {
+      "fields": {
+        "opSuccinctVerifier": {
+          "handler": {
+            "type": "call",
+            "method": "routes",
+            "args": ["0x11b6a09d"] // 0x11b6a09d is first 4 bytes of the proposed output proofs
+          }
+        }
+      }
     },
     "PermissionedDisputeGame": {
       "ignoreMethods": [

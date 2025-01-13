@@ -131,9 +131,14 @@ export const phala: Layer2 = {
       risks: [],
     },
     dataAvailability: {
-      name: 'Data is posted on chain',
-      description: 'All transaction data is posted on Ethereum.',
-      references: [],
+      name: 'All data required for proofs is published on chain',
+      description: 'All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.',
+      references: [
+        {
+          href: 'https://etherscan.io/address/0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b',
+          text: 'BatchInbox - Etherscan address',
+        },
+      ],
       risks: [],
     },
     operator: {
@@ -153,13 +158,9 @@ export const phala: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('OPSuccinctL2OutputOracle', {
-        description: 'L2 Output Oracle.',
-      }),
-    ],
+    addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
-  permissions: [],
+  permissions: discovery.getDiscoveredPermissions(),
   milestones: [],
 }

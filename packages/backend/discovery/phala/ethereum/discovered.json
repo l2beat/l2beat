@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 21615263,
-  "configHash": "0x9264a759033aaaed6cb7848ee7bd953fa0c3454165128f5c1ec4035c130ef9b7",
+  "blockNumber": 21616417,
+  "configHash": "0x613a28f471d646bed706659c7350b7b5149931cdaeddce38779040d358d620bc",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -162,7 +162,7 @@
       }
     },
     {
-      "name": "SP1VerifierGateway",
+      "name": "SuccinctGateway",
       "address": "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
@@ -183,6 +183,10 @@
         "oldVerifier2": ["0x0000000000000000000000000000000000000000", false],
         "oldVerifier3": ["0xE780809121774D06aD9B0EEeC620fF4B3913Ced1", false],
         "oldVerifier4": ["0x0000000000000000000000000000000000000000", false],
+        "opSuccinctVerifier": [
+          "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",
+          false
+        ],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
         "verifier": ["0x0000000000000000000000000000000000000000", false]
       },
@@ -202,7 +206,8 @@
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
-      }
+      },
+      "derivedName": "SP1VerifierGateway"
     },
     {
       "name": "GnosisSafe",
@@ -604,6 +609,19 @@
       }
     },
     {
+      "name": "SP1Verifier",
+      "address": "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",
+      "sourceHashes": [
+        "0x5ebb775f2803d074da1b09f713044da7c8b74dd951913810947e8560b3a45845"
+      ],
+      "sinceTimestamp": 1735950131,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x11b6a09d63d255ad425ee3a7f6211d5ec63fbde9805b40551c3136275b6f4eb4",
+        "VERSION": "v4.0.0-rc.3"
+      }
+    },
+    {
       "name": "OPSuccinctL2OutputOracle",
       "address": "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8",
       "sourceHashes": [
@@ -655,10 +673,10 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 233700,
-        "latestOutputIndex": 100,
-        "nextBlockNumber": 238020,
-        "nextOutputIndex": 101,
+        "latestBlockNumber": 238050,
+        "latestOutputIndex": 101,
+        "nextBlockNumber": 242370,
+        "nextOutputIndex": 102,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
@@ -1486,6 +1504,19 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xAb427Bb4125C36688A5a6ec7b1cA0A3A1A15E0c2": [
       "constructor()",

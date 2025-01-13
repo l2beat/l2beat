@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7822d1c49009a97637585ddd545bccffce17b93d
+Generated with discovered.json: 0xc88fdec01b872d161402abe5067732a94dcd7804
 
-# Diff at Mon, 13 Jan 2025 11:29:00 GMT:
+# Diff at Mon, 13 Jan 2025 15:20:30 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@e1b12bb19ec99630a70e16cb0a9fafd125bdff06 block: 21586240
-- current block number: 21615263
+- current block number: 21616417
 
 ## Description
 
@@ -31,11 +31,28 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21586240 (main branch discovery), not current.
 
 ```diff
+    contract SuccinctGateway (0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      name:
+-        "SP1VerifierGateway"
++        "SuccinctGateway"
+      values.opSuccinctVerifier:
++        ["0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",false]
+    }
+```
+
+```diff
     contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
     +++ description: None
       values.additionalProposers:
 +        ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"]
     }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xf403cc7f6e4417f0cf53bf159056fb905ed9ab0e
