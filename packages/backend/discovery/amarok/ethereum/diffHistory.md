@@ -578,7 +578,7 @@ Generated with discovered.json: 0x8bff205d514a54237007fec22c001f4543d064c7
 
 ## Description
 
-Optimistic mode reactivated. Messages are now now passed via offchain relayers and optimistically accepted onchain.
+Optimistic mode reactivated. Messages are now passed via offchain relayers and optimistically accepted onchain.
 
 ## Watched changes
 

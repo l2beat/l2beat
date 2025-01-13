@@ -401,7 +401,7 @@
 
 ### Patch Changes
 
-- Fix array handler undetermistic indices
+- Fix array handler undeterministic indices
 
 ## 0.25.0
 
@@ -620,7 +620,7 @@
 
 ### Minor Changes
 
-- Etherscan like clients can now configure unsuppoted methods
+- Etherscan like clients can now configure unsupported methods
 
 ## 0.11.0
 
@@ -644,7 +644,7 @@
 
 ### Minor Changes
 
-- Enable rateLimiting for provider witch cache
+- Enable rateLimiting for provider with cache
 
 ## 0.7.1
 

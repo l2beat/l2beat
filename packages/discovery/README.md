@@ -540,7 +540,7 @@ Downloads events emitted (`event LogNewGovernorAccepted(address acceptedGovernor
 **Examples:**
 
 Assumes there is a function `function starknetIsGovernor(address user) view returns (bool)` in the abi.
-Collect all the events and check if the address emitted in each event when given as a argument to this function returns true.
+Collect all the events and check if the address emitted in each event when given as an argument to this function returns true.
 If it does, add it to the result
 
 ```json
