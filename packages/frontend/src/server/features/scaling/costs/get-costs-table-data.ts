@@ -21,7 +21,7 @@ export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 
 export const getCachedCostsTableData = cache(
   async (timeRange: CostsTimeRange) => {
-    const projects = getCostsProjects()
+    const projects = getCostsProjects().filter((p) => !p.isArchived)
     const projectsCosts = await getCostsForProjects(projects, timeRange)
     const projectsActivity = await getLatestActivityForProjects(
       projects,

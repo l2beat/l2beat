@@ -1,7 +1,11 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import {
+  useScalingFilter,
+  useScalingFilterValues,
+} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -14,6 +18,7 @@ import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { type ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
@@ -24,14 +29,17 @@ import { ChartProvider } from '../core/chart-provider'
 import { type ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
-import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import {
+  type ActivityChartType,
+  useActivityChartRenderParams,
+} from './use-activity-chart-render-params'
 import { typeToIndicator } from './utils/get-chart-type'
 
 interface Props {
   milestones: Milestone[]
   entries: ScalingActivityEntry[]
   hideScalingFactor?: boolean
-  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+  type: ActivityChartType
 }
 
 export function ActivityChart({
@@ -43,6 +51,7 @@ export function ActivityChart({
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
   const includeFilter = useScalingFilter()
+  const filter = useScalingFilterValues()
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvl-scale',
     'lin',
@@ -53,17 +62,21 @@ export function ActivityChart({
     true,
   )
 
-  const filter = {
-    type: 'projects' as const,
-    projectIds: entries.filter(includeFilter).map((project) => project.id),
-  }
+  const chartFilter: ActivityProjectFilter = filter.isEmpty
+    ? {
+        type: typeToChartFilterType(type),
+      }
+    : {
+        type: 'projects',
+        projectIds: entries.filter(includeFilter).map((project) => project.id),
+      }
 
   const { data: stats } = api.activity.chartStats.useQuery({
-    filter,
+    filter: chartFilter,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
-    filter,
+    filter: chartFilter,
   })
 
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
@@ -87,7 +100,10 @@ export function ActivityChart({
           {...data}
           showEthereum={showMainnet}
           metric={metric}
-          singleProject={filter.projectIds?.length === 1}
+          singleProject={
+            chartFilter.type === 'projects' &&
+            chartFilter.projectIds?.length === 1
+          }
           type={type}
         />
       )}
@@ -187,4 +203,19 @@ function Controls({
       />
     </ChartControlsWrapper>
   )
+}
+
+function typeToChartFilterType(
+  type: ActivityChartType,
+): Exclude<ActivityProjectFilter['type'], 'all' | 'projects'> {
+  switch (type) {
+    case 'Rollups':
+      return 'rollups'
+    case 'ValidiumsAndOptimiums':
+      return 'validiumsAndOptimiums'
+    case 'Others':
+      return 'others'
+    default:
+      assertUnreachable(type)
+  }
 }
