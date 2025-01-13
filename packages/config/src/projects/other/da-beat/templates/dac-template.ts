@@ -1,7 +1,9 @@
 import {
+  DaBridgeRisks,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
+  DaLayerRisks,
   DaUpgradeabilityRisk,
   DacDaLayer,
   IntegratedDacBridge,
@@ -10,13 +12,19 @@ import { DaLinks } from '../types/DaLinks'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 
 type TemplateSpecific = {
-  /** Project DAC is associated with */
-  project: string
+  /** DAC display settings */
+  display: {
+    /** Preferably parent project name */
+    name: string
+    /** Preferably parent project slug */
+    slug: string
+    description?: string
+  }
 }
 
 type Optionals = {
   /** Overwrite some of the risks, check defaults below */
-  risks?: Partial<DacDaLayer['risks'] & IntegratedDacBridge['risks']>
+  risks?: Partial<DaLayerRisks & DaBridgeRisks>
   /** Links for given DAC, defaults to Project's main links */
   links?: Partial<DaLinks>
   /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
@@ -45,7 +53,7 @@ type Optionals = {
   fallback?: DacDaLayer['fallback']
 }
 
-type TemplateVars = Optionals & TemplateSpecific
+export type DacTemplateVars = Optionals & TemplateSpecific
 
 /**
  * Template function for DA-BEAT DACs.
@@ -53,9 +61,9 @@ type TemplateVars = Optionals & TemplateSpecific
  * creating DA-LAYER and DA-BRIDGE without the need to manually
  * duplicate code and files.
  */
-export function DAC(template: TemplateVars): DacDaLayer {
+export function DAC(template: DacTemplateVars): DacDaLayer {
   // Common
-  const name = `${template.project} DAC`
+  const name = `${template.display.name} DAC`
 
   // "Bridge" backfill for DAC
   const bridgeTechnology =
@@ -97,8 +105,10 @@ export function DAC(template: TemplateVars): DacDaLayer {
   const dacLayer: DacDaLayer = {
     display: {
       name: name,
-      slug: template.project,
-      description: '',
+      slug: template.display.slug,
+      description:
+        template.display.description ??
+        'Set of parties responsible for signing and attesting to the availability of data.',
     },
     kind: 'DAC',
     type: 'DaLayer',
@@ -106,8 +116,8 @@ export function DAC(template: TemplateVars): DacDaLayer {
     fallback: template.fallback,
     challengeMechanism: template.challengeMechanism,
     technology: {
+      ...template.layer?.technology,
       description: layerTechnology,
-      risks: template.layer?.technology?.risks,
     },
     bridge: dacBridge,
     risks: {
