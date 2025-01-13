@@ -69,7 +69,7 @@ function Header() {
   return (
     <FullPageHeader>
       <h1 className="w-full text-left text-5xl font-bold md:text-6xl">
-        About L2BEAT
+        About Us
       </h1>
     </FullPageHeader>
   )
