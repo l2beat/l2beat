@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { NavLink, useSearchParams } from 'react-router'
-import { SortingArrowIcon } from './SortingArrowIcon'
+import { SortingArrowIcon } from './icons/SortingArrowIcon'
 import { DiscoLupeProject, fetchData } from './data'
 import { AVAILABLE_COLUMNS, LupeColumn } from './columns'
+import { FilterButton } from './FilterButton'
+import { useState } from 'react'
 
 export type SortDirection = 'asc' | 'desc'
 export interface Props {
@@ -21,6 +23,7 @@ export function divContainer(_: DiscoLupeProject, str: string) {
 }
 
 export function DiscoLupe() {
+  const [filterState, setFilterState] = useState<Record<string, string[]>>({})
   const result = useQuery({
     queryKey: ['discolupe-data'],
     queryFn: fetchData,
@@ -43,32 +46,47 @@ export function DiscoLupe() {
 
   const projects = result.data.data.projects
   const rows = getRows(projects, selectedColumns, sortBy, direction)
+  const filteredRows = filterRows(selectedColumns, rows, filterState)
 
   return (
-    <div className="overflow-x-scroll">
+    <div className="h-full overflow-x-scroll">
       <table className="table-auto border-collapse">
         <thead className="bg-gray-100">
           <tr>
-            {selectedColumns.map((c) => (
+            {selectedColumns.map((c, j) => (
               <th
                 key={c.header}
                 className="whitespace-nowrap bg-black px-4 py-2 text-left font-semibold text-base text-orange-300"
               >
-                <NavLink
-                  to={`?sort=${c.id}&dir=${getSortDirection(c.id, sortBy, direction)}`}
-                  className="hover:text-orange-500"
-                >
-                  {c.header.charAt(0).toUpperCase() + c.header.slice(1)}
-                  <span className="ml-2 inline-block align-middle text-gray-500">
-                    {getSortIcon(c.id, sortBy, direction)}
-                  </span>
-                </NavLink>
+                <div className="flex flex-row">
+                  <FilterButton
+                    values={[...new Set(rows.map((r) => r.columns[j] ?? ''))]}
+                    selected={filterState[c.id] ?? []}
+                    onValueChange={(values: string[]) => {
+                      setFilterState((filterState) => {
+                        return {
+                          ...filterState,
+                          [c.id]: values,
+                        }
+                      })
+                    }}
+                  />
+                  <NavLink
+                    to={`?sort=${c.id}&dir=${getSortDirection(c.id, sortBy, direction)}`}
+                    className="hover:text-orange-500"
+                  >
+                    {c.header.charAt(0).toUpperCase() + c.header.slice(1)}
+                    <span className="ml-2 inline-block align-middle text-gray-500">
+                      {getSortIcon(c.id, sortBy, direction)}
+                    </span>
+                  </NavLink>
+                </div>
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => {
+          {filteredRows.map((row, i) => {
             return (
               <tr
                 key={row.project.id.toString()}
@@ -81,8 +99,10 @@ export function DiscoLupe() {
                   <td
                     key={j}
                     className={clsx(
-                        'whitespace-nowrap px-4 py-1 text-gray-200',
-                        selectedColumns[j]?.align === 'left' ? 'text-left' : 'text-right'
+                      'whitespace-nowrap px-4 py-1 text-gray-200',
+                      selectedColumns[j]?.align === 'left'
+                        ? 'text-left'
+                        : 'text-right',
                     )}
                   >
                     {selectedColumns[j]?.displayFn(row.project, c)}
@@ -95,6 +115,34 @@ export function DiscoLupe() {
       </table>
     </div>
   )
+}
+
+function filterRows(
+  selectedColumns: LupeColumn[],
+  rows: Row[],
+  filter: Record<string, string[]>,
+): Row[] {
+  return rows.filter((r) => {
+    for (const columnID in filter) {
+      const filterValues = filter[columnID]
+      if (filterValues === undefined) {
+        continue
+      }
+
+      const index = columnIDToIndex(selectedColumns, columnID)
+      const value = r.columns[index]
+      if (value === undefined) {
+        console.error(`Expected to find a column value at index ${index}`)
+        continue
+      }
+
+      if (!filterValues.includes(value)) {
+        return false
+      }
+    }
+
+    return true
+  })
 }
 
 function columnIDToIndex(columns: LupeColumn[], columnId: string): number {
