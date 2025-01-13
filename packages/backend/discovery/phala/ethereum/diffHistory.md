@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x0db5ced69225be32ffdcb9363f7e8dabe8409ea6
+Generated with discovered.json: 0x7822d1c49009a97637585ddd545bccffce17b93d
+
+# Diff at Mon, 13 Jan 2025 11:29:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@e1b12bb19ec99630a70e16cb0a9fafd125bdff06 block: 21586240
+- current block number: 21615263
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: None
+      values.aggregationVkey:
+-        "0x00d4e72bc998d0528b0722a53bedd9c6f0143c9157af194ad4bb2502e37a496f"
++        "0x001758559af75612b9d16de030ed47309d7d28fadd3839a3addaa78d2d4e2754"
+      values.rangeVkeyCommitment:
+-        "0x33e3678015df481724af3aac49d000923caeec277027610b1490f857769f9459"
++        "0x39979c7850d2d3f00c30b29a503c80e245af53ce02a1202518ae0d3c1f8691d0"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21586240 (main branch discovery), not current.
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: None
+      values.additionalProposers:
++        ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"]
+    }
+```
+
+Generated with discovered.json: 0xf403cc7f6e4417f0cf53bf159056fb905ed9ab0e
 
 # Diff at Thu, 09 Jan 2025 10:11:31 GMT:
 

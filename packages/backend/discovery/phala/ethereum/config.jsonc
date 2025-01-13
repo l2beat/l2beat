@@ -11,6 +11,16 @@
   },
   "overrides": {
     "OPSuccinctL2OutputOracle": {
+      "fields": {
+        "additionalProposers": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ProposerUpdated",
+            "valueKey": "proposer",
+            "flagKey": "added"
+          }
+        }
+      },
       "ignoreMethods": [
         "computeL2Timestamp",
         "getL2Output",
