@@ -1,4 +1,4 @@
-import { DaBridge, DacDaLayer } from '../types'
+import { DaBridge, DaUpgradeabilityRisk, DacDaLayer } from '../types'
 import { DaTechnology } from '../types/DaTechnology'
 import { DAC, DacTemplateVars } from './dac-template'
 
@@ -62,6 +62,10 @@ export function AnytrustDAC(template: DacTemplateVars): DacDaLayer {
     bridge: {
       ...template.bridge,
       technology: anytrustBridgeTechnology,
+    },
+    risks: {
+      upgradeability:
+        template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(),
     },
   })
 }

@@ -2,10 +2,17 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
+import { DacTransactionDataType } from '../other/da-beat/types'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ebichain')
+
+const { membersCount, requiredSignatures } = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
 
 export const ebichain: Layer2 = orbitStackL2({
   discovery,
@@ -42,4 +49,16 @@ export const ebichain: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   discoveryDrivenData: true,
+  dataAvailabilitySolution: AnytrustDAC({
+    display: {
+      name: 'Ebi Chain',
+      slug: 'ebichain',
+    },
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignatures,
+      membersCount: membersCount,
+      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    },
+  }),
 })

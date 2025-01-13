@@ -6,9 +6,16 @@ import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
+import { DacTransactionDataType } from '../other/da-beat/types'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('degen', 'base')
+
+const { membersCount, requiredSignatures } = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
 
 export const degen: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
@@ -92,4 +99,16 @@ export const degen: Layer3 = orbitStackL3({
       type: 'incident',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    display: {
+      name: 'Degen Chain',
+      slug: 'degen',
+    },
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z,
+      requiredMembers: requiredSignatures,
+      membersCount: membersCount,
+      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    },
+  }),
 })

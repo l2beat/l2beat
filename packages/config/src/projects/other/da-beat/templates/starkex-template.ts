@@ -1,10 +1,4 @@
-import {
-  DaBridgeRisks,
-  DaCommitteeSecurityRisk,
-  DaTechnology,
-  DaUpgradeabilityRisk,
-  DacDaLayer,
-} from '../types'
+import { DaTechnology, DaUpgradeabilityRisk, DacDaLayer } from '../types'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { DAC, DacTemplateVars } from './dac-template'
 
@@ -27,9 +21,7 @@ export function StarkexDAC(template: DacTemplateVars): DacDaLayer {
     ],
   }
 
-  const bridgeRisks: DaBridgeRisks = {
-    committeeSecurity:
-      template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
+  const bridgeRisks = {
     upgradeability:
       template.risks?.upgradeability ??
       DaUpgradeabilityRisk.ImmutableNoSecurity,

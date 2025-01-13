@@ -1,11 +1,4 @@
-import {
-  DaBridgeRisks,
-  DaCommitteeSecurityRisk,
-  DaTechnology,
-  DaUpgradeabilityRisk,
-  DacDaLayer,
-} from '../types'
-import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
+import { DaTechnology, DaUpgradeabilityRisk, DacDaLayer } from '../types'
 import { DAC, DacTemplateVars } from './dac-template'
 
 export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
@@ -31,13 +24,9 @@ export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
     ],
   }
 
-  const bridgeRisks: DaBridgeRisks = {
-    committeeSecurity:
-      template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
+  const bridgeRisks = {
     upgradeability:
       template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(0),
-    relayerFailure:
-      template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
   }
 
   const layerTechnology: DaTechnology = {
