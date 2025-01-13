@@ -23,7 +23,7 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group flex gap-6 rounded-md bg-surface-secondary transition-all hover:bg-surface-tertiary',
+        'group flex gap-6 rounded-md bg-surface-primary transition-all hover:bg-surface-secondary',
         orientation === 'vertical' && 'max-w-96 flex-col',
         props.className,
       )}
