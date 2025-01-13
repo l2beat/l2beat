@@ -79,7 +79,7 @@ export function SubVerifiersTable({ verifier, className }: Props) {
           {verifier.subVerifiers.map((sV) => (
             <tr
               className="h-8 border-b border-gray-200 text-sm *:pr-3 last:border-none dark:border-zinc-700"
-              key={`${sV.proofSystem}-${sV.trustedSetup}`}
+              key={`${sV.name}-${sV.proofSystem}-${sV.trustedSetup}`}
             >
               <td>{sV.name}</td>
               <td>{sV.proofSystem}</td>
