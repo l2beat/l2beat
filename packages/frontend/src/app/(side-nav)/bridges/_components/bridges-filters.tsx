@@ -28,14 +28,12 @@ export function BridgesFilters({ entries }: Props) {
             options={validatedByOptions}
             value={filter.validatedBy}
             onValueChange={(validatedBy) => filter.set({ validatedBy })}
-            insidePrimaryCard
           />
           <TableFilter
             title="Type"
             options={typeOptions}
             value={filter.type}
             onValueChange={(type) => filter.set({ type })}
-            insidePrimaryCard
           />
         </div>
       </div>

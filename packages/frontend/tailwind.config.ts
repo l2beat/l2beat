@@ -301,6 +301,7 @@ const config: Config = {
   plugins: [
     plugin((creator) => {
       creator.addVariant('primary-card', '.primary-card &')
+      creator.addUtilities({ '.primary-card': {} })
     }),
     tailwindcssAnimate,
     containerQueries,
