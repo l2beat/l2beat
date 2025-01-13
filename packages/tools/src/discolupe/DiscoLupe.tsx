@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { ReactElement } from 'react'
 import { NavLink, useSearchParams } from 'react-router'
 import { SortingArrowIcon } from './SortingArrowIcon'
 import { DiscoLupeProject, fetchData } from './data'
+import { AVAILABLE_COLUMNS, LupeColumn } from './columns'
 
 export type SortDirection = 'asc' | 'desc'
 export interface Props {
@@ -11,77 +11,14 @@ export interface Props {
   projects: DiscoLupeProject[]
 }
 
-interface LupeColumn {
-  header: string
-  id: string
-  fn: (project: DiscoLupeProject) => string
-  displayFn: (project: DiscoLupeProject, str: string) => ReactElement
-  align: 'right' | 'left'
-}
-
 interface Row {
   project: DiscoLupeProject
   columns: string[]
 }
 
-function divContainer(_: DiscoLupeProject, str: string) {
+export function divContainer(_: DiscoLupeProject, str: string) {
   return <div>{str}</div>
 }
-
-const CONFIGURED_HEADERS: LupeColumn[] = [
-  {
-    header: 'Name',
-    align: 'left',
-    id: 'qx',
-    fn: (project: DiscoLupeProject) => project.display.name,
-    displayFn: (project: DiscoLupeProject, str: string) => {
-      return (
-        <div>
-          <img
-            src={`https://raw.githubusercontent.com/l2beat/l2beat/refs/heads/main/packages/frontend/public/icons/${project.display.slug}.png`}
-            alt={project.display.name}
-            width={20}
-            height={20}
-            className="mr-2 inline-block"
-          />
-          <p className="inline-block">{str}</p>
-        </div>
-      )
-    },
-  },
-  {
-    header: 'TVL',
-    id: 'ig',
-    align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      formatCurrencyExactValue(project.tvl, 'usd'),
-    displayFn: divContainer,
-  },
-  {
-    header: 'Permissions',
-    id: 'td',
-    align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      project.arePermissionsDiscoveryDriven ? '✅' : '❌',
-    displayFn: divContainer,
-  },
-  {
-    header: 'Smart contracts',
-    id: 'i9',
-    align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      project.areContractsDiscoveryDriven ? '✅' : '❌',
-    displayFn: divContainer,
-  },
-  {
-    header: 'Milestones & Incidents',
-    id: 'vl',
-    align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      project.milestones && project.milestones.length > 0 ? '✅' : '❌',
-    displayFn: divContainer,
-  },
-]
 
 export function DiscoLupe() {
   const result = useQuery({
@@ -99,7 +36,7 @@ export function DiscoLupe() {
     return <div>{`Error... ${result.error}`}</div>
   }
 
-  const selectedColumns = CONFIGURED_HEADERS
+  const selectedColumns = AVAILABLE_COLUMNS
 
   const sortBy = searchParams.get('sort') ?? 'qx'
   const direction = (searchParams.get('dir') as SortDirection) ?? 'asc'
@@ -219,37 +156,4 @@ function getSortIcon(column: string, sortBy: string, direction: SortDirection) {
   ) : (
     <SortingArrowIcon className="rotate-180" />
   )
-}
-
-export function formatCurrencyExactValue(value: number, currency: string) {
-  const string =
-    currency === 'usd' || currency === 'USD'
-      ? value.toFixed(2)
-      : formatCrypto(value)
-  const [integer, decimal = ''] = string.split('.')
-  const formatted = formatInteger(integer ?? 0)
-  return formatted + (decimal && `.${decimal}`)
-}
-
-function formatCrypto(value: number) {
-  if (value < 1) {
-    return value.toFixed(6)
-  } else if (value < 100) {
-    return value.toFixed(3)
-  } else {
-    return value.toFixed(2)
-  }
-}
-
-function formatInteger(integer: number | string): string {
-  const value = integer.toString()
-  if (value.startsWith('-')) {
-    return '-' + formatInteger(value.substring(1))
-  }
-  const count = value.length / 3
-  const resultValue = value.split('')
-  for (let i = 1; i < count; i++) {
-    resultValue.splice(-4 * i + 1, 0, ',')
-  }
-  return resultValue.join('')
 }
