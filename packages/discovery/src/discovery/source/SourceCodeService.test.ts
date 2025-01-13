@@ -175,4 +175,75 @@ describe(SourceCodeService.name, () => {
       ],
     })
   })
+
+  it('single manually verified contract', async () => {
+    const provider = mockObject<IProvider>({
+      getSource: mockFn(),
+    })
+    provider.getSource.resolvesToOnce(FOO_METADATA)
+
+    const service = new SourceCodeService()
+
+    const result = await service.getSources(provider, FOO_ADDRESS, [], {
+      [FOO_ADDRESS]: 'LINK_TO_SOURCE_CODE',
+    })
+
+    expect(result).toEqual({
+      abi: [],
+      abis: {},
+      isVerified: true,
+      name: 'Foo',
+      sources: [
+        {
+          hash: '0xebfdc649af5aa73605ac6eae403d0f4d855f2674bdee881b0f5f77a49dcf843e',
+          name: 'Foo',
+          address: FOO_ADDRESS,
+          source: FOO_METADATA,
+        },
+      ],
+    })
+  })
+
+  it('manually verified implementation', async () => {
+    const provider = mockObject<IProvider>({
+      getSource: mockFn(),
+    })
+    provider.getSource.resolvesToOnce(BAR_METADATA).resolvesToOnce(FOO_METADATA)
+
+    const service = new SourceCodeService()
+
+    const result = await service.getSources(
+      provider,
+      BAR_ADDRESS,
+      [FOO_ADDRESS],
+      {
+        [FOO_ADDRESS]: 'LINK_TO_SOURCE_CODE',
+      },
+    )
+
+    expect(result).toEqual({
+      abi: ['function bar()'],
+      abis: {
+        [BAR_ADDRESS.toString()]: ['function bar()'],
+      },
+      isVerified: true,
+      name: 'Foo',
+      sources: [
+        {
+          hash: Hash256(
+            '0xec81a410d9701878fa4bffb9afa6a6602c33e540e61ea2442a7f72a2795c01c2',
+          ),
+          name: 'Bar',
+          address: BAR_ADDRESS,
+          source: BAR_METADATA,
+        },
+        {
+          hash: '0xebfdc649af5aa73605ac6eae403d0f4d855f2674bdee881b0f5f77a49dcf843e',
+          name: 'Foo',
+          address: FOO_ADDRESS,
+          source: FOO_METADATA,
+        },
+      ],
+    })
+  })
 })
