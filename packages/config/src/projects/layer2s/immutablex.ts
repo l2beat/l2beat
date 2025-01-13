@@ -31,6 +31,12 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
+import { StarkexDAC } from '../other/da-beat/templates/starkex-template'
+import {
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
+  DacTransactionDataType,
+} from '../other/da-beat/types'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -55,6 +61,12 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 )
 
 const committee = getCommittee(discovery)
+
+const requiredHonestMembersPercentage = (
+  ((committee.accounts.length - committee.minSigners + 1) /
+    committee.accounts.length) *
+  100
+).toFixed(0)
 
 export const immutablex: Layer2 = {
   type: 'layer2',
@@ -209,4 +221,66 @@ export const immutablex: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    display: {
+      name: 'Immutable X',
+      slug: 'immutablex',
+    },
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: committee.minSigners,
+      membersCount: committee.accounts.length,
+      transactionDataType: DacTransactionDataType.StateDiffs,
+      knownMembers: [
+        {
+          external: false,
+          name: 'Immutable',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'StarkWare',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Deversifi',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Consensys',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Nethermind',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Iqlusion',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Infura',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Cephalopod',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+      ],
+    },
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+      committeeSecurity:
+        DaCommitteeSecurityRisk.NoHonestMinimumCommitteeSecurity(
+          `${committee.minSigners}/${committee.accounts.length}`,
+          requiredHonestMembersPercentage,
+        ),
+    },
+  }),
 }
