@@ -154,7 +154,11 @@ export async function NavLayout({
         {!legacyNav && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileNavbar {...{ groups, logoLink }} />
+        <MobileNavbar
+          groups={groups}
+          logoLink={logoLink}
+          legacyNav={!!legacyNav}
+        />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
