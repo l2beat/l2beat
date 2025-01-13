@@ -62,7 +62,7 @@ export function RegularDaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="border-divider max-md:border-b max-md:bg-surface-primary max-md:px-4"
+      className="border-divider max-md:border-b max-md:bg-surface-header max-md:px-4"
     >
       <header className="space-y-4 pt-6 max-md:pb-4 md:space-y-3">
         <ProjectHeader title={project.name} slug={project.slug} />
@@ -108,7 +108,7 @@ export function RegularDaProjectSummary({ project }: Props) {
 
             <div className="flex flex-col">
               <div>
-                <div className="-mx-4 border-y border-gray-200 px-4 dark:border-zinc-700 md:hidden">
+                <div className="-mx-4 border-y border-divider px-4 md:hidden">
                   <MobileProjectLinks projectLinks={project.header.links} />
                 </div>
               </div>
@@ -281,7 +281,7 @@ function RadioButtonLikeIcon({ selected }: { selected: boolean }) {
     <div
       className={cn(
         'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
-        selected ? 'border-brand' : 'border-gray-400',
+        selected ? 'border-brand' : 'border-divider',
       )}
     >
       {selected ? <div className="size-3 rounded-full bg-brand"></div> : null}
