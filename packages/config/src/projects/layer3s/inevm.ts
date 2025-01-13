@@ -5,16 +5,9 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
-import { DacTransactionDataType } from '../other/da-beat/types'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('inevm', 'arbitrum')
-
-const dac = discovery.getContractValue<{
-  membersCount: number
-  requiredSignatures: number
-}>('SequencerInbox', 'dacKeyset')
-const { membersCount, requiredSignatures } = dac
 
 export const inevm: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
@@ -66,15 +59,9 @@ export const inevm: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   dataAvailabilitySolution: AnytrustDAC({
-    display: {
-      name: 'inEVM',
-      slug: 'inevm',
-    },
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: requiredSignatures,
-      membersCount: membersCount,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
     },
+    discovery,
   }),
 })

@@ -82,7 +82,6 @@ export const gmnetwork: Layer2 = opStackL2({
     kind: 'No DAC',
     display: {
       name: 'GM Network DA',
-      slug: 'gmnetworkda',
       description:
         'GM Network DA is a data availability solution using data availability challenges (DA Challenges).',
     },

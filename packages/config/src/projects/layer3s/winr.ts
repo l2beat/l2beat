@@ -5,15 +5,8 @@ import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from '../layer3s'
 import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
-import { DacTransactionDataType } from '../other/da-beat/types'
 
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
-
-const dac = discovery.getContractValue<{
-  membersCount: number
-  requiredSignatures: number
-}>('SequencerInbox', 'dacKeyset')
-const { membersCount, requiredSignatures } = dac
 
 export const winr: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
@@ -173,15 +166,9 @@ export const winr: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   discoveryDrivenData: true,
   dataAvailabilitySolution: AnytrustDAC({
-    display: {
-      name: 'WINR',
-      slug: 'winr',
-    },
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: requiredSignatures,
-      membersCount: membersCount,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
     },
+    discovery,
   }),
 })

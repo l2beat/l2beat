@@ -13,11 +13,7 @@ import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 
 type TemplateSpecific = {
   /** DAC display settings */
-  display: {
-    /** Preferably parent project name */
-    name: string
-    /** Preferably parent project slug */
-    slug: string
+  display?: {
     description?: string
   }
 }
@@ -33,7 +29,7 @@ type Optionals = {
     otherConsiderations?: DacDaLayer['otherConsiderations']
   }
   /**
-   * Optional layer description and technology, defaults to generic ones
+   * Optional bridge technology, defaults to generic ones
    */
   bridge: {
     technology?: IntegratedDacBridge['technology']
@@ -62,9 +58,6 @@ export type DacTemplateVars = Optionals & TemplateSpecific
  * duplicate code and files.
  */
 export function DAC(template: DacTemplateVars): DacDaLayer {
-  // Common
-  const name = `${template.display.name} DAC`
-
   // "Bridge" backfill for DAC
   const bridgeTechnology =
     template.bridge.technology?.description ??
@@ -104,10 +97,8 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
 
   const dacLayer: DacDaLayer = {
     display: {
-      name: name,
-      slug: template.display.slug,
       description:
-        template.display.description ??
+        template.display?.description ??
         'Set of parties responsible for signing and attesting to the availability of data.',
     },
     kind: 'DAC',

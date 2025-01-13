@@ -3,17 +3,10 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
-import { DacTransactionDataType } from '../other/da-beat/types'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('oevnetwork')
-
-const dac = discovery.getContractValue<{
-  membersCount: number
-  requiredSignatures: number
-}>('SequencerInbox', 'dacKeyset')
-const { membersCount, requiredSignatures } = dac
 
 export const oev: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
@@ -52,15 +45,9 @@ export const oev: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   dataAvailabilitySolution: AnytrustDAC({
-    display: {
-      name: 'OEV Network',
-      slug: 'oev',
-    },
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: requiredSignatures,
-      membersCount: membersCount,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
     },
+    discovery,
   }),
 })

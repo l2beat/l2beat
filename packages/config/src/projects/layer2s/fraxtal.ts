@@ -104,7 +104,6 @@ export const fraxtal: Layer2 = opStackL2({
     kind: 'No DAC',
     display: {
       name: 'FraxtalDA',
-      slug: 'FraxtalDA',
       description:
         'FraxtalDA is a custom data availability solution built by the Fraxtal team.',
     },

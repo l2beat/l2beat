@@ -80,7 +80,6 @@ export const automata: Layer2 = opStackL2({
     kind: 'No DAC',
     display: {
       name: 'Automata DA',
-      slug: 'automata-da',
       description:
         'Automata DA is a data availability solution using data availability challenges (DA Challenges).',
     },

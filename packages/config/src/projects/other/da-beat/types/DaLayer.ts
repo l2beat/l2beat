@@ -53,7 +53,12 @@ export type EthereumDaLayer = CommonDaLayer & {
   economicSecurity?: DaEconomicSecurity
 }
 
-export type DacDaLayer = Omit<CommonDaLayer, 'id'> & {
+export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
+  display?: {
+    // Rest will be linked dynamically from scaling
+    description?: string
+    name?: string
+  }
   kind: 'DAC' | 'No DAC'
   bridge: IntegratedDacBridge | NoDacBridge
   /** Risks associated with the data availability layer. */

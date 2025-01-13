@@ -181,10 +181,6 @@ export const wirex: Layer2 = polygonCDKStack({
   ],
   knowledgeNuggets: [],
   dataAvailabilitySolution: PolygoncdkDAC({
-    display: {
-      name: 'Pay Chain',
-      slug: 'wirex',
-    },
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,

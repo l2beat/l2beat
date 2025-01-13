@@ -45,7 +45,6 @@ const requiredStakeFormatted = parseFloat(
 const mantleDataAvailabilitySolution: DacDaLayer = {
   display: {
     name: 'Mantle DA',
-    slug: 'mantleda',
     description:
       'Mantle DA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
   },

@@ -4,16 +4,9 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
-import { DacTransactionDataType } from '../other/da-beat/types'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('molten', 'arbitrum')
-
-const dac = discovery.getContractValue<{
-  membersCount: number
-  requiredSignatures: number
-}>('SequencerInbox', 'dacKeyset')
-const { membersCount, requiredSignatures } = dac
 
 export const molten: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1716471996), // 2024-05-23T13:46:36Z
@@ -69,15 +62,9 @@ export const molten: Layer3 = orbitStackL3({
     }),
   ],
   dataAvailabilitySolution: AnytrustDAC({
-    display: {
-      name: 'Molten',
-      slug: 'molten',
-    },
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: requiredSignatures,
-      membersCount: membersCount,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
     },
+    discovery,
   }),
 })

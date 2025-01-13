@@ -75,7 +75,6 @@ export const xterio: Layer2 = opStackL2({
     kind: 'No DAC',
     display: {
       name: 'XterioDA',
-      slug: 'xterioda',
       description:
         'XterioDA is a data availability solution using data availability challenges (DA Challenges).',
     },

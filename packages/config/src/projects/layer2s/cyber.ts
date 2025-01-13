@@ -103,7 +103,6 @@ export const cyber: Layer2 = opStackL2({
     kind: 'No DAC',
     display: {
       name: 'CyberDA',
-      slug: 'cyberda',
       description:
         'CyberDA is a data availability solution using data availability challenges (DA Challenges).',
     },

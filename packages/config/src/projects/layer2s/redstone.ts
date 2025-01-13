@@ -75,7 +75,6 @@ export const redstone: Layer2 = opStackL2({
     kind: 'No DAC',
     display: {
       name: 'RedstoneDA',
-      slug: 'redstone-da',
       description:
         'RedstoneDA is a data availability solution using data availability challenges (DA Challenges).',
     },

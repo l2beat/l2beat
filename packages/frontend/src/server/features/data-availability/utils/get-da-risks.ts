@@ -1,6 +1,7 @@
 import {
   type BlockchainDaLayer,
   type DaBridgeRisks,
+  DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaLayerRisks,
   type DaServiceDaLayer,
@@ -49,11 +50,13 @@ export function getDaLayerRisks(
 }
 
 export function getDaBridgeRisks(daBridge: Bridge) {
+  const committeeSecurity = getCommitteeSecurity(daBridge)
+
   return {
     isNoBridge: daBridge.type === 'NoBridge' || daBridge.type === 'NoDacBridge',
     relayerFailure: daBridge.risks.relayerFailure,
     upgradeability: daBridge.risks.upgradeability,
-    committeeSecurity: daBridge.risks.committeeSecurity,
+    committeeSecurity,
   }
 }
 
@@ -88,4 +91,48 @@ function adjustSentiment(totalValueSecured: number, slashableFunds: number) {
   if (slashableFunds > totalValueSecured / 3) return 'warning'
   // If economic security < 1/3 of total value secured -> we score red
   return 'bad'
+}
+
+// Should be a parte of the config
+function getCommitteeSecurity(bridge: Bridge): DaCommitteeSecurityRisk {
+  if (
+    bridge.type !== 'IntegratedDacBridge' ||
+    bridge.risks.committeeSecurity.type !== 'Auto'
+  ) {
+    return bridge.risks.committeeSecurity
+  }
+
+  const adjustedSentiment = getDacSentiment(bridge)
+
+  return DaCommitteeSecurityRisk.Auto({
+    resolved: {
+      value: `${bridge.requiredMembers}/${bridge.membersCount}`,
+      sentiment: adjustedSentiment,
+    },
+  })
+}
+
+function getDacSentiment(config?: {
+  membersCount: number
+  knownMembers?: IntegratedDacBridge['knownMembers']
+  requiredMembers: number
+}) {
+  if (!config?.knownMembers) return 'bad'
+
+  const assumedHonestMembers = config.membersCount - config.requiredMembers + 1
+
+  // If less than 6 members or more than 1/3 of members need to be honest, the sentiment is bad
+  if (
+    config.knownMembers.length < 6 ||
+    assumedHonestMembers / config.knownMembers.length > 1 / 3
+  ) {
+    return 'bad'
+  }
+
+  // If less than 5 members are external, the sentiment is bad
+  if (config.knownMembers.filter((member) => member.external).length < 5) {
+    return 'bad'
+  }
+
+  return 'warning'
 }

@@ -1,8 +1,31 @@
-import { DaBridge, DaUpgradeabilityRisk, DacDaLayer } from '../types'
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import {
+  DaBridge,
+  DaUpgradeabilityRisk,
+  DacDaLayer,
+  DacTransactionDataType,
+  IntegratedDacBridge,
+} from '../types'
 import { DaTechnology } from '../types/DaTechnology'
 import { DAC, DacTemplateVars } from './dac-template'
 
-export function AnytrustDAC(template: DacTemplateVars): DacDaLayer {
+type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
+  bridge: {
+    technology?: IntegratedDacBridge['technology']
+  } & Pick<
+    IntegratedDacBridge,
+    'createdAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
+  >
+  discovery: ProjectDiscovery
+}
+
+export function AnytrustDAC(template: TemplateVars): DacDaLayer {
+  const dac = template.discovery.getContractValue<{
+    membersCount: number
+    requiredSignatures: number
+  }>('SequencerInbox', 'dacKeyset')
+  const { membersCount, requiredSignatures } = dac
+
   const anytrustBridgeTechnology: DaBridge['technology'] = {
     description: `
     ## DA Bridge Architecture
@@ -27,7 +50,7 @@ export function AnytrustDAC(template: DacTemplateVars): DacDaLayer {
   const layerTechnology: DaTechnology = {
     description: `
     ## Architecture
-    ![Anytrust architecture](/images/da-layer-technology/anytrust/architecture${template.bridge.membersCount}.png#center)
+    ![Anytrust architecture](/images/da-layer-technology/anytrust/architecture${membersCount}.png#center)
 
     The DAC uses a data availability solution built on the AnyTrust protocol. It is composed of the following components:
     - **Sequencer Inbox**: Main entry point for the Sequencer submitting transaction batches.
@@ -62,6 +85,9 @@ export function AnytrustDAC(template: DacTemplateVars): DacDaLayer {
     bridge: {
       ...template.bridge,
       technology: anytrustBridgeTechnology,
+      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+      membersCount,
+      requiredMembers: requiredSignatures,
     },
     risks: {
       upgradeability:

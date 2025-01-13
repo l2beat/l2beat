@@ -187,10 +187,6 @@ export const xlayer: Layer2 = polygonCDKStack({
     }),
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
-    display: {
-      name: 'X Layer',
-      slug: 'xlayer',
-    },
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,

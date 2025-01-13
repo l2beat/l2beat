@@ -167,10 +167,6 @@ export const witness: Layer2 = polygonCDKStack({
     }),
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
-    display: {
-      name: 'Witness Chain',
-      slug: 'witness',
-    },
     bridge: {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,

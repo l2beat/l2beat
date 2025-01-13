@@ -398,10 +398,6 @@ export const nova: Layer2 = orbitStackL2({
     },
   ],
   dataAvailabilitySolution: DAC({
-    display: {
-      name: 'Arbitrum Nova',
-      slug: 'nova',
-    },
     layer: {
       technology: {
         description: `

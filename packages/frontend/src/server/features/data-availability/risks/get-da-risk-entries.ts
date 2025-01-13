@@ -114,7 +114,7 @@ function getDacEntries(
     const tvs = getTvs([parentProject.id])
 
     const bridgeEntry: DaBridgeRiskEntry = {
-      name: daLayer.display.name,
+      name: daLayer.display?.name ?? `${parentProject.display.name} DAC`,
       slug: parentProject.display.slug,
       href: `/scaling/projects/${parentProject.display.slug}`,
       statuses: {},
@@ -125,7 +125,7 @@ function getDacEntries(
     const projectEntry: DaRiskEntry = {
       id: parentProject.id,
       slug: parentProject.display.slug,
-      name: daLayer.display.name,
+      name: daLayer.display?.name ?? `${parentProject.display.name} DAC`,
       nameSecondLine: kindToType(daLayer.kind),
       href: `/scaling/projects/${parentProject.display.slug}`,
       statuses: {},

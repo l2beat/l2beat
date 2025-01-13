@@ -46,7 +46,7 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
       title: 'Technology',
       diagram: {
         type: 'da-layer-technology',
-        slug: project.dataAvailabilitySolution.display.slug,
+        slug: project.display.slug,
       },
       content: project.dataAvailabilitySolution.technology.description.concat(
         '\n\n',
