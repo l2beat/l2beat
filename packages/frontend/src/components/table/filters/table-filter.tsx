@@ -15,16 +15,9 @@ interface Props {
   options: string[]
   value: string | undefined
   onValueChange: (option: string | undefined) => void
-  insidePrimaryCard?: boolean
 }
 
-export function TableFilter({
-  title,
-  options,
-  value,
-  onValueChange,
-  insidePrimaryCard = false,
-}: Props) {
+export function TableFilter({ title, options, value, onValueChange }: Props) {
   const onClick = useCallback(
     (e: MouseEvent) => {
       if (value !== undefined) {
@@ -63,9 +56,8 @@ export function TableFilter({
     >
       <SelectTrigger
         className={cn(
+          'primary-card:bg-surface-secondary primary-card:data-[state=open]:hover:bg-surface-tertiary',
           value !== undefined && 'text-brand',
-          insidePrimaryCard &&
-            'bg-surface-secondary data-[state=open]:hover:bg-surface-tertiary',
         )}
         icon={
           value !== undefined ? (
@@ -81,17 +73,14 @@ export function TableFilter({
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent
-        className={cn(
-          'flex flex-col',
-          insidePrimaryCard && 'bg-surface-secondary',
-        )}
+        className={cn('flex flex-col primary-card:bg-surface-secondary')}
         align="start"
       >
         {options.map((option) => (
           <SelectItem
             key={option}
             value={option}
-            className={cn(insidePrimaryCard && 'focus:bg-surface-tertiary')}
+            className="primary-card:focus:bg-surface-tertiary"
           >
             {option}
           </SelectItem>
