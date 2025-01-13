@@ -19,7 +19,7 @@ export function RequiredTools(props: Props) {
       <tbody>
         {props.items.map((item) => (
           <tr
-            className="h-14 border-b border-gray-200 dark:border-zinc-700"
+            className="h-14 border-b border-gray-200 last:border-none dark:border-zinc-700"
             key={item.name}
           >
             <td className="text-balance px-4 text-base font-medium md:text-lg">
