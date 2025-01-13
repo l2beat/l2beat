@@ -58,7 +58,7 @@ export function LegacyNavbar({
             <SocialLinks />
           </ul>
           <div className="hidden h-8 w-px bg-gray-300 dark:bg-gray-700 xl:block" />
-          <ul className="flex h-full items-center gap-1.5">
+          <ul className="flex h-full items-center">
             <LegacyNavLink title="About Us" href="/about-us" />
             <LegacyNavLink title="Forum" href={externalLinks.forum} />
             <LegacyNavLink title="Donate" href="/donate" />
