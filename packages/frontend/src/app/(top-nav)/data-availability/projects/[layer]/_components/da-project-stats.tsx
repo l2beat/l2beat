@@ -29,7 +29,7 @@ export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
   const partitionedByThree = chunkArray(stats, GROUPS)
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-surface-primary md:grid-cols-3 md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-surface-primary md:px-6 md:py-5">
       {partitionedByThree.map((statGroup, i) => {
         const isLastGroup = i === partitionedByThree.length - 1
 
