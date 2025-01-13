@@ -31,7 +31,7 @@ export abstract class BaseAnalyzer {
     protected readonly provider: RpcClient,
     protected readonly db: Database,
     protected readonly projectId: ProjectId,
-  ) { }
+  ) {}
 
   async analyzeInterval(
     from: UnixTime,
@@ -172,7 +172,7 @@ export function batchesToStateUpdateDelays(
         oldestBlock.timestamp,
         newestBlock.timestamp,
         (l2BlockNumber - oldestBlock.blockNumber) /
-        (newestBlock.blockNumber - oldestBlock.blockNumber),
+          (newestBlock.blockNumber - oldestBlock.blockNumber),
       )
     )
   }
