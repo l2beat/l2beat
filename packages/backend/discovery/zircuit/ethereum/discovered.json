@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 21388259,
-  "configHash": "0x0698c10cff4e338a0af49513f3885568e3e5af6fd467ba45985135c7f5162b19",
+  "blockNumber": 21564418,
+  "configHash": "0x7d9dacead9f8bfef1a831e60dc97925bd118e97967889183ef7ce0bd34b426d9",
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -71,7 +71,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 21387958,
+          "prevBlockNum": 21564376,
           "prevTxCount": 1
         },
         "paused": false,
@@ -113,7 +113,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635008",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636378",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -268,7 +268,7 @@
         "0x3a72e01a50e4baf0c333aa3ad2413675a95c2fc68a18d8a95b3a65179e98ccbc"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -474,6 +474,45 @@
       "derivedName": "SuperchainConfig"
     },
     {
+      "name": "L1ERC20TokenBridge",
+      "address": "0x912C7271a6A3622dfb8B218eb46a6122aB046C79",
+      "template": "lido/L1ERC20TokenBridge",
+      "sourceHashes": [
+        "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
+        "0xc4b0423b7d0fcada3862027e805c2fc79676feb6f4bc3978e5a86b390bfd7be3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
+      "sinceTimestamp": 1726591415,
+      "values": {
+        "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "$implementation": "0x6bc726C993103197C41d787dd72eCd4D2e1614E8",
+        "$pastUpgrades": [
+          [
+            "2024-09-17T16:43:35.000Z",
+            "0x7ce2acc826dbccea48fc0d45858f428df245e825147aa96c020b57c71f5b6c96",
+            ["0x6bc726C993103197C41d787dd72eCd4D2e1614E8"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
+        "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
+        "isDepositsEnabled": true,
+        "isInitialized": true,
+        "isWithdrawalsEnabled": true,
+        "l1Token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "l2Token": "0xf0e673Bc224A8Ca3ff67a61605814666b1234833",
+        "l2TokenBridge": "0xF4DC271cA48446a5d2b97Ff41D39918DF8A4Eb0e",
+        "messenger": "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
+        "proxy__getAdmin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "proxy__getImplementation": "0x6bc726C993103197C41d787dd72eCd4D2e1614E8",
+        "proxy__getIsOssified": false,
+        "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
+        "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
+      }
+    },
+    {
       "name": "L2OutputOracle",
       "address": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
       "template": "opstack/L2OutputOracle",
@@ -525,10 +564,10 @@
         "finalizationPeriodSeconds": 14400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7045182,
-        "latestOutputIndex": 19302,
-        "nextBlockNumber": 7045183,
-        "nextOutputIndex": 19303,
+        "latestBlockNumber": 8107741,
+        "latestOutputIndex": 22679,
+        "nextBlockNumber": 8107742,
+        "nextOutputIndex": 22680,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -827,6 +866,56 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0x6bc726C993103197C41d787dd72eCd4D2e1614E8": [
+      "constructor(address messenger_, address l2TokenBridge_, address l1Token_, address l2Token_)",
+      "error ErrorAccountIsZeroAddress()",
+      "error ErrorAlreadyInitialized()",
+      "error ErrorDepositsDisabled()",
+      "error ErrorDepositsEnabled()",
+      "error ErrorSenderNotEOA()",
+      "error ErrorUnauthorizedMessenger()",
+      "error ErrorUnsupportedL1Token()",
+      "error ErrorUnsupportedL2Token()",
+      "error ErrorWithdrawalsDisabled()",
+      "error ErrorWithdrawalsEnabled()",
+      "error ErrorWrongCrossDomainSender()",
+      "event DepositsDisabled(address indexed disabler)",
+      "event DepositsEnabled(address indexed enabler)",
+      "event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event Initialized(address indexed admin)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WithdrawalsDisabled(address indexed disabler)",
+      "event WithdrawalsEnabled(address indexed enabler)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSITS_DISABLER_ROLE() view returns (bytes32)",
+      "function DEPOSITS_ENABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_DISABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_ENABLER_ROLE() view returns (bytes32)",
+      "function depositERC20(address l1Token_, address l2Token_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function depositERC20To(address l1Token_, address l2Token_, address to_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function disableDeposits()",
+      "function disableWithdrawals()",
+      "function enableDeposits()",
+      "function enableWithdrawals()",
+      "function finalizeERC20Withdrawal(address l1Token_, address l2Token_, address from_, address to_, uint256 amount_, bytes data_)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin_)",
+      "function isDepositsEnabled() view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isWithdrawalsEnabled() view returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Token() view returns (address)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
     "0x6BCe7408c0781dcE7b71494274302D4b75a1447c": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -879,6 +968,22 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x912C7271a6A3622dfb8B218eb46a6122aB046C79": [
+      "constructor(address implementation_, address admin_, bytes data_)",
+      "error ErrorNotAdmin()",
+      "error ErrorProxyIsOssified()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ProxyOssified()",
+      "event Upgraded(address indexed implementation)",
+      "function proxy__changeAdmin(address newAdmin_)",
+      "function proxy__getAdmin() view returns (address)",
+      "function proxy__getImplementation() view returns (address)",
+      "function proxy__getIsOssified() view returns (bool)",
+      "function proxy__ossify()",
+      "function proxy__upgradeTo(address newImplementation_)",
+      "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
     "0x92Ef6Af472b39F1b363da45E35530c24619245A4": [
       "constructor(address _admin)",
@@ -1146,9 +1251,10 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
+    "lido/L1ERC20TokenBridge": "0xa297506a5551518c3ed10a3817c661bc02da5794e2745084217d9c8f6c440482",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L1StandardBridge": "0x7646e8d311af4d3b67dc674e167b6f42a20accc7ae822efd2d49ad8ab877f7bf",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismPortal_zircuit": "0x6eee351872c977a3e6da44161da5cd9d7ee870df03d9b7053780ae3b30acb89b",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"

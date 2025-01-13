@@ -5,8 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { useIsClient } from '~/hooks/use-is-client'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
 import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
 import { Skeleton } from '../../core/skeleton'

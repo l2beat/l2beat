@@ -67,7 +67,7 @@ export const lzOmnichain: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Omnichain tokens are tokenized Token Bridges. Usually, one chain is designated as main and acts as an token escrow. In this case, transfers from the main chain are done using typical lock-mint model. Transfers between\
+        'Omnichain tokens are tokenized Token Bridges. Usually, one chain is designated as main and acts as a token escrow. In this case, transfers from the main chain are done using typical lock-mint model. Transfers between\
         other (non-main) chains are made using burn-mint model. The implementation details may vary between each individual omnichain token and must be individually assessed.',
       risks: [],
       references: [],
@@ -117,12 +117,12 @@ export const lzOmnichain: Bridge = {
         'LayerZero Relayer',
         'Contract used to provide the merkle proof for the transfers on source chains.',
       ),
-      {
-        multipleAddresses: INBOUND_PROOF_LIBRARIES,
-        name: 'Default LayerZero Inbound Proof Libraries',
-        description:
+      ...INBOUND_PROOF_LIBRARIES.map((l) =>
+        discovery.getContractDetails(
+          l,
           'Contracts used to validate messages coming from source chains.',
-      },
+        ),
+      ),
       discovery.getContractDetails(
         'Endpoint',
         'Contract used for cross-chain messaging.',

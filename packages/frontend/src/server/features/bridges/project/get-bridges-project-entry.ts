@@ -2,7 +2,6 @@ import {
   type Bridge,
   type ScalingProjectRiskViewEntry,
   getContractsVerificationStatuses,
-  getManuallyVerifiedContracts,
   isVerified,
 } from '@l2beat/config'
 import compact from 'lodash/compact'
@@ -18,17 +17,12 @@ export type BridgesProjectEntry = Awaited<
 >
 
 export async function getBridgesProjectEntry(project: Bridge) {
-  const [
-    contractsVerificationStatuses,
-    manuallyVerifiedContracts,
-    projectsChangeReport,
-    header,
-  ] = await Promise.all([
-    getContractsVerificationStatuses(project),
-    getManuallyVerifiedContracts(),
-    getProjectsChangeReport(),
-    getHeader(project),
-  ])
+  const [contractsVerificationStatuses, projectsChangeReport, header] =
+    await Promise.all([
+      getContractsVerificationStatuses(project),
+      getProjectsChangeReport(),
+      getHeader(project),
+    ])
 
   const isProjectVerified = isVerified(project)
   const changes = projectsChangeReport.getChanges(project.id)
@@ -48,7 +42,6 @@ export async function getBridgesProjectEntry(project: Bridge) {
       project,
       isProjectVerified,
       contractsVerificationStatuses,
-      manuallyVerifiedContracts,
       projectsChangeReport,
     ),
   }

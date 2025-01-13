@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 21035830,
+  "blockNumber": 21585292,
   "configHash": "0xe2054510e432dbe29b6e89dae0e4fdc84380cce9f77bc89e47a38b23fe68e052",
   "contracts": [
     {
@@ -338,26 +338,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3262409,
+        "getFirstUnprocessedPriorityTx": 3266781,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 58,
+        "getPriorityQueueSize": 100,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 493365,
-        "getTotalBatchesExecuted": 493335,
-        "getTotalBatchesVerified": 493361,
-        "getTotalBlocksCommitted": 493365,
-        "getTotalBlocksExecuted": 493335,
-        "getTotalBlocksVerified": 493361,
-        "getTotalPriorityTxs": 3262467,
+        "getTotalBatchesCommitted": 495891,
+        "getTotalBatchesExecuted": 495855,
+        "getTotalBatchesVerified": 495890,
+        "getTotalBlocksCommitted": 495891,
+        "getTotalBlocksExecuted": 495855,
+        "getTotalBlocksVerified": 495890,
+        "getTotalPriorityTxs": 3266881,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -366,8 +366,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x736549836ab626a8d526664345c51b02c579d662797a84e9d50b005881ec711b",
-          "expirationTimestamp": 1729696931,
+          "canonicalTxHash": "0x551f7524c7dc5cc695b77d12cb0e261cda9d4652cc689334ddde63df6af711b2",
+          "expirationTimestamp": 1736321843,
           "layer2Tip": 0
         },
         "txFilterer": [],
@@ -435,13 +435,13 @@
       "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xddcdd4b758b565f39e4924d6a66afc27850a66e5f1022fb1c008d10f85af1028"
+        "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1676370683,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x8191975d8B0851C7f0740918896Cf298c09aA05E",
+        "$implementation": "0x8D231E4097C3cb200Ed62134B466AA615cE60336",
         "$pastUpgrades": [
           [
             "2023-02-14T10:31:23.000Z",
@@ -482,9 +482,14 @@
             "2024-06-06T13:20:35.000Z",
             "0xb689a0cfff9af4bb1d1da94c404d396f24d5cf5031c31647671549c717cdba7a",
             ["0x8191975d8B0851C7f0740918896Cf298c09aA05E"]
+          ],
+          [
+            "2025-01-08T16:00:35.000Z",
+            "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",
+            ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
           ]
         ],
-        "$upgradeCount": 8,
+        "$upgradeCount": 9,
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
@@ -607,8 +612,15 @@
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
     ],
-    "0x8191975d8B0851C7f0740918896Cf298c09aA05E": [
+    "0x8D231E4097C3cb200Ed62134B466AA615cE60336": [
       "constructor(address _sharedBridge)",
+      "error EmptyDeposit()",
+      "error NotInitializedReentrancyGuard()",
+      "error Reentrancy()",
+      "error SlotOccupied()",
+      "error TokensWithFeesNotSupported()",
+      "error Unauthorized(address caller)",
+      "error WithdrawalAlreadyFinalized()",
       "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
       "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
       "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",

@@ -261,7 +261,7 @@ export const starknet: Layer2 = {
         'https://starkware.co/ecosystem/',
         'https://community.starknet.io/',
       ],
-      documentation: ['https://starknet.io/learn/what-is-starknet'],
+      documentation: ['https://docs.starknet.io'],
       explorers: ['https://voyager.online/', 'https://starkscan.co/'],
       repositories: ['https://github.com/starkware-libs'],
       socialMedia: [
@@ -748,13 +748,11 @@ export const starknet: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS_COMPRESSED,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,

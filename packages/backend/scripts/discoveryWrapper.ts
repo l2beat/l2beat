@@ -6,5 +6,10 @@ export async function discoverAndUpdateDiffHistory(
   description?: string,
 ) {
   await discover(config)
-  await updateDiffHistory(config.project, config.chain.name, description)
+  await updateDiffHistory(
+    config.project,
+    config.chain.name,
+    description,
+    config.overwriteCache,
+  )
 }

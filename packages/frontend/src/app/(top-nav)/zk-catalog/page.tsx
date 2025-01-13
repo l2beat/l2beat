@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <ContentWrapper>
       <header className="mt-[72px] text-left md:text-center">
-        <h1 className="text-6xl font-bold">ZK Catalog</h1>
+        <h1 className="text-5xl font-bold md:text-6xl">ZK Catalog</h1>
         <p className="mx-auto mt-6 max-w-[994px] text-base font-medium">
           ZK Catalog by L2BEAT is a community-driven resource offering detailed
           insights into the ZK technology utilized by various blockchain

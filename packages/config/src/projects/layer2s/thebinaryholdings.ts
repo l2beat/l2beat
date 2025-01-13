@@ -38,7 +38,7 @@ export const thebinaryholdings: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.zero.thebinaryholdings.com',
   genesisTimestamp: new UnixTime(1719397465),
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     genesisTimestamp: new UnixTime(1719397463),
     minTimestamp: new UnixTime(1719397465),
     l2BlockTimeSeconds: 2,

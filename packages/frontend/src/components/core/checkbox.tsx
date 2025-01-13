@@ -13,10 +13,12 @@ const Checkbox = ({
 }: React.ComponentProps<typeof CheckboxPrimitive.Root>) => {
   const id = React.useId()
   return (
-    <div
+    <label
+      htmlFor={id}
       className={cn(
-        'flex h-8 w-max select-none items-center space-x-2 rounded-lg py-1 pl-2 pr-3',
+        'flex h-8 w-max cursor-pointer select-none items-center space-x-2 rounded-lg py-1 pl-2 pr-3',
         'bg-surface-primary primary-card:bg-surface-secondary',
+        props.disabled && 'cursor-not-allowed opacity-50',
         className,
       )}
     >
@@ -39,13 +41,10 @@ const Checkbox = ({
           />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
-      <label
-        htmlFor={id}
-        className="cursor-pointer whitespace-pre text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:text-sm"
-      >
+      <div className="whitespace-pre text-xs font-medium leading-none md:text-sm">
         {children}
-      </label>
-    </div>
+      </div>
+    </label>
   )
 }
 Checkbox.displayName = CheckboxPrimitive.Root.displayName

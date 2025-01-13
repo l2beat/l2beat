@@ -2,6 +2,7 @@ import { compact } from 'lodash'
 import { type Metadata } from 'next'
 import Image from 'next/image'
 import { ContentWrapper } from '~/components/content-wrapper'
+import { FullPageHeader } from '~/components/full-page-header'
 import { CustomLink } from '~/components/link/custom-link'
 import { env } from '~/env'
 import { CustomLinkIcon } from '~/icons/outlink'
@@ -66,95 +67,93 @@ interface HeaderProps {
 
 async function Header(props: HeaderProps) {
   return (
-    <header className="bg-pure-white py-24 dark:bg-zinc-900">
-      <ContentWrapper className="flex items-center justify-center leading-[1.15]">
-        <div className="grid md:grid-cols-12">
-          <div className="relative leading-normal md:col-span-7">
-            <h1 className="text-6xl font-bold">Donate</h1>
-            <div className="mt-6 space-y-6">
-              <p>
-                Thank you for supporting L2BEAT&apos;s mission to bring
-                education and transparency to the blockchain space.
-              </p>
-              <p>
-                We&apos;re committed to delivering accurate and reliable
-                information. We strive to be an impartial and independent
-                watchdog that acts in the best interest of users and the broader
-                ecosystem while always remaining credibly neutral and faithful
-                to reality and facts. We deliver data and tools that allow our
-                community to educate themselves, transact securely, and make
-                well-informed decisions.
-              </p>
-              <p>
-                Your support means a lot to our small, independent team. Thank
-                you!
-              </p>
-            </div>
-            <div className="relative my-12 flex items-center justify-center md:hidden">
-              <div className="z-10 flex flex-col items-center justify-center">
-                <div className="size-[184px] rounded-xl bg-white p-3">
-                  <Image
-                    alt="QR Code of donate address"
-                    src="/images/qr-codes/donate.png"
-                    width={160}
-                    height={160}
-                    style={{
-                      imageRendering: 'pixelated',
-                    }}
-                  />
-                </div>
-                <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono text-lg">
-                  {props.ethereumAddress}
-                </p>
-              </div>
-              <div className="absolute flex size-full items-center justify-center">
-                <div className="size-[356px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
-              </div>
-            </div>
-
-            <div className="relative z-10 mt-6">
-              <span className="text-sm uppercase text-purple-100 dark:text-pink-200">
-                Donate through
-              </span>
-              <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
-                {props.networks.map((network) => (
-                  <CustomLink
-                    key={network.name}
-                    className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
-                    href={network.linkURL}
-                    underline={false}
-                  >
-                    {network.name}
-                    <CustomLinkIcon className="fill-current" />
-                  </CustomLink>
-                ))}
-              </div>
-            </div>
+    <FullPageHeader contentWrapperClassName="leading-[1.15]">
+      <div className="grid md:grid-cols-12">
+        <div className="relative leading-normal md:col-span-7">
+          <h1 className="text-5xl font-bold md:text-6xl">Donate</h1>
+          <div className="mt-6 space-y-6">
+            <p>
+              Thank you for supporting L2BEAT&apos;s mission to bring education
+              and transparency to the blockchain space.
+            </p>
+            <p>
+              We&apos;re committed to delivering accurate and reliable
+              information. We strive to be an impartial and independent watchdog
+              that acts in the best interest of users and the broader ecosystem
+              while always remaining credibly neutral and faithful to reality
+              and facts. We deliver data and tools that allow our community to
+              educate themselves, transact securely, and make well-informed
+              decisions.
+            </p>
+            <p>
+              Your support means a lot to our small, independent team. Thank
+              you!
+            </p>
           </div>
-          <div className="relative col-span-5 hidden items-center justify-center md:flex">
+          <div className="relative my-12 flex items-center justify-center md:hidden">
             <div className="z-10 flex flex-col items-center justify-center">
-              <div className="size-[236px] rounded-xl bg-white p-3">
+              <div className="size-[184px] rounded-xl bg-white p-3">
                 <Image
                   alt="QR Code of donate address"
                   src="/images/qr-codes/donate.png"
-                  width={212}
-                  height={212}
+                  width={160}
+                  height={160}
                   style={{
                     imageRendering: 'pixelated',
                   }}
                 />
               </div>
-              <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono">
+              <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono text-lg">
                 {props.ethereumAddress}
               </p>
             </div>
             <div className="absolute flex size-full items-center justify-center">
-              <div className="size-[400px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
+              <div className="size-[356px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
+            </div>
+          </div>
+
+          <div className="relative z-10 mt-6">
+            <span className="text-sm uppercase text-purple-100 dark:text-pink-200">
+              Donate through
+            </span>
+            <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
+              {props.networks.map((network) => (
+                <CustomLink
+                  key={network.name}
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
+                  href={network.linkURL}
+                  underline={false}
+                >
+                  {network.name}
+                  <CustomLinkIcon className="fill-current" />
+                </CustomLink>
+              ))}
             </div>
           </div>
         </div>
-      </ContentWrapper>
-    </header>
+        <div className="relative col-span-5 hidden items-center justify-center md:flex">
+          <div className="z-10 flex flex-col items-center justify-center">
+            <div className="size-[236px] rounded-xl bg-white p-3">
+              <Image
+                alt="QR Code of donate address"
+                src="/images/qr-codes/donate.png"
+                width={212}
+                height={212}
+                style={{
+                  imageRendering: 'pixelated',
+                }}
+              />
+            </div>
+            <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono">
+              {props.ethereumAddress}
+            </p>
+          </div>
+          <div className="absolute flex size-full items-center justify-center">
+            <div className="size-[400px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
+          </div>
+        </div>
+      </div>
+    </FullPageHeader>
   )
 }
 

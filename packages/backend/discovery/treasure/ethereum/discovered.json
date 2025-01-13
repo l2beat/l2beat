@@ -1,7 +1,7 @@
 {
   "name": "treasure",
   "chain": "ethereum",
-  "blockNumber": 21429089,
+  "blockNumber": 21585285,
   "configHash": "0x544b2936cb47784e5e83a75751d34b370dd03a6c3c1d385f6ce028257e6487d2",
   "contracts": [
     {
@@ -19,17 +19,19 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x1c68007a9A7E5Adc862da9b54938112352B97f17",
+          "0xe25AdA29FA5873A24afEe1342422BD14e5809e03",
           "0xBAe65c4bA62799F68817Cbb2bB353Da4572C23Ae",
           "0x1ee4324F7BD44A4c7c335C2D4e758639B60E8726",
           "0x58244EA236D2ff57c023A4028E228f77dc328894",
           "0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0"
         ],
-        "$threshold": 2,
+        "$threshold": 4,
         "domainSeparator": "0x6141a8ea5ad694ce2588765fe01d823393e56087b662f7e7693aea35182ba278",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 2,
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -90,8 +92,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "baseTokenGasPriceMultiplierDenominator": 861,
-        "baseTokenGasPriceMultiplierNominator": 6250000,
+        "baseTokenGasPriceMultiplierDenominator": 15677,
+        "baseTokenGasPriceMultiplierNominator": 100000000,
         "daMode": 1,
         "facetAddresses": [
           "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
@@ -183,26 +185,26 @@
         "getBaseToken": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 54,
+        "getFirstUnprocessedPriorityTx": 119,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
+        "getPriorityQueueSize": 3,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 65,
-        "getTotalBatchesExecuted": 61,
-        "getTotalBatchesVerified": 64,
-        "getTotalBlocksCommitted": 65,
-        "getTotalBlocksExecuted": 61,
-        "getTotalBlocksVerified": 64,
-        "getTotalPriorityTxs": 54,
+        "getTotalBatchesCommitted": 192,
+        "getTotalBatchesExecuted": 189,
+        "getTotalBatchesVerified": 192,
+        "getTotalBlocksCommitted": 192,
+        "getTotalBlocksExecuted": 189,
+        "getTotalBlocksVerified": 192,
+        "getTotalPriorityTxs": 122,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -274,10 +276,12 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0" },
+    { "address": "0x1c68007a9A7E5Adc862da9b54938112352B97f17" },
     { "address": "0x1ee4324F7BD44A4c7c335C2D4e758639B60E8726" },
     { "address": "0x58244EA236D2ff57c023A4028E228f77dc328894" },
     { "address": "0xBAe65c4bA62799F68817Cbb2bB353Da4572C23Ae" },
-    { "address": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216" }
+    { "address": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216" },
+    { "address": "0xe25AdA29FA5873A24afEe1342422BD14e5809e03" }
   ],
   "abis": {
     "0x282370D1e925ee897CB29Cb3beC13aAe0743067C": [

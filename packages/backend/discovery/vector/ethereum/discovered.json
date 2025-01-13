@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21386151,
+  "blockNumber": 21585288,
   "configHash": "0x6a97439e4e2b92fe494e30ca9d22bd730417850ff10762f95b0d7592a49b656e",
   "contracts": [
     {
@@ -75,8 +75,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 174,
-        "latestBlock": 695760,
+        "latestAuthoritySetId": 203,
+        "latestBlock": 815760,
         "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -168,14 +168,14 @@
           "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
           "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
           "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
-          "0xb9274De2305B377b437a9297D6c84eBD69f7aaCE"
+          "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
         ],
         "$threshold": 4,
         "domainSeparator": "0x0a3a4ca49dc98b965e6bed30f0e8c99ee93572432964da204089e65025760611",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -211,7 +211,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -260,10 +260,10 @@
         }
       ]
     },
+    { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
     { "address": "0xAD379D3275a18bd4BB741C3b291a3778D51c3304" },
-    { "address": "0xb9274De2305B377b437a9297D6c84eBD69f7aaCE" },
     { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" },
     { "address": "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2" },
     { "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e" },

@@ -67,12 +67,15 @@ function STARKEX_PERPETUAL_WITHDRAW(
   }
 }
 
-const CANONICAL_ORDERING: ScalingProjectTechnologyChoice = {
-  name: 'Users can force any transaction',
-  description:
-    'Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.',
-  risks: [],
-  references: [],
+function CANONICAL_ORDERING(
+  forcedInbox: 'smart contract' | 'EOA inbox',
+): ScalingProjectTechnologyChoice {
+  return {
+    name: 'Users can force any transaction',
+    description: `Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the ${forcedInbox} on the host chain directly.`,
+    risks: [],
+    references: [],
+  }
 }
 
 const PROPOSE_OWN_BLOCKS: ScalingProjectTechnologyChoice = {

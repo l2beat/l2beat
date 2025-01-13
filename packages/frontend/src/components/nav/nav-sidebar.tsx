@@ -40,6 +40,7 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
       </nav>
       <div>
         <NavSmallLinkGroup className="mt-5">
+          <NavSmallLink title="About Us" href="/about-us" />
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           <NavSmallLink title="Donate" href="/donate" />
           <NavSmallLink

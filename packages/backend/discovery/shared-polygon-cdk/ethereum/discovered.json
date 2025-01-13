@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21471468,
+  "blockNumber": 21579404,
   "configHash": "0x5943efe0a05ae0ecfd3ac11cd0516f29678b9935af12c82b1488fc8272b45d0d",
   "contracts": [
     {
@@ -68,7 +68,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 58,
+        "nonce": 60,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -115,7 +115,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xbd4491d3f629b9d5368392a580f32d2d7c09abf695cb2e454837cba50c35f479",
+        "getRoot": "0x32af70703c52ee3b64f2fcbe08c0d8a5d63d8d5bdca36ed07e9acdd5380c7f98",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -182,14 +182,14 @@
           "extensions": []
         },
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1734951131,
+        "lastMint": 1735795571,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10326838970968012309497132052",
+        "totalSupply": "10333669277937664930129336277",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -320,7 +320,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x4e6d1683cf235ace1468ba8e1577db2359bac7108de86d8af5d5e20743d98a78",
+        "getRollupExitRoot": "0x854ce710df1e7540e36ddd34b0223199a8cfc1c0af7db86733889255b609ec21",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -335,14 +335,15 @@
           [true],
           [true],
           [true],
-          [true]
+          [true],
+          [false]
         ],
-        "lastAggregationTimestamp": 1735032263,
+        "lastAggregationTimestamp": 1736334911,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupCount": 12,
+        "rollupCount": 13,
         "rollupsData": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -359,8 +360,8 @@
           [
             "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
             196,
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            8
           ],
           [
             "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
@@ -415,9 +416,15 @@
             938,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             4
+          ],
+          [
+            "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+            752025,
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            7
           ]
         ],
-        "rollupTypeCount": 7,
+        "rollupTypeCount": 8,
         "rollupTypes": [
           [
             "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
@@ -446,10 +453,14 @@
           [
             "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
             "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+          ],
+          [
+            "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
           ]
         ],
-        "totalSequencedBatches": 514657,
-        "totalVerifiedBatches": 505528,
+        "totalSequencedBatches": 531232,
+        "totalVerifiedBatches": 526028,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -512,8 +523,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 51885,
-        "getRoot": "0x150154eb4ffac6cb65bd75cd6d240eae3c23fe1c6bbfd0c35ef9408273c45df1",
+        "depositCount": 52403,
+        "getRoot": "0x19aeb145d2889f0cd0212193d912955fc911b90f080eec1a1a91a6bd9d4ec506",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -546,7 +557,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x254b69e96e43f89a57894428a84483a3a683405c
+
+# Diff at Thu, 09 Jan 2025 07:03:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 79888653
+- current block number: 81451067
+
+## Description
+
+SC member sync actions for nova. The key rotation notice can be found [in the forum](https://forum.arbitrum.foundation/t/non-emergency-actions-to-facilitate-key-rotation-of-security-council-december-2024/27973).
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      values.$members.9:
+-        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+      values.$members.8:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
+      values.$members.7:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+      values.$members.6:
+-        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.$members.5:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+      values.$members.4:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+      values.$members.3:
+-        "0xeA4A4A886aCA47DD0167B4aEE5B1345e18D20Ee5"
++        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+      values.$members.2:
+-        "0x1716C1C037e4968D5A06d4d080904F9B7a6508f2"
++        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.1:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.0:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
+    }
+```
+
 Generated with discovered.json: 0x511db5a6d9878f35c1b27b2d07e564777657ca91
 
 # Diff at Fri, 29 Nov 2024 09:08:54 GMT:

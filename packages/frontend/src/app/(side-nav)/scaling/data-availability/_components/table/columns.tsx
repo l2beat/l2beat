@@ -10,9 +10,9 @@ import { sortByDacMembers } from '~/components/table/sorting/functions/sort-by-d
 import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
+import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
-const columnHelper = createColumnHelper<ScalingDataAvailabilityEntry>()
+const columnHelper = createColumnHelper<ScalingDaEntry>()
 
 export const columns = [
   ...getScalingCommonProjectColumns(columnHelper),

@@ -61,7 +61,7 @@ export function ScalingProjectSummary({ project }: Props) {
           <div className="grid w-full md:grid-cols-3 md:gap-4">
             <ValueLockedSummary
               breakdown={project.header.tvl?.tvlBreakdown}
-              detailedBreakdownHref={`/scaling/projects/${project.slug}/tvl-breakdown`}
+              detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
               isArchived={project.isArchived}
             />
             <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />

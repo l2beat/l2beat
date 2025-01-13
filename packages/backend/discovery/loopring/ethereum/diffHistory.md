@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xe7de9a00edfb55f35a05af5ce29dfbecd1edb236
+
+# Diff at Fri, 03 Jan 2025 11:56:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21313525
+- current block number: 21543795
+
+## Description
+
+Loopring MS signer changes.
+
+## Watched changes
+
+```diff
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
+    +++ description: None
+      values.$members.0:
+-        "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268"
++        "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2"
+    }
+```
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      values.$members.3:
+-        "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.2:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191"
+      values.$members.1:
+-        "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191"
++        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.$members.0:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "0x576aBC47E0Dbe79c1c950190173faE9A13f8AB98"
+    }
+```
+
 Generated with discovered.json: 0x652375d3ebc7c2c20ea31124493ddbd9cdb5a9a9
 
 # Diff at Mon, 02 Dec 2024 08:06:57 GMT:

@@ -7,6 +7,7 @@ const BATCH_VERSION_1 = 1
 export interface SpanBatchDecoderOpts {
   l2BlockTimeSeconds: number
   genesisTimestamp: UnixTime
+  blockOffset: number
 }
 
 export function decodeBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
@@ -68,7 +69,7 @@ function decodeSpanBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
   const absTimestamp = relTimestamp + opts.genesisTimestamp.toNumber()
   const blocksWithTimestamps = tsxPerBlock.map((txCount, i) => ({
     timestamp: absTimestamp + i * opts.l2BlockTimeSeconds,
-    blockNumber: relTimestamp / opts.l2BlockTimeSeconds + i,
+    blockNumber: relTimestamp / opts.l2BlockTimeSeconds + i + opts.blockOffset,
     txCount,
   }))
 

@@ -17,6 +17,7 @@ import {
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { formatThroughput } from '~/utils/number-format/format-throughput'
 
 interface Props {
   stats: ProjectStat[]
@@ -120,7 +121,7 @@ export function getCommonDaProjectStats(
     title: 'TVS',
     value: formatCurrency(project.header.tvs, 'usd'),
     tooltip:
-      'Total value secured (TVS) is the sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVL of sovereign rollups.',
+      'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
   })
 
   // Economic security
@@ -160,6 +161,17 @@ export function getCommonDaProjectStats(
     title: 'Duration of storage',
     ...durationOfStorage,
   })
+
+  if (project.header.throughput) {
+    stats.push({
+      title: 'Max throughput',
+      value: formatThroughput(
+        project.header.throughput.size,
+        project.header.throughput.frequency,
+        { fromUnit: 'KB' },
+      ),
+    })
+  }
 
   return stats
 }

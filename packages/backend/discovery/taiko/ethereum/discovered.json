@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21486439,
+  "blockNumber": 21543865,
   "configHash": "0x784276e8ab8d26b8692e7d487f4559c6cf326770c350bc09492a651b5f592145",
   "contracts": [
     {
@@ -184,27 +184,27 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 712415,
-          "blockHash_": "0xbce11cd667cce94fe0c03ff9d3e8e4bbcbc5188314bd7f863357b9797f04cf99",
-          "stateRoot_": "0xf1bc619fafd7c030eec696a9bf26f41ec1ad4acb4baa686a541998a5b0a7c5b4",
-          "verifiedAt_": 1735197191
+          "blockId_": 734191,
+          "blockHash_": "0x3860e32e1e675bb9e26f35a706e026aca17136f3eae9d812a047086436625872",
+          "stateRoot_": "0x2d68374fef1c7ab953824f0b91d21647e9f9edea99eda4ba37d46c2dd370e1da",
+          "verifiedAt_": 1735886303
         },
         "getLastVerifiedBlock": {
-          "blockId_": 712423,
-          "blockHash_": "0xc41ca16a01a0429d8cee3cd1c8f84181474632ab13a6037913cc1e41bdf5ca45",
+          "blockId_": 734198,
+          "blockHash_": "0x1439c4391743e4bda2b816f48539616c342a847479cf5605d4c2da736e6372ff",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1735197371
+          "verifiedAt_": 1735885499
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 712415,
-            "lastSynecdAt": 1735213679
+            "lastSyncedBlockId": 734191,
+            "lastSynecdAt": 1735905071
           },
           {
-            "numBlocks": 712973,
-            "lastVerifiedBlockId": 712423,
+            "numBlocks": 734829,
+            "lastVerifiedBlockId": 734198,
             "provingPaused": false,
             "__reservedB1": 45,
             "__reservedB2": 18301,
@@ -235,12 +235,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 712415,
-            "lastSynecdAt": 1735213679
+            "lastSyncedBlockId": 734191,
+            "lastSynecdAt": 1735905071
           },
           "slotB": {
-            "numBlocks": 712973,
-            "lastVerifiedBlockId": 712423,
+            "numBlocks": 734829,
+            "lastVerifiedBlockId": 734198,
             "provingPaused": false,
             "__reservedB1": 45,
             "__reservedB2": 18301,
@@ -316,7 +316,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1735213691,
+        "clock": 1735906199,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1152,7 +1152,7 @@
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
         "lastUnpausedAt": 0,
-        "nextInstanceId": 165,
+        "nextInstanceId": 167,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1175,7 +1175,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
+          "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2",
           "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
         ],
         "$threshold": 1,
@@ -1183,7 +1183,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 13,
+        "nonce": 22,
         "VERSION": "1.4.1"
       }
     },
@@ -1312,7 +1312,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 35700,
+        "nextMessageId": 35788,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1470,8 +1470,8 @@
     { "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D" },
     { "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200" },
     { "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6" },
+    { "address": "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2" },
     { "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1" },
-    { "address": "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268" },
     { "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68" },
     { "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87" },
     { "address": "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C" },

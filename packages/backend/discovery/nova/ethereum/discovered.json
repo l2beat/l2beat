@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 21465192,
+  "blockNumber": 21579692,
   "configHash": "0x9cd35feb2e6a028f535bd6c9bb9f33a3b5b0009302094f91a91ee7a540544d68",
   "contracts": [
     {
@@ -125,7 +125,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 164131,
+        "batchCount": 171274,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -163,7 +163,7 @@
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 409498,
+        "totalDelayedMessagesRead": 416682,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -903,7 +903,7 @@
         "0x5dbde25ce90571f7dd8e189ec68615bd76cab9ddb0ba7690b721e9e03c70b6ed"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -948,11 +948,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 409501,
+        "delayedMessageCount": 416684,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 164131,
-        "sequencerReportedSubMessageCount": 80977209
+        "sequencerMessageCount": 171274,
+        "sequencerReportedSubMessageCount": 81433196
       }
     },
     {
@@ -1491,16 +1491,16 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
+          "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
+          "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
+          "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
           "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
-          "0x1716C1C037e4968D5A06d4d080904F9B7a6508f2",
-          "0xeA4A4A886aCA47DD0167B4aEE5B1345e18D20Ee5",
           "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
           "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
-          "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -1680,12 +1680,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 21325,
+        "firstUnresolvedNode": 21708,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 21324,
-        "latestNodeCreated": 21477,
+        "latestConfirmed": 21707,
+        "latestNodeCreated": 21860,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -1797,12 +1797,11 @@
         }
       ]
     },
-    { "address": "0x1716C1C037e4968D5A06d4d080904F9B7a6508f2" },
     { "address": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8" },
     { "address": "0x290Aa3E7533c873B3326DabFe7579e86ed951428" },
     { "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93" },
     { "address": "0x375906ADFD34D93236084F462BB2dB0D92129Fe1" },
-    { "address": "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF" },
+    { "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71" },
     { "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09" },
     { "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C" },
     {
@@ -1815,6 +1814,7 @@
         }
       ]
     },
+    { "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B" },
     { "address": "0x5a09A94eE8198D3c474d723337aa58023810022C" },
     {
       "address": "0x5B3E4404d05339D41A7E672BC912CBf511Cca294",
@@ -1844,10 +1844,11 @@
       ]
     },
     { "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7" },
-    { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
+    { "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67" },
     { "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe" },
     { "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F" },
     { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
+    { "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8" },
     {
       "address": "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47",
       "receivedPermissions": [
@@ -1946,7 +1947,6 @@
       ]
     },
     { "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33" },
-    { "address": "0xeA4A4A886aCA47DD0167B4aEE5B1345e18D20Ee5" },
     { "address": "0xfE2bf40f2A9183774BF8E871d634A4E50255158B" }
   ],
   "abis": {
@@ -2943,7 +2943,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
+    "orbitstack/Bridge": "0xbf3086cfe461b5cddc0ca0473fd46a2d3d521ef3860d13221d24c902c0013175",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/CustomGateway": "0xc4bb8ded0b7cd317b76ac6cfa0b521e1f8f3093f9f4dfd8634bc43c08592fa80",
     "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",

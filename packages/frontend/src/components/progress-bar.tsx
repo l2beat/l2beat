@@ -8,7 +8,7 @@ import {
 } from 'next/navigation'
 import NProgress from 'nprogress'
 import React, { Suspense, useEffect, type JSX } from 'react'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 
 export function ProgressBar() {
   return (
@@ -123,8 +123,7 @@ const Next13ProgressBar = React.memo(
 
     const pathname = usePathname()
     const searchParams = useSearchParams()
-    const breakpoint = useBreakpoint()
-    const isMobile = breakpoint === 'mobile'
+    const isMobile = useIsMobile()
 
     useEffect(() => {
       NProgress.done()
@@ -236,8 +235,6 @@ const Next13ProgressBar = React.memo(
         mutationObserver.disconnect()
       }
     }, [delay, isMobile, showOnShallow])
-
-    if (breakpoint === undefined) return null
 
     return (
       <style>

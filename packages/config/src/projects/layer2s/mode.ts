@@ -72,7 +72,7 @@ export const mode: Layer2 = opStackL2({
     },
   ],
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     l2BlockTimeSeconds: 2,
     minTimestamp: new UnixTime(1710386375),
     genesisTimestamp: new UnixTime(1700167583),

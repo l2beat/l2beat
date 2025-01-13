@@ -8,25 +8,6 @@ const CHANNEL_VERSION_BROTLI = 1
 const CHANNEL_VERSION_ZLIB_LOWER_NIBBLE_DEFALTE = 0x08
 const CHANNEL_VERSION_ZLIB_LOWER_NIBBLE_RESERVED = 0x0f
 
-export function byteArrFromHexStr(hexString: string) {
-  const str = hexString.startsWith('0x') ? hexString.slice(2) : hexString
-  assert(str.length % 2 === 0, 'Invalid hex string length')
-  const arr = []
-  for (let i = 0; i < str.length; i += 2) {
-    arr.push(parseInt(str.substring(i, i + 2), 16))
-  }
-  return new Uint8Array(arr)
-}
-
-export function hexStrFromByteArr(byteArr: Uint8Array) {
-  return (
-    '0x' +
-    Array.from(byteArr)
-      .map((byte) => byte.toString(16).padStart(2, '0'))
-      .join('')
-  )
-}
-
 export async function getBatchFromChannel(channel: Uint8Array) {
   const decompressed = await decompressToByteArray(channel)
   const batches = []

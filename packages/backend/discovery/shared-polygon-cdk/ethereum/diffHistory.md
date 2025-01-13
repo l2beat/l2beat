@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x85284e06ab48b8f6616195c93ae7fe0699bb3b2b
+
+# Diff at Wed, 08 Jan 2025 11:18:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21543818
+- current block number: 21579404
+
+## Description
+
+xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the varifier differs.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.3:
+-        4
++        8
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.rollupTypeCount:
+-        7
++        8
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.7:
++        ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"]
+    }
+```
+
+Generated with discovered.json: 0xb01359e6b262fce04a47953690d9596f2a9a9aff
+
+# Diff at Fri, 03 Jan 2025 12:00:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21471468
+- current block number: 21543818
+
+## Description
+
+New unverified L2 base contract deployed with a new rollupTypeID (7) and chainID 752025.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.12:
++        [false]
+      values.rollupCount:
+-        12
++        13
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.12:
++        ["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",7]
+    }
+```
+
 Generated with discovered.json: 0x31ba653ef31f5529d5c2af23836d2d26e8e35fc7
 
 # Diff at Tue, 24 Dec 2024 09:35:10 GMT:
