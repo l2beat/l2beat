@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 21580548,
-  "configHash": "0x2f582a24c74ad1764ce44677d855986539300e493f1545d81d17e4c66e1987db",
+  "configHash": "0x0b44670f88e1be2ae5575f3a648e647cdb44f17d706034d1fb1b33c641c4a160",
   "contracts": [
     {
       "name": "Bridger",
@@ -234,7 +234,13 @@
         "nonce": 16,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "derivedName": "GnosisSafe",
+      "references": [
+        {
+          "text": "Security Council members - Kinto Docs",
+          "href": "https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/security-council"
+        }
+      ]
     },
     {
       "name": "ValidatorUtils",
