@@ -189,35 +189,35 @@ function DonateFundingSources() {
             </li>
           </ul>
         </div>
+        <div className="mt-4 overflow-x-auto pb-3">
+          <table>
+            <thead>
+              <tr className="h-14 border-b border-divider text-left text-sm text-secondary">
+                <th className="min-w-[300px] md:pl-4">Source / Project</th>
+                <th className="md:pl-4">Tier</th>
+                <th className="md:pl-4">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {fundingSources.map((item) => {
+                return (
+                  <tr
+                    className="h-14 border-b border-divider text-base last:border-b-0"
+                    key={item.source}
+                  >
+                    <td className="pr-4 md:px-4">{item.source}</td>
+                    <td className="pr-4 md:px-4">{item.tier}</td>
+                    <td className="whitespace-pre pr-4 md:whitespace-normal md:px-4">
+                      {item.description}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="mt-8 font-bold">Last updated: January 2024</div>
       </div>
-      <div className="mt-4 overflow-x-auto pb-3">
-        <table>
-          <thead>
-            <tr className="h-14 border-b border-divider text-left text-sm text-secondary">
-              <th className="min-w-[300px] md:pl-4">Source / Project</th>
-              <th className="md:pl-4">Tier</th>
-              <th className="md:pl-4">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {fundingSources.map((item) => {
-              return (
-                <tr
-                  className="h-14 border-b border-divider text-base last:border-b-0"
-                  key={item.source}
-                >
-                  <td className="pr-4 md:px-4">{item.source}</td>
-                  <td className="pr-4 md:px-4">{item.tier}</td>
-                  <td className="whitespace-pre pr-4 md:whitespace-normal md:px-4">
-                    {item.description}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div className="mt-8 font-bold">Last updated: January 2024</div>
     </section>
   )
 }
