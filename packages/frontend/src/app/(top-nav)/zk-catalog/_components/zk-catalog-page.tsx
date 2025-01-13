@@ -26,7 +26,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
           <AccordionHeader asChild>
             <AccordionTrigger
               asChild
-              className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 dark:border-gray-800 dark:bg-zinc-900 md:flex-row"
+              className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-divider bg-surface-primary px-6 py-4 md:flex-row"
             >
               <div className="grid md:grid-cols-[4fr,4fr,4fr,4fr,4fr,1fr]">
                 <div className="mb-3 flex items-center gap-2 md:hidden">
@@ -88,7 +88,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
               </div>
             </AccordionTrigger>
           </AccordionHeader>
-          <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-gray-300 pt-3 dark:border-gray-800 md:space-y-2 md:px-6 md:pb-6">
+          <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-divider bg-surface-primary pt-3 md:space-y-2 md:px-6 md:pb-6">
             {item.shortDescription ? (
               <div className="my-7 flex flex-col gap-0.5 px-5">
                 <div className="text-2xs font-medium uppercase text-gray-500">
