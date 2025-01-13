@@ -13,6 +13,7 @@
     --negative: 0 100% 42%;
     --brand: 285deg 62.7% 52.7%;
     --background: 230deg 13.6% 91.4%;
+    --background-content: 0deg 0% 98%;
     --surface-primary: 0deg 0% 98%;
     --surface-secondary: 230deg 13.6% 91.4%;
     --surface-tertiary: 223deg 15.9% 82.7%;
@@ -36,6 +37,7 @@
     --negative: 0 100% 50%;
     --brand: 284deg 87.1% 75.7%;
     --background: 0deg 0% 0%;
+    --background-content: 0deg 0% 0%;
     --surface-primary: 225deg 14.8% 10.6%;
     --surface-secondary: 222deg 8.06% 24.3%;
     --surface-tertiary: 220deg 7.89% 29.8%;
@@ -77,6 +79,10 @@
 
   body {
     @apply bg-background text-base text-primary md:text-lg font-sans transition-colors selection:bg-brand/30 dark:selection:bg-brand/50;
+  }
+
+  body:has(.content) {
+    @apply bg-background-content;
   }
 }
 
