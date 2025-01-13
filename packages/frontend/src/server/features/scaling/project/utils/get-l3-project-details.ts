@@ -1,8 +1,5 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type ManuallyVerifiedContracts,
-} from '@l2beat/shared-pure'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { type RosetteValue } from '~/components/rosette/types'
@@ -28,7 +25,6 @@ interface Params {
   isVerified: boolean
   isHostChainVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
-  manuallyVerifiedContracts: ManuallyVerifiedContracts
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
   hostChain?: Layer2
@@ -44,7 +40,6 @@ export async function getL3ProjectDetails({
   isHostChainVerified,
   combinedRosetteValues,
   hostChainRosetteValues,
-  manuallyVerifiedContracts,
   projectsChangeReport,
   contractsVerificationStatuses,
 }: Params) {
@@ -59,7 +54,6 @@ export async function getL3ProjectDetails({
           nativePermissions: project.nativePermissions,
         },
         contractsVerificationStatuses,
-        manuallyVerifiedContracts,
       )
     : undefined
 
@@ -76,7 +70,6 @@ export async function getL3ProjectDetails({
       architectureImage: project.display.architectureImage,
     },
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
     projectsChangeReport,
   )
 

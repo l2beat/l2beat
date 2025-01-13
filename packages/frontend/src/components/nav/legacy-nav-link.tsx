@@ -23,7 +23,7 @@ export function LegacyNavLink({
       <Link
         className={cn(
           'flex h-full items-center font-medium',
-          large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2',
+          large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2 max-xl:text-sm',
           pathname.startsWith(href) && [
             'pt-0.5 text-brand',
             !withoutUnderline && 'border-b-2 border-current',

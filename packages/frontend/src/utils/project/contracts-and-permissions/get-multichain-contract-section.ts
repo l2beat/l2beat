@@ -7,7 +7,6 @@ import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-b
 import {
   type ContractsVerificationStatuses,
   type EthereumAddress,
-  type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { type MultiChainContractsSectionProps } from '~/components/projects/sections/contracts/multichain-contracts-section'
@@ -43,7 +42,6 @@ type MultiChainContractsSection = Omit<
 export function getMultiChainContractsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   projectsChangeReport: ProjectsChangeReport | undefined,
 ): MultiChainContractsSection | undefined {
   const hasAnyContracts = Object.values(projectParams.contracts.addresses).some(
@@ -71,7 +69,6 @@ export function getMultiChainContractsSection(
               projectParams,
               isUnverified,
               contractsVerificationStatuses,
-              manuallyVerifiedContracts,
               projectChangeReport,
             )
           }),
@@ -109,14 +106,11 @@ function makeTechnologyContract(
   projectParams: ProjectParams,
   isUnverified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): TechnologyContract {
   const chain = item.chain ?? 'ethereum'
 
   const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
-  const manuallyVerifiedContractsForChain =
-    manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
 
   const getAddress = (opts: {
@@ -183,16 +177,6 @@ function makeTechnologyContract(
   )
 
   const additionalReferences: Reference[] = []
-  addresses.forEach((address) => {
-    const manuallyVerified = manuallyVerifiedContractsForChain[address.address]
-    if (manuallyVerified) {
-      additionalReferences.push({
-        text: 'Source code',
-        href: manuallyVerified,
-      })
-    }
-  })
-
   const mainAddresses = [getAddress({ address: item.address })]
   const implementationAddresses =
     item.upgradeability?.implementations.map((implementation) =>

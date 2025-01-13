@@ -7,10 +7,7 @@ import {
   type OnChainDaBridge,
   type StandaloneDacBridge,
 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type ManuallyVerifiedContracts,
-} from '@l2beat/shared-pure'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
@@ -27,7 +24,6 @@ type RegularDetailsParams = {
   daBridge: OnChainDaBridge | StandaloneDacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
-  manuallyVerifiedContracts: ManuallyVerifiedContracts
   projectsChangeReport: ProjectsChangeReport
   evaluatedGrissiniValues: RosetteValue[]
 }
@@ -37,7 +33,6 @@ export function getRegularDaProjectSections({
   daBridge,
   isVerified,
   contractsVerificationStatuses,
-  manuallyVerifiedContracts,
   projectsChangeReport,
   evaluatedGrissiniValues,
 }: RegularDetailsParams) {
@@ -52,7 +47,6 @@ export function getRegularDaProjectSections({
             permissions: daBridge.permissions,
           },
           contractsVerificationStatuses,
-          manuallyVerifiedContracts,
         )
 
   const contractsSection =
@@ -67,7 +61,6 @@ export function getRegularDaProjectSections({
             isUnderReview: daLayer.isUnderReview,
           },
           contractsVerificationStatuses,
-          manuallyVerifiedContracts,
           projectsChangeReport,
         )
 

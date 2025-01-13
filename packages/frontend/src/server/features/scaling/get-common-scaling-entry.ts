@@ -8,6 +8,7 @@ import {
   isUnderReview,
   isVerified,
 } from '@l2beat/config'
+import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -33,7 +34,7 @@ export interface FilterableScalingEntry {
 }
 
 export interface CommonScalingEntry extends CommonProjectEntry {
-  tab: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+  tab: ActivityChartType
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
   filterable: FilterableScalingValues | undefined

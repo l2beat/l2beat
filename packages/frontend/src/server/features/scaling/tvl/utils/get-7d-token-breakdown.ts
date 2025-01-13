@@ -2,7 +2,7 @@ import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { env } from '~/env'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTokenBreakdown } from './get-token-breakdown'
-import { type BaseProject, getTvlProjects } from './get-tvl-projects'
+import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 
 export function get7dTokenBreakdown(
@@ -18,13 +18,11 @@ export type LatestTvl = Awaited<ReturnType<typeof get7dTokenBreakdownData>>
 export async function get7dTokenBreakdownData({
   type,
 }: { type: 'layer2' | 'bridge' }) {
-  const filter =
+  const projectsToQuery = getTvlProjects((project) =>
     type === 'layer2'
-      ? (project: BaseProject) =>
-          project.type === 'layer2' || project.type === 'layer3'
-      : (project: BaseProject) => project.type === 'bridge'
-
-  const projectsToQuery = getTvlProjects(filter)
+      ? project.type === 'layer2' || project.type === 'layer3'
+      : project.type === 'bridge',
+  )
 
   const tvlValues = await getTvlValuesForProjects(projectsToQuery, '7d')
 
