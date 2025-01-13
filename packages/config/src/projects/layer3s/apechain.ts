@@ -3,9 +3,17 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
+import { DacTransactionDataType } from '../other/da-beat/types'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('apechain', 'arbitrum')
+
+const dac = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = dac
 
 export const apechain: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
@@ -47,4 +55,16 @@ export const apechain: Layer3 = orbitStackL3({
   gasTokens: ['APE'],
   overrideEscrows: [],
   discoveryDrivenData: true,
+  dataAvailabilitySolution: AnytrustDAC({
+    display: {
+      name: 'ApeChain',
+      slug: 'apechain',
+    },
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignatures,
+      membersCount: membersCount,
+      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    },
+  }),
 })

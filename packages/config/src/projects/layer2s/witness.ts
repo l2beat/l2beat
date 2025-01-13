@@ -8,6 +8,8 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../other/da-beat/templates/polygoncdk-template'
+import { DacTransactionDataType } from '../other/da-beat/types'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
@@ -164,4 +166,16 @@ export const witness: Layer2 = polygonCDKStack({
       ...upgradeability,
     }),
   ],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    display: {
+      name: 'Witness Chain',
+      slug: 'witness',
+    },
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: DacTransactionDataType.TransactionData,
+    },
+  }),
 })

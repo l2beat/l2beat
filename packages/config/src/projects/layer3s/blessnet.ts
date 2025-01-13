@@ -3,9 +3,17 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
+import { DacTransactionDataType } from '../other/da-beat/types'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
+
+const dac = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = dac
 
 export const blessnet: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
@@ -61,4 +69,16 @@ export const blessnet: Layer3 = orbitStackL3({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  dataAvailabilitySolution: AnytrustDAC({
+    display: {
+      name: 'Blessnet',
+      slug: 'blessnet',
+    },
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignatures,
+      membersCount: membersCount,
+      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+    },
+  }),
 })

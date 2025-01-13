@@ -4,7 +4,7 @@ import { espressoDA } from './blockchain/espressoDA/espressoDA'
 import { ethereum } from './blockchain/ethereum/ethereum'
 import { memo } from './blockchain/memo/memo'
 import { near } from './blockchain/near/near'
-import { eigenDA } from './dac/eigenDA'
+import { eigenDA } from './da-services/eigen-da/eigen-da'
 
 export * from './types'
 export * from './utils/to-used-in-project'
