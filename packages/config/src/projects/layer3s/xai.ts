@@ -5,6 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
+import { DaEconomicSecurityRisk } from '../other/da-beat/types'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
@@ -138,6 +139,9 @@ export const xai: Layer3 = orbitStackL3({
           href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
         },
       ],
+    },
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
     },
     discovery,
   }),
