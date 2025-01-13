@@ -35,11 +35,11 @@ export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
     <>
-      <div className="bg-gray-100 px-4 pb-6 pt-8 dark:bg-zinc-900 md:!bg-transparent md:px-0 md:pb-0 md:pt-[72px]">
+      <div className="px-4 pb-6 pt-8 max-md:bg-surface-primary md:px-0 md:pb-0 md:pt-[72px]">
         <Breadcrumbs icon={props.details.icon} title={props.details.title} />
         <Header {...props} />
       </div>
-      <div className="mt-8 space-y-10 px-4 md:mt-16 md:px-0">
+      <div className="md:mt-16 md:space-y-10">
         <Section title="List of verifiers">
           <Verifiers
             items={props.details.verifiers}

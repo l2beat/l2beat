@@ -35,7 +35,7 @@ export function VerifierCard({
       </div>
       <SubVerifiersTable
         verifier={verifier}
-        className="mt-7 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)]"
+        className="mt-7 w-[calc(100vw_-_78px)] md:w-[calc(100vw_-_188px)]"
       />
     </div>
   )

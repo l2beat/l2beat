@@ -48,12 +48,12 @@ export function Verifiers(props: Props) {
             asChild
           >
             <tbody
-              className="transition-colors hover:!bg-zinc-100 data-[state=open]:bg-gray-100 dark:hover:!bg-neutral-800 dark:data-[state=open]:bg-zinc-900"
+              className="border-b border-divider transition-colors last:border-none"
               key={item.contractAddress.toString()}
             >
               <AccordionHeader asChild>
                 <AccordionTrigger asChild>
-                  <tr className="group/trigger h-14 cursor-pointer border-b border-divider data-[state=open]:border-none">
+                  <tr className="group/trigger h-14 cursor-pointer">
                     <td className="px-4 text-base font-medium md:text-lg">
                       {item.name}
                     </td>
@@ -79,9 +79,9 @@ export function Verifiers(props: Props) {
                 </AccordionTrigger>
               </AccordionHeader>
               <AccordionContent asChild>
-                <tr className="border-b border-divider">
+                <tr>
                   <td
-                    colSpan={3}
+                    colSpan={100}
                     className="mt-1 space-y-5 px-4 pb-5 md:hidden"
                   >
                     {item.verified === 'no' ? (
@@ -122,11 +122,11 @@ export function Verifiers(props: Props) {
                     </div>
                     <SubVerifiersTable
                       verifier={item}
-                      className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_128px)]"
+                      className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_176px)]"
                     />
                   </td>
                   <td
-                    colSpan={5}
+                    colSpan={100}
                     className="mt-1 hidden w-[90%] space-y-5 px-4 pb-5 md:table-cell"
                   >
                     <div>
@@ -139,7 +139,7 @@ export function Verifiers(props: Props) {
                     </div>
                     <SubVerifiersTable
                       verifier={item}
-                      className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_128px)]"
+                      className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_176px)]"
                     />
                   </td>
                 </tr>
