@@ -333,6 +333,5 @@ export const apex: Layer2 = {
       requiredMembers: dacConfig.requiredSignatures,
       membersCount: dacConfig.membersCount,
     },
-    discovery,
   }),
 }
