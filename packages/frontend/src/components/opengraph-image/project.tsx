@@ -2,7 +2,6 @@
 
 interface Props {
   baseUrl: string
-  background?: 'default' | 'da-beat'
   slug: string
   name: string
   size: {
@@ -17,7 +16,6 @@ export function ProjectOpengraphImage({
   slug,
   name,
   size,
-  background = 'default',
   children,
 }: Props) {
   return (
@@ -30,7 +28,7 @@ export function ProjectOpengraphImage({
       }}
     >
       <img
-        src={`${baseUrl}/meta-images/projects/${background === 'default' ? 'template.png' : 'da-beat-template.jpg'}`}
+        src={`${baseUrl}/meta-images/projects/template.png`}
         alt=""
         {...size}
       />

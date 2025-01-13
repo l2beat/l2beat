@@ -55,7 +55,8 @@ export default async function Image({ params }: Props) {
       name={project.display.name}
       size={size}
     >
-      BRIDGES • PROJECT PAGE
+      {/* See comment in zk-catalog/[slug]/opengraph-image.tsx for explanation why we use &nbsp; */}
+      BRIDGES&nbsp;•&nbsp;PROJECT&nbsp;PAGE
     </ProjectOpengraphImage>,
     {
       ...size,

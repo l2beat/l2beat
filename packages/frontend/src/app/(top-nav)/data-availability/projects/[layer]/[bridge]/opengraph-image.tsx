@@ -51,13 +51,13 @@ export default async function Image({ params }: Props) {
   ]
   return new ImageResponse(
     <ProjectOpengraphImage
-      background="da-beat"
       baseUrl={baseUrl}
       slug={project.display.slug}
       name={project.display.name}
       size={size}
     >
-      DATA AVAILABILITY • PROJECT PAGE
+      {/* See comment in zk-catalog/[slug]/opengraph-image.tsx for explanation why we use &nbsp; */}
+      DATA&nbsp;AVAILABILITY&nbsp;•&nbsp;PROJECT&nbsp;PAGE
     </ProjectOpengraphImage>,
     {
       ...size,

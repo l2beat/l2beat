@@ -61,7 +61,13 @@ export default async function Image({ params }: Props) {
       name={project.name}
       size={size}
     >
-      ZK CATALOG • PROJECT PAGE
+      {/* 
+        Because of the way vercel/satori code is implemented, we need to use &nbsp; to not let the text
+        be splitted by whitespaces because if it is then the text is not rendered correctly.
+        Probably only in this specific case where "T" and "A" are next to each because vercel/satori,
+        does not take into account the font kerning.
+      */}
+      ZK&nbsp;CATALOG&nbsp;•&nbsp;PROJECT&nbsp;PAGE
     </ProjectOpengraphImage>,
     {
       ...size,
@@ -79,6 +85,7 @@ export default async function Image({ params }: Props) {
           weight: 700,
         },
       ],
+      debug: true,
     },
   )
 }
