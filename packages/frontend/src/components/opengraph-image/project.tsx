@@ -9,6 +9,7 @@ interface Props {
     width: number
     height: number
   }
+  children: React.ReactNode
 }
 
 export function ProjectOpengraphImage({
@@ -17,6 +18,7 @@ export function ProjectOpengraphImage({
   name,
   size,
   background = 'default',
+  children,
 }: Props) {
   return (
     <div
@@ -79,11 +81,11 @@ export function ProjectOpengraphImage({
             color: '#db8bf7',
             fontFamily: 'roboto',
             fontWeight: 500,
-            fontSize: 32,
+            fontSize: 36,
             whiteSpace: 'pre',
           }}
         >
-          PROJECT PAGE
+          {children}
         </div>
       </div>
     </div>
