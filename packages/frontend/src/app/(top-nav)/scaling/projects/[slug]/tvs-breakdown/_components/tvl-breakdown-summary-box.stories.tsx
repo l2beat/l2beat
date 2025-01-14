@@ -11,7 +11,7 @@ type Story = StoryObj<typeof TvlBreakdownSummaryBoxComponent>
 
 export const Default: Story = {
   args: {
-    tvl: {
+    total: {
       value: 5470000000,
       change: 0.029,
     },
