@@ -60,7 +60,7 @@ export function ScalingProjectSummary({ project }: Props) {
           </div>
           <div className="grid w-full md:grid-cols-3 md:gap-4">
             <ValueLockedSummary
-              breakdown={project.header.tvl?.tvlBreakdown}
+              tvl={project.header.tvl}
               detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
               isArchived={project.isArchived}
             />

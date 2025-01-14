@@ -26,7 +26,9 @@ import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
+  ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
+  ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -96,6 +98,8 @@ export interface ZkStackConfigCommon {
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
+  nonTemplateRiskView?: Partial<ScalingProjectRiskView>
+  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
 }
 
 export type Upgradeability = {
@@ -357,7 +361,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),
     riskView: {
-      stateValidation: {
+      stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         secondLine: formatExecutionDelay(executionDelayS),
         sources: [
@@ -383,7 +387,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         ],
       },
       dataAvailability:
-        daProvider !== undefined
+        (templateVars.nonTemplateRiskView?.dataAvailability ??
+        daProvider !== undefined)
           ? {
               ...RISK_VIEW.DATA_EXTERNAL,
               sources: [
@@ -423,7 +428,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                 },
               ],
             },
-      exitWindow: {
+      exitWindow: templateVars.nonTemplateRiskView?.exitWindow ?? {
         ...RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
         sources: [
           {
@@ -435,7 +440,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           },
         ],
       },
-      sequencerFailure: {
+      sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
         ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
         sources: [
           {
@@ -447,7 +452,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           },
         ],
       },
-      proposerFailure: {
+      proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
         ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
         sources: [
           {
@@ -491,9 +496,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             },
           )),
     technology: {
-      dataAvailability: technologyDA(daProvider),
-      operator: OPERATOR.CENTRALIZED_OPERATOR,
-      forceTransactions: {
+      dataAvailability:
+        templateVars.nonTemplateTechnology?.dataAvailability ??
+        technologyDA(daProvider),
+      operator:
+        templateVars.nonTemplateTechnology?.operator ??
+        OPERATOR.CENTRALIZED_OPERATOR,
+      forceTransactions: templateVars.nonTemplateTechnology
+        ?.forceTransactions ?? {
         name: 'Users can force any transaction via L1',
         description:
           'If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
@@ -512,7 +522,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           },
         ],
       },
-      exitMechanisms: [
+      exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
           ...EXITS.REGULAR('zk', 'merkle proof'),
           references: [
