@@ -9,7 +9,7 @@ export const haust: Layer2 = upcomingL2({
     name: 'Haust Network',
     slug: 'haust',
     description:
-      'Haust Network is a zkEVM Layer 2 blockchain built on the Polygon CDK, integrating AggLayer, Data Availability and Account Abstraction from the outset.',
+      'Haust Network is a zkEVM Layer 2 blockchain built on the Polygon CDK, integrating with the AggLayer and Account Abstraction from the outset.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
     provider: 'Polygon',
