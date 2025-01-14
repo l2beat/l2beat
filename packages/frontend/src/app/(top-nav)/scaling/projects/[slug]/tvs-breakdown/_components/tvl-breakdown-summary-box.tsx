@@ -30,6 +30,7 @@ export function TvlBreakdownSummaryBox(props: Props) {
         title="Total value secured"
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
         mobileTitle="Total value secured"
+        smallMobileTitle="Total"
         value={props.total.value}
         change={props.total.change}
         warning={props.warning}
@@ -39,6 +40,7 @@ export function TvlBreakdownSummaryBox(props: Props) {
         title="Natively Minted"
         tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
         mobileTitle="Natively Minted Tokens"
+        smallMobileTitle="Native"
         value={props.native.value}
         change={props.native.change}
       />
@@ -46,6 +48,7 @@ export function TvlBreakdownSummaryBox(props: Props) {
         title="Externally Bridged"
         tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
         mobileTitle="Externally Bridged Value"
+        smallMobileTitle="External"
         value={props.external.value}
         change={props.external.change}
       />
@@ -53,6 +56,7 @@ export function TvlBreakdownSummaryBox(props: Props) {
         title="Canonically Bridged"
         tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         mobileTitle="Canonically Bridged Value"
+        smallMobileTitle="Canonical"
         value={props.canonical.value}
         change={props.canonical.change}
       />
@@ -63,6 +67,7 @@ export function TvlBreakdownSummaryBox(props: Props) {
 interface StatsItemProps {
   title: string
   mobileTitle: string
+  smallMobileTitle: string
   value: number
   change: number
   tooltip: string
@@ -84,11 +89,19 @@ function StatsItem(props: StatsItemProps) {
         </span>
         <span
           className={cn(
-            'font-medium md:hidden',
+            'font-medium max-xs:hidden md:hidden',
             props.big ? 'text-lg text-primary' : 'text-xs text-gray-600',
           )}
         >
           {props.mobileTitle}
+        </span>
+        <span
+          className={cn(
+            'font-medium xs:hidden',
+            props.big ? 'text-lg text-primary' : 'text-xs text-gray-600',
+          )}
+        >
+          {props.smallMobileTitle}
         </span>
 
         <Tooltip>
