@@ -8,7 +8,7 @@ import {
 } from '@radix-ui/react-accordion'
 import { type Metadata } from 'next'
 import Image from 'next/image'
-import { ContentWrapper } from '~/components/content-wrapper'
+import { MainPageHeader } from '~/components/main-page-header'
 import { ChevronIcon } from '~/icons/chevron'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -38,24 +38,22 @@ export default async function Page() {
   const view = getZkCatalogView(projects, verifiers)
 
   return (
-    <ContentWrapper>
-      <header className="mt-[72px] text-left md:text-center">
-        <h1 className="text-5xl font-bold md:text-6xl">ZK Catalog</h1>
-        <p className="mx-auto mt-6 max-w-[994px] text-base font-medium">
-          ZK Catalog by L2BEAT is a community-driven resource offering detailed
-          insights into the ZK technology utilized by various blockchain
-          projects. It aims to enhance transparency and understanding of ZK tech
-          implementations across the industry.
-        </p>
-      </header>
+    <>
+      <MainPageHeader>ZK Catalog</MainPageHeader>
+      <p className="mx-6 text-xs text-secondary max-md:mt-6">
+        ZK Catalog by L2BEAT is a community-driven resource offering detailed
+        insights into the ZK technology utilized by various blockchain projects.
+        It aims to enhance transparency and understanding of ZK tech
+        implementations across the industry.
+      </p>
       <ProjectList {...view} />
-    </ContentWrapper>
+    </>
   )
 }
 
 function ProjectList({ items, askForVerificationLink }: ZkCatalogView) {
   return (
-    <main className="mt-4 md:mt-12">
+    <main className="mt-4 md:mt-6">
       <Accordion className="space-y-3" type="multiple">
         {items.map((item) => (
           <AccordionItem key={item.slug} value={item.slug}>
@@ -64,7 +62,7 @@ function ProjectList({ items, askForVerificationLink }: ZkCatalogView) {
                 asChild
                 className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-divider bg-surface-primary px-6 py-4 md:flex-row"
               >
-                <div className="grid md:grid-cols-[4fr,4fr,4fr,4fr,4fr,1fr]">
+                <div className="grid md:grid-cols-[1.5fr,1fr,1fr,1fr,130px,70px]">
                   <div className="mb-3 flex items-center gap-2 md:hidden">
                     <Image
                       width={18}
@@ -114,7 +112,7 @@ function ProjectList({ items, askForVerificationLink }: ZkCatalogView) {
                     slug={item.slug}
                     className="self-center justify-self-center"
                   />
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-center">
                     <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
                       <span className="text-base font-bold">Verifiers</span>
                       <ChevronIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />

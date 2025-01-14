@@ -12,7 +12,7 @@ export function DetailsLink({
     <LinkWithOnHoverPrefetch
       href={`/zk-catalog/${slug}`}
       className={cn(
-        'mt-7 flex h-10 w-full items-center justify-center rounded-lg bg-black px-6 text-base font-bold text-primary-invert dark:bg-white md:mt-0 md:h-8 md:w-max',
+        'mt-7 flex h-10 w-full items-center justify-center rounded-lg bg-black px-6 text-base font-bold text-primary-invert dark:bg-white md:mt-0',
         className,
       )}
     >
