@@ -8,16 +8,16 @@ import {
 import { EtherscanLink } from '~/components/etherscan-link'
 import { CustomLink } from '~/components/link/custom-link'
 import { Markdown } from '~/components/markdown/markdown'
+import { externalLinks } from '~/consts/external-links'
 import { ChevronIcon } from '~/icons/chevron'
 import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
-import { type ZkCatalogProjectDetails } from '../page'
+import { type ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
 import { LastUsedCell } from './last-used-cell'
 import { SubVerifiersTable } from './sub-verifiers-table'
 import { VerifiedCell } from './verified-cell'
 
 interface Props {
   items: ZkCatalogProjectDetails['verifiers']
-  askForVerificationLink: string
 }
 
 export function Verifiers(props: Props) {
@@ -25,7 +25,7 @@ export function Verifiers(props: Props) {
     <Accordion type="multiple" asChild>
       <table className="w-full">
         <thead>
-          <tr className="border-b border-divider align-bottom text-zinc-500 dark:text-n-zinc-300">
+          <tr className="border-b border-divider align-bottom text-secondary">
             <th className="px-4 py-2 text-start text-xs font-medium uppercase">
               Name
             </th>
@@ -64,10 +64,7 @@ export function Verifiers(props: Props) {
                       />
                     </td>
                     <td className="pr-4">
-                      <VerifiedCell
-                        {...item}
-                        askForVerificationLink={props.askForVerificationLink}
-                      />
+                      <VerifiedCell {...item} />
                     </td>
                     <td className="hidden pr-4 md:table-cell">
                       <LastUsedCell days={item.lastUsedDaysAgo} />
@@ -85,7 +82,9 @@ export function Verifiers(props: Props) {
                     className="mt-1 space-y-5 px-4 pb-5 md:hidden"
                   >
                     {item.verified === 'no' ? (
-                      <CustomLink href={props.askForVerificationLink}>
+                      <CustomLink
+                        href={externalLinks.askForZkCatalogVerification}
+                      >
                         Submit or ask for verification
                       </CustomLink>
                     ) : null}
@@ -98,7 +97,7 @@ export function Verifiers(props: Props) {
                       </p>
                     ) : null}
                     <div>
-                      <p className="mb-2 text-xs font-medium text-zinc-500 dark:text-n-zinc-300">
+                      <p className="mb-2 text-xs font-medium text-secondary">
                         Verifier
                       </p>
                       <EtherscanLink
@@ -107,13 +106,13 @@ export function Verifiers(props: Props) {
                       />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-zinc-500 dark:text-n-zinc-300">
+                      <p className="mb-2 text-xs font-medium text-secondary">
                         Last used
                       </p>
                       <LastUsedCell days={item.lastUsedDaysAgo} />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-zinc-500 dark:text-n-zinc-300">
+                      <p className="mb-2 text-xs font-medium text-secondary">
                         Description
                       </p>
                       <Markdown className="text-xs">
@@ -130,7 +129,7 @@ export function Verifiers(props: Props) {
                     className="mt-1 hidden w-[90%] space-y-5 px-4 pb-5 md:table-cell"
                   >
                     <div>
-                      <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-50">
+                      <p className="mb-2 text-xs font-medium text-secondary">
                         Description
                       </p>
                       <Markdown className="text-xs font-medium text-zinc-900/80 dark:text-white/80">

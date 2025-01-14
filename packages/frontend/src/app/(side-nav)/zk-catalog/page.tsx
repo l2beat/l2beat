@@ -17,9 +17,9 @@ import { DetailsItem } from './_components/details-item'
 import { DetailsLink } from './_components/details-link'
 import { VerifierCard } from './_components/verifier-card'
 import {
-  type ZkCatalogView,
-  getZkCatalogView,
-} from './_utils/get-zk-catalog-view'
+  type ZkCatalogEntry,
+  getZkCatalogEntries,
+} from './_utils/get-zk-catalog-entries'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'ZK Catalog - L2BEAT',
@@ -35,7 +35,7 @@ export default async function Page() {
     select: ['proofVerification'],
     whereNot: ['isArchived'],
   })
-  const view = getZkCatalogView(projects, verifiers)
+  const entries = getZkCatalogEntries(projects, verifiers)
 
   return (
     <>
@@ -46,17 +46,17 @@ export default async function Page() {
         It aims to enhance transparency and understanding of ZK tech
         implementations across the industry.
       </p>
-      <ProjectList {...view} />
+      <ProjectList entries={entries} />
     </>
   )
 }
 
-function ProjectList({ items, askForVerificationLink }: ZkCatalogView) {
+function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
   return (
     <main className="mt-4 md:mt-6">
       <Accordion className="space-y-3" type="multiple">
-        {items.map((item) => (
-          <AccordionItem key={item.slug} value={item.slug}>
+        {entries.map((entry) => (
+          <AccordionItem key={entry.slug} value={entry.slug}>
             <AccordionHeader asChild>
               <AccordionTrigger
                 asChild
@@ -67,11 +67,11 @@ function ProjectList({ items, askForVerificationLink }: ZkCatalogView) {
                     <Image
                       width={18}
                       height={18}
-                      alt={item.name}
-                      src={`/icons/${item.slug}.png`}
+                      alt={entry.name}
+                      src={`/icons/${entry.slug}.png`}
                       className="size-[18px]"
                     />
-                    <span className="text-lg font-bold">{item.name}</span>
+                    <span className="text-lg font-bold">{entry.name}</span>
                   </div>
                   <DetailsItem
                     title="Name"
@@ -81,35 +81,35 @@ function ProjectList({ items, askForVerificationLink }: ZkCatalogView) {
                       <Image
                         width={18}
                         height={18}
-                        alt={item.name}
-                        src={`/icons/${item.slug}.png`}
+                        alt={entry.name}
+                        src={`/icons/${entry.slug}.png`}
                         className="size-[18px]"
                       />
-                      <span>{item.name}</span>
+                      <span>{entry.name}</span>
                     </div>
                   </DetailsItem>
                   <DetailsItem
                     title="Number of verifiers"
                     className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
                   >
-                    <VerifiedCountWithDetails verifiers={item.verifiers} />
+                    <VerifiedCountWithDetails verifiers={entry.verifiers} />
                   </DetailsItem>
                   <DetailsItem
                     title="Aggregation"
                     tooltip="Shows if recursive proof aggregation is used."
                     className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
                   >
-                    {item.aggregation ? 'Yes' : 'No'}
+                    {entry.aggregation ? 'Yes' : 'No'}
                   </DetailsItem>
                   <DetailsItem
                     title="Trusted setup"
                     tooltip="Shows if a trusted setup is used anywhere in the proving stack."
                     className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
                   >
-                    {item.trustedSetup}
+                    {entry.trustedSetup}
                   </DetailsItem>
                   <DetailsLink
-                    slug={item.slug}
+                    slug={entry.slug}
                     className="self-center justify-self-center"
                   />
                   <div className="flex items-center justify-center">
@@ -123,21 +123,20 @@ function ProjectList({ items, askForVerificationLink }: ZkCatalogView) {
               </AccordionTrigger>
             </AccordionHeader>
             <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-divider bg-surface-primary pt-3 md:space-y-2 md:px-6 md:pb-6">
-              {item.shortDescription ? (
+              {entry.shortDescription ? (
                 <div className="my-7 flex flex-col gap-0.5 px-5">
-                  <div className="text-2xs font-medium uppercase text-gray-500">
+                  <div className="text-2xs font-medium uppercase text-secondary">
                     Description
                   </div>
                   <div className="text-sm font-medium">
-                    {item.shortDescription}
+                    {entry.shortDescription}
                   </div>
                 </div>
               ) : null}
-              {item.verifiers.map((verifier) => (
+              {entry.verifiers.map((verifier) => (
                 <VerifierCard
-                  key={`${item.name}-${verifier.name}`}
+                  key={`${entry.name}-${verifier.name}`}
                   verifier={verifier}
-                  askForVerificationLink={askForVerificationLink}
                 />
               ))}
             </AccordionContent>

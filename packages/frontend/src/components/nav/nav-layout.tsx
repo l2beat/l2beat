@@ -26,7 +26,7 @@ export async function NavLayout({
   topNavbar,
   topChildren,
 }: Props) {
-  const groups: NavGroup[] = compact([
+  const groups = compact<NavGroup>([
     {
       type: 'multiple',
       title: 'Scaling',
@@ -129,6 +129,7 @@ export async function NavLayout({
     {
       type: 'single',
       title: 'ZK Catalog',
+      match: 'zk-catalog',
       href: '/zk-catalog',
       icon: (
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />

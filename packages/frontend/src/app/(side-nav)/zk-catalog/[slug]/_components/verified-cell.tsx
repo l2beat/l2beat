@@ -9,10 +9,9 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { CustomLink } from '~/components/link/custom-link'
+import { externalLinks } from '~/consts/external-links'
 
-type Props = {
-  askForVerificationLink: string
-} & (
+type Props =
   | {
       verified: 'yes' | 'failed'
       performedBy: {
@@ -23,7 +22,6 @@ type Props = {
   | {
       verified: 'no'
     }
-)
 
 export function VerifiedCell(props: Props) {
   switch (props.verified) {
@@ -67,7 +65,7 @@ export function VerifiedCell(props: Props) {
           </Tooltip>
           <CustomLink
             className="ml-[26px] text-xs max-md:hidden"
-            href={props.askForVerificationLink}
+            href={externalLinks.askForZkCatalogVerification}
           >
             Submit or ask for verification
           </CustomLink>
