@@ -26,8 +26,9 @@ export type ChainId =
 export type Chain = {
   id: ChainId
   name: string
-  suggestedBlocksCount: number
-  batchSize: number
+  type: 'rpc' | 'starknet'
+  customSuggestedBlocksCount?: number
+  customBatchSize?: number
   getBlockLink: (blockNumber: number) => string
   getTxLink: (txHash: string) => string
   getContractLink: (address: string) => string
@@ -38,8 +39,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'alephzero',
     name: 'Aleph Zero EVM',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://evm-explorer.alephzero.org/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -50,8 +50,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'arbitrum',
     name: 'Arbitrum One',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://arbiscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -62,8 +61,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'base',
     name: 'Base',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://basescan.org/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -74,8 +72,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'blast',
     name: 'Blast',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://blastscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://blastscan.io/tx/${txHash}`,
@@ -85,8 +82,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'ethereum',
     name: 'Ethereum',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://etherscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -97,8 +93,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'gravity',
     name: 'Gravity',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://explorer.gravity.xyz/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.gravity.xyz/tx/${txHash}`,
@@ -108,8 +103,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'linea',
     name: 'Linea',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://lineascan.build/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://lineascan.build/tx/${txHash}`,
@@ -119,8 +113,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'lyra',
     name: 'Derive',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://explorer.lyra.finance/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.lyra.finance/tx/${txHash}`,
@@ -130,8 +123,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'mantle',
     name: 'Mantle',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://explorer.mantle.xyz/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.mantle.xyz/tx/${txHash}`,
@@ -141,8 +133,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'nova',
     name: 'Arbitrum Nova',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://nova.arbiscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://nova.arbiscan.io/tx/${txHash}`,
@@ -152,8 +143,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'optimism',
     name: 'OP Mainnet',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://optimistic.etherscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -164,8 +154,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'polygonpos',
     name: 'Polygon PoS',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://polygonscan.com/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://polygonscan.com/tx/${txHash}`,
@@ -175,8 +164,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'polynomial',
     name: 'Polynomial',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://polynomialscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://polynomialscan.io/tx/${txHash}`,
@@ -186,8 +174,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'scroll',
     name: 'Scroll',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://scrollscan.com/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://scrollscan.com/tx/${txHash}`,
@@ -197,8 +184,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'silicon',
     name: 'Silicon',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://scope.silicon.network/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://scope.silicon.network/tx/${txHash}`,
@@ -208,8 +194,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'starknet',
     name: 'Starknet',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'starknet',
     getBlockLink: (blockNumber: number) =>
       `https://starkscan.co/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://starkscan.co/tx/${txHash}`,
@@ -219,8 +204,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'taiko',
     name: 'Taiko',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://taikoscan.io//block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://taikoscan.io/tx/${txHash}`,
@@ -230,8 +214,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'worldchain',
     name: 'World Chain',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://worldscan.org/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://worldscan.org/tx/${txHash}`,
@@ -241,8 +224,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'xai',
     name: 'Xai',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://xaiscan.io//block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://xaiscan.io/tx/${txHash}`,
@@ -252,8 +234,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'zircuit',
     name: 'Zircuit',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://explorer.zircuit.com//blocks/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.zircuit.com/tx/${txHash}`,
@@ -263,8 +244,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'zksync-era',
     name: 'ZKsync Era',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://era.zksync.network//block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -275,8 +255,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'zora',
     name: 'Zora',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    type: 'rpc',
     getBlockLink: (blockNumber: number) =>
       `https://explorer.zora.energy/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.zora.energy/tx/${txHash}`,

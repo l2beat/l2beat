@@ -16,6 +16,8 @@ import type { Counter } from '../counters/counter'
 import { DB } from '../db/db'
 import { NameService } from './NameService'
 
+const DEFAULT_BATCH_SIZE = 10
+
 export class ChainService {
   private readonly client: BlockClient
   private readonly counter: Counter
@@ -24,37 +26,17 @@ export class ChainService {
   constructor(chain: Chain, db: DB) {
     const http = new HttpClient()
 
-    switch (chain.id) {
+    switch (chain.type) {
       case 'starknet':
         this.client = new StarknetClient(chain)
         this.counter = new StarknetCounter()
         break
-      case 'alephzero':
-      case 'arbitrum':
-      case 'base':
-      case 'blast':
-      case 'ethereum':
-      case 'gravity':
-      case 'linea':
-      case 'lyra':
-      case 'mantle':
-      case 'nova':
-      case 'optimism':
-      case 'polygonpos':
-      case 'polynomial':
-      case 'scroll':
-      case 'silicon':
-      case 'taiko':
-      case 'worldchain':
-      case 'xai':
-      case 'zircuit':
-      case 'zksync-era':
-      case 'zora': {
+      case 'rpc': {
         this.client = new RpcClient({
           url: getApiUrl(chain.id),
           sourceName: chain.id,
           http,
-          callsPerMinute: chain.batchSize * 30,
+          callsPerMinute: (chain.customBatchSize ?? DEFAULT_BATCH_SIZE) * 30,
           logger: Logger.SILENT,
           retryStrategy: 'RELIABLE',
         })
