@@ -48,7 +48,7 @@
         "$upgradeCount": 1,
         "committeeHash": "0x6a72452343c27af9cfd36812714ec5c293ae843cac115b41f7b422f8e237c83f",
         "getAmountOfMembers": 3,
-        "getProcotolName": "DataAvailabilityCommittee",
+        "getProtocolName": "DataAvailabilityCommittee",
         "members": [
           [
             "http://silicon-mainnet-da-3.nodeinfra.com:8444",
@@ -333,7 +333,7 @@
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function committeeHash() view returns (bytes32)",
       "function getAmountOfMembers() view returns (uint256)",
-      "function getProcotolName() pure returns (string)",
+      "function getProtocolName() pure returns (string)",
       "function initialize()",
       "function members(uint256) view returns (string url, address addr)",
       "function owner() view returns (address)",
