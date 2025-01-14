@@ -8,26 +8,8 @@ import { CheckIcon } from '~/icons/check'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 
-const SelectContext = React.createContext<
-  React.Dispatch<React.SetStateAction<boolean>> | undefined
->(undefined)
-
-function useSelectContext() {
-  const context = React.useContext(SelectContext)
-  if (!context) {
-    throw new Error('useSelectContext must be used within a SelectContext')
-  }
-
-  return context
-}
-
 function Select(props: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  const [isOpen, setIsOpen] = React.useState(false)
-  return (
-    <SelectContext.Provider value={setIsOpen}>
-      <SelectPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props} />
-    </SelectContext.Provider>
-  )
+  return <SelectPrimitive.Root {...props} />
 }
 
 const SelectGroup = SelectPrimitive.Group
@@ -35,7 +17,7 @@ const SelectGroup = SelectPrimitive.Group
 const SelectValue = SelectPrimitive.Value
 
 const selectTriggerClassnames = cn(
-  'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+  'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
   'bg-surface-primary text-xs font-medium leading-none data-[state=open]:hover:bg-surface-secondary md:text-sm',
   'ring-offset-background focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand',
   'z-20 transition-colors',
@@ -50,17 +32,11 @@ const SelectTrigger = ({
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   icon?: React.ReactNode
 }) => {
-  const setIsOpen = useSelectContext()
   return (
     <SelectPrimitive.Trigger
       ref={ref}
       onPointerDown={(e) => {
         if (e.pointerType === 'touch') e.preventDefault()
-      }}
-      onPointerUp={(e) => {
-        if (e.pointerType === 'touch') {
-          setIsOpen((prevState) => !prevState)
-        }
       }}
       className={cn(selectTriggerClassnames, className)}
       {...props}
@@ -120,31 +96,33 @@ const SelectContent = ({
   position = 'popper',
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) => (
-  <SelectPrimitive.Content
-    ref={ref}
-    data-role="select-content"
-    className={cn(
-      'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-lg bg-surface-primary shadow-popover',
-      'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      position === 'popper' &&
-        'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-      className,
-    )}
-    position={position}
-    {...props}
-  >
-    <SelectScrollUpButton />
-    <SelectPrimitive.Viewport
+  <SelectPrimitive.Portal>
+    <SelectPrimitive.Content
+      ref={ref}
+      data-role="select-content"
       className={cn(
-        'p-1',
+        'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-lg bg-surface-primary shadow-popover',
+        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
         position === 'popper' &&
-          'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+          'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+        className,
       )}
+      position={position}
+      {...props}
     >
-      {children}
-    </SelectPrimitive.Viewport>
-    <SelectScrollDownButton />
-  </SelectPrimitive.Content>
+      <SelectScrollUpButton />
+      <SelectPrimitive.Viewport
+        className={cn(
+          'p-1',
+          position === 'popper' &&
+            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+        )}
+      >
+        {children}
+      </SelectPrimitive.Viewport>
+      <SelectScrollDownButton />
+    </SelectPrimitive.Content>
+  </SelectPrimitive.Portal>
 )
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
