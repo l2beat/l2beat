@@ -307,7 +307,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9"
+          "target": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         }
       ],
       "sinceTimestamp": 1735877183,
@@ -386,11 +387,15 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0xbB138cE37870443d5b2B02a36619D3478738E0f6",
+      "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
         "0xb085c0ecb42d97e9bd5fab260dd0fb686b8e112ba9b1ec07ece067a8ce17e2a3"
       ],
       "proxyType": "resolved delegate proxy",
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "categories": ["Core"],
+      "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1735877339,
       "values": {
         "$immutable": false,
@@ -422,8 +427,7 @@
         "superchainConfig": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
         "systemConfig": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.4.0"
-      },
-      "errors": { "xDomainMessageSender": "Processing error occurred." }
+      }
     },
     {
       "name": "DisputeGameFactory",
@@ -484,6 +488,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -574,6 +579,7 @@
         {
           "permission": "upgrade",
           "target": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
@@ -606,11 +612,13 @@
     {
       "name": "L1StandardBridge",
       "address": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
+      "template": "opstack/L1StandardBridge_soon",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
         "0xe2afd35e21cefc5b6eda770f7082c3916b8353d50c158a857cfc2ada89027f5b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -618,7 +626,8 @@
           "via": [
             {
               "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0
+              "delay": 0,
+              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
             }
           ]
         }
@@ -1104,6 +1113,8 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/DisputeGameFactory": "0x02f89510f08edb9ae5191064b00ab809feddc1544be93f761bbf30427ef5ae5b",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
+    "opstack/L1StandardBridge_soon": "0xf16929c059e4cd1c96c60912d102a1f009983c7055ab3cb5d54c3dd5ec9d3412",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismPortal_soon": "0xaf8cbf870d9361ccf783c20cbf6d00b28d0fff712e5ed73f41ea5f602b4eb993",
     "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8"

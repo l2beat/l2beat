@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe17256091af1617f2ef5e4ed3dd3d5df72782b32
+Generated with discovered.json: 0x71e43d7919ac5d71aef6c8eb7d220cc3cd5eddaf
 
-# Diff at Tue, 14 Jan 2025 11:27:42 GMT:
+# Diff at Tue, 14 Jan 2025 14:38:05 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - current block number: 21622232
@@ -68,7 +68,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L1CrossDomainMessenger (0xbB138cE37870443d5b2B02a36619D3478738E0f6)
-    +++ description: None
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
 ```
 
 ```diff
@@ -92,5 +92,5 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L1StandardBridge (0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9)
-    +++ description: None
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
 ```
