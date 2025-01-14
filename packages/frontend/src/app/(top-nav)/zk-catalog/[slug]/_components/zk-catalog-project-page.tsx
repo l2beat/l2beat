@@ -11,6 +11,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { CustomLink } from '~/components/link/custom-link'
 import { Markdown } from '~/components/markdown/markdown'
+import { PrimaryCard } from '~/components/primary-card'
 import { InfoIcon } from '~/icons/info'
 import { type ZkCatalogProofVerification } from '../../_utils/types'
 import { ProjectHeader } from './project-header'
@@ -34,11 +35,11 @@ export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
     <>
-      <div className="bg-gray-100 px-4 pb-6 pt-8 dark:bg-zinc-900 md:!bg-transparent md:px-0 md:pb-0 md:pt-[72px]">
+      <div className="px-4 pb-6 pt-8 max-md:bg-surface-primary md:px-0 md:pb-0 md:pt-[72px]">
         <Breadcrumbs icon={props.details.icon} title={props.details.title} />
         <Header {...props} />
       </div>
-      <div className="mt-8 space-y-10 px-4 md:mt-16 md:px-0">
+      <div className="md:mt-16 md:space-y-10">
         <Section title="List of verifiers">
           <Verifiers
             items={props.details.verifiers}
@@ -97,7 +98,7 @@ function Header(props: ZkCatalogProjectPageProps) {
         ) : undefined}
       </div>
       <HorizontalSeparator className="mb-5 mt-6 md:hidden" />
-      <div className="flex grid-cols-3 flex-col gap-1 bg-gray-100 dark:bg-zinc-900 md:mt-8 md:grid md:rounded-xl md:p-6">
+      <div className="flex grid-cols-3 flex-col gap-1 bg-surface-primary md:mt-8 md:grid md:rounded-xl md:p-6">
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
@@ -147,9 +148,9 @@ function HeaderItem({
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section>
+    <PrimaryCard>
       <h2 className="mb-4 text-2xl font-bold">{title}</h2>
       {children}
-    </section>
+    </PrimaryCard>
   )
 }

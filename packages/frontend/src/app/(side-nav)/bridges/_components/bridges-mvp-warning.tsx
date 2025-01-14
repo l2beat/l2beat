@@ -18,7 +18,7 @@ export function BridgesMvpWarning({
   }
 
   return (
-    <p className="my-4 rounded-lg bg-yellow-500 p-2 text-center text-base font-medium text-black">
+    <p className="bg-yellow-500 p-2 text-center text-base font-medium text-black md:mb-4 md:mt-6 md:rounded-lg">
       L2BEAT Bridges is a work in progress. You might find incomplete research
       or inconsistent naming. Join our{' '}
       <CustomLink href={externalLinks.discord}>Discord</CustomLink> to suggest

@@ -14,7 +14,7 @@ export function VerifierCard({
   askForVerificationLink: string
 }) {
   return (
-    <div className="border-t border-gray-300 px-5 py-4 dark:border-gray-800 max-md:first:border-t-0 md:rounded-lg md:border md:first:mt-7">
+    <div className="border-t border-divider px-5 py-4 max-md:first:border-t-0 md:rounded-lg md:border md:first:mt-7">
       <div className="grid space-y-2 lg:grid-cols-4 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">
@@ -35,7 +35,7 @@ export function VerifierCard({
       </div>
       <SubVerifiersTable
         verifier={verifier}
-        className="mt-7 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)]"
+        className="mt-7 w-[calc(100vw_-_78px)] md:w-[calc(100vw_-_188px)]"
       />
     </div>
   )

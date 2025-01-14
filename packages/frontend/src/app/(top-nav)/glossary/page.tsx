@@ -19,8 +19,8 @@ export const metadata: Metadata = getDefaultMetadata({
 export default function Page() {
   const glossaryEntries = getCollection('glossary')
   return (
-    <div className="header-height-glossary">
-      <FullPageHeader className="pb-0">
+    <div className="header-height-glossary reading">
+      <FullPageHeader className="border-none !pb-0">
         <div className="w-full">
           <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
             <h1 className="text-5xl font-bold md:text-6xl">Glossary</h1>

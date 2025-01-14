@@ -55,7 +55,10 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
       disabled={options.length < 2 && !value}
     >
       <SelectTrigger
-        className={cn(value !== undefined && 'text-brand')}
+        className={cn(
+          'primary-card:bg-surface-secondary primary-card:data-[state=open]:hover:bg-surface-tertiary',
+          value !== undefined && 'text-brand',
+        )}
         icon={
           value !== undefined ? (
             <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
@@ -69,9 +72,16 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
       >
         <SelectValue placeholder={title} />
       </SelectTrigger>
-      <SelectContent className="flex flex-col" align="start">
+      <SelectContent
+        className={cn('flex flex-col primary-card:bg-surface-secondary')}
+        align="start"
+      >
         {options.map((option) => (
-          <SelectItem key={option} value={option}>
+          <SelectItem
+            key={option}
+            value={option}
+            className="primary-card:focus:bg-surface-tertiary"
+          >
             {option}
           </SelectItem>
         ))}

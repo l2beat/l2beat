@@ -124,7 +124,7 @@ function NavLinkMultipleGroup({
         </div>
       )}
       <CollapsibleContent>
-        <ul className="mb-3 ml-[15px] mt-2 flex flex-col gap-0.5 border-l border-gray-300 pl-[14px] dark:border-gray-850">
+        <ul className="mb-3 ml-[15px] mt-2 flex flex-col gap-0.5 border-l border-divider pl-[14px]">
           {group.links?.map(
             (link) =>
               !link.disabled && (
