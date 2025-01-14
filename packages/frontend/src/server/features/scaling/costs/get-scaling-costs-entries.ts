@@ -24,7 +24,7 @@ export async function getScalingCostsEntries() {
       getScalingCostEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id] ?? 0,
+        tvl[project.id],
       ),
     )
     .sort(compareStageAndTvl)
@@ -39,12 +39,12 @@ export interface ScalingCostsEntry extends CommonScalingEntry {
 function getScalingCostEntry(
   project: Layer2,
   changes: ProjectChanges,
-  tvl: number,
+  tvl: number | undefined,
 ): ScalingCostsEntry {
   return {
     ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     href: `/scaling/projects/${project.display.slug}#onchain-costs`,
     costsWarning: project.display.costsWarning,
-    tvlOrder: tvl,
+    tvlOrder: tvl ?? -1,
   }
 }

@@ -42,7 +42,7 @@ export async function getScalingFinalityEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         finality[project.id.toString()],
-        tvl[project.id] ?? 0,
+        tvl[project.id],
       ),
     )
     .filter(notUndefined)
@@ -127,7 +127,7 @@ function getScalingFinalityEntry(
   project: Layer2,
   changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
-  tvl: number,
+  tvl: number | undefined,
 ): ScalingFinalityEntry | undefined {
   const data = getFinalityData(finalityProjectData, project)
   if (!data) {
@@ -144,6 +144,6 @@ function getScalingFinalityEntry(
     dataAvailabilityMode: project.dataAvailability?.mode,
     data,
     finalizationPeriod: project.display.finality?.finalizationPeriod,
-    tvlOrder: tvl,
+    tvlOrder: tvl ?? -1,
   }
 }

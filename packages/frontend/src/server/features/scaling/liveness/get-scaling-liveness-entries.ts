@@ -54,7 +54,7 @@ export async function getScalingLivenessEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         liveness[project.id.toString()],
-        tvl[project.id] ?? 0,
+        tvl[project.id],
       ),
     )
     .filter((x) => x !== undefined)
@@ -80,7 +80,7 @@ function getScalingLivenessEntry(
   >,
   changes: ProjectChanges,
   liveness: LivenessProject | undefined,
-  tvl: number,
+  tvl: number | undefined,
 ): ScalingLivenessEntry | undefined {
   if (!liveness) {
     return undefined
@@ -99,7 +99,7 @@ function getScalingLivenessEntry(
     explanation: project.livenessInfo?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
     dataAvailabilityMode: project.scalingDa?.mode,
-    tvlOrder: tvl,
+    tvlOrder: tvl ?? -1,
   }
 }
 

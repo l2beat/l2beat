@@ -139,7 +139,7 @@ function getScalingSummaryEntry(
           change: activity.change,
         }
       : undefined,
-    tvlOrder: latestTvl?.breakdown.total ?? 0,
+    tvlOrder: latestTvl?.breakdown.total ?? -1,
     ...getRisks(project),
   }
 }

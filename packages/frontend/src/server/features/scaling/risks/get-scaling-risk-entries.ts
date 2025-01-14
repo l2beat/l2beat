@@ -32,7 +32,7 @@ export async function getScalingRiskEntries() {
       getScalingRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id] ?? 0,
+        tvl[project.id],
       ),
     )
     .sort(compareStageAndTvl)
@@ -51,11 +51,11 @@ function getScalingRiskEntry(
     'countdowns'
   >,
   changes: ProjectChanges,
-  tvl: number,
+  tvl: number | undefined,
 ): ScalingRiskEntry {
   return {
     ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
-    tvlOrder: tvl,
+    tvlOrder: tvl ?? -1,
   }
 }

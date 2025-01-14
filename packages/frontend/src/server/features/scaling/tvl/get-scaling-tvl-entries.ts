@@ -46,7 +46,7 @@ export async function getScalingTvlEntries() {
 
 export interface ScalingTvlEntry extends CommonScalingEntry {
   tvl: {
-    data: ProjectSevenDayTvlBreakdown
+    data: ProjectSevenDayTvlBreakdown | undefined
     associatedTokens: string[]
     warnings: WarningWithSentiment[]
   }
@@ -58,9 +58,6 @@ function getScalingTvlEntry(
   changes: ProjectChanges,
   data: ProjectSevenDayTvlBreakdown | undefined,
 ): ScalingTvlEntry | undefined {
-  if (!data) {
-    return undefined
-  }
   return {
     ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
     href: `/scaling/projects/${project.slug}/tvs-breakdown`,
@@ -69,6 +66,6 @@ function getScalingTvlEntry(
       associatedTokens: project.tvlInfo.associatedTokens,
       warnings: project.tvlInfo.warnings,
     },
-    tvlOrder: data.breakdown.total,
+    tvlOrder: data?.breakdown.total ?? -1,
   }
 }

@@ -64,6 +64,6 @@ function getScalingArchivedEntry(
     provider: project.display.provider,
     risks: project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
     totalTvl: latestTvl?.breakdown.total,
-    tvlOrder: latestTvl?.breakdown.total ?? 0,
+    tvlOrder: latestTvl?.breakdown.total ?? -1,
   }
 }
