@@ -78,7 +78,7 @@ export default async function Page(props: Props) {
       <MainPageHeader>
         <Breadcrumbs icon={projectDetails.icon} title={projectDetails.title} />
       </MainPageHeader>
-      <div className="border-divider max-lg:pt-8 max-md:border-b max-md:bg-surface-header max-md:px-4 max-md:pb-6">
+      <div className="border-divider max-lg:pt-8 max-md:border-b max-md:bg-header-primary max-md:px-4 max-md:pb-6">
         <div className="flex flex-col gap-1 md:flex-row md:items-end md:gap-4 md:px-6">
           <ProjectHeader
             icon={projectDetails.icon}
