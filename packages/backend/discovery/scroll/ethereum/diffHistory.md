@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xcee509905e5d8edf024841e772a1c85cfb0bb15f
+
+# Diff at Fri, 10 Jan 2025 15:23:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13c134b0211f75779d58c36868cbda90565479ce block: 21579385
+- current block number: 21579385
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579385 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xc98f03651ddf430db5e0fa5d49b57551e01975529019ff3fbc1897109cd6dc9e"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xcd6a67da07fdd0ff4f75a99bf03d70659a6a00d98f1219b1aff2756b7ce971bd"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV0 (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x29ee0fd7e29697f9960266e0f8fc2b84b927300952d489ee40ea3cff695bd819"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x438a888895bdfdd405a223087c58ce76dcd866a0c5e208b94c63e83922724cb3"]
+      references:
++        [{"text":"Source Code","href":"https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xdd6da115b0a4c879746bcca2a71fa1daa79f7e3a074369d9246f614b327e9322"]
+      references:
++        [{"text":"Source Code","href":"https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"}]
+    }
+```
+
 Generated with discovered.json: 0x16c05b9aad122da9bb70b5a2bef9a422726b1ce1
 
 # Diff at Wed, 08 Jan 2025 11:14:25 GMT:

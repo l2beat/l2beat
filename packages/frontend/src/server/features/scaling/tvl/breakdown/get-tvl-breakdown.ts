@@ -87,7 +87,12 @@ export function getTvlBreakdown(configMapping: ConfigMapping) {
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
               assetId: priceConfig.assetId,
-              chainId: chainConverter.toChainId(config.chain),
+              /*
+               * We are taking chain from price because there is an edge case in which
+               * chain from amount config is different for frontend and backend purposes.
+               * E.g. Elastic chain and AggLayer where we have shared escrows.
+               */
+              chainId: chainConverter.toChainId(priceConfig.chain),
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),

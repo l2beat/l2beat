@@ -45,9 +45,9 @@ export async function NavLayout({
           href: '/scaling/risk',
         },
         {
-          title: 'Value Locked',
+          title: 'Value Secured',
           shortTitle: 'Value',
-          href: '/scaling/tvl',
+          href: '/scaling/tvs',
         },
         {
           title: 'Activity',
@@ -154,7 +154,7 @@ export async function NavLayout({
         {!legacyNav && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileNavbar {...{ groups, logoLink }} />
+        <MobileNavbar groups={groups} logoLink={logoLink} />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}

@@ -109,6 +109,7 @@ export class ProjectDiscovery {
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
+      references: contract.references,
       ...descriptionOrOptions,
     }
   }
@@ -589,6 +590,7 @@ export class ProjectDiscovery {
         },
       ],
       chain: this.chain,
+      references: contract.references,
       description,
     }
   }
@@ -958,7 +960,7 @@ export class ProjectDiscovery {
           ...this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
-            undefined,
+            contract.references,
             true,
           ),
         )

@@ -205,7 +205,7 @@ export const base: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       minTimestamp: new UnixTime(1710375515),
       genesisTimestamp: new UnixTime(1686789347),
       l2BlockTimeSeconds: 2,
@@ -280,13 +280,11 @@ export const base: Layer2 = {
     ],
     coingeckoPlatform: 'base',
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,

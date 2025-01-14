@@ -1,4 +1,4 @@
-import { UnixTime, ValueWithSentiment } from '@l2beat/shared-pure'
+import { ValueWithSentiment } from '@l2beat/shared-pure'
 
 import {
   DataAvailabilityBridge,
@@ -7,14 +7,7 @@ import {
   DataAvailabilityMode,
 } from './ScalingProjectDataAvailability'
 
-export type DataAvailabilityHistory = DataAvailabilityHistoryEntry[]
-
-export type DataAvailabilityHistoryEntry = DataAvailabilityWithSentiment & {
-  sinceTimestamp?: UnixTime
-  untilTimestamp?: UnixTime
-}
-
-export interface DataAvailabilityWithSentiment {
+export interface ProjectDataAvailability {
   layer: ValueWithSentiment<string> & { secondLine?: string }
   bridge: DataAvailabilityBridge
   mode: DataAvailabilityMode
@@ -259,7 +252,7 @@ function DAC_SENTIMENT(config?: {
 
 export function addSentimentToDataAvailability(
   data: DataAvailabilityConfig,
-): DataAvailabilityWithSentiment {
+): ProjectDataAvailability {
   return {
     layer: addSentimentToLayers(data.layers),
     bridge: data.bridge,

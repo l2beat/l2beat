@@ -47,7 +47,7 @@ export function StackedTvlChartHover(props: Props) {
           Total
         </span>
         <span className="hidden text-sm text-gray-700 dark:text-gray-50 xs:inline">
-          Total value locked
+          Total value secured
         </span>
         {total}
       </div>

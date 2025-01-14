@@ -127,13 +127,11 @@ export const lightlink: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.CELESTIA],
-      bridge: DA_BRIDGES.NONE,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.CELESTIA],
+    bridge: DA_BRIDGES.NONE,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   // chainConfig: {
   //   name: 'lightlink',
   //   chainId: 1890,

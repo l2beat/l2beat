@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe8c2d5441853418b289335aab1b56f0049448301
+
+# Diff at Mon, 13 Jan 2025 09:02:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c91b831cf8a00067e27832808851565a41cd3489 block: 21580548
+- current block number: 21580548
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21580548 (main branch discovery), not current.
+
+```diff
+    contract Kinto SecurityCouncil (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      references:
++        [{"text":"Security Council members - Kinto Docs","href":"https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/security-council"}]
+    }
+```
+
 Generated with discovered.json: 0x5c17c6f6b6df18d014267565224c68e1ed6b123f
 
 # Diff at Wed, 08 Jan 2025 15:07:42 GMT:

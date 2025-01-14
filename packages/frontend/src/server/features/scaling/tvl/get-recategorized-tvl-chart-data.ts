@@ -52,11 +52,11 @@ export const getCachedRecategorizedTvlChartData = cache(
     const projectsFilter = createTvlProjectsFilter(filter)
     const tvlProjects = getTvlProjects(projectsFilter)
 
-    const rollups = tvlProjects.filter(({ category }) => category === 'Rollups')
+    const rollups = tvlProjects.filter(({ category }) => category === 'rollups')
     const validiumsAndOptimiums = tvlProjects.filter(
-      ({ category }) => category === 'ValidiumOrOptimiums',
+      ({ category }) => category === 'validiumsAndOptimiums',
     )
-    const others = tvlProjects.filter(({ category }) => category === 'Others')
+    const others = tvlProjects.filter(({ category }) => category === 'others')
 
     const [rollupValues, validiumAndOptimiumsValues, othersValues] =
       await Promise.all([

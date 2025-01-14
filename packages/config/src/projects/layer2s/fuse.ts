@@ -9,7 +9,7 @@ export const fuse: Layer2 = upcomingL2({
     name: 'Fuse',
     slug: 'fuse',
     description:
-      'Fuse announced a strategic move to integrate with the Ethereum ecosystem as an Polygon CDK L2.',
+      'Fuse announced a strategic move to integrate with the Ethereum ecosystem as a Polygon CDK L2.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
     provider: 'Polygon',
