@@ -67,7 +67,7 @@ export default async function Page(props: Props) {
         tvlBreakdownTimestamp={dataTimestamp}
       />
       <TvlBreakdownSummaryBox
-        tvl={{
+        total={{
           value: project7dData.total,
           change: project7dData.change.total,
         }}

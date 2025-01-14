@@ -14,7 +14,7 @@ type ValueWithChange = {
 }
 
 type Props = {
-  tvl: ValueWithChange
+  total: ValueWithChange
   native: ValueWithChange
   external: ValueWithChange
   canonical: ValueWithChange
@@ -27,8 +27,8 @@ export function TvlBreakdownSummaryBox(props: Props) {
         title="Total value secured"
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
         mobileTitle="Total value secured"
-        value={props.tvl.value}
-        change={props.tvl.change}
+        value={props.total.value}
+        change={props.total.change}
         big
       />
       <StatsItem
