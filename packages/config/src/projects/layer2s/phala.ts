@@ -12,15 +12,18 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'
-import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 
 const discovery = new ProjectDiscovery('phala')
 
-const finalizationPeriod = discovery.getContractValue<number>('OPSuccinctL2OutputOracle', 'finalizationPeriodSeconds')
+const finalizationPeriod = discovery.getContractValue<number>(
+  'OPSuccinctL2OutputOracle',
+  'finalizationPeriodSeconds',
+)
 const upgradeDelay = 0
 const forcedWithdrawalDelay = 0
 const SEQUENCING_WINDOW_SECONDS = 3600 * 12
@@ -74,12 +77,11 @@ export const phala: Layer2 = {
       }),
     ],
   },
-  dataAvailability: 
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.RaaS.Conduit],
   type: 'layer2',
   riskView: {
@@ -92,9 +94,7 @@ export const phala: Layer2 = {
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-        SEQUENCING_WINDOW_SECONDS,
-      ),
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(SEQUENCING_WINDOW_SECONDS),
       secondLine: formatDelay(SEQUENCING_WINDOW_SECONDS),
       sources: [
         {
@@ -166,10 +166,7 @@ export const phala: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR_YIELDING(
-          'zk',
-          finalizationPeriod,
-        ),
+        ...EXITS.REGULAR_YIELDING('zk', finalizationPeriod),
         references: [],
         risks: [],
       },
