@@ -62,7 +62,7 @@ export function InlinedNoBridgeGrissiniDetailsPlaceholder({
         <div
           className={cn(
             'text-[13px] font-medium leading-none',
-            sentimentToTextColor('neutral', { vibrant: true }),
+            sentimentToTextColor('neutral'),
           )}
         >
           {DESCRIPTION}
