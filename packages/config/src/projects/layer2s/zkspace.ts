@@ -266,10 +266,10 @@ export const zkspace: Layer2 = {
   ],
   milestones: [
     {
-      name: 'ZKBase Officially Upgrades to ZKBase',
+      name: 'ZKSpace Officially Upgrades to ZKBase',
       link: 'https://zkbaseofficial.medium.com/zkbase-is-undergoing-a-brand-new-upgrade-and-setting-sail-again-in-2024-3d71418a10e1',
       date: '2023-12-29T00:00:00Z',
-      description: 'ZKSpace Officially Upgrades to ZKBase',
+      description: 'The ZKSpace team has rebranded to ZKBase.',
       type: 'general',
     },
     {
