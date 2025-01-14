@@ -26,7 +26,7 @@ export function ScalingProjectStats({ project, className }: Props) {
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-surface-table-group md:px-6 md:py-5',
+        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5',
         className,
       )}
     >

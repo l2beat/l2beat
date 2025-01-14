@@ -121,7 +121,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                       Please select one of the available DA bridges to view its
                       risks and detailed analysis.
                     </div>
-                    <div className="flex flex-col rounded-lg bg-surface-table-group lg:h-[278px]">
+                    <div className="flex flex-col rounded-lg bg-header-secondary lg:h-[278px]">
                       <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary md:flex md:border-b">
                         <div className="w-12"></div>
                         <div className="flex-1">DA Bridge</div>
@@ -129,7 +129,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                         <div className="flex-1 pr-12 text-right">TVS</div>
                         <div className="flex-[1.5] lg:flex-1">Used by</div>
                       </div>
-                      <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-surface-table-group md:gap-0 md:rounded-t-none md:bg-none dark:md:bg-none">
+                      <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-header-secondary md:gap-0 md:rounded-t-none md:bg-none dark:md:bg-none">
                         {project.bridges.map((bridge, index) => (
                           <div
                             key={bridge.id}

@@ -44,7 +44,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
           target="_blank"
           className={cn(
             navigationMenuTriggerStyle(),
-            'bg-surface-table-group',
+            'bg-header-secondary',
             'ring-inset ring-brand focus:ring-2',
             'flex flex-row items-center gap-1.5',
           )}
@@ -63,11 +63,11 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="bg-surface-table-group ring-inset ring-brand focus:ring-2">
+      <NavigationMenuTrigger className="bg-header-secondary ring-inset ring-brand focus:ring-2">
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>
-      <NavigationMenuContent className="bg-surface-table-group">
+      <NavigationMenuContent className="bg-header-secondary">
         {projectLink.links.map((link) => {
           const parsedSocial =
             projectLink.name === 'Social' ? parseSocial(link) : undefined
@@ -79,7 +79,7 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
               target="_blank"
               className={cn(
                 navigationMenuTriggerStyle(),
-                'bg-surface-table-group hover:bg-surface-tertiary focus:bg-surface-tertiary',
+                'bg-header-secondary hover:bg-surface-tertiary focus:bg-surface-tertiary',
                 'flex w-full justify-start gap-1.5',
               )}
             >
