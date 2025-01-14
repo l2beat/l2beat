@@ -28,7 +28,7 @@ interface Props {
 
 export function MultipleBridgeDetails({ project }: Props) {
   return (
-    <div className="flex flex-row items-end gap-10 py-8 max-md:pt-6 md:mb-10 md:py-0">
+    <div className="flex flex-row items-end gap-10 pt-4 md:py-0">
       {/* Left side (table with title and banner) */}
       <div className="flex flex-1 flex-col gap-4">
         <div className="whitespace-pre text-xs uppercase text-secondary">

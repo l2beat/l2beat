@@ -44,66 +44,57 @@ export function RegularDaProjectSummary({ project }: Props) {
   ]
 
   return (
-    <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
+    <FullPageHeader className="pb-4 pt-8 md:pb-8 md:pt-12">
       <section id="summary" className="w-full">
         <ProjectHeader title={project.name} slug={project.slug} />
-        <div className="mt-6 flex w-full gap-10">
-          <div className="w-full">
-            {/* Details row */}
-            <div className="flex flex-col gap-6 md:gap-8">
-              {/* Links and stats */}
-              <div className="flex flex-row items-end gap-10">
-                <div className="w-full">
-                  <div className="!mb-8 hidden md:flex">
-                    <HorizontalSeparator className="max-md:-mx-4 max-md:w-screen" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-col gap-4">
-                      <div className="max-md:hidden">
-                        <DesktopProjectLinks
-                          projectLinks={project.header.links}
-                        />
-                      </div>
-                      <DaProjectStats
-                        stats={stats}
-                        daLayerGrissiniValues={
-                          project.header.daLayerGrissiniValues
-                        }
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/* Right side (DA Layer Grissini details) */}
-                {hasMultipleBridges && (
-                  <div className="hidden lg:block">
-                    <div className="flex flex-col gap-4 pt-3">
-                      <div className="whitespace-pre text-xs text-secondary">
-                        {project.name} risks
-                      </div>
-                      <GrissiniDetails
-                        values={project.header.daLayerGrissiniValues}
-                      />
-                    </div>
-                  </div>
-                )}
+        {/* Details row */}
+        <div className="mt-6 flex w-full flex-col gap-6 md:gap-8">
+          {/* Links and stats */}
+          <div className="flex flex-row items-end gap-10">
+            <div className="w-full">
+              <div className="!mb-8 hidden md:flex">
+                <HorizontalSeparator className="max-md:-mx-4 max-md:w-screen" />
               </div>
-
-              <div className="flex flex-col">
-                <div>
-                  <div className="-mx-4 border-y border-divider px-4 md:hidden">
-                    <MobileProjectLinks projectLinks={project.header.links} />
+              <div className="flex-1">
+                <div className="flex flex-col gap-4">
+                  <div className="max-md:hidden">
+                    <DesktopProjectLinks projectLinks={project.header.links} />
                   </div>
+                  <DaProjectStats
+                    stats={stats}
+                    daLayerGrissiniValues={project.header.daLayerGrissiniValues}
+                  />
                 </div>
-                {hasMultipleBridges ? (
-                  <MultipleBridgeDetails project={project} />
-                ) : (
-                  <SingleBridgeDetails project={project} />
-                )}
               </div>
             </div>
+            {/* Right side (DA Layer Grissini details) */}
+            {hasMultipleBridges && (
+              <div className="hidden lg:block">
+                <div className="flex flex-col gap-4 pt-3">
+                  <div className="whitespace-pre text-xs text-secondary">
+                    {project.name} risks
+                  </div>
+                  <GrissiniDetails
+                    values={project.header.daLayerGrissiniValues}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <div>
+              <div className="-mx-4 border-y border-divider px-4 md:hidden">
+                <MobileProjectLinks projectLinks={project.header.links} />
+              </div>
+            </div>
+            {hasMultipleBridges ? (
+              <MultipleBridgeDetails project={project} />
+            ) : (
+              <SingleBridgeDetails project={project} />
+            )}
           </div>
         </div>
-        <HorizontalSeparator className="max-md:hidden" />
       </section>
     </FullPageHeader>
   )

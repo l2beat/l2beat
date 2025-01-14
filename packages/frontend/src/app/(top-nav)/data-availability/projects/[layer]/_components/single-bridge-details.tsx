@@ -8,7 +8,7 @@ interface Props {
 
 export function SingleBridgeDetails({ project }: Props) {
   return (
-    <div className="mb-8 grid gap-y-2 max-md:my-6 md:mb-10 md:grid-cols-5 md:gap-x-3">
+    <div className="grid gap-y-2 max-md:mt-4 md:grid-cols-5 md:gap-x-3">
       <div className="text-xs text-secondary md:col-span-2">
         {project.name} risks
       </div>
