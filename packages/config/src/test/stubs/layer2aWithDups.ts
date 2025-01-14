@@ -71,13 +71,11 @@ export const layer2aWithDups: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -95,7 +93,9 @@ export const layer2aWithDups: Layer2 = {
     },
     dataAvailability: { ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL },
     operator: { ...OPERATOR.CENTRALIZED_SEQUENCER },
-    forceTransactions: { ...FORCE_TRANSACTIONS.CANONICAL_ORDERING },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+    },
     exitMechanisms: [],
     otherConsiderations: [
       {

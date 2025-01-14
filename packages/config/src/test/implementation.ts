@@ -10,7 +10,6 @@ import {
   Layer3,
   OnChainDaBridge,
   ScalingProjectContract,
-  isSingleAddress,
 } from '../../src'
 
 export type Project = Layer2 | Layer3 | Bridge
@@ -73,11 +72,11 @@ export function getUniqueContractsForProject(
 function getUniqueContractsFromList(
   contracts: ScalingProjectContract[],
 ): AddressOnChain[] {
-  const mainAddresses = contracts.flatMap((c) =>
-    getAddresses(c).map((a) => ({ address: a, chain: c.chain ?? 'ethereum' })),
-  )
+  const mainAddresses = contracts.flatMap((c) => ({
+    address: c.address,
+    chain: c.chain ?? 'ethereum',
+  }))
   const upgradeabilityAddresses = contracts
-    .filter(isSingleAddress)
     .filter((c) => !!c.upgradeability) // remove undefined
     .flatMap((c) =>
       (c.upgradeability?.implementations ?? []).flatMap((a) => ({
@@ -176,12 +175,4 @@ export function areAllAddressesVerified(
   return addresses.every(
     (address) => addressVerificationMap[address.toString()],
   )
-}
-
-function getAddresses(c: ScalingProjectContract): EthereumAddress[] {
-  if (isSingleAddress(c)) {
-    return [c.address]
-  } else {
-    return c.multipleAddresses
-  }
 }

@@ -34,7 +34,7 @@ export function getElasticChainL2TokenEntry(
     : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-  // We are hardcoding assetId because elasticChainL2Token is an canonical token
+  // We are hardcoding assetId because elasticChainL2Token is a canonical token
   const assetId = AssetId.create(ethereum.name, token.address)
   const type = 'elasticChainL2Token'
   const dataSource = `${project.projectId}_elastic_chain`

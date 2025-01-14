@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 import { SentimentText } from '../../sentiment-text'
-import { WarningBar } from '../../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
@@ -106,7 +106,7 @@ function RosetteTooltipContent() {
           className="mb-2"
           icon={RoundedWarningIcon}
           text={selectedRisk.warning.value}
-          color={selectedRisk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+          color={sentimentToWarningBarColor(selectedRisk.warning.sentiment)}
           ignoreMarkdown
         />
       )}

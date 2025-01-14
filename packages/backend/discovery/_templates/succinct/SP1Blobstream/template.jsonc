@@ -40,7 +40,7 @@
       "handler": {
         "type": "hardcoded",
         "value": [
-          "0x44eb418a966ff47f5af6f48aea6afde0bf193a8d",
+          // relayer 1 removed manually
           "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
           "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
         ]

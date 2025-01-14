@@ -1,4 +1,4 @@
-import { type Layer2, getCurrentEntry } from '@l2beat/config'
+import { type Layer2 } from '@l2beat/config'
 import {
   TrackedTxsConfigSubtypeValues,
   UnixTime,
@@ -57,7 +57,6 @@ function getScalingLivenessEntry(
   liveness: LivenessProject,
   tvl: ProjectsLatestTvlUsd,
 ) {
-  const dataAvailability = getCurrentEntry(project.dataAvailability)
   const data = getLivenessData(liveness, project)
   return {
     ...getCommonScalingEntry({
@@ -70,7 +69,7 @@ function getScalingLivenessEntry(
     data,
     explanation: project.display.liveness?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
-    dataAvailabilityMode: dataAvailability?.mode,
+    dataAvailabilityMode: project.dataAvailability?.mode,
     tvlOrder: tvl[project.id] ?? 0,
   }
 }

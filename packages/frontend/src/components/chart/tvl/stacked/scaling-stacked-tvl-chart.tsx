@@ -3,7 +3,10 @@
 import { type Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import {
+  useScalingFilter,
+  useScalingFilterValues,
+} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
@@ -25,23 +28,30 @@ import { useStackedTvlChartRenderParams } from './use-stacked-tvl-chart-render-p
 interface Props {
   milestones: Milestone[]
   entries: ScalingTvlEntry[]
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }
 
-export function ScalingStackedTvlChart({ milestones, entries }: Props) {
+export function ScalingStackedTvlChart({ milestones, entries, tab }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
+  const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useState<TvlChartRange>('1y')
 
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
 
   const filter = useMemo<TvlProjectFilter>(() => {
+    if (filters.isEmpty) {
+      return {
+        type: tab,
+      }
+    }
     return {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, includeFilter])
+  }, [entries, filters.isEmpty, includeFilter, tab])
 
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,

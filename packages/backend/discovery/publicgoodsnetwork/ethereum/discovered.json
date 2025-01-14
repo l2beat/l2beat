@@ -513,7 +513,7 @@
         "0x6e17f8c044cb5416af604d756bb7ab831395f1ea7638248701de78a55271e561"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -877,7 +877,7 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/BalanceClaimer": "0x7a30e41741ae2c6a7984c4ad6cea30b458edc58e79a3db576e40bd2bac32249b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
-    "opstack/L1StandardBridge_PGN_withdraw": "0x09b918a91f33d385a5434c29762497d077df99c6bbc5fa1627c8cb5b8eeddbb8",
+    "opstack/L1StandardBridge_PGN_withdraw": "0x3aa6a8a8217eb0511cff801f42ebb787c71c5b0f53d08760b93b25c81c19c8c2",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismPortal_PGN_withdraw": "0x85f44d5fadf5c6dfa87d7512bb709bb6d868098610aed29d7ddcb1e9c1172858",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"

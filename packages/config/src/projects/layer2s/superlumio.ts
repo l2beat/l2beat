@@ -34,7 +34,7 @@ export const superlumio: Layer2 = opStackL2({
   rpcUrl: 'https://mainnet.lumio.io',
   genesisTimestamp: new UnixTime(1708984633),
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     genesisTimestamp: new UnixTime(1708984631),
     minTimestamp: new UnixTime(1708984751),
     l2BlockTimeSeconds: 2,

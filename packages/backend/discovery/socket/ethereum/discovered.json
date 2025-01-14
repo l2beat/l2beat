@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 21428964,
+  "blockNumber": 21579626,
   "configHash": "0xb5ce17cb1c9c00fea8d4213e87c3d8579a04a2db4839ef0f4e2fdd6516de1262",
   "contracts": [
     {
@@ -37,7 +37,7 @@
         "isGlobalTipped": false,
         "isInitialized": true,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "remoteNativeSwitchboard": "0x72fB18276f3C3c3FD3146F6163994ec02Fa1c9D1",
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
@@ -89,7 +89,7 @@
         "isGlobalTipped": false,
         "isInitialized": true,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "receiveGasLimit": 300000,
         "remoteNativeSwitchboard": "0x9Cf7443685827419B0067fb2471C24969EAA716C",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
@@ -136,7 +136,7 @@
         "maxAllowedPacketLength": 10,
         "minAllowedPacketLength": 1,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
       }
     },
     {
@@ -170,7 +170,7 @@
         "isGlobalTipped": false,
         "isInitialized": true,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "receiveGasLimit": 300000,
         "remoteNativeSwitchboard": "0x1D6811553Aff8231aDd04A84F300b89E15D99EA4",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
@@ -259,7 +259,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 376,
+        "nonce": 377,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -453,7 +453,7 @@
       "values": {
         "$immutable": true,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
       }
     },
     {
@@ -654,7 +654,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 8786,
+        "globalMessageCount": 9901,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -671,7 +671,7 @@
           "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA",
           "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD"
         ],
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "plugs": [
           "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D",
           "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A",
@@ -811,7 +811,13 @@
           "0x94104d7801f30d2f9069118C65Fe63A3A11515B1",
           "0xA2bE759B86CeA53372C3e9a882047cdC3884D568",
           "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93",
-          "0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188"
+          "0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188",
+          "0x1a0e7Efa0F74703A930B2b1Cb6565b1d8981dd85",
+          "0x3Deb3254730eEF7c50fb5b133CA0EaeA2e59127d",
+          "0x95c879322BA01e1c7Fe5EB3F3724C49C6aF7e426",
+          "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E",
+          "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD",
+          "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -853,7 +859,7 @@
         "$immutable": true,
         "chainSlug": 1,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9"
       },
@@ -975,7 +981,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 412,
+        "nonce": 413,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1042,7 +1048,7 @@
         "chainSlug": 1,
         "isGlobalTipped": false,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
         "timeoutInSeconds": 7200
@@ -1127,7 +1133,7 @@
         "isInitialized": true,
         "nominee": "0x0000000000000000000000000000000000000000",
         "outbox__": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "remoteNativeSwitchboard": "0xaB2F8c1588ACA57bC2909512B645a860C65770d3",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
@@ -1149,10 +1155,17 @@
     {
       "name": "USD0++ Vault Polynomial",
       "address": "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F",
-      "unverified": true,
+      "sourceHashes": [
+        "0xc3321c0d760c3f5fe8845b9fdd3fb32455ca5317920d929526142e921ddc68d9"
+      ],
       "sinceTimestamp": 1728993695,
-      "values": { "$immutable": true },
-      "derivedName": ""
+      "values": {
+        "$immutable": true,
+        "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+      },
+      "derivedName": "Vault"
     },
     {
       "name": "USDC Vault Reya",
@@ -1230,11 +1243,26 @@
         },
         "chainSlug": 1,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9"
       },
       "derivedName": "TransmitManager"
+    },
+    {
+      "name": "",
+      "address": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
+      "unverified": true,
+      "proxyType": "gnosis safe",
+      "sinceTimestamp": 1735913351,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xa8165F6a303A6C07Ce3C784b8ABCc595a04e6506",
+        "$members": ["0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"],
+        "$threshold": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)"
+      }
     },
     {
       "name": "KintoMultisig",
@@ -1262,7 +1290,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 213,
+        "nonce": 216,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1277,7 +1305,7 @@
       "values": {
         "$immutable": true,
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+        "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
       }
     }
   ],
@@ -1291,6 +1319,7 @@
     { "address": "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52" },
     { "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E" },
     { "address": "0x9eab2223d84060E212354BfA620BF687b6E9Ae20" },
+    { "address": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8" },
     { "address": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332" },
     { "address": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836" },
     { "address": "0xb69F2341F008f673F757B49104c165C8022CD0df" },
@@ -3725,6 +3754,51 @@
       "function updateSibling(uint32 siblingChainSlug_, address remoteNativeSwitchboard_)",
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
+    ],
+    "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F": [
+      "constructor(address token_)",
+      "error CannotTransferOrExecuteOnBridgeContracts()",
+      "error InsufficientMsgValue()",
+      "error InvalidConnector()",
+      "error InvalidTokenAddress()",
+      "error InvalidTokenContract()",
+      "error MessageIdMisMatched()",
+      "error NoPendingData()",
+      "error NoPermit(bytes32 role)",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAddressReceiver()",
+      "event BridgingTokens(address connector, address sender, address receiver, uint256 amount, bytes32 messageId)",
+      "event ConnectorStatusUpdated(address connector, bool status)",
+      "event HookUpdated(address newHook)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event RoleGranted(bytes32 indexed role, address indexed grantee)",
+      "event RoleRevoked(bytes32 indexed role, address indexed revokee)",
+      "event TokensBridged(address connecter, address receiver, uint256 amount, bytes32 messageId)",
+      "function bridge(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_, bytes execPayload_, bytes options_) payable",
+      "function bridgeType() view returns (bytes32)",
+      "function bridgeWithPermit(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_, bytes execPayload_, bytes options_, uint256 deadline_, uint8 v_, bytes32 r_, bytes32 s_) payable",
+      "function claimOwner()",
+      "function connectorCache(address) view returns (bytes)",
+      "function disperseRewards(address receiver_, uint256 amount_, address rewardToken_)",
+      "function getMinFees(address connector_, uint256 msgGasLimit_, uint256 payloadSize_) view returns (uint256 totalFees)",
+      "function grantRole(bytes32 role_, address grantee_)",
+      "function hasRole(bytes32 role_, address address_) view returns (bool)",
+      "function hook__() view returns (address)",
+      "function identifierCache(bytes32) view returns (bytes)",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function receiveInbound(uint32 siblingChainSlug_, bytes payload_) payable",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function retry(address connector_, bytes32 messageId_)",
+      "function revokeRole(bytes32 role_, address revokee_)",
+      "function token() view returns (address)",
+      "function updateConnectorStatus(address[] connectors, bool[] statuses)",
+      "function updateHook(address hook_, bool approve_)",
+      "function validConnectors(address) view returns (bool)"
     ],
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": [
       "constructor(address token_)",

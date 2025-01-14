@@ -90,18 +90,16 @@ export const hyperliquid: Layer3 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.HYPERLIQUID_DA],
-      bridge: {
-        value: `${validatorSetSize} validators`,
-        sentiment: 'bad',
-        description:
-          'The bridge verifies that at least 2/3+1 of the Huperliquid validators have signed off a withdrawal request.',
-      },
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.HYPERLIQUID_DA],
+    bridge: {
+      value: `${validatorSetSize} validators`,
+      sentiment: 'bad',
+      description:
+        'The bridge verifies that at least 2/3+1 of the Huperliquid validators have signed off a withdrawal request.',
+    },
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,

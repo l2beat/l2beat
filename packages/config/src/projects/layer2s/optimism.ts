@@ -260,7 +260,7 @@ export const optimism: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(105235064),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       // timestamp of the first blob tx
       minTimestamp: new UnixTime(1710375155),
       l2BlockTimeSeconds: 2,
@@ -343,13 +343,11 @@ export const optimism: Layer2 = {
     ],
     coingeckoPlatform: 'optimistic-ethereum',
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
@@ -397,7 +395,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xA6f3DFdbf4855a43c529bc42EDE96797252879af#code',
+          href: 'https://etherscan.io/address/0x27B81db41F586016694632193b99E45b1a27B8f8#code',
         },
       ],
     },
@@ -422,7 +420,7 @@ export const optimism: Layer2 = {
     },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
           text: 'Sequencing Window - OP Mainnet Specs',

@@ -71,12 +71,9 @@ export const scalingSummaryColumns = [
     },
     {
       id: 'total',
-      header: 'Total value locked',
+      header: 'Total value secured',
       cell: (ctx) => {
         const value = ctx.row.original.tvl
-        if (value.breakdown?.total === undefined) {
-          return <NoDataBadge />
-        }
 
         return (
           <TotalCell
@@ -91,7 +88,7 @@ export const scalingSummaryColumns = [
       meta: {
         align: 'right',
         tooltip:
-          'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
       },
     },
   ),

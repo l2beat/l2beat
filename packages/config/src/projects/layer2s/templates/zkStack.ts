@@ -19,7 +19,6 @@ import {
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   Milestone,
-  NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
@@ -96,6 +95,7 @@ export interface ZkStackConfigCommon {
   additionalBadges?: BadgeId[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  gasTokens?: string[]
 }
 
 export type Upgradeability = {
@@ -319,6 +319,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -341,7 +342,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
-    dataAvailability: [
+    dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -355,7 +356,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.STATE_DIFFS_COMPRESSED,
           }),
-    ],
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
@@ -491,7 +491,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             },
           )),
     technology: {
-      newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
       dataAvailability: technologyDA(daProvider),
       operator: OPERATOR.CENTRALIZED_OPERATOR,
       forceTransactions: {

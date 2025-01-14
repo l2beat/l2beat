@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useIsMobile } from './use-breakpoint'
 import { useEventListener } from './use-event-listener'
-import { useBreakpoint } from './use-is-mobile'
 
 const DEFAULT_THRESHOLD = `30%`
 
@@ -12,7 +12,7 @@ interface Threshold {
 }
 
 export function useCurrentSection(threshold?: Threshold) {
-  const breakpoint = useBreakpoint()
+  const isMobile = useIsMobile()
   const [currentSection, setCurrentSection] = useState<HTMLElement>()
 
   const findCurrentSection = useCallback(() => {
@@ -38,8 +38,7 @@ export function useCurrentSection(threshold?: Threshold) {
         const sectionBottom = sectionTop + sectionHeight
 
         const scrollPos =
-          window.scrollY +
-          getViewportHeightOffset(threshold, breakpoint === 'mobile')
+          window.scrollY + getViewportHeightOffset(threshold, isMobile)
 
         return {
           section,
@@ -56,7 +55,7 @@ export function useCurrentSection(threshold?: Threshold) {
     if (!current) return
 
     setCurrentSection(current.section)
-  }, [breakpoint, threshold])
+  }, [isMobile, threshold])
 
   useEffect(() => {
     findCurrentSection()

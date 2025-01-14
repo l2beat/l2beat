@@ -1,16 +1,24 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 21543805,
-  "configHash": "0x5f7370f4a07a8cc3494a93546960c459fd25377b9c259ccbbcc8e1de5fd48b40",
+  "blockNumber": 21579385,
+  "configHash": "0x840336bb532b6d94e95bb7ed6ab0acb78c062e6cb924c89543cadb1c9524f704",
   "contracts": [
     {
       "name": "PlonkVerifierV1-1",
       "address": "0x03a72B00D036C479105fF98A1953b15d9c510110",
-      "unverified": true,
+      "sourceHashes": [
+        "0xc98f03651ddf430db5e0fa5d49b57551e01975529019ff3fbc1897109cd6dc9e"
+      ],
       "sinceTimestamp": 1719379319,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "L1MessageQueue",
@@ -62,13 +70,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 41050361,
+        "l2BaseFee": 47197844,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 949717,
-        "nextUnfinalizedQueueIndex": 949715,
+        "nextCrossDomainMessageIndex": 949914,
+        "nextUnfinalizedQueueIndex": 949912,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 949717,
+        "pendingQueueIndex": 949914,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -185,7 +193,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -193,10 +201,18 @@
     {
       "name": "PlonkVerifierV1",
       "address": "0x2293cd12e8564e8219d314b075867c2f66ac6941",
-      "unverified": true,
+      "sourceHashes": [
+        "0xcd6a67da07fdd0ff4f75a99bf03d70659a6a00d98f1219b1aff2756b7ce971bd"
+      ],
       "sinceTimestamp": 1712907503,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "Whitelist",
@@ -208,10 +224,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "whitelisted": [
-          "0x21b8a9F5a4640c3FC13E19C48e776173e1210995",
-          "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"
-        ]
+        "whitelisted": ["0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"]
       },
       "derivedName": "Whitelist"
     },
@@ -245,10 +258,18 @@
     {
       "name": "PlonkVerifierV0",
       "address": "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1",
-      "unverified": true,
+      "sourceHashes": [
+        "0x29ee0fd7e29697f9960266e0f8fc2b84b927300952d489ee40ea3cff695bd819"
+      ],
       "sinceTimestamp": 1696780751,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "MultipleVersionRollupVerifier",
@@ -1007,18 +1028,34 @@
     {
       "name": "PlonkVerifierV2",
       "address": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
-      "unverified": true,
+      "sourceHashes": [
+        "0x438a888895bdfdd405a223087c58ce76dcd866a0c5e208b94c63e83922724cb3"
+      ],
       "sinceTimestamp": 1722833027,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "PlonkVerifierV2-1",
       "address": "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7",
-      "unverified": true,
+      "sourceHashes": [
+        "0xdd6da115b0a4c879746bcca2a71fa1daa79f7e3a074369d9246f614b327e9322"
+      ],
       "sinceTimestamp": 1724898419,
       "values": { "$immutable": true },
-      "derivedName": ""
+      "derivedName": "",
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
+        }
+      ]
     },
     {
       "name": "FeeVaultMultisig",
@@ -1185,7 +1222,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 352141,
+        "lastFinalizedBatchIndex": 352468,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -1661,7 +1698,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 21401742674233,
+        "totalBridgedUSDC": 20451824500606,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -1712,7 +1749,6 @@
     { "address": "0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B" },
     { "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4" },
     { "address": "0x0c5cc5155b346453154059aD9d2Ff695dB92f774" },
-    { "address": "0x21b8a9F5a4640c3FC13E19C48e776173e1210995" },
     {
       "name": "L2USDCGatewayFallback",
       "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142"

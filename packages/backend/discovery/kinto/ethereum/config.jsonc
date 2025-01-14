@@ -58,6 +58,14 @@
         "domainSeparator",
         "__depositCount"
       ]
+    },
+    "Kinto SecurityCouncil": {
+      "references": [
+        {
+          "text": "Security Council members - Kinto Docs",
+          "href": "https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/security-council"
+        }
+      ]
     }
   }
 }

@@ -7,7 +7,7 @@ import {
 } from '@radix-ui/react-accordion'
 import Image from 'next/image'
 import { ChevronIcon } from '~/icons/chevron'
-import { VerifiedCountWithDetails } from '../[project]/_components/verified-count-with-details'
+import { VerifiedCountWithDetails } from '../[slug]/_components/verified-count-with-details'
 import { type ZkCatalogViewEntry } from '../types'
 import { DetailsItem } from './details-item'
 import { DetailsLink } from './details-link'

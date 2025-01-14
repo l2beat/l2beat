@@ -249,6 +249,12 @@
     },
     "USDCBridge": {
       "ignoreMethods": ["OTHER_BRIDGE"]
+    },
+    "Poseidon2": {
+      "manualSourcePaths": {
+        // Kroma's Poseidon2 contract, deployed using Circomlibjs,
+        "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js"
+      }
     }
   }
 }

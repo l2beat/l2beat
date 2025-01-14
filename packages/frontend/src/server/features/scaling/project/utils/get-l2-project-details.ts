@@ -1,8 +1,5 @@
 import { type Layer2 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type ManuallyVerifiedContracts,
-} from '@l2beat/shared-pure'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -25,7 +22,6 @@ interface Params {
   project: Layer2
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
-  manuallyVerifiedContracts: ManuallyVerifiedContracts
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
 }
@@ -34,7 +30,6 @@ export async function getL2ProjectDetails({
   project,
   isVerified,
   contractsVerificationStatuses,
-  manuallyVerifiedContracts,
   projectsChangeReport,
   rosetteValues,
 }: Params) {
@@ -48,7 +43,6 @@ export async function getL2ProjectDetails({
           nativePermissions: project.nativePermissions,
         },
         contractsVerificationStatuses,
-        manuallyVerifiedContracts,
       )
     : undefined
 
@@ -64,7 +58,6 @@ export async function getL2ProjectDetails({
       architectureImage: project.display.architectureImage,
     },
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
     projectsChangeReport,
   )
 
@@ -120,7 +113,7 @@ export async function getL2ProjectDetails({
       props: {
         id: 'tvl',
         stacked: true,
-        title: 'Value Locked',
+        title: 'Value Secured',
         projectId: project.id,
         milestones: sortedMilestones,
         tokens,

@@ -50,7 +50,7 @@ export function ScalingArchivedTables({
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length}
@@ -69,7 +69,7 @@ export function ScalingArchivedTables({
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
+          <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
             <ScalingArchivedTable
               entries={filteredEntries.validiumsAndOptimiums}
