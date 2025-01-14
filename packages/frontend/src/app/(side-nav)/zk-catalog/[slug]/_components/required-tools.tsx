@@ -1,6 +1,6 @@
 import { CustomLink } from '~/components/link/custom-link'
 import { EM_DASH } from '~/consts/characters'
-import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
+import { type ZkCatalogProjectDetails } from '../page'
 
 interface Props {
   items: ZkCatalogProjectDetails['requiredTools']

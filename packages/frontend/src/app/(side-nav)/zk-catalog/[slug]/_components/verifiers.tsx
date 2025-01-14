@@ -10,10 +10,10 @@ import { CustomLink } from '~/components/link/custom-link'
 import { Markdown } from '~/components/markdown/markdown'
 import { ChevronIcon } from '~/icons/chevron'
 import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
+import { type ZkCatalogProjectDetails } from '../page'
 import { LastUsedCell } from './last-used-cell'
 import { SubVerifiersTable } from './sub-verifiers-table'
 import { VerifiedCell } from './verified-cell'
-import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 
 interface Props {
   items: ZkCatalogProjectDetails['verifiers']
