@@ -1,24 +1,31 @@
-import { type Layer2, layer2s } from '@l2beat/config'
-import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  type ProjectsLatestTvlUsd,
-  getProjectsLatestTvlUsd,
-} from '../tvl/utils/get-latest-tvl-usd'
-import { getFinality } from './get-finality'
-import { type FinalityData, type FinalityProjectData } from './schema'
-
+  type DataAvailabilityMode,
+  type Layer2,
+  type ScalingProjectCategory,
+  type ScalingProjectStack,
+  layer2s,
+} from '@l2beat/config'
+import {
+  UnixTime,
+  type WarningValueWithSentiment,
+  notUndefined,
+} from '@l2beat/shared-pure'
+import { type SyncStatus } from '~/types/sync-status'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
+import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import { getFinality } from './get-finality'
+import { type FinalityData, type FinalityProjectData } from './schema'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
 
-export type ScalingFinalityEntries = Awaited<
-  ReturnType<typeof getScalingFinalityEntries>
->
 export async function getScalingFinalityEntries() {
   const configurations = getFinalityConfigurations()
   const [finality, tvl, projectsChangeReport] = await Promise.all([
@@ -35,7 +42,7 @@ export async function getScalingFinalityEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         finality[project.id.toString()],
-        tvl,
+        tvl[project.id] ?? 0,
       ),
     )
     .filter(notUndefined)
@@ -93,15 +100,35 @@ function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
   )
 }
 
-export type ScalingFinalityEntry = NonNullable<
-  ReturnType<typeof getScalingFinalityEntry>
->
+export interface ScalingFinalityEntry extends CommonScalingEntry {
+  category: ScalingProjectCategory
+  provider: ScalingProjectStack | undefined
+  dataAvailabilityMode: DataAvailabilityMode | undefined
+  data: {
+    timeToInclusion: {
+      averageInSeconds: number
+      minimumInSeconds: number | undefined
+      maximumInSeconds: number
+      warning: WarningValueWithSentiment | undefined
+    }
+    stateUpdateDelay:
+      | {
+          averageInSeconds: number
+          warning: WarningValueWithSentiment | undefined
+        }
+      | undefined
+    syncStatus: SyncStatus
+  }
+  finalizationPeriod: number | undefined
+  tvlOrder: number
+}
+
 function getScalingFinalityEntry(
   project: Layer2,
   changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
-  tvl: ProjectsLatestTvlUsd,
-) {
+  tvl: number,
+): ScalingFinalityEntry | undefined {
   const data = getFinalityData(finalityProjectData, project)
   if (!data) {
     return
@@ -117,6 +144,6 @@ function getScalingFinalityEntry(
     dataAvailabilityMode: project.dataAvailability?.mode,
     data,
     finalizationPeriod: project.display.finality?.finalizationPeriod,
-    tvlOrder: tvl[project.id] ?? 0,
+    tvlOrder: tvl,
   }
 }
