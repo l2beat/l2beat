@@ -78,21 +78,23 @@ export default async function Page(props: Props) {
       <MainPageHeader>
         <Breadcrumbs icon={projectDetails.icon} title={projectDetails.title} />
       </MainPageHeader>
-      <div className="flex items-end gap-4 px-6">
-        <ProjectHeader
-          icon={projectDetails.icon}
-          title={projectDetails.title}
-        />
-        {projectDetails.linkToMainProjectDetails && (
-          <CustomLink
-            className="text-sm"
-            href={projectDetails.linkToMainProjectDetails}
-          >
-            View project&apos;s detail page
-          </CustomLink>
-        )}
+      <div className="border-divider max-lg:pt-8 max-md:border-b max-md:bg-surface-header max-md:px-4 max-md:pb-6">
+        <div className="flex flex-col gap-1 md:flex-row md:items-end md:gap-4 md:px-6">
+          <ProjectHeader
+            icon={projectDetails.icon}
+            title={projectDetails.title}
+          />
+          {projectDetails.linkToMainProjectDetails && (
+            <CustomLink
+              className="text-sm"
+              href={projectDetails.linkToMainProjectDetails}
+            >
+              View project&apos;s detail page
+            </CustomLink>
+          )}
+        </div>
+        <Summary details={projectDetails} />
       </div>
-      <Summary details={projectDetails} />
       <div className="md:mt-6 md:space-y-6">
         <Section title="List of verifiers">
           <Verifiers items={projectDetails.verifiers} />
@@ -138,7 +140,7 @@ function Summary(props: {
   details: ZkCatalogProjectDetails
 }) {
   return (
-    <div className="flex grid-cols-3 flex-col gap-1 bg-surface-primary md:mt-8 md:grid md:rounded-xl md:p-6">
+    <div className="mt-6 flex grid-cols-3 flex-col gap-1 md:mt-8 md:grid md:rounded-xl md:bg-surface-primary md:p-6">
       <HeaderItem title="Number of verifiers">
         <VerifiedCountWithDetails verifiers={props.details.verifiers} />
       </HeaderItem>
@@ -169,7 +171,7 @@ function HeaderItem({
 }) {
   return (
     <div className="flex items-baseline justify-between md:block">
-      <h3 className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-50 md:mb-2">
+      <h3 className="flex items-center gap-1.5 text-xs text-secondary md:mb-2">
         {title}
         {tooltip ? (
           <Tooltip>
