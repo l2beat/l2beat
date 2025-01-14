@@ -35,7 +35,7 @@ const SelectGroup = SelectPrimitive.Group
 const SelectValue = SelectPrimitive.Value
 
 const selectTriggerClassnames = cn(
-  'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+  'group/trigger flex min-h-8 select-none items-center justify-between gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
   'bg-surface-primary text-xs font-medium leading-none data-[state=open]:hover:bg-surface-secondary md:text-sm',
   'ring-offset-background focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand',
   'z-20 transition-colors',
