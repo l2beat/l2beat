@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc8272733f2d64deedf58c0f3268ff1e1046cfeef
+Generated with discovered.json: 0xe17256091af1617f2ef5e4ed3dd3d5df72782b32
 
-# Diff at Mon, 13 Jan 2025 15:52:41 GMT:
+# Diff at Tue, 14 Jan 2025 11:27:42 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 21616576
+- current block number: 21622232
 
 ## Description
 
@@ -14,7 +14,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448)
-    +++ description: None
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
 ```
 
 ```diff
@@ -32,7 +32,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07)
-    +++ description: None
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
 ```
 
 ```diff

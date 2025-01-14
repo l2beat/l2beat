@@ -1,18 +1,30 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21616576,
+  "blockNumber": 21622232,
   "configHash": "0xe2c60e9b70e24d03cb3e1d796967bcfa2759331cb770c7fa061c1c6b40f5c1a6",
   "contracts": [
     {
       "name": "L2OutputOracle",
       "address": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
+      "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3703a67e457793b9a26cf1ac8548b5ea17dd768da63011587bb1af5c1f7c1d99"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "target": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
@@ -23,6 +35,12 @@
             }
           ]
         }
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
       ],
       "sinceTimestamp": 1735877387,
       "values": {
@@ -38,70 +56,15 @@
         "$upgradeCount": 1,
         "challenger": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
         "CHALLENGER": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
-        "computeL2Timestamp": [0, 0, 0, 0, 0],
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
-        "getL2Output": [
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0x23a327a4ab28338330864f8b775f15a06094fc8c20eda3e9134a1bdc097eb09b",
-            1735993571,
-            10000
-          ],
-          [
-            "0x7311d32141a197ce513f984037f25ff910667a6bc39bfae16bc2e6415cc2ceed",
-            1736053091,
-            15000
-          ],
-          [
-            "0xe7b4616425785a16e8aacbea6de887b15be6c7b4ec360884f5dcf75ff0ef3675",
-            1736112611,
-            20000
-          ],
-          [
-            "0x027ae2995507f0de469f40ae566f73da687e86ea199e449ed7c8d74d5e7f0c6e",
-            1736171363,
-            25000
-          ]
-        ],
-        "getL2OutputAfter": [
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ]
-        ],
-        "getL2OutputIndexAfter": [0, 0, 0, 0, 0],
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 80000,
-        "latestOutputIndex": 15,
-        "nextBlockNumber": 85000,
-        "nextOutputIndex": 16,
+        "latestBlockNumber": 85000,
+        "latestOutputIndex": 16,
+        "nextBlockNumber": 90000,
+        "nextOutputIndex": 17,
         "proposer": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "PROPOSER": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "startingBlockNumber": 0,
@@ -110,11 +73,10 @@
         "submissionInterval": 5000,
         "version": "1.8.0"
       },
-      "errors": {
-        "computeL2Timestamp": "Processing error occurred.",
-        "getL2Output": "Processing error occurred.",
-        "getL2OutputAfter": "Processing error occurred.",
-        "getL2OutputIndexAfter": "Processing error occurred."
+      "fieldMeta": {
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": "Challenge period (Number of seconds until a state root is finalized)."
+        }
       }
     },
     {
@@ -205,12 +167,19 @@
     {
       "name": "OptimismPortal",
       "address": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+      "template": "opstack/OptimismPortal_soon",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x59c5fe4b963d6487e129935b3a6f9f6340305c191ed4ed9d5623fe4dcd4b473c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "target": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
@@ -222,6 +191,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1735877303,
       "values": {
         "$admin": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
@@ -234,23 +204,24 @@
           ]
         ],
         "$upgradeCount": 1,
-        "balance": "242179500001000000000",
         "guardian": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
-        "isOutputFinalized": [true, true, true, true, true],
         "l2Oracle": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
         "l2Sender": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "MIN_BRIDGE_VALUE": 1000000000000000,
+        "MIN_BRIDGE_VALUE": "0.001",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 328258,
-          "prevBlockNum": 21614460
+          "prevBlockNum": 21622174
         },
         "paused": false,
         "superchainConfig": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
         "systemConfig": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
         "version": "2.8.1-beta.1"
       },
-      "errors": { "isOutputFinalized": "Processing error occurred." }
+      "fieldMeta": {
+        "MIN_BRIDGE_VALUE": { "description": "Minimum deposit value." }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "name": "L1ERC721Bridge",
@@ -433,7 +404,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621790",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621832",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -618,6 +589,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8",
           "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B",
           "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643",
           "0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
@@ -626,8 +598,8 @@
         "domainSeparator": "0xbf3a78c944e3a08fbc56664df7d361dd0ec1c25f9ef34f2f7593845c007a6b1b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 19,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 20,
         "VERSION": "1.3.0"
       }
     },
@@ -679,14 +651,35 @@
       "receivedPermissions": [
         {
           "permission": "guard",
+          "target": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
+        },
+        {
+          "permission": "guard",
           "target": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
         }
       ]
     },
-    { "address": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D" },
+    {
+      "address": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "target": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+        }
+      ]
+    },
     { "address": "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B" },
     { "address": "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1" },
-    { "address": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A" },
+    { "address": "0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8" },
+    {
+      "address": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "target": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+        }
+      ]
+    },
     { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
     { "address": "0xfF000000000000000000000000000000000000FF" }
   ],
@@ -1111,6 +1104,8 @@
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/DisputeGameFactory": "0x02f89510f08edb9ae5191064b00ab809feddc1544be93f761bbf30427ef5ae5b",
+    "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
+    "opstack/OptimismPortal_soon": "0xaf8cbf870d9361ccf783c20cbf6d00b28d0fff712e5ed73f41ea5f602b4eb993",
     "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8"
   }
 }
