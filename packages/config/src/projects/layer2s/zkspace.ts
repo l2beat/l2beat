@@ -47,7 +47,7 @@ export const zkspace: Layer2 = {
     name: 'ZKBase',
     slug: 'zkspace',
     description:
-      'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology, dedicated to providing scaling solutions for mainstream blockchains including Ethereum and Bitcoin.',
+      'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
     purposes: ['NFT', 'Exchange', 'Payments'],
     provider: 'ZKsync Lite',
     category: 'ZK Rollup',
