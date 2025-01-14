@@ -11,6 +11,7 @@ export type ChainId =
   | 'mantle'
   | 'nova'
   | 'optimism'
+  | 'polygonpos'
   | 'polynomial'
   | 'scroll'
   | 'silicon'
@@ -40,7 +41,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
     suggestedBlocksCount: 100,
     batchSize: 10,
     getBlockLink: (blockNumber: number) =>
-      `https://evm-explorer.alephzero.org//block/${blockNumber}`,
+      `https://evm-explorer.alephzero.org/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
       `https://evm-explorer.alephzero.org/tx/${txHash}`,
     getContractLink: (address: string) =>
@@ -52,7 +53,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
     suggestedBlocksCount: 100,
     batchSize: 10,
     getBlockLink: (blockNumber: number) =>
-      `https://arbiscan.io//block/${blockNumber}`,
+      `https://arbiscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
       `https://app.blocksec.com/explorer/tx/arbitrum/${txHash}`,
     getContractLink: (address: string) =>
@@ -161,15 +162,26 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://optimistic.etherscan.io/address/${address}`,
   },
   {
+    id: 'polygonpos',
+    name: 'Polygon PoS',
+    suggestedBlocksCount: 100,
+    batchSize: 10,
+    getBlockLink: (blockNumber: number) =>
+      `https://polygonscan.com/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://polygonscan.com/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://polygonscan.com/address/${address}`,
+  },
+  {
     id: 'polynomial',
     name: 'Polynomial',
     suggestedBlocksCount: 100,
     batchSize: 10,
     getBlockLink: (blockNumber: number) =>
-      `https://polynomialscan.io//block/${blockNumber}`,
+      `https://polynomialscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://polynomialscan.io/tx/${txHash}`,
     getContractLink: (address: string) =>
-      `https://polynomialscan.io//address/${address}`,
+      `https://polynomialscan.io/address/${address}`,
   },
   {
     id: 'scroll',

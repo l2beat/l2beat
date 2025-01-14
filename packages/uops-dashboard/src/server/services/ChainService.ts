@@ -40,6 +40,7 @@ export class ChainService {
       case 'mantle':
       case 'nova':
       case 'optimism':
+      case 'polygonpos':
       case 'polynomial':
       case 'scroll':
       case 'silicon':
