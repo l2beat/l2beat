@@ -1,3 +1,4 @@
+import { type WarningWithSentiment } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -5,6 +6,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
@@ -18,6 +20,7 @@ type Props = {
   native: ValueWithChange
   external: ValueWithChange
   canonical: ValueWithChange
+  warning: WarningWithSentiment | undefined
 }
 
 export function TvlBreakdownSummaryBox(props: Props) {
@@ -29,6 +32,7 @@ export function TvlBreakdownSummaryBox(props: Props) {
         mobileTitle="Total value secured"
         value={props.total.value}
         change={props.total.change}
+        warning={props.warning}
         big
       />
       <StatsItem
@@ -61,8 +65,9 @@ interface StatsItemProps {
   mobileTitle: string
   value: number
   change: number
-  big?: boolean
   tooltip: string
+  big?: boolean
+  warning?: WarningWithSentiment
 }
 
 function StatsItem(props: StatsItemProps) {
@@ -100,15 +105,28 @@ function StatsItem(props: StatsItemProps) {
           <TooltipContent>{props.tooltip}</TooltipContent>
         </Tooltip>
       </div>
-      <ValueWithPercentageChange
-        change={props.change}
-        className={cn(
-          'font-bold text-primary md:text-lg',
-          props.big ? 'text-lg' : 'text-base',
+      <div className="flex items-center gap-1">
+        <ValueWithPercentageChange
+          change={props.change}
+          className={cn(
+            'font-bold text-primary md:text-lg',
+            props.big ? 'text-lg' : 'text-base',
+          )}
+        >
+          {formatCurrency(props.value, 'usd')}
+        </ValueWithPercentageChange>
+        {props.warning && (
+          <Tooltip>
+            <TooltipTrigger>
+              <RoundedWarningIcon
+                sentiment={props.warning.sentiment}
+                className="size-5"
+              />
+            </TooltipTrigger>
+            <TooltipContent>{props.warning.content}</TooltipContent>
+          </Tooltip>
         )}
-      >
-        {formatCurrency(props.value, 'usd')}
-      </ValueWithPercentageChange>
+      </div>
     </div>
   )
 }

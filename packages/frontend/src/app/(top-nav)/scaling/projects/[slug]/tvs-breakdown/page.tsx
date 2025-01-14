@@ -83,6 +83,7 @@ export default async function Page(props: Props) {
           value: project7dData.breakdown.native,
           change: project7dData.change.native,
         }}
+        warning={project.display.tvlWarning}
       />
       <NativelyMintedTable tokens={native} />
       <ExternallyBridgedTable tokens={external} />
