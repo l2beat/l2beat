@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 21616417,
-  "configHash": "0x613a28f471d646bed706659c7350b7b5149931cdaeddce38779040d358d620bc",
+  "blockNumber": 21623632,
+  "configHash": "0x703cca9a0d25ca55032779ed00c8b2096c8ed6a0242c885743724f0e8e6e37d6",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -29,7 +29,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619778",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619779",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -499,7 +499,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21614789
+          "prevBlockNum": 21623324
         },
         "paused": false,
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
@@ -510,16 +510,19 @@
     {
       "name": "MIPS",
       "address": "0x99F4f5651FF808107A84F279ed8b79e0870F1f39",
+      "template": "succinct/OPSuccinct/MIPS",
       "sourceHashes": [
         "0xaac82ba0947c8928e2d00f2d5343a95f7e494fe1cb792814cc4875a689952f15"
       ],
+      "description": "Currently not used. The MIPS contract allows to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1734387347,
       "values": {
         "$immutable": true,
         "BRK_START": 1073741824,
         "oracle": "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44",
         "version": "1.0.1"
-      }
+      },
+      "derivedName": "MIPS"
     },
     {
       "name": "OpFoundationOperationsSafe",
@@ -624,11 +627,13 @@
     {
       "name": "OPSuccinctL2OutputOracle",
       "address": "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8",
+      "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x709a766c251331fb7c079ad2f2bd400a1e94ef7a1cbb118dc889fd93d8233165"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -673,10 +678,10 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 238050,
-        "latestOutputIndex": 101,
-        "nextBlockNumber": 242370,
-        "nextOutputIndex": 102,
+        "latestBlockNumber": 246750,
+        "latestOutputIndex": 103,
+        "nextBlockNumber": 251070,
+        "nextOutputIndex": 104,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
@@ -695,9 +700,11 @@
     {
       "name": "FaultDisputeGame",
       "address": "0xB6846927447e4764acd53b0b354BEd939f9220d7",
+      "template": "succinct/OPSuccinct/FaultDisputeGame",
       "sourceHashes": [
         "0xfcfd8e9eb9d6ec1518326de5385476d4d26b0682d70267add0084193ae403652"
       ],
+      "description": "Currently not used. It contains the logic of the dispute game.",
       "sinceTimestamp": 1734387359,
       "values": {
         "$immutable": true,
@@ -777,9 +784,11 @@
     {
       "name": "PreimageOracle",
       "address": "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44",
+      "template": "succinct/OPSuccinct/PreimageOracle",
       "sourceHashes": [
         "0x665ede6663477caf46bd510bb4ba7de3f2a6d8f51f840d058bad706018c67453"
       ],
+      "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
       "sinceTimestamp": 1734387347,
       "values": {
         "$immutable": true,
@@ -968,9 +977,11 @@
     {
       "name": "PermissionedDisputeGame",
       "address": "0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743",
+      "template": "succinct/OPSuccinct/PermissionedDisputeGame",
       "sourceHashes": [
         "0x95275ddb3e393113e19b284d6806675c79ab6698047f0cf6bdf7bb5ca1568c6d"
       ],
+      "description": "Currently not used. Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
       "sinceTimestamp": 1734387359,
       "values": {
         "$immutable": true,
@@ -1983,6 +1994,11 @@
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
     "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3",
+    "succinct/OPSuccinct/FaultDisputeGame": "0xa7dfada0beaf0f88870185000515c95d88999dd859d4021940c6834a06ffa46f",
+    "succinct/OPSuccinct/MIPS": "0xf8df850975900f2bda8c71a47dabb440877b38be5ec18dabb864e92a898fd7c5",
+    "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x7eb91981ba7f2c67680adfbfd9c6a755b9044ef0273ec9e1b1a1cc1c3c6c5274",
+    "succinct/OPSuccinct/PermissionedDisputeGame": "0x7c51b5f6912981ca7edc4d2ecb2c292977633fa3817093493c8c141faa9187b3",
+    "succinct/OPSuccinct/PreimageOracle": "0x523c74a9550e7030e60a4508d1775811a97958c35b5093d36b8cba6981360a35",
     "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
   }
 }

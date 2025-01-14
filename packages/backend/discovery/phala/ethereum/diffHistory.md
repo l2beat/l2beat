@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc88fdec01b872d161402abe5067732a94dcd7804
+Generated with discovered.json: 0xc922e2d79357fc248233446562894e669f741e2b
 
-# Diff at Tue, 14 Jan 2025 12:20:47 GMT:
+# Diff at Tue, 14 Jan 2025 15:30:24 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@44aff775ba02485d0ba2aa45c284c1cfc230af29 block: 21586240
-- current block number: 21616417
+- comparing to: main@1189a75f4d0a644ce19ab86fd322d93dd0ecf4ae block: 21586240
+- current block number: 21623632
 
 ## Description
 
@@ -14,7 +14,7 @@ Full discovery.
 
 ```diff
     contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
-    +++ description: None
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
       values.aggregationVkey:
 -        "0x00d4e72bc998d0528b0722a53bedd9c6f0143c9157af194ad4bb2502e37a496f"
 +        "0x001758559af75612b9d16de030ed47309d7d28fadd3839a3addaa78d2d4e2754"
@@ -42,10 +42,54 @@ discovery. Values are for block 21586240 (main branch discovery), not current.
 ```
 
 ```diff
+    contract MIPS (0x99F4f5651FF808107A84F279ed8b79e0870F1f39) {
+    +++ description: Currently not used. The MIPS contract allows to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      template:
++        "succinct/OPSuccinct/MIPS"
+      description:
++        "Currently not used. The MIPS contract allows to execute the final step of the dispute game which objectively determines the winner of the dispute."
+    }
+```
+
+```diff
     contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
-    +++ description: None
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
       values.additionalProposers:
 +        ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"]
+      template:
++        "succinct/OPSuccinct/OPSuccinctL2OutputOracle"
+      description:
++        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function."
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0xB6846927447e4764acd53b0b354BEd939f9220d7) {
+    +++ description: Currently not used. It contains the logic of the dispute game.
+      template:
++        "succinct/OPSuccinct/FaultDisputeGame"
+      description:
++        "Currently not used. It contains the logic of the dispute game."
+    }
+```
+
+```diff
+    contract PreimageOracle (0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      template:
++        "succinct/OPSuccinct/PreimageOracle"
+      description:
++        "The PreimageOracle contract is used to load the required data from L1 for a dispute game."
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743) {
+    +++ description: Currently not used. Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      template:
++        "succinct/OPSuccinct/PermissionedDisputeGame"
+      description:
++        "Currently not used. Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger."
     }
 ```
 

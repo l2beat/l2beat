@@ -8,33 +8,24 @@
     "0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743": "PermissionedDisputeGame",
     "0xB6846927447e4764acd53b0b354BEd939f9220d7": "FaultDisputeGame",
     "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44": "PreimageOracle",
-    "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SuccinctGateway"
+    "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SuccinctGateway",
+    "0x99F4f5651FF808107A84F279ed8b79e0870F1f39": "MIPS"
   },
   "overrides": {
     "OPSuccinctL2OutputOracle": {
-      "fields": {
-        "additionalProposers": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ProposerUpdated",
-            "valueKey": "proposer",
-            "flagKey": "added"
-          }
-        }
-      },
-      "ignoreMethods": [
-        "computeL2Timestamp",
-        "getL2Output",
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "historicBlockHashes"
-      ],
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ]
+      "extends": "succinct/OPSuccinct/OPSuccinctL2OutputOracle"
+    },
+    "FaultDisputeGame": {
+      "extends": "succinct/OPSuccinct/FaultDisputeGame"
+    },
+    "PermissionedDisputeGame": {
+      "extends": "succinct/OPSuccinct/PermissionedDisputeGame"
+    },
+    "PreimageOracle": {
+      "extends": "succinct/OPSuccinct/PreimageOracle"
+    },
+    "MIPS": {
+      "extends": "succinct/OPSuccinct/MIPS"
     },
     "SuccinctGateway": {
       "fields": {
@@ -46,23 +37,6 @@
           }
         }
       }
-    },
-    "PermissionedDisputeGame": {
-      "ignoreMethods": [
-        "getNumToResolve",
-        "resolutionCheckpoints",
-        "resolvedSubgames"
-      ]
-    },
-    "FaultDisputeGame": {
-      "ignoreMethods": [
-        "getNumToResolve",
-        "resolutionCheckpoints",
-        "resolvedSubgames"
-      ]
-    },
-    "PreimageOracle": {
-      "ignoreMethods": ["zeroHashes"]
     }
   }
 }
