@@ -67,8 +67,8 @@ export default async function Page(props: Props) {
         tvlBreakdownTimestamp={dataTimestamp}
       />
       <TvlBreakdownSummaryBox
-        tvl={{
-          value: project7dData.total,
+        total={{
+          value: project7dData.breakdown.total,
           change: project7dData.change.total,
         }}
         canonical={{
@@ -83,6 +83,7 @@ export default async function Page(props: Props) {
           value: project7dData.breakdown.native,
           change: project7dData.change.native,
         }}
+        warning={project.display.tvlWarning}
       />
       <NativelyMintedTable tokens={native} />
       <ExternallyBridgedTable tokens={external} />

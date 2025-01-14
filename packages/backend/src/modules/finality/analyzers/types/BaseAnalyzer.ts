@@ -90,8 +90,11 @@ export abstract class BaseAnalyzer {
     )
 
     assert(firstInRange !== 0, 'Assumption from above comment is not met')
-    const transactions =
-      firstInRange !== -1 ? sortedSafeTransactions.slice(firstInRange - 1) : []
+
+    if (firstInRange === -1) {
+      return undefined
+    }
+    const transactions = sortedSafeTransactions.slice(firstInRange - 1)
     const windowedTransactions = slidingWindow(transactions, 2, 1)
 
     const finalityBatches = []

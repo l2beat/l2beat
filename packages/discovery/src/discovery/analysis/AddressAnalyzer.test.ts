@@ -137,6 +137,7 @@ describe(AddressAnalyzer.name, () => {
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
+        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -258,6 +259,7 @@ describe(AddressAnalyzer.name, () => {
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
+        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -375,6 +377,7 @@ describe(AddressAnalyzer.name, () => {
         deploymentTimestamp: undefined,
         isVerified: true,
         proxyType: 'EIP1967 proxy',
+        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),

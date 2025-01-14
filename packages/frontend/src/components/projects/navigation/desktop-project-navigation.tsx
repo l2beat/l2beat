@@ -90,7 +90,7 @@ export function DesktopProjectNavigation({
           {project.isUnderReview && (
             <UnderReviewCallout small className="mt-2" />
           )}
-          {projectVariants && (
+          {projectVariants && projectVariants.length > 1 && (
             <div className="mt-2 pl-12">
               <Select
                 defaultValue={
@@ -210,7 +210,7 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
         'flex size-6 shrink-0 items-center justify-center rounded-lg text-center text-xs font-bold',
         props.selected
           ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-white'
-          : 'bg-gray-100 dark:bg-neutral-700',
+          : 'bg-surface-tertiary',
       )}
     >
       <span>{props.index}</span>

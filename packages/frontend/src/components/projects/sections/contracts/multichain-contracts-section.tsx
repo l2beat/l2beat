@@ -62,7 +62,7 @@ export function MultiChainContractsSection(
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={props.diagram} />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-xs text-secondary">
             {props.diagram.caption}
           </figcaption>
         </figure>

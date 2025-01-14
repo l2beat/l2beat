@@ -78,7 +78,7 @@ export function ScalingActivityTabs({
             Rollups{' '}
             <CountBadge>{filteredEntries.rollups.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length - 1}
@@ -91,7 +91,7 @@ export function ScalingActivityTabs({
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
+          <DirectoryTabsContent value="rollups" className="pt-5">
             <ActivityChart
               milestones={milestones}
               entries={rollups}
@@ -103,10 +103,7 @@ export function ScalingActivityTabs({
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent
-            value="validiums-and-optimiums"
-            className="main-page-card pt-5"
-          >
+          <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
             <ActivityChart
               milestones={milestones}
               entries={validiumsAndOptimiums}
@@ -122,10 +119,7 @@ export function ScalingActivityTabs({
         </TableSortingProvider>
         {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent
-              value="others"
-              className="main-page-card pt-5"
-            >
+            <DirectoryTabsContent value="others" className="pt-5">
               <ActivityChart
                 milestones={milestones}
                 entries={others ?? []}

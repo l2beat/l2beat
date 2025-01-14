@@ -3,7 +3,6 @@ import {
   type Layer3,
   badgesCompareFn,
   getContractsVerificationStatuses,
-  getManuallyVerifiedContracts,
   isVerified,
   layer2s,
 } from '@l2beat/config'
@@ -28,17 +27,12 @@ export type ScalingProjectEntry = Awaited<
 >
 
 export async function getScalingProjectEntry(project: ScalingProject) {
-  const [
-    contractsVerificationStatuses,
-    manuallyVerifiedContracts,
-    projectsChangeReport,
-    header,
-  ] = await Promise.all([
-    getContractsVerificationStatuses(project),
-    getManuallyVerifiedContracts(),
-    getProjectsChangeReport(),
-    getHeader(project),
-  ])
+  const [contractsVerificationStatuses, projectsChangeReport, header] =
+    await Promise.all([
+      getContractsVerificationStatuses(project),
+      getProjectsChangeReport(),
+      getHeader(project),
+    ])
 
   const changes = projectsChangeReport.getChanges(project.id)
 
@@ -65,7 +59,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
       project,
       isVerified: isProjectVerified,
       contractsVerificationStatuses,
-      manuallyVerifiedContracts,
       projectsChangeReport,
       rosetteValues,
     })
@@ -100,7 +93,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     isVerified: isProjectVerified,
     rosetteValues,
     isHostChainVerified,
-    manuallyVerifiedContracts,
     projectsChangeReport,
     contractsVerificationStatuses,
     combinedRosetteValues: stackedRosetteValues,
@@ -140,30 +132,27 @@ async function getHeader(project: ScalingProject) {
         ? (layer2s.find((l) => l.id === project.hostChain)?.display.name ??
           project.hostChain)
         : undefined,
-    tvl:
-      !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString()) &&
-      tvlProjectStats
-        ? {
-            tokenBreakdown: {
-              ...tvlProjectStats.tokenBreakdown,
-              warnings: compact([
+    tvl: !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())
+      ? {
+          breakdown: tvlProjectStats?.tvlBreakdown,
+          warning: project.display.tvlWarning,
+          tokens: {
+            breakdown: tvlProjectStats?.tokenBreakdown,
+            warnings: compact([
+              tvlProjectStats &&
                 tvlProjectStats.tokenBreakdown.total > 0 &&
-                  getAssociatedTokenWarning({
-                    associatedRatio:
-                      tvlProjectStats.tokenBreakdown.associated /
-                      tvlProjectStats.tokenBreakdown.total,
-                    name: project.display.name,
-                    associatedTokens,
-                  }),
-              ]),
-              associatedTokens,
-            },
-            tvlBreakdown: {
-              ...tvlProjectStats.tvlBreakdown,
-              warning: project.display.tvlWarning,
-            },
-          }
-        : undefined,
+                getAssociatedTokenWarning({
+                  associatedRatio:
+                    tvlProjectStats.tokenBreakdown.associated /
+                    tvlProjectStats.tokenBreakdown.total,
+                  name: project.display.name,
+                  associatedTokens,
+                }),
+            ]),
+            associatedTokens,
+          },
+        }
+      : undefined,
     badges:
       project.badges && project.badges.length !== 0
         ? project.badges?.sort(badgesCompareFn)

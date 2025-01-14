@@ -17,4 +17,6 @@ export const externalLinks = {
     finality:
       'https://medium.com/l2beat/tracking-time-to-finality-of-l2-transactions-051d32f5d5ba',
   },
+  askForZkCatalogVerification:
+    'https://l2beat.notion.site/ZK-Catalog-Verification-94e940aa2bff4287bb15a19f66e3cead?pvs=25',
 } as const

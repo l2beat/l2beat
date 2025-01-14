@@ -11,7 +11,7 @@ type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>
 export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
   const isMobile = useIsMobile()
   return (
-    <div className="border-brand p-4 max-md:border-x-0 max-md:bg-brand/25 max-md:dark:bg-brand/15 md:mt-10 md:rounded-lg md:border-2 md:p-8">
+    <div className="border-brand p-4 max-md:border-x-0 max-md:bg-brand/25 max-md:dark:bg-brand/15 md:mt-10 md:rounded-lg md:border-2 md:bg-surface-primary md:p-8">
       <div className="flex flex-wrap items-center justify-center gap-4">
         <h2 className="mr-auto text-2xl font-bold md:text-3xl">
           Recategorisation

@@ -1,5 +1,6 @@
 import { type ScalingProjectCategory } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { type ActivityChartType } from '../use-activity-chart-render-params'
 
 export function getChartType(category?: ScalingProjectCategory) {
   switch (category) {
@@ -18,9 +19,7 @@ export function getChartType(category?: ScalingProjectCategory) {
   }
 }
 
-export function typeToIndicator(
-  type?: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others',
-) {
+export function typeToIndicator(type?: ActivityChartType) {
   switch (type) {
     case 'Rollups':
       return 'bg-indicator-rollups'
