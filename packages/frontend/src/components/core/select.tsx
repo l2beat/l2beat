@@ -8,26 +8,8 @@ import { CheckIcon } from '~/icons/check'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 
-const SelectContext = React.createContext<
-  React.Dispatch<React.SetStateAction<boolean>> | undefined
->(undefined)
-
-function useSelectContext() {
-  const context = React.useContext(SelectContext)
-  if (!context) {
-    throw new Error('useSelectContext must be used within a SelectContext')
-  }
-
-  return context
-}
-
 function Select(props: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  const [isOpen, setIsOpen] = React.useState(false)
-  return (
-    <SelectContext.Provider value={setIsOpen}>
-      <SelectPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props} />
-    </SelectContext.Provider>
-  )
+  return <SelectPrimitive.Root {...props} />
 }
 
 const SelectGroup = SelectPrimitive.Group
@@ -50,17 +32,11 @@ const SelectTrigger = ({
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   icon?: React.ReactNode
 }) => {
-  const setIsOpen = useSelectContext()
   return (
     <SelectPrimitive.Trigger
       ref={ref}
       onPointerDown={(e) => {
         if (e.pointerType === 'touch') e.preventDefault()
-      }}
-      onPointerUp={(e) => {
-        if (e.pointerType === 'touch') {
-          setIsOpen((prevState) => !prevState)
-        }
       }}
       className={cn(selectTriggerClassnames, className)}
       {...props}
