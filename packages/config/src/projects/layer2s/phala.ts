@@ -68,7 +68,7 @@ export const phala: Layer2 = {
   },
   chainConfig: {
     name: 'phala',
-    chainId: 1,
+    chainId: 2035,
     explorerUrl: 'https://explorer.phala.network/',
     explorerApi: {
       url: 'https://explorer.phala.network/api',
