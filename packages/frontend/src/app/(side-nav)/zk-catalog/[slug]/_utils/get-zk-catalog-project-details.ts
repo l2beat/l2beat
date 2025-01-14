@@ -3,7 +3,15 @@ import { getCollectionEntry } from '~/content/get-collection'
 import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { getProofVerification } from '../../_utils/get-proof-verification'
 import { getTrustedSetup } from '../../_utils/get-trusted-setup'
-import { type ZkCatalogProjectDetails } from '../_components/zk-catalog-project-page'
+import { type ZkCatalogProofVerification } from '../../_utils/types'
+
+export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
+  title: string
+  icon: string
+  description: string | undefined
+  trustedSetup: string
+  linkToMainProjectDetails: string | undefined
+}
 
 export function getZkCatalogProjectDetails(
   project: ProjectWith<'proofVerification', 'isScaling'>,

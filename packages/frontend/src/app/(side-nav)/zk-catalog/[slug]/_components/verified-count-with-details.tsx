@@ -2,8 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { VerifiedIcon } from '~/icons/verified'
-
-import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
+import { type ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
 
 interface Props {
   verifiers: ZkCatalogProjectDetails['verifiers']
@@ -43,7 +42,7 @@ export function VerifiedCountWithDetails(props: Props) {
   return (
     <div className="flex items-center gap-1.5 leading-none">
       <span>{props.verifiers.length}</span>
-      <div className="select-none text-base font-medium text-zinc-500 dark:text-gray-50">
+      <div className="select-none text-base font-medium text-secondary">
         (
         <div className="inline-flex items-center gap-1">
           {successfullyVerifiedCount > 0 ? (

@@ -9,6 +9,7 @@ export type NavGroup =
     }
   | ({
       type: 'single'
+      match: string
       icon: React.ReactNode
     } & NavLink)
 
