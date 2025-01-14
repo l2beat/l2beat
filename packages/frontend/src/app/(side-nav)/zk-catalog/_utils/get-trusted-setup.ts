@@ -1,5 +1,7 @@
 import { type ZkCatalogOnchainVerifier } from './types'
 
+export type TrustedSetup = 'Yes' | 'No' | '?'
+
 export function getTrustedSetup(verifiers: ZkCatalogOnchainVerifier[]) {
   const allUndefined = verifiers.every((verifier) =>
     verifier.subVerifiers.every((subVerifier) => !subVerifier.trustedSetup),
