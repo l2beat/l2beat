@@ -17,7 +17,7 @@ export const Init = command({
     chain,
     initialAddresses: restPositionals({
       type: EthereumAddressValue,
-      displayName: 'initalAddresses',
+      displayName: 'initialAddresses',
       description: 'a list of initial addresses',
     }),
   },
