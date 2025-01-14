@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x71e43d7919ac5d71aef6c8eb7d220cc3cd5eddaf
+Generated with discovered.json: 0x22eaa1385f614688f4260e41f4f4f7c430dd54fc
 
-# Diff at Tue, 14 Jan 2025 14:38:05 GMT:
+# Diff at Tue, 14 Jan 2025 17:37:51 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 21622232
+- current block number: 21624259
 
 ## Description
 
@@ -20,13 +20,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087)
-    +++ description: None
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
 ```
 
 ```diff
@@ -55,26 +49,8 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0xa41694e4f8bb50f10A5eb3ea3CB04aC187F19326)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0xAa17a7021054a984199a5bC40538f3DD6d04d36e)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract L1CrossDomainMessenger (0xbB138cE37870443d5b2B02a36619D3478738E0f6)
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
-```
-
-```diff
-+   Status: CREATED
-    contract DisputeGameFactory (0xcf0f094b6765eD31038003831F7f75bD07Bd49c2)
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
 ```
 
 ```diff
