@@ -7,7 +7,7 @@ import { CustomLink } from '~/components/link/custom-link'
 import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
-import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
+import { type ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
 
 interface Props {
   verifier: ZkCatalogProjectDetails['verifiers'][number]
@@ -24,7 +24,7 @@ export function SubVerifiersTable({ verifier, className }: Props) {
     >
       <table className="w-full border-collapse">
         <thead>
-          <tr className="border-b border-divider text-left align-bottom text-zinc-500 dark:text-n-zinc-300">
+          <tr className="border-b border-divider text-left align-bottom text-secondary">
             <th className="py-1.5 pr-3 text-2xs font-medium uppercase">Name</th>
             <th className="py-1.5 pr-3 text-2xs font-medium uppercase">
               Proof system

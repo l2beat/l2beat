@@ -8,10 +8,8 @@ import { DetailsItem } from './details-item'
 
 export function VerifierCard({
   verifier,
-  askForVerificationLink,
 }: {
   verifier: ZkCatalogViewEntry['verifiers'][number]
-  askForVerificationLink: string
 }) {
   return (
     <div className="border-t border-divider px-5 py-4 max-md:first:border-t-0 md:rounded-lg md:border md:first:mt-7">
@@ -24,10 +22,7 @@ export function VerifierCard({
           />
         </DetailsItem>
         <DetailsItem title="Verification status">
-          <VerifiedCell
-            {...verifier}
-            askForVerificationLink={askForVerificationLink}
-          />
+          <VerifiedCell {...verifier} />
         </DetailsItem>
         <DetailsItem title="Last used" className="lg:pl-10">
           <LastUsedCell days={verifier.lastUsedDaysAgo} />
