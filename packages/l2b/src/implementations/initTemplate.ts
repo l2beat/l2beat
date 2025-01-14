@@ -3,7 +3,7 @@ import path from 'path'
 import { assert } from '@l2beat/shared-pure'
 import { readConfig } from '../config/readConfig'
 
-export function initTempalte(name: string) {
+export function initTemplate(name: string) {
   const config = readConfig()
   assert(config.projectRootPath, '.l2b file not found')
   assert(config.discoveryPath, '.l2b does not specify the discovery path')
