@@ -1,14 +1,14 @@
 Generated with discovered.json: 0xc88fdec01b872d161402abe5067732a94dcd7804
 
-# Diff at Mon, 13 Jan 2025 15:20:30 GMT:
+# Diff at Tue, 14 Jan 2025 12:20:47 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@e1b12bb19ec99630a70e16cb0a9fafd125bdff06 block: 21586240
+- comparing to: main@44aff775ba02485d0ba2aa45c284c1cfc230af29 block: 21586240
 - current block number: 21616417
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Full discovery.
 
 ## Watched changes
 
