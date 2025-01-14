@@ -132,30 +132,27 @@ async function getHeader(project: ScalingProject) {
         ? (layer2s.find((l) => l.id === project.hostChain)?.display.name ??
           project.hostChain)
         : undefined,
-    tvl:
-      !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString()) &&
-      tvlProjectStats
-        ? {
-            tokenBreakdown: {
-              ...tvlProjectStats.tokenBreakdown,
-              warnings: compact([
+    tvl: !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())
+      ? {
+          breakdown: tvlProjectStats?.tvlBreakdown,
+          warning: project.display.tvlWarning,
+          tokens: {
+            breakdown: tvlProjectStats?.tokenBreakdown,
+            warnings: compact([
+              tvlProjectStats &&
                 tvlProjectStats.tokenBreakdown.total > 0 &&
-                  getAssociatedTokenWarning({
-                    associatedRatio:
-                      tvlProjectStats.tokenBreakdown.associated /
-                      tvlProjectStats.tokenBreakdown.total,
-                    name: project.display.name,
-                    associatedTokens,
-                  }),
-              ]),
-              associatedTokens,
-            },
-            tvlBreakdown: {
-              ...tvlProjectStats.tvlBreakdown,
-              warning: project.display.tvlWarning,
-            },
-          }
-        : undefined,
+                getAssociatedTokenWarning({
+                  associatedRatio:
+                    tvlProjectStats.tokenBreakdown.associated /
+                    tvlProjectStats.tokenBreakdown.total,
+                  name: project.display.name,
+                  associatedTokens,
+                }),
+            ]),
+            associatedTokens,
+          },
+        }
+      : undefined,
     badges:
       project.badges && project.badges.length !== 0
         ? project.badges?.sort(badgesCompareFn)

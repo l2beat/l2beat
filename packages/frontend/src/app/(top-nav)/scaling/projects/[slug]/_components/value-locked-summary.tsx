@@ -24,15 +24,13 @@ interface ValueLockedBreakdown {
 }
 
 export interface ValueLockedSummaryProps {
-  breakdown:
-    | NonNullable<ScalingProjectEntry['header']['tvl']>['tvlBreakdown']
-    | undefined
+  tvl: NonNullable<ScalingProjectEntry['header']['tvl']> | undefined
   detailedBreakdownHref: string
   isArchived?: boolean
 }
 
 export function ValueLockedSummary(props: ValueLockedSummaryProps) {
-  const params = getParams(props.breakdown)
+  const params = getParams(props.tvl)
 
   const tvlStats = [
     {
@@ -59,7 +57,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
   ]
 
   return (
-    <div className="bg-gray-100 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
+    <div className="md:flex md:flex-col md:gap-3 md:rounded-lg md:bg-surface-primary md:px-6 md:py-4">
       <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
           Value secured
@@ -68,47 +66,30 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           TVS
         </span>
 
-        {params.breakdown.total > 0 || props.isArchived ? (
-          params.breakdown.warning ? (
-            <Tooltip>
-              <TooltipTrigger className="flex items-center gap-1">
-                <ValueWithPercentageChange
-                  className="text-lg font-bold md:text-2xl md:leading-none"
-                  changeClassName="text-xs font-bold md:text-base"
-                  change={params.breakdown.totalChange}
-                >
-                  {formatCurrency(params.breakdown.total, 'usd')}
-                </ValueWithPercentageChange>
-                {params.breakdown.warning && (
-                  <RoundedWarningIcon
-                    className="size-4"
-                    sentiment={params.breakdown.warning.sentiment}
-                  />
-                )}
-              </TooltipTrigger>
-              <TooltipContent>
-                {params.breakdown.warning.content}
-              </TooltipContent>
-            </Tooltip>
+        <div className="flex items-center gap-1">
+          {params.breakdown.total > 0 || props.isArchived ? (
+            <ValueWithPercentageChange
+              className="text-lg font-bold md:text-2xl md:leading-none"
+              changeClassName="text-xs font-bold md:text-base md:w-[58px]"
+              change={params.breakdown.totalChange}
+            >
+              {formatCurrency(params.breakdown.total, 'usd')}
+            </ValueWithPercentageChange>
           ) : (
-            <div className="flex items-center gap-1">
-              <ValueWithPercentageChange
-                className="text-nowrap text-lg font-bold md:text-2xl md:leading-none"
-                changeClassName="text-xs font-bold md:text-base"
-                change={params.breakdown.totalChange}
-              >
-                {formatCurrency(params.breakdown.total, 'usd')}
-              </ValueWithPercentageChange>
-              {params.breakdown.warning && (
-                <RoundedWarningIcon className="size-4" sentiment="warning" />
-              )}
-            </div>
-          )
-        ) : (
-          <div className="w-auto">
             <NoDataBadge />
-          </div>
-        )}
+          )}
+          {props.tvl?.warning ? (
+            <Tooltip>
+              <TooltipTrigger>
+                <RoundedWarningIcon
+                  className="size-4"
+                  sentiment={props.tvl?.warning.sentiment}
+                />
+              </TooltipTrigger>
+              <TooltipContent>{props.tvl?.warning.content}</TooltipContent>
+            </Tooltip>
+          ) : null}
+        </div>
       </div>
       <ValueLockedBreakdown
         canonical={params.usage.canonical}
@@ -151,8 +132,8 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
   )
 }
 
-function getParams(breakdown: ValueLockedSummaryProps['breakdown']) {
-  if (!breakdown) {
+function getParams(tvl: ValueLockedSummaryProps['tvl']) {
+  if (!tvl?.breakdown) {
     return {
       breakdown: {
         total: 0,
@@ -160,7 +141,6 @@ function getParams(breakdown: ValueLockedSummaryProps['breakdown']) {
         external: 0,
         native: 0,
         totalChange: 0,
-        warning: undefined,
       },
       usage: {
         canonical: 1,
@@ -171,19 +151,19 @@ function getParams(breakdown: ValueLockedSummaryProps['breakdown']) {
   }
 
   const [canonical, external, native] = unifyPercentagesAsIntegers([
-    breakdown.total === 0
+    tvl.breakdown.total === 0
       ? 100 / 3
-      : (breakdown.canonical / breakdown.total) * 100,
-    breakdown.total === 0
+      : (tvl.breakdown.canonical / tvl.breakdown.total) * 100,
+    tvl.breakdown.total === 0
       ? 100 / 3
-      : (breakdown.external / breakdown.total) * 100,
-    breakdown.total === 0
+      : (tvl.breakdown.external / tvl.breakdown.total) * 100,
+    tvl.breakdown.total === 0
       ? 100 / 3
-      : (breakdown.native / breakdown.total) * 100,
+      : (tvl.breakdown.native / tvl.breakdown.total) * 100,
   ] as const)
 
   return {
-    breakdown,
+    breakdown: tvl.breakdown,
     usage: {
       canonical,
       external,

@@ -5,11 +5,11 @@ interface Props {
   className?: string
 }
 
-export function MainPageCard({ children, className }: Props) {
+export function PrimaryCard({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'main-page-card bg-surface-primary p-4 md:rounded-xl md:px-6 md:py-5',
+        'bg-surface-primary p-4 primary-card md:rounded-xl md:px-6 md:py-5',
         className,
       )}
     >

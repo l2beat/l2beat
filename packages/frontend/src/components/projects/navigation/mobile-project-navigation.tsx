@@ -34,14 +34,15 @@ export function MobileProjectNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="flex justify-center bg-white dark:bg-neutral-900"
+      className="flex justify-center bg-surface-header"
+      childrenClassName="w-full"
     >
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <a
           href="#"
           ref={isSummarySection ? selectedItem : undefined}
           className={cn(
-            'whitespace-nowrap p-4 text-xs transition-colors',
+            'w-full whitespace-nowrap border-b border-divider p-4 text-center text-xs transition-colors',
             isSummarySection && 'border-b-2 border-current text-brand',
           )}
         >
@@ -58,7 +59,7 @@ export function MobileProjectNavigation({ sections }: Props) {
               ref={selected ? selectedItem : undefined}
               href={`#${section.id}`}
               className={cn(
-                'whitespace-nowrap p-4 text-xs transition-colors',
+                'w-full whitespace-nowrap border-b border-divider p-4 text-center text-xs transition-colors',
                 selected && 'border-b-2 border-current text-brand',
               )}
             >

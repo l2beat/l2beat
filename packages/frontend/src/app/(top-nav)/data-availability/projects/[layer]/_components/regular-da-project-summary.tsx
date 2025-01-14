@@ -62,9 +62,9 @@ export function RegularDaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="border-gray-200 dark:border-zinc-700 max-md:border-b max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="border-divider max-md:border-b max-md:bg-surface-header max-md:px-4"
     >
-      <header className="space-y-4 pt-6 max-md:bg-gray-100 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
+      <header className="space-y-4 pt-6 max-md:pb-4 md:space-y-3">
         <ProjectHeader title={project.name} slug={project.slug} />
       </header>
       <div className="flex w-full gap-10">
@@ -108,7 +108,7 @@ export function RegularDaProjectSummary({ project }: Props) {
 
             <div className="flex flex-col">
               <div>
-                <div className="-mx-4 border-y border-gray-200 px-4 dark:border-zinc-700 md:hidden">
+                <div className="-mx-4 border-y border-divider px-4 md:hidden">
                   <MobileProjectLinks projectLinks={project.header.links} />
                 </div>
               </div>
@@ -116,7 +116,7 @@ export function RegularDaProjectSummary({ project }: Props) {
               <div className="flex flex-row items-end gap-10 py-8 max-md:pt-6 md:mb-10 md:py-0">
                 {/* Left side (table with title and banner) */}
                 <div className="flex flex-1 flex-col gap-4">
-                  <div className="whitespace-pre text-xs uppercase text-gray-500 dark:text-gray-600">
+                  <div className="whitespace-pre text-xs uppercase text-secondary">
                     Select a bridge
                   </div>
                   <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-medium text-blue-700 dark:text-blue-700 md:flex lg:px-6">
@@ -124,20 +124,20 @@ export function RegularDaProjectSummary({ project }: Props) {
                     Please select one of the available DA bridges to view its
                     risks and detailed analysis.
                   </div>
-                  <div className="flex flex-col lg:h-[278px]">
-                    <div className="hidden flex-row gap-4 rounded-t-lg border-surface-tertiary bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary dark:bg-zinc-800 md:flex md:border-b">
+                  <div className="flex flex-col rounded-lg bg-surface-primary lg:h-[278px]">
+                    <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-tertiary/75 px-4 py-2 text-xs font-semibold uppercase text-secondary md:flex md:border-b">
                       <div className="w-12"></div>
                       <div className="flex-1">DA Bridge</div>
                       <div className="flex-1 text-center">DA Risks</div>
                       <div className="flex-1 pr-12 text-right">TVS</div>
                       <div className="flex-[1.5] lg:flex-1">Used by</div>
                     </div>
-                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 md:gap-0 md:rounded-t-none md:bg-none dark:md:bg-none">
+                    <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg bg-surface-primary md:gap-0 md:rounded-t-none md:bg-none dark:md:bg-none">
                       {project.bridges.map((bridge, index) => (
                         <div
                           key={bridge.id}
                           className={cn(
-                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-surface-tertiary bg-surface-secondary px-4 py-2 dark:bg-zinc-800 md:rounded-none md:border-b md:bg-transparent',
+                            'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider px-4 py-2 max-md:bg-surface-secondary md:rounded-none md:border-b',
                             index === project.bridges.length - 1 &&
                               'md:border-b-0',
                             // Hide 3rd and further bridges on mobile (will be shown in a drawer)
@@ -281,7 +281,7 @@ function RadioButtonLikeIcon({ selected }: { selected: boolean }) {
     <div
       className={cn(
         'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
-        selected ? 'border-brand' : 'border-gray-400',
+        selected ? 'border-brand' : 'border-divider',
       )}
     >
       {selected ? <div className="size-3 rounded-full bg-brand"></div> : null}

@@ -22,7 +22,7 @@ export function ScalingProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="pt-6 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="border-divider pt-6 max-md:border-b max-md:bg-surface-header max-md:px-4"
     >
       <div className="flex gap-10">
         <div className="w-full space-y-4 md:space-y-6">
@@ -60,7 +60,7 @@ export function ScalingProjectSummary({ project }: Props) {
           </div>
           <div className="grid w-full md:grid-cols-3 md:gap-4">
             <ValueLockedSummary
-              breakdown={project.header.tvl?.tvlBreakdown}
+              tvl={project.header.tvl}
               detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
               isArchived={project.isArchived}
             />
