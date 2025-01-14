@@ -1,3 +1,7 @@
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DATA_ON_CHAIN,
@@ -8,7 +12,6 @@ import {
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
@@ -17,7 +20,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'
-import { ContractParameters, get$Implementations } from '@l2beat/discovery-types'
 
 const discovery = new ProjectDiscovery('phala')
 
@@ -152,8 +154,7 @@ export const phala: Layer2 = {
   technology: {
     stateCorrectness: {
       name: 'Validity proofs ensure state correctness',
-      description:
-        `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+      description: `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
         Through the SuccinctL2OutputOracle, the system also allows to switch to an optimistic mode, in which no proofs are required and a challenger can challenge the proposed output state root within the finalization period.`,
       references: [
         {
