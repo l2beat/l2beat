@@ -30,21 +30,21 @@ export const soneium: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.soneium.org',
   finality: {
     type: 'OPStack',
-    genesisTimestamp: new UnixTime(1733134753), 
-    minTimestamp: new UnixTime(1733134753), 
+    genesisTimestamp: new UnixTime(1733134753),
+    minTimestamp: new UnixTime(1733134753),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',
   },
   chainConfig: {
     name: 'soneium',
-    chainId: 1868, 
+    chainId: 1868,
     explorerUrl: 'https://soneium.blockscout.com/',
     explorerApi: {
       url: 'https://soneium.blockscout.com/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: new UnixTime(1733134753), 
+    minTimestampForTvl: new UnixTime(1733134753),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'), // Standard multicall address
@@ -54,7 +54,7 @@ export const soneium: Layer2 = opStackL2({
       },
     ],
   },
-  genesisTimestamp: new UnixTime(1733134753), 
+  genesisTimestamp: new UnixTime(1733134753),
   isNodeAvailable: true,
   milestones: [
     {
