@@ -16,7 +16,7 @@ export function FullPageHeader(props: Props) {
   return (
     <Comp
       className={cn(
-        'border-b border-divider bg-surface-header pb-8 pt-12 md:py-24',
+        'border-b border-divider bg-header-primary pb-8 pt-12 md:py-24',
         props.className,
       )}
     >

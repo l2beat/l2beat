@@ -5,7 +5,7 @@ import { SvgIcon, type SvgIconProps } from './svg-icon'
 const infoVariants = cva(undefined, {
   variants: {
     variant: {
-      gray: 'fill-gray-500 dark:fill-gray-600',
+      gray: 'fill-secondary',
       blue: 'fill-blue-500',
       yellow: 'fill-yellow-900',
     },

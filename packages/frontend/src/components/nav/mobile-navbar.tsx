@@ -17,7 +17,7 @@ export function MobileNavbar({
 }: { groups: NavGroup[]; logoLink: string; className?: string }) {
   return (
     <div className={cn('lg:hidden', className)}>
-      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-divider bg-surface-header px-3.5">
+      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-divider bg-header-primary px-3.5">
         {/* Left side */}
         <div className="flex items-center gap-3">
           <div className="py-4">

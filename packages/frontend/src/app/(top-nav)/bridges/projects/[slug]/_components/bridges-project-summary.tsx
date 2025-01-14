@@ -1,4 +1,6 @@
+import { BridgesMvpWarning } from '~/app/(side-nav)/bridges/_components/bridges-mvp-warning'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { FullPageHeader } from '~/components/full-page-header'
 import { ArchivedBar } from '~/components/projects/archived-bar'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
@@ -17,53 +19,51 @@ interface Props {
 
 export function BridgesProjectSummary({ project }: Props) {
   return (
-    <section
-      id="summary"
-      className="border-divider max-md:border-b max-md:bg-surface-header max-md:px-4"
-    >
-      <div className="w-full space-y-4 md:space-y-6">
-        <div className="flex flex-col gap-2">
+    <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
+      <section id="summary" className="max-md:bg-header-primary max-md:px-4">
+        <BridgesMvpWarning />
+
+        <div className="w-full space-y-4 md:space-y-6">
           <ProjectHeader title={project.name} slug={project.slug} />
-          {project.isArchived && <ArchivedBar />}
-          {project.isUpcoming && <UpcomingBar />}
-          {project.underReviewStatus && (
-            <UnderReviewBar
-              text={getUnderReviewText(project.underReviewStatus)}
-            />
-          )}
-          {project.header.warning && (
-            <WarningBar
-              text={project.header.warning}
-              color="yellow"
-              className="w-full items-center justify-center p-2.5 text-xs md:text-base"
-            />
-          )}
-        </div>
-        {project.header.description && (
-          <div className="md:hidden">
-            <AboutSection description={project.header.description} />
+          <div className="space-y-2">
+            {project.isArchived && <ArchivedBar />}
+            {project.isUpcoming && <UpcomingBar />}
+            {project.underReviewStatus && (
+              <UnderReviewBar
+                text={getUnderReviewText(project.underReviewStatus)}
+              />
+            )}
+            {project.header.warning && (
+              <WarningBar
+                text={project.header.warning}
+                color="yellow"
+                className="w-full items-center justify-center p-2.5 text-xs md:text-base"
+              />
+            )}
           </div>
-        )}
-        <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
+          {project.header.description && (
+            <div className="md:hidden">
+              <AboutSection description={project.header.description} />
+            </div>
+          )}
+          <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
 
-        <div className="max-md:hidden">
-          <DesktopProjectLinks projectLinks={project.header.links} />
+          <div className="max-md:hidden">
+            <DesktopProjectLinks projectLinks={project.header.links} />
+          </div>
+          <BridgesProjectStats project={project} />
         </div>
-        <BridgesProjectStats project={project} />
-      </div>
 
-      <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />
-      <div className="md:hidden">
-        <MobileProjectLinks projectLinks={project.header.links} />
-      </div>
-      <div className="max-md:hidden">
-        <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
+        <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />
+        <div className="md:hidden">
+          <MobileProjectLinks projectLinks={project.header.links} />
+        </div>
+        <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 max-md:hidden md:px-0 lg:flex-row lg:gap-8">
           {project.header.description && (
             <AboutSection description={project.header.description} />
           )}
         </div>
-        <HorizontalSeparator className="my-6" />
-      </div>
-    </section>
+      </section>
+    </FullPageHeader>
   )
 }
