@@ -35,7 +35,7 @@ export function MobileProjectLinks({
                 >
                   <th
                     className={cn(
-                      'w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550',
+                      'w-[110px] py-3 align-top font-medium text-secondary',
                       i === 0 && 'pt-0',
                     )}
                   >
