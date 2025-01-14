@@ -74,13 +74,12 @@ export const phala: Layer2 = {
       }),
     ],
   },
-  dataAvailability: [
+  dataAvailability: 
     addSentimentToDataAvailability({
       layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
       bridge: DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.TRANSACTION_DATA,
     }),
-  ],
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.RaaS.Conduit],
   type: 'layer2',
   riskView: {
@@ -151,7 +150,7 @@ export const phala: Layer2 = {
       risks: [],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
           href: 'https://etherscan.io/address/0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b',
