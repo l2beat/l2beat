@@ -16,7 +16,7 @@ export const symbiosis: Bridge = {
     slug: 'symbiosis',
     category: 'Hybrid',
     description:
-      'Symbiosis is a cross-chain AMM DEX externally validated my a MPC relayers network.',
+      'Symbiosis is a cross-chain AMM DEX externally validated my an MPC relayers network.',
     links: {
       websites: [
         'https://symbiosis.finance/',
@@ -64,7 +64,7 @@ export const symbiosis: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Symbiosis uses a MPC relayer network to facilitate cross-chain transfers. An AMM on BOBA BNB is used to perform swaps.',
+        'Symbiosis uses an MPC relayer network to facilitate cross-chain transfers. An AMM on BOBA BNB is used to perform swaps.',
       references: [],
       risks: [],
     },

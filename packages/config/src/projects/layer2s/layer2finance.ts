@@ -15,7 +15,7 @@ export const layer2finance: Layer2 = {
     name: 'Layer2.Finance',
     slug: 'layer2finance',
     warning:
-      'Currently the TVL is calculated incorrectly, because it does not take assets locked in DeFi into account.',
+      'Currently the TVS is calculated incorrectly, because it does not take assets locked in DeFi into account.',
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purposes: ['Exchange'],

@@ -1,10 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
+  ProjectDataAvailability,
   ScalingProjectCategory,
   ScalingProjectRiskView,
   ScalingProjectStack,
 } from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+import { ProjectLivenessInfo, WarningWithSentiment } from '../layer2s'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -23,6 +25,9 @@ export interface Project {
   statuses?: ProjectStatuses
   scalingInfo?: ProjectScalingInfo
   scalingRisks?: ProjectScalingRisks
+  scalingDa?: ProjectDataAvailability
+  tvlInfo?: ProjectTvlInfo
+  livenessInfo?: ProjectLivenessInfo
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
   countdowns?: ProjectCountdowns
@@ -71,6 +76,11 @@ export interface ProjectScalingRisks {
   self: ScalingProjectRiskView
   host: ScalingProjectRiskView | undefined
   stacked: ScalingProjectRiskView | undefined
+}
+
+export interface ProjectTvlInfo {
+  associatedTokens: string[]
+  warnings: WarningWithSentiment[]
 }
 
 export interface ProjectCountdowns {

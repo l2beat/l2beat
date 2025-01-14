@@ -5,6 +5,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -41,6 +42,7 @@ export const wirex: Layer2 = polygonCDKStack({
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['Payments'],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'Pay Chain',
     slug: 'wirex',
     description:

@@ -206,18 +206,11 @@ function projectContainsAddressAsContract(
 
   for (const contract of project.contracts.addresses) {
     if (
-      'address' in contract &&
-      (contract.address.toString() === address ||
-        (contract.upgradeability !== undefined &&
-          contract.upgradeability.implementations
-            .map((a) => a.toString())
-            .includes(address)))
-    ) {
-      return contract
-    }
-    if (
-      'multipleAddresses' in contract &&
-      contract.multipleAddresses.map((a) => a.toString()).includes(address)
+      contract.address.toString() === address ||
+      (contract.upgradeability !== undefined &&
+        contract.upgradeability.implementations
+          .map((a) => a.toString())
+          .includes(address))
     ) {
       return contract
     }

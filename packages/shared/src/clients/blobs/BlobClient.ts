@@ -24,13 +24,23 @@ export class BlobClient extends ClientCore {
     super({ ...$ })
   }
 
+  async getBlobsByVersionedHashesAndBlockNumber(
+    blobVersionedHashes: string[],
+    blockNumber: number,
+  ): Promise<BlobsInBlock> {
+    const blockSidecar = await this.getBlockSidecar(blockNumber)
+    const relevantBlobs = filterOutIrrelevant(blockSidecar, blobVersionedHashes)
+
+    return { blobs: relevantBlobs, blockNumber }
+  }
+
   async getRelevantBlobs(txHash: string): Promise<BlobsInBlock> {
     const tx = await this.$.rpcClient.getTransaction(txHash)
 
     assert(tx.blockNumber, `Tx ${tx}: No pending txs allowed`)
 
     // Skip blob processing for type 2 transactions
-    if (tx.type === '0x2') {
+    if (Number(tx.type) === 2) {
       return { blobs: [], blockNumber: tx.blockNumber }
     }
 

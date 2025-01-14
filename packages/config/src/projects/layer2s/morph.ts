@@ -17,6 +17,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -50,6 +51,7 @@ export const morph: Layer2 = {
   id: ProjectId('morph'),
   createdAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
     name: 'Morph',
     slug: 'morph',
     description:
@@ -128,13 +130,11 @@ export const morph: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_1R_ZK,

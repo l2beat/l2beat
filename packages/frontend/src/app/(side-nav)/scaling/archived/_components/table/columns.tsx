@@ -6,7 +6,7 @@ import { TypeCell } from '~/components/table/cells/type-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
-import { formatTvlTableNumber } from '~/utils/number-format/format-tvl-number'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
@@ -46,7 +46,7 @@ export const scalingArchivedColumns = [
   }),
   columnHelper.accessor('totalTvl', {
     id: 'total',
-    header: 'Total value locked',
+    header: 'Total value secured',
     cell: (ctx) => {
       const value = ctx.getValue()
       if (value === undefined) {
@@ -55,7 +55,7 @@ export const scalingArchivedColumns = [
 
       return (
         <span className="font-bold md:text-base">
-          {formatTvlTableNumber(value)}
+          {formatDollarValueNumber(value)}
         </span>
       )
     },
@@ -72,7 +72,7 @@ export const scalingArchivedColumns = [
     meta: {
       align: 'right',
       tooltip:
-        'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
     },
   }),
 ]

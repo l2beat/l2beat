@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -11,6 +12,7 @@ export const superlumio: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.RaaS.Conduit],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'SuperLumio',
     slug: 'superlumio',
     description:
@@ -32,7 +34,7 @@ export const superlumio: Layer2 = opStackL2({
   rpcUrl: 'https://mainnet.lumio.io',
   genesisTimestamp: new UnixTime(1708984633),
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     genesisTimestamp: new UnixTime(1708984631),
     minTimestamp: new UnixTime(1708984751),
     l2BlockTimeSeconds: 2,

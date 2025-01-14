@@ -17,6 +17,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Layer3 } from './types'
@@ -100,6 +101,7 @@ export const zklinknova: Layer3 = {
   hostChain: ProjectId('linea'),
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'zkLink Nova',
     slug: 'zklinknova',
     description:
@@ -479,13 +481,11 @@ export const zklinknova: Layer3 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.EXTERNAL],
-      bridge: DA_BRIDGES.NONE,
-      mode: DA_MODES.STATE_DIFFS_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.NONE],
+    bridge: DA_BRIDGES.NONE,
+    mode: DA_MODES.STATE_DIFFS_COMPRESSED,
+  }),
   contracts: {
     addresses: [
       lineaDiscovery.getContractDetails('L1ERC20Bridge', {

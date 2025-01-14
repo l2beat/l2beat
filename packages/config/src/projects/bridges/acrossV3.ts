@@ -259,6 +259,7 @@ export const acrossV3: Bridge = {
       discovery.getContractDetails('Zora_Adapter'),
       discovery.getContractDetails('WorldChain_Adapter'),
       discovery.getContractDetails('Alephzero_Adapter'),
+      discovery.getContractDetails('Ink_Adapter'),
       discovery.getContractDetails(
         'Ethereum_SpokePool',
         'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.',

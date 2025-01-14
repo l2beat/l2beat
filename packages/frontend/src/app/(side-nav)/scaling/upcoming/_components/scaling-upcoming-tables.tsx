@@ -7,6 +7,11 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
@@ -45,7 +50,7 @@ export function ScalingUpcomingTables({
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length}
@@ -59,11 +64,13 @@ export function ScalingUpcomingTables({
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
+            <RollupsInfo />
             <ScalingUpcomingTable entries={filteredEntries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
+          <DirectoryTabsContent value="validiumsAndOptimiums">
+            <ValidiumsAndOptimiumsInfo />
             <ScalingUpcomingTable
               entries={filteredEntries.validiumsAndOptimiums}
             />
@@ -72,6 +79,7 @@ export function ScalingUpcomingTables({
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
+              <OthersInfo />
               <ScalingUpcomingTable entries={filteredEntries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>

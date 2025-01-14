@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
@@ -14,6 +15,7 @@ export const syndicateframe: Layer3 = opStackL3({
   additionalPurposes: ['Social'],
   hostChain: ProjectId('base'),
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Syndicate Frame Chain',
     shortName: 'Frame Chain',
     slug: 'syndicateframe',

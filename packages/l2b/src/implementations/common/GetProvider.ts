@@ -1,3 +1,4 @@
+import { mkdirSync } from 'fs'
 import path from 'path'
 import {
   AllProviders,
@@ -22,14 +23,10 @@ export async function getProvider(
   let cache: DiscoveryCache = new NoCache()
   const config = readConfig()
   if (config.projectRootPath !== undefined) {
-    const globalCachePath = path.join(
-      config.projectRootPath,
-      'cache',
-      'l2b.sqlite',
-    )
-    const sqliteCache = new SQLiteCache(globalCachePath)
-    await sqliteCache.init()
-    cache = sqliteCache
+    const cacheDir = path.join(config.projectRootPath, 'cache')
+    mkdirSync(cacheDir, { recursive: true }) // Make sure the cache directory exists
+    const globalCachePath = path.join(cacheDir, 'l2b.sqlite')
+    cache = new SQLiteCache(globalCachePath)
   }
 
   const chainConfigs: DiscoveryChainConfig[] = [

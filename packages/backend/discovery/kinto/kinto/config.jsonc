@@ -44,6 +44,7 @@
       "ignoreInWatchMode": ["getNonce"]
     },
     "NioGovernor": {
+      "description": "Governance contract allowing token- and NFT based voting.",
       "ignoreMethods": [
         "proposalDeadline",
         "proposalEta",
@@ -57,12 +58,35 @@
       "ignoreInWatchMode": ["clock"]
     },
     "NioGuardians": {
+      "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
       "ignoreMethods": ["exists", "getPastTotalSupply"],
-      "ignoreInWatchMode": ["clock"]
+      "ignoreInWatchMode": ["clock"],
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+              }
+            ]
+          }
+        }
+      }
     },
     "AccessManager": {
+      // highly custom/manual event-based discovery here, should be automated
+      "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
       "fields": {
+        "initialAdminRole": {
+          "description": "From the constructor args. Has the ADMIN_ROLE (0).",
+          "handler": {
+            "type": "hardcoded", // constructorArgs handler fails here
+            "value": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+          }
+        },
         "RoleGuardianChanged": {
+          "description": "The guardian permission allows canceling operations that have been scheduled under the role.",
           "handler": {
             "type": "stateFromEvent",
             "event": "RoleGuardianChanged",
@@ -71,6 +95,7 @@
           }
         },
         "RoleAdminChanged": {
+          "description": "The RoleAdmin permission is required to grant the role, revoke the role and update the execution delay for the respective role.",
           "handler": {
             "type": "stateFromEvent",
             "event": "RoleAdminChanged",
@@ -79,6 +104,7 @@
           }
         },
         "RoleGrantDelayChanged": {
+          "description": "Grant delay for a given `roleId`.",
           "handler": {
             "type": "stateFromEvent",
             "event": "RoleGrantDelayChanged",
@@ -87,6 +113,7 @@
           }
         },
         "TargetAdminDelayUpdated": {
+          "description": "Delay for changing the AccessManager configuration of a given target contract.",
           "handler": {
             "type": "stateFromEvent",
             "event": "TargetAdminDelayUpdated",
@@ -95,6 +122,7 @@
           }
         },
         "TargetFunctionRoleUpdated": {
+          "description": "Target addresses and function selectors accessible from a given role id.",
           "handler": {
             "type": "stateFromEvent",
             "event": "TargetFunctionRoleUpdated",
@@ -103,6 +131,7 @@
           }
         },
         "OperationScheduled": {
+          "description": "List of scheduled operations.",
           "severity": "HIGH",
           "handler": {
             "type": "stateFromEvent",
@@ -118,6 +147,7 @@
           }
         },
         "AdditionalRoles": {
+          "description": "Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.",
           "handler": {
             "type": "stateFromEvent",
             "event": "RoleLabel",
@@ -125,6 +155,7 @@
           }
         },
         "RolesGranted": {
+          "description": "List of roles granted to accounts.",
           "handler": {
             "type": "stateFromEvent",
             "event": "RoleGranted",
@@ -144,11 +175,25 @@
       "ignoreInWatchMode": ["globalMessageCount"]
     },
     "Treasury": {
-      "ignoreMethods": ["proxiableUUID"]
+      "description": "Kinto Treasury.",
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "send tokens and ETH from the Treasury to any address without delay."
+              }
+            ]
+          }
+        }
+      }
     },
     "BridgedKinto": {
-      "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["totalSupply"]
+      "description": "KINTO token contract.",
+      "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply", "clock"]
     },
     "RewardsDistributor": {
       "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
@@ -163,16 +208,31 @@
       "ignoreMethods": ["proxiableUUID"]
     },
     "SponsorPaymaster": {
+      "description": "Paymaster used for user transactions eligible for sponsorship.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["getDeposit"]
     },
     "KintoWalletFactory": {
+      "description": "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalWallets"],
-      "ignoreRelatives": ["beacon"]
+      "ignoreRelatives": ["beacon"],
+      "fields": {
+        "owner": {
+          "severity": "HIGH",
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+              }
+            ]
+          }
+        }
+      }
     },
     "KintoID": {
-      "description": "Manages Kinto's KYC system: KYC provider addresses and the KYC status of users.",
+      "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.",
       "ignoreMethods": ["proxiableUUID", "tokenByIndex"],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "fields": {
@@ -180,11 +240,67 @@
           "handler": {
             "type": "accessControl"
           }
+        },
+        // extracting single roles here for better descriptions
+        "UPGRADERs": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "UPGRADER_ROLE"
+          },
+          "target": {
+            "permissions": [{ "type": "upgrade" }]
+          }
+        },
+        "KYC_PROVIDERs": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "KYC_PROVIDER_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+              }
+            ]
+          }
+        },
+        "GOVERNANCErs": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "GOVERNANCE_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+              }
+            ]
+          }
+        },
+        "DEFAULT_ADMINs": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "transfer KYC NFTs to a different address."
+              }
+            ]
+          }
         }
       }
     },
     "KintoAppRegistry": {
-      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs. Accordingly, users can only transact from their smart wallets.",
+      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.",
       "ignoreMethods": [
         "proxiableUUID",
         "reservedContracts",
@@ -192,7 +308,25 @@
         "tokenByIndex",
         "tokenIdToApp"
       ],
-      "ignoreRelatives": ["getReservedContracts", "getSystemContracts"]
+      "ignoreRelatives": ["getReservedContracts", "getSystemContracts"],
+      "ignoreInWatchMode": ["totalSupply", "appCount"],
+      "fields": {
+        "owner": {
+          "severity": "HIGH",
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+              }
+            ]
+          }
+        },
+        "getSystemContracts": {
+          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts.",
+          "severity": "HIGH"
+        }
+      }
     }
   }
 }

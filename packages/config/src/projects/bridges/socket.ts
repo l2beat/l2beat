@@ -366,35 +366,35 @@ export const socket: Bridge = {
         address: EthereumAddress('0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7'),
         name: 'USDC Vault Reya',
         description:
-          'Socket Vault associated with Reya and owned by socketadmin.eth EOA.',
+          'Socket Vault associated with Reya and owned by Socket EOA.',
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35'),
         name: 'USDe Vault Reya',
         description:
-          'Socket Vault associated with Reya and owned by socketadmin.eth EOA.',
+          'Socket Vault associated with Reya and owned by Socket EOA.',
         tokens: ['USDe'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3'),
         name: 'sUSDe Vault Reya',
         description:
-          'Socket Vault associated with Reya and owned by socketadmin.eth EOA.',
+          'Socket Vault associated with Reya and owned by Socket EOA.',
         tokens: ['sUSDe'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x64dF894688c5052BeAdC35371cF69151Ebc5D658'),
         name: 'WETH Vault Reya',
         description:
-          'Socket Vault associated with Reya and owned by socketadmin.eth EOA.',
+          'Socket Vault associated with Reya and owned by Socket EOA.',
         tokens: ['WETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6'),
         name: 'WBTC Vault Reya',
         description:
-          'Socket Vault associated with Reya and owned by socketadmin.eth EOA.',
+          'Socket Vault associated with Reya and owned by Socket EOA.',
         tokens: ['WBTC'],
       }),
     ],

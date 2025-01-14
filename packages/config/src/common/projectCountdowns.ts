@@ -5,7 +5,7 @@ export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 
 export const PROJECT_COUNTDOWNS = {
   otherMigration: {
-    expiresAt: new UnixTime(1751320800), // 2025-07-01T00:00:00Z
+    expiresAt: new UnixTime(1750284000), // 2025-06-19T00:00:00Z
     getContext: (project: Layer2 | Layer3) => {
       if (
         project.display.category === 'Other' ||

@@ -1,3 +1,387 @@
+Generated with discovered.json: 0x8da9a5398f53a601615f4b4f72252862310ad2e4
+
+# Diff at Wed, 08 Jan 2025 10:45:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@20bf0eaa1dce373e2c004314fef59d2d1bdf5502 block: 288071483
+- current block number: 288071483
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 288071483 (main branch discovery), not current.
+
+```diff
+    contract ERC20Bridge (0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      description:
+-        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
++        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
+Generated with discovered.json: 0x7c6b1a12ac3a53a7b00118bae34d6bb06ce78f3b
+
+# Diff at Tue, 24 Dec 2024 09:40:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8f52aa11293aef791f10e1b8317bef0d461a04f9 block: 286040164
+- current block number: 288071483
+
+## Description
+
+Config related: Add Celestia Nitro wmroot, ignore USDC CA.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 286040164 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (0x8aFf09e2259cacbF4Fc4e3E53F3bf799EfEEab36)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FiatTokenV2_2 (0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287:
++        "Celestia Nitro 3.2.1 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x2c65a62bde750190ecb05ab1a59de3bb6766b5ce
+
+# Diff at Wed, 18 Dec 2024 12:17:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 282642841
+- current block number: 286040164
+
+## Description
+
+Upgrade to known ArbOS v32 contracts, unused fastConfirmer (would be orthogonal to the sentry system).
+
+Multiple upgrades of the sentry node- and staking related infra contracts without major changes: Minting sentry keys is re-enabled and can be done with other currencies than ETH. 'promo-codes' and referral rewards are included in the SC logic.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract ChallengeManager (0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
++        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
+      values.$implementation:
+-        "0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"
++        "0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"
+      values.$pastUpgrades.2:
++        ["2024-12-16T20:39:05.000Z","0x1621d4d8758255b5b5ac8feb35fd9358c768eb27f61784ff0db9dbb54a6e268f",["0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.osp:
+-        "0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8"
++        "0xD89d54007079071cBA859127318b9F34eeB78049"
+    }
+```
+
+```diff
+    contract XaiMultisig (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x526a6E634aD36bB0007c4422586c135F1F9B525a)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x800dA62bE6626127F71B34E795286C34C04D6712)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0xb20107bfB36D3B5AcA534aCAfbd8857b10b402a8)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: This is the contract where Xai Sentry Keys for running a sentry node are minted.
+      sourceHashes.1:
+-        "0xc408ffd6d9b25f5dccbe9efa0caca71b711c95f903420227c41605fc4672a46c"
++        "0xa5bceee1502b9b30ff5e8cf1acb16d0196637dd53d375860c3bec1fae2701c7f"
+      values.$implementation:
+-        "0xE6E5356423516C9b75d4Dfb1fCa3973c5B695be8"
++        "0xe72b004FCa3A05251c6C8d1BF1482B9308876c7f"
+      values.$pastUpgrades.11:
++        ["2024-12-14T01:58:28.000Z","0x243eb3ec2ccf3d1d472d5a49df0f738f93262df905c8868a72dc4066546b4a2c",["0xe72b004FCa3A05251c6C8d1BF1482B9308876c7f"]]
+      values.$pastUpgrades.10:
++        ["2024-12-13T01:28:49.000Z","0x2076fd7a582c2de1357c834161c5e856568af154e7101ede7f363eab012df090",["0x14e6e53dc0E4d0d02644a96F4bC1798A7876db49"]]
+      values.$pastUpgrades.9:
++        ["2024-12-10T15:27:38.000Z","0x2b7d573f6a4f5b1d188483697b9767e34ea3e2dcf6e534785bb2b764a4de2428",["0xC6BccA5297Cd4511250E2D3241bEd586631E2aA0"]]
+      values.$upgradeCount:
+-        9
++        12
+      values.maxSupply:
+-        50000
++        5000000
+      values.ADMIN_MINT_ROLE:
++        "0x507caaa5b2a5a027bc340a5334d9220583b7d60d846ee2aabc76e37d69a7253b"
+      values.AIRDROP_ADMIN_ROLE:
++        "0x786fcfa0099ab9aba15d4b2ccc7ffa9994e7c522c9b340b95e584749e47fcfb9"
+      values.esXaiAddress:
++        "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c"
+      values.mintingPaused:
++        false
+      values.refereeAddress:
++        "0xfD41041180571C5D371BEA3D9550E55653671198"
+      values.refereeCalculationsAddress:
++        "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F"
+      values.TRANSFER_ROLE:
++        "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+      values.usdcAddress:
++        "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+      values.xaiAddress:
++        "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
+      derivedName:
+-        "NodeLicense7"
++        "NodeLicense9"
+    }
+```
+
+```diff
+    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      template:
+-        "orbitstack/RollupProxy"
++        "orbitstack/RollupProxy_fastConfirm"
+      sourceHashes.2:
+-        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
++        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
+      sourceHashes.1:
+-        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e"
++        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
+      issuedPermissions.0.via.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      values.$implementation.1:
+-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
++        "0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"
+      values.$implementation.0:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446"
+      values.$pastUpgrades.1:
++        ["2024-12-16T20:39:05.000Z","0x1621d4d8758255b5b5ac8feb35fd9358c768eb27f61784ff0db9dbb54a6e268f",["0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446","0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v20 wasmModuleRoot"
++        "ArbOS v32 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
++        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
+      values.anyTrustFastConfirmer:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0xc555b2F1D559Fbb854569b33640990D178F94747)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract RefereeCalculations (0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x84fc1ee0b022c330db75d04b71a06523524388e6db61a159b2bd3b5d02bccf28"
++        "0xc9c19fb4d016fe3bcc74ab045b2d6a2231e661f4d86cbb0cac0dc5d1301fb49a"
+      values.$implementation:
+-        "0x5A195953555A11d2a4b654DCa3aE4f9f19eBC3E2"
++        "0x1488598b22Cc196Aa547894493BC2313a8A00C1e"
+      values.$pastUpgrades.1:
++        ["2024-12-10T17:38:10.000Z","0x20e602e4c1899b6cb255bb9db60aebb18a0a89f0087ad8ffc50492d6e89302b7",["0x1488598b22Cc196Aa547894493BC2313a8A00C1e"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xe8709022B9C9D7347856c75910fe07e10C904446)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
+    +++ description: The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.
+      sourceHashes.1:
+-        "0x317ab76b0d59c8c31385b5239fb1bdfff324c9629c5e8d74b82808349fbb169a"
++        "0x6b20ddf2a4ea9bb1615fb08c76f1f2f98b13ead97bc452a3840e59119c8abee1"
+      values.$implementation:
+-        "0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E"
++        "0x2095FE5CEDBE22Afc2174daC57cB6831954A560D"
+      values.$pastUpgrades.3:
++        ["2024-12-13T16:24:54.000Z","0xf515093e32598c21145005613e2d1f385b8d902d4642aacb4e6caa0f799aee27",["0x2095FE5CEDBE22Afc2174daC57cB6831954A560D"]]
+      values.$pastUpgrades.2:
++        ["2024-12-13T00:36:48.000Z","0x869e99caece9b22a813fc83475c90e783b6ac2e37aa192780fcfb7491770e79d",["0xec287a91Ac0b72Ba7f249c08a2c64dA317eF9715"]]
+      values.$pastUpgrades.1:
++        ["2024-12-10T15:27:48.000Z","0x719feb67c546cad4f43b5e741590f7b2258e896049163656eccb2f598515adc4",["0x5bfd44421b5E0405F8cfcc17463522AF6b9e1Ab3"]]
+      values.$upgradeCount:
+-        1
++        4
+      values.STAKE_KEYS_ADMIN_ROLE:
++        "0x4744ee11e24f5fc5de82fa6dba03b134899d8fd3405c7e9a26e120c89c8d9c28"
+      derivedName:
+-        "PoolFactory"
++        "PoolFactory2"
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+      sourceHashes.1:
+-        "0x049618a11ae7ca2b4087908a6cb43e2102853e1798710e66a169be6fd6d4ed99"
++        "0xc8757a87d8b14b9a5c61b8130720860918aaa5843442a0b6bf6307c3a7353c32"
+      values.$implementation:
+-        "0xfCa2657FC4456Ac256A78A31aAB1128F5e1d2D40"
++        "0x4F18941fE5bE7a54318989b2C42648914dCe47C4"
+      values.$pastUpgrades.11:
++        ["2024-12-15T00:07:08.000Z","0xd4a4e9be6cfdbb76dec68088cfa15e609b8d3356755c15de6e411c9034963c63",["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]]
+      values.$pastUpgrades.10:
++        ["2024-12-13T00:36:38.000Z","0x58b76b23b8bb0f3ba0bf4d2807f545b1838c527e3a71d18fe2369ee7bf6c12ca",["0x1f122B41D6740F5dE2Df93b8b00013e84227955e"]]
+      values.$pastUpgrades.9:
++        ["2024-12-10T15:27:05.000Z","0x7de66eae5bdbc8b25d8c61bc496b8022ca928b709de3dd72e7de1951fab33ecd",["0x119B21e962B6C5e57340a3CCeCFC3a90385A70dC"]]
+      values.$upgradeCount:
+-        9
++        12
+      values.maxKeysPerPool:
+-        1000
++        100000
+      values.maxStakeAmountPerLicense:
+-        "20000000000000000000000"
++        "200000000000000000000"
+      derivedName:
+-        "Referee9"
++        "Referee10"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x33c1514Bf90e202d242C299b37C60f908aa206D4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x54E0923782b701044444De5d8c3A45aC890b0881)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (0x8aFf09e2259cacbF4Fc4e3E53F3bf799EfEEab36)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FiatTokenV2_2 (0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xD89d54007079071cBA859127318b9F34eeB78049)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          |  404 ++--
+ .../.flat/FiatTokenV2_2/FiatTokenProxy.p.sol       |  417 ++++
+ .../arbitrum/.flat/FiatTokenV2_2/FiatTokenV2_2.sol | 2357 ++++++++++++++++++++
+ .../xai/arbitrum/.flat/MasterMinter.sol            |  454 ++++
+ .../NodeLicenseRegistry/NodeLicense9.sol}          |  715 ++++--
+ .../OneStepProofEntry.sol                          |  485 +++-
+ .../{.flat@282642841 => .flat}/OneStepProver0.sol  |  765 +++++--
+ .../OneStepProverHostIo.sol                        |  892 ++++++--
+ .../OneStepProverMath.sol                          |   65 +-
+ .../OneStepProverMemory.sol                        |  315 ++-
+ .../PoolFactory/PoolFactory2.sol}                  |  816 +++++--
+ .../RefereeCalculations/RefereeCalculations.sol    |   41 +
+ .../RollupProxy/RollupAdminLogic.1.sol             |  370 +--
+ .../RollupProxy/RollupUserLogic.2.sol              |  415 ++--
+ .../SentryReferee/Referee10.sol}                   |  671 ++++--
+ 15 files changed, 7659 insertions(+), 1523 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 282642841 (main branch discovery), not current.
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: This is the contract where Xai Sentry Keys for running a sentry node are minted.
+      description:
+-        "This is the contract where Xai Sentry Keys to run a node are minted."
++        "This is the contract where Xai Sentry Keys for running a sentry node are minted."
+    }
+```
+
 Generated with discovered.json: 0x7066c482913892a0d5497dd83af41388af955677
 
 # Diff at Sun, 08 Dec 2024 13:29:13 GMT:

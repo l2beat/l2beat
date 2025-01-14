@@ -1,3 +1,134 @@
+Generated with discovered.json: 0x85284e06ab48b8f6616195c93ae7fe0699bb3b2b
+
+# Diff at Wed, 08 Jan 2025 11:18:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21543818
+- current block number: 21579404
+
+## Description
+
+xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the varifier differs.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.3:
+-        4
++        8
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.rollupTypeCount:
+-        7
++        8
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.7:
++        ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"]
+    }
+```
+
+Generated with discovered.json: 0xb01359e6b262fce04a47953690d9596f2a9a9aff
+
+# Diff at Fri, 03 Jan 2025 12:00:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21471468
+- current block number: 21543818
+
+## Description
+
+New unverified L2 base contract deployed with a new rollupTypeID (7) and chainID 752025.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.12:
++        [false]
+      values.rollupCount:
+-        12
++        13
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.12:
++        ["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",7]
+    }
+```
+
+Generated with discovered.json: 0x31ba653ef31f5529d5c2af23836d2d26e8e35fc7
+
+# Diff at Tue, 24 Dec 2024 09:35:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8f52aa11293aef791f10e1b8317bef0d461a04f9 block: 21465473
+- current block number: 21471468
+
+## Description
+
+Single new signer `0x9Ec9E740c5423147FCE0c78E0f3cb12ee3Fa02F6` added to CreateRollupMultisig.
+
+## Watched changes
+
+```diff
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.6:
++        "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
+      values.$members.5:
+-        "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
++        "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+      values.$members.4:
+-        "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
++        "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
+      values.$members.3:
+-        "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
++        "0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
+      values.$members.2:
+-        "0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
++        "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
+      values.$members.1:
+-        "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
++        "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+      values.$members.0:
+-        "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
++        "0x9Ec9E740c5423147FCE0c78E0f3cb12ee3Fa02F6"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
+
+Generated with discovered.json: 0xa21d9ef5e1f99bf8b3a155ec283a1b15639d8c6e
+
+# Diff at Mon, 23 Dec 2024 13:26:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21078440
+- current block number: 21465473
+
+## Description
+
+addNewRollupType() for a new validium version scheduled (validiums can be then upgraded to this version).
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.19:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","verifier":"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB","forkID":13,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: Validium, Version: fork.13 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
 Generated with discovered.json: 0xb4eda61fe08c1533e7db7c7c6b9356c723381097
 
 # Diff at Wed, 30 Oct 2024 12:25:53 GMT:

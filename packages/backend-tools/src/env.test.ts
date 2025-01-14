@@ -3,6 +3,13 @@ import { expect } from 'earl'
 import { Env } from './env'
 
 describe(Env.name, () => {
+  describe(Env.key.name, () => {
+    it('returns correct environment variable key', () => {
+      const result = Env.key('polygon-pos', 'ETHERSCAN_API_KEY')
+      expect(result).toEqual('POLYGONPOS_ETHERSCAN_API_KEY')
+    })
+  })
+
   describe(Env.prototype.string.name, () => {
     it('returns the environment variable', () => {
       const env = new Env({ TEST_A: 'foo' })

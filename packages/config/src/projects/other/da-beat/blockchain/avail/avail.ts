@@ -91,11 +91,11 @@ export const avail: BlockchainDaLayer = {
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a dishonest majority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
+        text: `a dishonest supermajority of Avail validators finalizes an unavailable block, and there aren't light nodes on the network verifying data availability, or they fail at social signaling unavailable data.`,
       },
       {
         category: 'Funds can be lost if',
-        text: 'a dishonest majority of Avail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
+        text: 'a dishonest supermajority of Avail validators finalizes an unavailable block, and the light nodes on the network cannot collectively reconstruct the block.',
       },
     ],
   },

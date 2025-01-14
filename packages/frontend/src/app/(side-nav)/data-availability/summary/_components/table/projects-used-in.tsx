@@ -40,13 +40,13 @@ export function ProjectsUsedIn({
 
   const nMoreComponent = noTooltip ? (
     <span className="text-2xs text-zinc-800 dark:text-gray-50">
-      + {rest.length} more
+      +{rest.length} more
     </span>
   ) : (
     <Tooltip>
       <TooltipTrigger>
-        <span className="text-2xs text-zinc-800 dark:text-gray-50">
-          + {rest.length} more
+        <span className="text-2xs leading-none text-zinc-800 dark:text-gray-50">
+          +{rest.length} more
         </span>
       </TooltipTrigger>
       <TooltipContent className="flex flex-col">

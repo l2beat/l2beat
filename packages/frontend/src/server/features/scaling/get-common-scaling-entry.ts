@@ -5,11 +5,10 @@ import {
   type ProjectWith,
   type StageConfig,
   badges,
-  getCurrentEntry,
   isUnderReview,
   isVerified,
 } from '@l2beat/config'
-import { featureFlags } from '~/consts/feature-flags'
+import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -35,7 +34,7 @@ export interface FilterableScalingEntry {
 }
 
 export interface CommonScalingEntry extends CommonProjectEntry {
-  tab: 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+  tab: ActivityChartType
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
   filterable: FilterableScalingValues | undefined
@@ -92,7 +91,7 @@ export function getCommonScalingEntry2({
       countdowns: project.countdowns,
     },
     tab:
-      featureFlags.showOthers && project.scalingInfo.isOther
+      project.scalingInfo.isOther || project.scalingInfo.type === 'Other'
         ? 'Others'
         : isRollup
           ? 'Rollups'
@@ -164,8 +163,7 @@ export function getCommonScalingEntry({
       stage: getStage(stage),
       purposes: project.display.purposes,
       hostChain: project.type === 'layer2' ? 'Ethereum' : getHostChain(project),
-      daLayer:
-        getCurrentEntry(project.dataAvailability)?.layer.value ?? 'Unknown',
+      daLayer: project.dataAvailability?.layer.value ?? 'Unknown',
       raas: getRaas(project.badges ?? []),
     },
   }

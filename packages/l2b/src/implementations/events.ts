@@ -1,4 +1,4 @@
-import { IProvider, ProxyDetector, SQLiteCache } from '@l2beat/discovery'
+import { IProvider, ProxyDetector } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { CliLogger } from '@l2beat/shared'
@@ -22,9 +22,6 @@ export async function getEvents(
   explorerApiKey?: string,
   explorerType?: string,
 ) {
-  const sqliteCache = new SQLiteCache()
-  await sqliteCache.init()
-
   const explorer = {
     type: (explorerType as ExplorerConfig['type']) ?? 'etherscan',
     url: explorerUrl ?? 'ERROR',

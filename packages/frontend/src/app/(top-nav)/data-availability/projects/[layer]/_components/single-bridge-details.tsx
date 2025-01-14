@@ -9,16 +9,16 @@ interface Props {
 export function SingleBridgeDetails({ project }: Props) {
   return (
     <div className="mb-8 grid gap-y-2 max-md:my-6 md:mb-10 md:grid-cols-5 md:gap-x-3">
-      <div className="text-xs text-gray-500 dark:text-gray-600 md:col-span-2">
+      <div className="text-xs text-secondary md:col-span-2">
         {project.name} risks
       </div>
-      <div className="col-span-3 text-xs text-gray-500 dark:text-gray-600 max-md:hidden">
+      <div className="col-span-3 text-xs text-secondary max-md:hidden">
         DA Bridge risks
       </div>
       {project.header.daLayerGrissiniValues.map((value) => (
         <SingleGrissiniDetails key={value.name} {...value} />
       ))}
-      <div className="mt-3 text-xs text-gray-500 dark:text-gray-600 md:hidden">
+      <div className="mt-3 text-xs text-secondary md:hidden">
         DA Bridge risks
       </div>
       {project.selectedBridge.type === 'NoBridge' ? (

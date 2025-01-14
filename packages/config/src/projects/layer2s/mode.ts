@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -13,6 +14,7 @@ export const mode: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Mode Network',
     shortName: 'Mode',
     slug: 'mode',
@@ -70,7 +72,7 @@ export const mode: Layer2 = opStackL2({
     },
   ],
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     l2BlockTimeSeconds: 2,
     minTimestamp: new UnixTime(1710386375),
     genesisTimestamp: new UnixTime(1700167583),

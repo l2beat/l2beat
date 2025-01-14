@@ -8,7 +8,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/core/navigation-menu'
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
@@ -44,12 +44,14 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
           target="_blank"
           className={cn(
             navigationMenuTriggerStyle(),
+            'bg-header-secondary',
+            'ring-inset ring-brand focus:ring-2',
             'flex flex-row items-center gap-1.5',
           )}
         >
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name}
-          <OutLinkIcon className="fill-current" />
+          <CustomLinkIcon className="fill-current" />
         </NavigationMenuLink>
       </NavigationMenuItem>
     )
@@ -61,11 +63,11 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger>
+      <NavigationMenuTrigger className="bg-header-secondary ring-inset ring-brand focus:ring-2">
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
+      <NavigationMenuContent className="bg-header-secondary">
         {projectLink.links.map((link) => {
           const parsedSocial =
             projectLink.name === 'Social' ? parseSocial(link) : undefined
@@ -77,6 +79,7 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
               target="_blank"
               className={cn(
                 navigationMenuTriggerStyle(),
+                'bg-header-secondary hover:bg-surface-tertiary focus:bg-surface-tertiary',
                 'flex w-full justify-start gap-1.5',
               )}
             >
@@ -88,7 +91,7 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
                 />
               )}
               {parsedSocial ? parsedSocial.text : formatLink(link)}
-              <OutLinkIcon className="fill-current" />
+              <CustomLinkIcon className="fill-current" />
             </NavigationMenuLink>
           )
         })}

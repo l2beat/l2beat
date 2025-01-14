@@ -32,6 +32,11 @@ const cmd = command({
       description:
         'Message that will be written in the description section of diffHistory.md',
     }),
+    overwriteCache: flag({
+      type: boolean,
+      long: 'overwrite-cache',
+      description: 'overwrite the cache entries',
+    }),
   },
   handler: async (args) => {
     const configReader = new ConfigReader()
@@ -84,6 +89,7 @@ const cmd = command({
               project: config.name,
               chain: getChainConfig(config.chain),
               dev: true,
+              overwriteCache: args.overwriteCache,
             },
             args.message,
           )

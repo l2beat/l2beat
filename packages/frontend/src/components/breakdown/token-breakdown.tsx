@@ -3,7 +3,7 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { languageJoin } from '~/utils/language-join'
 import { Square } from '../square'
-import { WarningBar } from '../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../warning-bar'
 import { Breakdown } from './breakdown'
 
 export interface TokenBreakdownProps {
@@ -67,37 +67,37 @@ export function TokenBreakdownTooltipContent({
     { title: 'Other', value: other, variant: 'other' as const },
   ]
 
-  if (total === 0) {
-    return 'No tokens'
-  }
-
   return (
     <div className="space-y-2">
-      <div>
-        {values.map(
-          (v, i) =>
-            v.value > 0 && (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-x-6"
-              >
-                <span className="flex items-center gap-1">
-                  <Square variant={v.variant} size="small" />
-                  <span>{v.title}</span>
-                </span>
-                <span className="font-medium">
-                  {((v.value / total) * 100).toFixed(2)}%
-                </span>
-              </div>
-            ),
-        )}
-      </div>
+      {total === 0 ? (
+        <span>No tokens</span>
+      ) : (
+        <div>
+          {values.map(
+            (v, i) =>
+              v.value > 0 && (
+                <div
+                  key={i}
+                  className="flex items-center justify-between gap-x-6"
+                >
+                  <span className="flex items-center gap-1">
+                    <Square variant={v.variant} size="small" />
+                    <span>{v.title}</span>
+                  </span>
+                  <span className="font-medium">
+                    {((v.value / total) * 100).toFixed(2)}%
+                  </span>
+                </div>
+              ),
+          )}
+        </div>
+      )}
       {tvlWarnings?.map((warning, i) => (
         <WarningBar
           key={`tvl-warning-${i}`}
           icon={RoundedWarningIcon}
           text={warning.content}
-          color={warning.sentiment === 'warning' ? 'yellow' : 'red'}
+          color={sentimentToWarningBarColor(warning.sentiment)}
           // Cell itself is a href.
           // Markdown might contain links - nesting them in a tooltip
           // breaks semantics apart causing significant layout shifts.

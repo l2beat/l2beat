@@ -17,6 +17,7 @@ import { fiefdom } from './fiefdom'
 import { geist } from './geist'
 import { ham } from './ham'
 import { hook } from './hook'
+import { hyperliquid } from './hyperliquid'
 import { inevm } from './inevm'
 import { l3x } from './l3x'
 import { lumiterra } from './lumiterra'
@@ -67,6 +68,7 @@ export const layer3s: Layer3[] = [
   geist,
   inevm,
   ham,
+  hyperliquid,
   hook,
   rari,
   zklinknova,

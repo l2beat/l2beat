@@ -179,7 +179,23 @@ export class RpcCounter implements Counter {
         }
       }
 
-      const operations = method.count(operation.calldata)
+      let operations = []
+      try {
+        operations = method.count(operation.calldata)
+      } catch {
+        return {
+          id: generateId(),
+          level,
+          count: 1,
+          methodSelector: selector,
+          methodSignature: method.signature,
+          methodName: method.name,
+          contractName: method.contractName,
+          contractAddress: operation.to ?? '',
+          children: [],
+        }
+      }
+
       let count = 0
       const children: CountedOperation[] = []
       for (const operation of operations) {

@@ -5,7 +5,6 @@ import {
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { featureFlags } from '~/consts/feature-flags'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -19,10 +18,11 @@ import {
   type ActivityProjectTableData,
   getActivityTable,
 } from './get-activity-table-data'
+import { compareActivityEntry } from './utils/compare-activity-entry'
 import { getActivityProjects } from './utils/get-activity-projects'
 
 export async function getScalingActivityEntries() {
-  const projects = getActivityProjects()
+  const projects = getActivityProjects().filter((p) => !p.isArchived)
   const [projectsChangeReport, activityData] = await Promise.all([
     getProjectsChangeReport(),
     getActivityTable(projects),
@@ -39,12 +39,11 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .filter((entry) => entry !== undefined)
     .concat(
       compact([
         getEthereumEntry(ethereumData, 'Rollups'),
         getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-        featureFlags.showOthers && getEthereumEntry(ethereumData, 'Others'),
+        getEthereumEntry(ethereumData, 'Others'),
       ]),
     )
     .sort(compareActivityEntry)
@@ -54,19 +53,20 @@ export async function getScalingActivityEntries() {
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
   dataSource: ScalingProjectDisplay['activityDataSource']
-  data: ActivityProjectTableData
+  data: ActivityProjectTableData | undefined
 }
 
 function getScalingProjectActivityEntry(
   project: Layer2 | Layer3,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
-): ScalingActivityEntry | undefined {
-  if (!data) {
-    return undefined
-  }
+): ScalingActivityEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: data.syncStatus }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncStatus: data?.syncStatus,
+    }),
     href: `/scaling/projects/${project.display.slug}#activity`,
     dataSource: project.display.activityDataSource,
     data,
@@ -91,21 +91,4 @@ function getEthereumEntry(
     data,
     statuses: undefined,
   }
-}
-
-function compareActivityEntry(
-  a: ScalingActivityEntry,
-  b: ScalingActivityEntry,
-) {
-  if (featureFlags.stageSorting) {
-    const stageDiff = b.stageOrder - a.stageOrder
-    if (stageDiff !== 0) {
-      return stageDiff
-    }
-  }
-  const diff = b.data.uops.pastDayCount - a.data.uops.pastDayCount
-  if (diff !== 0) {
-    return diff
-  }
-  return a.name.localeCompare(b.name)
 }

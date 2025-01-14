@@ -5,7 +5,7 @@ import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { formatCurrency } from '~/utils/number-format/format-currency'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
@@ -66,12 +66,12 @@ const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
   cell: (ctx) => (
     <div className="w-full pr-5 text-right text-sm font-medium">
-      {formatCurrency(ctx.row.original.tvs, 'usd')}
+      {formatDollarValueNumber(ctx.row.original.tvs)}
     </div>
   ),
   meta: {
     tooltip:
-      'Total value secured (TVS) is the sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVL of sovereign rollups.',
+      'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
     align: 'right',
   },
 })
@@ -83,7 +83,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
       return (
         <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-          {formatCurrency(0, 'usd')}
+          {formatDollarValueNumber(0)}
         </div>
       )
     }
@@ -177,10 +177,10 @@ const bridgeRisksColumn = virtual(
 const bridgeTvsColumn = virtual(
   columnHelper.display({
     id: 'bridge-tvs',
-    header: 'Value Secured',
+    header: 'Value secured',
     meta: {
       tooltip:
-        'The sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and DA bridge, and are listed on L2BEAT.',
+        'The sum of the total value secured (TVS) across all L2s & L3s that use this DA layer and DA bridge, and are listed on L2BEAT.',
     },
   }),
 )

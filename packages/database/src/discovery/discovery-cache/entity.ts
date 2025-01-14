@@ -4,8 +4,6 @@ import { DiscoveryCache } from '../../kysely/generated/types'
 export interface DiscoveryCacheRecord {
   key: string
   value: string
-  chain: string
-  blockNumber: number
 }
 
 export function toRecord(

@@ -1,3 +1,153 @@
+Generated with discovered.json: 0xdec784644d4c02d5cdca179e038695d5b0d47320
+
+# Diff at Wed, 08 Jan 2025 11:10:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 282615739
+- current block number: 293252435
+
+## Description
+
+Remove relayer1 as it is no longer approved.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.isRelayer1Approved:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 282615739 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      issuedPermissions.4:
+-        {"permission":"upgrade","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}
+      issuedPermissions.3.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.3.target:
+-        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
++        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
+      issuedPermissions.2.target:
+-        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
++        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
+      issuedPermissions.1.target:
+-        "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d"
++        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
+      values.relayers.2:
+-        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.1:
+-        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
++        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.0:
+-        "0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"
++        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
+    }
+```
+
+Generated with discovered.json: 0xc37c9a7827e8491dac4b8ea540fa17c6abe038e5
+
+# Diff at Thu, 19 Dec 2024 11:57:29 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@1e850509cf42792486a5c52f33b2bb56c3de2df1 block: 282615739
+- current block number: 282615739
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+Properly resolve $admin.
+Resolve old Gateway owner's permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 282615739 (main branch discovery), not current.
+
+```diff
+    contract HeaderRangeVerifier (0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3) {
+    +++ description: None
+      name:
+-        "headerRangeVerifier"
++        "HeaderRangeVerifier"
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      template:
++        "succinct/SuccinctGateway"
+      description:
++        "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3","via":[]}]
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"can freeze the bridge contract and update the list of authorized relayers."},{"permission":"upgrade","target":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"}]
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+      values.isRelayerApproved:
+-        true
+      values.relayers.2:
++        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.1:
++        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
+      values.guardians:
++        ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+      values.isRelayer1Approved:
++        true
+      values.isRelayer2Approved:
++        true
+      values.isRelayer3Approved:
++        true
+      description:
++        "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D","via":[]},{"permission":"configure","target":"0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d","via":[]},{"permission":"configure","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]},{"permission":"configure","target":"0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC","via":[]},{"permission":"upgrade","target":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}]
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x6c7a05e0AE641c6559fD76ac56641778B6eCd776","description":"can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."}]
+    }
+```
+
+```diff
+    contract NextHeaderVerifier (0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C) {
+    +++ description: None
+      name:
+-        "nextHeaderVerifier"
++        "NextHeaderVerifier"
+    }
+```
+
 Generated with discovered.json: 0xd39227606f84756fb081b73d26ca8508301b491e
 
 # Diff at Thu, 12 Dec 2024 15:07:34 GMT:

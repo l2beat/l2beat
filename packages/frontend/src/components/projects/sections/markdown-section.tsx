@@ -38,7 +38,7 @@ export function MarkdownSection({
       {diagramParams ? (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={diagramParams} />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-xs text-secondary">
             {diagramParams.caption}
           </figcaption>
         </figure>

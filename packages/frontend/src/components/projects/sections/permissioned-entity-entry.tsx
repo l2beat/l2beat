@@ -1,6 +1,6 @@
 import { Callout } from '~/components/callout'
 import { CopyButton } from '~/components/copy-button'
-import { OutLink } from '~/components/out-link'
+import { CustomLink } from '~/components/link/custom-link'
 import { BulletIcon } from '~/icons/bullet'
 import { cn } from '~/utils/cn'
 
@@ -24,9 +24,9 @@ export function PermissionedEntityEntry({
       body={
         <>
           <div className="flex flex-col flex-wrap gap-x-2 !leading-[1.15]">
-            <OutLink key={entity.href} href={entity.href}>
+            <CustomLink key={entity.href} href={entity.href}>
               {entity.name}
-            </OutLink>
+            </CustomLink>
             {entity.key && (
               <div className="mt-1 flex items-center justify-center gap-1 text-gray-850 dark:text-gray-400">
                 <strong className="text-primary">Key:</strong>{' '}

@@ -153,6 +153,7 @@ export const base: Layer2 = {
         'https://twitter.com/BuildOnBase',
         'https://discord.gg/buildonbase',
         'https://base.mirror.xyz/',
+        'https://warpcast.com/base',
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
@@ -189,6 +190,13 @@ export const base: Layer2 = {
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3'),
+        tokens: ['USDS', 'sUSDS'],
+        ...ESCROW.CANONICAL_EXTERNAL,
+        description:
+          'Maker-controlled vault for USDS ans sUSDS bridged with canonical messaging.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -197,7 +205,7 @@ export const base: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       minTimestamp: new UnixTime(1710375515),
       genesisTimestamp: new UnixTime(1686789347),
       l2BlockTimeSeconds: 2,
@@ -272,13 +280,11 @@ export const base: Layer2 = {
     ],
     coingeckoPlatform: 'base',
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
@@ -306,7 +312,7 @@ export const base: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, actors can submit a fraud proof that shows that the state was incorrect.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -320,7 +326,7 @@ export const base: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xCd3c0194db74C23807D4B90A5181e1B28cF7007C#code',
+          href: 'https://etherscan.io/address/0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e#code',
         },
       ],
     },
@@ -345,7 +351,7 @@ export const base: Layer2 = {
     },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
           text: 'Sequencing Window - OP Mainnet Specs',

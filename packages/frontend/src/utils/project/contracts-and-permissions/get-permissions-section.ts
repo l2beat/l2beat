@@ -5,14 +5,8 @@ import {
   type Layer3,
   type ScalingProjectPermission,
   type ScalingProjectPermissionedAccount,
-  type ScalingProjectReference,
 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type ManuallyVerifiedContracts,
-  notUndefined,
-} from '@l2beat/shared-pure'
-import { concat } from 'lodash'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
@@ -47,7 +41,6 @@ type PermissionSection = Omit<
 export function getPermissionsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): PermissionSection | undefined {
   if (
     projectParams.permissions.length === 0 &&
@@ -85,7 +78,6 @@ export function getPermissionsSection(
           projectParams,
           permission,
           contractsVerificationStatuses,
-          manuallyVerifiedContracts,
         ),
       ) ?? [],
     nativePermissions: Object.fromEntries(
@@ -98,7 +90,6 @@ export function getPermissionsSection(
                 projectParams,
                 p,
                 contractsVerificationStatuses,
-                manuallyVerifiedContracts,
               ),
             ),
           ]
@@ -145,12 +136,9 @@ function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ScalingProjectPermission,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): TechnologyContract[] {
   const chain = getChain(projectParams, permission)
   const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
-  const manuallyVerifiedContractsForChain =
-    manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
@@ -191,24 +179,21 @@ function toTechnologyContract(
       ? `${permission.name} (${permission.accounts.length})`
       : permission.name
 
-  const manuallyVerifiedReferences: ScalingProjectReference[] = addresses
-    .map((address) => {
-      const manuallyVerified =
-        manuallyVerifiedContractsForChain[address.address]
-      if (!manuallyVerified) {
-        return
-      }
-      return {
-        text: 'Source code',
-        href: manuallyVerified,
-      }
-    })
-    .filter(notUndefined)
+  const participants = permission.participants?.map((account) => {
+    const name = resolvePermissionedName(
+      permission.name,
+      account,
+      projectParams.permissions,
+    )
 
-  const references =
-    permission.participants === undefined && permission.references
-      ? concat(permission.references, manuallyVerifiedReferences)
-      : manuallyVerifiedReferences
+    return {
+      name,
+      href: `${etherscanUrl}/address/${account.address.toString()}#code`,
+      verificationStatus: toVerificationStatus(
+        verificationStatusForChain[account.address.toString()],
+      ),
+    }
+  })
 
   const result: TechnologyContract[] = [
     {
@@ -217,45 +202,12 @@ function toTechnologyContract(
       usedInProjects,
       chain,
       description: permission.description,
-      references,
+      participants,
+      references: permission.references ?? [],
       implementationChanged: false,
       highSeverityFieldChanged: false,
     },
   ]
-
-  if (permission.participants) {
-    const addresses: TechnologyContractAddress[] = permission.participants.map(
-      (account) => {
-        const name = resolvePermissionedName(
-          permission.name,
-          account,
-          projectParams.permissions,
-        )
-        const address = account.address.toString()
-
-        return {
-          name,
-          address,
-          href: `${etherscanUrl}/address/${account.address.toString()}#code`,
-          isAdmin: false,
-          verificationStatus: toVerificationStatus(
-            verificationStatusForChain[account.address.toString()],
-          ),
-        }
-      },
-    )
-
-    result.push({
-      name: `${permission.name} participants (${permission.participants.length})`,
-      addresses,
-      chain,
-      description: `Those are the participants of the ${permission.name}.`,
-      references: permission.references ?? [],
-      usedInProjects: undefined,
-      implementationChanged: false,
-      highSeverityFieldChanged: false,
-    })
-  }
 
   return result
 }

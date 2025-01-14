@@ -1,5 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+} from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { Upgradeability, zkStackL2 } from './templates/zkStack'
@@ -19,11 +26,12 @@ export const sophon: Layer2 = zkStackL2({
     added: 'sophonValidatorsAdded',
     removed: 'sophonValidatorsRemoved',
   },
-  additionalBadges: [Badge.DA.CustomDA],
+  additionalBadges: [Badge.DA.Avail],
   createdAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
   display: {
     name: 'Sophon',
     slug: 'sophon',
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
@@ -51,10 +59,9 @@ export const sophon: Layer2 = zkStackL2({
   },
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {
-    layer: DA_LAYERS.EXTERNAL,
-    bridge: DA_BRIDGES.NONE,
+    layer: DA_LAYERS.AVAIL,
     riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL,
+      ...RISK_VIEW.DATA_AVAIL(false),
       sources: [
         {
           contract: 'ExecutorFacet',
@@ -65,16 +72,7 @@ export const sophon: Layer2 = zkStackL2({
       ],
     },
     technology: {
-      name: 'Data is not stored on chain',
-      description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the centralized Sequencer.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the external data becomes unavailable.',
-          isCritical: true,
-        },
-      ],
+      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
       references: [
         {
           text: 'ExecutorFacet - _commitOneBatch() function',
@@ -82,11 +80,26 @@ export const sophon: Layer2 = zkStackL2({
         },
       ],
     },
+    bridge: DA_BRIDGES.NONE,
   },
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: [], // 'SOPH' not on CG yet
+      tokens: [
+        'ETH',
+        'USDT',
+        'BEAM',
+        'stAethir',
+        'PEPE',
+        'wstETH',
+        'weETH',
+        'sDAI',
+        'DAI',
+        'WBTC',
+        'stAZUR',
+        'stAVAIL',
+        'OPN',
+      ], // 'SOPH' not on CG yet
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
       sharedEscrow: {
@@ -104,7 +117,7 @@ export const sophon: Layer2 = zkStackL2({
     discovery.getEscrowDetails({
       address: discovery.getContract('L1USDCBridge').address,
       tokens: ['USDC'],
-      source: 'external',
+      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),

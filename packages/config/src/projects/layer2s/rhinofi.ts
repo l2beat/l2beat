@@ -20,6 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -66,6 +67,7 @@ export const rhinofi: Layer2 = {
     Badge.Infra.SHARP,
   ],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
     name: 'rhino.fi',
     slug: 'rhinofi',
     description: 'rhino.fi is a Validium based on the StarkEx technology.',
@@ -133,16 +135,14 @@ export const rhinofi: Layer2 = {
     //   },
     // ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.DAC],
-      bridge: DA_BRIDGES.DAC_MEMBERS({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      mode: DA_MODES.STATE_DIFFS,
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.DAC],
+    bridge: DA_BRIDGES.DAC_MEMBERS({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
     }),
-  ],
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {

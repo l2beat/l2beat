@@ -234,6 +234,21 @@ export function DATA_CELESTIA(
   }
 }
 
+export function DATA_AVAIL(
+  isUsingVector: boolean,
+): ScalingProjectRiskViewEntry {
+  const additional = isUsingVector
+    ? ' Transaction data is checked against the Vector bridge data roots, signed off by Vector validators.'
+    : ' Transaction data is not checked against the Vector bridge data roots onchain, but L2 nodes can verify data availability by running an Avail light client.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation fully rely on data that is posted on Avail.` +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
 export const DATA_POS: ScalingProjectRiskViewEntry = {
   value: 'PoS network',
   description:
@@ -266,12 +281,12 @@ function capitalize(str: string): string {
 }
 
 export function NATIVE_AND_CANONICAL(
-  nativeTokens = 'ETH',
+  gasTokens = ['ETH'],
   isAre: 'is' | 'are' = 'is',
 ): ScalingProjectRiskViewEntry {
   return {
     value: 'Native & Canonical',
-    description: `${nativeTokens} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
+    description: `${gasTokens.join(', ')} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
     sentiment: 'good',
   }
 }
@@ -335,6 +350,13 @@ export function SEQUENCER_SELF_SEQUENCE(
     sentiment: 'good',
     definingMetric: delay,
   }
+}
+
+const SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER: ScalingProjectRiskViewEntry = {
+  value: 'Self sequence',
+  description:
+    'Users can self sequence transactions by sending them on L1. There is no privileged operator.',
+  sentiment: 'good',
 }
 
 export function SEQUENCER_SELF_SEQUENCE_ZK(
@@ -646,6 +668,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_L3,
   DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
+  DATA_AVAIL,
   DATA_POS,
 
   // validatedBy
@@ -660,6 +683,7 @@ export const RISK_VIEW = {
   // sequencerFailure
   SEQUENCER_SELF_SEQUENCE,
   SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
   SEQUENCER_FORCE_VIA_L1,
   SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
   SEQUENCER_FORCE_VIA_L1_LOOPRING,

@@ -3,8 +3,8 @@ import path from 'path'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { BufferReader, decodeBatch } from './decodeBatch'
-import { byteArrFromHexStr } from './utils'
 
 describe(decodeBatch.name, () => {
   it('should decode the span batch blob', () => {
@@ -18,6 +18,7 @@ describe(decodeBatch.name, () => {
     const data = decodeBatch(batch, {
       l2BlockTimeSeconds: 2,
       genesisTimestamp: new UnixTime(1686789347),
+      blockOffset: 0,
     })
     expect(data).toEqual(stub.decoded)
   })
@@ -33,6 +34,7 @@ describe(decodeBatch.name, () => {
     const data = decodeBatch(batch, {
       l2BlockTimeSeconds: 2,
       genesisTimestamp: new UnixTime(1708809815),
+      blockOffset: 0,
     })
     expect(data).toEqual(stub.decoded)
   })

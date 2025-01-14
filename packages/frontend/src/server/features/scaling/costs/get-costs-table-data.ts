@@ -1,11 +1,12 @@
+import { type Layer2, type Layer3 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
-import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
+import { getDb } from '~/server/database'
 import { getCostsForProjects } from './get-costs-for-projects'
 import { type LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
-import { type CostsTimeRange } from './utils/range'
+import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
 
 export function getCostsTable(
   ...parameters: Parameters<typeof getCachedCostsTableData>
@@ -20,7 +21,7 @@ export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 
 export const getCachedCostsTableData = cache(
   async (timeRange: CostsTimeRange) => {
-    const projects = getCostsProjects()
+    const projects = getCostsProjects().filter((p) => !p.isArchived)
     const projectsCosts = await getCostsForProjects(projects, timeRange)
     const projectsActivity = await getLatestActivityForProjects(
       projects,
@@ -45,6 +46,22 @@ export const getCachedCostsTableData = cache(
     tags: ['costs'],
   },
 )
+
+async function getLatestActivityForProjects(
+  projects: (Layer2 | Layer3)[],
+  timeRange: CostsTimeRange,
+) {
+  const db = getDb()
+  const range = getFullySyncedCostsRange(timeRange)
+  const summedCounts = await db.activity.getSummedCountForProjectsAndTimeRange(
+    projects.map((p) => p.id),
+    range,
+  )
+
+  return Object.fromEntries(
+    summedCounts.map((record) => [record.projectId, record.count]),
+  )
+}
 
 function getSyncStatus(syncedUntil: UnixTime) {
   const isSynced = UnixTime.now()

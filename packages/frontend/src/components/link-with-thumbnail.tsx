@@ -23,7 +23,7 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group flex gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
+        'group flex gap-6 rounded-md bg-surface-primary transition-all hover:bg-surface-secondary',
         orientation === 'vertical' && 'max-w-96 flex-col',
         props.className,
       )}
@@ -71,7 +71,7 @@ export function LinkWithThumbnail({
             </p>
           </div>
         )}
-        <p className="flex flex-wrap items-center gap-1 text-sm font-medium text-blue-700 underline transition-colors group-hover:text-blue-550 dark:text-blue-500 md:mt-3">
+        <p className="flex flex-wrap items-center gap-1 text-sm font-medium text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>

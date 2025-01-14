@@ -1,6 +1,7 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { DA_LAYERS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -28,6 +29,10 @@ export const redstone: Layer2 = opStackL2({
   additionalBadges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   additionalPurposes: ['Gaming'],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     name: 'Redstone',
     slug: 'redstone',
     architectureImage: 'opstack-dachallenge',
@@ -50,7 +55,7 @@ export const redstone: Layer2 = opStackL2({
     daChallengeWindow,
     daResolveWindow,
     'https://github.com/latticexyz/redstone',
-    DA_LAYERS.REDSTONE_DA,
+    DA_LAYERS.OP_ALT_DA,
   ),
   discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1712192291),

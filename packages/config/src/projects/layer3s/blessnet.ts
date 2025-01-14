@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -12,6 +13,10 @@ export const blessnet: Layer3 = orbitStackL3({
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   hostChain: ProjectId.ARBITRUM,
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'Blessnet',
     slug: 'blessnet',
     description:
@@ -46,9 +51,9 @@ export const blessnet: Layer3 = orbitStackL3({
   //     tokens: '*',
   //   }),
   // ],
-  // nativeToken: 'INJ',
+  // gasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  // nativeToken: 'BLESS', // not on CG
+  // gasTokens: ['BLESS'], // not on CG
   // associatedTokens: ['BLESS'],
   rpcUrl: 'https://blessnet.calderachain.xyz/http',
   discovery,

@@ -1,6 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import {
   useScalingFilter,
   useScalingFilterValues,
@@ -13,37 +14,44 @@ import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { featureFlags } from '~/consts/feature-flags'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { type ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
+import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
 import { type ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
-import { useActivityChartRenderParams } from './use-activity-chart-render-params'
+import {
+  type ActivityChartType,
+  useActivityChartRenderParams,
+} from './use-activity-chart-render-params'
+import { typeToIndicator } from './utils/get-chart-type'
 
 interface Props {
   milestones: Milestone[]
   entries: ScalingActivityEntry[]
   hideScalingFactor?: boolean
+  type: ActivityChartType
 }
 
 export function ActivityChart({
   milestones,
   entries,
   hideScalingFactor,
+  type,
 }: Props) {
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
-  const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
+  const filter = useScalingFilterValues()
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvl-scale',
     'lin',
@@ -54,22 +62,21 @@ export function ActivityChart({
     true,
   )
 
-  const filter =
-    !featureFlags.showOthers && filters.isEmpty
-      ? { type: 'all' as const }
-      : {
-          type: 'projects' as const,
-          projectIds: entries
-            .filter(includeFilter)
-            .map((project) => project.id),
-        }
+  const chartFilter: ActivityProjectFilter = filter.isEmpty
+    ? {
+        type: typeToChartFilterType(type),
+      }
+    : {
+        type: 'projects',
+        projectIds: entries.filter(includeFilter).map((project) => project.id),
+      }
 
   const { data: stats } = api.activity.chartStats.useQuery({
-    filter,
+    filter: chartFilter,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
-    filter,
+    filter: chartFilter,
   })
 
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
@@ -78,6 +85,7 @@ export function ActivityChart({
       chart: data,
       showMainnet,
       metric,
+      type,
     })
 
   return (
@@ -92,18 +100,38 @@ export function ActivityChart({
           {...data}
           showEthereum={showMainnet}
           metric={metric}
-          singleProject={filter.projectIds?.length === 1}
+          singleProject={
+            chartFilter.type === 'projects' &&
+            chartFilter.projectIds?.length === 1
+          }
+          type={type}
         />
       )}
       useLogScale={scale === 'log'}
     >
-      <section className="flex flex-col gap-4">
+      <section className="flex flex-col">
         <ActivityChartHeader
           stats={stats}
           range={chartRange}
           hideScalingFactor={hideScalingFactor}
         />
-        <Chart />
+        <Chart className="mt-4" />
+        <ChartLegend
+          className="my-2"
+          elements={[
+            {
+              name:
+                type === 'ValidiumsAndOptimiums'
+                  ? 'Validiums and Optimiums'
+                  : (type ?? 'Projects'),
+              color: typeToIndicator(type),
+            },
+            {
+              name: 'Ethereum',
+              color: 'bg-indicator-ethereum',
+            },
+          ]}
+        />
         <Controls
           scale={scale}
           setScale={setScale}
@@ -175,4 +203,19 @@ function Controls({
       />
     </ChartControlsWrapper>
   )
+}
+
+function typeToChartFilterType(
+  type: ActivityChartType,
+): Exclude<ActivityProjectFilter['type'], 'all' | 'projects'> {
+  switch (type) {
+    case 'Rollups':
+      return 'rollups'
+    case 'ValidiumsAndOptimiums':
+      return 'validiumsAndOptimiums'
+    case 'Others':
+      return 'others'
+    default:
+      assertUnreachable(type)
+  }
 }

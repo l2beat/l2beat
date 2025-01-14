@@ -1,15 +1,14 @@
 import { type Milestone } from '@l2beat/config'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { CustomLink } from '~/components/link/custom-link'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { formatDate } from '~/utils/dates'
-import { CustomLink } from '../../link/custom-link'
 
 interface Props {
   milestone: Milestone
 }
 
 export function ChartMilestoneHover({ milestone }: Props) {
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
+  const isMobile = useIsMobile()
   return (
     <div>
       <div className="mb-1 whitespace-nowrap">

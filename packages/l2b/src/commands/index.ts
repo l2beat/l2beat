@@ -9,6 +9,7 @@ import { FetchFlatSources } from './FetchFlatSources'
 import { FindL2 } from './FindL2'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
+import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
@@ -32,6 +33,7 @@ export function getSubcommands() {
     FetchFlatSources,
     Flatten,
     FlattenAndDiff,
+    GetTokenMinters,
     MatchFlat,
     Powerdiff,
     SolFmt,

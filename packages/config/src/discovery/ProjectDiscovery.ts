@@ -29,7 +29,7 @@ import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 
 import { join } from 'path'
 import {
-  ScalingProjectContractSingleAddress,
+  ScalingProjectContract,
   ScalingProjectUpgradeability,
 } from '../common/ScalingProjectContracts'
 import {
@@ -85,10 +85,8 @@ export class ProjectDiscovery {
 
   getContractDetails(
     identifier: string,
-    descriptionOrOptions?:
-      | string
-      | Partial<ScalingProjectContractSingleAddress>,
-  ): ScalingProjectContractSingleAddress {
+    descriptionOrOptions?: string | Partial<ScalingProjectContract>,
+  ): ScalingProjectContract {
     const contract = this.getContract(identifier)
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
@@ -111,6 +109,7 @@ export class ProjectDiscovery {
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
+      references: contract.references,
       ...descriptionOrOptions,
     }
   }
@@ -160,7 +159,7 @@ export class ProjectDiscovery {
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
 
-    const options: Partial<ScalingProjectContractSingleAddress> = {
+    const options: Partial<ScalingProjectContract> = {
       name,
       description,
       upgradableBy,
@@ -234,7 +233,7 @@ export class ProjectDiscovery {
     contractOverrides?: Record<string, string>,
   ): {
     permissions: ScalingProjectPermission[]
-    contracts: ScalingProjectContractSingleAddress[]
+    contracts: ScalingProjectContract[]
   } {
     return this.resolveStackTemplates(
       ORBIT_STACK_PERMISSION_TEMPLATES,
@@ -267,7 +266,7 @@ export class ProjectDiscovery {
     contractOverrides?: Record<string, string>,
   ): {
     permissions: ScalingProjectPermission[]
-    contracts: ScalingProjectContractSingleAddress[]
+    contracts: ScalingProjectContract[]
   } {
     const resolved = this.computeStackContractPermissions(
       permissionTemplates,
@@ -557,10 +556,8 @@ export class ProjectDiscovery {
   getContractFromValue(
     contractIdentifier: string,
     key: string,
-    descriptionOrOptions?:
-      | string
-      | Partial<ScalingProjectContractSingleAddress>,
-  ): ScalingProjectContractSingleAddress {
+    descriptionOrOptions?: string | Partial<ScalingProjectContract>,
+  ): ScalingProjectContract {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
       isString(address) && EthereumAddress.check(address),
@@ -593,6 +590,7 @@ export class ProjectDiscovery {
         },
       ],
       chain: this.chain,
+      references: contract.references,
       description,
     }
   }
@@ -690,9 +688,9 @@ export class ProjectDiscovery {
   }
 
   getOpStackContractDetails(
-    upgradesProxy: Partial<ScalingProjectContractSingleAddress>,
+    upgradesProxy: Partial<ScalingProjectContract>,
     overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ScalingProjectContractSingleAddress[] {
+  ): ScalingProjectContract[] {
     return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
       this.hasContract(overrides?.[d.name] ?? d.name),
     ).map((d) =>
@@ -814,6 +812,7 @@ export class ProjectDiscovery {
       propose: 'A Proposer',
       sequence: 'A Sequencer',
       validate: 'A Validator',
+      operateLinea: 'An Operator',
       fastconfirm: 'A FastConfirmer',
     }
 
@@ -872,6 +871,7 @@ export class ProjectDiscovery {
       propose: 'Can act as a Proposer',
       sequence: 'Can act as a Sequencer',
       validate: 'Can act as a Validator',
+      operateLinea: 'Can act as an Operator',
       fastconfirm: 'Can act as a FastConfirmer',
     }
 
@@ -960,7 +960,7 @@ export class ProjectDiscovery {
           ...this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
-            undefined,
+            contract.references,
             true,
           ),
         )
@@ -994,10 +994,10 @@ export class ProjectDiscovery {
         permission.description,
       )
     })
-    return result
+    return result.map((p) => ({ ...p, discoveryDrivenData: true }))
   }
 
-  getDiscoveredContracts(): ScalingProjectContractSingleAddress[] {
+  getDiscoveredContracts(): ScalingProjectContract[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
@@ -1041,6 +1041,7 @@ export class ProjectDiscovery {
             this.describeContractOrEoa(contract, true),
           ),
           ...upgradableBy,
+          discoveryDrivenData: true,
         })
       })
 
@@ -1117,6 +1118,12 @@ const roleDescriptions: {
     name: 'Validator/Proposer',
     description:
       'Can propose new state roots (called nodes) and challenge state roots on the host chain.',
+  },
+  operateLinea: {
+    // LINEA specific
+    name: 'Operator',
+    description:
+      'Allowed to prove blocks and post the corresponding transaction data.',
   },
   fastconfirm: {
     name: 'AnyTrust FastConfirmer',

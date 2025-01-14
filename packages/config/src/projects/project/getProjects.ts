@@ -7,7 +7,6 @@ import { Layer3, layer3s } from '../layer3s'
 import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
 import { Project } from './Project'
-import { getCurrentEntry } from './utils/getCurrentEntry'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -22,6 +21,7 @@ export function getProjects(): Project[] {
 }
 
 function layer2Or3ToProject(p: Layer2 | Layer3): Project {
+  const otherMigrationContext = PROJECT_COUNTDOWNS.otherMigration.getContext(p)
   return {
     id: p.id,
     name: p.display.name,
@@ -47,7 +47,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       ),
       stack: p.display.provider,
       raas: getRaas(p.badges),
-      daLayer: getCurrentEntry(p.dataAvailability)?.layer.value ?? 'Unknown',
+      daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
     },
@@ -56,13 +56,19 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       host: undefined,
       stacked: undefined,
     },
+    scalingDa: p.dataAvailability,
+    tvlInfo: {
+      associatedTokens: p.config.associatedTokens ?? [],
+      warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
+    },
+    livenessInfo: p.type === 'layer2' ? p.display.liveness : undefined,
     proofVerification: p.stateValidation?.proofVerification,
-    countdowns: p.display.reasonsForBeingOther
+    countdowns: otherMigrationContext
       ? {
           otherMigration: {
             expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
             pretendingToBe: p.display.category,
-            reasons: p.display.reasonsForBeingOther,
+            reasons: otherMigrationContext.reasonsForBeingOther,
           },
         }
       : undefined,
@@ -87,6 +93,10 @@ function bridgeToProject(p: Bridge): Project {
       redWarning: undefined,
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
+    },
+    tvlInfo: {
+      associatedTokens: p.config.associatedTokens ?? [],
+      warnings: [],
     },
     // tags
     isBridge: true,

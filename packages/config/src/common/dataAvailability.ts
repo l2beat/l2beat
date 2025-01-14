@@ -1,4 +1,4 @@
-import { UnixTime, ValueWithSentiment } from '@l2beat/shared-pure'
+import { ValueWithSentiment } from '@l2beat/shared-pure'
 
 import {
   DataAvailabilityBridge,
@@ -7,14 +7,7 @@ import {
   DataAvailabilityMode,
 } from './ScalingProjectDataAvailability'
 
-export type DataAvailabilityHistory = DataAvailabilityHistoryEntry[]
-
-export type DataAvailabilityHistoryEntry = DataAvailabilityWithSentiment & {
-  sinceTimestamp?: UnixTime
-  untilTimestamp?: UnixTime
-}
-
-export interface DataAvailabilityWithSentiment {
+export interface ProjectDataAvailability {
   layer: ValueWithSentiment<string> & { secondLine?: string }
   bridge: DataAvailabilityBridge
   mode: DataAvailabilityMode
@@ -89,10 +82,17 @@ export const DA_LAYERS = {
     fallbackDescription: undefined,
     secondLine: undefined,
   },
-  EXTERNAL: {
-    value: 'External',
+  AVAIL: {
+    value: 'Avail',
     sentiment: 'warning',
-    description: 'The data is posted off chain.',
+    description: 'The data is posted to Avail.',
+    fallbackDescription: undefined,
+    secondLine: undefined,
+  },
+  NONE: {
+    value: 'None',
+    sentiment: 'bad',
+    description: 'The data is not posted to any data availability layer.',
     fallbackDescription: undefined,
     secondLine: undefined,
   },
@@ -108,15 +108,15 @@ export const DA_LAYERS = {
     value: 'FraxtalDA',
     sentiment: 'warning',
     description:
-      'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data are published on an on chain inbox.',
+      'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data are published on an onchain inbox.',
     fallbackDescription: undefined,
     secondLine: undefined,
   },
-  REDSTONE_DA: {
-    value: 'RedstoneDA',
+  OP_ALT_DA: {
+    value: 'Alt-DA Provider',
     sentiment: 'warning',
     description:
-      'The data is posted to RedstoneDA which is a separate data availability module developed by the Redstone team. Data is posted off chain, and only hashes of data are published on an on chain inbox.',
+      'The data is posted to an off-chain data availability provider which is tasked to serve data upon request. Only hashes of the data are published on an onchain inbox.',
     fallbackDescription: undefined,
     secondLine: undefined,
   },
@@ -124,7 +124,7 @@ export const DA_LAYERS = {
     value: 'EigenDA',
     sentiment: 'warning',
     description:
-      'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only hashes of data are published on an on chain inbox.',
+      'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only hashes of data are published on an onchain inbox.',
     fallbackDescription: undefined,
     secondLine: undefined,
   },
@@ -132,7 +132,7 @@ export const DA_LAYERS = {
     value: 'NearDA',
     sentiment: 'warning',
     description:
-      'The data is posted to NearDA which is a separate data availability layer on the Near protocol. Only hashes of data are published on an on chain inbox.',
+      'The data is posted to NearDA which is a separate data availability layer on the Near protocol. Only hashes of data are published on an onchain inbox.',
     fallbackDescription: undefined,
     secondLine: undefined,
   },
@@ -141,6 +141,14 @@ export const DA_LAYERS = {
     sentiment: 'warning',
     description:
       'The data is guaranteed to be available by Polygon proof of stake validators. On Ethereum, the data is indirectly referenced in the signed block header.',
+    fallbackDescription: undefined,
+    secondLine: undefined,
+  },
+  HYPERLIQUID_DA: {
+    value: 'Hyperliquid DA',
+    sentiment: 'bad',
+    description:
+      'The data is custodied by Hyperliquid validators. On Arbitrum there is no direct reference of the data.',
     fallbackDescription: undefined,
     secondLine: undefined,
   },
@@ -170,13 +178,19 @@ export const DA_BRIDGES = {
     value: 'Enshrined',
     sentiment: 'good',
     description:
-      'The validating bridge has access to all the data, as it is posted on chain.',
+      'The validating bridge has access to all the data, as it is posted onchain.',
   },
   OPTIMISTIC: {
     value: 'Optimistic',
     sentiment: 'bad',
     description:
       'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
+  },
+  BLOBSTREAM: {
+    value: 'Blobstream',
+    sentiment: 'warning',
+    description:
+      'The Blobstream DA bridge is used to attest to the data availability on Celestia.',
   },
   DAC_MEMBERS: ({
     requiredSignatures,
@@ -238,7 +252,7 @@ function DAC_SENTIMENT(config?: {
 
 export function addSentimentToDataAvailability(
   data: DataAvailabilityConfig,
-): DataAvailabilityWithSentiment {
+): ProjectDataAvailability {
   return {
     layer: addSentimentToLayers(data.layers),
     bridge: data.bridge,

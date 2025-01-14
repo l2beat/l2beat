@@ -105,7 +105,7 @@ export const hermez: Layer2 = {
     operator: {
       ...OPERATOR.DECENTRALIZED_OPERATOR,
       description:
-        'The system runs an auction in which anyone can bid to become the operator for a set number of blocks. The operator will be able to propose blocks and collect fees during this window. Hermez will also run a operator known as boot coordinator that will propose blocks in case no one bids in the auction. This operator can be removed by the governance.',
+        'The system runs an auction in which anyone can bid to become the operator for a set number of blocks. The operator will be able to propose blocks and collect fees during this window. Hermez will also run an operator known as boot coordinator that will propose blocks in case no one bids in the auction. This operator can be removed by the governance.',
       references: [
         {
           text: 'Forging Consensus Protocol - Hermez documentation',

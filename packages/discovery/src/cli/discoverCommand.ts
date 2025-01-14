@@ -82,6 +82,11 @@ export const DiscoverCommandArgs = {
     short: 'b',
     description: 'the block number on which the discovery will be performed',
   }),
+  overwriteCache: flag({
+    type: boolean,
+    long: 'overwrite-cache',
+    description: 'overwrite the cache entries',
+  }),
 }
 
 export const DiscoverCommand = command({

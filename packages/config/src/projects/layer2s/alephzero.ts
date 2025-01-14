@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -12,6 +13,10 @@ export const alephzero: Layer2 = orbitStackL2({
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:
@@ -27,7 +32,7 @@ export const alephzero: Layer2 = orbitStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['AZERO'],
-  nativeToken: 'AZERO',
+  gasTokens: ['AZERO'],
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

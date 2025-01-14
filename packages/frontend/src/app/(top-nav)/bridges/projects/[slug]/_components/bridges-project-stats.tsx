@@ -27,10 +27,10 @@ export function BridgesProjectStats({ project }: Props) {
   )
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-4 md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5">
       <ProjectStat
-        title="Total value locked"
-        tooltip="Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
+        title="Total value secured"
+        tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         value={
           !project.isUpcoming && project.header.tvl ? (
             <Tooltip>
@@ -122,9 +122,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-gray-500 dark:text-gray-600">
-          {props.title}
-        </span>
+        <span className="text-xs text-secondary">{props.title}</span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">

@@ -5,6 +5,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -71,8 +72,8 @@ export const xlayer: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          text: 'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
+          href: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
     },
@@ -92,6 +93,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     ],
   },
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'X Layer',
     slug: 'xlayer',
     description:
@@ -153,6 +155,16 @@ export const xlayer: Layer2 = polygonCDKStack({
       ],
       description:
         'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+    },
+    {
+      name: 'RollupManager',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('XLayerValidium', 'rollupManager'),
+        ),
+      ],
+      description:
+        'Permissioned to revert batches that are not yet finalized and to initialize / upgrade the validium contract to a new (existing) version.',
     },
     {
       name: 'DACProxyAdminOwner',

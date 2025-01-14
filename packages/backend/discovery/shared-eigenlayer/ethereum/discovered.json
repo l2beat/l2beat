@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 21357574,
+  "blockNumber": 21429022,
   "configHash": "0x8f3dd5677c880d9ef5f8ebc4a89bd46ed78daa9b7e36d71a0fc890a8c7324d58",
   "contracts": [
     {
@@ -14,8 +14,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x62a21b0000000000",
-        "get_deposit_root": "0xd0c7375e487d170977bd199bf9b56aee9dd6b744584ba4d9c35aca98428f06e5"
+        "get_deposit_count": "0x8fd31b0000000000",
+        "get_deposit_root": "0x9c1a54a50b2318ec11ef882f95f7ae5d87b566f21e5fdf14aa68bca7c7a7e6b2"
       },
       "derivedName": "DepositContract"
     },
@@ -73,7 +73,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1733360411,
+        "latestPress": 1733965235,
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -185,7 +185,8 @@
           "0xa3F64D3102a035db35c42A9001BBc83e08c7a366",
           "0x461591A7e68906eDBcD643E010A7e1AE3B023c6d",
           "0xBc77233855e3274E1903771675Eb71E602D9DC2e",
-          "0xeF2A435e5EE44B2041100EF8cbC8ae035166606c"
+          "0xeF2A435e5EE44B2041100EF8cbC8ae035166606c",
+          "0x3aDdEb54ddd43Eb40235eC32DfA7928F28A44bb5"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -658,7 +659,7 @@
         "name": "Backing Eigen",
         "owner": "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2",
         "symbol": "bEIGEN",
-        "totalSupply": "1695532817023767092307692325",
+        "totalSupply": "1696820237537832215384615403",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -864,7 +865,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32642,
+        "numPods": 32684,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -961,12 +962,12 @@
           "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
           "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD"
         ],
-        "$threshold": 3,
+        "$threshold": 4,
         "domainSeparator": "0x1402d1fac147648503e0981151b32afe3fec9a5207c84371b09867cbdc7a67a2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 78,
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 79,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1332,7 +1333,7 @@
         "name": "Eigen",
         "owner": "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2",
         "symbol": "EIGEN",
-        "totalSupply": "1695532817023767092307692325",
+        "totalSupply": "1696820237537832215384615403",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {

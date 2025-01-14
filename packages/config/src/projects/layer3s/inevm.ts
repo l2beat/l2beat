@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -13,6 +14,10 @@ export const inevm: Layer3 = orbitStackL3({
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   hostChain: ProjectId.ARBITRUM,
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'inEVM',
     slug: 'inevm',
     description:
@@ -44,7 +49,7 @@ export const inevm: Layer3 = orbitStackL3({
       tokens: '*',
     }),
   ],
-  // nativeToken: 'INJ',
+  // gasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   rpcUrl: 'https://inevm.calderachain.xyz/http',
   discovery,

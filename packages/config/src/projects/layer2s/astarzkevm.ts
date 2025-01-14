@@ -5,6 +5,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
@@ -79,6 +80,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   rollupModuleContract: discovery.getContract('AstarValidium'),
   rollupVerifierContract: discovery.getContract('AstarVerifier'),
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'Astar zkEVM',
     slug: 'astarzkevm',
     description:

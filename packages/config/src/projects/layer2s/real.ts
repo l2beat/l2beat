@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -14,6 +15,10 @@ export const real: Layer2 = orbitStackL2({
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['RWA'],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'Re.al',
     slug: 'real',
     description:
@@ -58,7 +63,7 @@ export const real: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://real.drpc.org',
-  // nativeToken: 'reETH', // not on coingecko yet
+  // gasTokens: ['reETH'], // not on coingecko yet
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xfC89B875970122E24C6C5ADd4Dea139443943ea7'),

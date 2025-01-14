@@ -2,8 +2,8 @@ import zlib from 'zlib'
 import { assert } from '@l2beat/shared-pure'
 
 import { Blob } from '@l2beat/shared'
+import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
-import { byteArrFromHexStr } from '../opStack/utils'
 import { blobsToData } from './blobsToData'
 import { numberToByteArr } from './utils'
 

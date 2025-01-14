@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -14,6 +15,10 @@ export const xai: Layer3 = orbitStackL3({
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD,
+    ],
     name: 'Xai',
     slug: 'xai',
     description:
@@ -36,7 +41,7 @@ export const xai: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
-  nativeToken: 'XAI',
+  gasTokens: ['XAI'],
   rpcUrl: 'https://xai-chain.net/rpc',
   nonTemplateTechnology: {
     stateCorrectness: {

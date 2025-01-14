@@ -1,8 +1,8 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo, useRef } from 'react'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useIsClient } from '~/hooks/use-is-client'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
 import { useChartLoading } from './chart-loading-context'
@@ -14,9 +14,8 @@ export function ChartMilestones() {
   const loading = useChartLoading()
   const chartContext = useChartContext()
   const chartHoverContext = useChartHoverContext()
-  const breakpoint = useBreakpoint()
+  const isMobile = useIsMobile()
   const { rect } = useChartRect()
-  const isMobile = breakpoint === 'mobile'
   const isClient = useIsClient()
 
   const onCanvasMoveEvent = useCallback(

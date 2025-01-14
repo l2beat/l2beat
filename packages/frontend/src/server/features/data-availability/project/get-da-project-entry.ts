@@ -2,6 +2,7 @@ import {
   type BlockchainDaLayer,
   type DaBridge,
   type DaLayer,
+  type DaLayerThroughput,
   type DacBridge,
   type DacDaLayer,
   type EthereumDaLayer,
@@ -10,7 +11,6 @@ import {
   isDaBridgeVerified,
 } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
-import { getManuallyVerifiedContracts } from '@l2beat/config'
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   mapBridgeRisksToRosetteValues,
@@ -75,6 +75,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     links: ProjectLink[]
     economicSecurity: EconomicSecurityData | undefined
     durationStorage: number | undefined
+    throughput: DaLayerThroughput | undefined
     numberOfOperators: number | undefined
     usedIn: UsedInProject[]
   }
@@ -87,6 +88,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     tvs: number
     economicSecurity: EconomicSecurityData | undefined
     durationStorage: number
+    throughput: DaLayerThroughput | undefined
     usedIn: UsedInProject[]
     bridgeName: string
     callout: {
@@ -127,13 +129,11 @@ export async function getDaProjectEntry(
     economicSecurity,
     tvlPerProject,
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
     projectsChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
     getDaProjectsTvl(uniqueProjectsInUse),
     getContractsVerificationStatuses(daLayer),
-    getManuallyVerifiedContracts(),
     getProjectsChangeReport(),
   ])
 
@@ -162,7 +162,6 @@ export async function getDaProjectEntry(
     daBridge,
     isVerified: common.isVerified,
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
     projectsChangeReport,
     evaluatedGrissiniValues,
   })
@@ -195,6 +194,8 @@ export async function getDaProjectEntry(
       economicSecurity,
       durationStorage:
         daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
+      throughput:
+        daLayer.kind === 'PublicBlockchain' ? daLayer.throughput : undefined,
       numberOfOperators: daLayer.numberOfOperators,
       usedIn: daLayer.bridges
         .flatMap((bridge) => bridge.usedIn)
@@ -253,6 +254,7 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: daLayer.pruningWindow,
+      throughput: daLayer.throughput,
       usedIn: usedInByTvlDesc,
       bridgeName: daBridge.display.name,
       callout: {

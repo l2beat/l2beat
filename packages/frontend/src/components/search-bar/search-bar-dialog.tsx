@@ -104,7 +104,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
     >
-      <Command shouldFilter={false} sidebar className="rounded-none">
+      <Command shouldFilter={false} className="rounded-none">
         <CommandInput
           ref={inputRef}
           placeholder="Search for projects"
@@ -117,6 +117,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
         </CommandInput>
         <CommandList className="max-h-screen md:h-[270px] md:max-h-[270px] [@supports(height:100dvh)]:max-h-dvh">
           <CommandEmpty>No results found.</CommandEmpty>
+
           {filteredProjects.length > 0 && value === '' && (
             <CommandGroup heading="Recently added projects">
               {filteredProjects.map((project) => {
@@ -145,12 +146,12 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           )}
           {value !== '' &&
             grouped.length > 0 &&
-            grouped.map(([group, items]) => (
+            grouped.map(([group, items], groupIndex) => (
               <CommandGroup
                 heading={searchBarCategories[group].name}
                 key={group}
               >
-                {items.map((item) => {
+                {items.map((item, index) => {
                   return (
                     <SearchBarItem
                       key={item.href}
@@ -160,7 +161,16 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                         router.push(item.href)
                       }}
                       label={entryToLabel(item)}
-                      value={`${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`}
+                      value={
+                        // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
+                        // For example try to search "nea" without this hack.
+                        // It will scroll to "Neva" but highlight "Rainbow Bridge" (highlight is correct cuz near is tag for it)
+                        // Using '-' as value makes first item always selected.
+                        // https://github.com/pacocoursey/cmdk/issues/171#issuecomment-1775421795
+                        groupIndex === 0 && index === 0
+                          ? '-'
+                          : `${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`
+                      }
                     >
                       {item.type === 'project' && (
                         <Image

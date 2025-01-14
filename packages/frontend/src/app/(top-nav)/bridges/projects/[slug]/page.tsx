@@ -1,5 +1,6 @@
 import { bridges } from '@l2beat/config/build/src/projects/bridges'
 import { notFound } from 'next/navigation'
+import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
@@ -66,27 +67,29 @@ export default async function Page(props: Props) {
         </div>
       )}
       <BridgesProjectSummary project={projectEntry} />
-      {isNavigationEmpty ? (
-        <ProjectDetails items={projectEntry.projectDetails} />
-      ) : (
-        <div className="gap-x-12 md:flex">
-          <div className="mt-10 hidden w-[242px] shrink-0 md:block">
-            <DesktopProjectNavigation
-              project={{
-                title: projectEntry.name,
-                slug: projectEntry.slug,
-                isUnderReview: !!projectEntry.underReviewStatus,
-              }}
-              sections={navigationSections}
-            />
+      <ContentWrapper mobileFull>
+        {isNavigationEmpty ? (
+          <ProjectDetails items={projectEntry.projectDetails} />
+        ) : (
+          <div className="gap-x-12 md:flex">
+            <div className="mt-10 hidden w-[242px] shrink-0 md:block">
+              <DesktopProjectNavigation
+                project={{
+                  title: projectEntry.name,
+                  slug: projectEntry.slug,
+                  isUnderReview: !!projectEntry.underReviewStatus,
+                }}
+                sections={navigationSections}
+              />
+            </div>
+            <div className="w-full">
+              <HighlightableLinkContextProvider>
+                <ProjectDetails items={projectEntry.projectDetails} />
+              </HighlightableLinkContextProvider>
+            </div>
           </div>
-          <div className="w-full">
-            <HighlightableLinkContextProvider>
-              <ProjectDetails items={projectEntry.projectDetails} />
-            </HighlightableLinkContextProvider>
-          </div>
-        </div>
-      )}
+        )}
+      </ContentWrapper>
     </HydrateClient>
   )
 }

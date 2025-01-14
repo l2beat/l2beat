@@ -1,3 +1,276 @@
+Generated with discovered.json: 0x55b5ac839416bd5081d30634287a40e8c875684f
+
+# Diff at Thu, 09 Jan 2025 06:23:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 21346059
+- current block number: 21585110
+
+## Description
+
+New MIPS, PermissionedDisputeGame, FaultDisputeGame and DelayedWETH contracts.
+
+- interop: add `hashL2toL2CrossDomainMessage()` and `_dependencySet` (in 'encoding' and 'hashing' libraries)
+- formatting and doc changes
+- removal of interfaces (IDisputeGame, IFaultDisputeGame)
+- no changes in DelayedWETH
+
+### MIPS
+
+Refactor: [64bit architecture and multithreading support](https://github.com/ethereum-optimism/docs/issues/1066).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x050ed6F6273c7D836a111E42153BC00D0380b87d)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.8.target:
+-        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      directlyReceivedPermissions.8.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.7.target:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.6.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      directlyReceivedPermissions.5.target:
+-        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
++        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      directlyReceivedPermissions.4.target:
+-        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0"
+      directlyReceivedPermissions.3.target:
+-        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
++        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      directlyReceivedPermissions.2.target:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
++        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.8.target:
+-        "0x9F9b897e37de5052cD70Db6D08474550DDb07f39"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      receivedPermissions.8.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.7.target:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.6.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      receivedPermissions.5.target:
+-        "0x82511d494B5C942BE57498a70Fdd7184Ee33B975"
++        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      receivedPermissions.4.target:
+-        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0"
+      receivedPermissions.3.target:
+-        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
++        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      receivedPermissions.2.target:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
++        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x82511d494B5C942BE57498a70Fdd7184Ee33B975)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x9F9b897e37de5052cD70Db6D08474550DDb07f39)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0xA6f3DFdbf4855a43c529bc42EDE96797252879af)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0x050ed6F6273c7D836a111E42153BC00D0380b87d"
++        "0x91a661891248d8C4916FB4a1508492a5e2CBcb87"
+      values.gameImpls.0:
+-        "0xA6f3DFdbf4855a43c529bc42EDE96797252879af"
++        "0x27B81db41F586016694632193b99E45b1a27B8f8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH_PermissionedGames (0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x27B81db41F586016694632193b99E45b1a27B8f8)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH_PermissionlessGames (0x323dFC63c9B83CB83f40325AaB74b245937cbdF0)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x91a661891248d8C4916FB4a1508492a5e2CBcb87)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH_PermissionedGames}/DelayedWETH.sol |   0
+ .../DelayedWETH_PermissionedGames}/Proxy.p.sol     |   0
+ .../DelayedWETH.sol                                |   0
+ .../DelayedWETH_PermissionlessGames}/Proxy.p.sol   |   0
+ .../{.flat@21346059 => .flat}/FaultDisputeGame.sol | 386 ++++++++----------
+ .../ethereum/{.flat@21346059 => .flat}/MIPS.sol    | 444 +++++++++++++++------
+ .../PermissionedDisputeGame.sol                    | 408 +++++++++----------
+ 7 files changed, 681 insertions(+), 557 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21346059 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH (0x82511d494B5C942BE57498a70Fdd7184Ee33B975) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      name:
+-        "DelayedWETH_PermissionlessGames"
++        "DelayedWETH"
+      displayName:
+-        "DelayedWETH"
+    }
+```
+
+```diff
+    contract DelayedWETH (0x9F9b897e37de5052cD70Db6D08474550DDb07f39) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      name:
+-        "DelayedWETH_PermissionedGames"
++        "DelayedWETH"
+      displayName:
+-        "DelayedWETH"
+    }
+```
+
+Generated with discovered.json: 0xb4955f0f7566471bb9cf8338790547d588590716
+
+# Diff at Wed, 08 Jan 2025 09:04:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 21346059
+- current block number: 21346059
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21346059 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
+Generated with discovered.json: 0x9074daf74e21587a6df98b6fa92ce587120f152f
+
+# Diff at Sat, 21 Dec 2024 17:14:44 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@873a66d1ca14f5f7fb72cefd59af61bb4df31351 block: 21346059
+- current block number: 21346059
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21346059 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"sequence","target":"0x6887246668a3b87F54DeB3b94Ba47a6f63F32985","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+      issuedPermissions.0.via.0:
+-        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04","delay":0}
+      template:
++        "opstack/SystemConfig"
+      description:
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+    }
+```
+
 Generated with discovered.json: 0xbe6d1bd6cdf06c3266e47df316adae1127543239
 
 # Diff at Fri, 06 Dec 2024 21:11:41 GMT:

@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -13,6 +14,7 @@ export const parallel: Layer2 = orbitStackL2({
   discovery,
   additionalBadges: [],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Parallel',
     slug: 'parallel',
     redWarning:

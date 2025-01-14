@@ -46,17 +46,7 @@ export const skaleIMA: Bridge = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669'),
         sinceTimestamp: new UnixTime(1626719900),
-        tokens: [
-          'RAZOR',
-          'USDP',
-          'USDC',
-          'SKL',
-          'DAI',
-          'USDT',
-          'WBTC',
-          // 'HMT',
-          'LINK',
-        ],
+        tokens: '*',
       }),
     ],
   },
@@ -78,7 +68,7 @@ export const skaleIMA: Bridge = {
     validation: {
       name: 'Validation',
       description:
-        'SKALE IMA Bridge operates on SKALE Network nodes for connected SKALE chain. Messages are signed by BLS secret key with a 11 out of 16 threshold, then sent and validated on Ethereum. The validator set signing the message is the same one that is used for the consensus of the SKALE chain, making the bridge as secure as the chain itself. Since the state root is not sent to L1, the bridge and the chain state can diverge.',
+        'SKALE IMA Bridge operates on SKALE Network nodes for connected SKALE chain. Messages are signed by BLS secret key with an 11 out of 16 threshold, then sent and validated on Ethereum. The validator set signing the message is the same one that is used for the consensus of the SKALE chain, making the bridge as secure as the chain itself. Since the state root is not sent to L1, the bridge and the chain state can diverge.',
       references: [
         {
           text: 'SKALE IMA Bridge - Overview',

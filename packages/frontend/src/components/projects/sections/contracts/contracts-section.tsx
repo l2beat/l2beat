@@ -82,7 +82,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={props.diagram} />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-xs text-secondary">
             {props.diagram.caption}
           </figcaption>
         </figure>
@@ -146,7 +146,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.escrows.length > 0 && (
         <>
           <h3 className="font-bold">
-            Value Locked is calculated based on these smart contracts and
+            Value Secured is calculated based on these smart contracts and
             tokens:
           </h3>
           <div className="my-4">

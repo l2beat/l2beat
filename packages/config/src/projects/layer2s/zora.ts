@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -14,6 +15,7 @@ export const zora: Layer2 = opStackL2({
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Zora',
     slug: 'zora',
     description:
@@ -37,7 +39,7 @@ export const zora: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.zora.energy',
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     genesisTimestamp: new UnixTime(1686693839),
     minTimestamp: new UnixTime(1710386579),
     l2BlockTimeSeconds: 2,

@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -15,6 +16,10 @@ export const apechain: Layer3 = orbitStackL3({
     Badge.RaaS.Caldera,
   ],
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'ApeChain',
     slug: 'apechain',
     description:
@@ -39,7 +44,7 @@ export const apechain: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.apechain.com/http',
   // associatedTokens: ['APE'],
-  nativeToken: 'APE',
+  gasTokens: ['APE'],
   overrideEscrows: [],
   discoveryDrivenData: true,
 })

@@ -1,16 +1,17 @@
 'use client'
 import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { CustomLink } from '~/components/link/custom-link'
+import { externalLinks } from '~/consts/external-links'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CloseIcon } from '~/icons/close'
 import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 
 type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>
 export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
+  const isMobile = useIsMobile()
   return (
-    <div className="border-brand p-4 max-md:border-x-0 max-md:bg-brand/25 max-md:dark:bg-brand/15 md:mt-10 md:rounded-lg md:border-2 md:p-8">
+    <div className="border-brand p-4 max-md:border-x-0 max-md:bg-brand/25 max-md:dark:bg-brand/15 md:mt-10 md:rounded-lg md:border-2 md:bg-surface-primary md:p-8">
       <div className="flex flex-wrap items-center justify-center gap-4">
         <h2 className="mr-auto text-2xl font-bold md:text-3xl">
           Recategorisation
@@ -18,7 +19,7 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
         <Countdown expiresAt={expiresAt} size={isMobile ? 'sm' : 'md'} />
       </div>
       <p className="mt-4 text-base font-medium">
-        The project will be classifed as &quot;Other&quot; due to its specific
+        The project will be classified as &quot;Other&quot; due to its specific
         risks that set it apart from the standard classifications.
       </p>
       <p className="mb-4 mt-6 text-lg font-bold">
@@ -42,6 +43,13 @@ export function OtherMigrationNotice({ expiresAt, reasons }: Props) {
           </div>
         ))}
       </div>
+      <p className="mt-2.5 text-base font-bold">
+        Learn more about the recategorisation{' '}
+        <CustomLink href={externalLinks.articles.recategorisation}>
+          here
+        </CustomLink>
+        .
+      </p>
     </div>
   )
 }

@@ -27,6 +27,7 @@ import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
+import { corn } from './corn'
 import { coti } from './coti'
 import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
@@ -39,9 +40,11 @@ import { degate3 } from './degate3'
 import { degenlayer } from './degenlayer'
 import { dydx } from './dydx'
 import { ebichain } from './ebichain'
+import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
+import { facet } from './facet'
 import { fhenix } from './fhenix'
 import { fluence } from './fluence'
 import { fluent } from './fluent'
@@ -66,6 +69,7 @@ import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { immutablezkevm } from './immutablezkevm'
 import { ink } from './ink'
 import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
@@ -87,6 +91,7 @@ import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
+import { memento } from './memento'
 import { metal } from './metal'
 import { metis } from './metis'
 import { millicent } from './millicent'
@@ -114,6 +119,7 @@ import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
 import { payy } from './payy'
+import { phala } from './phala'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
@@ -218,6 +224,7 @@ export const layer2s: Layer2[] = [
   cyber,
   canvasconnect,
   coti,
+  corn,
   creator,
   cronoszkevm,
   dbk,
@@ -231,6 +238,7 @@ export const layer2s: Layer2[] = [
   edgeless,
   ethernity,
   everclear,
+  facet,
   fhenix,
   fluence,
   fluent,
@@ -254,6 +262,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  immutablezkevm,
   ink,
   intmax,
   kakarotzkevm,
@@ -275,8 +284,10 @@ export const layer2s: Layer2[] = [
   lyra,
   race,
   ebichain,
+  eclipse,
   mantapacific,
   mantle,
+  memento,
   metal,
   metis,
   mint,
@@ -304,6 +315,7 @@ export const layer2s: Layer2[] = [
   parallel,
   patex,
   payy,
+  phala,
   playchain,
   plumenetwork,
   polygonmiden,

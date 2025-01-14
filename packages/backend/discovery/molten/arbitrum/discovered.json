@@ -1,7 +1,7 @@
 {
   "name": "molten",
   "chain": "arbitrum",
-  "blockNumber": 275817646,
+  "blockNumber": 287771961,
   "configHash": "0x2b8b85016a47c99f1c45705dad129d2f24c5927dc63e4692634ccfe6cc064370",
   "contracts": [
     {
@@ -95,12 +95,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 841,
+        "firstUnresolvedNode": 980,
         "inbox": "0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 840,
-        "latestNodeCreated": 865,
+        "latestConfirmed": 979,
+        "latestNodeCreated": 1004,
         "loserStakeEscrow": "0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -167,7 +167,8 @@
             "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
-            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot"
+            "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
       ]
@@ -221,7 +222,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 18404,
+        "batchCount": 18606,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"],
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
@@ -251,7 +252,7 @@
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 29944,
+        "totalDelayedMessagesRead": 31606,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -493,7 +494,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 40,
+        "nonce": 45,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -867,7 +868,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "Bridge",
-      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -907,12 +908,12 @@
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
         ],
         "allowedOutboxList": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
-        "delayedMessageCount": 29957,
+        "delayedMessageCount": 31616,
         "nativeToken": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 18404,
-        "sequencerReportedSubMessageCount": 9313238
+        "sequencerMessageCount": 18606,
+        "sequencerReportedSubMessageCount": 9322066
       }
     }
   ],
@@ -1646,7 +1647,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
+    "orbitstack/Bridge": "0xbf3086cfe461b5cddc0ca0473fd46a2d3d521ef3860d13221d24c902c0013175",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
     "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",

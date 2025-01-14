@@ -4,10 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
+import { CustomLink } from '~/components/link/custom-link'
 import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
-import { CustomLink } from '../../link/custom-link'
 import { parseSocial } from './parse-social'
 import { type ProjectLink } from './types'
 
@@ -20,7 +20,7 @@ export function MobileProjectLinks({
         <AccordionTrigger className="py-4">
           <span className="font-bold">
             Links:{' '}
-            <span className="ml-2 font-medium text-gray-600">
+            <span className="ml-2 font-medium text-secondary">
               Website, Docs, etc.
             </span>
           </span>
@@ -30,7 +30,7 @@ export function MobileProjectLinks({
             <tbody>
               {projectLinks.map(({ name, links }, i) => (
                 <tr
-                  className="border-t border-gray-300 first:border-none dark:border-gray-850"
+                  className="border-t border-divider first:border-none"
                   key={i}
                 >
                   <th

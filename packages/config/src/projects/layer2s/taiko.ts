@@ -14,6 +14,7 @@ import {
   DA_MODES,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
@@ -127,21 +128,32 @@ assert(
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
+// const hasThreeTiers =
+//   discovery.getContractValue<number[]>('MainnetTierRouter', 'getTierIds')
+//     .length === 3
+
+// assert(
+//   hasThreeTiers,
+//   'Remove the header warning in case validity proofs are re-enabled.',
+// )
+
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   createdAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
   display: {
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Taiko',
     slug: 'taiko',
     provider: 'Taiko',
+    // headerWarning: hasThreeTiers
+    //   ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
+    //   : undefined,
     description:
       'Taiko is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
@@ -156,6 +168,8 @@ export const taiko: Layer2 = {
         'https://twitter.com/taikoxyz',
         'https://discord.gg/taikoxyz',
         'https://taiko.mirror.xyz',
+        'https://community.taiko.xyz',
+        'https://youtube.com/@taikoxyz',
       ],
       rollupCodes: 'https://rollup.codes/taiko',
     },
@@ -350,7 +364,7 @@ export const taiko: Layer2 = {
         },
         {
           text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B#code',
+          href: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code',
         },
       ],
       risks: [

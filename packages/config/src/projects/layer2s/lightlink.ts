@@ -10,6 +10,7 @@ import { addSentimentToDataAvailability } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
@@ -75,6 +76,7 @@ export const lightlink: Layer2 = {
   type: 'layer2',
   id: ProjectId('lightlink'),
   createdAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
+  badges: [Badge.VM.EVM, Badge.DA.Celestia],
   display: {
     name: 'LightLink',
     slug: 'lightlink',
@@ -125,13 +127,11 @@ export const lightlink: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.CELESTIA],
-      bridge: DA_BRIDGES.NONE,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.CELESTIA],
+    bridge: DA_BRIDGES.NONE,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   // chainConfig: {
   //   name: 'lightlink',
   //   chainId: 1890,

@@ -24,7 +24,7 @@ interface TerminalState {
   discover: (project: string) => Promise<void>
 }
 
-export const useTerminalStore = create<TerminalState>((set) => ({
+export const useTerminalStore = create<TerminalState>((set, get) => ({
   output: '',
   command: {
     inFlight: false,
@@ -51,19 +51,16 @@ export const useTerminalStore = create<TerminalState>((set) => ({
   matchProject: async (project: string, address: string) => {
     executeStreaming(set, () => executeMatchFlat(project, address, 'projects'))
   },
-  discover: async (project: string) =>
-    set((state) => {
-      const chain = state.command.chain
-      if (chain === undefined) {
-        return {}
-      }
+  discover: async (project: string) => {
+    const chain = get().command.chain
+    if (chain === undefined) {
+      return
+    }
 
-      executeStreaming(set, () =>
-        executeDiscover(project, chain, state.command.devMode),
-      )
-
-      return {}
-    }),
+    return executeStreaming(set, () =>
+      executeDiscover(project, chain, get().command.devMode),
+    )
+  },
 }))
 
 async function executeStreaming(
@@ -72,48 +69,52 @@ async function executeStreaming(
   ) => void,
   cmd: () => EventSource,
 ) {
-  try {
-    let stream: EventSource | undefined
-    set((state) => {
-      const { command } = state
-      if (command.chain === undefined) {
-        return state
+  return new Promise<void>((resolve, reject) => {
+    try {
+      let stream: EventSource | undefined
+      set((state) => {
+        const { command } = state
+        if (command.chain === undefined) {
+          return state
+        }
+
+        const newCommand = { ...command, stream: cmd(), inFlight: true }
+        stream = newCommand.stream
+        return { command: newCommand }
+      })
+
+      if (stream === undefined) {
+        return
       }
 
-      const newCommand = { ...command, stream: cmd(), inFlight: true }
-      stream = newCommand.stream
-      return { command: newCommand }
-    })
+      set((state) => ({
+        output: '',
+        command: { ...state.command, inFlight: true },
+      }))
 
-    if (stream === undefined) {
-      return
-    }
+      stream.onmessage = (event) => {
+        const encoded = event.data.toString()
+        const text = encoded.replace(/\\n/g, '\n')
+        const toAdd = text.endsWith('\n') ? text : text + '\n'
+        set((state) => ({ output: state.output + toAdd }))
+      }
 
-    set((state) => ({
-      output: '',
-      command: { ...state.command, inFlight: true },
-    }))
-
-    stream.onmessage = (event) => {
-      const encoded = event.data.toString()
-      const text = encoded.replace(/\\n/g, '\n')
-      const toAdd = text.endsWith('\n') ? text : text + '\n'
-      set((state) => ({ output: state.output + toAdd }))
-    }
-
-    // This is a known quirk of the SSE protocol - normal completion and
-    // errors both go through the error handler
-    stream.onerror = () => {
-      stream?.close()
+      // This is a known quirk of the SSE protocol - normal completion and
+      // errors both go through the error handler
+      stream.onerror = () => {
+        stream?.close()
+        set((state) => ({
+          command: { ...state.command, stream: undefined, inFlight: false },
+        }))
+        resolve()
+      }
+    } catch (error) {
+      console.log('Catch error', error)
+      set((state) => ({ output: state.output + `Error: ${error}` }))
       set((state) => ({
         command: { ...state.command, stream: undefined, inFlight: false },
       }))
+      reject(error)
     }
-  } catch (error) {
-    console.log('Catch error', error)
-    set((state) => ({ output: state.output + `Error: ${error}` }))
-    set((state) => ({
-      command: { ...state.command, stream: undefined, inFlight: false },
-    }))
-  }
+  })
 }
