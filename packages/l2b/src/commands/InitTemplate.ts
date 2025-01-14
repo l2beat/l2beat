@@ -1,5 +1,5 @@
 import { command, positional, string } from 'cmd-ts'
-import { initTempalte } from '../implementations/initTemplate'
+import { initTemplate } from '../implementations/initTemplate'
 
 export const InitTemplate = command({
   name: 'init-template',
@@ -13,6 +13,6 @@ export const InitTemplate = command({
     }),
   },
   handler: (args) => {
-    initTempalte(args.name)
+    initTemplate(args.name)
   },
 })
