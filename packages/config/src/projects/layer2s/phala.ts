@@ -17,13 +17,24 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'
+import { ContractParameters, get$Implementations } from '@l2beat/discovery-types'
 
 const discovery = new ProjectDiscovery('phala')
+
+function safeGetImplementation(contract: ContractParameters): string {
+  const implementation = get$Implementations(contract.values)[0]
+  if (!implementation) {
+    throw new Error(`No implementation found for ${contract.name}`)
+  }
+  return implementation.toString()
+}
 
 const finalizationPeriod = discovery.getContractValue<number>(
   'OPSuccinctL2OutputOracle',
   'finalizationPeriodSeconds',
 )
+const portal = discovery.getContract('OptimismPortal')
+const l2OutputOracle = discovery.getContract('OPSuccinctL2OutputOracle')
 const upgradeDelay = 0
 const forcedWithdrawalDelay = 0
 const SEQUENCING_WINDOW_SECONDS = 3600 * 12
@@ -98,7 +109,7 @@ export const phala: Layer2 = {
       secondLine: formatDelay(SEQUENCING_WINDOW_SECONDS),
       sources: [
         {
-          contract: 'OptimismPortal',
+          contract: portal.name,
           references: [],
         },
       ],
@@ -107,7 +118,7 @@ export const phala: Layer2 = {
       ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       sources: [
         {
-          contract: 'OPSuccinctL2OutputOracle',
+          contract: l2OutputOracle.name,
           references: [],
         },
       ],
@@ -140,13 +151,26 @@ export const phala: Layer2 = {
   ),
   technology: {
     stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [],
+      name: 'Validity proofs ensure state correctness',
+      description:
+        `Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+        Through the SuccinctL2OutputOracle, the system also allows to switch to an optimistic mode, in which no proofs are required and a challenger can challenge the proposed output state root within the finalization period.`,
+      references: [
+        {
+          href: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+          text: 'Op-Succinct architecture',
+        },
+      ],
       risks: [],
     },
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [],
+      references: [
+        {
+          href: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+          text: 'Op-Succinct architecture',
+        },
+      ],
       risks: [],
     },
     dataAvailability: {
@@ -161,13 +185,45 @@ export const phala: Layer2 = {
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      references: [],
+      references: [
+        {
+          text: 'SuccinctL2OutputOracle.sol - Etherscan source code, CHALLENGER address',
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            l2OutputOracle,
+          )}#code`,
+        },
+        {
+          text: 'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER address',
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            l2OutputOracle,
+          )}#code`,
+        },
+      ],
       risks: [],
     },
     exitMechanisms: [
       {
         ...EXITS.REGULAR_YIELDING('zk', finalizationPeriod),
-        references: [],
+        references: [
+          {
+            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+          {
+            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+          {
+            text: 'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER check',
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              l2OutputOracle,
+            )}#code`,
+          },
+        ],
         risks: [],
       },
     ],
@@ -177,5 +233,13 @@ export const phala: Layer2 = {
     risks: [],
   },
   permissions: discovery.getDiscoveredPermissions(),
-  milestones: [],
+  milestones: [
+    {
+      name: 'Phala Network Launch',
+      link: 'https://x.com/PhalaNetwork/status/1877052813383184606',
+      date: '2025-01-08T00:00:00Z',
+      description: 'Phala Network is live on Ethereum mainnet.',
+      type: 'general',
+    },
+  ],
 }
