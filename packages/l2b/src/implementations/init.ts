@@ -7,7 +7,7 @@ import { readConfig } from '../config/readConfig'
 export function initDiscovery(
   project: string,
   chain: string,
-  initalAddresses: EthereumAddress[],
+  initialAddresses: EthereumAddress[],
 ) {
   const config = readConfig()
   assert(config.discoveryPath, '.l2b does not specify the discovery path')
@@ -16,7 +16,7 @@ export function initDiscovery(
   mkdirSync(projectPath, { recursive: true })
 
   const configPath = path.join(projectPath, 'config.jsonc')
-  createEmptyConfig(configPath, project, chain, initalAddresses)
+  createEmptyConfig(configPath, project, chain, initialAddresses)
 }
 
 function createEmptyConfig(
