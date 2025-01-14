@@ -66,13 +66,13 @@ export function EthereumDaProjectSummary({ project }: Props) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col lg:hidden">
             <div>
               <div className="-mx-4 border-y border-divider px-4 md:hidden">
                 <MobileProjectLinks projectLinks={project.header.links} />
               </div>
             </div>
-            <div className="lg:hidden">
+            <div>
               <InfoCallout
                 title={project.header.callout.title}
                 description={project.header.callout.description}

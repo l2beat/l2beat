@@ -22,15 +22,15 @@ interface Props {
 
 export function DesktopProjectLinks({ projectLinks }: Props) {
   return (
-    <div>
-      <NavigationMenu>
+    <NavigationMenu asChild>
+      <div>
         <NavigationMenuList>
           {projectLinks.map((link) => (
             <ProjectLinkItem key={link.name} projectLink={link} />
           ))}
         </NavigationMenuList>
-      </NavigationMenu>
-    </div>
+      </div>
+    </NavigationMenu>
   )
 }
 
