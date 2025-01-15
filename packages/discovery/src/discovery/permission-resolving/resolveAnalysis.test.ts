@@ -59,9 +59,8 @@ describe(resolveAnalysis.name, () => {
 
     expect(resolveAnalysis(input)).toEqual([
       {
-        permission: 'configure',
         path: [
-          pathElem({ address: vaultAddress }),
+          pathElem({ address: vaultAddress, gives: 'configure' }),
           pathElem({ address: msigAddress }),
         ],
       },
@@ -106,9 +105,8 @@ describe(resolveAnalysis.name, () => {
 
     expect(resolveAnalysis(input)).toEqual([
       {
-        permission: 'configure',
         path: [
-          pathElem({ address: vaultAddress }),
+          pathElem({ address: vaultAddress, gives: 'configure' }),
           pathElem({ address: msigAddress }),
         ],
       },
@@ -153,10 +151,9 @@ describe(resolveAnalysis.name, () => {
 
     expect(resolveAnalysis(input)).toEqual(
       members.map((m) => ({
-        permission: 'configure',
         path: [
-          pathElem({ address: vaultAddress }),
-          pathElem({ address: msigAddress }),
+          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: msigAddress, gives: 'member' }),
           pathElem({ address: m }),
         ],
       })),
@@ -201,10 +198,9 @@ describe(resolveAnalysis.name, () => {
 
     expect(resolveAnalysis(input)).toEqual(
       members.map((m) => ({
-        permission: 'configure',
         path: [
-          pathElem({ address: vaultAddress }),
-          pathElem({ address: msigAddress }),
+          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: msigAddress, gives: 'member' }),
           pathElem({ address: m }),
         ],
       })),
@@ -249,10 +245,9 @@ describe(resolveAnalysis.name, () => {
 
     expect(resolveAnalysis(input)).toEqual(
       members.map((m) => ({
-        permission: 'configure',
         path: [
-          pathElem({ address: vaultAddress }),
-          pathElem({ address: msigAddress }),
+          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: msigAddress, gives: 'member' }),
           pathElem({ address: m }),
         ],
       })),
@@ -280,9 +275,8 @@ describe(resolveAnalysis.name, () => {
 
     expect(resolveAnalysis(input)).toEqual([
       {
-        permission: 'configure',
         path: [
-          pathElem({ address: targetAddress, delay: 10 }),
+          pathElem({ address: targetAddress, delay: 10, gives: 'configure' }),
           pathElem({ address: contractAddress }),
         ],
       },
@@ -312,6 +306,8 @@ describe(resolveAnalysis.name, () => {
             {
               type: 'configure',
               delay: 10,
+              description: 'description',
+              condition: 'condition',
               target: targetAddress,
             },
           ],
@@ -321,9 +317,14 @@ describe(resolveAnalysis.name, () => {
 
     expect(resolveAnalysis(input)).toEqual([
       {
-        permission: 'configure',
         path: [
-          pathElem({ address: targetAddress, delay: 10 }),
+          pathElem({
+            address: targetAddress,
+            delay: 10,
+            gives: 'configure',
+            description: 'description',
+            condition: 'condition',
+          }),
           pathElem({ address: eoaAddress }),
         ],
       },
@@ -356,5 +357,6 @@ function pathElem<T>(elem: Partial<PathElement<T>>): PathElement<T> {
     delay: elem.delay ?? 0,
     description: elem.description,
     condition: elem.condition,
+    gives: elem.gives,
   }
 }

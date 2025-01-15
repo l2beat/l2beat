@@ -6,9 +6,8 @@ import {
   PathElement,
   resolvePermissions,
 } from './resolvePermissions'
-import { log } from 'console'
 
-describe.only(resolvePermissions.name, () => {
+describe(resolvePermissions.name, () => {
   it('op mainnet', () => {
     const graph: Node<string>[] = [
       node('contract1', [

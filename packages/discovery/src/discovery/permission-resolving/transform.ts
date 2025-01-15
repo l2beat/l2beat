@@ -16,13 +16,11 @@ export function transformToIssued(
   resolved: ResolvedPermission[],
 ): OutputResolvedPermission[] | undefined {
   const matching = resolved.filter((r) => r.path[0]?.address === forAddress)
-  if (matching.length === 0) {
-    return undefined
-  }
 
   return sort(
     matching.map((r) => ({
-      permission: internalPermissionToExternal(r.permission),
+      // biome-ignore lint/style/noNonNullAssertion: we know it's fine
+      permission: internalPermissionToExternal(r.path[0]!.gives!),
       // biome-ignore lint/style/noNonNullAssertion: we know it's fine
       target: r.path[r.path.length - 1]!.address,
       via: r.path.slice(1, -1).reverse(),
@@ -52,24 +50,27 @@ export function transformToReceived(
   }
 
   const ultimate = sort(
-    assignedToThisAddress.map((r) => ({
-      permission: internalPermissionToExternal(r.permission),
-      // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
-      target: r.path[0]!.address,
-      // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
-      delay: zeroToUndefined(r.path[0]!.delay),
-      description: r.path[1]?.description,
-      condition: r.path[1]?.condition,
-      via: emptyToUndefined(
-        r.path.slice(1, -1).map(
-          (x): ResolvedPermissionPath => ({
-            address: x.address,
-            delay: zeroToUndefined(x.delay),
-            condition: x.condition,
-          }),
+    assignedToThisAddress.map((r) => {
+      return {
+        // biome-ignore lint/style/noNonNullAssertion: we know path[0].gives exists
+        permission: internalPermissionToExternal(r.path[0]!.gives!),
+        // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
+        target: r.path[0]!.address,
+        // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
+        delay: zeroToUndefined(r.path[0]!.delay),
+        description: r.path[0]?.description,
+        condition: r.path[0]?.condition,
+        via: emptyToUndefined(
+          r.path.slice(1, -1).map(
+            (x): ResolvedPermissionPath => ({
+              address: x.address,
+              delay: zeroToUndefined(x.delay),
+              condition: x.condition,
+            }),
+          ),
         ),
-      ),
-    })),
+      }
+    }),
   )
 
   const direct: OutputResolvedPermission[] = sort(
