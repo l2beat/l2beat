@@ -4,7 +4,11 @@ import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
-import { ContractEntry, type TechnologyContract } from '../contract-entry'
+import {
+  ContractEntry,
+  type TechnologyContract,
+  technologyContractKey,
+} from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
 import { type Reference } from '../reference-list'
@@ -77,9 +81,9 @@ export function MultiChainContractsSection(
                 {chainName}:
               </h3>
               <div className="my-4">
-                {unchangedContracts.map((contract, i) => (
+                {unchangedContracts.map((contract) => (
                   <ContractEntry
-                    key={`${contract.name}-${contract.chain}-${i}`}
+                    key={technologyContractKey(contract)}
                     contract={contract}
                     className="my-4"
                     type="contract"
@@ -125,7 +129,7 @@ function ImplementationHasChangedContracts(props: {
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry
-          key={`${contract.name}-${contract.chain}`}
+          key={technologyContractKey(contract)}
           contract={contract}
           className="my-4 p-0"
           type="contract"
