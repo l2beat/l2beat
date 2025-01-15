@@ -22,7 +22,7 @@ export const koi: Layer2 = upcomingL2({
       socialMedia: [
         'https://t.me/mute_io',
         'https://twitter.com/koi_finance',
-        'https://discord.koi.finance'
+        'https://discord.koi.finance',
       ],
     },
   },
