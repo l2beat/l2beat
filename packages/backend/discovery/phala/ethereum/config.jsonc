@@ -5,42 +5,24 @@
   "initialAddresses": ["0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521"],
   "names": {
     "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8": "OPSuccinctL2OutputOracle",
-    "0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743": "PermissionedDisputeGame",
-    "0xB6846927447e4764acd53b0b354BEd939f9220d7": "FaultDisputeGame",
-    "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44": "PreimageOracle"
+    "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SuccinctGateway",
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
+    "0xeBf5859b7646ca9cf8A981613569bF28394F2571": "SystemConfig"
   },
   "overrides": {
-    "OPSuccinctL2OutputOracle": {
-      "ignoreMethods": [
-        "computeL2Timestamp",
-        "getL2Output",
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "historicBlockHashes"
-      ],
-      "ignoreInWatchMode": [
-        "latestBlockNumber",
-        "latestOutputIndex",
-        "nextBlockNumber",
-        "nextOutputIndex"
-      ]
+    "SystemConfig": {
+      "ignoreRelatives": ["disputeGameFactory"] // not used
     },
-    "PermissionedDisputeGame": {
-      "ignoreMethods": [
-        "getNumToResolve",
-        "resolutionCheckpoints",
-        "resolvedSubgames"
-      ]
-    },
-    "FaultDisputeGame": {
-      "ignoreMethods": [
-        "getNumToResolve",
-        "resolutionCheckpoints",
-        "resolvedSubgames"
-      ]
-    },
-    "PreimageOracle": {
-      "ignoreMethods": ["zeroHashes"]
+    "SuccinctGateway": {
+      "fields": {
+        "opSuccinctVerifier": {
+          "handler": {
+            "type": "call",
+            "method": "routes",
+            "args": ["0x11b6a09d"] // 0x11b6a09d is first 4 bytes of the proposed output proofs
+          }
+        }
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import { type ChainId, SUPPORTED_CHAINS } from '@/chains'
+import { SUPPORTED_CHAINS } from '@/chains'
 import type {
   ApiError,
   BlockWithChain,
@@ -15,7 +15,7 @@ import { SubmitButton } from './submitButton'
 export function BlockForm({
   onComplete,
 }: { onComplete: (block: BlockWithChain | undefined) => void }) {
-  const [chainId, setChain] = useState<ChainId>(SUPPORTED_CHAINS[0].id)
+  const [chainId, setChain] = useState<string>(SUPPORTED_CHAINS[0].id)
   const [blockNumber, setBlockNumber] = useState('')
 
   const [isLoading, setIsLoading] = useState(false)
@@ -32,13 +32,13 @@ export function BlockForm({
     const blockParam = urlParams.get('block')
 
     if (chainParam && blockParam) {
-      setChain(chainParam as ChainId)
+      setChain(chainParam)
       setBlockNumber(blockParam)
-      getBlock(chainParam as ChainId, blockParam)
+      getBlock(chainParam, blockParam)
     }
   }, [])
 
-  const handleSetChain = (chain: ChainId) => {
+  const handleSetChain = (chain: string) => {
     setChain(chain)
     setBlockNumber('')
     onComplete(undefined)
@@ -59,7 +59,7 @@ export function BlockForm({
     replace(`${pathname}?${params.toString()}`)
   }
 
-  const getBlock = async (chainId: ChainId, blockNumber: string) => {
+  const getBlock = async (chainId: string, blockNumber: string) => {
     setIsLoading(true)
     try {
       const res = await fetch(`${window.location.origin}/api/uops`, {

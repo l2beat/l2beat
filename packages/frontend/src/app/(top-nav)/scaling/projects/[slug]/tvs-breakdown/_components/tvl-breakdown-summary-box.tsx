@@ -25,7 +25,7 @@ type Props = {
 
 export function TvlBreakdownSummaryBox(props: Props) {
   return (
-    <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 dark:bg-purple-700 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:p-6 md:dark:border-pink-900">
+    <div className="flex flex-col justify-between gap-[7px] py-5 md:flex-row md:gap-2 md:rounded-lg md:bg-surface-primary md:p-6">
       <StatsItem
         title="Total value secured"
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
@@ -110,7 +110,7 @@ function StatsItem(props: StatsItemProps) {
               className={cn(
                 'md:size-3.5',
                 props.big
-                  ? 'fill-black dark:fill-white md:fill-secondary'
+                  ? 'fill-black dark:fill-white md:!fill-secondary'
                   : 'fill-secondary',
               )}
             />
