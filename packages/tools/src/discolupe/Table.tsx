@@ -3,7 +3,12 @@ import { useState } from 'react'
 import { NavLink } from 'react-router'
 import { ColumnSelector } from './ColumnSelector'
 import { FilterButton } from './FilterButton'
-import { AVAILABLE_COLUMNS, ColumnId, LupeColumn } from './columns'
+import {
+  AVAILABLE_COLUMNS,
+  ColumnId,
+  DEFAULT_COLUMN_IDS,
+  LupeColumn,
+} from './columns'
 import { DiscoLupeProject } from './data'
 import { SortingArrowIcon } from './icons/SortingArrowIcon'
 
@@ -38,8 +43,9 @@ export interface TableProps {
 }
 
 export function Table({ projects, sort }: TableProps) {
-  const [selectedColumns, setSelectedColumns] =
-    useState<LupeColumn[]>(AVAILABLE_COLUMNS)
+  const [selectedColumns, setSelectedColumns] = useState<LupeColumn[]>(
+    AVAILABLE_COLUMNS.filter((c) => DEFAULT_COLUMN_IDS.includes(c.id)),
+  )
   const defaultFilterState = Object.fromEntries(
     selectedColumns.map((c) => [c.id, undefined]),
   ) as ColumnFilter

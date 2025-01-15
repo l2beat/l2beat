@@ -32,6 +32,35 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: DivContainer,
   },
   {
+    header: 'Is Live',
+    id: 'zz',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      !project.isUpcoming && !project.isArchived ? '✅' : '❌',
+    displayFn: DivContainer,
+  },
+  {
+    header: 'Is Under Review',
+    id: 'zk',
+    align: 'right',
+    fn: (project: DiscoLupeProject) => (project.isUnderReview ? '✅' : '❌'),
+    displayFn: DivContainer,
+  },
+  {
+    header: 'Is Upcoming',
+    id: 'mk',
+    align: 'right',
+    fn: (project: DiscoLupeProject) => (project.isUpcoming ? '✅' : '❌'),
+    displayFn: DivContainer,
+  },
+  {
+    header: 'Is Archived',
+    id: 'lz',
+    align: 'right',
+    fn: (project: DiscoLupeProject) => (project.isArchived ? '✅' : '❌'),
+    displayFn: DivContainer,
+  },
+  {
     header: 'Discovery driven',
     id: 'm5',
     align: 'right',
@@ -43,7 +72,7 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: DivContainer,
   },
   {
-    header: 'Permissions',
+    header: 'Permissions are discovery driven',
     id: 'td',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
@@ -51,7 +80,7 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: DivContainer,
   },
   {
-    header: 'Smart contracts',
+    header: 'Smart contracts are discovery driven',
     id: 'i9',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
@@ -67,6 +96,8 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: DivContainer,
   },
 ] as const
+
+export const DEFAULT_COLUMN_IDS: ColumnId[] = ['qx', 'ig', 'zz', 'm5']
 
 export const AVAILABLE_COLUMNS =
   AVAILABLE_COLUMNS_RAW as unknown as LupeColumn[]

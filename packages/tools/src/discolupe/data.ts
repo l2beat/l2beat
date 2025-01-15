@@ -9,6 +9,9 @@ export const DiscoLupeProject = z.object({
   tvl: z.number(),
   arePermissionsDiscoveryDriven: z.boolean(),
   areContractsDiscoveryDriven: z.boolean(),
+  isArchived: z.boolean(),
+  isUpcoming: z.boolean(),
+  isUnderReview: z.boolean(),
   milestones: z.array(z.object({})).optional(),
 })
 export type DiscoLupeProject = z.infer<typeof DiscoLupeProject>

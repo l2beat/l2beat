@@ -3,6 +3,7 @@ import {
   type Layer3,
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,
+  isUnderReview,
   layer2s,
   layer3s,
 } from '@l2beat/config'
@@ -40,6 +41,9 @@ function toResponseProject(project: Layer2 | Layer3, tvl: number) {
     display: project.display,
     arePermissionsDiscoveryDriven: arePermissionsDiscoveryDriven(project),
     areContractsDiscoveryDriven: areContractsDiscoveryDriven(project),
+    isArchived: project.isArchived === true,
+    isUpcoming: project.isUpcoming === true,
+    isUnderReview: project.isUnderReview === true,
     milestones: project.milestones,
   }
 }
