@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Table } from './Table'
-import { DiscoLupeProject, fetchData } from './data'
+import { fetchData } from './src/fetchData'
+import { DiscoLupeProject } from './src/model'
 
 export interface Props {
   projects: DiscoLupeProject[]

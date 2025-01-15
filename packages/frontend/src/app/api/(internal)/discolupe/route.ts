@@ -13,9 +13,9 @@ export async function GET() {
   const response = await getResponse()
 
   const headers = {
-    'Access-Control-Allow-Origin': '*', // Allow all origins
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', // Allowed methods
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization', // Allowed headers
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   }
 
   return NextResponse.json(response, { headers })

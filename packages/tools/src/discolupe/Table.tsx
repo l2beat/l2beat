@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { ColumnSelector } from './ColumnSelector'
 import { FilterButton } from './FilterButton'
+import { SortingArrowIcon } from './icons/SortingArrowIcon'
 import {
   AVAILABLE_COLUMNS,
   ColumnId,
@@ -8,10 +9,13 @@ import {
   LupeColumn,
   deserializeColumns,
   serializeColumns,
-} from './columns'
-import { DiscoLupeProject } from './data'
-import { ColumnFilter, deserializeFilter, serializeFilter } from './filtering'
-import { SortingArrowIcon } from './icons/SortingArrowIcon'
+} from './src/columns'
+import {
+  ColumnFilter,
+  deserializeFilter,
+  serializeFilter,
+} from './src/filtering'
+import { DiscoLupeProject } from './src/model'
 import { useSearchParamsState } from './useSearchParamsState'
 
 interface Matrix {

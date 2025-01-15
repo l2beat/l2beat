@@ -1,4 +1,4 @@
-import { DiscoLupeProject } from './data'
+import { DiscoLupeProject } from './src/model'
 
 export function IndicatorContainer(_: DiscoLupeProject, str: string) {
   const LUT: Record<string, string> = {

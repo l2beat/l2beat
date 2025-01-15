@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
-import { DivContainer } from './DivContainer'
-import { IndicatorContainer } from './IndicatorContainer'
-import { ProjectName } from './ProjectName'
-import { DiscoLupeProject } from './data'
+import { DivContainer } from '../DivContainer'
+import { IndicatorContainer } from '../IndicatorContainer'
+import { ProjectName } from '../ProjectName'
+import { DiscoLupeProject } from './model'
 import { formatCurrencyExactValue } from './utils'
 
 export type ColumnId = (typeof AVAILABLE_COLUMNS_RAW)[number]['id']

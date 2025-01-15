@@ -1,4 +1,4 @@
-import { LupeColumn } from './columns'
+import { LupeColumn } from './src/columns'
 
 export interface ColumnSelectorProps {
   available: LupeColumn[]
