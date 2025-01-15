@@ -1,4 +1,4 @@
-import { type ChainId, SUPPORTED_CHAINS } from '@/chains'
+import { SUPPORTED_CHAINS } from '@/chains'
 import type { ApiError, Stats, StatsApiRequest, StatsWithChain } from '@/types'
 import { useState } from 'react'
 import { BlockCountInput, type InputMode } from './blockCountInput'
@@ -14,9 +14,9 @@ export function StatsForm({
   lastFetched?: number
   onUpdate: (block: StatsWithChain | undefined) => void
 }) {
-  const [chainId, setChain] = useState<ChainId>(SUPPORTED_CHAINS[0].id)
+  const [chainId, setChain] = useState<string>(SUPPORTED_CHAINS[0].id)
   const [blockCount, setBlockCount] = useState(
-    SUPPORTED_CHAINS[0].suggestedBlocksCount,
+    SUPPORTED_CHAINS[0].customSuggestedBlocksCount ?? 100,
   )
 
   const [loadedCount, setLoadedCount] = useState(0)
@@ -24,10 +24,10 @@ export function StatsForm({
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSetChain = (chain: ChainId) => {
+  const handleSetChain = (chain: string) => {
     setChain(chain)
     const selectedChain = SUPPORTED_CHAINS.find((c) => c.id === chain)
-    setBlockCount(selectedChain?.suggestedBlocksCount || 100)
+    setBlockCount(selectedChain?.customSuggestedBlocksCount || 100)
     onUpdate(undefined)
   }
 
@@ -67,7 +67,7 @@ export function StatsForm({
     getStats(chainId, blockCount)
   }
 
-  const getStats = async (chainId: ChainId, overideBlockCount: number) => {
+  const getStats = async (chainId: string, overideBlockCount: number) => {
     setIsLoading(true)
 
     const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
@@ -76,7 +76,7 @@ export function StatsForm({
       throw new Error(`Unsupported chain: ${chain}`)
     }
 
-    let currentBatchSize = chain.batchSize || 10
+    let currentBatchSize = chain.customBatchSize || 10
     let blocksLeftToFetch = overideBlockCount ?? blockCount
     let currentLastFetched = lastFetched
 
@@ -109,7 +109,7 @@ export function StatsForm({
   }
 
   const getBatch = async (
-    chainId: ChainId,
+    chainId: string,
     count: number,
     lastFetched?: number,
   ): Promise<Stats> => {
