@@ -12,10 +12,12 @@
     },
     "owner": {
       "target": {
-        "permissions": [{
-          "type": "configure",
-          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode."
-        }]
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "can toggle between the optimistic mode and not optimistic (ZK) mode."
+          }
+        ]
       }
     }
   },
