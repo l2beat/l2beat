@@ -1,8 +1,9 @@
+import { type ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { SearchBarButton } from './search-bar/search-bar-button'
 
 interface Props {
-  children: string
+  children: ReactNode
   description?: string
   className?: string
 }

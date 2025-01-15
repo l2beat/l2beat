@@ -149,8 +149,5 @@ function getIsActive({
   pathname,
   group,
 }: { pathname: string; group: NavGroup }) {
-  if (group.type === 'single') {
-    return group.href === pathname
-  }
   return pathname.startsWith(`/${group.match}`)
 }

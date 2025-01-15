@@ -26,7 +26,7 @@ export function ScalingProjectStats({ project, className }: Props) {
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-surface-primary md:px-6 md:py-5',
+        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5',
         className,
       )}
     >
@@ -113,9 +113,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-gray-500 dark:text-gray-600">
-          {props.title}
-        </span>
+        <span className="text-xs text-secondary">{props.title}</span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">

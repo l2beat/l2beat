@@ -29,7 +29,7 @@ export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
   const partitionedByThree = chunkArray(stats, GROUPS)
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-surface-primary md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5">
       {partitionedByThree.map((statGroup, i) => {
         const isLastGroup = i === partitionedByThree.length - 1
 
@@ -76,7 +76,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row items-center gap-1.5">
-        <span className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
+        <span className="whitespace-pre text-xs text-secondary">
           {props.title}
         </span>
         {props.tooltip && (

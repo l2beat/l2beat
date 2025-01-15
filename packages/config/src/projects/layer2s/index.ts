@@ -62,6 +62,7 @@ import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { gwyneth } from './gwyneth'
 import { happychain } from './happychain'
+import { haust } from './haust'
 import { hemi } from './hemi'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
@@ -257,6 +258,7 @@ export const layer2s: Layer2[] = [
   gwyneth,
   hemi,
   happychain,
+  haust,
   hermez,
   hybrid,
   hychain,

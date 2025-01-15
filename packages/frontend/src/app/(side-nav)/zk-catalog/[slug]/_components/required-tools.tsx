@@ -1,6 +1,6 @@
 import { CustomLink } from '~/components/link/custom-link'
 import { EM_DASH } from '~/consts/characters'
-import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
+import { type ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
 
 interface Props {
   items: ZkCatalogProjectDetails['requiredTools']
@@ -10,7 +10,7 @@ export function RequiredTools(props: Props) {
   return (
     <table className="w-full">
       <thead>
-        <tr className="border-b border-divider align-bottom text-xs font-medium uppercase text-zinc-500 dark:text-n-zinc-300">
+        <tr className="border-b border-divider align-bottom text-xs font-medium uppercase text-secondary">
           <th className="px-4 py-2 text-start">Tool name</th>
           <th className="py-2 pr-4 text-start">Version</th>
           <th className="py-2 pr-4 text-start">Tool docs</th>

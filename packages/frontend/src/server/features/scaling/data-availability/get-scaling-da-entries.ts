@@ -34,7 +34,7 @@ export async function getScalingDaEntries() {
       getScalingDaEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id] ?? 0,
+        tvl[project.id],
       ),
     )
     .filter((entry) => entry !== undefined)
@@ -53,13 +53,13 @@ export interface ScalingDaEntry extends CommonScalingEntry {
 function getScalingDaEntry(
   project: ProjectWith<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
   changes: ProjectChanges,
-  tvl: number,
+  tvl: number | undefined,
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
     provider: project.scalingInfo.stack,
-    tvlOrder: tvl,
+    tvlOrder: tvl ?? -1,
   }
 }

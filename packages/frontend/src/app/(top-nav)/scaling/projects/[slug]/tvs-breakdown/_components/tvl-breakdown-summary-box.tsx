@@ -84,13 +84,13 @@ function StatsItem(props: StatsItemProps) {
       )}
     >
       <div className="flex items-center gap-1">
-        <span className="hidden text-xs font-medium text-gray-500 dark:text-gray-600 md:inline">
+        <span className="hidden text-xs font-medium text-secondary md:inline">
           {props.title}
         </span>
         <span
           className={cn(
             'font-medium max-xs:hidden md:hidden',
-            props.big ? 'text-lg text-primary' : 'text-xs text-gray-600',
+            props.big ? 'text-lg text-primary' : 'text-xs text-secondary',
           )}
         >
           {props.mobileTitle}
@@ -98,7 +98,7 @@ function StatsItem(props: StatsItemProps) {
         <span
           className={cn(
             'font-medium xs:hidden',
-            props.big ? 'text-lg text-primary' : 'text-xs text-gray-600',
+            props.big ? 'text-lg text-primary' : 'text-xs text-secondary',
           )}
         >
           {props.smallMobileTitle}
@@ -110,8 +110,8 @@ function StatsItem(props: StatsItemProps) {
               className={cn(
                 'md:size-3.5',
                 props.big
-                  ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
-                  : 'fill-gray-500 dark:fill-gray-600',
+                  ? 'fill-black dark:fill-white md:fill-secondary'
+                  : 'fill-secondary',
               )}
             />
           </TooltipTrigger>

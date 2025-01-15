@@ -1,6 +1,23 @@
-export function NoBridgeGrissiniDetailsPlaceholder() {
+import { cn } from '~/utils/cn'
+import { sentimentToTextColor } from '~/utils/sentiment'
+import { SingleGrissini } from './single-grissini'
+
+const TITLE = 'No bridge'
+const DESCRIPTION =
+  'Without a DA Bridge, Ethereum has no proof of data availability for this project.'
+
+export function NoBridgeGrissiniDetailsPlaceholder({
+  className,
+}: {
+  className?: string
+}) {
   return (
-    <div className="flex h-[278px] w-[264px] flex-col items-center justify-center gap-3 rounded-lg bg-surface-primary p-4 text-center">
+    <div
+      className={cn(
+        'flex h-[278px] w-[264px] flex-col items-center justify-center gap-3 rounded-lg bg-header-secondary p-4 text-center',
+        className,
+      )}
+    >
       <svg
         width="40"
         height="40"
@@ -18,10 +35,38 @@ export function NoBridgeGrissiniDetailsPlaceholder() {
         />
       </svg>
 
-      <div className="text-lg font-bold">No bridge</div>
-      <div className="text-xs font-medium">
-        Without a DA Bridge, Ethereum has no proof of data availability for this
-        project.
+      <div className="text-lg font-bold">{TITLE}</div>
+      <div className="text-xs font-medium">{DESCRIPTION}</div>
+    </div>
+  )
+}
+
+export function InlinedNoBridgeGrissiniDetailsPlaceholder({
+  className,
+}: {
+  className?: string
+}) {
+  return (
+    <div
+      className={cn(
+        'flex flex-row items-stretch rounded bg-header-secondary md:h-[5.125rem]',
+        className,
+      )}
+    >
+      <SingleGrissini
+        sentiment="neutral"
+        className="h-full shrink-0 max-md:w-1"
+      />
+      <div className="flex flex-1 flex-col justify-center gap-1 p-4 md:items-center">
+        <div className="text-sm font-bold md:text-lg">{TITLE}</div>
+        <div
+          className={cn(
+            'text-[13px] font-medium leading-none',
+            sentimentToTextColor('neutral'),
+          )}
+        >
+          {DESCRIPTION}
+        </div>
       </div>
     </div>
   )
