@@ -32,7 +32,9 @@
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
     "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
-    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
+    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerOwningMultisig",
+    "0x942eaF324971440384e4cA0ffA39fC3bb369D67d": "EigenLayerBeigenOwningMultisig",
+    "0x5050389572f2d220ad927CcbeA0D406831012390": "EigenLayerPauserMultisig",
     "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
     "0xbb00DDa2832850a43840A3A86515E3Fe226865F2": "EigenLayerTokenMultisig",
     "0x343907185b71aDF0eBa9567538314396aa985442": "EigenLayerBeaconOracle",
@@ -47,7 +49,9 @@
     "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": "StrategiesBeacon",
     "0x7750d328b314EfFa365A0402CcfD489B80B0adda": "RewardsCoordinator",
     "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": "TokenHopper",
-    "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator"
+    "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator",
+    "0x738130BC8eADe1Bc65A9c056DEa636835896bc53": "TimelockControllerBeigen",
+    "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning"
   },
   "overrides": {
     "RewardAllStakersActionGenerator": {
