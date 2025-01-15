@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { type ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
 
 interface Item {
   content: ReactNode
@@ -10,11 +11,17 @@ interface Item {
 
 interface Props {
   items: Item[]
+  className?: string
 }
 
-export function Breadcrumbs({ items }: Props) {
+export function Breadcrumbs({ items, className }: Props) {
   return (
-    <nav className="flex select-none items-center gap-2 text-base font-medium text-secondary">
+    <nav
+      className={cn(
+        'flex select-none items-center gap-2 text-base font-medium text-secondary',
+        className,
+      )}
+    >
       {items.map((item, i) => (
         <React.Fragment key={i}>
           <BreadcrumbItem href={item.href} className="last:text-primary">
