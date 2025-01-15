@@ -138,6 +138,7 @@ export const ink: Layer2 = {
   display: {
     name: 'Ink',
     slug: 'ink',
+    stateValidationImage: 'opfp',
     description:
       'Ink is an Optimistic Rollup built with the OP Stack by Kraken exchange.',
     purposes: ['Universal'],
