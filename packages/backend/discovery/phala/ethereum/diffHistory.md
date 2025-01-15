@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe785fe7dce718d1133a8ba93b146b90739d3b28e
+
+# Diff at Wed, 15 Jan 2025 12:19:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21586240
+- current block number: 21629833
+
+## Description
+
+VKeys changed.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: None
+      values.aggregationVkey:
+-        "0x00d4e72bc998d0528b0722a53bedd9c6f0143c9157af194ad4bb2502e37a496f"
++        "0x001758559af75612b9d16de030ed47309d7d28fadd3839a3addaa78d2d4e2754"
+      values.rangeVkeyCommitment:
+-        "0x33e3678015df481724af3aac49d000923caeec277027610b1490f857769f9459"
++        "0x39979c7850d2d3f00c30b29a503c80e245af53ce02a1202518ae0d3c1f8691d0"
+    }
+```
+
 Generated with discovered.json: 0xf403cc7f6e4417f0cf53bf159056fb905ed9ab0e
 
 # Diff at Thu, 09 Jan 2025 10:11:31 GMT:
