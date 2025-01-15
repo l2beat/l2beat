@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21543865,
-  "configHash": "0x784276e8ab8d26b8692e7d487f4559c6cf326770c350bc09492a651b5f592145",
+  "blockNumber": 21630233,
+  "configHash": "0xd14052e2e2773c7f5bafa131c589aa4341337c0edea265319149fe6bc5d09e41",
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -184,27 +184,27 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedBlock": {
-          "blockId_": 734191,
-          "blockHash_": "0x3860e32e1e675bb9e26f35a706e026aca17136f3eae9d812a047086436625872",
-          "stateRoot_": "0x2d68374fef1c7ab953824f0b91d21647e9f9edea99eda4ba37d46c2dd370e1da",
-          "verifiedAt_": 1735886303
+          "blockId_": 766991,
+          "blockHash_": "0xaf2f8317dbc802bc2db56efe45e100825cb6013561c8e9445f184d175f9a328d",
+          "stateRoot_": "0xa534ed646d6faa02c75b35e0fa4ce627b2393fc2b6ccc503df0e5ee1894bb59c",
+          "verifiedAt_": 1736932919
         },
         "getLastVerifiedBlock": {
-          "blockId_": 734198,
-          "blockHash_": "0x1439c4391743e4bda2b816f48539616c342a847479cf5605d4c2da736e6372ff",
+          "blockId_": 766992,
+          "blockHash_": "0x6ed37a536156918f83551eb75b2807cf4ace9030b8e9cf5c328f4065894e0c09",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1735885499
+          "verifiedAt_": 1736933027
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 734191,
-            "lastSynecdAt": 1735905071
+            "lastSyncedBlockId": 766991,
+            "lastSynecdAt": 1736947979
           },
           {
-            "numBlocks": 734829,
-            "lastVerifiedBlockId": 734198,
+            "numBlocks": 767507,
+            "lastVerifiedBlockId": 766992,
             "provingPaused": false,
             "__reservedB1": 45,
             "__reservedB2": 18301,
@@ -229,18 +229,18 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "sp1_remote_verifier": "0x2D33d748644dAb8B3FB0E07642d9dE96b816d067",
+        "sp1_remote_verifier": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371",
         "state": {
           "__reserve1": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 734191,
-            "lastSynecdAt": 1735905071
+            "lastSyncedBlockId": 766991,
+            "lastSynecdAt": 1736947979
           },
           "slotB": {
-            "numBlocks": 734829,
-            "lastVerifiedBlockId": 734198,
+            "numBlocks": 767507,
+            "lastVerifiedBlockId": 766992,
             "provingPaused": false,
             "__reservedB1": 45,
             "__reservedB2": 18301,
@@ -252,7 +252,7 @@
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
         "taiko_token": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
         "tier_router": "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0",
-        "verifier_RISCZERO_GROTH16_VERIFIER": "0xcF706D99C265fC2349AE43c5f6BFD7931FE5308D",
+        "verifier_RISCZERO_GROTH16_VERIFIER": "0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9",
         "verifier_TIER_GUARDIAN": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
         "verifier_TIER_GUARDIAN_MINORITY": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
         "verifier_TIER_OPTIMISTIC": "0x0000000000000000000000000000000000000000",
@@ -316,7 +316,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1735906199,
+        "clock": 1736948351,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -341,20 +341,6 @@
         "totalSupply": "1000000000000000000000000000"
       },
       "derivedName": "TaikoToken"
-    },
-    {
-      "name": "SP1RemoteVerifier",
-      "address": "0x2D33d748644dAb8B3FB0E07642d9dE96b816d067",
-      "sourceHashes": [
-        "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
-      ],
-      "sinceTimestamp": 1731046367,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
-        "VERSION": "v3.0.0"
-      },
-      "derivedName": "SP1Verifier"
     },
     {
       "name": "MainnetTierRouter",
@@ -718,7 +704,21 @@
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "sp1RemoteVerifier": "0x2D33d748644dAb8B3FB0E07642d9dE96b816d067"
+        "sp1RemoteVerifier": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
+      },
+      "derivedName": "SP1Verifier"
+    },
+    {
+      "name": "SP1RemoteVerifier",
+      "address": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "sinceTimestamp": 1736742119,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
       },
       "derivedName": "SP1Verifier"
     },
@@ -1024,7 +1024,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 66,
+        "nonce": 67,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1152,7 +1152,7 @@
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
         "lastUnpausedAt": 0,
-        "nextInstanceId": 167,
+        "nextInstanceId": 169,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1183,7 +1183,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 22,
+        "nonce": 30,
         "VERSION": "1.4.1"
       }
     },
@@ -1205,22 +1205,6 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
-      }
-    },
-    {
-      "name": "RiscZeroGroth16Verifier",
-      "address": "0xcF706D99C265fC2349AE43c5f6BFD7931FE5308D",
-      "sourceHashes": [
-        "0xbfaa6169e1a03e48364505afc6b77ebb621eee5b1b35b2e59d89857d195fc927"
-      ],
-      "sinceTimestamp": 1730879519,
-      "values": {
-        "$immutable": true,
-        "BN254_CONTROL_ID": "0x05a022e1db38457fb510bc347b30eb8f8cf3eda95587653d0eac19e1f10d164e",
-        "CONTROL_ROOT_0": "0x3f05edb31fb4615345ac63d411cf6d8b",
-        "CONTROL_ROOT_1": "0x2e853b01450e34db0fa0de1b4917b8eb",
-        "SELECTOR": "0x50bd1769",
-        "VERSION": "1.1.2"
       }
     },
     {
@@ -1312,7 +1296,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 35788,
+        "nextMessageId": 35897,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1461,6 +1445,22 @@
         "proxiableUUID": "EXPECT_REVERT"
       },
       "derivedName": "MainnetSharedAddressManager"
+    },
+    {
+      "name": "RiscZeroGroth16Verifier",
+      "address": "0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9",
+      "sourceHashes": [
+        "0xa7c7f84404cf32503f02fd83a5400cb3a4131cd1c18109577255d297ff768351"
+      ],
+      "sinceTimestamp": 1736741831,
+      "values": {
+        "$immutable": true,
+        "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
+        "CONTROL_ROOT_0": "0x4d5a42c577a3ab1231be642624d9da8c",
+        "CONTROL_ROOT_1": "0x69042c9355281d562b4766691ceb35f7",
+        "SELECTOR": "0xc101b42b",
+        "VERSION": "1.2.0"
+      }
     }
   ],
   "eoas": [
@@ -1613,15 +1613,6 @@
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x2D33d748644dAb8B3FB0E07642d9dE96b816d067": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0": [
       "constructor(address _daoFallbackProposer)",
@@ -1891,6 +1882,15 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyAttestation(bytes data) view returns (bool success)",
       "function verifyParsedQuote(tuple(tuple(bytes2 version, bytes2 attestationKeyType, bytes4 teeType, bytes2 qeSvn, bytes2 pceSvn, bytes16 qeVendorId, bytes20 userData) header, tuple(bytes16 cpuSvn, bytes4 miscSelect, bytes28 reserved1, bytes16 attributes, bytes32 mrEnclave, bytes32 reserved2, bytes32 mrSigner, bytes reserved3, uint16 isvProdId, uint16 isvSvn, bytes reserved4, bytes reportData) localEnclaveReport, tuple(bytes ecdsa256BitSignature, bytes ecdsaAttestationKey, tuple(bytes16 cpuSvn, bytes4 miscSelect, bytes28 reserved1, bytes16 attributes, bytes32 mrEnclave, bytes32 reserved2, bytes32 mrSigner, bytes reserved3, uint16 isvProdId, uint16 isvSvn, bytes reserved4, bytes reportData) pckSignedQeReport, bytes qeReportSignature, tuple(uint16 parsedDataSize, bytes data) qeAuthData, tuple(uint16 certType, uint32 certDataSize, bytes[3] decodedCertDataArray) certification) v3AuthData) v3quote) view returns (bool, bytes)"
+    ],
+    "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": [
       "constructor(address _logic, bytes _data) payable",
@@ -2163,19 +2163,6 @@
       "function withdrawBond(uint256 _amount)",
       "function withdrawEtherToAdmin(uint256 _amount)",
       "function withdrawToAdmin(uint256 _amount)"
-    ],
-    "0xcF706D99C265fC2349AE43c5f6BFD7931FE5308D": [
-      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
-      "error SelectorMismatch(bytes4 received, bytes4 expected)",
-      "error VerificationFailed()",
-      "function BN254_CONTROL_ID() view returns (bytes32)",
-      "function CONTROL_ROOT_0() view returns (bytes16)",
-      "function CONTROL_ROOT_1() view returns (bytes16)",
-      "function SELECTOR() view returns (bytes4)",
-      "function VERSION() view returns (string)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
-      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ],
     "0xcfe803378D79d1180EbF030455040EA6513869dF": [
       "error FUNC_NOT_IMPLEMENTED()",
@@ -2545,6 +2532,19 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyBatchProof(tuple(bytes32 metaHash, bytes32 blobHash, address prover, uint64 blockId, bool isContesting, bool blobUsed, address msgSender, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) tran)[] _ctxs, tuple(uint16 tier, bytes data) _proof)",
       "function verifyProof(tuple(bytes32 metaHash, bytes32 blobHash, address prover, uint64 blockId, bool isContesting, bool blobUsed, address msgSender) _ctx, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot, bytes32 graffiti) _tran, tuple(uint16 tier, bytes data) _proof) view"
+    ],
+    "0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9": [
+      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
+      "error SelectorMismatch(bytes4 received, bytes4 expected)",
+      "error VerificationFailed()",
+      "function BN254_CONTROL_ID() view returns (bytes32)",
+      "function CONTROL_ROOT_0() view returns (bytes16)",
+      "function CONTROL_ROOT_1() view returns (bytes16)",
+      "function SELECTOR() view returns (bytes4)",
+      "function VERSION() view returns (string)",
+      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
+      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ]
   },
   "usedTemplates": {

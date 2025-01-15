@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xcd56bb0152b78215fa65e3b2cc8d5adbe0bd73bc
+
+# Diff at Wed, 15 Jan 2025 09:07:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21078634
+- current block number: 21628882
+
+## Description
+
+DA commitment change. As per the OP stack alt-DA spec, the current commitment is for EigenDA:
+```
+          EigenDA (da service id byte)
+          l
+0x 01 01 00 00f9021bf852f842a00...
+    l  l
+    l  L - - commit type (alt-DA)
+    version 1
+```
+
+badge changed.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x2220bf1da60c03ba861effedadc5e568c69c2745
 
 # Diff at Wed, 08 Jan 2025 08:57:49 GMT:

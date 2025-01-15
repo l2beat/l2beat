@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 20711342,
+  "blockNumber": 21629810,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
   "contracts": [
     {
@@ -121,7 +121,7 @@
         "isFrozen": false,
         "isNotFinalized": true,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 30000000000000,
+        "maxTotalBalance": 50000000000000,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "StarkWareProxy_upgradeDelay": 0,
@@ -201,7 +201,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1996,
+        "l1ToL2MessageNonce": 2850,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -209,9 +209,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2085237480954812608329477412487226833174033798297863084092299093947886385834",
-        "stateBlockNumber": 95439,
-        "stateRoot": "1323314802301699511525350349395083324671556270843646639334450604087861306567",
+        "stateBlockHash": "1234786585059138136266739805485319663050641345874558543423182687265855885799",
+        "stateBlockNumber": 221761,
+        "stateRoot": "294089572735320914036448831512111664052901650846194482743241860028342749635",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },

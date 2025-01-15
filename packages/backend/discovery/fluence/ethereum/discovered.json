@@ -1,7 +1,7 @@
 {
   "name": "fluence",
   "chain": "ethereum",
-  "blockNumber": 21465176,
+  "blockNumber": 21628392,
   "configHash": "0x9d816d3fa4d275a73ace500776da83a8646aca1f31a7ff61dfa8a3009a826ae6",
   "contracts": [
     {
@@ -344,12 +344,12 @@
           "0x89De2771f84b8fd0d09560f75908D6F6a1273A6e"
         ],
         "allowedOutboxList": ["0x50Df2E43aDefee3b6510b637697d30e7dc155e13"],
-        "delayedMessageCount": 219,
+        "delayedMessageCount": 243,
         "nativeToken": "0x236501327e701692a281934230AF0b6BE8Df3353",
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerInbox": "0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0",
-        "sequencerMessageCount": 1161,
-        "sequencerReportedSubMessageCount": 3751292
+        "sequencerMessageCount": 1462,
+        "sequencerReportedSubMessageCount": 4799250
       }
     },
     {
@@ -591,11 +591,13 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
           "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
-          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -604,8 +606,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 17,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -665,7 +667,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1161,
+        "batchCount": 1462,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xAec3997252d4F9Cd92Cc49be2e8068e23065665a"],
         "bridge": "0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
@@ -696,7 +698,7 @@
         "rollup": "0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 219,
+        "totalDelayedMessagesRead": 243,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -786,12 +788,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 269,
+        "firstUnresolvedNode": 314,
         "inbox": "0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95",
         "isERC20Enabled": false,
         "lastStakeBlock": 20425444,
-        "latestConfirmed": 268,
-        "latestNodeCreated": 281,
+        "latestConfirmed": 313,
+        "latestNodeCreated": 325,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x50Df2E43aDefee3b6510b637697d30e7dc155e13",
@@ -932,6 +934,7 @@
     { "address": "0x08dE8bf67c62e5cf73729372750f79E82388df6a" },
     { "address": "0x27Cc0f325627dBaDC1731EF4D031126573e0E870" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
+    { "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9" },
     {
       "address": "0x505aFCB1502aa5589e4b5F948275100551E79b7b",
       "receivedPermissions": [
@@ -945,6 +948,7 @@
     { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
+    { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
     {
       "address": "0xAec3997252d4F9Cd92Cc49be2e8068e23065665a",
       "receivedPermissions": [
@@ -956,7 +960,7 @@
       ]
     },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
-    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     { "address": "0xCEC8A395617593B30BEC7c199a3Ae3Fe40186dB8" },
     { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" }
   ],

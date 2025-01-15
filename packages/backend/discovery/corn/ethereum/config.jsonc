@@ -21,7 +21,8 @@
       "ignoreMethods": ["proxiableUUID"]
     },
     "Bitcorn": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }

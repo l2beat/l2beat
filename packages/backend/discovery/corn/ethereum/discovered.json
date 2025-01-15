@@ -1,8 +1,8 @@
 {
   "name": "corn",
   "chain": "ethereum",
-  "blockNumber": 21586482,
-  "configHash": "0x7d3cfc21187cd357dfe1d8bb28f9589272420d510f96197bebb02d3d74bc408e",
+  "blockNumber": 21629156,
+  "configHash": "0x964817638eb30dae4b9af94884284d9496e25e2066b135ad9cc01bca612ae9b8",
   "contracts": [
     {
       "name": "wBTC Escrow",
@@ -71,6 +71,7 @@
         "0x9e4e67ffc0ca2b20636f2131b971bf25d3c1067ef6c47d36a11a8f72fbe0b0ed"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1731609551,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -122,7 +123,7 @@
         "sharedDecimals": 8,
         "symbol": "BTCN",
         "token": "0x386E7A3a0c0919c9d53c3b04FF67E73Ff9e45Fb6",
-        "totalSupply": "21000000453190330000000000"
+        "totalSupply": "21000001172092100000000000"
       },
       "derivedName": "BitcornOFT"
     },
@@ -252,7 +253,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 204,
+        "nonce": 206,
         "VERSION": "1.3.0"
       }
     },

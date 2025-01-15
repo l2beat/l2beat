@@ -1,7 +1,7 @@
 {
   "name": "edgeless",
   "chain": "ethereum",
-  "blockNumber": 21465158,
+  "blockNumber": 21628441,
   "configHash": "0x1da4b101ce685ace2c8a4c9963b81bd7433e14001a1eba9c628c5d665a9a0904",
   "contracts": [
     {
@@ -98,6 +98,7 @@
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -439,8 +440,8 @@
         "nativeToken": "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7",
         "rollup": "0x890025891508a463A636f81D2f532a97210240de",
         "sequencerInbox": "0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086",
-        "sequencerMessageCount": 231,
-        "sequencerReportedSubMessageCount": 1425
+        "sequencerMessageCount": 232,
+        "sequencerReportedSubMessageCount": 1427
       }
     },
     {
@@ -569,7 +570,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 19487060,
         "latestConfirmed": 210,
-        "latestNodeCreated": 210,
+        "latestNodeCreated": 211,
         "loserStakeEscrow": "0xa43ce4721Ac0faB33E8636e0DDB55E76e3EFF461",
         "minimumAssertionPeriod": 75,
         "outbox": "0x5e8749760c5051fF80b73319cCf4d05ef9959563",
@@ -750,6 +751,7 @@
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -918,7 +920,7 @@
         "owner": "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "stakingManager": "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227",
-        "underlyingAssetAmount": "20033719488604730877",
+        "underlyingAssetAmount": "20062326065488155833",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "derivedName": "EthStrategy"
@@ -1164,7 +1166,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 231,
+        "batchCount": 232,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x4e4aC6F04106964b5B69FDA5EcC207295bCae81f"],
         "bridge": "0x6B595398152999bBc759D5D8ed8169793F915488",

@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x65b9e2aa46a89f9b24232079da351448c0001664
+
+# Diff at Wed, 15 Jan 2025 13:39:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21543865
+- current block number: 21630233
+
+## Description
+
+Upgrade of both RISC0 and SP1 verifier contracts.
+
+### SP1Verifier
+
+v3.0.0 -> v4.0.0-rc.3
+
+All-new verifier with new verifier hash: https://github.com/succinctlabs/sp1/releases/tag/v4.0.0-rc.1 ('not production ready').
+
+### RiscZeroGroth16Verifier
+
+v1.1.2 -> v1.2.0
+
+Adds a new Interface `IRiscZeroSelectable` for easily querying the selector. No changes to the zk verification itself 
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.sp1_remote_verifier:
+-        "0x2D33d748644dAb8B3FB0E07642d9dE96b816d067"
++        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
+      values.verifier_RISCZERO_GROTH16_VERIFIER:
+-        "0xcF706D99C265fC2349AE43c5f6BFD7931FE5308D"
++        "0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x2D33d748644dAb8B3FB0E07642d9dE96b816d067)
+    +++ description: None
+```
+
+```diff
+    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
+    +++ description: None
+      values.sp1RemoteVerifier:
+-        "0x2D33d748644dAb8B3FB0E07642d9dE96b816d067"
++        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0xcF706D99C265fC2349AE43c5f6BFD7931FE5308D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1RemoteVerifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xf31DE43cc0cF75245adE63d3Dabf58d4332855e9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../RiscZeroGroth16Verifier.sol                    | 19 ++++++++--
+ .../SP1RemoteVerifier.sol}                         | 42 +++++++++++-----------
+ .../SP1Verifier}/ERC1967Proxy.p.sol                |  0
+ .../SP1Verifier}/SP1Verifier.sol                   |  0
+ 4 files changed, 38 insertions(+), 23 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543865 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0x2D33d748644dAb8B3FB0E07642d9dE96b816d067) {
+    +++ description: None
+      name:
+-        "SP1RemoteVerifier"
++        "SP1Verifier"
+    }
+```
+
 Generated with discovered.json: 0x3af5b8c874ed7b4ffc3fba396a08c1387641f74f
 
 # Diff at Fri, 03 Jan 2025 12:10:19 GMT:

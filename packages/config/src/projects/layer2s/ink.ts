@@ -285,7 +285,7 @@ export const ink: Layer2 = {
         },
         {
           text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059#code',
+          href: 'https://etherscan.io/address/0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963#code',
         },
       ],
     },

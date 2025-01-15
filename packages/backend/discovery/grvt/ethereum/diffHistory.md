@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x64cee33bb3a78b23ba6eb00682c572af8a421c3d
+
+# Diff at Wed, 15 Jan 2025 10:05:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21593895
+- current block number: 21629172
+
+## Description
+
+Ignore GRVT token.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21593895 (main branch discovery), not current.
+
+```diff
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"upgrade","target":"0xE17aeD2fC55f4A876315376ffA49FE6358113a65"}
+      receivedPermissions.1.target:
+-        "0xAB3B124052F0389D1cbED221d912026Ac995bb95"
++        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GRVTBaseToken (0xAB3B124052F0389D1cbED221d912026Ac995bb95)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x01760da7c2e999a872c59c95cea8d1bfdf8fc730
 
 # Diff at Fri, 10 Jan 2025 11:53:07 GMT:

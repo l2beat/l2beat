@@ -1,7 +1,7 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 288071483,
+  "blockNumber": 295702624,
   "configHash": "0xf966dd03425792f958aa06f248c400827f072d445b62e04cc056ea4074b45557",
   "contracts": [
     {
@@ -35,7 +35,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -488,7 +488,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -605,12 +605,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 90885,
+        "delayedMessageCount": 91574,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 133635,
-        "sequencerReportedSubMessageCount": 67375233
+        "sequencerMessageCount": 139399,
+        "sequencerReportedSubMessageCount": 73554973
       }
     },
     {
@@ -731,18 +731,17 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 133635,
+        "batchCount": 139399,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
-          "requiredSignatures": 5,
-          "membersCount": 7,
+          "requiredSignatures": 4,
+          "membersCount": 6,
           "blsSignatures": [
             "YAaEnUny7I1Stgrqdkdn5ob8omB9Id5dh2xtP87ifNORqK2gdi8NLU9Lw4PAXlg/pwPcmuYrAp8OZOPAw02Z5NOUhTKS+udcc7iSEST/tJ6CI1KeH2jXoToqA5FADD4hrwt7qHtu0RK56+zb3voUzyGnjt838DQH0UZSAMmsEZq8k/KCZPeej6IP03lSQOPxSQAAzbxLd3GZKk0V9tYEF9HCHxHjyJHHN7whXqovNDOE/vcw87RZzBlBeP9fOQ8HKRdEvB70DjshSupH/QeU5Znd034y+4NGiMvaCIkoZGb0/tZxHFc9yxp2Uy2HpaVVDxMmZYLSAsWIdsfkAMHKLmQ2ZtqW8Khd9M/uXOaEqTSu6yjJyizIDyXbA3FUuoW8uQ==",
             "YBnmxAj50xHWx74c8TEJQ4hMxDc8au4r/8ZjDdm9VZZeVz30yudFDkKd5gzt/bnDkxL/fS3uO/uyV5IK/x5g53D7ZBMcrVJF3UMriIitIvf/jriRsnCi1TSZVG+RpGoMNAAji+ipTEVV5YnQPi/AVGQIGwmoEzhA/giQH7evlxzC1Q876MQqHTwwfIrX63UZ5hPEs84OyTq5gHvR71UYbI7TEzHRNi3RJTfgsidx8Q1v2jndA5HfYUq2pxmmPPkIoxHSK+Syt24Fe9q/6dIMN76BXMDpbXu1+r0QdQMPLEfSWm/aquMI6sN1ljaa958XThaluC1z+iqrR9b5e8LoEq1OliZf2qCHnv9MFX51KCF42zEQiz493XQrf0HUJIfCag==",
-            "YAKvb8hRiZPIAext4QCk7ngBMmDVkAcQoAqc/BSXtU7/gUDohCF6RI29uc5OlOXIIhifqDOAe+RIDnUrkMJuXKM3f+21bngw9rgjuSoGfaXfqLffFlR3eIQs0QY0XQeG0RKYArEpJ/D/hOt7YPOddAXGn62x4ryWuyqt5mkyyWzfGrncElFsqT6Ni+hAjwjDOABlbMG6rvSrm6uyznjdL233pYO0DTe8S95wgYOcGLP8xSDHlN341schNnHTQyJAcxddkM3BEocKI7ymH9PNp12Ax5Y5SVZEXKkLFAECOwihaMjjH0brzYxdGbaPEEAgDQQbx8bvW09h5AnTEXPrz6oYWFRep/drK92rK9LtDM8NgnjzMLv+AeSd93X1DmZPpA==",
             "YAX5RGkb2ssH+fb3F+MTg0p+7jF3Le5BT8W/hIR7iSsgHvN2l435zpiSVuqOZNaIaQ/wyuGPur4m2hoiJ1d0J+r/VvbEYQGFCxPe6oi5JzIuAb/QlRA9lT+B1Rup8HKhcAAnSGaIowju3bSosv0LG04H0NlZOSRdJSFOIBA3WyfiK1867Nju+ZqfWF/TLUvR4AnIz2uNkZ7TzuIiA6mQnDHvpKSKsAUvhhAovG8Y8TI0iC1W/LSX1G9VVqFBeI2k1gDX3vzit2yN2PjskBfh5+N6bsIRSECZPRXBqskekNytvRlFveesFOwpXOmiyRPmFAwaYLtsQtSVjz94Ev5rabPQim7x1y9s6AEtV/Q/ggRU7/lTha1SVmMCRdYWWu3Igg==",
             "YBWhdxIOTQsrGcRQF8bHAEauHwl6F64farjSibsWDNPgplumU8MFRPn6X0jtBBMR1hH/aXso0ftQEI0edQVEB5dJkB4gymdhxq6hFCbYZpxsb8Ipr4lJe05WNmJRX1VeTRIu9WaeVLZlm+RMtvSuzbXXKJyNUnSZ420JaMKyR8Wt9M05nFZ832+eqer4eOtKDBX6gPBzdbUG+WRYdQlvFMkH/Nwo7LyKlHx231VIXKEIeuYXBmMxdtd0++QT7wi7PRN1XLjxGC8osyHYh3rksjBjG6urtgt4b/tVWyNevNaHT5YuO5MBPMMoQFgUqeV6dQiU3v2aXCwnnInTCjEvNbI5PUdwOosJi8JcdY7N1Vpm9jn8Gm89pCdwc8avTGWU5A==",
             "YA+ljLY01rxIncmXWl8bIZduwLObm0LKJIjzdyXjzH5FLN4Y+sUF2zjvF07aUPHOyADiV0y/+ztNO/iTpKLCVUzPzRHTtsukZaE3SUY+IIYU6NvUYdMXfhcKnHH3VU+iVRaSfiK2hw7OCfsge8AQcucdNlgaHSrdvlDmzAIx7jsemsLh8ov5dpywIVkWWZGY6wIwVh2/zUWBMZ4O3V3OYWppRttXZr2ukmwIDU5hQ4qtKRKemHaHSgb18QTuUsowMhkLwx2eW5hMOIYyzLV+NyUTyaQhkD0EtYISRBhHM7RinbP9LQWbLm0dnueZ9O3AkwnbH8w6/h3jkshPZx8hqJ6QH33SwbML1KIvOTEFvgBs7dnj9gbcfMq+17Bu3/YkWw==",
@@ -754,7 +753,7 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": true,
-        "keySetUpdates": 6,
+        "keySetUpdates": 7,
         "maxDataSize": 104857,
         "maxTimeVariation": {
           "delayBlocks": 5760,
@@ -767,7 +766,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 90885,
+        "totalDelayedMessagesRead": 91574,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -975,7 +974,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 3581029,
+        "totalSupply": 3582370,
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "usdcAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
@@ -1014,6 +1013,11 @@
               "delay": 0
             }
           ]
+        },
+        {
+          "permission": "validate",
+          "target": "0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53",
+          "via": []
         },
         {
           "permission": "validate",
@@ -1062,12 +1066,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 8126,
+        "firstUnresolvedNode": 8655,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 8125,
-        "latestNodeCreated": 8278,
+        "latestConfirmed": 8654,
+        "latestNodeCreated": 8806,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1076,12 +1080,15 @@
         "rollupDeploymentBlock": 18928845,
         "rollupEventInbox": "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "setValidatorCount": 1,
+        "setValidatorCount": 2,
         "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8"],
+        "validators": [
+          "0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53",
+          "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8"
+        ],
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
@@ -1311,7 +1318,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 284,
+        "getPoolsCount": 291,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "STAKE_KEYS_ADMIN_ROLE": "0x4744ee11e24f5fc5de82fa6dba03b134899d8fd3405c7e9a26e120c89c8d9c28",
@@ -1454,13 +1461,13 @@
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 9017,
+        "challengeCounter": 9546,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6809,
+        "getKycWalletCount": 6837,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 100000,
@@ -1494,6 +1501,16 @@
       ]
     },
     { "address": "0x08a361fE449b1371cC21b286d88F69eF6d205809" },
+    {
+      "address": "0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "target": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
     { "address": "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a" },
     { "address": "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc" },
     {

@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 21242135,
+  "blockNumber": 21628437,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
   "contracts": [
     {
@@ -108,7 +108,7 @@
       "sinceTimestamp": 1638346811,
       "values": {
         "$immutable": true,
-        "addseq": 5344,
+        "addseq": 5385,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -130,8 +130,8 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xc4de3f1d170aa551d4597b1e95173f6087e19d8d48f679df730508cfe6454371",
-        "triggerTime": 1732072759
+        "ssHash": "0x2873508ac0686ac90ca233a0e1279190271073db2b081aea5ce736f7ed8ae6b2",
+        "triggerTime": 1736781066
       },
       "derivedName": "Bridge"
     },
@@ -184,6 +184,7 @@
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",

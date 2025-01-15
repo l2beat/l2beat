@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21585288,
+  "blockNumber": 21630305,
   "configHash": "0x6a97439e4e2b92fe494e30ca9d22bd730417850ff10762f95b0d7592a49b656e",
   "contracts": [
     {
@@ -17,12 +17,12 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "target": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+          "target": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
           "via": []
         },
         {
@@ -75,13 +75,13 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 203,
-        "latestBlock": 815760,
-        "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
+        "latestAuthoritySetId": 210,
+        "latestBlock": 843120,
+        "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
-        "vectorXProgramVkey": "0x00285180a989ed2d6aa8194220690d0d45f2907535d3d3c09e4cb29f6dbe3d4d",
+        "vectorXProgramVkey": "0x00d0279ddadaccdbdb6142981d3830f9ada20ed4e2925ed186ae2be5806e3402",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
@@ -175,7 +175,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -249,9 +249,14 @@
     },
     { "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5" },
     { "address": "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A" },
+    { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
+    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
+    { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
+    { "address": "0xAD379D3275a18bd4BB741C3b291a3778D51c3304" },
+    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" },
+    { "address": "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2" },
     {
-      "name": "Relayer",
-      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+      "address": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -260,12 +265,6 @@
         }
       ]
     },
-    { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
-    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
-    { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
-    { "address": "0xAD379D3275a18bd4BB741C3b291a3778D51c3304" },
-    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" },
-    { "address": "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2" },
     { "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e" },
     { "address": "0xE458b870F2F59a49915591282f1Bb688901767AD" }
   ],
@@ -433,6 +432,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
-    "succinct/SP1Vector": "0xc2941a3d35e633cd5608c0d372ed85b4804a8ed7044f0b4e186b69899469e624"
+    "succinct/SP1Vector": "0x78071e05043e5eb86f0b5aeb68356a16a61d43c8cc990dcbdec2c4fb86ad5350"
   }
 }

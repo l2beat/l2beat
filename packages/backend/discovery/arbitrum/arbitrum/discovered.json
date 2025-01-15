@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 293266550,
+  "blockNumber": 295612328,
   "configHash": "0x7ce82aed984bee2ddba4926b8b4b3729e64a78877c09ef4b2fad92e173bfe2c4",
   "contracts": [
     {
@@ -59,7 +59,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 29265,
+        "exitNum": 29521,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -714,7 +714,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2008,
+        "exitNum": 2009,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"
@@ -920,6 +920,7 @@
       "sourceHashes": [
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -948,6 +949,7 @@
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
