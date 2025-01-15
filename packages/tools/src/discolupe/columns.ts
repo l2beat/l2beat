@@ -1,5 +1,6 @@
 import { ReactElement } from 'react'
 import { DivContainer } from './DivContainer'
+import { IndicatorContainer } from './IndicatorContainer'
 import { ProjectName } from './ProjectName'
 import { DiscoLupeProject } from './data'
 import { formatCurrencyExactValue } from './utils'
@@ -36,29 +37,29 @@ const AVAILABLE_COLUMNS_RAW = [
     id: 'zz',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
-      !project.isUpcoming && !project.isArchived ? '✅' : '❌',
-    displayFn: DivContainer,
+      !project.isUpcoming && !project.isArchived ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
   },
   {
     header: 'Is Under Review',
     id: 'zk',
     align: 'right',
-    fn: (project: DiscoLupeProject) => (project.isUnderReview ? '✅' : '❌'),
-    displayFn: DivContainer,
+    fn: (project: DiscoLupeProject) => (project.isUnderReview ? 'Yes' : 'No'),
+    displayFn: IndicatorContainer,
   },
   {
     header: 'Is Upcoming',
     id: 'mk',
     align: 'right',
-    fn: (project: DiscoLupeProject) => (project.isUpcoming ? '✅' : '❌'),
-    displayFn: DivContainer,
+    fn: (project: DiscoLupeProject) => (project.isUpcoming ? 'Yes' : 'No'),
+    displayFn: IndicatorContainer,
   },
   {
     header: 'Is Archived',
     id: 'lz',
     align: 'right',
-    fn: (project: DiscoLupeProject) => (project.isArchived ? '✅' : '❌'),
-    displayFn: DivContainer,
+    fn: (project: DiscoLupeProject) => (project.isArchived ? 'Yes' : 'No'),
+    displayFn: IndicatorContainer,
   },
   {
     header: 'Discovery driven',
@@ -67,33 +68,33 @@ const AVAILABLE_COLUMNS_RAW = [
     fn: (project: DiscoLupeProject) =>
       project.arePermissionsDiscoveryDriven &&
       project.areContractsDiscoveryDriven
-        ? '✅'
-        : '❌',
-    displayFn: DivContainer,
+        ? 'Yes'
+        : 'No',
+    displayFn: IndicatorContainer,
   },
   {
     header: 'Permissions are discovery driven',
     id: 'td',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
-      project.arePermissionsDiscoveryDriven ? '✅' : '❌',
-    displayFn: DivContainer,
+      project.arePermissionsDiscoveryDriven ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
   },
   {
     header: 'Smart contracts are discovery driven',
     id: 'i9',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
-      project.areContractsDiscoveryDriven ? '✅' : '❌',
-    displayFn: DivContainer,
+      project.areContractsDiscoveryDriven ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
   },
   {
     header: 'Milestones & Incidents',
     id: 'vl',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
-      project.milestones && project.milestones.length > 0 ? '✅' : '❌',
-    displayFn: DivContainer,
+      project.milestones && project.milestones.length > 0 ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
   },
 ] as const
 

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useState } from 'react'
-import { NavLink } from 'react-router'
+import { useSearchParams } from 'react-router'
 import { ColumnSelector } from './ColumnSelector'
 import { FilterButton } from './FilterButton'
 import {
@@ -39,17 +39,111 @@ export interface SortConfig {
 
 export interface TableProps {
   projects: DiscoLupeProject[]
-  sort: SortConfig
 }
 
-export function Table({ projects, sort }: TableProps) {
-  const [selectedColumns, setSelectedColumns] = useState<LupeColumn[]>(
+function useSearchParamsState<T>(
+  initializer: T,
+  key: string,
+  serialize: (arg: T) => string,
+  deserialize: (arg: string) => T,
+): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const initialValue = searchParams.has(key)
+    ? deserialize(searchParams.get(key) as string)
+    : initializer
+
+  const [state, setState] = useState<T>(initialValue)
+  const setParamsAndState: React.Dispatch<React.SetStateAction<T>> = (arg) => {
+    setState((prevState) => {
+      const newState =
+        typeof arg === 'function' ? (arg as (prev: T) => T)(prevState) : arg
+      const value = serialize(newState)
+
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams)
+        newParams.set(key, value)
+        return newParams
+      })
+
+      return newState
+    })
+  }
+
+  return [state, setParamsAndState]
+}
+
+export function Table({ projects }: TableProps) {
+  const [selectedColumns, setSelectedColumns] = useSearchParamsState<
+    LupeColumn[]
+  >(
     AVAILABLE_COLUMNS.filter((c) => DEFAULT_COLUMN_IDS.includes(c.id)),
+    'cols',
+    (cols: LupeColumn[]) => cols.map((c) => c.id).join(''),
+    (serialized: string) => {
+      console.log('deserializing columns', serialized)
+      const ids: ColumnId[] = []
+      for (let i = 0; i < serialized.length; i += 2) {
+        ids.push(serialized.slice(i, i + 2) as ColumnId)
+      }
+      return AVAILABLE_COLUMNS.filter((c) => ids.includes(c.id))
+    },
   )
   const defaultFilterState = Object.fromEntries(
     selectedColumns.map((c) => [c.id, undefined]),
   ) as ColumnFilter
-  const [filter, setFilter] = useState<ColumnFilter>(defaultFilterState)
+  const [filter, setFilter] = useSearchParamsState<ColumnFilter>(
+    defaultFilterState,
+    'filter',
+    (filter: ColumnFilter) => {
+      const definedEntries = Object.entries(filter).filter(
+        ([_, value]) => value !== undefined,
+      )
+      if (definedEntries.length === 0) return ''
+
+      return definedEntries
+        .map(([key, values]) => `${key}:${values?.join(',')}`)
+        .join('|')
+    },
+    (serialized: string) => {
+      if (!serialized) return defaultFilterState
+
+      try {
+        const result = { ...defaultFilterState }
+
+        // Split into column segments and parse
+        const segments = serialized.split('|')
+        segments.forEach((segment) => {
+          const parts = segment.split(':')
+          const columnId = parts[0]
+          const valueStr = parts[1]
+
+          if (columnId && columnId in defaultFilterState) {
+            result[columnId as keyof ColumnFilter] = valueStr
+              ? valueStr.split(',')
+              : undefined
+          }
+        })
+
+        return result
+      } catch {
+        return defaultFilterState
+      }
+    },
+  )
+
+  const [sort, setSort] = useSearchParamsState<SortConfig>(
+    { byColumnId: 'qx', direction: 'asc' },
+    'sort',
+    (sort: SortConfig) => `${sort.byColumnId}:${sort.direction}`,
+    (serialized: string) => {
+      const [byColumnId, direction] = serialized.split(':') as [
+        ColumnId,
+        SortDirection,
+      ]
+
+      return { byColumnId, direction }
+    },
+  )
 
   const matrix = toMatrix(projects, selectedColumns)
   const visibleRows = toVisibleRows(matrix, sort, filter)
@@ -89,9 +183,18 @@ export function Table({ projects, sort }: TableProps) {
                       })
                     }}
                   />
-                  <NavLink
-                    to={`?sort=${c.config.id}&dir=${getSortDirection(c.config.id, sort.byColumnId, sort.direction)}`}
+                  <div
                     className="hover:text-orange-500"
+                    onClick={() => {
+                      setSort({
+                        byColumnId: c.config.id,
+                        direction: getSortDirection(
+                          c.config.id,
+                          sort.byColumnId,
+                          sort.direction,
+                        ),
+                      })
+                    }}
                   >
                     {c.config.header}
                     <span className="ml-2 inline-block align-middle text-gray-500">
@@ -101,7 +204,7 @@ export function Table({ projects, sort }: TableProps) {
                         sort.direction,
                       )}
                     </span>
-                  </NavLink>
+                  </div>
                 </div>
               </th>
             ))}
