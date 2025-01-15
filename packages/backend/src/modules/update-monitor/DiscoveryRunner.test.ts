@@ -18,44 +18,6 @@ describe(DiscoveryRunner.name, () => {
   const MOCK_PROVIDER = mockObject<IProvider>({})
 
   describe(DiscoveryRunner.prototype.run.name, () => {
-    it('injects initial addresses', async () => {
-      const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().returns({
-          contracts: [{ address: ADDRESS }],
-        }),
-      })
-      const runner = new DiscoveryRunner(
-        mockObject<AllProviders>({
-          get: () => MOCK_PROVIDER,
-          getStats: () => ({
-            highLevelMeasurements: new ProviderStats(),
-            cacheMeasurements: new ProviderStats(),
-            lowLevelMeasurements: new ProviderStats(),
-          }),
-        }),
-        engine,
-        configReader,
-        'ethereum',
-      )
-
-      await runner.run(getMockConfig(), 1, {
-        logger: Logger.SILENT,
-        injectInitialAddresses: true,
-      })
-
-      expect(engine.discover).toHaveBeenNthCalledWith(
-        1,
-        MOCK_PROVIDER,
-        new DiscoveryConfig({
-          ...getMockConfig().raw,
-          maxAddresses: 600,
-          maxDepth: 18,
-          initialAddresses: [ADDRESS],
-        }),
-      )
-    })
-
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
       const sourceConfig: DiscoveryConfig = new DiscoveryConfig({
@@ -81,7 +43,6 @@ describe(DiscoveryRunner.name, () => {
       )
       await runner.run(sourceConfig, 1, {
         logger: Logger.SILENT,
-        injectInitialAddresses: true,
       })
 
       expect(sourceConfig).toEqual(getMockConfig())
@@ -111,7 +72,6 @@ describe(DiscoveryRunner.name, () => {
 
         await runner.run(getMockConfig(), 1, {
           logger: Logger.SILENT,
-          injectInitialAddresses: false,
           maxRetries: 2,
           retryDelayMs: 10,
         })
@@ -144,7 +104,6 @@ describe(DiscoveryRunner.name, () => {
           async () =>
             await runner.run(getMockConfig(), 1, {
               logger: Logger.SILENT,
-              injectInitialAddresses: false,
               maxRetries: 1,
               retryDelayMs: 10,
             }),

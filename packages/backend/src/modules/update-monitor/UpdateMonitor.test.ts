@@ -73,6 +73,7 @@ const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
     {
       ...mockContract(NAME_A, ADDRESS_A),
       values: { a: false },
+      fieldMeta: { a: { severity: 'MEDIUM' } },
     },
     mockContract(NAME_B, ADDRESS_B),
   ],
@@ -696,7 +697,23 @@ describe(UpdateMonitor.name, () => {
 
   describe(UpdateMonitor.prototype.generateDailyReminder.name, () => {
     it('does not cross-contaminate between chains', async () => {
-      const discoveryRunnerEth = discoveryRunner
+      const discoveryRunnerEth = mockObject<DiscoveryRunner>({
+        run: async () => ({
+          discovery: {
+            ...DISCOVERY_RESULT,
+            contracts: [
+              {
+                ...DISCOVERY_RESULT.contracts[0],
+                fieldMeta: { a: { severity: 'MEDIUM' } },
+              },
+              ...DISCOVERY_RESULT.contracts.slice(1),
+            ],
+          },
+          flatSources: {},
+        }),
+        chain: 'ethereum',
+        getBlockNumber: async () => BLOCK_NUMBER,
+      })
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
         run: async () => ({
           discovery: DISCOVERY_RESULT_ARB_2,
@@ -721,10 +738,23 @@ describe(UpdateMonitor.name, () => {
           if (name === PROJECT_A && chain === 'arbitrum') {
             return DISCOVERY_RESULT
           }
+          if (name === PROJECT_B && chain === 'arbitrum') {
+            return {
+              ...mockProject,
+              contracts: COMMITTED,
+            }
+          }
 
           return {
             ...mockProject,
-            contracts: COMMITTED,
+            contracts: [
+              ...COMMITTED.slice(1),
+              {
+                ...mockContract(NAME_A, ADDRESS_A),
+                values: { a: true },
+                fieldMeta: { a: { severity: 'MEDIUM' } },
+              },
+            ],
           }
         },
 
@@ -732,22 +762,8 @@ describe(UpdateMonitor.name, () => {
           if (chain === 'arbitrum') {
             return [mockConfig(PROJECT_B, chain)]
           }
-          const innerConfig: Partial<RawDiscoveryConfig> = {
-            overrides: {
-              [NAME_A]: {
-                fields: {
-                  a: {
-                    severity: 'MEDIUM',
-                  },
-                },
-              },
-            },
-          }
 
-          return [
-            mockConfig(PROJECT_A, chain, innerConfig),
-            mockConfig(PROJECT_B, chain, innerConfig),
-          ]
+          return [mockConfig(PROJECT_A, chain), mockConfig(PROJECT_B, chain)]
         },
       })
 
@@ -776,7 +792,7 @@ describe(UpdateMonitor.name, () => {
         [PROJECT_B]: [
           {
             chainName: 'arbitrum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
           },
         ],
       })
@@ -906,16 +922,11 @@ function mockContract(
   }
 }
 
-function mockConfig(
-  name: string,
-  chain = 'ethereum',
-  innerConfig: Partial<RawDiscoveryConfig> = {},
-): DiscoveryConfig {
+function mockConfig(name: string, chain = 'ethereum'): DiscoveryConfig {
   return new DiscoveryConfig({
     name,
     chain,
     initialAddresses: [],
-    ...innerConfig,
   })
 }
 
@@ -952,5 +963,4 @@ const mockDiff: DiscoveryDiff[] = [
 
 const OPTIONS: DiscoveryRunnerOptions = {
   logger: Logger.SILENT.for('UpdateMonitor'),
-  injectInitialAddresses: false,
 }

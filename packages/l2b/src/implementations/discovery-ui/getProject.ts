@@ -23,12 +23,13 @@ import {
   Field,
   FieldValue,
 } from './types'
+import { ContractConfig } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 
 export function getProject(configReader: ConfigReader, project: string) {
   const chains = configReader.readAllChainsForProject(project)
   const data = chains.map((chain) => ({
     chain,
-    config: configReader.readConfig(project, chain, { skipTemplates: false }),
+    config: configReader.readConfig(project, chain),
     discovery: configReader.readDiscovery(project, chain),
   }))
 
@@ -37,18 +38,18 @@ export function getProject(configReader: ConfigReader, project: string) {
     const meta = getMeta(discovery)
     const contracts = discovery.contracts
       .map((contract) => {
-        const overrides =
-          config.overrides.get(contract.address) ??
-          config.overrides.get(config.names[contract.address] ?? '')
-        const template = contract.template
-          ? configReader.templateService.loadContractTemplate(contract.template)
-          : undefined
+        const contarctConfig = config.for(contract.address)
+        if (contract.template !== undefined) {
+          const templateValues =
+            configReader.templateService.loadContractTemplate(contract.template)
+          contarctConfig.pushValues(templateValues)
+        }
+
         return contractFromDiscovery(
           chain,
           meta,
           contract,
-          overrides,
-          template,
+          contarctConfig,
           discovery.abis,
         )
       })
@@ -101,23 +102,17 @@ function contractFromDiscovery(
   chain: string,
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: ContractParameters,
-  overrides: DiscoveryContract | undefined,
-  template: DiscoveryContract | undefined,
+  contractConfig: ContractConfig,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
-    const oField = overrides?.fields?.[name]
-    const tField = template?.fields?.[name]
+    const oField = contractConfig.fields[name]
     return {
-      description: oField?.description ?? tField?.description,
-      handler: oField?.handler ?? tField?.handler,
-      ignoreInWatchMode:
-        overrides?.ignoreInWatchMode?.includes(name) ||
-        template?.ignoreInWatchMode?.includes(name),
-      ignoreRelatives:
-        overrides?.ignoreRelatives?.includes(name) ||
-        template?.ignoreRelatives?.includes(name),
-      severity: oField?.severity ?? tField?.severity,
+      description: oField?.description,
+      handler: oField?.handler,
+      ignoreInWatchMode: contractConfig.ignoreInWatchMode?.includes(name),
+      ignoreRelatives: contractConfig.ignoreRelatives?.includes(name),
+      severity: oField?.severity,
     }
   }
 

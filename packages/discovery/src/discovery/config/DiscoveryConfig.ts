@@ -3,9 +3,9 @@ import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ConfigReader } from './ConfigReader'
+import { ContractConfig } from './ContractConfig'
 import { CommonAddressNames, DiscoveryOverrides } from './DiscoveryOverrides'
 import type {
-  DiscoveryContract,
   DiscoveryCustomType,
   RawDiscoveryConfig,
 } from './RawDiscoveryConfig'
@@ -14,7 +14,7 @@ import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 // values inside this class should not be modified during the runtime
 // this will result in the hash being different and break the update mechanism
 export class DiscoveryConfig {
-  readonly overrides: DiscoveryOverrides
+  private readonly overrides: DiscoveryOverrides
   readonly sharedModuleDiscovery: DiscoveryOutput[]
 
   constructor(
@@ -29,6 +29,12 @@ export class DiscoveryConfig {
         return configReader.readDiscovery(projectName, config.chain)
       },
     )
+  }
+
+  for(addressOrName: string | EthereumAddress): ContractConfig {
+    const overrides = this.overrides.get(addressOrName)
+
+    return new ContractConfig(overrides, this.configTypes())
   }
 
   get raw(): RawDiscoveryConfig {
@@ -65,23 +71,6 @@ export class DiscoveryConfig {
       : []
   }
 
-  // NOTE(radomski): name is for contract local types
-  typesFor(name: string): Record<string, DiscoveryCustomType> {
-    const result = structuredClone(this.globalTypes)
-    for (const key of Object.keys(this.config.types ?? {})) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      result[key] = (this.config.types ?? {})[key]!
-    }
-
-    const contractLocal = this.overrides.get(name)?.types ?? {}
-    for (const key of Object.keys(contractLocal)) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      result[key] = contractLocal[key]!
-    }
-
-    return result
-  }
-
   get hash(): Hash256 {
     return hashJson(getDiscoveryConfigEntries(this.config))
   }
@@ -93,7 +82,12 @@ export class DiscoveryConfig {
     })
   }
 
-  getContract(name: string): DiscoveryContract | undefined {
-    return this.config.overrides?.[name ?? '']
+  private configTypes(): Record<string, DiscoveryCustomType> {
+    const result = structuredClone(this.globalTypes)
+    for (const key in this.config.types ?? {}) {
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
+      result[key] = (this.config.types ?? {})[key]!
+    }
+    return result
   }
 }

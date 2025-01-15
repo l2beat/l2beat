@@ -1,7 +1,6 @@
 import { hashJson } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
 import { DiscoveryConfig } from './DiscoveryConfig'
 import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
@@ -57,7 +56,7 @@ describe(DiscoveryConfig.name, () => {
       expect(result).toEqual({ ...OVERRIDE_A, address: ADDRESS_A, name: 'A' })
     })
     it('throws if override is not found', () => {
-      expect(() => CONFIG.overrides.get('C')).toThrow()
+      expect(() => CONFIG.for('C')).toThrow()
     })
   })
 

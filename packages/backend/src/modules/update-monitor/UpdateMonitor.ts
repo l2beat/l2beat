@@ -6,7 +6,10 @@ import {
   diffDiscovery,
   normalizeDiffPath,
 } from '@l2beat/discovery'
-import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import type {
+  ContractParameters,
+  DiscoveryOutput,
+} from '@l2beat/discovery-types'
 import {
   assert,
   ChainConverter,
@@ -93,7 +96,7 @@ export class UpdateMonitor {
 
         const diff = diffDiscovery(committed.contracts, discovery.contracts)
 
-        const severityCounts = countSeverities(diff, projectConfig)
+        const severityCounts = countSeverities(diff, committed.contracts)
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
@@ -181,7 +184,6 @@ export class UpdateMonitor {
       blockNumber,
       {
         logger: this.logger,
-        injectInitialAddresses: false,
       },
     )
 
@@ -284,7 +286,6 @@ export class UpdateMonitor {
       previousDiscovery.blockNumber,
       {
         logger: this.logger,
-        injectInitialAddresses: false,
       },
     )
 
@@ -338,18 +339,14 @@ const errorCount = new Gauge({
   help: 'Value showing amount of errors in the update cycle',
 })
 
-function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
+function countSeverities(
+  diffs: DiscoveryDiff[],
+  contracts: ContractParameters[],
+) {
   const result = { low: 0, medium: 0, high: 0, unknown: 0 }
-  if (config === undefined) {
-    result.unknown = diffs
-      .map((d) => d.diff?.length ?? 0)
-      .reduce((a, b) => a + b, 0)
-    return result
-  }
 
   for (const diff of diffs) {
-    const contract = config.getContract(diff.name)
-    if (contract === undefined || diff.diff === undefined) {
+    if (diff.diff === undefined) {
       result.unknown += 1
       continue
     }
@@ -368,15 +365,7 @@ function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
         continue
       }
 
-      const key = normalizeDiffPath(field.key)
-      const fields = contract.fields ?? {}
-
-      if (fields[key] === undefined) {
-        result.unknown += 1
-        continue
-      }
-
-      const severity = fields[key].severity
+      const severity = field.severity
 
       switch (severity) {
         case 'LOW':

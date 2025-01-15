@@ -24,11 +24,7 @@ export class ConfigReader {
     this.templateService = new TemplateService(rootPath)
   }
 
-  readConfig(
-    name: string,
-    chain: string,
-    options?: { skipTemplates: boolean },
-  ): DiscoveryConfig {
+  readConfig(name: string, chain: string): DiscoveryConfig {
     assert(
       fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
       'Project not found, check if case matches',
@@ -49,10 +45,6 @@ export class ConfigReader {
       console.log(message)
 
       throw new Error(`Cannot parse file ${name}/${chain}/config.jsonc`)
-    }
-
-    if (!options?.skipTemplates) {
-      this.templateService.inlineTemplates(rawConfig.data)
     }
 
     const globalTypes = this.readGlobalTypes()

@@ -97,7 +97,7 @@ function ChangedDetectedDropdown({
         </summary>
         <p>
           {project.diff.map((d, index) => {
-            const contract = project.config?.getContract(d.name)
+            const contract = project.config?.for(d.name)
             return (
               <p style={{ marginTop: '8px' }} key={index}>
                 <span style={{ fontWeight: 'bold' }}>

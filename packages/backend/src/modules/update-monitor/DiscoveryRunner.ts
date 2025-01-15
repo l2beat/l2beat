@@ -20,7 +20,6 @@ import { Gauge } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger
-  injectInitialAddresses: boolean
   maxRetries?: number
   retryDelayMs?: number
 }
@@ -51,9 +50,7 @@ export class DiscoveryRunner {
     blockNumber: number,
     options: DiscoveryRunnerOptions,
   ): Promise<DiscoveryRunResult> {
-    const config = options.injectInitialAddresses
-      ? await this.updateInitialAddresses(projectConfig)
-      : projectConfig
+    const config = projectConfig
 
     return await this.discoverWithRetry(
       config,
@@ -124,23 +121,6 @@ export class DiscoveryRunner {
     }
 
     return result
-  }
-
-  // There was a case connected with Amarok (better described in L2B-1521)
-  // the problem was with stack too deep in the discovery caused by misconfigured new contract
-  // that had a lot of relatives (e.g. Uniswap, DAI)
-  // unfortunately, it resulted in not discovering important contracts because they cannot be put on the stack
-  // this function ensures that initial addresses are taken from discovered.json
-  // so this way we will always discover "known" contracts
-  async updateInitialAddresses(config: DiscoveryConfig) {
-    const discovery = this.configReader.readDiscovery(config.name, this.chain)
-    const initialAddresses = discovery.contracts.map((c) => c.address)
-    return new DiscoveryConfig({
-      ...config.raw,
-      initialAddresses,
-      maxAddresses: (config.raw.maxAddresses ?? 200) * 3,
-      maxDepth: (config.raw.maxDepth ?? 6) * 3,
-    })
   }
 }
 

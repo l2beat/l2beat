@@ -35,7 +35,7 @@ function DashboardProjectPage(props: ConfigPageProps) {
           </summary>
           <p>
             {props.diff.map((d, index) => {
-              const contract = props.config?.getContract(d.name)
+              const contract = props.config?.for(d.name)
               return (
                 <p style={{ marginTop: '8px' }} key={index}>
                   <span style={{ fontWeight: 'bold' }}>

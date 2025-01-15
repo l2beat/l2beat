@@ -58,10 +58,4 @@ export class DiscoveryOverrides {
 
     return { name, address, ...override }
   }
-
-  *[Symbol.iterator](): IterableIterator<ContractOverrides> {
-    for (const key of Object.keys(this.config.overrides ?? {})) {
-      yield this.get(key)
-    }
-  }
 }
