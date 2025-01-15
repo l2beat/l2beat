@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 21629895,
-  "configHash": "0x5013495bc1aeb2d393182c95b7471be9489d291e9ca0340f622127a395260c49",
+  "blockNumber": 21630802,
+  "configHash": "0x2a0f2b4378ebb567e147ffb138d0e096696153617dfb443aba58dfcbbc620f90",
   "contracts": [
     {
       "name": "DepositContract",
@@ -14,8 +14,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x14811c0000000000",
-        "get_deposit_root": "0xb95c71a0d5ec57fdcc3749d4a7466be0cd9acb356761e34036ccc4fcc6c76424"
+        "get_deposit_count": "0xb6811c0000000000",
+        "get_deposit_root": "0x9405a344aadea461c720f293149907221deb11c15d852fe28ff1ce8ac520b329"
       },
       "derivedName": "DepositContract"
     },
@@ -335,6 +335,37 @@
       }
     },
     {
+      "name": "EigenLayerOperationsMultisig2",
+      "address": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732236023,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3",
+          "0x9229C290F60F303884073F28EB8E81F9B82506d5",
+          "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
+          "0xc5280E368648b0e192b355c7d8330593bA7af700",
+          "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x61ee3be2a1999f4d0139ce35b0a2142d8ad067c74102210278661869542d9630",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 6,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe"
+    },
+    {
       "name": "EigenLayerPauserMultisig",
       "address": "0x5050389572f2d220ad927CcbeA0D406831012390",
       "template": "GnosisSafe",
@@ -485,6 +516,34 @@
       "sinceTimestamp": 1732299167,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "0xFEA47018D632A77bA579846c840d5706705Dc598"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+              "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xBE1685C81aA44FF9FB319dD389addd9374383e90"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -1046,6 +1105,34 @@
       "sinceTimestamp": 1732234379,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "0xFEA47018D632A77bA579846c840d5706705Dc598"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+              "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xBE1685C81aA44FF9FB319dD389addd9374383e90"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -1375,6 +1462,7 @@
     { "address": "0x33E816008E7bc7798A73d0eaa640CC24f34d1626" },
     { "address": "0x34C37613e1680efD9e203C979658e1d058b4B2BC" },
     { "address": "0x34D64c402cA43C1c4B368e16130C64aC245718C6" },
+    { "address": "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE" },
     { "address": "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1" },
     { "address": "0x4a3CD82B73821d075799680AcDff3e884B726777" },
     { "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71" },
@@ -1387,15 +1475,19 @@
     { "address": "0x80cb2DA66A3ccb6064f16B15B6ae11d8E089C6D7" },
     { "address": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2" },
     { "address": "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95" },
+    { "address": "0x9229C290F60F303884073F28EB8E81F9B82506d5" },
     { "address": "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815" },
     { "address": "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4" },
     { "address": "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02" },
     { "address": "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99" },
+    { "address": "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3" },
     { "address": "0xAF4D94Cd299211de542530399290877E2c85F061" },
     { "address": "0xb7Ae34BB33da55f12797e793E01e63a17B11d108" },
     { "address": "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD" },
     { "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0" },
     { "address": "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c" },
+    { "address": "0xc5280E368648b0e192b355c7d8330593bA7af700" },
+    { "address": "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927" },
     { "address": "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF" },
     { "address": "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60" },
     { "address": "0xe7fFd467F7526abf9c8796EDeE0AD30110419127" },
@@ -1693,6 +1785,9 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": [
+      "constructor(address _singleton)"
     ],
     "0x5050389572f2d220ad927CcbeA0D406831012390": [
       "constructor(address _singleton)"
