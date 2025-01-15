@@ -365,6 +365,10 @@
       "address": "0xAaAAAA20D9E0e2461697782ef11675f668207961"
     },
     {
+      "symbol": "AXL",
+      "address": "0x467719aD09025FcC6cF6F8311755809d45a5E5f3"
+    },
+    {
       "symbol": "AXS",
       "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b"
     },
@@ -885,6 +889,10 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "JASMY",
+      "address": "0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC"
+    },
+    {
       "symbol": "KCS",
       "address": "0xf34960d9d60be18cC1D5Afc1A6F012A723a28811",
       "coingeckoId": "kucoin-shares"
@@ -985,6 +993,10 @@
     {
       "symbol": "MATIC",
       "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+    },
+    {
+      "symbol": "MAV",
+      "address": "0x7448c7456a97769F6cD04F1E83A4a23cCdC46aBD"
     },
     {
       "symbol": "MC",
@@ -1394,6 +1406,10 @@
       "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF"
     },
     {
+      "symbol": "SSV",
+      "address": "0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54"
+    },
+    {
       "symbol": "STARL",
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
     },
@@ -1435,6 +1451,10 @@
     {
       "symbol": "SUSHI",
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
+    },
+    {
+      "symbol": "SWELL",
+      "address": "0x0a6E7Ba5042B38349e437ec6Db6214AEC7B35676"
     },
     {
       "symbol": "SX",
@@ -1557,6 +1577,10 @@
       "symbol": "USDT",
       "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
       "category": "stablecoin"
+    },
+    {
+      "symbol": "USUAL",
+      "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E"
     },
     {
       "symbol": "VENT",
