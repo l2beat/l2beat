@@ -82,7 +82,7 @@ describe(transformToReceived.name, () => {
         description: undefined,
         condition: undefined,
         permission: 'configure',
-        target: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
+        from: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
         delay: 112233,
         via: undefined,
       },
@@ -90,7 +90,7 @@ describe(transformToReceived.name, () => {
         description: undefined,
         condition: undefined,
         permission: 'upgrade',
-        target: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
+        from: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
         delay: undefined,
         via: undefined,
       },
@@ -99,7 +99,7 @@ describe(transformToReceived.name, () => {
     expect(receivedPermissions).toEqual([
       {
         permission: 'configure',
-        target: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
+        from: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
         delay: 112233,
         description: undefined,
         condition: undefined,
@@ -122,7 +122,7 @@ describe(transformToReceived.name, () => {
       },
       {
         permission: 'upgrade',
-        target: EthereumAddress('0x1a0ad011913A150f69f6A19DF447A0CfD9551054'),
+        from: EthereumAddress('0x1a0ad011913A150f69f6A19DF447A0CfD9551054'),
         delay: undefined,
         description: undefined,
         condition: undefined,
@@ -231,7 +231,7 @@ describe(transformToReceived.name, () => {
         description: undefined,
         condition: undefined,
         permission: 'configure',
-        target: EthereumAddress('0xC72aE5c7cc9a332699305E29F68Be66c73b60542'),
+        from: EthereumAddress('0xC72aE5c7cc9a332699305E29F68Be66c73b60542'),
         via: undefined,
       },
       {
@@ -239,7 +239,7 @@ describe(transformToReceived.name, () => {
         description: undefined,
         condition: undefined,
         permission: 'upgrade',
-        target: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
+        from: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
         via: undefined,
       },
     ])
