@@ -96,6 +96,19 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://etherscan.io/address/${address}`,
   },
   {
+    id: 'facet',
+    name: 'Facet',
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://mainnet.facet.org/',
+    },
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.facet.org/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://explorer.facet.org/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.facet.org/address/${address}`,
+  },
+  {
     id: 'gravity',
     name: 'Gravity',
     blockchainApi: {
