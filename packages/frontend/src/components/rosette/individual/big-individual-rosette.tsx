@@ -31,6 +31,7 @@ export interface Props {
   isUpcoming?: boolean
   isUnderReview?: boolean
   className?: string
+  background?: 'header' | 'surface'
 }
 
 export function BigIndividualRosette(props: Props) {
@@ -53,6 +54,7 @@ export function BigIndividualRosette(props: Props) {
           l3={props.l3}
           isUnderReview={isUnderReview}
           className={cn(props.isUpcoming && 'opacity-30')}
+          background={props.background}
         />
         {props.isUpcoming && (
           <UpcomingBadge className="absolute left-[90px] top-[130px]" />
@@ -75,6 +77,7 @@ export function BigIndividualRosette(props: Props) {
               l2={props.l2}
               l3={props.l3}
               isUnderReview={isUnderReview}
+              background={props.background}
             />
           </TooltipTrigger>
           <PizzaRosetteLabels
