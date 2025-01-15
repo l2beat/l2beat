@@ -145,7 +145,7 @@ export const soneium: Layer2 = {
     links: {
       websites: ['https://soneium.org/en/'],
       apps: ['https://bridge.soneium.org/'],
-      documentation: ['https://soneium.org/en/docs/'],
+      documentation: ['https://docs.soneium.org/docs/builders/overview'],
       explorers: ['https://soneium.blockscout.com/'],
       repositories: ['https://github.com/Soneium'],
       socialMedia: [
@@ -449,6 +449,14 @@ export const soneium: Layer2 = {
     risks: [],
   },
   milestones: [
+    {
+      name: 'Soneium sequencer censors copyright-infringing tokens',
+      link: 'https://x.com/donnoh_eth/status/1879210463952818472',
+      date: '2025-01-14T00:00:00Z',
+      description:
+        'Soneium bans copyright infringing tokens at sequencer level. Token contracts can still be used by force-including transactions directly from the L1.',
+      type: 'incident',
+    },
     {
       name: 'Soneium Launch',
       link: 'https://x.com/soneium/status/1878988222866350348',
