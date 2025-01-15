@@ -109,6 +109,7 @@ function RosetteTooltipContent() {
         </span>
         <SentimentText
           sentiment={content.outer.sentiment}
+          vibrant={true}
           className="flex items-center gap-1 font-medium"
         >
           {content.outer.value}
@@ -128,6 +129,7 @@ function RosetteTooltipContent() {
         </span>
         <SentimentText
           sentiment={content.inner.sentiment}
+          vibrant={true}
           className="flex items-center gap-1 font-medium"
         >
           {content.inner.value}
