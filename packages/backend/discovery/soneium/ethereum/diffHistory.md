@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x1cf87468bd79cf6d3b7d424e04b8d91d684f3207
+Generated with discovered.json: 0x33bd63a031a6f526f8b52c639ef3aef344008c7b
 
-# Diff at Tue, 14 Jan 2025 13:39:35 GMT:
+# Diff at Wed, 15 Jan 2025 10:03:13 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 21623078
+- current block number: 21629155
 
 ## Description
 
@@ -153,6 +153,12 @@ First discovery of Soneium.
 +   Status: CREATED
     contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1OpUSDCBridgeAdapter (0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb)
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
 ```
 
 ```diff

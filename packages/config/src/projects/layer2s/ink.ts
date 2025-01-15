@@ -281,7 +281,9 @@ export const ink: Layer2 = {
       references: [
         {
           text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: 'https://etherscan.io/address/0x10d7B35078d3baabB96Dd45a9143B94be65b12CD#code',
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            disputeGameFactory,
+          )}#code`,
         },
         {
           text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
