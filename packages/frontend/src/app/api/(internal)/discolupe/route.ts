@@ -27,7 +27,10 @@ async function getResponse() {
     success: true,
     data: {
       projects: [...layer2s, ...layer3s].map((p) =>
-        toResponseProject(p, tvl.projects[p.id.toString()]?.breakdown.total ?? 0),
+        toResponseProject(
+          p,
+          tvl.projects[p.id.toString()]?.breakdown.total ?? 0,
+        ),
       ),
     },
   } as const
