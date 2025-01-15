@@ -95,7 +95,7 @@ export function getSelfMeta(
 ): ContractMeta | undefined {
   let description: string | undefined = undefined
   if (overrides?.description !== undefined) {
-    description = interpolateDescription(overrides?.description, analysis)
+    description = interpolateString(overrides?.description, analysis)
   }
 
   let references: ExternalReference[] | undefined
