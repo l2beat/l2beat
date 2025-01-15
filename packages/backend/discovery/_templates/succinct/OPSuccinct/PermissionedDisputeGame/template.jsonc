@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PermissionedDisputeGame",
-  "description": "Currently not used. Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+  "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
   "ignoreMethods": [
     "getNumToResolve",
     "resolutionCheckpoints",
