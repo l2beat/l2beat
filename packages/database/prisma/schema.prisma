@@ -33,6 +33,14 @@ model Activity {
   @@id([projectId, timestamp])
 }
 
+model Da {
+  project String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
+  totalSize     Int
+
+  @@id([project, timestamp])
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @db.Timestamp(6)
   projectId      String   @db.VarChar(255)

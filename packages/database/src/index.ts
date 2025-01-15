@@ -30,3 +30,8 @@ export type { TvlCleanerRecord } from './tvl/tvl-cleaner/entity'
 export type { ValueRecord } from './tvl/value/entity'
 export type { IndexerConfigurationRecord } from './uif/indexer-configuration/entity'
 export type { IndexerStateRecord } from './uif/indexer-state/entity'
+
+// DA
+
+export type { DaRecord } from './da/entity'
+export { DaRepository } from './da/repository'

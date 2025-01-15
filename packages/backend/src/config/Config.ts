@@ -37,6 +37,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
+  readonly da: DaConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -189,4 +190,13 @@ export interface DABeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+}
+
+export interface DaConfig {
+  readonly ethereum: {
+    readonly minBlock: number
+  }
+  readonly blobscan: {
+    readonly url: string
+  }
 }

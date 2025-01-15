@@ -207,6 +207,14 @@ export function makeConfig(
         'wss://avail-mainnet.public.blastapi.io/',
       ),
     },
+    da: flags.isEnabled('da') && {
+      blobscan: {
+        url: env.string(['BLOBSCAN_URL'], 'https://api.blobscan.com'),
+      },
+      ethereum: {
+        minBlock: env.integer(['ETHEREUM_MIN_BLOCK'], 21602704),
+      },
+    },
     chainConfig: getChainConfig(env),
     beaconApi: {
       url: env.optionalString([

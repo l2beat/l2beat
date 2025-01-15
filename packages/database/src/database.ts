@@ -2,6 +2,7 @@ import { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { StakeRepository } from './da-beat/stake/repository'
+import { DaRepository } from './da/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
 import { FlatSourcesRepository } from './discovery/flat-sources/repository'
 import { UpdateMonitorRepository } from './discovery/update-monitor/repository'
@@ -69,6 +70,10 @@ export function createDatabase(config?: PoolConfig) {
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
+    // #endregion
+
+    // #region DA
+    da: new DaRepository(db),
     // #endregion
   }
 }
