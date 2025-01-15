@@ -1,7 +1,6 @@
 import { Chain } from '@/chains'
 import { Block } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { getApiUrl } from '../apiUrls'
 import { BlockClient } from './BlockClient'
 
 // TODO: To be replaced by BlockProvider from @l2beat/shared
@@ -11,9 +10,7 @@ export class StarknetClient implements BlockClient {
   async getLatestBlockNumber(): Promise<number> {
     const params = ['latest']
 
-    const apiUrl = getApiUrl(this.chain.id)
-
-    const response = await fetch(apiUrl, {
+    const response = await fetch(this.chain.blockchainApiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,9 +39,7 @@ export class StarknetClient implements BlockClient {
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
     const params = [{ block_number: blockNumber }]
 
-    const apiUrl = getApiUrl(this.chain.id)
-
-    const response = await fetch(apiUrl, {
+    const response = await fetch(this.chain.blockchainApiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

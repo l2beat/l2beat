@@ -1,8 +1,7 @@
-import type { Chain } from '@/chains'
+import type { Chain, ChainId } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { getApiKey, getApiUrl, getScanUrl } from '../clients/apiUrls'
 import { BlockClient } from '../clients/block/BlockClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
 import { RpcCodeClient } from '../clients/code/RpcCodeClient'
@@ -33,7 +32,7 @@ export class ChainService {
         break
       case 'rpc': {
         this.client = new RpcClient({
-          url: getApiUrl(chain.id),
+          url: chain.blockchainApiUrl,
           sourceName: chain.id,
           http,
           callsPerMinute: (chain.customBatchSize ?? DEFAULT_BATCH_SIZE) * 30,
@@ -50,8 +49,8 @@ export class ChainService {
         ]
 
         let contractClient = undefined
-        const scanApiUrl = getScanUrl(chain.id)
-        const scanApiKey = getApiKey(chain.id, 'SCAN')
+        const scanApiUrl = chain.etherscanApiUrl
+        const scanApiKey = getEtherscanApiKey(chain.id)
         if (scanApiUrl && scanApiKey) {
           contractClient = new ScanClient(scanApiUrl, scanApiKey)
         }
@@ -94,4 +93,10 @@ export class ChainService {
 
     return this.counter.countForBlocks(blocks)
   }
+}
+
+export function getEtherscanApiKey(chainId: ChainId): string | undefined {
+  const envName = `${chainId.toUpperCase().replace('-', '_')}_SCAN_API_KEY`
+  const value = process.env[envName]
+  return value
 }

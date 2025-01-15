@@ -1,15 +1,13 @@
 import { createHash } from 'crypto'
 import { providers } from 'ethers'
 import { Chain } from '../../../chains'
-import { getApiUrl } from '../apiUrls'
 
 export class RpcCodeClient {
   private readonly provider: providers.Provider
 
   constructor(private readonly chain: Chain) {
-    const apiUrl = getApiUrl(chain.id)
     this.provider = new providers.StaticJsonRpcProvider({
-      url: apiUrl,
+      url: this.chain.blockchainApiUrl,
       timeout: 15_000,
     })
   }
