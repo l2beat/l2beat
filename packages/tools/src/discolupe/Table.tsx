@@ -4,7 +4,6 @@ import { FilterButton } from './FilterButton'
 import { SortingArrowIcon } from './icons/SortingArrowIcon'
 import {
   AVAILABLE_COLUMNS,
-  ColumnId,
   DEFAULT_COLUMN_IDS,
   LupeColumn,
   deserializeColumns,
@@ -15,31 +14,16 @@ import {
   deserializeFilter,
   serializeFilter,
 } from './src/filtering'
+import { toMatrix, toVisibleRows } from './src/matrix'
 import { DiscoLupeProject } from './src/model'
+import {
+  SortConfig,
+  SortDirection,
+  deserializeSort,
+  getSortDirection,
+  serializeSort,
+} from './src/sort'
 import { useSearchParamsState } from './useSearchParamsState'
-
-interface Matrix {
-  rowCount: number
-  projects: DiscoLupeProject[]
-  columns: Column[]
-}
-
-interface Row {
-  project: DiscoLupeProject
-  columns: string[]
-}
-
-interface Column {
-  config: LupeColumn
-  values: string[]
-}
-
-export type SortDirection = 'asc' | 'desc'
-
-export interface SortConfig {
-  byColumnId: ColumnId
-  direction: SortDirection
-}
 
 export interface TableProps {
   projects: DiscoLupeProject[]
@@ -68,15 +52,8 @@ export function Table({ projects }: TableProps) {
   const [sort, setSort] = useSearchParamsState<SortConfig>(
     { byColumnId: 'qx', direction: 'asc' },
     'sort',
-    (sort: SortConfig) => `${sort.byColumnId}:${sort.direction}`,
-    (serialized: string) => {
-      const [byColumnId, direction] = serialized.split(':') as [
-        ColumnId,
-        SortDirection,
-      ]
-
-      return { byColumnId, direction }
-    },
+    serializeSort,
+    deserializeSort,
   )
 
   const matrix = toMatrix(projects, selectedColumns)
@@ -174,96 +151,6 @@ export function Table({ projects }: TableProps) {
       </table>
     </div>
   )
-}
-
-function toVisibleRows(
-  matrix: Matrix,
-  sort: SortConfig,
-  filter: ColumnFilter,
-): Row[] {
-  let rows: Row[] = matrix.projects.map((project) => ({
-    project,
-    columns: [],
-  }))
-
-  for (const column of matrix.columns) {
-    for (const [rowIndex, value] of column.values.entries()) {
-      rows[rowIndex]?.columns.push(value)
-    }
-  }
-
-  const columnConfigs = matrix.columns.map((c) => c.config)
-  const columnIndex = columnIDToIndex(columnConfigs, sort.byColumnId)
-
-  rows.sort((r1, r2) => {
-    if (
-      r1.columns[columnIndex] === undefined ||
-      r2.columns[columnIndex] === undefined
-    ) {
-      return 0
-    }
-
-    return r1.columns[columnIndex].localeCompare(r2.columns[columnIndex])
-  })
-
-  if (sort.direction === 'desc') {
-    rows = rows.reverse()
-  }
-
-  return rows.filter((r) => {
-    for (const columnID in filter) {
-      const filterValues = filter[columnID as keyof ColumnFilter]
-      if (filterValues === undefined) {
-        continue
-      }
-
-      const index = columnIDToIndex(columnConfigs, columnID)
-      const value = r.columns[index]
-      if (value === undefined) {
-        console.error(`Expected to find a column value at index ${index}`)
-        continue
-      }
-
-      if (!filterValues.includes(value)) {
-        return false
-      }
-    }
-
-    return true
-  })
-}
-
-function columnIDToIndex(columns: LupeColumn[], columnId: string): number {
-  return columns.findIndex((c) => c.id === columnId)
-}
-
-function toMatrix(
-  projects: DiscoLupeProject[],
-  selectedColumns: LupeColumn[],
-): Matrix {
-  const result: Matrix = {
-    rowCount: projects.length,
-    projects,
-    columns: [],
-  }
-
-  for (const columnConfiguration of selectedColumns) {
-    const column: Column = {
-      config: columnConfiguration,
-      values: projects.map((p) => columnConfiguration.fn(p)),
-    }
-    result.columns.push(column)
-  }
-
-  return result
-}
-
-function getSortDirection(
-  column: string,
-  sortBy: string,
-  direction: SortDirection,
-): SortDirection {
-  return column === sortBy && direction === 'asc' ? 'desc' : 'asc'
 }
 
 function getSortIcon(column: string, sortBy: string, direction: SortDirection) {
