@@ -1,9 +1,9 @@
 import { ProjectService } from '@l2beat/config'
 import { type Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { type ReactNode } from 'react'
+import { Breadcrumbs } from '~/components/breadcrumbs'
 import {
   Tooltip,
   TooltipContent,
@@ -76,7 +76,25 @@ export default async function Page(props: Props) {
   return (
     <main>
       <MainPageHeader>
-        <Breadcrumbs icon={projectDetails.icon} title={projectDetails.title} />
+        <Breadcrumbs
+          items={[
+            { content: 'ZK Catalog', href: '/zk-catalog' },
+            {
+              content: (
+                <span className="flex items-center gap-1.5">
+                  <Image
+                    alt={`${projectDetails.title} logo`}
+                    width={16}
+                    height={16}
+                    src={projectDetails.icon}
+                    className="inline size-4"
+                  />
+                  <span className="leading-none">{projectDetails.title}</span>
+                </span>
+              ),
+            },
+          ]}
+        />
       </MainPageHeader>
       <div className="border-divider max-lg:pt-8 max-md:border-b max-md:bg-header-primary max-md:px-4 max-md:pb-6">
         <div className="flex flex-col gap-1 md:flex-row md:items-end md:gap-4 md:px-6">
@@ -114,25 +132,6 @@ export default async function Page(props: Props) {
         )}
       </div>
     </main>
-  )
-}
-
-function Breadcrumbs(props: { icon: string; title: string }) {
-  return (
-    <nav className="flex select-none gap-1 space-x-1 text-base font-medium text-secondary">
-      <Link href="/zk-catalog">ZK Catalog</Link>
-      <span>/</span>
-      <span className="flex items-center gap-1.5">
-        <Image
-          alt={`Icon for the ${props.title}`}
-          width={16}
-          height={16}
-          src={props.icon}
-          className="inline size-4"
-        />
-        <span>{props.title}</span>
-      </span>
-    </nav>
   )
 }
 
