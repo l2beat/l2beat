@@ -4,7 +4,7 @@ import { Layer2 } from './types'
 
 export const koi: Layer2 = upcomingL2({
   id: 'koi',
-  createdAt: new UnixTime(1736600180), // 2024-11-12T10:56:20Z
+  createdAt: new UnixTime(1736912127), // 2025-01-14T10:55:27Z
   display: {
     name: 'Koi Finance',
     slug: 'koi',
