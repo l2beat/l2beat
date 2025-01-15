@@ -21,18 +21,18 @@
             "args": []
           }
         },
-//          "opStackDA": {
-//            "handler": {
-//              "type": "opStackDA",
-//              "sequencerAddress": "{{ batcherHash }}"
-//            }
-//          },
-//        "sequencerInbox": {
-//          "handler": {
-//            "type": "opStackSequencerInbox",
-//            "sequencerAddress": "{{ batcherHash }}"
-//          }
-//        },
+          "opStackDA": {
+            "handler": {
+              "type": "opStackDA",
+              "sequencerAddress": "{{ batcherHash }}"
+            }
+          },
+        "sequencerInbox": {
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
         "gasLimit": {
           "description": "Gas limit for blocks on L2.",
           "severity": "LOW"
