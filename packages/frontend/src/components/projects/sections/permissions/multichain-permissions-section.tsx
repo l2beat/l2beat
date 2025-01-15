@@ -1,6 +1,10 @@
 import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
-import { ContractEntry, type TechnologyContract } from '../contract-entry'
+import {
+  ContractEntry,
+  type TechnologyContract,
+  technologyContractKey,
+} from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import { type ProjectSectionProps } from '../types'
@@ -38,9 +42,9 @@ export function MultichainPermissionsSection({
               <h3 className="font-bold">
                 The system consists of the following permissions on {chainName}:
               </h3>
-              {permissions.map((permission, i) => (
+              {permissions.map((permission) => (
                 <ContractEntry
-                  key={i}
+                  key={technologyContractKey(permission)}
                   contract={permission}
                   className="my-4"
                   type="permission"
