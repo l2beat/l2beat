@@ -67,7 +67,7 @@ export function ScalingTvlTabs(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length}
@@ -80,8 +80,9 @@ export function ScalingTvlTabs(props: Props) {
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
+          <DirectoryTabsContent value="rollups" className="pt-5">
             <ScalingStackedTvlChart
+              tab="rollups"
               milestones={props.milestones}
               entries={props.rollups}
             />
@@ -91,11 +92,9 @@ export function ScalingTvlTabs(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent
-            value="validiums-and-optimiums"
-            className="main-page-card pt-5"
-          >
+          <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
             <ScalingStackedTvlChart
+              tab="validiumsAndOptimiums"
               milestones={props.milestones}
               entries={props.validiumsAndOptimiums}
             />
@@ -105,8 +104,9 @@ export function ScalingTvlTabs(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="others" className="main-page-card pt-5">
+          <DirectoryTabsContent value="others" className="pt-5">
             <ScalingStackedTvlChart
+              tab="others"
               milestones={props.milestones}
               entries={props.others ?? []}
             />

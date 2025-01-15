@@ -2,8 +2,8 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.7142857142857143
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 5/7 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 4/6 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
   }
@@ -29,8 +29,8 @@
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: 1
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
+    definingMetric: 2
+    description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
@@ -41,8 +41,8 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.7142857142857143
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 5/7 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 4/6 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
   }
@@ -66,8 +66,8 @@
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: 1
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
+    definingMetric: 2
+    description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"

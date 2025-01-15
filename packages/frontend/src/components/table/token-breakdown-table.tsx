@@ -28,7 +28,7 @@ export function TokenTable<T>({ table }: Props<T>) {
       <TableHeader>
         <TableHeaderRow
           key={headers.id}
-          className="!border-0 md:bg-black/10 dark:md:bg-white/10"
+          className="!border-0 md:bg-surface-secondary"
         >
           {headers.headers.map((header) => (
             <TableHead

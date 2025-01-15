@@ -15,13 +15,13 @@ import { type NavGroup } from './types'
 interface Props {
   groups: NavGroup[]
   logoLink: string
-  legacyNav: boolean
+  topNavbar: boolean
 }
 
-export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
+export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
-    <NavSideBarWrapper legacyNav={legacyNav}>
+    <NavSideBarWrapper topNavbar={topNavbar}>
       <div className="flex h-[38px] flex-row items-center justify-between">
         <Link href={logoLink}>
           <Logo className="block h-8 w-auto" />
@@ -40,6 +40,7 @@ export async function NavSidebar({ groups, logoLink, legacyNav }: Props) {
       </nav>
       <div>
         <NavSmallLinkGroup className="mt-5">
+          <NavSmallLink title="About Us" href="/about-us" />
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           <NavSmallLink title="Donate" href="/donate" />
           <NavSmallLink

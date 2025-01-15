@@ -69,6 +69,11 @@ export interface ResolvedPermission {
   via?: ResolvedPermissionPath[]
 }
 
+export type ExternalReference = {
+  text: string
+  href: string
+}
+
 export interface Meta {
   issuedPermissions?: ResolvedPermission[]
   receivedPermissions?: ResolvedPermission[]
@@ -77,6 +82,7 @@ export interface Meta {
   types?: ContractValueType[]
   description?: string
   severity?: ContractFieldSeverity
+  references?: ExternalReference[]
 }
 
 export type EoaParameters = {

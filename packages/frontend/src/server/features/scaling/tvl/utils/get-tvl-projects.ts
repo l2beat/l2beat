@@ -18,10 +18,10 @@ import {
   type AmountConfigEntry,
   type ProjectId,
   UnixTime,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
+import { isProjectOther } from '../../utils/is-project-other'
 
 export interface BaseProject {
   projectId: ProjectId
@@ -38,7 +38,7 @@ export interface TvlProject extends BaseProject {
       minTimestamp: UnixTime
     }
   >
-  category?: 'Rollups' | 'ValidiumOrOptimiums' | 'Others'
+  category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }
 
 export function toTvlProject(project: Layer2 | Layer3 | Bridge): TvlProject {
@@ -77,10 +77,11 @@ const backendProjects = [
 ]
 
 export function getTvlProjects(
-  filter: (p: BaseProject) => boolean,
+  filter: (p: Layer2 | Layer3 | Bridge) => boolean,
 ): TvlProject[] {
-  const filteredProjects = backendProjects
+  const filteredProjects = projects
     .filter((p) => filter(p))
+    .map(toBackendProject)
     .filter(
       (project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.projectId),
     )
@@ -128,23 +129,27 @@ export function getTvlProjects(
 
 function getCategory(
   p: Layer2 | Layer3 | Bridge,
-): 'Rollups' | 'ValidiumOrOptimiums' | 'Others' | undefined {
+): 'rollups' | 'validiumsAndOptimiums' | 'others' | undefined {
   if (p.type === 'bridge') {
     return undefined
   }
 
-  switch (p.display.category) {
-    case 'Validium':
-    case 'Optimium':
-      return 'ValidiumOrOptimiums'
-    case 'Optimistic Rollup':
-    case 'ZK Rollup':
-      return 'Rollups'
-    case 'Other':
-      return 'Others'
-    case 'Plasma':
-      return undefined
-    default:
-      assertUnreachable(p.display.category)
+  if (isProjectOther(p)) {
+    return 'others'
+  }
+
+  if (
+    p.display.category === 'Optimistic Rollup' ||
+    p.display.category === 'ZK Rollup'
+  ) {
+    return 'rollups'
+  }
+
+  if (
+    p.display.category === 'Validium' ||
+    p.display.category === 'Optimium' ||
+    p.display.category === 'Plasma'
+  ) {
+    return 'validiumsAndOptimiums'
   }
 }

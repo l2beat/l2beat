@@ -4,7 +4,6 @@ import { env } from '~/env'
 export function getActivityProjects() {
   return [...layer2s, ...layer3s].filter(
     (project) =>
-      !project.isArchived &&
       !project.isUpcoming &&
       project.config.transactionApi !== undefined &&
       !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(project.id.toString()),

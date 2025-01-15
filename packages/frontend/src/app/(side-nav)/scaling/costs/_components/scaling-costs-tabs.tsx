@@ -69,8 +69,9 @@ export function ScalingCostsTabs(props: Props) {
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="main-page-card pt-5">
+          <DirectoryTabsContent value="rollups" className="pt-5">
             <ScalingCostsChart
+              tab="rollups"
               entries={props.rollups}
               milestones={props.milestones}
             />
@@ -81,11 +82,9 @@ export function ScalingCostsTabs(props: Props) {
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent
-              value="others"
-              className="main-page-card pt-5"
-            >
+            <DirectoryTabsContent value="others" className="pt-5">
               <ScalingCostsChart
+                tab="others"
                 entries={props.others ?? []}
                 milestones={props.milestones}
               />

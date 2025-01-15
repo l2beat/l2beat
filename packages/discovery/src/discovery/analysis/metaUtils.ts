@@ -6,10 +6,13 @@ import {
   ContractValueType,
   StackCategory,
   get$Admins,
+  get$Implementations,
 } from '@l2beat/discovery-types'
+import { uniqBy } from 'lodash'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContractField,
+  ExternalReference,
   PermissionConfiguration,
   RawPermissionConfiguration,
 } from '../config/RawDiscoveryConfig'
@@ -29,6 +32,7 @@ export interface ContractMeta {
   categories?: Set<StackCategory>
   types?: Set<ContractValueType>
   severity?: ContractFieldSeverity
+  references?: ExternalReference[]
 }
 
 export function mergeContractMeta(
@@ -44,6 +48,7 @@ export function mergeContractMeta(
     severity: findHighestSeverity(a?.severity, b?.severity),
     canActIndependently:
       (a?.canActIndependently ?? false) || (b?.canActIndependently ?? false),
+    references: mergeReferences(a?.references, b?.references),
   }
   return isEmptyObject(result) ? undefined : result
 }
@@ -88,19 +93,44 @@ export function getSelfMeta(
   overrides: ContractOverrides | undefined,
   analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
-  if (overrides?.description === undefined) {
-    return undefined
+  let description: string | undefined = undefined
+  if (overrides?.description !== undefined) {
+    description = interpolateDescription(overrides?.description, analysis)
   }
-  const description = interpolateString(overrides?.description, analysis)
-  return {
-    canActIndependently: overrides.canActIndependently,
-    displayName: overrides.displayName ?? undefined,
+
+  let references: ExternalReference[] | undefined
+  if (overrides?.manualSourcePaths !== undefined) {
+    const addresses = [
+      analysis.address,
+      ...get$Implementations(analysis.values),
+    ]
+
+    for (const address of addresses) {
+      const manualSourcePath = overrides.manualSourcePaths[address.toString()]
+      if (manualSourcePath === undefined) {
+        continue
+      }
+
+      references ??= []
+      references.push({
+        text: 'Source Code',
+        href: manualSourcePath,
+      })
+    }
+  }
+
+  const result = {
+    canActIndependently: overrides?.canActIndependently,
+    displayName: overrides?.displayName,
     description,
+    references,
     permissions: undefined,
     categories: undefined,
     severity: undefined,
     types: undefined,
   }
+
+  return isEmptyObject(result) ? undefined : result
 }
 
 export function getTargetsMeta(
@@ -233,6 +263,14 @@ function mergeSets<T>(
     return undefined
   }
   return new Set([...(a ?? []), ...(b ?? [])])
+}
+
+export function mergeReferences(
+  a: ExternalReference[] | undefined,
+  b: ExternalReference[] | undefined,
+): ExternalReference[] | undefined {
+  const result = uniqBy([...(a ?? []), ...(b ?? [])], (v) => JSON.stringify(v))
+  return result.length > 0 ? result : undefined
 }
 
 export function findHighestSeverity(
