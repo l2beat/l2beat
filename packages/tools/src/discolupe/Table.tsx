@@ -1,6 +1,4 @@
 import clsx from 'clsx'
-import { useState } from 'react'
-import { useSearchParams } from 'react-router'
 import { ColumnSelector } from './ColumnSelector'
 import { FilterButton } from './FilterButton'
 import {
@@ -8,17 +6,19 @@ import {
   ColumnId,
   DEFAULT_COLUMN_IDS,
   LupeColumn,
+  deserializeColumns,
+  serializeColumns,
 } from './columns'
 import { DiscoLupeProject } from './data'
+import { ColumnFilter, deserializeFilter, serializeFilter } from './filtering'
 import { SortingArrowIcon } from './icons/SortingArrowIcon'
+import { useSearchParamsState } from './useSearchParamsState'
 
 interface Matrix {
   rowCount: number
   projects: DiscoLupeProject[]
   columns: Column[]
 }
-
-type ColumnFilter = Record<ColumnId, string[] | undefined>
 
 interface Row {
   project: DiscoLupeProject
@@ -41,94 +41,24 @@ export interface TableProps {
   projects: DiscoLupeProject[]
 }
 
-function useSearchParamsState<T>(
-  initializer: T,
-  key: string,
-  serialize: (arg: T) => string,
-  deserialize: (arg: string) => T,
-): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const initialValue = searchParams.has(key)
-    ? deserialize(searchParams.get(key) as string)
-    : initializer
-
-  const [state, setState] = useState<T>(initialValue)
-  const setParamsAndState: React.Dispatch<React.SetStateAction<T>> = (arg) => {
-    setState((prevState) => {
-      const newState =
-        typeof arg === 'function' ? (arg as (prev: T) => T)(prevState) : arg
-      const value = serialize(newState)
-
-      setSearchParams((prevParams) => {
-        const newParams = new URLSearchParams(prevParams)
-        newParams.set(key, value)
-        return newParams
-      })
-
-      return newState
-    })
-  }
-
-  return [state, setParamsAndState]
-}
-
 export function Table({ projects }: TableProps) {
   const [selectedColumns, setSelectedColumns] = useSearchParamsState<
     LupeColumn[]
   >(
     AVAILABLE_COLUMNS.filter((c) => DEFAULT_COLUMN_IDS.includes(c.id)),
     'cols',
-    (cols: LupeColumn[]) => cols.map((c) => c.id).join(''),
-    (serialized: string) => {
-      console.log('deserializing columns', serialized)
-      const ids: ColumnId[] = []
-      for (let i = 0; i < serialized.length; i += 2) {
-        ids.push(serialized.slice(i, i + 2) as ColumnId)
-      }
-      return AVAILABLE_COLUMNS.filter((c) => ids.includes(c.id))
-    },
+    serializeColumns,
+    deserializeColumns,
   )
+
   const defaultFilterState = Object.fromEntries(
     selectedColumns.map((c) => [c.id, undefined]),
   ) as ColumnFilter
   const [filter, setFilter] = useSearchParamsState<ColumnFilter>(
     defaultFilterState,
     'filter',
-    (filter: ColumnFilter) => {
-      const definedEntries = Object.entries(filter).filter(
-        ([_, value]) => value !== undefined,
-      )
-      if (definedEntries.length === 0) return ''
-
-      return definedEntries
-        .map(([key, values]) => `${key}:${values?.join(',')}`)
-        .join('|')
-    },
-    (serialized: string) => {
-      if (!serialized) return defaultFilterState
-
-      try {
-        const result = { ...defaultFilterState }
-
-        // Split into column segments and parse
-        const segments = serialized.split('|')
-        segments.forEach((segment) => {
-          const parts = segment.split(':')
-          const columnId = parts[0]
-          const valueStr = parts[1]
-
-          if (columnId && columnId in defaultFilterState) {
-            result[columnId as keyof ColumnFilter] = valueStr
-              ? valueStr.split(',')
-              : undefined
-          }
-        })
-
-        return result
-      } catch {
-        return defaultFilterState
-      }
-    },
+    serializeFilter,
+    (serialized: string) => deserializeFilter(serialized, defaultFilterState),
   )
 
   const [sort, setSort] = useSearchParamsState<SortConfig>(

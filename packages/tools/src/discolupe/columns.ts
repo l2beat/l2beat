@@ -116,3 +116,21 @@ export const DEFAULT_COLUMN_IDS: ColumnId[] = ['qx', 'ig', 'zz', 'm5']
 
 export const AVAILABLE_COLUMNS =
   AVAILABLE_COLUMNS_RAW as unknown as LupeColumn[]
+
+export function serializeColumns(columns: LupeColumn[]): string {
+  return columns.map((c) => c.id).join('')
+}
+
+export function deserializeColumns(serialized: string): LupeColumn[] {
+  const columns: LupeColumn[] = []
+
+  for (let i = 0; i < serialized.length; i += 2) {
+    const id = serialized.slice(i, i + 2) as ColumnId
+    const column = AVAILABLE_COLUMNS.find((c) => c.id === id)
+    if (column !== undefined) {
+      columns.push(column)
+    }
+  }
+
+  return columns
+}
