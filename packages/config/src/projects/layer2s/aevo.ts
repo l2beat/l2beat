@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
   createdAt: new UnixTime(1694090052), // 2023-09-07T12:34:12Z
-  additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.DA.EigenDA, Badge.RaaS.Conduit],
   daProvider: CELESTIA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,

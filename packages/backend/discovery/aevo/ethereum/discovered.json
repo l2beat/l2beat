@@ -1,7 +1,7 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 21078634,
+  "blockNumber": 21628882,
   "configHash": "0x9f822462f565de56e4fd07c24283a53c66be2638322a251f8aa56da7f83c8f7f",
   "contracts": [
     {
@@ -54,7 +54,7 @@
         ],
         "$upgradeCount": 6,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640966",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641861",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -221,7 +221,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 56,
+        "nonce": 73,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -282,7 +282,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 796584,
-          "prevBlockNum": 21078577
+          "prevBlockNum": 21628256
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
@@ -385,10 +385,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 5109600,
-        "latestOutputIndex": 8515,
-        "nextBlockNumber": 5110200,
-        "nextOutputIndex": 8516,
+        "latestBlockNumber": 5773200,
+        "latestOutputIndex": 9621,
+        "nextBlockNumber": 5773800,
+        "nextOutputIndex": 9622,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -460,7 +460,7 @@
         "gasLimit": 150000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": true,
+          "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false
         },
         "overhead": 188,
