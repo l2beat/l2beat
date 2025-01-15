@@ -1,7 +1,7 @@
 {
   "name": "swell",
   "chain": "ethereum",
-  "blockNumber": 21565774,
+  "blockNumber": 21628490,
   "configHash": "0xb92e622dce98c6094d5c60c53665436f10615f11aa70be7a24bffd88a8c05f45",
   "contracts": [
     {
@@ -198,7 +198,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 45,
+        "nonce": 52,
         "VERSION": "1.3.0"
       }
     },
@@ -264,6 +264,7 @@
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -377,7 +378,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -425,7 +426,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21565724
+          "prevBlockNum": 21628325
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -517,7 +518,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 10,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -557,7 +558,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 957,
+        "gameCount": 1165,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xa0cFbe3402d6E0a74e96D3C360F74D5ea4Fa6893",
@@ -567,7 +568,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 957,
+        "permissionedGamesTotal": 1165,
         "version": "1.0.0"
       }
     },
@@ -751,7 +752,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 97,
+        "nonce": 98,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -896,7 +897,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 8,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1114,7 +1115,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622392",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622919",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

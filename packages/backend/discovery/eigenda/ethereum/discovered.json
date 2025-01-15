@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 21365898,
+  "blockNumber": 21628459,
   "configHash": "0xd0b945f631cb82400e9d0c7628cf58ea02ad791f455b8b6edff34d7777e046e0",
   "contracts": [
     {
@@ -230,7 +230,6 @@
           "0xfdaa0fe4307b2e9f18c1211f08ba2613a2ec3002eaad3e2d61f87b9cb25e305d",
           "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
           "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
-          "0xd6e2be452864cc8794926587487737ab897b2ad406ec3da00c017428674d531b",
           "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
           "0x23300304fd0646813aa0be7ccc7118087f34331f5892b9dd8ae54b6f0c669224",
           "0xddc70367e7acf0865b3da4c7bd35bd822f00abe639de80a507536684027f8cab",
@@ -238,7 +237,6 @@
           "0xf5cb5ed8b9977a41406e89704eb1e0d06cad740a6cde74857036f17e0a01b4a9",
           "0x4e69818bbb7112a75a417a8da67ba346b541bc18a4fcd78897cf0d20d5573f14",
           "0xb1466ebd795b92cdd28a91fda29fc81ddbb10d46e2a29c1bec4be99431dbcf1d",
-          "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f",
           "0x0496a1c5a3f9d2350177e1d3fc810b61acfcfd24e1d40e1d716524fd379e858a",
           "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
           "0x298a5d7f39ddadc4ea6ec53dfe8f53da3bcb79f78959d6f0b052db493af7a750",
@@ -278,8 +276,6 @@
           "0xfaadebdb6cb8d82a27c41dccb96d35b6a42c45132cb777a1b3ba70c3fb6b2370",
           "0x5b2274de8738752b57013b4b6bc7da9d3b1d231d9f09e9cec3387c806f84f2a0",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
-          "0xb2a1eea9734c6913d8bb849051d4cc19b8310a134a49054395129b1a20f299db",
-          "0xbfa7b15ee3e230688bae0116125206f07046efaefc4983df233efc4f635b0c83",
           "0x7589e32e34b503623a02b00149346424838461e88188478f3129c3c020224fd3",
           "0x6c1d43ae1a74bfbb3194940cac14182a6d75bd447e79f5dd5d8c4e1f5a19bc12",
           "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
@@ -300,14 +296,12 @@
           "0xde53519c0b50ce1cd275100ee06201a3b7226f63a30b86dd2cb316111738eaf5",
           "0x39495b08d4d21acf806b4c32512ac907e1dcd2a3217d5d5b9fd20f25714c8a36",
           "0x1861c2cf819ad84c9e6de80ba0f5314734d8ade8892321e381baec534c3c3fc2",
-          "0x00f23d80265845805632286d56635c29d2a4f0743a07e36e686d9dabfaff93c1",
           "0x83a970734199a554104e51933e39e7f712000abb43de137401120483a36bce50",
           "0x3ceb264831fd0409c2be704857d44726a904ffb020c199cc0e965c076104d170",
           "0x7a56a2226e44d5e4a2194d23f492a418bee9a3088e7809a239838b81c8a1a8d7",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
           "0x8f6ea0107f79f10ea0198872746c612f0878d26bc8f285199130d2d00a10e092",
           "0x81eab2df34764a3124ba5b3e5a8e017418fbd5b7db42fc92b24333f79a010801",
-          "0x91f9c3a43cd54c92a6f3253398e8f592d1b6ad8d376fe189a81786a6a1a84dde",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x5cba09edb487ff0398e56aa7add0675724b755d5ef0feb06ef03f26ace53745a",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
@@ -317,21 +311,18 @@
           "0x90602bdb9617a0d2f08f30c8a03bf3e37052f0e0c24965ee3406a42f55c449dc",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
           "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
-          "0x8482ab441df56bd6332c29b019b37eb8810cda09a7011316f9d8f1448a77b52b",
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x607bfc20f482482ff1a1585e2d1296146cce65cef0fa271eecba591de650576e",
           "0x6d703438b7e75f6adae53e8c3f48de7256db52a20a6aca679a07cf5dceb537c9",
           "0x839f4b2b3fcfabfcf03a1fda25214870c95e3c905a0f8c0a885ee53177df960c",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
           "0x61a037630ed03eba219a0c1b99e744f25072c3ec2040d50091664182b1feee43",
-          "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
           "0xe5418418d084fbf58aaab319d27d38d56a1fe417ee3d553c50265c6461fe296a",
           "0x9a9465fec50da13302323f66f8fa753de709d3faa299f66f9a955e676563da45",
           "0x9e6f62da5509519a81e7ce9549000fa7991483cb9053221968351252b70a1fb9",
           "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
           "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
-          "0x9f80a535ab06889e44d4d1efd4c06f5fbbef89051cd4151fcf434edc755f9ffc",
           "0xab8f5fb53d5b1a01f560a22700bc55f71807b21523a25ff674837245dab433a8",
           "0x37826de7eefbbb8ede0f1b634eb5029b2fa1788c1fe47d7b6182c3533f0d07d1",
           "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
@@ -370,7 +361,12 @@
           "0x567f5cd99014498aee2e719ee1a87c7120a16205b724e4ac1b20e90864474174",
           "0x7730acb2b5ee650752a368bef35a1adb3c6ff5c5f4a5bea02ab270995f71de2b",
           "0x1d32e0504112b36c7a6a366f240377b60afea521d5395183530ae19c200e3d65",
-          "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9"
+          "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
+          "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
+          "0xbdd732ea30885f35952cc61fb2fa054a2bad17bc86626ef2abd0e26aab36442e",
+          "0xb2a1eea9734c6913d8bb849051d4cc19b8310a134a49054395129b1a20f299db",
+          "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
+          "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f"
         ],
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -437,7 +433,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "41048477231797405273724",
+        "totalShares": "33341287514195386861859",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -544,7 +540,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "866127567431165999544",
+        "totalShares": "828316814013991705728",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
@@ -588,7 +584,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       }
     },
@@ -625,7 +621,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "22760737724047431751514",
+        "totalShares": "19720928647452952338118",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -676,7 +672,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "138221570587356714914869",
+        "totalShares": "150311496525519038834902",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
@@ -727,7 +723,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8738412811972303572771",
+        "totalShares": "7681024153536765216400",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -778,7 +774,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "18051059584145542318101",
+        "totalShares": "17953962891806745307202",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -815,7 +811,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1869724633950101671620669",
+        "totalShares": "3559840567650574613682376",
         "underlyingToken": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
       },
       "fieldMeta": {
@@ -867,7 +863,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "30186770005022020981754",
+        "totalShares": "30596916045323549202039",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -892,6 +888,7 @@
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "displayName": "ProxyAdmin",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -984,7 +981,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 71265,
+        "batchId": 77873,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1016,7 +1013,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 71265,
+        "taskNumber": 77873,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1072,7 +1069,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "9620868770811564833502",
+        "totalShares": "9723121253560135235192",
         "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "fieldMeta": {
@@ -1123,7 +1120,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "1055023530065624850048443",
+        "totalShares": "936225476617155133310065",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -1174,7 +1171,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "78071218670068554152242",
+        "totalShares": "80327706631562480166265",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -1225,7 +1222,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "6716744988845654177310",
+        "totalShares": "5626003368192963817566",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
@@ -1270,7 +1267,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "402864741155922397166156824",
+        "totalShares": "401736739002147125523441464",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -1321,7 +1318,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8357983002653242188932",
+        "totalShares": "8356580441429392320800",
         "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {

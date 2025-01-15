@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 122593187,
+  "blockNumber": 130664390,
   "configHash": "0x31a3019cd0013048c71bd882672a02bed221167c8934d74ae1189dbeb3ceb61b",
   "contracts": [
     {
@@ -94,7 +94,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638481",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643207",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -147,14 +147,14 @@
         "$upgradeCount": 2,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 1,
+        "blobBaseFee": 165388840,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 2198118884,
+        "l1BaseFee": 2729924942,
         "version": "1.3.0"
       },
       "derivedName": "GasPriceOracle"
@@ -365,18 +365,18 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 2198118884,
+        "basefee": 2729924942,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 1,
+        "blobBaseFee": 165388840,
         "blobBaseFeeScalar": 1014213,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x2e964eeaf833d19fd3135e9ff9aae81186b0a6630bf08e7396db845b3bbac9a2",
+        "hash": "0xc97d32f85d939c80d6de9babda4aabd207ada16634c1d8eb98c48509f5bd65e7",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 20290230,
+        "number": 21628505,
         "sequenceNumber": 4,
-        "timestamp": 1720785011,
+        "timestamp": 1736927471,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -452,6 +452,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "ProxyAdmin",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -696,7 +697,7 @@
         "name": "Optimism",
         "owner": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
         "symbol": "OP",
-        "totalSupply": "4294967294179743819541674335"
+        "totalSupply": "4294963294239972048644009441"
       },
       "derivedName": "GovernanceToken"
     },
