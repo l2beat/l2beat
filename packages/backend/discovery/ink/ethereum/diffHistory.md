@@ -1,12 +1,14 @@
-Generated with discovered.json: 0x9b9cd4451ab35f2b7cb0924d252d1dcb7fa6b2d1
+Generated with discovered.json: 0x81f5e51d9b6b83432b359f8ca79b1a48315106c1
 
-# Diff at Wed, 15 Jan 2025 07:29:50 GMT:
+# Diff at Wed, 15 Jan 2025 10:19:47 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21486361
-- current block number: 21628394
+- current block number: 21629240
 
 ## Description
+
+PermissionedDisputeGame upgraded (1.3.0), FaultDisputeGame (1.3.0) and DelayedWETH added, all known shapes. InitBonds same as optimism for now. Permissioned game is still the respected gameType.
 
 Two signers added to Gelato MS, now 4/10.
 
