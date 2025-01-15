@@ -450,11 +450,11 @@ export const soneium: Layer2 = {
   },
   milestones: [
     {
-      name: 'Soneium sequencer censors copyright-infringing tokens',
+      name: 'Soneium censors copyright-infringing tokens',
       link: 'https://x.com/donnoh_eth/status/1879210463952818472',
       date: '2025-01-14T00:00:00Z',
       description:
-        'Soneium bans copyright infringing tokens at sequencer level. Token contracts can still be used by force-including transactions directly from the L1.',
+        'Sequencer bans copyright-infringing tokens - can still be used by forcing txs directly from the L1.',
       type: 'incident',
     },
     {
