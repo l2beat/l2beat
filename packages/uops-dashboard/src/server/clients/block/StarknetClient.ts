@@ -10,7 +10,7 @@ export class StarknetClient implements BlockClient {
   async getLatestBlockNumber(): Promise<number> {
     const params = ['latest']
 
-    const response = await fetch(this.chain.blockchainApiUrl, {
+    const response = await fetch(this.chain.blockchainApi.url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export class StarknetClient implements BlockClient {
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
     const params = [{ block_number: blockNumber }]
 
-    const response = await fetch(this.chain.blockchainApiUrl, {
+    const response = await fetch(this.chain.blockchainApi.url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

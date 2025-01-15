@@ -7,7 +7,7 @@ export class RpcCodeClient {
 
   constructor(private readonly chain: Chain) {
     this.provider = new providers.StaticJsonRpcProvider({
-      url: this.chain.blockchainApiUrl,
+      url: this.chain.blockchainApi.url,
       timeout: 15_000,
     })
   }

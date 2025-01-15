@@ -41,12 +41,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## How to add new chain to UOPS explorer?
 
-1. `packages/uops-dashboard/src/chains.ts`
-- add entry to `ChainId`
-- add entry to `SUPPORTED_CHAINS`
-2. `packages/uops-dashboard/src/server/clients/apiUrls.ts`
-- add entry to `API_URLS`
-- [optional] add entry to `SCAN_URLS` to see contract names in explorer
+1. Navigate to `packages/uops-dashboard/src/chains.ts`
+2. Add new entry to `SUPPORTED_CHAINS`
+3. For more info see `Chain` type comments
 
 ### How to test newly added chain?
 

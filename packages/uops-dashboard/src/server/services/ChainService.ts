@@ -25,14 +25,14 @@ export class ChainService {
   constructor(chain: Chain, db: DB) {
     const http = new HttpClient()
 
-    switch (chain.type) {
+    switch (chain.blockchainApi.type) {
       case 'starknet':
         this.client = new StarknetClient(chain)
         this.counter = new StarknetCounter()
         break
       case 'rpc': {
         this.client = new RpcClient({
-          url: chain.blockchainApiUrl,
+          url: chain.blockchainApi.url,
           sourceName: chain.id,
           http,
           callsPerMinute: (chain.customBatchSize ?? DEFAULT_BATCH_SIZE) * 30,
