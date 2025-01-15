@@ -146,10 +146,10 @@ export function batchesToStateUpdateDelays(
   const map: Map<number, number> = new Map()
   for (const batch of t2iBatches) {
     for (const l2Block of batch.l2Blocks) {
-      if (oldestBlock && oldestBlock.blockNumber > l2Block.blockNumber) {
+      if (!oldestBlock || oldestBlock.blockNumber > l2Block.blockNumber) {
         oldestBlock = l2Block
       }
-      if (newestBlock && newestBlock.blockNumber < l2Block.blockNumber) {
+      if (!newestBlock || newestBlock.blockNumber < l2Block.blockNumber) {
         newestBlock = l2Block
       }
 
@@ -181,9 +181,6 @@ export function batchesToStateUpdateDelays(
     b.l2Blocks.map((l2Block) => {
       const l1Timestamp = b.l1Timestamp
       const l2Timestamp = getL2BlockTimestamp(l2Block.blockNumber)
-      if (l2Timestamp > l1Timestamp) {
-        console.log(l2Block, b.l1Timestamp)
-      }
       return l1Timestamp - l2Timestamp
     }),
   )
