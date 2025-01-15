@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21593851,
+  "blockNumber": 21630370,
   "configHash": "0x6df0ac5890932228ef162e50fab913768c569d091daad0bb753a87dd4a00c8f3",
   "contracts": [
     {
@@ -336,7 +336,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 171,
+        "nonce": 172,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
