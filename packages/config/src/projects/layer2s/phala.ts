@@ -14,6 +14,7 @@ import {
   DA_LAYERS,
   DA_MODES,
   EXITS,
+  FRONTRUNNING_RISK,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -225,6 +226,10 @@ export const phala: Layer2 = {
           category: 'Funds can be stolen if',
           text: 'optimistic mode is enabled and no challenger checks the published state.',
         },
+        {
+          category: 'Funds can be stolen if',
+          text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
+        },
       ],
     },
     newCryptography: {
@@ -263,7 +268,7 @@ export const phala: Layer2 = {
           )}#code`,
         },
       ],
-      risks: [],
+      risks: [FRONTRUNNING_RISK],
     },
     exitMechanisms: [
       {
