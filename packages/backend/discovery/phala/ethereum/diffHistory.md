@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x77998404d0fdf1e3a6d250889197459dd174b063
+Generated with discovered.json: 0xff38e9b6faa818266f23fb8e14753a64a9cc048e
 
-# Diff at Wed, 15 Jan 2025 11:24:15 GMT:
+# Diff at Wed, 15 Jan 2025 13:22:11 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@1189a75f4d0a644ce19ab86fd322d93dd0ecf4ae block: 21586240
-- current block number: 21629562
+- current block number: 21630146
 
 ## Description
 
@@ -163,6 +163,15 @@ discovery. Values are for block 21586240 (main branch discovery), not current.
 -   Status: DELETED
     contract FaultDisputeGame (0xB6846927447e4764acd53b0b354BEd939f9220d7)
     +++ description: None
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "SuccinctGatewaySP1Multisig"
+    }
 ```
 
 ```diff

@@ -230,6 +230,14 @@ export const phala: Layer2 = {
           category: 'Funds can be stolen if',
           text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
         },
+        {
+          category: 'Funds can be frozen if',
+          text: 'the permissioned proposer fails to publish state roots to the L1.',
+        },
+        {
+          category: 'Funds can be frozen if',
+          text: 'in non-optimistic mode, the SuccinctGateway is unable to route proof verification to a valid verifier.',
+        },
       ],
     },
     newCryptography: {
