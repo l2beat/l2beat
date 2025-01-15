@@ -3,7 +3,7 @@ import {
   PermissionType,
   ResolvedPermissionPath,
 } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, assert } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import {
   Permission,
@@ -51,13 +51,12 @@ export function transformToReceived(
 
   const ultimate = sort(
     assignedToThisAddress.map((r) => {
+      assert(r.path[0])
+      assert(r.path[0]?.gives)
       return {
-        // biome-ignore lint/style/noNonNullAssertion: we know path[0].gives exists
-        permission: internalPermissionToExternal(r.path[0]!.gives!),
-        // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
-        target: r.path[0]!.address,
-        // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
-        delay: zeroToUndefined(r.path[0]!.delay),
+        permission: internalPermissionToExternal(r.path[0].gives),
+        target: r.path[0].address,
+        delay: zeroToUndefined(r.path[0].delay),
         description: r.path[0]?.description,
         condition: r.path[0]?.condition,
         via: emptyToUndefined(
