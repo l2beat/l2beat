@@ -46,4 +46,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - add entry to `SUPPORTED_CHAINS`
 2. `packages/uops-dashboard/src/server/clients/apiUrls.ts`
 - add entry to `API_URLS`
-- [optional] add entry to `SCAN_URLS`
+- [optional] add entry to `SCAN_URLS` to see contract names in explorer
+
+### How to test newly added chain?
+
+1. Run `pnpmn dev` & open [local instance](http://localhost:3000)
+2. Select this new chain & explore latest block
+3. Check links: block, tx, contract
+4. Go to [stats](http://localhost:3000/stats)
+5. Explore last 100 blocks
+6. [optional] If in steps 2 & 5 you did not see any UOPS: manually go to `0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789` on the explorer and find block number when it was invoked
