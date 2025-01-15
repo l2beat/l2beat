@@ -10,7 +10,8 @@ import { Permission } from '../config/RawDiscoveryConfig'
 // multisigs, but it makes the processing easier to set it to one for
 // non-multisig contracts. It also contains a delay field which allows to model
 // things like multisigs with delays or contracts which always execute an
-// operation with some additional baseline delay.
+// operation with some additional baseline delay. (see caveat below - the delay
+// is added to the the edge delay)
 //
 // Edges link two nodes together and define the action that can take place on
 // that link. Each action can have a execution delay which is additive to the
@@ -23,6 +24,21 @@ import { Permission } from '../config/RawDiscoveryConfig'
 // these delays will start to drift apart. Current implementation does not say
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
+
+// NOTE (adamiak): initially delay was treated a bit differently then other
+// edge parameters.
+// So e.g. when A pointed (e.g. as "act") to B with { delay=100, description="D"
+// and condition="C" }, the resulting path would be:
+// path<act> = [{'A', delay: 100}, {'B', description: "D", condition: "C"}]
+// So delay was added to the preceeding path element. This was very confusing
+// but made it look nice if "A" was a Timelock (which was usually the case).
+// But this is not only confusing and made implementation ugly,
+// but also not correct. First of all, if timelock is given "act" on contract Z,
+// it can act without a delay. Even if it imposes delay upon its users, from the point
+// of view of Z it can act without delay. You can also imagine a Timelock with
+// delay=1h under one condition, and delay=7d under another
+// condition. So the delay should always go together with the condition.
+// That's how it's done now.
 
 export interface Node<T = EthereumAddress> {
   address: T
@@ -42,13 +58,13 @@ export interface Edge<T = EthereumAddress> {
 
 export interface PathElement<T = EthereumAddress> {
   address: T
+  gives: Permission | undefined
   delay: number
   description?: string
   condition?: string
 }
 
 export interface ResolvedPermission<T = EthereumAddress> {
-  permission: Permission
   path: PathElement<T>[]
 }
 
@@ -63,19 +79,20 @@ export function resolvePermissions<T>(
     for (const edge of seedingEdges) {
       const toNode = getNode(edge.toNode, graph)
       const resolved: ResolvedPermission<T> = {
-        permission: edge.permission,
         path: [
           {
             address: node.address,
             delay: edge.delay + node.delay,
-            description: undefined,
-            condition: undefined,
+            description: edge.description,
+            condition: edge.condition,
+            gives: edge.permission,
           },
           {
             address: toNode.address,
-            delay: toNode.delay,
-            description: edge.description,
-            condition: edge.condition,
+            delay: 0,
+            gives: undefined,
+            description: undefined,
+            condition: undefined,
           },
         ],
       }
@@ -130,15 +147,20 @@ function followThrough<T>(
 
       const toNode = getNode(edge.toNode, graph)
       const clone = structuredClone(resolved)
-      const last = clone.path[clone.path.length - 1]
-      if (last !== undefined) {
-        last.delay += edge.delay
-      }
+      clone.path.pop()
       clone.path.push({
-        address: toNode.address,
-        delay: toNode.delay,
+        address: node.address,
+        gives: edge.permission,
+        delay: edge.delay + node.delay,
         description: edge.description,
         condition: edge.condition,
+      })
+      clone.path.push({
+        address: toNode.address,
+        gives: undefined,
+        delay: 0,
+        description: undefined,
+        condition: undefined,
       })
       result.push(
         ...followThrough(toNode.address, graph, [...visited, address], clone),

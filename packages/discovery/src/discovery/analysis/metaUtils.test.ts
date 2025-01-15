@@ -12,7 +12,7 @@ import {
   findHighestSeverity,
   getMetaFromUpgradeability,
   getTargetsMeta,
-  interpolateDescription,
+  interpolateString,
   invertMeta,
   mergeContractMeta,
   mergePermissions,
@@ -187,6 +187,7 @@ describe('metaUtils', () => {
               },
               {
                 type: 'configure',
+                condition: 'condition C1 is met',
                 delay: 0,
                 description:
                   'configuring the {{ $.address }} contract allows freeze funds',
@@ -235,6 +236,7 @@ describe('metaUtils', () => {
               target: selfAddress,
               description:
                 'configuring the 0x0000000000000000000000000000000000001234 allows to change this number: 1122',
+              condition: undefined,
             },
           ],
           categories: new Set(['Core']),
@@ -253,9 +255,11 @@ describe('metaUtils', () => {
               target: selfAddress,
               description:
                 'upgrading the 0x0000000000000000000000000000000000001234 contract gives access to all funds',
+              condition: undefined,
             },
             {
               type: 'configure',
+              condition: 'condition C1 is met',
               delay: 0,
               target: selfAddress,
               description:
@@ -277,9 +281,11 @@ describe('metaUtils', () => {
               target: selfAddress,
               description:
                 'upgrading the 0x0000000000000000000000000000000000001234 contract gives access to all funds',
+              condition: undefined,
             },
             {
               type: 'configure',
+              condition: 'condition C1 is met',
               delay: 0,
               target: selfAddress,
               description:
@@ -483,7 +489,7 @@ describe('metaUtils', () => {
         },
       )
 
-      const result = interpolateDescription(description, analysis)
+      const result = interpolateString(description, analysis)
 
       expect(result).toEqual(
         'Contract with address 0x1234567890123456789012345678901234567890 and value 42',
@@ -496,8 +502,8 @@ describe('metaUtils', () => {
         EthereumAddress.from('0x1234567890123456789012345678901234567890'),
       )
 
-      expect(() => interpolateDescription(description, analysis)).toThrow(
-        'Value for variable "{{ missingValue }}" in contract description not found in contract analysis',
+      expect(() => interpolateString(description, analysis)).toThrow(
+        'Value for variable "{{ missingValue }}" in contract field not found in contract analysis',
       )
     })
   })

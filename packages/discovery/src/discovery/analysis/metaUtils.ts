@@ -69,7 +69,7 @@ export function mergePermissions(
   return result.length === 0 ? undefined : result
 }
 
-export function interpolateDescription(
+export function interpolateString(
   description: string,
   analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): string {
@@ -77,7 +77,7 @@ export function interpolateDescription(
     const value = key === '$.address' ? analysis.address : analysis.values[key]
     if (value === undefined) {
       throw new Error(
-        `Value for variable "{{ ${key} }}" in contract description not found in contract analysis`,
+        `Value for variable "{{ ${key} }}" in contract field not found in contract analysis`,
       )
     }
     return String(value)
@@ -91,7 +91,7 @@ export function getSelfMeta(
   if (overrides?.description === undefined) {
     return undefined
   }
-  const description = interpolateDescription(overrides?.description, analysis)
+  const description = interpolateString(overrides?.description, analysis)
   return {
     canActIndependently: overrides.canActIndependently,
     displayName: overrides.displayName ?? undefined,
@@ -188,7 +188,10 @@ function linkPermission(
     type: rawPermission.type,
     delay,
     description: rawPermission.description
-      ? interpolateDescription(rawPermission.description, analysis)
+      ? interpolateString(rawPermission.description, analysis)
+      : undefined,
+    condition: rawPermission.condition
+      ? interpolateString(rawPermission.condition, analysis)
       : undefined,
     target: self,
   }

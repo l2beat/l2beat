@@ -41,25 +41,35 @@ export function transformToReceived(
   const emptyToUndefined = <T>(arr: T[]) => (arr.length === 0 ? undefined : arr)
   const zeroToUndefined = (x: number) => (x === 0 ? undefined : x)
 
+  const assignedToThisAddress = resolved.filter(
+    (r) => r.path[r.path.length - 1]?.address === toAddress,
+  )
+
+  if (
+    toAddress === EthereumAddress('0x847B5c174615B1B7fDF770882256e2D3E95b9D92')
+  ) {
+    console.dir(assignedToThisAddress, { depth: null })
+  }
+
   const ultimate = sort(
-    resolved
-      .filter((r) => r.path[r.path.length - 1]?.address === toAddress)
-      .map((r) => ({
-        permission: internalPermissionToExternal(r.permission),
-        // biome-ignore lint/style/noNonNullAssertion: we path[0] exists
-        target: r.path[0]!.address,
-        // biome-ignore lint/style/noNonNullAssertion: we path[0] exists
-        delay: zeroToUndefined(r.path[0]!.delay),
-        description: r.path[1]?.description,
-        via: emptyToUndefined(
-          r.path.slice(1, -1).map(
-            (x): ResolvedPermissionPath => ({
-              address: x.address,
-              delay: zeroToUndefined(x.delay),
-            }),
-          ),
+    assignedToThisAddress.map((r) => ({
+      permission: internalPermissionToExternal(r.permission),
+      // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
+      target: r.path[0]!.address,
+      // biome-ignore lint/style/noNonNullAssertion: we know path[0] exists
+      delay: zeroToUndefined(r.path[0]!.delay),
+      description: r.path[1]?.description,
+      condition: r.path[1]?.condition,
+      via: emptyToUndefined(
+        r.path.slice(1, -1).map(
+          (x): ResolvedPermissionPath => ({
+            address: x.address,
+            delay: zeroToUndefined(x.delay),
+            condition: x.condition,
+          }),
         ),
-      })),
+      ),
+    })),
   )
 
   const direct: OutputResolvedPermission[] = sort(
@@ -69,6 +79,7 @@ export function transformToReceived(
         target: p.target,
         delay: zeroToUndefined(p.delay),
         description: p.description,
+        condition: p.condition,
         via: undefined,
       }))
       .filter((p) => !ultimate.some((m) => isEqual(m, p))),

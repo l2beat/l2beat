@@ -9,12 +9,24 @@
     },
     "fallbackOwner": {
       "target": {
-        "description": "Fallback Owner of {{ $.address }} - takes ownership of {{ safe }} if the number of members falls below {{ minOwners }}."
+        "permissions": [
+          {
+            "type": "act",
+            "description": "takes ownership of {{ safe }}",
+            "condition": "the number of members falls below {{ minOwners }}.",
+            "delay": 3600
+          }
+        ]
       }
     },
     "livenessGuard": {
       "target": {
-        "description": "Liveness Guard of {{ $.address }} - used to remove members inactive for {{ livenessInterval }}."
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "is a Liveness Guard of {{ $.address }} - used to remove members of {{ safe }} inactive for {{ livenessInterval }}."
+          }
+        ]
       }
     }
   }

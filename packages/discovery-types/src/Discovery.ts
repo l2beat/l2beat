@@ -57,6 +57,7 @@ export type PermissionType =
 export interface ResolvedPermissionPath {
   address: EthereumAddress
   delay?: number
+  condition?: string
 }
 
 export interface ResolvedPermission {
@@ -64,6 +65,7 @@ export interface ResolvedPermission {
   target: EthereumAddress
   delay?: number
   description?: string
+  condition?: string
   via?: ResolvedPermissionPath[]
 }
 
