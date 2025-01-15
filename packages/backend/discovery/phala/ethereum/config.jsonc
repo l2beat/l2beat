@@ -5,27 +5,15 @@
   "initialAddresses": ["0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521"],
   "names": {
     "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8": "OPSuccinctL2OutputOracle",
-    "0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743": "PermissionedDisputeGame",
-    "0xB6846927447e4764acd53b0b354BEd939f9220d7": "FaultDisputeGame",
-    "0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44": "PreimageOracle",
     "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SuccinctGateway",
-    "0x99F4f5651FF808107A84F279ed8b79e0870F1f39": "MIPS"
+    "0xeBf5859b7646ca9cf8A981613569bF28394F2571": "SystemConfig"
   },
   "overrides": {
+    "SystemConfig": {
+      "ignoreRelatives": ["disputeGameFactory"]
+    },
     "OPSuccinctL2OutputOracle": {
       "extends": "succinct/OPSuccinct/OPSuccinctL2OutputOracle"
-    },
-    "FaultDisputeGame": {
-      "extends": "succinct/OPSuccinct/FaultDisputeGame"
-    },
-    "PermissionedDisputeGame": {
-      "extends": "succinct/OPSuccinct/PermissionedDisputeGame"
-    },
-    "PreimageOracle": {
-      "extends": "succinct/OPSuccinct/PreimageOracle"
-    },
-    "MIPS": {
-      "extends": "succinct/OPSuccinct/MIPS"
     },
     "SuccinctGateway": {
       "fields": {

@@ -2,7 +2,7 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DATA_ON_CHAIN,
   DA_BRIDGES,
@@ -74,6 +74,17 @@ export const phala: Layer2 = {
         'https://phala.network/blog',
       ],
     },
+    liveness: {
+      warnings: {
+        stateUpdates: 'Please note, the state is not finalized until the finalization period passes.',
+      },
+      explanation: `Phala is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+        SEQUENCING_WINDOW_SECONDS,
+      )} or until it gets published. The state root gets confirmed ${formatSeconds(
+        finalizationPeriod,
+      )} after it has been posted.`,
+    },
+    finality: { finalizationPeriod:  finalizationPeriod},
   },
   chainConfig: {
     name: 'phala',

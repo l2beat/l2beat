@@ -9,6 +9,14 @@
         "valueKey": "proposer",
         "flagKey": "added"
       }
+    },
+    "owner": {
+      "target": {
+        "permissions": [{
+          "type": "configure",
+          "description": "can toggle between the optimistic mode and not optimistic (ZK) mode."
+        }]
+      }
     }
   },
   "ignoreMethods": [
