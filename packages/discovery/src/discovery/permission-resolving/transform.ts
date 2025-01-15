@@ -28,7 +28,16 @@ export function transformToIssued(
       return {
         permission: internalPermissionToExternal(r.path[0].gives),
         target: last.address,
-        via: r.path.slice(1, -1).reverse(),
+        via: r.path
+          .slice(1, -1)
+          .reverse()
+          .map(
+            (x): ResolvedPermissionPath => ({
+              address: x.address,
+              delay: x.delay,
+              condition: x.condition,
+            }),
+          ),
       }
     }),
   )
@@ -48,12 +57,6 @@ export function transformToReceived(
   const assignedToThisAddress = resolved.filter(
     (r) => r.path[r.path.length - 1]?.address === toAddress,
   )
-
-  if (
-    toAddress === EthereumAddress('0x847B5c174615B1B7fDF770882256e2D3E95b9D92')
-  ) {
-    console.dir(assignedToThisAddress, { depth: null })
-  }
 
   const ultimate = sort(
     assignedToThisAddress.map((r) => {
