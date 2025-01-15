@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x39a2237a90d309f9c20fde67344d8aa921c0077c
+
+# Diff at Wed, 15 Jan 2025 07:31:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21465236
+- current block number: 21628402
+
+## Description
+
+Two signers added to Gelato MS, now 4/10.
+
+## Watched changes
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.9:
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.8:
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.7:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.6:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+      values.$members.5:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+      values.$members.4:
+-        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.3:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.2:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+      values.$members.1:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.0:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x7b954c6e4c525b52b994ec03578e000dfcbdeec5
 
 # Diff at Wed, 08 Jan 2025 10:44:55 GMT:
