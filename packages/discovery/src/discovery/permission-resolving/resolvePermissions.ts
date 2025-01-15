@@ -25,21 +25,6 @@ import { Permission } from '../config/RawDiscoveryConfig'
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
 
-// NOTE (adamiak): initially delay was treated a bit differently then other
-// edge parameters.
-// So e.g. when A pointed (e.g. as "act") to B with { delay=100, description="D"
-// and condition="C" }, the resulting path would be:
-// path<act> = [{'A', delay: 100}, {'B', description: "D", condition: "C"}]
-// So delay was added to the preceeding path element. This was very confusing
-// but made it look nice if "A" was a Timelock (which was usually the case).
-// But this is not only confusing and made implementation ugly,
-// but also not correct. First of all, if timelock is given "act" on contract Z,
-// it can act without a delay. Even if it imposes delay upon its users, from the point
-// of view of Z it can act without delay. You can also imagine a Timelock with
-// delay=1h under one condition, and delay=7d under another
-// condition. So the delay should always go together with the condition.
-// That's how it's done now.
-
 export interface Node<T = EthereumAddress> {
   address: T
   threshold: number
