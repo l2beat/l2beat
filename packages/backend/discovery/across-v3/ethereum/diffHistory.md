@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x781c2f720cc4ded21607077f0393ed0da0e76472
+
+# Diff at Wed, 15 Jan 2025 09:06:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21543430
+- current block number: 21628877
+
+## Description
+
+Soneium adapter added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.1868:
++        "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
+      values.CrossChainContracts.1868:
++        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Soneium_Adapter (0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Soneium_Adapter.sol   | 596 +++++++++++++++++++++
+ 1 file changed, 596 insertions(+)
+```
+
 Generated with discovered.json: 0x4a75fdca8455fbd7d6fb3c4a66c4947552961416
 
 # Diff at Fri, 03 Jan 2025 10:43:13 GMT:
