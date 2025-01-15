@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x4dacf0edbf35077522b521884aad81792a036d93
+
+# Diff at Wed, 15 Jan 2025 13:53:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21585288
+- current block number: 21630305
+
+## Description
+
+New relayer, new programVkey.
+
+## Watched changes
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.isRelayerApproved:
+-        false
++        true
+      values.vectorXProgramVkey:
+-        "0x00285180a989ed2d6aa8194220690d0d45f2907535d3d3c09e4cb29f6dbe3d4d"
++        "0x00d0279ddadaccdbdb6142981d3830f9ada20ed4e2925ed186ae2be5806e3402"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585288 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      issuedPermissions.1.target:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
+      issuedPermissions.0.target:
+-        "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d"
++        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.isRelayerApproved:
+-        true
++        false
+      values.relayers.0:
+-        "0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"
++        "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
+    }
+```
+
 Generated with discovered.json: 0x69c3f8489c736f7f92feded9f8328a32067bed91
 
 # Diff at Thu, 09 Jan 2025 06:59:49 GMT:
