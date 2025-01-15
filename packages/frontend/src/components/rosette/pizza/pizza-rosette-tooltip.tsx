@@ -37,6 +37,7 @@ export function PizzaRosetteTooltip({
             values={values}
             className="scale-75"
             isUnderReview={isUnderReview}
+            background="surface"
           />
           <PizzaRosetteLabels
             values={values}

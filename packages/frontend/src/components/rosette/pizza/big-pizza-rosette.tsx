@@ -22,6 +22,7 @@ export interface BigPizzaRosetteProps {
   isUpcoming?: boolean
   isUnderReview?: boolean
   className?: string
+  background?: 'header' | 'surface'
 }
 
 export function BigPizzaRosette(props: BigPizzaRosetteProps) {
@@ -43,6 +44,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           values={props.values}
           isUnderReview={isUnderReview}
           className={cn(props.isUpcoming && 'opacity-30')}
+          background={props.background}
         />
         {props.isUpcoming && (
           <UpcomingBadge className="absolute left-[90px] top-[130px]" />
@@ -67,6 +69,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
             <PizzaRosetteIcon
               values={props.values}
               isUnderReview={isUnderReview}
+              background={props.background}
             />
           </TooltipTrigger>
           <PizzaRosetteLabels
