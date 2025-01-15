@@ -216,7 +216,16 @@ export const phala: Layer2 = {
           text: 'Op-Succinct architecture',
         },
       ],
-      risks: [],
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'in non-optimistic mode, the validity proof cryptography is broken or implemented incorrectly.',
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'optimistic mode is enabled and no challenger checks the published state.',
+        },
+      ],
     },
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
@@ -285,7 +294,12 @@ export const phala: Layer2 = {
   },
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: `the contracts or their dependencies (e.g. SuccinctGateway) receive a malicious code upgrade. There is no delay on upgrades.`,
+      },
+    ],
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
