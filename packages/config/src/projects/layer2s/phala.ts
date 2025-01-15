@@ -35,6 +35,15 @@ const finalizationPeriod = discovery.getContractValue<number>(
   'OPSuccinctL2OutputOracle',
   'finalizationPeriodSeconds',
 )
+
+const sequencerAddress = EthereumAddress(
+  discovery.getContractValue('SystemConfig', 'batcherHash'),
+)
+
+const sequencerInbox = EthereumAddress(
+  discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+)
+
 const portal = discovery.getContract('OptimismPortal')
 const l2OutputOracle = discovery.getContract('OPSuccinctL2OutputOracle')
 const upgradeDelay = 0
@@ -88,6 +97,34 @@ export const phala: Layer2 = {
         sinceTimestamp: new UnixTime(1734388655),
         tokens: ['ETH'],
       }),
+    ],
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: sequencerAddress,
+          to: sequencerInbox,
+          sinceTimestamp: new UnixTime(1734388655),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: l2OutputOracle.address,
+          selector: '0x9ad84880',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
+          sinceTimestamp: new UnixTime(1734388655),
+        },
+      },
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
