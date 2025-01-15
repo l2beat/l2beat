@@ -3,7 +3,7 @@ import {
   PermissionType,
   ResolvedPermissionPath,
 } from '@l2beat/discovery-types'
-import { EthereumAddress, assert } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import {
   Permission,
