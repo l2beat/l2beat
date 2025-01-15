@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
 import { isVerified } from '../../verification'
 import { Bridge, bridges } from '../bridges'
-import { Layer2, layer2s } from '../layer2s'
+import { Layer2, layer2s, ProjectLivenessInfo } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
 import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
@@ -61,7 +61,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
-    livenessInfo: p.type === 'layer2' ? p.display.liveness : undefined,
+    livenessInfo: getLiveness(p),
     proofVerification: p.stateValidation?.proofVerification,
     countdowns: otherMigrationContext
       ? {
@@ -77,6 +77,17 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     isArchived: p.isArchived ? true : undefined,
     isUpcoming: p.isUpcoming ? true : undefined,
+  }
+}
+
+function getLiveness(p: Layer2 | Layer3): ProjectLivenessInfo | undefined {
+  if (
+    (p.display.category === 'Optimistic Rollup' ||
+      p.display.category === 'ZK Rollup') &&
+    p.type === 'layer2' &&
+    p.config.trackedTxs !== undefined
+  ) {
+    return p.display.liveness ?? {}
   }
 }
 

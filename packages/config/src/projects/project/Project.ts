@@ -27,7 +27,15 @@ export interface Project {
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
+  // tvlConfig
+  /** Display information for the liveness feature. If this is present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
+  // costsInfo
+  // trackedTxsConfig
+  // activityInfo
+  // activityConfig
+  // finalityInfo
+  // finalityConfig
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
   countdowns?: ProjectCountdowns
