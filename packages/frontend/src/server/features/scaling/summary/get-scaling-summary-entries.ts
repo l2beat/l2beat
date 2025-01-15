@@ -23,6 +23,7 @@ import {
   type ActivityLatestUopsData,
   getActivityLatestUops,
 } from '../activity/get-activity-latest-tps'
+import { getActivitySyncStatus } from '../activity/utils/get-activity-sync-status'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
@@ -109,8 +110,16 @@ function getScalingSummaryEntry(
       : undefined
   const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
 
+  const activitySyncStatus = activity
+    ? getActivitySyncStatus(activity.syncedUntil)
+    : undefined
+
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncStatus: activitySyncStatus,
+    }),
     stage:
       isProjectOther(project) || !project.stage
         ? {

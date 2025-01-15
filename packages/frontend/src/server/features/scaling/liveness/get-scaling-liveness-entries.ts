@@ -91,7 +91,7 @@ function getScalingLivenessEntry(
     ...getCommonScalingEntry2({
       project,
       changes,
-      syncStatus: data?.syncStatus,
+      syncStatuses: data?.syncStatus,
     }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,

@@ -7,8 +7,8 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { aggregateActivityRecords } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
+import { getActivitySyncStatus } from './utils/get-activity-sync-status'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { getSyncStatus } from './utils/get-sync-status'
 import {
   type ActivityProjectFilter,
   createActivityProjectsFilter,
@@ -73,7 +73,7 @@ export const getCachedRecategorizedActivityChartData = cache(
         adjustedRange,
       ),
     ])
-    const syncStatus = getSyncStatus(adjustedRange[1])
+    const syncStatus = getActivitySyncStatus(adjustedRange[1])
 
     const aggregatedRollupsEntries =
       aggregateActivityRecords(rollupsEntries) ?? {}
@@ -157,6 +157,6 @@ function getMockRecategorizedActivityChart(
       9000,
       12000,
     ]),
-    syncStatus: getSyncStatus(adjustedRange[1]),
+    syncStatus: getActivitySyncStatus(adjustedRange[1]),
   }
 }
