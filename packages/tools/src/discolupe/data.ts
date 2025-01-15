@@ -5,8 +5,10 @@ export const DiscoLupeProject = z.object({
   display: z.object({
     name: z.string(),
     slug: z.string(),
+    provider: z.string().optional(),
   }),
   tvl: z.number(),
+  type: z.string(),
   arePermissionsDiscoveryDriven: z.boolean(),
   areContractsDiscoveryDriven: z.boolean(),
   isArchived: z.boolean(),

@@ -25,6 +25,20 @@ const AVAILABLE_COLUMNS_RAW = [
       ProjectName(project, str),
   },
   {
+    header: 'Type',
+    id: 'ii',
+    align: 'right',
+    fn: (project: DiscoLupeProject) => project.type,
+    displayFn: DivContainer,
+  },
+  {
+    header: 'Provider',
+    id: 'vi',
+    align: 'right',
+    fn: (project: DiscoLupeProject) => project.display.provider ?? 'None',
+    displayFn: DivContainer,
+  },
+  {
     header: 'TVL',
     id: 'ig',
     align: 'right',

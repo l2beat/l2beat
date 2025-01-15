@@ -3,7 +3,6 @@ import {
   type Layer3,
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,
-  isUnderReview,
   layer2s,
   layer3s,
 } from '@l2beat/config'
@@ -28,7 +27,7 @@ async function getResponse() {
     success: true,
     data: {
       projects: [...layer2s, ...layer3s].map((p) =>
-        toResponseProject(p, tvl.projects[p.id.toString()]?.total ?? 0),
+        toResponseProject(p, tvl.projects[p.id.toString()]?.breakdown.total ?? 0),
       ),
     },
   } as const
@@ -39,6 +38,7 @@ function toResponseProject(project: Layer2 | Layer3, tvl: number) {
     id: project.id.toString(),
     tvl,
     display: project.display,
+    type: project.type === 'layer2' ? 'L2' : 'L3',
     arePermissionsDiscoveryDriven: arePermissionsDiscoveryDriven(project),
     areContractsDiscoveryDriven: areContractsDiscoveryDriven(project),
     isArchived: project.isArchived === true,
