@@ -10,8 +10,7 @@ import { Permission } from '../config/RawDiscoveryConfig'
 // multisigs, but it makes the processing easier to set it to one for
 // non-multisig contracts. It also contains a delay field which allows to model
 // things like multisigs with delays or contracts which always execute an
-// operation with some additional baseline delay. (see caveat below - the delay
-// is added to the the edge delay)
+// operation with some additional baseline delay.
 //
 // Edges link two nodes together and define the action that can take place on
 // that link. Each action can have a execution delay which is additive to the
