@@ -1,30 +1,5 @@
-export type ChainId =
-  | 'alephzero'
-  | 'arbitrum'
-  | 'base'
-  | 'blast'
-  | 'ethereum'
-  | 'gravity'
-  | 'immutablex'
-  | 'linea'
-  | 'lyra'
-  | 'mantle'
-  | 'nova'
-  | 'optimism'
-  | 'polygonpos'
-  | 'polynomial'
-  | 'scroll'
-  | 'silicon'
-  | 'starknet'
-  | 'taiko'
-  | 'worldchain'
-  | 'xai'
-  | 'zircuit'
-  | 'zksync-era'
-  | 'zora'
-
 export type Chain = {
-  id: ChainId
+  id: string
   name: string
   type: 'rpc' | 'starknet'
   blockchainApiUrl: string

@@ -1,4 +1,4 @@
-import type { Chain, ChainId } from '@/chains'
+import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
@@ -95,7 +95,7 @@ export class ChainService {
   }
 }
 
-export function getEtherscanApiKey(chainId: ChainId): string | undefined {
+export function getEtherscanApiKey(chainId: string): string | undefined {
   const envName = `${chainId.toUpperCase().replace('-', '_')}_SCAN_API_KEY`
   const value = process.env[envName]
   return value
