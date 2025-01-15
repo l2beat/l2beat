@@ -278,6 +278,10 @@ export const soneium: Layer2 = {
           category: 'Funds can be stolen if',
           text: 'no validator checks the published state. Fraud proofs assume at least one honest and able validator.',
         },
+        {
+          category: 'Funds can be frozen if',
+          text: 'permissioned proposers fail to publish state roots to the L1.',
+        },
       ],
       references: [
         {
