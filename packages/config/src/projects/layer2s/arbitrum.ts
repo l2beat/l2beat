@@ -637,4 +637,14 @@ export const arbitrum: Layer2 = orbitStackL2({
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_04,
     },
   ],
+  dataActivityConfig: {
+    type: 'Ethereum',
+    config: {
+      inbox: '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+      sequencers: [
+        '0x0c5911d57b24fcf1dc8b2608efbae57c7098e32d',
+        '0xc1b634853cb333d3ad8663715b08f41a3aec47cc',
+      ],
+    },
+  },
 })

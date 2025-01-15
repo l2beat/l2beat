@@ -55,6 +55,7 @@ import { zkfairDac } from './dac/zkfair'
 import { applyProcessor } from './processors'
 
 export * from './types'
+export * from './da-data'
 
 export const ethereumDaLayer = ethereum
 export const daLayers = applyProcessor([

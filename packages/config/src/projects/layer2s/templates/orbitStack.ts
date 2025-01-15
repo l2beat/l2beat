@@ -49,6 +49,7 @@ import {
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
+import { DaConfig } from '../../other/da-beat/da-data'
 import { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -149,6 +150,7 @@ interface OrbitStackConfigCommon {
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
+  dataActivityConfig?: DaConfig
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -561,6 +563,7 @@ function orbitStackCommon(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
       templateVars.additionalBadges ?? [],
     ),
+    dataActivityConfig: templateVars.dataActivityConfig,
   }
 }
 

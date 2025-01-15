@@ -22,6 +22,7 @@ import type { ScalingProjectStateDerivation } from '../../../common/ScalingProje
 import type { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import type { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
 import { type BadgeId } from '../../badges'
+import { DaConfig } from '../../other/da-beat/da-data'
 import type { StageConfig } from '../common/stages/types'
 import type { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import type { Layer2LivenessConfig } from './Layer2LivenessConfig'
@@ -71,6 +72,8 @@ export interface Layer2 {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: BadgeId[]
+  /** Data availability configuration */
+  dataActivityConfig?: DaConfig
 }
 
 export type Layer2Display = ScalingProjectDisplay & {
