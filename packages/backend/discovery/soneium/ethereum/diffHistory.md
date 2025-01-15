@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x33bd63a031a6f526f8b52c639ef3aef344008c7b
+Generated with discovered.json: 0x47e1ac6530ee74ed0306f6733efac8f0134cbf55
 
-# Diff at Wed, 15 Jan 2025 10:03:13 GMT:
+# Diff at Wed, 15 Jan 2025 17:33:42 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 21629155
+- author: Luca Donno (<donnoh99@gmail.com>)
+- current block number: 21631401
 
 ## Description
 
@@ -49,7 +49,7 @@ First discovery of Soneium.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x509182eC226b3B71D36A3255A80EF0b1A9D43033)
+    contract SoneiumMultisig (0x509182eC226b3B71D36A3255A80EF0b1A9D43033)
     +++ description: None
 ```
 
