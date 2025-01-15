@@ -10,10 +10,7 @@
   },
   "overrides": {
     "SystemConfig": {
-      "ignoreRelatives": ["disputeGameFactory"]
-    },
-    "OPSuccinctL2OutputOracle": {
-      "extends": "succinct/OPSuccinct/OPSuccinctL2OutputOracle"
+      "ignoreRelatives": ["disputeGameFactory"] // not used
     },
     "SuccinctGateway": {
       "fields": {
