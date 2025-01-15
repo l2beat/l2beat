@@ -109,6 +109,20 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://explorer.gravity.xyz/address/${address}`,
   },
   {
+    id: 'immutable',
+    name: 'Immutable zkEVM',
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.immutable.com',
+    },
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.immutable.com/block/${blockNumber}`,
+    getTxLink: (txHash: string) =>
+      `https://explorer.immutable.com/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.immutable.com/address/${address}`,
+  },
+  {
     id: 'linea',
     name: 'Linea',
     blockchainApi: {
