@@ -16,15 +16,21 @@ export function transformToIssued(
   resolved: ResolvedPermission[],
 ): OutputResolvedPermission[] | undefined {
   const matching = resolved.filter((r) => r.path[0]?.address === forAddress)
+  if (matching.length === 0) {
+    return undefined
+  }
 
   return sort(
-    matching.map((r) => ({
-      // biome-ignore lint/style/noNonNullAssertion: we know it's fine
-      permission: internalPermissionToExternal(r.path[0]!.gives!),
-      // biome-ignore lint/style/noNonNullAssertion: we know it's fine
-      target: r.path[r.path.length - 1]!.address,
-      via: r.path.slice(1, -1).reverse(),
-    })),
+    matching.map((r) => {
+      const last = r.path[r.path.length - 1]
+      assert(r.path[0]?.gives)
+      assert(last)
+      return {
+        permission: internalPermissionToExternal(r.path[0].gives),
+        target: last.address,
+        via: r.path.slice(1, -1).reverse(),
+      }
+    }),
   )
 }
 
