@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "soneium",
+  "initialAddresses": [
+    "0xeb9bf100225c214efc3e7c651ebbadcf85177607", // L1StandardBridge
+    "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb" // L1OpUsdcBridgeAdapterProxy
+  ],
+  "names": {
+    "0x509182eC226b3B71D36A3255A80EF0b1A9D43033": "SoneiumMultisig"
+  },
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame"
+      }
+    }
+  },
+  "sharedModules": {},
+  "overrides": {}
+}
