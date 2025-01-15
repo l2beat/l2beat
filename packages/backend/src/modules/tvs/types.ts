@@ -1,4 +1,4 @@
-import { CoingeckoId, EthereumAddress, ProjectId, } from "@l2beat/shared-pure";
+import { CoingeckoId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 export type DataOperator =
   | 'balanceOfEscrow'
@@ -6,12 +6,10 @@ export type DataOperator =
   | 'circulatingSupply'
 
 export function isDataOperator(value: string): value is DataOperator {
-  return ['balanceOfEscrow', 'totalSupply', 'circulatingSupply'].includes(value);
+  return ['balanceOfEscrow', 'totalSupply', 'circulatingSupply'].includes(value)
 }
 
-export type CalculationOperator =
-  | 'sum'
-  | 'diff'
+export type CalculationOperator = 'sum' | 'diff'
 
 export type Operator = DataOperator | CalculationOperator
 
@@ -23,9 +21,9 @@ export interface Formula {
 }
 
 export interface Token {
-  id: string,
+  id: string
   amount: Formula
-  address: EthereumAddress // unsafe
+  address: EthereumAddress
   chain: string
   ticker: string
   sinceTimestamp: number
@@ -33,24 +31,10 @@ export interface Token {
   decimals: number
   category: 'ether' | 'stablecoin' | 'other'
   source: 'canonical' | 'external' | 'native'
-  // TODO: rename
-  isAssociatedWithThisChain: string
-
+  isAssociated: string
+  // TODO: do we really need this?
   displayTicker?: string
 }
-
-/*
-  {
-    "ETH": [
-      {
-        "coingeckoId": "ethereum"
-      },
-      {
-        coinMarketCapId: "Ethereum"
-      }
-    ]
-  }
-*/
 
 export type PriceSources = Map<string, PriceSource[]>
 
@@ -69,7 +53,10 @@ export type TvsConfig = {
   tokens: Token[]
 }
 
-export type AmountConfig = BalanceAmountConfig | TotalSupplyAmountConfig | CirculatingSupplyAmountConfig
+export type AmountConfig =
+  | BalanceAmountConfig
+  | TotalSupplyAmountConfig
+  | CirculatingSupplyAmountConfig
 
 export interface BalanceAmountConfig {
   id: string // hash(type,tokenId,holder).slice(0,8)
@@ -95,4 +82,10 @@ export interface CirculatingSupplyAmountConfig {
 export type PriceConfig = {
   id: string // hash(type, tokenId)
   ticker: string
+}
+
+export interface TokenValue {
+  tokenId: string
+  project: ProjectId
+  valueUsd: number
 }
