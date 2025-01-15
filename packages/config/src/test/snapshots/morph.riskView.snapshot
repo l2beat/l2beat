@@ -9,7 +9,7 @@
       {
         contract: "MorphRollup"
         references: [
-          "https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code"
+          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
         ]
       }
     ]
@@ -24,7 +24,7 @@
       {
         contract: "MorphRollup"
         references: [
-          "https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code"
+          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
         ]
       }
     ]
@@ -38,20 +38,20 @@
       {
         contract: "MorphRollup"
         references: [
-          "https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code"
+          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
         ]
       }
     ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
-    sentiment: "bad"
+    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
+    sentiment: "warning"
     sources: [
       {
         contract: "L1MessageQueueWithGasPriceOracle"
         references: [
-          "https://etherscan.io/address/0x828F68e2E05a34fA836416F124350E25021876ac#code"
+          "https://etherscan.io/address/0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA#code"
         ]
       }
       {
@@ -61,7 +61,7 @@
         ]
       }
     ]
-    value: "No mechanism"
+    value: "Enqueue via L1"
   }
   stateValidation: {
     definingMetric: Infinity

@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xa01a89cf44e7c29243fd1c09ea09d0ef7f40628d
+Generated with discovered.json: 0x16ca7a2d817d1a00685950b595528cfc12f6dcfd
 
-# Diff at Wed, 15 Jan 2025 10:28:08 GMT:
+# Diff at Wed, 15 Jan 2025 15:58:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21465401
-- current block number: 21629281
+- comparing to: main@8f56dc4992e8473d4cee07324256126e8a93ce88 block: 21465401
+- current block number: 21630927
 
 ## Description
 
 Upgrades to MorphRollup, L1MessageQueueWithGasPriceOracle, L1CrossDomainMessenger to **deprecate skipping / dropping messages from the queue**.
+
+There is no enforcement of the processing of the queue.
 
 Some Challengers are apparently run by bitget / bitget wallet.
 
