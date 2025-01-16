@@ -24,17 +24,17 @@ export const soon: Layer2 = opStackL2({
       sentiment: 'bad',
     },
     technology: {
-      name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible',
+      name: 'Data is posted to EigenDA',
       description:
-        'Fraxtal uses a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on chain inbox.',
+        'Transactions roots are posted onchain and the full data is posted on EigenDA. Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable roots.',
       references: [
         {
-          text: 'Fraxtal documentation',
-          href: 'https://docs.frax.com/fraxtal',
+          text: 'EigenDA documentation',
+          href: 'https://docs.eigenda.xyz/overview',
         },
         {
           text: 'On-Chain Inbox',
-          href: 'https://etherscan.io/address/0xff000000000000000000000000000000000420fc',
+          href: 'https://etherscan.io/address/0xfF000000000000000000000000000000000000FF',
         },
       ],
       risks: [
