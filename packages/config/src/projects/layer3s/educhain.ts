@@ -25,12 +25,18 @@ export const educhain: Layer3 = orbitStackL3({
     description:
       'EDU Chain is Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative “Learn Own Earn” model for education.',
     links: {
-      websites: ['https://opencampus.xyz/'],
+      websites: ['https://educhain.xyz/'],
       apps: ['https://bridge.gelato.network/bridge/edu-chain'],
-      documentation: ['https://userdocs.opencampus.xyz/edu-chain/introduction'],
+      documentation: [
+        'https://userdocs.opencampus.xyz/edu-chain/introduction',
+        'https://devdocs.opencampus.xyz/open-campus',
+      ],
       explorers: ['https://educhain.blockscout.com/'],
       repositories: ['https://github.com/opencampus-xyz'],
-      socialMedia: ['https://x.com/opencampus_xyz'],
+      socialMedia: [
+        'https://x.com/educhain_xyz',
+        'https://medium.com/edu-chain',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },
