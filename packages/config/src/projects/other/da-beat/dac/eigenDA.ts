@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { aevo } from '../../../layer2s/aevo'
+import { soon } from '../../../layer2s/soon'
 import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
@@ -93,7 +94,7 @@ export const eigenDA: DacDaLayer = {
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },
-      usedIn: [...toUsedInProject([donatuz, aevo])],
+      usedIn: [...toUsedInProject([donatuz, aevo, soon])],
     }),
     eigenDAbridge,
   ],

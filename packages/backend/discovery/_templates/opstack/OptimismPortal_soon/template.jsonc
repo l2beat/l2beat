@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits. Has a MIN_BRIDGE_VALUE set to {{ MIN_BRIDGE_VALUE }} ETH.",
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "MIN_BRIDGE_VALUE": {
+      "returnType": "(Undecimal18)",
+      "description": "Minimum deposit value."
+    },
+    "guardian": {
+      "target": {
+        "permissions": [{ "type": "guard" }]
+      }
+    },
+    "GUARDIAN": {
+      "target": {
+        "permissions": [{ "type": "guard" }]
+      }
+    }
+  }
+}

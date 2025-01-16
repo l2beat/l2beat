@@ -148,6 +148,7 @@ interface OpStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
+  usingAltVm?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -224,6 +225,9 @@ function opStackCommon(
     upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
+  const automaticBadges = templateVars.usingAltVm
+    ? [Badge.Stack.OPStack, daBadge]
+    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
   return {
     isArchived: templateVars.isArchived,
@@ -408,10 +412,7 @@ function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: mergeBadges(
-      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
   }
 }
 
