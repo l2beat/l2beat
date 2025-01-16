@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { soon } from '../../../layer2s/soon'
 import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DacDaLayer } from '../types/DaLayer'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './bridges/eigenDABridge'
-import { soon } from '../../../layer2s/soon'
 
 export const eigenDA: DacDaLayer = {
   id: 'eigen-da',
