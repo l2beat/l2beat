@@ -1,24 +1,24 @@
 import {
   type Layer2,
   type Layer3,
+  type StageConfig,
   badges,
   isUnderReview,
   layer2s,
   layer3s,
 } from '@l2beat/config'
+import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getStage } from '../get-common-scaling-entry'
 import {
   type LatestTvl,
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
 import { getHostChain } from '../utils/get-host-chain'
-import { getRisks } from './get-scaling-summary-entries'
 
 export interface ScalingApiEntry {
   id: string
@@ -97,7 +97,7 @@ function getScalingApiEntry(
         name: badges[x].display.name,
       })) ?? [],
     stage: getStage(project.stage),
-    risks: getRisks(project).risks,
+    risks: getL2Risks(project.riskView),
     tvl: {
       breakdown: latestTvl?.breakdown ?? {
         total: 0,
@@ -109,4 +109,14 @@ function getScalingApiEntry(
       associatedTokens: project.config.associatedTokens ?? [],
     },
   }
+}
+
+function getStage(config: StageConfig | undefined) {
+  if (!config || config.stage === 'NotApplicable') {
+    return 'Not applicable'
+  }
+  if (config.stage === 'UnderReview') {
+    return 'Under review'
+  }
+  return config.stage
 }

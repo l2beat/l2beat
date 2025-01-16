@@ -10,7 +10,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import {
@@ -59,7 +59,7 @@ function getScalingTvlEntry(
   data: ProjectSevenDayTvlBreakdown | undefined,
 ): ScalingTvlEntry | undefined {
   return {
-    ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvl: {
       data,

@@ -13,7 +13,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
@@ -61,7 +61,7 @@ function getScalingArchivedEntry(
   latestTvl: LatestTvl['projects'][string] | undefined,
 ): ScalingArchivedEntry {
   return {
-    ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     provider: project.scalingInfo.stack,

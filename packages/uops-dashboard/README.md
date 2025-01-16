@@ -10,6 +10,7 @@ pnpm dev
 1. Navigate to `packages/uops-dashboard/src/chains.ts`
 2. Add new entry to `SUPPORTED_CHAINS`
 3. For more info see `Chain` type comments
+4. Here is the [example PR](https://github.com/l2beat/l2beat/commit/17b90b9468b5899aa7b704b0777cacdf5ffdb778)
 
 ### How to test newly added chain?
 
