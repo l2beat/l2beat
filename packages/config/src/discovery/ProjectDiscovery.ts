@@ -398,7 +398,10 @@ export class ProjectDiscovery {
     const descriptionWithContractNames =
       this.replaceAddressesWithNames(formattedDesc)
 
-    const references = [...(userReferences ?? []), ...(contract.references ?? [])]
+    const references = [
+      ...(userReferences ?? []),
+      ...(contract.references ?? []),
+    ]
     return [
       {
         name: contract.name,
