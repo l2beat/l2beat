@@ -3,7 +3,6 @@ import { DiscoLupeModel } from './model'
 export async function fetchData() {
   const req = await fetch('https://fe-staging.l2beat.com/api/discolupe')
 
-
   const result = await req.json()
   const parsed = DiscoLupeModel.parse(result)
   if (!parsed.success) {
