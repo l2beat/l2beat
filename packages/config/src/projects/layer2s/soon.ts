@@ -1,12 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { DA_BRIDGES, DA_LAYERS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-import { DA_BRIDGES, DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-
-
 
 const discovery = new ProjectDiscovery('soon')
 
@@ -53,8 +51,7 @@ export const soon: Layer2 = opStackL2({
     bridge: DA_BRIDGES.NONE,
   },
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS],
+    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',
     slug: 'soon',
@@ -78,4 +75,3 @@ export const soon: Layer2 = opStackL2({
   isNodeAvailable: false,
   discoveryDrivenData: true,
 })
-

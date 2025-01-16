@@ -10,7 +10,7 @@
     "SystemConfig": {
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "fields": {
-      // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
           "target": {
             "permissions": [{ "type": "sequence" }]
@@ -21,12 +21,12 @@
             "args": []
           }
         },
-          "opStackDA": {
-            "handler": {
-              "type": "opStackDA",
-              "sequencerAddress": "{{ batcherHash }}"
-            }
-          },
+        "opStackDA": {
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
         "sequencerInbox": {
           "handler": {
             "type": "opStackSequencerInbox",
@@ -46,10 +46,14 @@
               }
             ]
           }
-        },
+        }
       },
       "ignoreInWatchMode": ["scalar", "overhead"],
-      "ignoreRelatives": ["gasPayingToken", "disputeGameFactory", "optimismMintableERC20Factory"]  //disputeGameFactory is not used (yet), ERC20 tokens not supported
+      "ignoreRelatives": [
+        "gasPayingToken",
+        "disputeGameFactory",
+        "optimismMintableERC20Factory"
+      ] //disputeGameFactory is not used (yet), ERC20 tokens not supported
     }
   }
 }
