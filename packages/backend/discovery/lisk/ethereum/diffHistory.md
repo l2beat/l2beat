@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xcee5a1de292ade26ee5daf776d4c4eb37dce7f86
+
+# Diff at Thu, 16 Jan 2025 08:14:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a739892e4565ca2cf8f67abed360c494a770dcea block: 21628398
+- current block number: 21635783
+
+## Description
+
+Gas limit doubled to 60M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        60000000
+    }
+```
+
+Generated with discovered.json: 0x47c7010c9b019fc821f8fc9e972898eea4eab874
+
+# Diff at Wed, 15 Jan 2025 07:30:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21343018
+- current block number: 21628398
+
+## Description
+
+Two signers added to Gelato MS, now 4/10.
+
+## Watched changes
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.9:
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.8:
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.7:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.6:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+      values.$members.5:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+      values.$members.4:
+-        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.3:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.2:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+      values.$members.1:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.0:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xbb9eeffc226264cb17a75017f4162fe347bdfc0d
 
 # Diff at Wed, 08 Jan 2025 09:02:41 GMT:

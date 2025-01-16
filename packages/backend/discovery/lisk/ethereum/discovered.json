@@ -1,7 +1,7 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 21343018,
+  "blockNumber": 21635783,
   "configHash": "0x80ed5fb760d1f3250f0475f7934029861e6ebae6582eac9b6f9c97542b8dcb90",
   "contracts": [
     {
@@ -56,7 +56,7 @@
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24",
         "batchInbox": "0xFf00000000000000000000000000000000001135",
-        "gasLimit": 30000000,
+        "gasLimit": 60000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -171,10 +171,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9374400,
-        "latestOutputIndex": 867,
-        "nextBlockNumber": 9385200,
-        "nextOutputIndex": 868,
+        "latestBlockNumber": 11134800,
+        "latestOutputIndex": 1030,
+        "nextBlockNumber": 11145600,
+        "nextOutputIndex": 1031,
         "proposer": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "PROPOSER": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "startingBlockNumber": 0,
@@ -346,7 +346,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 489262,
-          "prevBlockNum": 21342893
+          "prevBlockNum": 21635590
         },
         "paused": false,
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
@@ -411,7 +411,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622861",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624756",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -577,11 +577,13 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
           "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
-          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -590,8 +592,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 13,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -778,9 +780,11 @@
       ]
     },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
+    { "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9" },
     { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
+    { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
     {
       "address": "0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24",
       "receivedPermissions": [
@@ -791,8 +795,8 @@
       ]
     },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     { "address": "0xb9DE90a90c5E441C483e754FE7341100D5fbaEcA" },
-    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
     { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" },
     { "address": "0xFf00000000000000000000000000000000001135" }
   ],

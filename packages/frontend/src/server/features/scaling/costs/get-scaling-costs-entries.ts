@@ -1,4 +1,8 @@
-import { type Layer2, type WarningWithSentiment } from '@l2beat/config'
+import {
+  type Project,
+  ProjectService,
+  type WarningWithSentiment,
+} from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -10,14 +14,18 @@ import {
 } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
-import { getCostsProjects } from './utils/get-costs-projects'
 
 export async function getScalingCostsEntries() {
-  const [tvl, projectsChangeReport] = await Promise.all([
+  const [tvl, projectsChangeReport, projects] = await Promise.all([
     getProjectsLatestTvlUsd(),
     getProjectsChangeReport(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'scalingInfo', 'costsInfo'],
+      optional: ['countdowns'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
   ])
-  const projects = getCostsProjects().filter((p) => !p.isArchived)
 
   const entries = projects
     .map((project) =>
@@ -37,14 +45,14 @@ export interface ScalingCostsEntry extends CommonScalingEntry {
 }
 
 function getScalingCostEntry(
-  project: Layer2,
+  project: Project<'statuses' | 'scalingInfo' | 'costsInfo', 'countdowns'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingCostsEntry {
   return {
     ...getCommonScalingEntry({ project, changes, syncStatuses: undefined }),
-    href: `/scaling/projects/${project.display.slug}#onchain-costs`,
-    costsWarning: project.display.costsWarning,
+    href: `/scaling/projects/${project.slug}#onchain-costs`,
+    costsWarning: project.costsInfo.warning,
     tvlOrder: tvl ?? -1,
   }
 }

@@ -1,14 +1,11 @@
 import {
-  type Layer2,
-  type Layer3,
+  type Project,
   type ProjectDataAvailability,
+  ProjectService,
   type ScalingProjectCategory,
-  type ScalingProjectDisplay,
   type ScalingProjectStack,
   type StageConfig,
   type WarningWithSentiment,
-  layer2s,
-  layer3s,
 } from '@l2beat/config'
 import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 import { compact } from 'lodash'
@@ -34,12 +31,15 @@ import {
 } from '../tvl/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
-import { isProjectOther } from '../utils/is-project-other'
 
 export async function getScalingSummaryEntries() {
-  const projects = [...layer2s, ...layer3s].filter(
-    (project) => !project.isUpcoming && !project.isArchived,
-  )
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['statuses', 'scalingInfo', 'scalingRisks'],
+    optional: ['countdowns', 'tvlInfo', 'scalingDa', 'scalingStage'],
+    where: ['isScaling'],
+    whereNot: ['isUpcoming', 'isArchived'],
+  })
+
   const [projectsChangeReport, tvl, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),
     get7dTokenBreakdown({ type: 'layer2' }),
@@ -65,7 +65,6 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
   provider: ScalingProjectStack | undefined
   dataAvailability: ProjectDataAvailability | undefined
-  mainPermissions: ScalingProjectDisplay['mainPermissions']
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvl: {
     breakdown:
@@ -95,7 +94,10 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
 }
 
 function getScalingSummaryEntry(
-  project: Layer2 | Layer3,
+  project: Project<
+    'statuses' | 'scalingInfo' | 'scalingRisks',
+    'countdowns' | 'tvlInfo' | 'scalingDa' | 'scalingStage'
+  >,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
   activity: ActivityLatestUopsData[string] | undefined,
@@ -105,11 +107,11 @@ function getScalingSummaryEntry(
       ? getAssociatedTokenWarning({
           associatedRatio:
             latestTvl.breakdown.associated / latestTvl.breakdown.total,
-          name: project.display.name,
-          associatedTokens: project.config.associatedTokens ?? [],
+          name: project.name,
+          associatedTokens: project.tvlInfo?.associatedTokens ?? [],
         })
       : undefined
-  const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
+  const associatedTokensExcludedWarnings = compact(project.tvlInfo?.warnings)
 
   const activityNotSyncedStatus = activity
     ? getActivityNotSyncedStatus(activity.syncedUntil)
@@ -119,59 +121,38 @@ function getScalingSummaryEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatuses: [activityNotSyncedStatus],
+      notSyncedStatuses: [activityNotSyncedStatus],
     }),
     stage:
-      isProjectOther(project) || !project.stage
-        ? {
-            stage: 'NotApplicable' as const,
-          }
-        : project.stage,
-    category: project.display.category,
-    provider: project.display.provider,
-    dataAvailability: project.dataAvailability,
-    mainPermissions: project.display.mainPermissions,
-    reasonsForBeingOther: project.display.reasonsForBeingOther,
+      project.scalingInfo.isOther || !project.scalingStage
+        ? { stage: 'NotApplicable' as const }
+        : project.scalingStage,
+    category: project.scalingInfo.type,
+    provider: project.scalingInfo.stack,
+    dataAvailability: project.scalingDa,
+    reasonsForBeingOther: project.countdowns?.otherMigration?.reasons,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,
       associatedTokensExcludedChange: latestTvl?.associatedTokensExcludedChange,
-      associatedTokens: project.config.associatedTokens ?? [],
+      associatedTokens: project.tvlInfo?.associatedTokens ?? [],
       warnings: compact([
         ...associatedTokensExcludedWarnings,
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
       ]),
       associatedTokensExcludedWarnings,
     },
-    activity: activity
-      ? {
-          pastDayUops: activity.pastDayUops,
-          change: activity.change,
-          isSynced: !activityNotSyncedStatus,
-        }
-      : undefined,
+    activity: activity && {
+      pastDayUops: activity.pastDayUops,
+      change: activity.change,
+      isSynced: !activityNotSyncedStatus,
+    },
     tvlOrder: latestTvl?.breakdown.total ?? -1,
-    ...getRisks(project),
-  }
-}
-
-export function getRisks(project: Layer2 | Layer3): {
-  risks: RosetteValue[]
-  baseLayerRisks: RosetteValue[] | undefined
-} {
-  if (project.type === 'layer2') {
-    return {
-      risks: getL2Risks(project.riskView),
-      baseLayerRisks: undefined,
-    }
-  }
-  const baseLayer = layer2s.find((p) => p.id === project.hostChain)
-  const projectRisks = getL2Risks(project.riskView)
-  const baseLayerRisks = baseLayer ? getL2Risks(baseLayer.riskView) : undefined
-  const stackedRisks =
-    project.type === 'layer3' ? project.stackedRiskView : undefined
-  return {
-    risks: stackedRisks ? getL2Risks(stackedRisks) : projectRisks,
-    baseLayerRisks,
+    risks: getL2Risks(
+      project.scalingRisks.stacked ?? project.scalingRisks.self,
+    ),
+    baseLayerRisks: project.scalingRisks.host
+      ? getL2Risks(project.scalingRisks.host)
+      : undefined,
   }
 }

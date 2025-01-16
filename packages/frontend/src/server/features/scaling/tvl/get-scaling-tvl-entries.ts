@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type WarningWithSentiment,
 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -10,7 +10,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import {
@@ -54,12 +54,16 @@ export interface ScalingTvlEntry extends CommonScalingEntry {
 }
 
 function getScalingTvlEntry(
-  project: ProjectWith<'scalingInfo' | 'statuses' | 'tvlInfo', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'tvlInfo', 'countdowns'>,
   changes: ProjectChanges,
   data: ProjectSevenDayTvlBreakdown | undefined,
 ): ScalingTvlEntry | undefined {
   return {
-    ...getCommonScalingEntry2({ project, changes, syncStatuses: undefined }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      notSyncedStatuses: undefined,
+    }),
     href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvl: {
       data,

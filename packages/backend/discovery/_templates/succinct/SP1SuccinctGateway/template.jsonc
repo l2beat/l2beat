@@ -52,6 +52,17 @@
         ]
       }
     },
+    "oldVerifier5": {
+      "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address prover, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0x54bdcae3"
+        ]
+      }
+    },
     "verifier": {
       "description": "The prover contract address for SP1, and whether it is frozen (true if frozen).",
       "handler": {
@@ -59,7 +70,7 @@
         "method": "function routes(bytes4) view returns (address prover, bool frozen)",
         "args": [
           // first 4 bytes of the blobstream proof are used as identifier
-          "0x54bdcae3"
+          "0x1b34fe11"
         ]
       },
       "target": {

@@ -1,3 +1,250 @@
+Generated with discovered.json: 0x63164f1545ba481a415e9e0e530ad94ffff668f9
+
+# Diff at Thu, 16 Jan 2025 10:14:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3513cb068688b9fa7f9ddd40447f5f70d088c2cf block: 21629240
+- current block number: 21629240
+
+## Description
+
+Add decoding of absolute prestate hashes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629240 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
++++ description: Prestate tag for known prestates.
+      values.absolutePrestateDecoded:
++        "v1.3.1-ink"
+      fieldMeta:
++        {"absolutePrestateDecoded":{"description":"Prestate tag for known prestates."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9":"v1.4.1-rc.2 (cannon64)","0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2":"v1.4.1-rc.2","0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b":"v1.4.0 (cannon64)","0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568":"v1.4.0 (govApproved)","0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725":"v1.4.0-rc.2 (cannon64)","0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095":"v1.4.0-rc.2","0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6":"v1.4.0-rc.1 (cannon64)","0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe":"v1.4.0-rc.1","0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc":"v1.3.1-ink","0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c":"v1.3.1 (govApproved)","0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a":"v1.3.1-rc.1","0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922":"v1.3.0-rc.3","0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba":"v1.3.0-rc.2","0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673":"v1.3.0-rc.1","0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea":"v1.2.0 (govApproved)","0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b":"v1.1.0","0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e":"v1.0.1","0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55":"v1.0.0 (govApproved)","0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421":"v0.3.0","0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808":"v0.2.0","0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538":"v0.1.0","0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd":"v0.0.1"}}]
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
++++ description: Prestate tag for known prestates.
+      values.absolutePrestateDecoded:
++        "v1.3.1-ink"
+      fieldMeta:
++        {"absolutePrestateDecoded":{"description":"Prestate tag for known prestates."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9":"v1.4.1-rc.2 (cannon64)","0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2":"v1.4.1-rc.2","0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b":"v1.4.0 (cannon64)","0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568":"v1.4.0 (govApproved)","0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725":"v1.4.0-rc.2 (cannon64)","0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095":"v1.4.0-rc.2","0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6":"v1.4.0-rc.1 (cannon64)","0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe":"v1.4.0-rc.1","0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc":"v1.3.1-ink","0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c":"v1.3.1 (govApproved)","0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a":"v1.3.1-rc.1","0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922":"v1.3.0-rc.3","0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba":"v1.3.0-rc.2","0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673":"v1.3.0-rc.1","0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea":"v1.2.0 (govApproved)","0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b":"v1.1.0","0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e":"v1.0.1","0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55":"v1.0.0 (govApproved)","0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421":"v0.3.0","0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808":"v0.2.0","0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538":"v0.1.0","0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd":"v0.0.1"}}]
+    }
+```
+
+Generated with discovered.json: 0x81f5e51d9b6b83432b359f8ca79b1a48315106c1
+
+# Diff at Wed, 15 Jan 2025 10:19:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21486361
+- current block number: 21629240
+
+## Description
+
+PermissionedDisputeGame upgraded (1.3.0), FaultDisputeGame (1.3.0) and DelayedWETH added, all known shapes. InitBonds same as optimism for now. Permissioned game is still the respected gameType.
+
+Two signers added to Gelato MS, now 4/10.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059"
++        "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963"
+      values.gameImpls.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD"
+      values.initBonds.1:
+-        0
++        "80000000000000000"
+      values.initBonds.0:
+-        0
++        "80000000000000000"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","target":"0xde744491BcF6b2DD2F32146364Ea1487D75E2509","via":[{"address":"0xd56045E68956FCe2576E680c95a4750cf8241f79"}]}
+      receivedPermissions.10.target:
+-        "0xde744491BcF6b2DD2F32146364Ea1487D75E2509"
++        "0xA8B389A82e088b164cD03230e900980CcED34d29"
+      receivedPermissions.9.target:
+-        "0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.9.via.0.address:
+-        "0xd56045E68956FCe2576E680c95a4750cf8241f79"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.8.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      receivedPermissions.8.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xd56045E68956FCe2576E680c95a4750cf8241f79"
+      receivedPermissions.8.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.7.target:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      receivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.6.target:
+-        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
++        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
+      receivedPermissions.5.target:
+-        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
++        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
+      receivedPermissions.4.target:
+-        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
++        "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.9:
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.8:
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.7:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.6:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+      values.$members.5:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+      values.$members.4:
+-        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.3:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.2:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+      values.$members.1:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.0:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 10 (40%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd56045E68956FCe2576E680c95a4750cf8241f79) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","target":"0xde744491BcF6b2DD2F32146364Ea1487D75E2509"}
+      directlyReceivedPermissions.8.target:
+-        "0xde744491BcF6b2DD2F32146364Ea1487D75E2509"
++        "0xA8B389A82e088b164cD03230e900980CcED34d29"
+      directlyReceivedPermissions.7.target:
+-        "0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      directlyReceivedPermissions.7.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.6.target:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      directlyReceivedPermissions.6.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.5.target:
+-        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
++        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
+      directlyReceivedPermissions.4.target:
+-        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
++        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
+      directlyReceivedPermissions.3.target:
+-        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
++        "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0xde744491BcF6b2DD2F32146364Ea1487D75E2509) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.$pastUpgrades.2:
++        ["2025-01-13T21:22:47.000Z","0x71234ec9d3df32360383a0091277b0facbeb21456f1a29accb110fa43a6b5441",["0x7A78aa7D5dec2F8B368ca13f00Df2fA4E5De3C3F"]]
+      values.$pastUpgrades.1:
++        ["2025-01-13T21:22:47.000Z","0x71234ec9d3df32360383a0091277b0facbeb21456f1a29accb110fa43a6b5441",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        1
++        3
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH.sol                                |    0
+ .../Proxy.p.sol                                    |    0
+ .../DelayedWETH.sol                                |  651 ++++
+ .../Proxy.p.sol                                    |  200 +
+ .../ink/ethereum/.flat/FaultDisputeGame.sol        | 3959 ++++++++++++++++++++
+ .../PermissionedDisputeGame.sol                    |  398 +-
+ 6 files changed, 5033 insertions(+), 175 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21486361 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x3e8e87f48a4a8d11bc5e4e8510c4d2eaf91d4657
 
 # Diff at Wed, 08 Jan 2025 09:01:48 GMT:

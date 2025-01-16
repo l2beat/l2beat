@@ -25,7 +25,7 @@ interface Props {
   }
   isUnderReview?: boolean
   className?: string
-  background?: boolean
+  background?: 'header' | 'surface'
 }
 
 export function IndividualPizzaRosetteIcon({
@@ -33,7 +33,7 @@ export function IndividualPizzaRosetteIcon({
   l3,
   className,
   isUnderReview,
-  background = true,
+  background = 'header',
 }: Props) {
   const context = useIndividualRosetteTooltipContext()
   const svgRef = useRef(null)
@@ -104,14 +104,16 @@ export function IndividualPizzaRosetteIcon({
       </defs>
 
       <g clipPath="url(#outer-clip)">
-        {background ? (
-          <circle
-            cx="90"
-            cy="90"
-            r="90"
-            className="fill-gray-100 dark:fill-neutral-700"
-          />
-        ) : null}
+        <circle
+          cx="90"
+          cy="90"
+          r="90"
+          className={cn(
+            'stroke-divider stroke-2',
+            background === 'header' && 'fill-header-secondary',
+            background === 'surface' && 'fill-surface-secondary',
+          )}
+        />
 
         <g clipPath="url(#inner-clip)">
           <g
@@ -304,7 +306,10 @@ export function IndividualPizzaRosetteIcon({
             cx="90.1592"
             cy="90"
             r="52"
-            className="stroke-gray-100 dark:stroke-neutral-700"
+            className={cn(
+              background === 'header' && 'stroke-header-secondary',
+              background === 'surface' && 'stroke-surface-secondary',
+            )}
             strokeWidth="10"
           />
         </g>

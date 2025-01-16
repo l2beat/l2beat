@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xa058729c55a2acd8b130353199774c9186993b78
+
+# Diff at Wed, 15 Jan 2025 14:14:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6fd163e76ba309fea8e407a192deb4ec99f21cb3 block: 21242136
+- current block number: 21630407
+
+## Description
+
+add SC ref link (for FE).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242136 (main branch discovery), not current.
+
+```diff
+    contract FuelSecurityCouncil (0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      name:
+-        "FuelMultisig"
++        "FuelSecurityCouncil"
+      references:
++        [{"text":"Security Council members - Fuel Ignition docs","href":"https://docs.fuel.network/docs/verified-addresses/security-council/#fuel-bridge-security-council"}]
+    }
+```
+
 Generated with discovered.json: 0x0aa7eda5ee0e248498c60090e58c072b12ce9d7c
 
 # Diff at Tue, 10 Dec 2024 10:38:55 GMT:

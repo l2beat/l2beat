@@ -1,7 +1,7 @@
 import {
+  type Project,
   type ProjectDataAvailability,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -12,7 +12,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -51,12 +51,12 @@ export interface ScalingDaEntry extends CommonScalingEntry {
 }
 
 function getScalingDaEntry(
-  project: ProjectWith<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingDaEntry {
   return {
-    ...getCommonScalingEntry2({ project, changes, syncStatuses: undefined }),
+    ...getCommonScalingEntry({ project, changes, syncStatuses: undefined }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
     provider: project.scalingInfo.stack,

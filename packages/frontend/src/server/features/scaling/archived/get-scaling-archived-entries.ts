@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -13,7 +13,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
@@ -53,15 +53,12 @@ export interface ScalingArchivedEntry extends CommonScalingEntry {
 }
 
 function getScalingArchivedEntry(
-  project: ProjectWith<
-    'scalingInfo' | 'statuses' | 'scalingRisks',
-    'countdowns'
-  >,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks', 'countdowns'>,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
 ): ScalingArchivedEntry {
   return {
-    ...getCommonScalingEntry2({ project, changes, syncStatuses: undefined }),
+    ...getCommonScalingEntry({ project, changes, syncStatuses: undefined }),
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     provider: project.scalingInfo.stack,

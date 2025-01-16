@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x7b7ece2f4add12602896d38e133a48254e7f67e5
+
+# Diff at Wed, 15 Jan 2025 13:05:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21579404
+- current block number: 21630065
+
+## Description
+
+Polygon zkEVM upgraded to rollupTypeID 6 (prev 5), this is called the servicing update, and was deployed onchain in oct 2024 (see below).
+
+Timelock tx queued to reduce the timelock delay from 10 to 3 days.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.3:
+-        5
++        6
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.2:
+-        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+    }
+```
+
+```diff
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.7:
++        "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
+      values.$members.6:
+-        "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
++        "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+      values.$members.5:
+-        "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
++        "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
+      values.$members.4:
+-        "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
++        "0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
+      values.$members.3:
+-        "0x0B84d2e66192448B680BBd06813efF9e5923Ca77"
++        "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
+      values.$members.2:
+-        "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
++        "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+      values.$members.1:
+-        "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
++        "0x9Ec9E740c5423147FCE0c78E0f3cb12ee3Fa02F6"
+      values.$members.0:
+-        "0x9Ec9E740c5423147FCE0c78E0f3cb12ee3Fa02F6"
++        "0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.20:
++        {"target":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","value":"0","function":"updateDelay","inputs":{"newDelay":259200},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579404 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x85284e06ab48b8f6616195c93ae7fe0699bb3b2b
 
 # Diff at Wed, 08 Jan 2025 11:18:03 GMT:

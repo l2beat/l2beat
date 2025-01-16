@@ -1,14 +1,11 @@
 import {
   type DataAvailabilityMode,
-  type Layer2,
+  type Project,
+  ProjectService,
   type ScalingProjectCategory,
   type ScalingProjectStack,
-  layer2s,
 } from '@l2beat/config'
-import {
-  type WarningValueWithSentiment,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -21,21 +18,30 @@ import {
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinality } from './get-finality'
-import { type FinalityData, type FinalityProjectData } from './schema'
-import { getFinalityConfigurations } from './utils/get-finality-configurations'
+import { type FinalityProjectData } from './schema'
 import { getFinalityNotSyncedStatus } from './utils/get-finality-not-synced-status'
 
+export async function getFinalityProjects() {
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['statuses', 'scalingInfo', 'finalityInfo', 'finalityConfig'],
+    optional: ['countdowns', 'scalingDa'],
+    where: ['isScaling'],
+    whereNot: ['isUpcoming', 'isArchived'],
+  })
+
+  return projects
+}
+
 export async function getScalingFinalityEntries() {
-  const configurations = getFinalityConfigurations()
+  const projects = await getFinalityProjects()
+
   const [finality, tvl, projectsChangeReport] = await Promise.all([
-    getFinality(configurations),
+    getFinality(projects),
     getProjectsLatestTvlUsd(),
     getProjectsChangeReport(),
   ])
 
-  const includedProjects = getIncludedProjects(layer2s, finality)
-
-  const entries = includedProjects
+  const entries = projects
     .map((project) =>
       getScalingFinalityEntry(
         project,
@@ -44,7 +50,7 @@ export async function getScalingFinalityEntries() {
         tvl[project.id],
       ),
     )
-    .filter(notUndefined)
+    .filter((x) => x !== undefined)
     .sort(compareStageAndTvl)
 
   return groupByTabs(entries)
@@ -74,7 +80,10 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
 }
 
 function getScalingFinalityEntry(
-  project: Layer2,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'finalityInfo',
+    'countdowns' | 'scalingDa'
+  >,
   changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
   tvl: number | undefined,
@@ -91,39 +100,28 @@ function getScalingFinalityEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatuses: [notSyncedStatus],
+      notSyncedStatuses: [notSyncedStatus],
     }),
-    category: project.display.category,
-    provider: project.display.provider,
-    dataAvailabilityMode: project.dataAvailability?.mode,
+    category: project.scalingInfo.type,
+    provider: project.scalingInfo.stack,
+    dataAvailabilityMode: project.scalingDa?.mode,
     data: {
       timeToInclusion: {
         averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
         minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
         maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
-        warning: project.display.finality?.warnings?.timeToInclusion,
+        warning: project.finalityInfo?.warnings?.timeToInclusion,
       },
       stateUpdateDelay: finalityProjectData.stateUpdateDelays
         ? {
             averageInSeconds:
               finalityProjectData.stateUpdateDelays.averageInSeconds,
-            warning: project.display.finality?.warnings?.stateUpdateDelay,
+            warning: project.finalityInfo?.warnings?.stateUpdateDelay,
           }
         : undefined,
       isSynced: !notSyncedStatus,
     },
-    finalizationPeriod: project.display.finality?.finalizationPeriod,
+    finalizationPeriod: project.finalityInfo.finalizationPeriod,
     tvlOrder: tvl ?? -1,
   }
-}
-
-function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
-  return projects.filter(
-    (p) =>
-      !p.isUpcoming &&
-      !p.isArchived &&
-      (p.config.finality ?? finality[p.id.toString()]) &&
-      (p.display.category === 'ZK Rollup' ||
-        p.display.category === 'Optimistic Rollup'),
-  )
 }

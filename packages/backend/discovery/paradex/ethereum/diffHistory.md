@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x6d126dc7b8a43e5c366fbdb3785e8bc0ef5d5754
+
+# Diff at Wed, 15 Jan 2025 12:14:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 20711342
+- current block number: 21629810
+
+## Description
+
+Bridging limit increased to 50M USDC.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
++++ description: Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)
++++ severity: MEDIUM
+      values.maxTotalBalance:
+-        30000000000000
++        50000000000000
+    }
+```
+
 Generated with discovered.json: 0x44ab48f71bfdcd945a79d579c492d972aa6299e6
 
 # Diff at Mon, 21 Oct 2024 11:08:50 GMT:

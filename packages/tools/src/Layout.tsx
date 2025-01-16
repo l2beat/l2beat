@@ -30,6 +30,16 @@ export function Layout() {
             </NavLink>
           </li>
           <li>
+            <NavLink
+              className={({ isActive }) =>
+                clsx('font-mono underline', isActive && 'text-orange-500')
+              }
+              to="/discolupe"
+            >
+              /discolupe
+            </NavLink>
+          </li>
+          <li>
             <Link
               className="font-mono underline"
               to="https://fe-staging.l2beat.com/tools/logo-generator"

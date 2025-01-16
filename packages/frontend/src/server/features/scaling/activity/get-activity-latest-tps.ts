@@ -1,4 +1,4 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
+import { type Project } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
@@ -7,7 +7,7 @@ import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayUops } from './utils/get-last-day'
 
-export async function getActivityLatestUops(projects: (Layer2 | Layer3)[]) {
+export async function getActivityLatestUops(projects: Project[]) {
   if (env.MOCK) {
     return getMockActivityLatestUopsData(projects)
   }
@@ -17,7 +17,7 @@ export async function getActivityLatestUops(projects: (Layer2 | Layer3)[]) {
 export type ActivityLatestUopsData = Awaited<
   ReturnType<typeof getActivityLatestUopsData>
 >
-async function getActivityLatestUopsData(projects: (Layer2 | Layer3)[]) {
+async function getActivityLatestUopsData(projects: Project[]) {
   const db = getDb()
   const range = getFullySyncedActivityRange('1y')
   const records = await db.activity.getByProjectsAndTimeRange(
@@ -53,7 +53,7 @@ async function getActivityLatestUopsData(projects: (Layer2 | Layer3)[]) {
 }
 
 function getMockActivityLatestUopsData(
-  projects: (Layer2 | Layer3)[],
+  projects: Project[],
 ): ActivityLatestUopsData {
   return Object.fromEntries(
     projects.map((p) => [

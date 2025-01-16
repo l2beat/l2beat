@@ -28,7 +28,7 @@ export class ValueService {
 
         values.push({
           tokenId: token.id,
-          project: config.project,
+          projectId: config.projectId,
           valueUsd,
         })
       }

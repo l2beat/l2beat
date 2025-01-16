@@ -1,12 +1,11 @@
 import {
   type DataAvailabilityMode,
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -14,7 +13,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -32,24 +31,14 @@ export async function getScalingLivenessEntries() {
     getProjectsChangeReport(),
     getLiveness(),
     ProjectService.STATIC.getProjects({
-      select: ['statuses', 'scalingInfo'],
-      optional: ['countdowns', 'livenessInfo', 'scalingDa'],
+      select: ['statuses', 'scalingInfo', 'livenessInfo'],
+      optional: ['countdowns', 'scalingDa'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
   ])
 
-  // TODO: In the future select by livenessInfo being present instead
-  // We cannot do this now because it can be missing. Future refactor should
-  // make it so that if and only if trackedTxs are configured for liveness
-  // livenessInfo is present
-  const activeProjects = projects.filter(
-    (x) =>
-      x.scalingInfo.type === 'Optimistic Rollup' ||
-      x.scalingInfo.type === 'ZK Rollup',
-  )
-
-  const entries = activeProjects
+  const entries = projects
     .map((project) =>
       getScalingLivenessEntry(
         project,
@@ -75,9 +64,9 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
 }
 
 function getScalingLivenessEntry(
-  project: ProjectWith<
-    'scalingInfo' | 'statuses',
-    'countdowns' | 'livenessInfo' | 'scalingDa'
+  project: Project<
+    'scalingInfo' | 'statuses' | 'livenessInfo',
+    'countdowns' | 'scalingDa'
   >,
   changes: ProjectChanges,
   liveness: LivenessProject | undefined,
@@ -91,10 +80,10 @@ function getScalingLivenessEntry(
   const notSyncedStatus = getLivenessNotSyncedStatus(lowestSyncedUntil)
   const data = getLivenessData(liveness, project, !notSyncedStatus)
   return {
-    ...getCommonScalingEntry2({
+    ...getCommonScalingEntry({
       project,
       changes,
-      syncStatuses: compact([notSyncedStatus]),
+      notSyncedStatuses: [notSyncedStatus],
     }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
@@ -115,21 +104,21 @@ export interface LivenessData {
 
 function getLivenessData(
   liveness: LivenessProject,
-  project: ProjectWith<never, 'livenessInfo'>,
+  project: Project<'livenessInfo'>,
   isSynced: boolean,
 ): LivenessData {
   return {
     stateUpdates: getSubTypeData(
       liveness.stateUpdates,
-      project.livenessInfo?.warnings?.stateUpdates,
+      project.livenessInfo.warnings?.stateUpdates,
     ),
     batchSubmissions: getSubTypeData(
       liveness.batchSubmissions,
-      project.livenessInfo?.warnings?.batchSubmissions,
+      project.livenessInfo.warnings?.batchSubmissions,
     ),
     proofSubmissions: getSubTypeData(
       liveness.proofSubmissions,
-      project.livenessInfo?.warnings?.proofSubmissions,
+      project.livenessInfo.warnings?.proofSubmissions,
     ),
     isSynced,
   }

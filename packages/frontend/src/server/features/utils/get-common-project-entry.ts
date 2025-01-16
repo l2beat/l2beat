@@ -16,7 +16,7 @@ export interface CommonProjectEntry {
         redWarning?: string
         verificationWarning?: boolean
         underReview?: UnderReviewStatus
-        syncStatuses?: NotSyncedStatus[]
+        notSynced?: NotSyncedStatus[]
         countdowns?: ProjectCountdownsWithContext
       }
     | undefined
