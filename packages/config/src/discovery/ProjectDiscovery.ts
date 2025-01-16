@@ -378,7 +378,7 @@ export class ProjectDiscovery {
   getMultisigPermission(
     identifier: string,
     description: string | string[],
-    references?: ScalingProjectReference[],
+    userReferences?: ScalingProjectReference[],
     useBulletPoints: boolean = false,
   ): ScalingProjectPermission[] {
     const contract = this.getContract(identifier)
@@ -398,6 +398,7 @@ export class ProjectDiscovery {
     const descriptionWithContractNames =
       this.replaceAddressesWithNames(formattedDesc)
 
+    const references = [...(userReferences ?? []), ...(contract.references ?? [])]
     return [
       {
         name: contract.name,
