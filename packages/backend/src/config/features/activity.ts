@@ -8,7 +8,7 @@ import { BlockscoutChainConfig, EtherscanChainConfig } from '../Config'
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 const DEFAULT_RESYNC_LAST_DAYS = 7
 
-export function getProjectsWithActivity(): {
+export function  getProjectsWithActivity(): {
   id: ProjectId
   transactionApi: ScalingProjectTransactionApi
   name?: string

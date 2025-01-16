@@ -6,7 +6,12 @@ import {
   ScalingProjectStack,
 } from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
-import { ProjectLivenessInfo, WarningWithSentiment } from '../layer2s'
+import {
+  Layer2FinalityConfig,
+  Layer2FinalityDisplay,
+  ProjectLivenessInfo,
+  WarningWithSentiment,
+} from '../layer2s'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -34,8 +39,10 @@ export interface Project {
   // trackedTxsConfig
   // activityInfo
   // activityConfig
-  // finalityInfo
-  // finalityConfig
+  /** Configuration for the finality feature. If this is present finality is enabled for this project. */
+  finalityInfo?: Layer2FinalityDisplay
+  /** Configuration for the finality feature. If this is present finality is enabled for this project. */
+  finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
   countdowns?: ProjectCountdowns
