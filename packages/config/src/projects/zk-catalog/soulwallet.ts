@@ -4,10 +4,10 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../project/Project'
+import { BaseProject } from '../project/BaseProject'
 import { PROOFS } from './common/proofSystems'
 
-export const soulwallet: Project = {
+export const soulwallet: BaseProject = {
   id: ProjectId('soulwallet'),
   slug: 'soulwallet',
   name: 'Soul Wallet',

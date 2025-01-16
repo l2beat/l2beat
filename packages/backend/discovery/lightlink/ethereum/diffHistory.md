@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5546eedb4eff9f9b01bdfcb50e2cb76c18d72697
+
+# Diff at Thu, 16 Jan 2025 08:12:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a739892e4565ca2cf8f67abed360c494a770dcea block: 21422626
+- current block number: 21635772
+
+## Description
+
+challengeWindow (the effective challenge period) increased to 5d.
+
+## Watched changes
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      values.challengeWindow:
+-        259200
++        432000
+      values.finalizationSeconds:
+-        432000
++        604800
+    }
+```
+
 Generated with discovered.json: 0x42d845827fac948c43b2b8dc33a91a58b310e9ae
 
 # Diff at Mon, 21 Oct 2024 11:07:11 GMT:

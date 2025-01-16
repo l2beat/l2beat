@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 21630146,
+  "blockNumber": 21637082,
   "configHash": "0x2fb30c58206df5424648351a2a0f0f28982a36daafaf4d1574895c17f1dfb575",
   "contracts": [
     {
@@ -29,7 +29,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619793",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619794",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -120,8 +120,9 @@
         "$immutable": true,
         "oldVerifier": ["0x0000000000000000000000000000000000000000", false],
         "oldVerifier2": ["0x0000000000000000000000000000000000000000", false],
-        "oldVerifier3": ["0xE780809121774D06aD9B0EEeC620fF4B3913Ced1", false],
+        "oldVerifier3": ["0xE780809121774D06aD9B0EEeC620fF4B3913Ced1", true],
         "oldVerifier4": ["0x0000000000000000000000000000000000000000", false],
+        "oldVerifier5": ["0x0000000000000000000000000000000000000000", false],
         "opSuccinctVerifier": [
           "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",
           false
@@ -141,6 +142,9 @@
         },
         "oldVerifier4": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
@@ -250,6 +254,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -263,8 +268,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 73,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -383,7 +388,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21630082
+          "prevBlockNum": 21631609
         },
         "paused": false,
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
@@ -550,10 +555,10 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 255450,
-        "latestOutputIndex": 105,
-        "nextBlockNumber": 259770,
-        "nextOutputIndex": 106,
+        "latestBlockNumber": 264150,
+        "latestOutputIndex": 107,
+        "nextBlockNumber": 268470,
+        "nextOutputIndex": 108,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
@@ -600,7 +605,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -810,6 +815,7 @@
     { "address": "0x4665374939642965EfD8357D4568D2A77f677429" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     { "address": "0x5A2a0698355D06cd5c4e3872D2Bc6B9f6a89d39B" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
@@ -1355,6 +1361,6 @@
     "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x3f953bd6fe2c34eb89b0d4dfac66dfa4e597a9d4012a2dde6443edd5e47f6945",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
+    "succinct/SP1SuccinctGateway": "0xfd0c65c6bcfc5771c227135f9829fdd9c57aa549ecf7fb870d5b387a117ba317"
   }
 }

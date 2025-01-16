@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "blockNumber": 25072565,
+  "blockNumber": 25112167,
   "configHash": "0x1453a541b747a69f4a56448c7cd60c171ae55f647f985ffeebf04d4888e83719",
   "contracts": [
     {
@@ -32,7 +32,7 @@
         },
         {
           "permission": "configure",
-          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "target": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
           "via": []
         }
       ],
@@ -43,8 +43,9 @@
         "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
         "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
         "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
+        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", false]
+        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -58,6 +59,9 @@
         },
         "oldVerifier4": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
@@ -244,13 +248,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 3545400,
+        "latestBlock": 3560400,
         "nextHeaderFunctionId_depcrecated": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25",
         "relayers": [
           "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
           "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
         ],
-        "state_proofNonce": 7155,
+        "state_proofNonce": 7180,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -288,7 +292,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -298,13 +302,6 @@
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
       ],
       "sinceTimestamp": 1729727159,
       "values": {
@@ -349,6 +346,26 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
+      "sinceTimestamp": 1735949685,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
+      }
     },
     {
       "name": "NextHeaderVerifier",
@@ -698,6 +715,15 @@
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": [
       "constructor(address _singleton)"
     ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6": [
       "function CIRCUIT_DIGEST() view returns (bytes32)",
       "function verificationKeyHash() pure returns (bytes32)",
@@ -764,7 +790,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0x9b561e8f866e43abfbf30d5612a028aecb95be8441698251d61ab44b3d870955",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
+    "succinct/SP1SuccinctGateway": "0xfd0c65c6bcfc5771c227135f9829fdd9c57aa549ecf7fb870d5b387a117ba317",
     "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
   }
 }

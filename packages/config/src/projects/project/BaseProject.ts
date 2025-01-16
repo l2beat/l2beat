@@ -22,7 +22,7 @@ import {
 } from '../other'
 import { ProofVerification } from '../types'
 
-export interface Project {
+export interface BaseProject {
   id: ProjectId
   slug: string
   name: string

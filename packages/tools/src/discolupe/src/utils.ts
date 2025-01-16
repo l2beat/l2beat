@@ -1,32 +1,43 @@
-export function formatCurrencyExactValue(value: number, currency: string) {
-  const string =
-    currency === 'usd' || currency === 'USD'
-      ? value.toFixed(2)
-      : formatCrypto(value)
-  const [integer, decimal = ''] = string.split('.')
-  const formatted = formatInteger(integer ?? 0)
-  return formatted + (decimal && `.${decimal}`)
-}
+const units = ['', 'K', 'M', 'B', 'T']
 
-function formatCrypto(value: number) {
+const HAIR_SPACE = '\u200a'
+
+export function formatNumber(value: number, decimals = 2): string {
+  const minimum = Math.pow(10, -decimals)
+
+  if (value > 0 && value < minimum) {
+    return `<${minimum}`
+  }
+
+  if (value < 0 && value > -minimum) {
+    return `>-${minimum}`
+  }
+
+  if (value < 0) {
+    return `-${formatNumber(-value, decimals)}`
+  }
+
   if (value < 1) {
-    return value.toFixed(6)
-  } else if (value < 100) {
-    return value.toFixed(3)
-  } else {
-    return value.toFixed(2)
+    return value.toFixed(decimals)
   }
+
+  let unitIndex = 0
+  while (value >= 1000 && unitIndex < units.length - 1) {
+    value /= 1000
+    unitIndex++
+  }
+
+  const roundedDownValue =
+    Math.floor(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
+
+  const unit = units[unitIndex]
+
+  return roundedDownValue.toFixed(decimals) + withSpace(unit ?? '')
 }
 
-function formatInteger(integer: number | string): string {
-  const value = integer.toString()
-  if (value.startsWith('-')) {
-    return '-' + formatInteger(value.substring(1))
+function withSpace(unit: string) {
+  if (unit) {
+    return HAIR_SPACE + unit
   }
-  const count = value.length / 3
-  const resultValue = value.split('')
-  for (let i = 1; i < count; i++) {
-    resultValue.splice(-4 * i + 1, 0, ',')
-  }
-  return resultValue.join('')
+  return unit
 }

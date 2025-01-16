@@ -4,10 +4,10 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../project/Project'
+import { BaseProject } from '../project/BaseProject'
 import { PROOFS } from './common/proofSystems'
 
-export const payy: Project = {
+export const payy: BaseProject = {
   // TODO: This should be part of the payy project, but upcomingL2 doesn't support this :(
   id: ProjectId('payy-zk-catalog'),
   slug: 'payy',

@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -53,10 +53,7 @@ export interface ScalingArchivedEntry extends CommonScalingEntry {
 }
 
 function getScalingArchivedEntry(
-  project: ProjectWith<
-    'scalingInfo' | 'statuses' | 'scalingRisks',
-    'countdowns'
-  >,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks', 'countdowns'>,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
 ): ScalingArchivedEntry {

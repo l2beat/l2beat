@@ -1,7 +1,7 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 21078659,
+  "blockNumber": 21637077,
   "configHash": "0xd2b34cce08747ffe4e4f13d440cef697e19c9ff16fe43022e7f3e96a10fb807d",
   "contracts": [
     {
@@ -94,7 +94,7 @@
           "isSomeTxsLengthEqualToCelestiaDAExample": true,
           "isSequencerSendingBlobTx": false
         },
-        "overhead": 188,
+        "overhead": 0,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
@@ -104,7 +104,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 34200,
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187530910701986",
         "sequencerInbox": "0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xB71B58FfE538628557433dbBfA08d45ee5a69B44",
@@ -172,10 +172,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 15134400,
-        "latestOutputIndex": 8407,
-        "nextBlockNumber": 15136200,
-        "nextOutputIndex": 8408,
+        "latestBlockNumber": 18502200,
+        "latestOutputIndex": 10278,
+        "nextBlockNumber": 18504000,
+        "nextOutputIndex": 10279,
         "PROPOSER": "0x03e820562ffd2e0390787caD706EaF1FF98C2608",
         "startingBlockNumber": 0,
         "startingTimestamp": 1700021615,
@@ -300,6 +300,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -313,8 +314,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 56,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -349,7 +350,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620170",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620568",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -485,9 +486,9 @@
         "L2_ORACLE": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
-          "prevBaseFee": 1207352562,
-          "prevBoughtGas": 2363396,
-          "prevBlockNum": 21066735
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 590849,
+          "prevBlockNum": 21635586
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
@@ -586,6 +587,7 @@
     },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     { "address": "0x52E84149daE06CB5C4E92029140Da4faD86CE968" },
     { "address": "0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50" },
     { "address": "0x824CACbBeA0377801f72d736CFd5C869dd89b931" },

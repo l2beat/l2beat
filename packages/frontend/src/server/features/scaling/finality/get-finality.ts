@@ -1,4 +1,4 @@
-import { type Layer2FinalityConfig, type ProjectWith } from '@l2beat/config'
+import { type Layer2FinalityConfig, type Project } from '@l2beat/config'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues } from 'lodash'
 import { env } from '~/env'
@@ -9,7 +9,7 @@ export type FinalityProjectConfig = {
   projectId: ProjectId
 } & Layer2FinalityConfig
 
-export async function getFinality(projects: ProjectWith<'finalityConfig'>[]) {
+export async function getFinality(projects: Project<'finalityConfig'>[]) {
   if (env.MOCK) {
     return getMockFinalityData(projects)
   }
@@ -17,7 +17,7 @@ export async function getFinality(projects: ProjectWith<'finalityConfig'>[]) {
   return getFinalityData(projects)
 }
 
-async function getFinalityData(projects: ProjectWith<'finalityConfig'>[]) {
+async function getFinalityData(projects: Project<'finalityConfig'>[]) {
   const db = getDb()
   const projectIds = projects.map((p) => p.id)
   const records = await db.finality.getLatestGroupedByProjectId(projectIds)
@@ -61,7 +61,7 @@ async function getFinalityData(projects: ProjectWith<'finalityConfig'>[]) {
 }
 
 function getMockFinalityData(
-  projects: ProjectWith<'finalityConfig'>[],
+  projects: Project<'finalityConfig'>[],
 ): FinalityData {
   const result = projects.reduce<FinalityData>((acc, cur) => {
     acc[cur.id.toString()] = {

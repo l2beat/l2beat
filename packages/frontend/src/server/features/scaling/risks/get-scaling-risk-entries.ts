@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectRiskView,
 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -46,10 +46,7 @@ export interface ScalingRiskEntry extends CommonScalingEntry {
 }
 
 function getScalingRiskEntry(
-  project: ProjectWith<
-    'scalingInfo' | 'statuses' | 'scalingRisks',
-    'countdowns'
-  >,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks', 'countdowns'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingRiskEntry {

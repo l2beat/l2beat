@@ -1,10 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { Project } from './Project'
+import { BaseProject } from './BaseProject'
 import { ProjectService } from './ProjectService'
 
 describe(ProjectService.name, () => {
-  const projects: Project[] = [
+  const projects: BaseProject[] = [
     {
       id: ProjectId('foo'),
       slug: 'foochain',

@@ -1,7 +1,7 @@
 import {
   type DataAvailabilityMode,
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -64,7 +64,7 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
 }
 
 function getScalingLivenessEntry(
-  project: ProjectWith<
+  project: Project<
     'scalingInfo' | 'statuses' | 'livenessInfo',
     'countdowns' | 'scalingDa'
   >,
@@ -102,7 +102,7 @@ export interface LivenessData {
 
 function getLivenessData(
   liveness: LivenessProject,
-  project: ProjectWith<'livenessInfo'>,
+  project: Project<'livenessInfo'>,
 ) {
   let isSynced = true
   let lowestSyncedUntil = UnixTime.now()

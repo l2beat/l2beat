@@ -30,7 +30,12 @@ export default async function Page() {
   return (
     <div>
       <MainPageHeader>Summary</MainPageHeader>
-      <div className="flex flex-col gap-6">
+      {/* 
+        Negative margin is there to make the tabs align with the side nav
+        Padding from directory tabs can not be removed because it is needed
+        for the tabs to be sticky
+      */}
+      <div className="-mt-4 flex flex-col gap-6">
         <DirectoryTabs defaultValue="public">
           <DirectoryTabsList>
             <DirectoryTabsTrigger value="public">

@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type WarningWithSentiment,
 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -45,7 +45,7 @@ export interface ScalingCostsEntry extends CommonScalingEntry {
 }
 
 function getScalingCostEntry(
-  project: ProjectWith<'statuses' | 'scalingInfo' | 'costsInfo', 'countdowns'>,
+  project: Project<'statuses' | 'scalingInfo' | 'costsInfo', 'countdowns'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingCostsEntry {
