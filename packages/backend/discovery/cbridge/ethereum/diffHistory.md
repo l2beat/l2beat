@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd522c861789ff8b403e1b5e6250fc674b3c39a17
+
+# Diff at Wed, 15 Jan 2025 07:38:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21242135
+- current block number: 21628437
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242135 (main branch discovery), not current.
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x4bb86c487f20b52caf8c229012010810a6afebe1
 
 # Diff at Fri, 22 Nov 2024 08:40:11 GMT:

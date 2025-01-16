@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x7be928a6d0d1902aa60c5057b4207d8c28b3bbdb
+
+# Diff at Wed, 15 Jan 2025 07:52:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 122593187
+- current block number: 130664390
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 122593187 (main branch discovery), not current.
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0xebfa1d5ba77fb39d275f5e59944a2143e86b16b6
 
 # Diff at Mon, 21 Oct 2024 11:14:25 GMT:

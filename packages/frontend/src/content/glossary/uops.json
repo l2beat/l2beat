@@ -1,0 +1,5 @@
+{
+  "term": "UOPS",
+  "definition": "UOPS on our website stands for User Operations Per Second. In contrast to TPS (Transactions Per Second), UOPS takes into account the actions that are bundled and included in a single blockchain transaction. This can be achieved using a variety of bundling protocols, such as ERC-4337, Gnosis Safe, and Multicall.",
+  "isSpicy": false
+}

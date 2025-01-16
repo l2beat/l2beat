@@ -133,6 +133,7 @@ export const base: Layer2 = {
   display: {
     name: 'Base',
     slug: 'base',
+    stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     description:

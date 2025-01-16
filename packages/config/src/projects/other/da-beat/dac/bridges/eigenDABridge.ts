@@ -20,23 +20,17 @@ const upgrades = {
 }
 
 const EigenTimelockUpgradeDelay = eigenDiscovery.getContractValue<number>(
-  'EigenLayer Timelock',
-  'delay',
-)
-
-const eigenLayerUpgrades = {
-  upgradableBy: ['EigenLayerCommunityMultisig', 'EigenLayerOperationsMultisig'],
-  upgradeDelay: `${formatSeconds(EigenTimelockUpgradeDelay)} delay via EigenLayerOperationsMultisig, no delay via EigenLayerCommunityMultisig.`,
-}
-
-const EIGENUpgradeDelay = eigenDiscovery.getContractValue<number>(
-  'EIGEN Timelock',
+  'TimelockControllerOwning',
   'getMinDelay',
 )
 
-const EIGENUpgrades = {
-  upgradableBy: ['EIGEN Timelock'],
-  upgradeDelay: `${formatSeconds(EIGENUpgradeDelay)} delay.`,
+const eigenLayerUpgrades = {
+  upgradableBy: [
+    'EigenLayerCommunityMultisig',
+    'EigenLayerOperationsMultisig',
+    'EigenLayerOperationsMultisig2',
+  ],
+  upgradeDelay: `${formatSeconds(EigenTimelockUpgradeDelay)} delay via EigenLayerOperationsMultisig, no delay via EigenLayerCommunityMultisig.`,
 }
 
 const quorumThresholds = discovery.getContractValue<string>(
@@ -198,7 +192,7 @@ export const eigenDAbridge = {
             description: `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
               EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.`,
           }),
-          ...EIGENUpgrades,
+          ...eigenLayerUpgrades,
         },
       ],
     },
@@ -209,11 +203,7 @@ export const eigenDAbridge = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
-      },
-      {
-        category: 'Funds can be lost if',
-        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
+        text: 'EigenLayer core contracts (DelegationManager, StrategyManager, EIGEN token) receive a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
@@ -347,7 +337,7 @@ export const eigenDAbridge = {
         ],
       },
       ...eigenDiscovery.getMultisigPermission(
-        'EigenLayerExecutorMultisig',
+        'EigenLayerOwningMultisig',
         'The proxy contract authorized to unpause the EigenDAServiceManager contract and upgrade core contracts through the EigenDAProxyAdmin contract.',
       ),
       ...eigenDiscovery.getMultisigPermission(
@@ -359,8 +349,8 @@ export const eigenDAbridge = {
         'This multisig is one of the owners of EigenLayerExecutorMultisig and can upgrade EigenLayer core contracts without delay.',
       ),
       eigenDiscovery.contractAsPermissioned(
-        eigenDiscovery.getContract('EigenLayer Timelock'),
-        'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisig.',
+        eigenDiscovery.getContract('TimelockControllerOwning'),
+        'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisigs.',
       ),
     ],
   },
