@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xe98ecb5702fb87b2fb76f721965000b99c530bee
+
+# Diff at Thu, 16 Jan 2025 07:47:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24a86d11a7e2a6777684d2fc046b6e867ec85b15 block: 21629081
+- current block number: 21635651
+
+## Description
+
+Verifier unpaused.
+
+## Watched changes
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier.1:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xae65751f0532cda70552bc10859a5e05344a4db0
 
 # Diff at Wed, 15 Jan 2025 09:47:41 GMT:

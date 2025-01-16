@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 21629081,
+  "blockNumber": 21635651,
   "configHash": "0x095fcfd945197d147275446dd612c9a9d466577219ff0c82160e1bafb10e2735",
   "contracts": [
     {
@@ -58,7 +58,7 @@
         "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
         "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", false]
+        "verifier": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -210,13 +210,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 3544200,
+        "latestBlock": 3560400,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": [
           "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
           "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
         ],
-        "state_proofNonce": 1866,
+        "state_proofNonce": 1875,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -297,7 +297,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
