@@ -577,7 +577,7 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',
-      'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+      'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency.',
     ),
     ...discovery.getMultisigPermission(
       'OpFoundationUpgradeSafe',
