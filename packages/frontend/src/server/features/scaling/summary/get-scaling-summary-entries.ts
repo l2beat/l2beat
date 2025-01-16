@@ -1,7 +1,7 @@
 import {
+  type Project,
   type ProjectDataAvailability,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
   type StageConfig,
@@ -92,7 +92,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
 }
 
 function getScalingSummaryEntry(
-  project: ProjectWith<
+  project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks',
     'countdowns' | 'tvlInfo' | 'scalingDa' | 'scalingStage'
   >,

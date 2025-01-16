@@ -6,13 +6,17 @@ import { Layer2, ProjectLivenessInfo, layer2s } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
 import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
-import { Project, ProjectActivityInfo, ProjectCostsInfo } from './Project'
+import {
+  BaseProject,
+  ProjectActivityInfo,
+  ProjectCostsInfo,
+} from './BaseProject'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
 
-export function getProjects(): Project[] {
+export function getProjects(): BaseProject[] {
   return refactored
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
@@ -20,7 +24,7 @@ export function getProjects(): Project[] {
     .concat(daLayers.map(daLayerToProject))
 }
 
-function layer2Or3ToProject(p: Layer2 | Layer3): Project {
+function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
   const otherMigrationContext = PROJECT_COUNTDOWNS.otherMigration.getContext(p)
   return {
     id: p.id,
@@ -117,7 +121,7 @@ function getActivityInfo(p: Layer2 | Layer3): ProjectActivityInfo | undefined {
 
 function getFinality(
   p: Layer2 | Layer3,
-): Pick<Project, 'finalityConfig' | 'finalityInfo'> {
+): Pick<BaseProject, 'finalityConfig' | 'finalityInfo'> {
   if (
     p.type === 'layer2' &&
     (p.display.category === 'Optimistic Rollup' ||
@@ -133,7 +137,7 @@ function getFinality(
   return {}
 }
 
-function bridgeToProject(p: Bridge): Project {
+function bridgeToProject(p: Bridge): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -158,7 +162,7 @@ function bridgeToProject(p: Bridge): Project {
   }
 }
 
-function daLayerToProject(p: DaLayer): Project {
+function daLayerToProject(p: DaLayer): BaseProject {
   return {
     id: ProjectId(`${p.id}-da-layer`),
     slug: p.display.slug,

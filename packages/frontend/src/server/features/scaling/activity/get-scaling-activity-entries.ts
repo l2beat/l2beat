@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectDisplay,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
@@ -62,10 +62,7 @@ export interface ScalingActivityEntry extends CommonScalingEntry {
 }
 
 function getScalingProjectActivityEntry(
-  project: ProjectWith<
-    'statuses' | 'scalingInfo' | 'activityInfo',
-    'countdowns'
-  >,
+  project: Project<'statuses' | 'scalingInfo' | 'activityInfo', 'countdowns'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {

@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -31,7 +31,7 @@ export interface ScalingUpcomingEntry extends CommonScalingEntry {
 }
 
 function getScalingUpcomingEntry(
-  project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses', 'countdowns'>,
 ): ScalingUpcomingEntry {
   return {
     ...getCommonScalingEntry({

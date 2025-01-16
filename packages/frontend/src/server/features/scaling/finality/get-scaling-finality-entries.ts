@@ -1,7 +1,7 @@
 import {
   type DataAvailabilityMode,
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -80,7 +80,7 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
 }
 
 function getScalingFinalityEntry(
-  project: ProjectWith<
+  project: Project<
     'scalingInfo' | 'statuses' | 'finalityInfo',
     'countdowns' | 'scalingDa'
   >,
@@ -109,7 +109,7 @@ function getScalingFinalityEntry(
 
 function getFinalityData(
   finalityProjectData: FinalityProjectData | undefined,
-  project: ProjectWith<'finalityInfo'>,
+  project: Project<'finalityInfo'>,
 ) {
   if (!finalityProjectData) {
     return
