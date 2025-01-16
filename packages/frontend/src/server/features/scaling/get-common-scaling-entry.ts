@@ -72,12 +72,11 @@ export function getCommonScalingEntry({
           : undefined,
       countdowns: project.countdowns,
     },
-    tab:
-      project.scalingInfo.isOther || project.scalingInfo.type === 'Other'
-        ? 'Others'
-        : isRollup
-          ? 'Rollups'
-          : 'ValidiumsAndOptimiums',
+    tab: project.scalingInfo.isOther
+      ? 'Others'
+      : isRollup
+        ? 'Rollups'
+        : 'ValidiumsAndOptimiums',
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: {
       isRollup,
