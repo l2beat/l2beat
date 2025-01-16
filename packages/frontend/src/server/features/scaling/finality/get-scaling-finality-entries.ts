@@ -21,7 +21,7 @@ import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityProjectData } from './schema'
 
-export async function getFinalityProjects()  {
+export async function getFinalityProjects() {
   const projects = await ProjectService.STATIC.getProjects({
     select: ['statuses', 'scalingInfo', 'finalityInfo', 'finalityConfig'],
     optional: ['countdowns', 'scalingDa'],
