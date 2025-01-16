@@ -44,7 +44,6 @@ export function FinalityDurationCell(props: Props & BaseProps) {
         <SyncStatusWrapper syncStatus={props.syncStatus}>
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
         </SyncStatusWrapper>
-        {}
 
         {props.warning && (
           <RoundedWarningIcon
