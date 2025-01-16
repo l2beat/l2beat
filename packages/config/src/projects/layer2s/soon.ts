@@ -11,7 +11,7 @@ export const soon: Layer2 = opStackL2({
   createdAt: new UnixTime(1726836904), // 2024-09-20T12:55:04Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
-  additionalBadges: [Badge.DA.EigenDA],
+  additionalBadges: [Badge.DA.EigenDA, Badge.VM.SolanaVM],
   display: {
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Soon Alpha Mainnet',
