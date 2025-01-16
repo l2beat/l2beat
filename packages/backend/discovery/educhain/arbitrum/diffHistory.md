@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x22e6130effae2201921b460f6857aa1d07e6af4c
+Generated with discovered.json: 0x164e00aed95513a72ca8ea3f36560d7f8e42c297
 
-# Diff at Mon, 02 Dec 2024 08:55:36 GMT:
+# Diff at Thu, 16 Jan 2025 10:24:45 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 280513116
+- current block number: 295993900
 
 ## Description
 
-Standard orbit stack L3 with native token EDU and admin EOA, launch on Dec 2nd (Gelato).
+Standard orbit stack L3 with native token EDU and admin EOA, launch on Dec 2nd (Gelato). Postponed to Jan 2025.
 
 ## Initial discovery
 
@@ -20,7 +20,7 @@ Standard orbit stack L3 with native token EDU and admin EOA, launch on Dec 2nd (
 ```diff
 +   Status: CREATED
     contract ERC20Bridge (0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8)
-    +++ description: Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
 ```
 
 ```diff
@@ -56,7 +56,7 @@ Standard orbit stack L3 with native token EDU and admin EOA, launch on Dec 2nd (
 ```diff
 +   Status: CREATED
     contract ValidatorUtils (0x6c21303F5986180B1394d2C89f3e883890E2867b)
-    +++ description: None
+    +++ description: This contract implements view only utilities for validators.
 ```
 
 ```diff

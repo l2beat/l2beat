@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -9,7 +10,11 @@ const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 export const educhain: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [
+    Badge.DA.DAC,
+    // Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Gelato,
+  ],
   additionalPurposes: ['Social'],
   hostChain: ProjectId('arbitrum'),
   display: {
@@ -32,7 +37,6 @@ export const educhain: Layer3 = orbitStackL3({
   rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
   discoveryDrivenData: true,
   associatedTokens: ['EDU'],
-  nativeToken: 'EDU',
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),
@@ -46,14 +50,7 @@ export const educhain: Layer3 = orbitStackL3({
       name: 'CustomGateway',
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
-      source: 'external',
-      bridgedUsing: {
-        bridges: [
-          {
-            name: 'Canonically (custom escrow)',
-          },
-        ],
-      },
+      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
     }),
   ],
@@ -64,7 +61,7 @@ export const educhain: Layer3 = orbitStackL3({
     {
       name: 'Mainnet launch',
       link: 'https://medium.com/edu-chain', //TODO
-      date: '2024-12-02T00:00:00Z',
+      date: '2025-01-17T00:00:00Z',
       description: 'Educhain L3 opens its mainnet to all users.',
       type: 'general',
     },
