@@ -1,9 +1,3 @@
-import { assert } from '@l2beat/shared-pure'
-
-const units = ['', 'K', 'M', 'B', 'T']
-
-const HAIR_SPACE = '\u200a'
-
 export function formatNumber(value: number, decimals = 2): string {
   const minimum = Math.pow(10, -decimals)
 
@@ -23,26 +17,14 @@ export function formatNumber(value: number, decimals = 2): string {
     return value.toFixed(decimals)
   }
 
-  let unitIndex = 0
-  while (value >= 1000 && unitIndex < units.length - 1) {
-    value /= 1000
-    unitIndex++
-  }
+  const roundedDownValue = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+    notation: 'compact',
+    roundingMode: 'floor',
+  }).format(value)
 
-  const roundedDownValue =
-    Math.floor(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
-
-  const unit = units[unitIndex]
-  assert(unit !== undefined, `No unit for value ${value}`)
-
-  return roundedDownValue.toFixed(decimals) + withSpace(unit)
-}
-
-function withSpace(unit: string) {
-  if (unit) {
-    return HAIR_SPACE + unit
-  }
-  return unit
+  return roundedDownValue.toString().replace(/(\d)([KMBT])/g, '$1\u200a$2')
 }
 
 export function formatNumberWithCommas(value: number, precision = 2): string {
