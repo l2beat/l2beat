@@ -1,19 +1,18 @@
 import {
   ProjectService,
-  ProjectWith,
+  type ProjectWith,
   type ScalingProjectDisplay,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
-import { env } from 'process'
+import { env } from '~/env'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  getProjectsChangeReport,
   type ProjectChanges,
+  getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import {
   type ActivityProjectTableData,
@@ -47,13 +46,11 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .concat(
-      compact([
-        getEthereumEntry(ethereumData, 'Rollups'),
-        getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-        getEthereumEntry(ethereumData, 'Others'),
-      ]),
-    )
+    .concat([
+      getEthereumEntry(ethereumData, 'Rollups'),
+      getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
+      getEthereumEntry(ethereumData, 'Others'),
+    ])
     .sort(compareActivityEntry)
 
   return groupByTabs(entries)
@@ -73,7 +70,7 @@ function getScalingProjectActivityEntry(
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
   return {
-    ...getCommonScalingEntry2({
+    ...getCommonScalingEntry({
       project,
       changes,
       syncStatus: data?.syncStatus,

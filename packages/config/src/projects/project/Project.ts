@@ -11,6 +11,7 @@ import {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
   ProjectLivenessInfo,
+  StageConfig,
   WarningWithSentiment,
 } from '../layer2s'
 import {
@@ -30,6 +31,7 @@ export interface Project {
   // data
   statuses?: ProjectStatuses
   scalingInfo?: ProjectScalingInfo
+  scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo

@@ -14,7 +14,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -87,7 +87,7 @@ function getScalingFinalityEntry(
     return
   }
   return {
-    ...getCommonScalingEntry2({
+    ...getCommonScalingEntry({
       project,
       changes,
       syncStatus: data?.syncStatus,

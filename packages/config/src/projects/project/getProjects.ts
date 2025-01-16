@@ -39,9 +39,10 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       layer: p.type,
       type: p.display.category,
       isOther:
-        PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
-        !!p.display.reasonsForBeingOther &&
-        p.display.reasonsForBeingOther.length > 0,
+        p.display.category === 'Other' ||
+        (PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
+          !!p.display.reasonsForBeingOther &&
+          p.display.reasonsForBeingOther.length > 0),
       hostChain: getHostChain(
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),
@@ -51,6 +52,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       stage: getStage(p.stage),
       purposes: p.display.purposes,
     },
+    scalingStage: p.stage,
     scalingRisks: {
       self: p.riskView,
       host: undefined,

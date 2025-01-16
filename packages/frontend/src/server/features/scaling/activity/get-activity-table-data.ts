@@ -1,4 +1,4 @@
-import { layer2s, layer3s, ProjectWith } from '@l2beat/config'
+import { type ProjectWith, layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
