@@ -142,7 +142,7 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: IndicatorContainer,
   },
   {
-    header: 'Withdrawl Configured',
+    header: 'Withdrawls Configured',
     id: 'of',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
