@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa058729c55a2acd8b130353199774c9186993b78
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+add SC ref link (for FE).
 
 ## Config/verification related changes
 

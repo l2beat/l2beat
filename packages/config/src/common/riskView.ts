@@ -249,6 +249,21 @@ export function DATA_AVAIL(
   }
 }
 
+export function DATA_EIGENDA(
+  isUsingServiceManager: boolean,
+): ScalingProjectRiskViewEntry {
+  const additional = isUsingServiceManager
+    ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
+    : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation fully rely on data that is posted on EigenDA.` +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
 export const DATA_POS: ScalingProjectRiskViewEntry = {
   value: 'PoS network',
   description:
@@ -669,6 +684,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
   DATA_AVAIL,
+  DATA_EIGENDA,
   DATA_POS,
 
   // validatedBy

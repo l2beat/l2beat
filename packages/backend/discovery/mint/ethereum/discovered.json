@@ -1,7 +1,7 @@
 {
   "name": "mint",
   "chain": "ethereum",
-  "blockNumber": 21078665,
+  "blockNumber": 21637079,
   "configHash": "0x736886c33cdd26ea25f05e79b2df8368fba2b2d6083f23d9990d6f5498da3013",
   "contracts": [
     {
@@ -103,6 +103,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -116,8 +117,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 56,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -167,8 +168,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 100000,
-          "prevBlockNum": 21077484
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 21633244
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
@@ -229,10 +230,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 7322400,
-        "latestOutputIndex": 338,
-        "nextBlockNumber": 7344000,
-        "nextOutputIndex": 339,
+        "latestBlockNumber": 10692000,
+        "latestOutputIndex": 494,
+        "nextBlockNumber": 10713600,
+        "nextOutputIndex": 495,
         "PROPOSER": "0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA",
         "startingBlockNumber": 0,
         "startingTimestamp": 1715608931,
@@ -336,7 +337,7 @@
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true
         },
-        "overhead": 188,
+        "overhead": 0,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
@@ -346,7 +347,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 684000,
+        "scalar": "452312848583266388373324160190187140051835877600158453279133814289959323296",
         "sequencerInbox": "0x4e31448a098393727b786e25B54E59DcA1b77FE1",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x41c4FAE5E80B9a622d8968bcd3EBbcf1F93b30Db",
@@ -417,7 +418,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631677",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632013",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -448,6 +449,7 @@
     { "address": "0x41c4FAE5E80B9a622d8968bcd3EBbcf1F93b30Db" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     { "address": "0x4e31448a098393727b786e25B54E59DcA1b77FE1" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     {
       "address": "0x68bdFecE01535090c8f3C27ec3b1AE97E83fA4aA",
       "receivedPermissions": [

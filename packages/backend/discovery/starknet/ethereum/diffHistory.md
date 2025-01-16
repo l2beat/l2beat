@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xfc5f74026a824d06653c797febe62bc4319357fa
+
+# Diff at Thu, 16 Jan 2025 08:25:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a739892e4565ca2cf8f67abed360c494a770dcea block: 21358044
+- current block number: 21635833
+
+## Description
+
+New 'hat' role (root permission in this Maker Gov contract).
+
+## Watched changes
+
+```diff
+    contract MakerDAO Governance (0x0a3f6849f78076aefaDf113F5BED87720274dDC0) {
+    +++ description: None
+      values.hat:
+-        "0x329Feb1E300d6bf54d4969Df5089ff7bC79694B6"
++        "0x5985E06E47e0dd10230393e5dEF7200516262ed9"
+    }
+```
+
 Generated with discovered.json: 0xb5d9d9dcd9618d5c0084c17afd27719d7febec40
 
 # Diff at Tue, 10 Dec 2024 11:08:54 GMT:

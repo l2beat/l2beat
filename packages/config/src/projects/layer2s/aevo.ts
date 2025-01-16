@@ -5,7 +5,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
+import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aevo')
@@ -13,7 +13,7 @@ const discovery = new ProjectDiscovery('aevo')
 export const aevo: Layer2 = opStackL2({
   createdAt: new UnixTime(1694090052), // 2023-09-07T12:34:12Z
   additionalBadges: [Badge.DA.EigenDA, Badge.RaaS.Conduit],
-  daProvider: CELESTIA_DA_PROVIDER,
+  daProvider: EIGENDA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,
   additionalPurposes: ['Exchange'],
@@ -25,7 +25,7 @@ export const aevo: Layer2 = opStackL2({
     name: 'Aevo',
     slug: 'aevo',
     description:
-      'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and Celestia DA.',
+      'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and EigenDA.',
     links: {
       websites: ['https://aevo.xyz/'],
       apps: ['https://app.aevo.xyz/'],
@@ -69,6 +69,14 @@ export const aevo: Layer2 = opStackL2({
   isNodeAvailable: false,
   discoveryDrivenData: true,
   milestones: [
+    {
+      name: 'Aevo switches to EigenDA',
+      link: 'https://x.com/aevoxyz/status/1879728286093479947',
+      date: '2025-01-15T00:00:00.00Z',
+      description:
+        'Aevo switches from Celestia to EigenDA for data availability.',
+      type: 'general',
+    },
     {
       name: 'Aevo Open Mainnet Launch',
       link: 'https://aevo.mirror.xyz/hV7VYkpk7caoYl2DbOFcSaZRRrK-8NeWqKczrgUff6k',

@@ -7,7 +7,7 @@
     value: "External"
   }
   exitWindow: {
-    definingMetric: -259200
+    definingMetric: -432000
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
