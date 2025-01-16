@@ -1,8 +1,8 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21624259,
-  "configHash": "0x74043b5fff3927f6628330717abfd054ed730ecce0c5c25be061e09454e0874c",
+  "blockNumber": 21637371,
+  "configHash": "0x8adcc031afb1607213a3ed4fb5edd14bfd10bbbc19cd687df660f711dfeaf25f",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -61,10 +61,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 85000,
-        "latestOutputIndex": 16,
-        "nextBlockNumber": 90000,
-        "nextOutputIndex": 17,
+        "latestBlockNumber": 100000,
+        "latestOutputIndex": 19,
+        "nextBlockNumber": 105000,
+        "nextOutputIndex": 20,
         "proposer": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "PROPOSER": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "startingBlockNumber": 0,
@@ -228,7 +228,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 328258,
-          "prevBlockNum": 21624067
+          "prevBlockNum": 21636449
         },
         "paused": false,
         "superchainConfig": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
@@ -380,7 +380,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621870",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621905",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -448,7 +448,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "SoonMultisig",
       "address": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -519,7 +519,8 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 20,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1StandardBridge",

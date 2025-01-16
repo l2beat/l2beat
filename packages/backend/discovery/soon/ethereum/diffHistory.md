@@ -1,13 +1,19 @@
-Generated with discovered.json: 0xec4a1dff24462bcc0a28921c8a0c2b2fc71db493
+Generated with discovered.json: 0xe4820a4e3187a76254b32a45b656be86a9bfb65e
 
-# Diff at Wed, 15 Jan 2025 15:08:20 GMT:
+# Diff at Thu, 16 Jan 2025 13:34:05 GMT:
 
-- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 21624259
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current block number: 21637371
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery.
+
+    SOON is a fairly standard OP Stack (with no proofs) with SVM as the execution environment
+    all EVM addresses are changed to SOL addresses (byte32)
+    ERC20 token transfers are not allowed, only ETH
+    they are using EigenDA for DA with no bridge (no trace of Service Manager)
+
 
 ## Initial discovery
 
@@ -61,7 +67,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701)
+    contract SoonMultisig (0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701)
     +++ description: None
 ```
 

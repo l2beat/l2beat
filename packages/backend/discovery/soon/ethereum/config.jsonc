@@ -4,7 +4,8 @@
   "name": "soon",
   "initialAddresses": ["0x5a0702c7ebbec83802b35db737fccdc5fc6c5e07"], //OptimismPortal
   "names": {
-    "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": "SystemConfig"
+    "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8": "SystemConfig",
+    "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701": "SoonMultisig"
   },
   "overrides": {
     "SystemConfig": {
