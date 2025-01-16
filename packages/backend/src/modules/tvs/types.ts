@@ -1,4 +1,9 @@
-import { CoingeckoId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 export type DataOperator =
   | 'balanceOfEscrow'
@@ -17,23 +22,23 @@ export type Argument = Formula | string | number
 
 export interface Formula {
   operator: Operator
-  arguments?: Argument[]
+  arguments: Argument[]
 }
 
 export interface Token {
   id: string
   amount: Formula
-  address: EthereumAddress
+  address?: EthereumAddress
   chain: string
   ticker: string
-  sinceTimestamp: number
-  untilTimestamp: number
+  // TODO: do we really need this?
+  displayTicker?: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   decimals: number
   category: 'ether' | 'stablecoin' | 'other'
   source: 'canonical' | 'external' | 'native'
-  isAssociated: string
-  // TODO: do we really need this?
-  displayTicker?: string
+  isAssociated: boolean
 }
 
 export type PriceSources = Map<string, PriceSource[]>
@@ -49,7 +54,7 @@ interface CoinMarketCapPriceSource {
 }
 
 export type TvsConfig = {
-  project: ProjectId
+  projectId: ProjectId
   tokens: Token[]
 }
 
