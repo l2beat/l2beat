@@ -1,7 +1,7 @@
 import {
+  type Project,
   type ProjectDataAvailability,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -51,7 +51,7 @@ export interface ScalingDaEntry extends CommonScalingEntry {
 }
 
 function getScalingDaEntry(
-  project: ProjectWith<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingDaEntry {

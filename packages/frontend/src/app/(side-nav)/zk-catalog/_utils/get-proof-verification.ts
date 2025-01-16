@@ -1,10 +1,10 @@
-import { type OnchainVerifier, type ProjectWith } from '@l2beat/config'
+import { type OnchainVerifier, type Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { type ZkCatalogProofVerification } from './types'
 
 export function getProofVerification(
-  project: ProjectWith<'proofVerification'>,
+  project: Project<'proofVerification'>,
   verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogProofVerification {
   return {

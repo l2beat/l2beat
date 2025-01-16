@@ -1,4 +1,4 @@
-import { type ProjectWith } from '@l2beat/config'
+import { type Project } from '@l2beat/config'
 import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
@@ -34,7 +34,7 @@ export function getCommonScalingEntry({
   changes,
   syncStatus,
 }: {
-  project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>
+  project: Project<'scalingInfo' | 'statuses', 'countdowns'>
   changes: ProjectChanges | undefined
   syncStatus: SyncStatus | undefined
 }): CommonScalingEntry {
