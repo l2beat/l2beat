@@ -47,13 +47,13 @@ export async function getBridgeProjectDetails(
   const technologySection = getBridgeTechnologySection(bridge)
 
   await api.tvl.chart.prefetch({
-    range: '7d',
+    range: '1y',
     filter: { type: 'projects', projectIds: [bridge.id] },
     excludeAssociatedTokens: false,
   })
   const [tvlChartData, tokens] = await Promise.all([
     api.tvl.chart({
-      range: '7d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [bridge.id] },
       excludeAssociatedTokens: false,
     }),

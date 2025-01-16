@@ -34,7 +34,7 @@ export function ProjectActivityChart({
   category,
   projectName,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('lin')
   const [showMainnet, setShowMainnet] = useState(true)
