@@ -33,15 +33,16 @@ export interface Project {
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
   // tvlConfig
-  /** Display information for the liveness feature. If this is present liveness is enabled for this project. */
+  /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
-  // costsInfo
+  /** Display information for the costs feature. If present costs is enabled for this project. */
+  costsInfo?: ProjectCostsInfo
   // trackedTxsConfig
   // activityInfo
   // activityConfig
-  /** Configuration for the finality feature. If this is present finality is enabled for this project. */
+  /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityInfo?: Layer2FinalityDisplay
-  /** Configuration for the finality feature. If this is present finality is enabled for this project. */
+  /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
@@ -91,6 +92,10 @@ export interface ProjectScalingRisks {
   self: ScalingProjectRiskView
   host: ScalingProjectRiskView | undefined
   stacked: ScalingProjectRiskView | undefined
+}
+
+export interface ProjectCostsInfo {
+  warning?: WarningWithSentiment
 }
 
 export interface ProjectTvlInfo {

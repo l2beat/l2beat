@@ -6,7 +6,7 @@ import { Layer2, ProjectLivenessInfo, layer2s } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
 import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
-import { Project } from './Project'
+import { Project, ProjectCostsInfo } from './Project'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -62,7 +62,8 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
     livenessInfo: getLivenessInfo(p),
-    ...getFinalityConfig(p),
+    costsInfo: getCostsInfo(p),
+    ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
     countdowns: otherMigrationContext
       ? {
@@ -92,7 +93,20 @@ function getLivenessInfo(p: Layer2 | Layer3): ProjectLivenessInfo | undefined {
   }
 }
 
-function getFinalityConfig(
+function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
+  if (
+    p.type === 'layer2' &&
+    (p.display.category === 'Optimistic Rollup' ||
+      p.display.category === 'ZK Rollup') &&
+    p.config.trackedTxs !== undefined
+  ) {
+    return {
+      warning: p.display.costsWarning,
+    }
+  }
+}
+
+function getFinality(
   p: Layer2 | Layer3,
 ): Pick<Project, 'finalityConfig' | 'finalityInfo'> {
   if (
