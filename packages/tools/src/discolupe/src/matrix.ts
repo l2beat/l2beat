@@ -37,16 +37,14 @@ export function toVisibleRows(
 
   const columnConfigs = matrix.columns.map((c) => c.config)
   const columnIndex = columnIDToIndex(columnConfigs, sort.byColumnId)
+  const column = columnConfigs[columnIndex]
 
   rows.sort((r1, r2) => {
-    if (
-      r1.columns[columnIndex] === undefined ||
-      r2.columns[columnIndex] === undefined
-    ) {
-      return 0
+    if (column?.sortComparator !== undefined) {
+      return column.sortComparator(r1.project, r2.project)
+    } else {
+      return defaultSortComparator(r1, r2, columnIndex)
     }
-
-    return r1.columns[columnIndex].localeCompare(r2.columns[columnIndex])
   })
 
   if (sort.direction === 'desc') {
@@ -74,6 +72,17 @@ export function toVisibleRows(
 
     return true
   })
+}
+
+function defaultSortComparator(r1: Row, r2: Row, columnIndex: number): number {
+  if (
+    r1.columns[columnIndex] === undefined ||
+    r2.columns[columnIndex] === undefined
+  ) {
+    return 0
+  }
+
+  return r1.columns[columnIndex].localeCompare(r2.columns[columnIndex])
 }
 
 function columnIDToIndex(columns: LupeColumn[], columnId: string): number {

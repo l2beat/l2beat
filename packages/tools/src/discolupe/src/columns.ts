@@ -3,7 +3,7 @@ import { DivContainer } from '../DivContainer'
 import { IndicatorContainer } from '../IndicatorContainer'
 import { ProjectName } from '../ProjectName'
 import { DiscoLupeProject } from './model'
-import { formatCurrencyExactValue } from './utils'
+import { formatNumber } from './utils'
 
 export type ColumnId = (typeof AVAILABLE_COLUMNS_RAW)[number]['id']
 
@@ -13,6 +13,10 @@ export interface LupeColumn {
   fn: (project: DiscoLupeProject) => string
   displayFn: (project: DiscoLupeProject, str: string) => ReactElement
   align: 'right' | 'left'
+  sortComparator?: (
+    leftProject: DiscoLupeProject,
+    rightProject: DiscoLupeProject,
+  ) => number
 }
 
 const AVAILABLE_COLUMNS_RAW = [
@@ -42,9 +46,11 @@ const AVAILABLE_COLUMNS_RAW = [
     header: 'TVL',
     id: 'ig',
     align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      formatCurrencyExactValue(project.tvl, 'usd'),
+    fn: (project: DiscoLupeProject) => formatNumber(project.tvl),
     displayFn: DivContainer,
+    sortComparator: (p1: DiscoLupeProject, p2: DiscoLupeProject) => {
+      return p1.tvl - p2.tvl
+    },
   },
   {
     header: 'Is Live',
