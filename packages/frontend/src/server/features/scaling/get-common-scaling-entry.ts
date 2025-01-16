@@ -10,7 +10,7 @@ import {
 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
-import { type SyncStatus } from '~/types/sync-status'
+import { type NotSyncedStatus } from '~/types/sync-status'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
@@ -43,7 +43,7 @@ export interface CommonScalingEntry extends CommonProjectEntry {
 interface Params {
   project: Layer2 | Layer3
   changes: ProjectChanges | undefined
-  syncStatuses: (SyncStatus | undefined)[] | undefined
+  syncStatuses: (NotSyncedStatus | undefined)[] | undefined
 }
 
 type Params2 = Omit<Params, 'project'> & {

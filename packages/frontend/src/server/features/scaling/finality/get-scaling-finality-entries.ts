@@ -6,12 +6,9 @@ import {
   layer2s,
 } from '@l2beat/config'
 import {
-  UnixTime,
   type WarningValueWithSentiment,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
-import { type SyncStatus } from '~/types/sync-status'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -26,6 +23,7 @@ import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityData, type FinalityProjectData } from './schema'
 import { getFinalityConfigurations } from './utils/get-finality-configurations'
+import { getFinalityNotSyncedStatus } from './utils/get-finality-not-synced-status'
 
 export async function getScalingFinalityEntries() {
   const configurations = getFinalityConfigurations()
@@ -52,55 +50,6 @@ export async function getScalingFinalityEntries() {
   return groupByTabs(entries)
 }
 
-function getFinalityData(
-  finalityProjectData: FinalityProjectData | undefined,
-  project: Layer2,
-) {
-  if (!finalityProjectData) {
-    return
-  }
-
-  const data = {
-    timeToInclusion: {
-      averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
-      minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
-      maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
-      warning: project.display.finality?.warnings?.timeToInclusion,
-    },
-    stateUpdateDelay: finalityProjectData.stateUpdateDelays
-      ? {
-          averageInSeconds:
-            finalityProjectData.stateUpdateDelays.averageInSeconds,
-          warning: project.display.finality?.warnings?.stateUpdateDelay,
-        }
-      : undefined,
-    syncStatus: {
-      isSynced: isSynced(finalityProjectData.syncedUntil),
-      syncedUntil: finalityProjectData.syncedUntil,
-    },
-  }
-
-  return data
-}
-
-function isSynced(syncedUntil: number) {
-  return UnixTime.now()
-    .add(-1, 'days')
-    .add(-1, 'hours')
-    .lte(new UnixTime(syncedUntil))
-}
-
-function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
-  return projects.filter(
-    (p) =>
-      !p.isUpcoming &&
-      !p.isArchived &&
-      (p.config.finality ?? finality[p.id.toString()]) &&
-      (p.display.category === 'ZK Rollup' ||
-        p.display.category === 'Optimistic Rollup'),
-  )
-}
-
 export interface ScalingFinalityEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
   provider: ScalingProjectStack | undefined
@@ -118,7 +67,7 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
           warning: WarningValueWithSentiment | undefined
         }
       | undefined
-    syncStatus: SyncStatus
+    isSynced: boolean
   }
   finalizationPeriod: number | undefined
   tvlOrder: number
@@ -130,21 +79,51 @@ function getScalingFinalityEntry(
   finalityProjectData: FinalityProjectData | undefined,
   tvl: number | undefined,
 ): ScalingFinalityEntry | undefined {
-  const data = getFinalityData(finalityProjectData, project)
-  if (!data) {
+  if (!finalityProjectData) {
     return
   }
+
+  const notSyncedStatus = getFinalityNotSyncedStatus(
+    finalityProjectData.syncedUntil,
+  )
+
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatuses: compact([data?.syncStatus]),
+      syncStatuses: [notSyncedStatus],
     }),
     category: project.display.category,
     provider: project.display.provider,
     dataAvailabilityMode: project.dataAvailability?.mode,
-    data,
+    data: {
+      timeToInclusion: {
+        averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
+        minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
+        maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
+        warning: project.display.finality?.warnings?.timeToInclusion,
+      },
+      stateUpdateDelay: finalityProjectData.stateUpdateDelays
+        ? {
+            averageInSeconds:
+              finalityProjectData.stateUpdateDelays.averageInSeconds,
+            warning: project.display.finality?.warnings?.stateUpdateDelay,
+          }
+        : undefined,
+      isSynced: !notSyncedStatus,
+    },
     finalizationPeriod: project.display.finality?.finalizationPeriod,
     tvlOrder: tvl ?? -1,
   }
+}
+
+function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
+  return projects.filter(
+    (p) =>
+      !p.isUpcoming &&
+      !p.isArchived &&
+      (p.config.finality ?? finality[p.id.toString()]) &&
+      (p.display.category === 'ZK Rollup' ||
+        p.display.category === 'Optimistic Rollup'),
+  )
 }

@@ -101,11 +101,8 @@ export const scalingSummaryColumns = [
         return <NoDataBadge />
       }
 
-      const activitySyncStatus = ctx.row.original.statuses?.syncStatuses?.find(
-        (s) => s.type === 'activity',
-      )
       return (
-        <SyncStatusWrapper syncStatus={activitySyncStatus}>
+        <SyncStatusWrapper isSynced={data.isSynced}>
           <ValueWithPercentageChange change={data?.change}>
             {formatActivityCount(ctx.getValue())}
           </ValueWithPercentageChange>

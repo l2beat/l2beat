@@ -21,7 +21,7 @@ export const All: Story = {
         verificationWarning: true,
         syncStatuses: [
           {
-            type: undefined,
+            content: 'Some random content saying that this is not synced',
             syncedUntil: UnixTime.now().add(-2, 'days').toNumber(),
           },
         ],

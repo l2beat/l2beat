@@ -1,4 +1,4 @@
-export interface SyncStatus {
+export interface NotSyncedStatus {
   syncedUntil: number
-  type?: 'activity' | 'tvs'
+  content: string
 }

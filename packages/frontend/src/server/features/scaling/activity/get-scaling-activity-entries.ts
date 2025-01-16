@@ -20,6 +20,7 @@ import {
 } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
 import { getActivityProjects } from './utils/get-activity-projects'
+import { getActivityNotSyncedStatus } from './utils/get-activity-sync-status'
 
 export async function getScalingActivityEntries() {
   const projects = getActivityProjects().filter((p) => !p.isArchived)
@@ -53,7 +54,9 @@ export async function getScalingActivityEntries() {
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
   dataSource: ScalingProjectDisplay['activityDataSource']
-  data: ActivityProjectTableData | undefined
+  data:
+    | (Omit<ActivityProjectTableData, 'syncedUntil'> & { isSynced: boolean })
+    | undefined
 }
 
 function getScalingProjectActivityEntry(
@@ -61,15 +64,25 @@ function getScalingProjectActivityEntry(
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
+  const notSyncedStatus = data
+    ? getActivityNotSyncedStatus(data.syncedUntil)
+    : undefined
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatuses: compact([data?.syncStatus]),
+      syncStatuses: [notSyncedStatus],
     }),
     href: `/scaling/projects/${project.display.slug}#activity`,
     dataSource: project.display.activityDataSource,
-    data,
+    data: data
+      ? {
+          tps: data.tps,
+          uops: data.uops,
+          ratio: data.ratio,
+          isSynced: !notSyncedStatus,
+        }
+      : undefined,
   }
 }
 
@@ -77,6 +90,9 @@ function getEthereumEntry(
   data: ActivityProjectTableData,
   tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
+  const notSyncedStatus = data
+    ? getActivityNotSyncedStatus(data.syncedUntil)
+    : undefined
   return {
     id: ProjectId.ETHEREUM,
     name: 'Ethereum',
@@ -88,7 +104,12 @@ function getEthereumEntry(
     stageOrder: 3,
     filterable: undefined,
     dataSource: 'Blockchain RPC',
-    data,
+    data: {
+      tps: data.tps,
+      uops: data.uops,
+      ratio: data.ratio,
+      isSynced: !notSyncedStatus,
+    },
     statuses: undefined,
   }
 }

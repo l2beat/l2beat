@@ -7,7 +7,7 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { aggregateActivityRecords } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
-import { getActivitySyncStatus } from './utils/get-activity-sync-status'
+import { getActivityNotSyncedStatus } from './utils/get-activity-sync-status'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
   type ActivityProjectFilter,
@@ -47,14 +47,14 @@ export const getCachedActivityChartData = cache(
     )
 
     // By default, we assume we're always synced...
-    let syncStatus = getActivitySyncStatus(adjustedRange[1])
+    let syncStatus = getActivityNotSyncedStatus(adjustedRange[1])
 
     // ...but if we are looking at a single project, we check the last day we have data for,
     // and use that as the cutoff.
     if (isSingleProject) {
       const lastProjectEntry = entries.findLast((entry) => entry.projectId)
       if (lastProjectEntry) {
-        syncStatus = getActivitySyncStatus(lastProjectEntry.timestamp)
+        syncStatus = getActivityNotSyncedStatus(lastProjectEntry.timestamp)
         adjustedRange = [adjustedRange[0], lastProjectEntry.timestamp]
       }
     }
@@ -112,6 +112,6 @@ function getMockActivityChart(
 
   return {
     data: timestamps.map((timestamp) => [+timestamp, 15, 11, 16, 12]),
-    syncStatus: getActivitySyncStatus(adjustedRange[1]),
+    syncStatus: getActivityNotSyncedStatus(adjustedRange[1]),
   }
 }

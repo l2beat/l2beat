@@ -7,7 +7,6 @@ import {
 } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { type SyncStatus } from '~/types/sync-status'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -25,6 +24,7 @@ import {
   type AnomalyIndicatorEntry,
   toAnomalyIndicatorEntries,
 } from './utils/get-anomaly-entries'
+import { getLivenessNotSyncedStatus } from './utils/get-liveness-not-synced-status'
 
 export async function getScalingLivenessEntries() {
   const [tvl, projectsChangeReport, liveness, projects] = await Promise.all([
@@ -87,12 +87,14 @@ function getScalingLivenessEntry(
     return undefined
   }
 
-  const data = getLivenessData(liveness, project)
+  const lowestSyncedUntil = getLowestSyncedUntil(liveness)
+  const notSyncedStatus = getLivenessNotSyncedStatus(lowestSyncedUntil)
+  const data = getLivenessData(liveness, project, !notSyncedStatus)
   return {
     ...getCommonScalingEntry2({
       project,
       changes,
-      syncStatuses: compact([data?.syncStatus]),
+      syncStatuses: compact([notSyncedStatus]),
     }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
@@ -108,16 +110,33 @@ export interface LivenessData {
   stateUpdates: LivenessTypeData | undefined
   batchSubmissions: LivenessTypeData | undefined
   proofSubmissions: LivenessTypeData | undefined
-  syncStatus: SyncStatus
+  isSynced: boolean
 }
 
 function getLivenessData(
   liveness: LivenessProject,
   project: ProjectWith<never, 'livenessInfo'>,
-) {
-  let isSynced = true
+  isSynced: boolean,
+): LivenessData {
+  return {
+    stateUpdates: getSubTypeData(
+      liveness.stateUpdates,
+      project.livenessInfo?.warnings?.stateUpdates,
+    ),
+    batchSubmissions: getSubTypeData(
+      liveness.batchSubmissions,
+      project.livenessInfo?.warnings?.batchSubmissions,
+    ),
+    proofSubmissions: getSubTypeData(
+      liveness.proofSubmissions,
+      project.livenessInfo?.warnings?.proofSubmissions,
+    ),
+    isSynced,
+  }
+}
+
+function getLowestSyncedUntil(liveness: LivenessProject): UnixTime {
   let lowestSyncedUntil = UnixTime.now()
-  const syncTarget = UnixTime.now().add(-6, 'hours').toStartOf('hour')
 
   for (const subtype of TrackedTxsConfigSubtypeValues) {
     const data = liveness[subtype]
@@ -125,39 +144,17 @@ function getLivenessData(
       continue
     }
     const syncedUntil = new UnixTime(data.syncedUntil)
-    if (syncedUntil.lt(syncTarget)) {
-      isSynced = false
-      if (syncedUntil.lt(lowestSyncedUntil)) {
-        lowestSyncedUntil = syncedUntil
-      }
+    if (syncedUntil.lt(lowestSyncedUntil)) {
+      lowestSyncedUntil = syncedUntil
     }
   }
-
-  return {
-    stateUpdates: getSubTypeData(
-      liveness.stateUpdates,
-      project.livenessInfo?.warnings?.stateUpdates,
-      syncTarget,
-    ),
-    batchSubmissions: getSubTypeData(
-      liveness.batchSubmissions,
-      project.livenessInfo?.warnings?.batchSubmissions,
-      syncTarget,
-    ),
-    proofSubmissions: getSubTypeData(
-      liveness.proofSubmissions,
-      project.livenessInfo?.warnings?.proofSubmissions,
-      syncTarget,
-    ),
-    syncStatus: { isSynced, syncedUntil: lowestSyncedUntil.toNumber() },
-  }
+  return lowestSyncedUntil
 }
 
 export interface LivenessTypeData {
   '30d': LivenessDatapoint | undefined
   '90d': LivenessDatapoint | undefined
   max: LivenessDatapoint | undefined
-  syncStatus: SyncStatus | undefined
   warning: string | undefined
 }
 
@@ -170,15 +167,12 @@ export interface LivenessDatapoint {
 function getSubTypeData(
   data: LivenessDetails | undefined,
   warning: string | undefined,
-  syncTarget: UnixTime,
 ): LivenessTypeData | undefined {
   if (!data) return undefined
-  const isSynced = data.syncedUntil >= syncTarget.toNumber()
   return {
     '30d': data['30d'],
     '90d': data['90d'],
     max: data.max,
-    syncStatus: isSynced ? undefined : { syncedUntil: data.syncedUntil },
     warning,
   }
 }

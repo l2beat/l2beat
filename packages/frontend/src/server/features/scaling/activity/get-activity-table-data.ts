@@ -4,7 +4,6 @@ import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { countPerSecond } from './utils/count-per-second'
-import { getActivitySyncStatus } from './utils/get-activity-sync-status'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
 import { getLastDayRatio } from './utils/get-last-day-ratio'
@@ -71,7 +70,7 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
             },
           },
           ratio: getLastDayRatio(records),
-          syncStatus: getActivitySyncStatus(lastRecord.timestamp),
+          syncedUntil: lastRecord.timestamp,
         },
       ]
     }),
@@ -110,7 +109,7 @@ function getMockActivityTableData(): ActivityTableData {
           },
         },
         ratio: 1.1,
-        syncStatus: getActivitySyncStatus(UnixTime.now()),
+        syncedUntil: UnixTime.now(),
       },
     ]),
   )

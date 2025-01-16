@@ -86,6 +86,7 @@ function mapToTableEntry(
     data: {
       ...projectData,
       type: 'available',
+      isSynced: projectData.isSynced,
       total: projectData[unit].total,
       calldata: projectData[unit].calldata,
       blobs: projectData[unit].blobs,

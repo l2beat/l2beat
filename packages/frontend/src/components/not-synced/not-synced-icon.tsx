@@ -1,6 +1,5 @@
 import { ClockIcon } from '~/icons/clock'
-import { type SyncStatus } from '~/types/sync-status'
-import { formatTimestamp } from '~/utils/dates'
+import { type NotSyncedStatus } from '~/types/sync-status'
 import {
   Tooltip,
   TooltipContent,
@@ -8,47 +7,22 @@ import {
 } from '../core/tooltip/tooltip'
 
 interface NotSyncedBadgeProps {
-  syncStatuses: SyncStatus[] | undefined
+  syncStatuses: NotSyncedStatus[] | undefined
 }
 
 export function NotSyncedIcon({ syncStatuses }: NotSyncedBadgeProps) {
+  if (!syncStatuses || syncStatuses.length === 0) {
+    return null
+  }
+
   return (
     <Tooltip>
       <TooltipTrigger>
         <ClockIcon />
       </TooltipTrigger>
       <TooltipContent>
-        {syncStatuses?.map(getContent).join('\n')}
+        {syncStatuses.map((s) => s.content).join('\n')}
       </TooltipContent>
     </Tooltip>
   )
-}
-
-function getContent(syncStatus: SyncStatus) {
-  switch (syncStatus.type) {
-    case 'tvs':
-      return `TVS data for this item is not synced since ${formatTimestamp(
-        syncStatus.syncedUntil,
-        {
-          mode: 'datetime',
-          longMonthName: true,
-        },
-      )}.`
-    case 'activity':
-      return `Activity data for this item is not synced since ${formatTimestamp(
-        syncStatus.syncedUntil,
-        {
-          mode: 'datetime',
-          longMonthName: true,
-        },
-      )}.`
-    default:
-      return `The data for this item is not synced since ${formatTimestamp(
-        syncStatus.syncedUntil,
-        {
-          mode: 'datetime',
-          longMonthName: true,
-        },
-      )}.`
-  }
 }
