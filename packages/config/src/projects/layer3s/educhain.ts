@@ -37,6 +37,7 @@ export const educhain: Layer3 = orbitStackL3({
   rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
   discoveryDrivenData: true,
   associatedTokens: ['EDU'],
+  gasTokens: ['EDU'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),
