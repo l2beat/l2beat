@@ -5,6 +5,7 @@ import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DacDaLayer } from '../types/DaLayer'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './bridges/eigenDABridge'
+import { soon } from '../../../layer2s/soon'
 
 export const eigenDA: DacDaLayer = {
   id: 'eigen-da',
@@ -92,7 +93,7 @@ export const eigenDA: DacDaLayer = {
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },
-      usedIn: [...toUsedInProject([donatuz])],
+      usedIn: [...toUsedInProject([donatuz, soon])],
     }),
     eigenDAbridge,
   ],
