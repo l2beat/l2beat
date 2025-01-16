@@ -160,6 +160,7 @@ export const optimism: Layer2 = {
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',
+    stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     description:

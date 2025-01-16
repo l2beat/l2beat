@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc964739c822a328a8e1581b3f1305336221145a1
+
+# Diff at Wed, 15 Jan 2025 07:47:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21585110
+- current block number: 21628485
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585110 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x55b5ac839416bd5081d30634287a40e8c875684f
 
 # Diff at Thu, 09 Jan 2025 06:23:35 GMT:

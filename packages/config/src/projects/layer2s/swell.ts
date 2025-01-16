@@ -176,6 +176,7 @@ export const swell: Layer2 = {
     minTimestampForTvl: new UnixTime(1732696703),
   },
   config: {
+    associatedTokens: ['SWELL'],
     escrows: [
       discovery.getEscrowDetails({
         // OptimismPortal

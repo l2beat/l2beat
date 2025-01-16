@@ -1,3 +1,206 @@
+Generated with discovered.json: 0x81f5e51d9b6b83432b359f8ca79b1a48315106c1
+
+# Diff at Wed, 15 Jan 2025 10:19:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21486361
+- current block number: 21629240
+
+## Description
+
+PermissionedDisputeGame upgraded (1.3.0), FaultDisputeGame (1.3.0) and DelayedWETH added, all known shapes. InitBonds same as optimism for now. Permissioned game is still the respected gameType.
+
+Two signers added to Gelato MS, now 4/10.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059"
++        "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963"
+      values.gameImpls.0:
+-        "0x0000000000000000000000000000000000000000"
++        "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD"
+      values.initBonds.1:
+-        0
++        "80000000000000000"
+      values.initBonds.0:
+-        0
++        "80000000000000000"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","target":"0xde744491BcF6b2DD2F32146364Ea1487D75E2509","via":[{"address":"0xd56045E68956FCe2576E680c95a4750cf8241f79"}]}
+      receivedPermissions.10.target:
+-        "0xde744491BcF6b2DD2F32146364Ea1487D75E2509"
++        "0xA8B389A82e088b164cD03230e900980CcED34d29"
+      receivedPermissions.9.target:
+-        "0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.9.via.0.address:
+-        "0xd56045E68956FCe2576E680c95a4750cf8241f79"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.8.target:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      receivedPermissions.8.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xd56045E68956FCe2576E680c95a4750cf8241f79"
+      receivedPermissions.8.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.7.target:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      receivedPermissions.7.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.6.target:
+-        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
++        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
+      receivedPermissions.5.target:
+-        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
++        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
+      receivedPermissions.4.target:
+-        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
++        "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.9:
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.8:
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.7:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.6:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+      values.$members.5:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+      values.$members.4:
+-        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.3:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.2:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+      values.$members.1:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.0:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 10 (40%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd56045E68956FCe2576E680c95a4750cf8241f79) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","target":"0xde744491BcF6b2DD2F32146364Ea1487D75E2509"}
+      directlyReceivedPermissions.8.target:
+-        "0xde744491BcF6b2DD2F32146364Ea1487D75E2509"
++        "0xA8B389A82e088b164cD03230e900980CcED34d29"
+      directlyReceivedPermissions.7.target:
+-        "0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      directlyReceivedPermissions.7.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.6.target:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      directlyReceivedPermissions.6.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.5.target:
+-        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
++        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
+      directlyReceivedPermissions.4.target:
+-        "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
++        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
+      directlyReceivedPermissions.3.target:
+-        "0x5d66C1782664115999C47c9fA5cd031f495D3e4F"
++        "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0xde744491BcF6b2DD2F32146364Ea1487D75E2509) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.$pastUpgrades.2:
++        ["2025-01-13T21:22:47.000Z","0x71234ec9d3df32360383a0091277b0facbeb21456f1a29accb110fa43a6b5441",["0x7A78aa7D5dec2F8B368ca13f00Df2fA4E5De3C3F"]]
+      values.$pastUpgrades.1:
++        ["2025-01-13T21:22:47.000Z","0x71234ec9d3df32360383a0091277b0facbeb21456f1a29accb110fa43a6b5441",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        1
++        3
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH.sol                                |    0
+ .../Proxy.p.sol                                    |    0
+ .../DelayedWETH.sol                                |  651 ++++
+ .../Proxy.p.sol                                    |  200 +
+ .../ink/ethereum/.flat/FaultDisputeGame.sol        | 3959 ++++++++++++++++++++
+ .../PermissionedDisputeGame.sol                    |  398 +-
+ 6 files changed, 5033 insertions(+), 175 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21486361 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x3e8e87f48a4a8d11bc5e4e8510c4d2eaf91d4657
 
 # Diff at Wed, 08 Jan 2025 09:01:48 GMT:

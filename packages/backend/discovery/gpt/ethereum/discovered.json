@@ -1,7 +1,7 @@
 {
   "name": "gpt",
   "chain": "ethereum",
-  "blockNumber": 20676773,
+  "blockNumber": 21628462,
   "configHash": "0x053abff33590a72ba8325cd454e20b4de2c557bf4f2050207cc3c1934538c2e9",
   "contracts": [
     {
@@ -71,6 +71,7 @@
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -124,7 +125,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x63ae50828d2bf7ff73897ce9f6d55515f6f8eb56a2d10a549b4bd0418e2ec12c",
+        "lastAccInputHash": "0x1a05446ac2f3937cfe2eeb29b10a9d1d98211a559a9692e41ecf0f3e15c393c9",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "gpt-mainnet",

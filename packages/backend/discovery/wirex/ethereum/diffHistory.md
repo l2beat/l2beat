@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x10ab6fdd255020a72045d2a47cfc2e25abf7f464
+
+# Diff at Wed, 15 Jan 2025 07:48:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 20677136
+- current block number: 21628493
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20677136 (main branch discovery), not current.
+
+```diff
+    contract DACProxyAdmin (0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x3748c865fbc30f1a153a66160d6761d3ab9c5596
 
 # Diff at Mon, 21 Oct 2024 11:11:56 GMT:
