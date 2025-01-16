@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { Button, buttonVariants } from '~/components/core/button'
 import {
@@ -15,6 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { useRouterWithProgressBar } from '~/components/progress-bar'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
@@ -29,7 +29,7 @@ interface Props {
 }
 
 export function MultipleBridgeDetails({ project }: Props) {
-  const router = useRouter()
+  const router = useRouterWithProgressBar()
 
   return (
     <div className="flex flex-row items-end gap-10 pt-4 md:py-0">
