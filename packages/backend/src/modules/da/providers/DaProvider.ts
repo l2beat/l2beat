@@ -7,5 +7,10 @@ export type BlobSizeData = {
 
 export interface BlobsProvider {
   getBlobs(from: number, to: number): Promise<BlobSizeData[]>
-  getBlobsCount(from: number, to: number): Promise<number>
+  getBlobsByAddress(
+    from: number,
+    to: number,
+    toAddress: string,
+    fromAddresses?: string[],
+  ): Promise<BlobSizeData[]>
 }

@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { EthereumDaConfig, layer2s } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
@@ -9,6 +10,7 @@ import { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 import { BlobScanClient } from './clients/BlobscanClient'
 import { EthereumDaIndexer } from './indexers/EthereumDaIndexer'
+import { EthereumDaProjectIndexer } from './indexers/EthereumDaProjectIndexer'
 import { BlobScanDaProvider } from './providers/BlobscanDaProvider'
 
 export function initDaModule(
@@ -50,16 +52,36 @@ export function initDaModule(
   const ethereumDaIndexer = new EthereumDaIndexer({
     logger,
     batchSize: 1000,
-    minBlock: 21002704,
+    minHeight: 21002704,
     parents: [blockTargetIndexer],
     blobsProvider: blobsProvider,
     blockProvider,
     db: database,
-    minHeight: config.da.ethereum.minBlock,
     indexerService,
   })
 
-  const indexers = [blockTargetIndexer, ethereumDaIndexer]
+  const projectIndexers = layer2s
+    .filter(
+      (project) =>
+        project.dataActivityConfig &&
+        project.dataActivityConfig.type === 'Ethereum',
+    )
+    .map((project) => {
+      return new EthereumDaProjectIndexer({
+        projectId: project.id,
+        config: project.dataActivityConfig as EthereumDaConfig,
+        logger,
+        batchSize: 10000,
+        parents: [blockTargetIndexer],
+        blobsProvider: blobsProvider,
+        blockProvider,
+        db: database,
+        minHeight: 21002704,
+        indexerService,
+      })
+    })
+
+  const indexers = [blockTargetIndexer, ethereumDaIndexer, ...projectIndexers]
 
   return {
     start: async () => {

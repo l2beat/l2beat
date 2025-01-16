@@ -527,4 +527,11 @@ export const base: Layer2 = {
       },
     ],
   },
+  dataActivityConfig: {
+    type: 'Ethereum',
+    config: {
+      inbox: '0xFf00000000000000000000000000000000008453',
+      sequencers: ['0x5050f69a9786f081509234f1a7f4684b5e5b76c9'],
+    },
+  },
 }

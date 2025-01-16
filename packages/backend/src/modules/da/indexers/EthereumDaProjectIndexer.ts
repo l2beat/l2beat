@@ -1,3 +1,4 @@
+import { EthereumDaConfig } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { BlockProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
@@ -9,23 +10,25 @@ import {
 import { BlobSizeData, BlobsProvider } from '../providers/DaProvider'
 import { aggregatePerHour } from '../utils/aggregatePerDay'
 
-export interface EthereumDaIndexerDeps
+export interface EthereumDaProjectIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   blobsProvider: BlobsProvider
   blockProvider: BlockProvider
   db: Database
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
+  projectId: string
+  config: EthereumDaConfig
 }
 
-export class EthereumDaIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: EthereumDaIndexerDeps) {
+export class EthereumDaProjectIndexer extends ManagedChildIndexer {
+  constructor(private readonly $: EthereumDaProjectIndexerDeps) {
     super({
       ...$,
-      name: `ethereum_da_indexer`,
+      name: `ethereum_da_project_${$.projectId}_indexer`,
       tags: {
-        tag: 'ethereum',
-        project: 'blobs',
+        tag: $.projectId,
+        project: $.projectId,
       },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
@@ -35,12 +38,17 @@ export class EthereumDaIndexer extends ManagedChildIndexer {
     const fromWithBatchSize = from + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
 
-    this.logger.info('Fetching blobs', { from, to: adjustedTo })
+    this.logger.info('Fetching project blobs', {
+      from,
+      to: adjustedTo,
+    })
 
-    // We could optimize this by getting the count only instead of paginating in in the blobscan client
-    // since each blob is 128 KiB so 131,072 B
-    // ? or maybe not since we need timestamp to bucket data
-    const blobs = await this.$.blobsProvider.getBlobs(from, adjustedTo)
+    const blobs = await this.$.blobsProvider.getBlobsByAddress(
+      from,
+      adjustedTo,
+      this.$.config.config.inbox,
+      this.$.config.config.sequencers,
+    )
 
     // Since we bucket by hour and index by blocks
     // we need to get a reference timestamp since some update range may overlap with the previous hour
@@ -50,7 +58,7 @@ export class EthereumDaIndexer extends ManagedChildIndexer {
     const fillBackSince = new UnixTime(timestamp).toStartOf('hour')
 
     const presentRecords = await this.$.db.da.getByProjectAndFrom(
-      'ethereum',
+      this.$.projectId,
       fillBackSince,
     )
 
@@ -62,7 +70,7 @@ export class EthereumDaIndexer extends ManagedChildIndexer {
     )
 
     // It will reduce previous aggregate with new blobs
-    const records = aggregatePerHour('ethereum', [
+    const records = aggregatePerHour(this.$.projectId, [
       ...presentBlobSizeData,
       ...blobs,
     ])
