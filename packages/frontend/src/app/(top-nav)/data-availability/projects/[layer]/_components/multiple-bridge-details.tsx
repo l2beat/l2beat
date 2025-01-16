@@ -49,57 +49,57 @@ export function MultipleBridgeDetails({ project }: Props) {
           </div>
           <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg max-md:bg-header-secondary md:gap-0 md:rounded-t-none">
             {project.bridges.map((bridge, index) => (
-              <div
+              <Link
                 key={bridge.id}
-                className={cn(
-                  'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
-                  index === project.bridges.length - 1 && 'md:border-b-0',
-                  // Hide 3rd and further bridges on mobile (will be shown in a drawer)
-                  index > 2 && 'max-md:hidden',
-                  index === 0 && 'md:rounded-t-none',
-                )}
+                href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
               >
-                <div className="flex items-center px-1 md:px-3">
-                  <Link
-                    href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
-                  >
+                <div
+                  className={cn(
+                    'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                    index === project.bridges.length - 1 && 'md:border-b-0',
+                    // Hide 3rd and further bridges on mobile (will be shown in a drawer)
+                    index > 2 && 'max-md:hidden',
+                    index === 0 && 'md:rounded-t-none',
+                  )}
+                >
+                  <div className="flex items-center px-1 md:px-3">
                     <RadioButtonLikeIcon
                       selected={bridge.id === project.selectedBridge.id}
                     />
-                  </Link>
-                </div>
-                <div className="flex flex-1 items-center text-sm font-bold text-primary">
-                  {bridge.name}
-                </div>
-                <div className="flex flex-1 items-center justify-center">
-                  <GrissiniCell
-                    values={bridge.grissiniValues}
-                    hasNoBridge={bridge.type === 'NoBridge'}
-                  />
-                </div>
-                <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
-                  {formatCurrency(bridge.tvs, 'usd')}
-                </div>
-                <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
-                  {bridge.usedIn.length > 0 ? (
-                    <ProjectsUsedIn
-                      className="h-5 justify-start"
-                      usedIn={bridge.usedIn}
-                      maxProjects={4}
+                  </div>
+                  <div className="flex flex-1 items-center text-sm font-bold text-primary">
+                    {bridge.name}
+                  </div>
+                  <div className="flex flex-1 items-center justify-center">
+                    <GrissiniCell
+                      values={bridge.grissiniValues}
+                      hasNoBridge={bridge.type === 'NoBridge'}
                     />
-                  ) : (
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <span className="text-sm font-medium">No L2 😔</span>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        There are no scaling projects listed on L2BEAT that use
-                        this solution.
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
+                  </div>
+                  <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
+                    {formatCurrency(bridge.tvs, 'usd')}
+                  </div>
+                  <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
+                    {bridge.usedIn.length > 0 ? (
+                      <ProjectsUsedIn
+                        className="h-5 justify-start"
+                        usedIn={bridge.usedIn}
+                        maxProjects={4}
+                      />
+                    ) : (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <span className="text-sm font-medium">No L2 😔</span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          There are no scaling projects listed on L2BEAT that
+                          use this solution.
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
             <div
               className={cn(
