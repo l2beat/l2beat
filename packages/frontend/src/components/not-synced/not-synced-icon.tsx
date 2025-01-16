@@ -7,11 +7,11 @@ import {
 } from '../core/tooltip/tooltip'
 
 interface NotSyncedBadgeProps {
-  syncStatuses: NotSyncedStatus[] | undefined
+  notSyncedStatuses: NotSyncedStatus[] | undefined
 }
 
-export function NotSyncedIcon({ syncStatuses }: NotSyncedBadgeProps) {
-  if (!syncStatuses || syncStatuses.length === 0) {
+export function NotSyncedIcon({ notSyncedStatuses }: NotSyncedBadgeProps) {
+  if (!notSyncedStatuses || notSyncedStatuses.length === 0) {
     return null
   }
 
@@ -21,7 +21,7 @@ export function NotSyncedIcon({ syncStatuses }: NotSyncedBadgeProps) {
         <ClockIcon />
       </TooltipTrigger>
       <TooltipContent>
-        {syncStatuses.map((s) => s.content).join('\n')}
+        {notSyncedStatuses.map((s) => s.content).join('\n')}
       </TooltipContent>
     </Tooltip>
   )

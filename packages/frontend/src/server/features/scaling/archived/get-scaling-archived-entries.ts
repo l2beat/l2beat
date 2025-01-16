@@ -58,7 +58,11 @@ function getScalingArchivedEntry(
   latestTvl: LatestTvl['projects'][string] | undefined,
 ): ScalingArchivedEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatuses: undefined }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      notSyncedStatuses: undefined,
+    }),
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     provider: project.scalingInfo.stack,

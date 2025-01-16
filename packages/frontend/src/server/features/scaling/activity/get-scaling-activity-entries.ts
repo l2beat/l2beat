@@ -76,7 +76,7 @@ function getScalingProjectActivityEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatuses: [notSyncedStatus],
+      notSyncedStatuses: [notSyncedStatus],
     }),
     href: `/scaling/projects/${project.slug}#activity`,
     dataSource: project.activityInfo.dataSource,

@@ -56,7 +56,11 @@ function getScalingDaEntry(
   tvl: number | undefined,
 ): ScalingDaEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatuses: undefined }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      notSyncedStatuses: undefined,
+    }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
     provider: project.scalingInfo.stack,

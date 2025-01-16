@@ -66,8 +66,8 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             </TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.syncStatuses && (
-          <NotSyncedIcon syncStatuses={project.statuses.syncStatuses} />
+        {project.statuses?.notSynced && (
+          <NotSyncedIcon notSyncedStatuses={project.statuses.notSynced} />
         )}
         {project.statuses?.countdowns?.otherMigration &&
           !featureFlags.othersMigrated() && (

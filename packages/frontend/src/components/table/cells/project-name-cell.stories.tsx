@@ -19,7 +19,7 @@ export const All: Story = {
         underReview: 'config',
         redWarning: 'Red warning message',
         verificationWarning: true,
-        syncStatuses: [
+        notSynced: [
           {
             content: 'Some random content saying that this is not synced',
             syncedUntil: UnixTime.now().add(-2, 'days').toNumber(),
