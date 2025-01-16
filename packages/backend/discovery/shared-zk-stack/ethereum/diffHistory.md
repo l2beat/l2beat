@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x089edefbfba6e10c0a05b5f4799e7ef7af5a1815
+
+# Diff at Fri, 10 Jan 2025 11:44:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e594a564c9c62a7edef1a6e3f64f955bf70aa8eb block: 21585244
+- current block number: 21593851
+
+## Description
+
+UpgradeTimestamp added for the latest ZKsync Protocol Upgrade v25 (QoL upgrade, partly reviewed below).
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.1:
++        {"_protocolVersion":107374182400,"_upgradeTimestamp":1736517600}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585244 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.GrvtDiamond:
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.GrvtSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.grvtThirdBatchTS:
+-        1733327159
+      values.grvtValidatorsAdded:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
++        []
+      fieldMeta.grvtThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
 Generated with discovered.json: 0x403fce2f16a4bdb19d6487a08be2ae753e9a6875
 
 # Diff at Thu, 09 Jan 2025 06:50:39 GMT:

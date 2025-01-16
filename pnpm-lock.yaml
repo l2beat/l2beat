@@ -53,12 +53,6 @@ importers:
 
   packages/backend:
     dependencies:
-      '@bugsnag/js':
-        specifier: ^7.22.3
-        version: 7.25.0
-      '@bugsnag/plugin-koa':
-        specifier: ^7.19.0
-        version: 7.25.0(@bugsnag/core@7.25.0)
       '@google-cloud/bigquery':
         specifier: ^7.3.0
         version: 7.9.1(encoding@0.1.13)
@@ -1702,29 +1696,6 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
-
-  '@bugsnag/browser@7.25.0':
-    resolution: {integrity: sha512-PzzWy5d9Ly1CU1KkxTB6ZaOw/dO+CYSfVtqxVJccy832e6+7rW/dvSw5Jy7rsNhgcKSKjZq86LtNkPSvritOLA==}
-
-  '@bugsnag/core@7.25.0':
-    resolution: {integrity: sha512-JZLak1b5BVzy77CPcklViZrppac/pE07L3uSDmfSvFYSCGReXkik2txOgV05VlF9EDe36dtUAIIV7iAPDfFpQQ==}
-
-  '@bugsnag/cuid@3.1.1':
-    resolution: {integrity: sha512-d2z4b0rEo3chI07FNN1Xds8v25CNeekecU6FC/2Fs9MxY2EipkZTThVcV2YinMn8dvRUlViKOyC50evoUxg8tw==}
-
-  '@bugsnag/js@7.25.0':
-    resolution: {integrity: sha512-d8n8SyKdRUz8jMacRW1j/Sj/ckhKbIEp49+Dacp3CS8afRgfMZ//NXhUFFXITsDP5cXouaejR9fx4XVapYXNgg==}
-
-  '@bugsnag/node@7.25.0':
-    resolution: {integrity: sha512-KlxBaJ8EREEsfKInybAjTO9LmdDXV3cUH5+XNXyqUZrcRVuPOu4j4xvljh+n24ifok/wbFZTKVXUzrN4iKIeIA==}
-
-  '@bugsnag/plugin-koa@7.25.0':
-    resolution: {integrity: sha512-XtGiWUToXMG31QtA/TPFztHIPdgBbeDA90I4iZ3rk8y/77P1xBgrncp3yj6/fMbX1s5k7+w6jkkvXANf2U/stA==}
-    peerDependencies:
-      '@bugsnag/core': ^7.0.0
-
-  '@bugsnag/safe-json-stringify@6.0.0':
-    resolution: {integrity: sha512-htzFO1Zc57S8kgdRK9mLcPVTW1BY2ijfH7Dk2CeZmspTWKdKqSo1iwmqrq2WtRjFlo8aRZYgLX0wFrDXF/9DLA==}
 
   '@changesets/apply-release-plan@7.0.5':
     resolution: {integrity: sha512-1cWCk+ZshEkSVEZrm2fSj1Gz8sYvxgUL4Q78+1ZZqeqfuevPTPk033/yUZ3df8BKMohkqqHfzj0HOOrG0KtXTw==}
@@ -5294,10 +5265,6 @@ packages:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
     engines: {node: '>=10.16.0'}
 
-  byline@5.0.0:
-    resolution: {integrity: sha512-s6webAy+R4SR8XVuJWt2V2rGvhnrhxN+9S15GNuTK3wKPOXFF6RNc+8ug2XhH+2s4f+uudG4kUVYmYOQWL2g0Q==}
-    engines: {node: '>=0.10.0'}
-
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
@@ -7001,9 +6968,6 @@ packages:
 
   isarray@2.0.5:
     resolution: {integrity: sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==}
-
-  iserror@0.0.2:
-    resolution: {integrity: sha512-oKGGrFVaWwETimP3SiWwjDeY27ovZoyZPHtxblC4hCq9fXxed/jasx+ATWFFjCVSRZng8VTMsN1nDnGo6zMBSw==}
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
@@ -8741,9 +8705,6 @@ packages:
     resolution: {integrity: sha512-97qShzy1AiyxvPNIkLWoGua7xoQzzPjQ0HAH4B0rWKo7SZ6USuPcrUiAFrws0UH8RrbWmgq3LMTObhPIHbbBeQ==}
     engines: {node: '>= 8'}
 
-  stack-generator@2.0.10:
-    resolution: {integrity: sha512-mwnua/hkqM6pF4k8SnmZ2zfETsRUpWXREfA/goT8SLCV4iOFa4bzOX2nDipWAZFPTjLvQB82f5yaodMVhK0yJQ==}
-
   stackframe@1.3.4:
     resolution: {integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==}
 
@@ -10465,41 +10426,6 @@ snapshots:
 
   '@biomejs/cli-win32-x64@1.9.3':
     optional: true
-
-  '@bugsnag/browser@7.25.0':
-    dependencies:
-      '@bugsnag/core': 7.25.0
-
-  '@bugsnag/core@7.25.0':
-    dependencies:
-      '@bugsnag/cuid': 3.1.1
-      '@bugsnag/safe-json-stringify': 6.0.0
-      error-stack-parser: 2.1.4
-      iserror: 0.0.2
-      stack-generator: 2.0.10
-
-  '@bugsnag/cuid@3.1.1': {}
-
-  '@bugsnag/js@7.25.0':
-    dependencies:
-      '@bugsnag/browser': 7.25.0
-      '@bugsnag/node': 7.25.0
-
-  '@bugsnag/node@7.25.0':
-    dependencies:
-      '@bugsnag/core': 7.25.0
-      byline: 5.0.0
-      error-stack-parser: 2.1.4
-      iserror: 0.0.2
-      pump: 3.0.2
-      stack-generator: 2.0.10
-
-  '@bugsnag/plugin-koa@7.25.0(@bugsnag/core@7.25.0)':
-    dependencies:
-      '@bugsnag/core': 7.25.0
-      iserror: 0.0.2
-
-  '@bugsnag/safe-json-stringify@6.0.0': {}
 
   '@changesets/apply-release-plan@7.0.5':
     dependencies:
@@ -14815,8 +14741,6 @@ snapshots:
     dependencies:
       streamsearch: 1.1.0
 
-  byline@5.0.0: {}
-
   bytes@3.1.2: {}
 
   cacache@15.3.0:
@@ -16955,8 +16879,6 @@ snapshots:
 
   isarray@2.0.5: {}
 
-  iserror@0.0.2: {}
-
   isexe@2.0.0: {}
 
   isows@1.0.6(ws@8.18.0):
@@ -18846,10 +18768,6 @@ snapshots:
     dependencies:
       minipass: 3.3.6
     optional: true
-
-  stack-generator@2.0.10:
-    dependencies:
-      stackframe: 1.3.4
 
   stackframe@1.3.4: {}
 

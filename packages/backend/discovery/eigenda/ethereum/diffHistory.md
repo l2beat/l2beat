@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x1ee0c66e32c739049ac33e9c2ad09d167841a33d
+
+# Diff at Wed, 15 Jan 2025 07:42:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21365898
+- current block number: 21628459
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21365898 (main branch discovery), not current.
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x266d513bb55e652a9011ddefc4f87da60c466b71
 
 # Diff at Mon, 09 Dec 2024 15:40:04 GMT:

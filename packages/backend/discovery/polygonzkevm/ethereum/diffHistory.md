@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x99126e8497882a7e95ffdc8bb66627d14eff065a
+
+# Diff at Wed, 15 Jan 2025 13:18:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 20878349
+- current block number: 21630127
+
+## Description
+
+Polygon zkEVM upgraded to rollupTypeID 6 (prev 5), this is called [the servicing update](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta), and was deployed onchain in oct 2024. It adds minor changes like `rollbackBatches()` for batches that are not yet verified and allows local chain admins to upgrade to already-deployed new versions for their chain.
+
+## Watched changes
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf303702e52579ed796873f92868d2ebedd55360bf53043519e6061b19df3eb4b"
++        "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
+      values.$implementation:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
+      values.$pastUpgrades.4:
++        ["2025-01-15T12:16:11.000Z","0x9328cfd3d2833dca2d0ea16fbb34f8fc096c26ca8334476c5bf7107f32436029",["0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"]]
+      values.$upgradeCount:
+-        4
++        5
+    }
+```
+
+## Source code changes
+
+```diff
+.../PolygonZkEVMEtrog/PolygonZkEVMEtrog.sol        | 111 +++++++++++++++------
+ 1 file changed, 81 insertions(+), 30 deletions(-)
+```
+
 Generated with discovered.json: 0x211f698e7103ca1f1041c810857bdada90077456
 
 # Diff at Mon, 21 Oct 2024 11:09:04 GMT:

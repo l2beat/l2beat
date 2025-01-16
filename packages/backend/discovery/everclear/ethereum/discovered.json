@@ -1,7 +1,7 @@
 {
   "name": "everclear",
   "chain": "ethereum",
-  "blockNumber": 21471461,
+  "blockNumber": 21628389,
   "configHash": "0x776ba3b8fa5ed2574a454474695f88cce019d656fcc61727da02a0e1f8fc9b24",
   "contracts": [
     {
@@ -244,11 +244,11 @@
           "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         ],
         "allowedOutboxList": ["0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
-        "delayedMessageCount": 236,
+        "delayedMessageCount": 283,
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "sequencerMessageCount": 209,
-        "sequencerReportedSubMessageCount": 449548
+        "sequencerMessageCount": 253,
+        "sequencerReportedSubMessageCount": 578605
       }
     },
     {
@@ -295,7 +295,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 209,
+        "batchCount": 253,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x54F9375F5a6CEA1eECc561FC7f309aD8Cb633Ef9"],
         "bridge": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
@@ -326,7 +326,7 @@
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 235,
+        "totalDelayedMessagesRead": 282,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -625,11 +625,13 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
           "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
-          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -638,8 +640,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 17,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -724,12 +726,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 194,
+        "firstUnresolvedNode": 238,
         "inbox": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
         "isERC20Enabled": false,
         "lastStakeBlock": 20711424,
-        "latestConfirmed": 193,
-        "latestNodeCreated": 206,
+        "latestConfirmed": 237,
+        "latestNodeCreated": 250,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
@@ -924,6 +926,7 @@
     },
     { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
+    { "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9" },
     { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
     {
       "address": "0x54F9375F5a6CEA1eECc561FC7f309aD8Cb633Ef9",
@@ -938,6 +941,7 @@
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
     { "address": "0x8533308595A46552912E5632FF57d3462F72fE74" },
+    { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
     { "address": "0x9EcE0898142303Ef0f97567F5E37a9DF7F52ac87" },
     {
       "address": "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
@@ -950,7 +954,7 @@
       ]
     },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
-    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     { "address": "0xe18A1D28C1C693a0A0FB10d836F8D6FeF52ABA0e" },
     { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" }
   ],

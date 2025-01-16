@@ -5,17 +5,17 @@ import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
-import { LegacyNavbar } from './legacy-navbar'
 import { MobileNavProvider } from './mobile-nav-context'
 import { MobileNavbar } from './mobile-navbar'
 import { NavSidebar } from './nav-sidebar'
+import { TopNavbar } from './top-navbar'
 import { type NavGroup } from './types'
 
 interface Props {
   children: ReactNode
   className?: string
   logoLink: string
-  legacyNav?: boolean
+  topNavbar?: boolean
   topChildren?: ReactNode
 }
 
@@ -23,10 +23,10 @@ export async function NavLayout({
   children,
   className,
   logoLink,
-  legacyNav,
+  topNavbar,
   topChildren,
 }: Props) {
-  const groups: NavGroup[] = compact([
+  const groups = compact<NavGroup>([
     {
       type: 'multiple',
       title: 'Scaling',
@@ -129,6 +129,7 @@ export async function NavLayout({
     {
       type: 'single',
       title: 'ZK Catalog',
+      match: 'zk-catalog',
       href: '/zk-catalog',
       icon: (
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
@@ -141,27 +142,31 @@ export async function NavLayout({
       <div
         className={cn(
           'relative flex flex-col overflow-x-clip lg:flex-row',
-          legacyNav && 'lg:flex-col',
+          topNavbar && 'lg:flex-col',
           className,
         )}
       >
-        {!!legacyNav && (
+        {!!topNavbar && (
           <>
             {topChildren}
-            <LegacyNavbar logoLink={logoLink} groups={groups} />
+            <TopNavbar logoLink={logoLink} groups={groups} />
           </>
         )}
-        {!legacyNav && topChildren && (
+        {!topNavbar && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileNavbar groups={groups} logoLink={logoLink} />
+        <MobileNavbar
+          groups={groups}
+          logoLink={logoLink}
+          className={cn(!topNavbar && 'md:mb-5')}
+        />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
-          legacyNav={!!legacyNav}
+          topNavbar={!!topNavbar}
         />
         <div className="min-w-0 flex-1">
-          {!legacyNav && topChildren && (
+          {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}
           {children}

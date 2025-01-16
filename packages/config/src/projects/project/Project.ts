@@ -2,10 +2,18 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   ProjectDataAvailability,
   ScalingProjectCategory,
+  ScalingProjectDisplay,
   ScalingProjectRiskView,
   ScalingProjectStack,
 } from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+import {
+  Layer2FinalityConfig,
+  Layer2FinalityDisplay,
+  ProjectLivenessInfo,
+  StageConfig,
+  WarningWithSentiment,
+} from '../layer2s'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -23,8 +31,23 @@ export interface Project {
   // data
   statuses?: ProjectStatuses
   scalingInfo?: ProjectScalingInfo
+  scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
+  tvlInfo?: ProjectTvlInfo
+  // tvlConfig
+  /** Display information for the liveness feature. If present liveness is enabled for this project. */
+  livenessInfo?: ProjectLivenessInfo
+  /** Display information for the costs feature. If present costs is enabled for this project. */
+  costsInfo?: ProjectCostsInfo
+  // trackedTxsConfig
+  /** Display information for the activity feature. If present activity is enabled for this project. */
+  activityInfo?: ProjectActivityInfo
+  // activityConfig
+  /** Configuration for the finality feature. If present finality is enabled for this project. */
+  finalityInfo?: Layer2FinalityDisplay
+  /** Configuration for the finality feature. If present finality is enabled for this project. */
+  finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
   countdowns?: ProjectCountdowns
@@ -73,6 +96,19 @@ export interface ProjectScalingRisks {
   self: ScalingProjectRiskView
   host: ScalingProjectRiskView | undefined
   stacked: ScalingProjectRiskView | undefined
+}
+
+export interface ProjectTvlInfo {
+  associatedTokens: string[]
+  warnings: WarningWithSentiment[]
+}
+
+export interface ProjectCostsInfo {
+  warning?: WarningWithSentiment
+}
+
+export interface ProjectActivityInfo {
+  dataSource?: ScalingProjectDisplay['activityDataSource']
 }
 
 export interface ProjectCountdowns {

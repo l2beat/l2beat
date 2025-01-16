@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 21579690,
+  "blockNumber": 21628418,
   "configHash": "0xb9392cfb41000903a5c16cc7f46897a52eae57d0210f3eabe5f4622f63fa99bd",
   "contracts": [
     {
@@ -227,7 +227,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 787779,
+        "batchCount": 793092,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -258,7 +258,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1827611,
+        "totalDelayedMessagesRead": 1835288,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -520,6 +520,7 @@
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -568,6 +569,7 @@
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -832,12 +834,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 19591,
+        "firstUnresolvedNode": 19754,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 19590,
-        "latestNodeCreated": 19743,
+        "latestConfirmed": 19753,
+        "latestNodeCreated": 19906,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -1263,11 +1265,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1827619,
+        "delayedMessageCount": 1835294,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 787779,
-        "sequencerReportedSubMessageCount": 271059966
+        "sequencerMessageCount": 793092,
+        "sequencerReportedSubMessageCount": 273400024
       },
       "derivedName": "Bridge"
     },
@@ -1331,6 +1333,7 @@
       "sourceHashes": [
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",

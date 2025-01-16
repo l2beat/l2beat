@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ethereum",
-  "blockNumber": 21486361,
+  "blockNumber": 21629240,
   "configHash": "0xaf8b7f40d55f624b1f95ab91fed35be6acfd8e9084efa1a99a61a6099c9437f9",
   "contracts": [
     {
@@ -73,6 +73,91 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "PermissionedDisputeGame",
+      "address": "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963",
+      "template": "opstack/PermissionedDisputeGame",
+      "sourceHashes": [
+        "0x6aa2de634fc13396d9ea0b7d9d0869633db9d2bfc5b834f530fdc61ab1184bf6"
+      ],
+      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "sinceTimestamp": 1734024587,
+      "values": {
+        "$immutable": true,
+        "absolutePrestate": "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc",
+        "absolutePrestateDecoded": "v1.3.1-ink",
+        "anchorStateRegistry": "0xde744491BcF6b2DD2F32146364Ea1487D75E2509",
+        "challenger": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "claimData": [],
+        "claimDataLen": 0,
+        "clockExtension": 10800,
+        "createdAt": 0,
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "gameCreator": "0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 1,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "gameType": 1,
+        "getChallengerDuration": [],
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2BlockNumber": 0,
+        "l2BlockNumberChallenged": false,
+        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
+        "l2ChainId": 57073,
+        "maxClockDuration": 302400,
+        "maxGameDepth": 73,
+        "proposer": "0x65436ddCbc026F34118954F229f7F132b696b3B4",
+        "resolvedAt": 0,
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "splitDepth": 30,
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2BlockNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "version": "1.3.0",
+        "vm": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
+        "weth": "0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38"
+      },
+      "fieldMeta": {
+        "absolutePrestateDecoded": {
+          "description": "Prestate tag for known prestates."
+        }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
+            "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
+            "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
+            "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
+            "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
+            "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
+            "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
+            "0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe": "v1.4.0-rc.1",
+            "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc": "v1.3.1-ink",
+            "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c": "v1.3.1 (govApproved)",
+            "0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a": "v1.3.1-rc.1",
+            "0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922": "v1.3.0-rc.3",
+            "0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba": "v1.3.0-rc.2",
+            "0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673": "v1.3.0-rc.1",
+            "0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea": "v1.2.0 (govApproved)",
+            "0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b": "v1.1.0",
+            "0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e": "v1.0.1",
+            "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55": "v1.0.0 (govApproved)",
+            "0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421": "v0.3.0",
+            "0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808": "v0.2.0",
+            "0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538": "v0.1.0",
+            "0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd": "v0.0.1"
+          }
+        }
+      ]
+    },
+    {
       "name": "DisputeGameFactory",
       "address": "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
       "template": "opstack/DisputeGameFactory",
@@ -107,17 +192,17 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 79,
+        "gameCount": 160,
         "gameImpls": [
-          "0x0000000000000000000000000000000000000000",
-          "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059",
+          "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD",
+          "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963",
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000"
         ],
-        "initBonds": [0, 0, 0, 0, 0],
+        "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 79,
+        "permissionedGamesTotal": 159,
         "version": "1.0.0"
       }
     },
@@ -162,7 +247,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": 0,
+        "totalSupply": "560000000000000000",
         "version": "1.1.0"
       }
     },
@@ -195,6 +280,51 @@
       }
     },
     {
+      "name": "DelayedWETH",
+      "address": "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50",
+      "template": "opstack/DelayedWETH",
+      "sourceHashes": [
+        "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
+        "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "via": [
+            {
+              "address": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
+              "delay": 0
+            }
+          ]
+        }
+      ],
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1734024575,
+      "values": {
+        "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
+        "$implementation": "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087",
+        "$pastUpgrades": [
+          [
+            "2024-12-12T17:29:35.000Z",
+            "0x11b1f0451aab00410096f7311b12e20a1d57b30d3ffec63beeece2dd9a31dd23",
+            ["0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "config": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "decimals": 18,
+        "delay": 604800,
+        "name": "Wrapped Ether",
+        "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "symbol": "WETH",
+        "totalSupply": "263502800000000000",
+        "version": "1.1.0"
+      }
+    },
+    {
       "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "template": "GnosisSafe",
@@ -217,7 +347,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 45,
+        "nonce": 52,
         "VERSION": "1.3.0"
       }
     },
@@ -228,6 +358,7 @@
       "sourceHashes": [
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -278,6 +409,11 @@
         {
           "permission": "upgrade",
           "target": "0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38",
+          "via": [{ "address": "0xd56045E68956FCe2576E680c95a4750cf8241f79" }]
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50",
           "via": [{ "address": "0xd56045E68956FCe2576E680c95a4750cf8241f79" }]
         },
         {
@@ -341,7 +477,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -389,7 +525,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21486361
+          "prevBlockNum": 21629233
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -579,7 +715,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623439",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624994",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -597,6 +733,89 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
       }
+    },
+    {
+      "name": "FaultDisputeGame",
+      "address": "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD",
+      "template": "opstack/FaultDisputeGame",
+      "sourceHashes": [
+        "0x6a8cfd738d026b64f2e5aaaf5faac411dcdc8c0d8ef834587d82144340812a2c"
+      ],
+      "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "sinceTimestamp": 1734024575,
+      "values": {
+        "$immutable": true,
+        "absolutePrestate": "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc",
+        "absolutePrestateDecoded": "v1.3.1-ink",
+        "anchorStateRegistry": "0xde744491BcF6b2DD2F32146364Ea1487D75E2509",
+        "claimData": [],
+        "claimDataLen": 0,
+        "clockExtension": 10800,
+        "createdAt": 0,
+        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "gameCreator": "0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 0,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "gameType": 0,
+        "getChallengerDuration": [],
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2BlockNumber": 0,
+        "l2BlockNumberChallenged": false,
+        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
+        "l2ChainId": 57073,
+        "maxClockDuration": 302400,
+        "maxGameDepth": 73,
+        "resolvedAt": 0,
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "splitDepth": 30,
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2BlockNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "version": "1.3.0",
+        "vm": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
+        "weth": "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
+      },
+      "fieldMeta": {
+        "absolutePrestateDecoded": {
+          "description": "Prestate tag for known prestates."
+        }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
+            "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
+            "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
+            "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
+            "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
+            "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
+            "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
+            "0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe": "v1.4.0-rc.1",
+            "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc": "v1.3.1-ink",
+            "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c": "v1.3.1 (govApproved)",
+            "0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a": "v1.3.1-rc.1",
+            "0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922": "v1.3.0-rc.3",
+            "0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba": "v1.3.0-rc.2",
+            "0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673": "v1.3.0-rc.1",
+            "0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea": "v1.2.0 (govApproved)",
+            "0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b": "v1.1.0",
+            "0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e": "v1.0.1",
+            "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55": "v1.0.0 (govApproved)",
+            "0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421": "v0.3.0",
+            "0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808": "v0.2.0",
+            "0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538": "v0.1.0",
+            "0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd": "v0.0.1"
+          }
+        }
+      ]
     },
     {
       "name": "OpFoundationUpgradeSafe",
@@ -626,7 +845,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 10,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -833,7 +1052,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 97,
+        "nonce": 98,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -900,56 +1119,6 @@
       }
     },
     {
-      "name": "PermissionedDisputeGame",
-      "address": "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059",
-      "template": "opstack/PermissionedDisputeGame",
-      "sourceHashes": [
-        "0xf2f258eb38ded9ad4f2ad678585505ab05851f008aad859af6ad97de75a276b9"
-      ],
-      "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "sinceTimestamp": 1733498411,
-      "values": {
-        "$immutable": true,
-        "absolutePrestate": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
-        "anchorStateRegistry": "0xde744491BcF6b2DD2F32146364Ea1487D75E2509",
-        "challenger": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "claimData": [],
-        "claimDataLen": 0,
-        "clockExtension": 10800,
-        "createdAt": 0,
-        "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "gameCreator": "0x0000000000000000000000000000000000000000",
-        "gameData": {
-          "gameType_": 1,
-          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
-        },
-        "gameType": 1,
-        "getChallengerDuration": [],
-        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "l2BlockNumber": 0,
-        "l2BlockNumberChallenged": false,
-        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
-        "l2ChainId": 57073,
-        "maxClockDuration": 302400,
-        "maxGameDepth": 73,
-        "proposer": "0x65436ddCbc026F34118954F229f7F132b696b3B4",
-        "resolvedAt": 0,
-        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "splitDepth": 30,
-        "startingBlockNumber": 0,
-        "startingOutputRoot": {
-          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "l2BlockNumber": 0
-        },
-        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "status": 0,
-        "version": "1.3.1-beta.3",
-        "vm": "0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4",
-        "weth": "0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38"
-      }
-    },
-    {
       "name": "GelatoMultisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "template": "GnosisSafe",
@@ -971,11 +1140,13 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
           "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
-          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -984,8 +1155,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 17,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1031,7 +1202,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 8,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1079,6 +1250,10 @@
         {
           "permission": "upgrade",
           "target": "0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38"
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
         },
         {
           "permission": "upgrade",
@@ -1173,9 +1348,19 @@
             "2024-12-06T15:20:11.000Z",
             "0x45c2b63987a8c7ab97bdcdab5e04618d4ed74971aa4ac51b15ed8522ea6c0284",
             ["0x7A78aa7D5dec2F8B368ca13f00Df2fA4E5De3C3F"]
+          ],
+          [
+            "2025-01-13T21:22:47.000Z",
+            "0x71234ec9d3df32360383a0091277b0facbeb21456f1a29accb110fa43a6b5441",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-01-13T21:22:47.000Z",
+            "0x71234ec9d3df32360383a0091277b0facbeb21456f1a29accb110fa43a6b5441",
+            ["0x7A78aa7D5dec2F8B368ca13f00Df2fA4E5De3C3F"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "disputeGameFactory": "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.1-beta.3"
@@ -1192,6 +1377,7 @@
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
+    { "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9" },
     { "address": "0x4665374939642965EfD8357D4568D2A77f677429" },
     { "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
@@ -1215,12 +1401,13 @@
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7D056B99AA2021864c42E25B4F8cE3BdEAc9463C" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
+    { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
     { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
     { "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5" },
-    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     { "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8" },
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
@@ -1247,6 +1434,94 @@
     ],
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": [
       "constructor(address _singleton)"
+    ],
+    "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963": [
+      "constructor(uint32 _gameType, bytes32 _absolutePrestate, uint256 _maxGameDepth, uint256 _splitDepth, uint64 _clockExtension, uint64 _maxClockDuration, address _vm, address _weth, address _anchorStateRegistry, uint256 _l2ChainId, address _proposer, address _challenger)",
+      "error AlreadyInitialized()",
+      "error AnchorRootNotFound()",
+      "error BadAuth()",
+      "error BlockNumberMatches()",
+      "error BondTransferFailed()",
+      "error CannotDefendRootClaim()",
+      "error ClaimAboveSplit()",
+      "error ClaimAlreadyExists()",
+      "error ClaimAlreadyResolved()",
+      "error ClockNotExpired()",
+      "error ClockTimeExceeded()",
+      "error ContentLengthMismatch()",
+      "error DuplicateStep()",
+      "error EmptyItem()",
+      "error GameDepthExceeded()",
+      "error GameNotInProgress()",
+      "error IncorrectBondAmount()",
+      "error InvalidChallengePeriod()",
+      "error InvalidClockExtension()",
+      "error InvalidDataRemainder()",
+      "error InvalidDisputedClaimIndex()",
+      "error InvalidHeader()",
+      "error InvalidHeaderRLP()",
+      "error InvalidLocalIdent()",
+      "error InvalidOutputRootProof()",
+      "error InvalidParent()",
+      "error InvalidPrestate()",
+      "error InvalidSplitDepth()",
+      "error L2BlockNumberChallenged()",
+      "error MaxDepthTooLarge()",
+      "error NoCreditToClaim()",
+      "error OutOfOrderResolution()",
+      "error UnexpectedList()",
+      "error UnexpectedRootClaim(bytes32 rootClaim)",
+      "error UnexpectedString()",
+      "error ValidStep()",
+      "event Move(uint256 indexed parentIndex, bytes32 indexed claim, address indexed claimant)",
+      "event Resolved(uint8 indexed status)",
+      "function absolutePrestate() view returns (bytes32 absolutePrestate_)",
+      "function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset)",
+      "function anchorStateRegistry() view returns (address registry_)",
+      "function attack(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
+      "function challengeRootL2Block(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes _headerRLP)",
+      "function challenger() view returns (address challenger_)",
+      "function claimCredit(address _recipient)",
+      "function claimData(uint256) view returns (uint32 parentIndex, address counteredBy, address claimant, uint128 bond, bytes32 claim, uint128 position, uint128 clock)",
+      "function claimDataLen() view returns (uint256 len_)",
+      "function claims(bytes32) view returns (bool)",
+      "function clockExtension() view returns (uint64 clockExtension_)",
+      "function createdAt() view returns (uint64)",
+      "function credit(address) view returns (uint256)",
+      "function defend(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function getChallengerDuration(uint256 _claimIndex) view returns (uint64 duration_)",
+      "function getNumToResolve(uint256 _claimIndex) view returns (uint256 numRemainingChildren_)",
+      "function getRequiredBond(uint128 _position) view returns (uint256 requiredBond_)",
+      "function initialize() payable",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function l2BlockNumberChallenged() view returns (bool)",
+      "function l2BlockNumberChallenger() view returns (address)",
+      "function l2ChainId() view returns (uint256 l2ChainId_)",
+      "function maxClockDuration() view returns (uint64 maxClockDuration_)",
+      "function maxGameDepth() view returns (uint256 maxGameDepth_)",
+      "function move(bytes32 _disputed, uint256 _challengeIndex, bytes32 _claim, bool _isAttack) payable",
+      "function proposer() view returns (address proposer_)",
+      "function resolutionCheckpoints(uint256) view returns (bool initialCheckpointComplete, uint32 subgameIndex, uint128 leftmostPosition, address counteredBy)",
+      "function resolve() returns (uint8 status_)",
+      "function resolveClaim(uint256 _claimIndex, uint256 _numToResolve)",
+      "function resolvedAt() view returns (uint64)",
+      "function resolvedSubgames(uint256) view returns (bool)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function splitDepth() view returns (uint256 splitDepth_)",
+      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
+      "function startingOutputRoot() view returns (bytes32 root, uint256 l2BlockNumber)",
+      "function startingRootHash() view returns (bytes32 startingRootHash_)",
+      "function status() view returns (uint8)",
+      "function step(uint256 _claimIndex, bool _isAttack, bytes _stateData, bytes _proof)",
+      "function subgames(uint256, uint256) view returns (uint256)",
+      "function version() view returns (string)",
+      "function vm() view returns (address vm_)",
+      "function weth() view returns (address weth_)"
     ],
     "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD": [
       "constructor(address _admin)",
@@ -1328,6 +1603,16 @@
       "function signMessage(bytes _data)",
       "function signedMessages(bytes32) view returns (uint256)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": [
       "constructor(address _singleton)"
@@ -1437,6 +1722,91 @@
     ],
     "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f": [
       "constructor(address _addressManager, string _implementationName)"
+    ],
+    "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD": [
+      "constructor(uint32 _gameType, bytes32 _absolutePrestate, uint256 _maxGameDepth, uint256 _splitDepth, uint64 _clockExtension, uint64 _maxClockDuration, address _vm, address _weth, address _anchorStateRegistry, uint256 _l2ChainId)",
+      "error AlreadyInitialized()",
+      "error AnchorRootNotFound()",
+      "error BlockNumberMatches()",
+      "error BondTransferFailed()",
+      "error CannotDefendRootClaim()",
+      "error ClaimAboveSplit()",
+      "error ClaimAlreadyExists()",
+      "error ClaimAlreadyResolved()",
+      "error ClockNotExpired()",
+      "error ClockTimeExceeded()",
+      "error ContentLengthMismatch()",
+      "error DuplicateStep()",
+      "error EmptyItem()",
+      "error GameDepthExceeded()",
+      "error GameNotInProgress()",
+      "error IncorrectBondAmount()",
+      "error InvalidChallengePeriod()",
+      "error InvalidClockExtension()",
+      "error InvalidDataRemainder()",
+      "error InvalidDisputedClaimIndex()",
+      "error InvalidHeader()",
+      "error InvalidHeaderRLP()",
+      "error InvalidLocalIdent()",
+      "error InvalidOutputRootProof()",
+      "error InvalidParent()",
+      "error InvalidPrestate()",
+      "error InvalidSplitDepth()",
+      "error L2BlockNumberChallenged()",
+      "error MaxDepthTooLarge()",
+      "error NoCreditToClaim()",
+      "error OutOfOrderResolution()",
+      "error UnexpectedList()",
+      "error UnexpectedRootClaim(bytes32 rootClaim)",
+      "error UnexpectedString()",
+      "error ValidStep()",
+      "event Move(uint256 indexed parentIndex, bytes32 indexed claim, address indexed claimant)",
+      "event Resolved(uint8 indexed status)",
+      "function absolutePrestate() view returns (bytes32 absolutePrestate_)",
+      "function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset)",
+      "function anchorStateRegistry() view returns (address registry_)",
+      "function attack(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
+      "function challengeRootL2Block(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes _headerRLP)",
+      "function claimCredit(address _recipient)",
+      "function claimData(uint256) view returns (uint32 parentIndex, address counteredBy, address claimant, uint128 bond, bytes32 claim, uint128 position, uint128 clock)",
+      "function claimDataLen() view returns (uint256 len_)",
+      "function claims(bytes32) view returns (bool)",
+      "function clockExtension() view returns (uint64 clockExtension_)",
+      "function createdAt() view returns (uint64)",
+      "function credit(address) view returns (uint256)",
+      "function defend(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function getChallengerDuration(uint256 _claimIndex) view returns (uint64 duration_)",
+      "function getNumToResolve(uint256 _claimIndex) view returns (uint256 numRemainingChildren_)",
+      "function getRequiredBond(uint128 _position) view returns (uint256 requiredBond_)",
+      "function initialize() payable",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function l2BlockNumberChallenged() view returns (bool)",
+      "function l2BlockNumberChallenger() view returns (address)",
+      "function l2ChainId() view returns (uint256 l2ChainId_)",
+      "function maxClockDuration() view returns (uint64 maxClockDuration_)",
+      "function maxGameDepth() view returns (uint256 maxGameDepth_)",
+      "function move(bytes32 _disputed, uint256 _challengeIndex, bytes32 _claim, bool _isAttack) payable",
+      "function resolutionCheckpoints(uint256) view returns (bool initialCheckpointComplete, uint32 subgameIndex, uint128 leftmostPosition, address counteredBy)",
+      "function resolve() returns (uint8 status_)",
+      "function resolveClaim(uint256 _claimIndex, uint256 _numToResolve)",
+      "function resolvedAt() view returns (uint64)",
+      "function resolvedSubgames(uint256) view returns (bool)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function splitDepth() view returns (uint256 splitDepth_)",
+      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
+      "function startingOutputRoot() view returns (bytes32 root, uint256 l2BlockNumber)",
+      "function startingRootHash() view returns (bytes32 startingRootHash_)",
+      "function status() view returns (uint8)",
+      "function step(uint256 _claimIndex, bool _isAttack, bytes _stateData, bytes _proof)",
+      "function subgames(uint256, uint256) view returns (uint256)",
+      "function version() view returns (string)",
+      "function vm() view returns (address vm_)",
+      "function weth() view returns (address weth_)"
     ],
     "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087": [
       "constructor(uint256 _delay)",
@@ -1577,94 +1947,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059": [
-      "constructor(uint32 _gameType, bytes32 _absolutePrestate, uint256 _maxGameDepth, uint256 _splitDepth, uint64 _clockExtension, uint64 _maxClockDuration, address _vm, address _weth, address _anchorStateRegistry, uint256 _l2ChainId, address _proposer, address _challenger)",
-      "error AlreadyInitialized()",
-      "error AnchorRootNotFound()",
-      "error BadAuth()",
-      "error BlockNumberMatches()",
-      "error BondTransferFailed()",
-      "error CannotDefendRootClaim()",
-      "error ClaimAboveSplit()",
-      "error ClaimAlreadyExists()",
-      "error ClaimAlreadyResolved()",
-      "error ClockNotExpired()",
-      "error ClockTimeExceeded()",
-      "error ContentLengthMismatch()",
-      "error DuplicateStep()",
-      "error EmptyItem()",
-      "error GameDepthExceeded()",
-      "error GameNotInProgress()",
-      "error IncorrectBondAmount()",
-      "error InvalidChallengePeriod()",
-      "error InvalidClockExtension()",
-      "error InvalidDataRemainder()",
-      "error InvalidDisputedClaimIndex()",
-      "error InvalidHeader()",
-      "error InvalidHeaderRLP()",
-      "error InvalidLocalIdent()",
-      "error InvalidOutputRootProof()",
-      "error InvalidParent()",
-      "error InvalidPrestate()",
-      "error InvalidSplitDepth()",
-      "error L2BlockNumberChallenged()",
-      "error MaxDepthTooLarge()",
-      "error NoCreditToClaim()",
-      "error OutOfOrderResolution()",
-      "error UnexpectedList()",
-      "error UnexpectedRootClaim(bytes32 rootClaim)",
-      "error UnexpectedString()",
-      "error ValidStep()",
-      "event Move(uint256 indexed parentIndex, bytes32 indexed claim, address indexed claimant)",
-      "event Resolved(uint8 indexed status)",
-      "function absolutePrestate() view returns (bytes32 absolutePrestate_)",
-      "function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset)",
-      "function anchorStateRegistry() view returns (address registry_)",
-      "function attack(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
-      "function challengeRootL2Block(tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes _headerRLP)",
-      "function challenger() view returns (address challenger_)",
-      "function claimCredit(address _recipient)",
-      "function claimData(uint256) view returns (uint32 parentIndex, address counteredBy, address claimant, uint128 bond, bytes32 claim, uint128 position, uint128 clock)",
-      "function claimDataLen() view returns (uint256 len_)",
-      "function claims(bytes32) view returns (bool)",
-      "function clockExtension() view returns (uint64 clockExtension_)",
-      "function createdAt() view returns (uint64)",
-      "function credit(address) view returns (uint256)",
-      "function defend(bytes32 _disputed, uint256 _parentIndex, bytes32 _claim) payable",
-      "function extraData() pure returns (bytes extraData_)",
-      "function gameCreator() pure returns (address creator_)",
-      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
-      "function gameType() view returns (uint32 gameType_)",
-      "function getChallengerDuration(uint256 _claimIndex) view returns (uint64 duration_)",
-      "function getNumToResolve(uint256 _claimIndex) view returns (uint256 numRemainingChildren_)",
-      "function getRequiredBond(uint128 _position) view returns (uint256 requiredBond_)",
-      "function initialize() payable",
-      "function l1Head() pure returns (bytes32 l1Head_)",
-      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
-      "function l2BlockNumberChallenged() view returns (bool)",
-      "function l2BlockNumberChallenger() view returns (address)",
-      "function l2ChainId() view returns (uint256 l2ChainId_)",
-      "function maxClockDuration() view returns (uint64 maxClockDuration_)",
-      "function maxGameDepth() view returns (uint256 maxGameDepth_)",
-      "function move(bytes32 _disputed, uint256 _challengeIndex, bytes32 _claim, bool _isAttack) payable",
-      "function proposer() view returns (address proposer_)",
-      "function resolutionCheckpoints(uint256) view returns (bool initialCheckpointComplete, uint32 subgameIndex, uint128 leftmostPosition, address counteredBy)",
-      "function resolve() returns (uint8 status_)",
-      "function resolveClaim(uint256 _claimIndex, uint256 _numToResolve)",
-      "function resolvedAt() view returns (uint64)",
-      "function resolvedSubgames(uint256) view returns (bool)",
-      "function rootClaim() pure returns (bytes32 rootClaim_)",
-      "function splitDepth() view returns (uint256 splitDepth_)",
-      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
-      "function startingOutputRoot() view returns (bytes32 root, uint256 l2BlockNumber)",
-      "function startingRootHash() view returns (bytes32 startingRootHash_)",
-      "function status() view returns (uint8)",
-      "function step(uint256 _claimIndex, bool _isAttack, bytes _stateData, bytes _proof)",
-      "function subgames(uint256, uint256) view returns (uint256)",
-      "function version() view returns (string)",
-      "function vm() view returns (address vm_)",
-      "function weth() view returns (address weth_)"
     ],
     "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d": [
       "constructor()",
@@ -1968,13 +2250,14 @@
     "opstack/AnchorStateRegistry": "0xd777a643e82bcaa34c6605409142defa095bd558d37580cb92153eb68d721b3b",
     "opstack/DelayedWETH": "0x68c3c46b77dde7a7af0ae6477fe17a8531050e799e7ee4c01be128dee3c59447",
     "opstack/DisputeGameFactory": "0x02f89510f08edb9ae5191064b00ab809feddc1544be93f761bbf30427ef5ae5b",
+    "opstack/FaultDisputeGame": "0x88cc9b5b8462474bb350dc5d26c7582705cbf414113dacdc9c7c4e67d7e77e27",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0x7646e8d311af4d3b67dc674e167b6f42a20accc7ae822efd2d49ad8ab877f7bf",
     "opstack/MIPS": "0x2c304ef99a23cb31331231c111188b04a54bacddeaac088b13abd2c81ff74217",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal2": "0xdb11d2f7a8ea7a7cf25298feb8edc6f567ae5eca0d6f3acde5323cd958b9a50f",
-    "opstack/PermissionedDisputeGame": "0xa1884f80a601b59449ceecf3d0038d91830a8a382dd8da199c2081e4cb5596b5",
+    "opstack/PermissionedDisputeGame": "0xc05a1885a0b7e9921833d6a3cab40198b3381578b3fec8cbe3d81515b8443ede",
     "opstack/PreimageOracle": "0x523c74a9550e7030e60a4508d1775811a97958c35b5093d36b8cba6981360a35",
     "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"

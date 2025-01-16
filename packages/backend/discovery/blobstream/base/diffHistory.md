@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6286fe7d65df00c74c33fdfb8bdc278b379f5dac
+
+# Diff at Wed, 15 Jan 2025 09:48:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 24772641
+- current block number: 25072565
+
+## Description
+
+New Vkey: [v4](https://github.com/succinctlabs/sp1-blobstream/blob/89e058052c0b691898c5b56a62a6fa0270b31627/contracts/script/UpdateVkey.s.sol#L26).
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb"
++        "0x00e30cadab0b8ad6a5f115c5131a14afce4ec4bbf8acf7c821951778a2d97660"
+    }
+```
+
 Generated with discovered.json: 0xdb2b5c704d7ff88d4e06fdd48ea0c7fa14ca5416
 
 # Diff at Wed, 08 Jan 2025 11:10:38 GMT:

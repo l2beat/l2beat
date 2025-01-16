@@ -1,3 +1,4 @@
+'use client'
 import { type ReactNode } from 'react'
 
 import { cn } from '~/utils/cn'
@@ -22,7 +23,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
     <Component
       id={props.id}
       className={cn(
-        'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
+        'bg-surface-primary p-4 primary-card md:mt-10 md:rounded-lg md:p-8',
         props.nested && 'mt-10 md:p-0',
         props.className,
       )}
@@ -71,7 +72,7 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       {props.sectionOrder && (
         <div
           className={cn(
-            'hidden size-10 items-center justify-center rounded bg-gray-200 px-3 text-[26px] font-bold tabular-nums text-gray-700 dark:bg-zinc-700 dark:text-zinc-500 md:flex',
+            'hidden size-10 items-center justify-center rounded bg-surface-secondary px-3 text-[26px] font-bold tabular-nums text-secondary md:flex',
             props.nested && 'h-8 w-11 text-xl',
           )}
         >

@@ -1,62 +1,81 @@
-import { type Layer2 } from '@l2beat/config'
 import {
-  TrackedTxsConfigSubtypeValues,
-  UnixTime,
-  notUndefined,
-} from '@l2beat/shared-pure'
+  type DataAvailabilityMode,
+  ProjectService,
+  type ProjectWith,
+  type ScalingProjectCategory,
+  type ScalingProjectStack,
+} from '@l2beat/config'
+import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
+import { type SyncStatus } from '~/types/sync-status'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import {
-  type ProjectsLatestTvlUsd,
-  getProjectsLatestTvlUsd,
-} from '../tvl/utils/get-latest-tvl-usd'
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
+import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getLiveness } from './get-liveness'
-import { type LivenessProject } from './types'
-import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
-import { getLivenessProjects } from './utils/get-liveness-projects'
+import { type LivenessDetails, type LivenessProject } from './types'
+import {
+  type AnomalyIndicatorEntry,
+  toAnomalyIndicatorEntries,
+} from './utils/get-anomaly-entries'
 
 export async function getScalingLivenessEntries() {
-  const [tvl, projectsChangeReport, liveness] = await Promise.all([
+  const [tvl, projectsChangeReport, liveness, projects] = await Promise.all([
     getProjectsLatestTvlUsd(),
     getProjectsChangeReport(),
     getLiveness(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'scalingInfo', 'livenessInfo'],
+      optional: ['countdowns', 'scalingDa'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
   ])
-  const activeProjects = getLivenessProjects()
 
-  const entries = activeProjects
-    .map((project) => {
-      const projectLiveness = liveness[project.id.toString()]
-      if (!projectLiveness) {
-        return undefined
-      }
-
-      return getScalingLivenessEntry(
+  const entries = projects
+    .map((project) =>
+      getScalingLivenessEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        projectLiveness,
-        tvl,
-      )
-    })
-    .filter(notUndefined)
+        liveness[project.id.toString()],
+        tvl[project.id],
+      ),
+    )
+    .filter((x) => x !== undefined)
     .sort(compareStageAndTvl)
 
   return groupByTabs(entries)
 }
 
-export type ScalingLivenessEntry = Awaited<
-  ReturnType<typeof getScalingLivenessEntry>
->
+export interface ScalingLivenessEntry extends CommonScalingEntry {
+  category: ScalingProjectCategory
+  provider: ScalingProjectStack | undefined
+  data: LivenessData
+  explanation: string | undefined
+  anomalies: AnomalyIndicatorEntry[]
+  dataAvailabilityMode: DataAvailabilityMode | undefined
+  tvlOrder: number
+}
+
 function getScalingLivenessEntry(
-  project: Layer2,
+  project: ProjectWith<
+    'scalingInfo' | 'statuses' | 'livenessInfo',
+    'countdowns' | 'scalingDa'
+  >,
   changes: ProjectChanges,
-  liveness: LivenessProject,
-  tvl: ProjectsLatestTvlUsd,
-) {
+  liveness: LivenessProject | undefined,
+  tvl: number | undefined,
+): ScalingLivenessEntry | undefined {
+  if (!liveness) {
+    return undefined
+  }
+
   const data = getLivenessData(liveness, project)
   return {
     ...getCommonScalingEntry({
@@ -64,19 +83,27 @@ function getScalingLivenessEntry(
       changes,
       syncStatus: data?.syncStatus,
     }),
-    category: project.display.category,
-    provider: project.display.provider,
+    category: project.scalingInfo.type,
+    provider: project.scalingInfo.stack,
     data,
-    explanation: project.display.liveness?.explanation,
+    explanation: project.livenessInfo?.explanation,
     anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
-    dataAvailabilityMode: project.dataAvailability?.mode,
-    tvlOrder: tvl[project.id] ?? 0,
+    dataAvailabilityMode: project.scalingDa?.mode,
+    tvlOrder: tvl ?? -1,
   }
 }
 
-function getLivenessData(liveness: LivenessProject, project: Layer2) {
-  if (!liveness) return undefined
+export interface LivenessData {
+  stateUpdates: LivenessTypeData | undefined
+  batchSubmissions: LivenessTypeData | undefined
+  proofSubmissions: LivenessTypeData | undefined
+  syncStatus: SyncStatus
+}
 
+function getLivenessData(
+  liveness: LivenessProject,
+  project: ProjectWith<'livenessInfo'>,
+) {
   let isSynced = true
   let lowestSyncedUntil = UnixTime.now()
   const syncTarget = UnixTime.now().add(-6, 'hours').toStartOf('hour')
@@ -96,48 +123,51 @@ function getLivenessData(liveness: LivenessProject, project: Layer2) {
   }
 
   return {
-    stateUpdates: getSubTypeData(liveness, 'stateUpdates', project, syncTarget),
+    stateUpdates: getSubTypeData(
+      liveness.stateUpdates,
+      project.livenessInfo.warnings?.stateUpdates,
+      syncTarget,
+    ),
     batchSubmissions: getSubTypeData(
-      liveness,
-      'batchSubmissions',
-      project,
+      liveness.batchSubmissions,
+      project.livenessInfo.warnings?.batchSubmissions,
       syncTarget,
     ),
     proofSubmissions: getSubTypeData(
-      liveness,
-      'proofSubmissions',
-      project,
+      liveness.proofSubmissions,
+      project.livenessInfo.warnings?.proofSubmissions,
       syncTarget,
     ),
-    syncStatus: {
-      isSynced,
-      syncedUntil: lowestSyncedUntil.toNumber(),
-    },
+    syncStatus: { isSynced, syncedUntil: lowestSyncedUntil.toNumber() },
   }
+}
+
+export interface LivenessTypeData {
+  '30d': LivenessDatapoint | undefined
+  '90d': LivenessDatapoint | undefined
+  max: LivenessDatapoint | undefined
+  syncStatus: SyncStatus
+  warning: string | undefined
+}
+
+export interface LivenessDatapoint {
+  averageInSeconds: number
+  minimumInSeconds: number
+  maximumInSeconds: number
 }
 
 function getSubTypeData(
-  data: LivenessProject,
-  type: Exclude<keyof LivenessProject, 'anomalies'>,
-  project: Layer2,
+  data: LivenessDetails | undefined,
+  warning: string | undefined,
   syncTarget: UnixTime,
-) {
-  const typeData = data[type]
-  if (!typeData) return undefined
+): LivenessTypeData | undefined {
+  if (!data) return undefined
+  const isSynced = data.syncedUntil >= syncTarget.toNumber()
   return {
-    '30d': typeData['30d'],
-    '90d': typeData['90d'],
-    max: typeData.max,
-    syncStatus: getSyncStatus(typeData.syncedUntil, syncTarget),
-    warning: project.display.liveness?.warnings?.[type],
-  }
-}
-
-function getSyncStatus(syncedUntil: number, syncTarget: UnixTime) {
-  const isSynced = syncedUntil >= syncTarget.toNumber()
-
-  return {
-    isSynced,
-    syncedUntil,
+    '30d': data['30d'],
+    '90d': data['90d'],
+    max: data.max,
+    syncStatus: { isSynced, syncedUntil: data.syncedUntil },
+    warning,
   }
 }

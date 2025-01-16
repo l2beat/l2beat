@@ -1,11 +1,20 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import {
+  ProjectService,
+  type ProjectWith,
+  type ScalingProjectCategory,
+  type ScalingProjectStack,
+} from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { type RosetteValue } from '~/components/rosette/types'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
 import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
   type LatestTvl,
@@ -13,12 +22,15 @@ import {
 } from '../tvl/utils/get-7d-token-breakdown'
 
 export async function getScalingArchivedEntries() {
-  const [projectsChangeReport, tvl] = await Promise.all([
+  const [projectsChangeReport, tvl, projects] = await Promise.all([
     getProjectsChangeReport(),
     get7dTokenBreakdown({ type: 'layer2' }),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'scalingInfo', 'scalingRisks'],
+      optional: ['countdowns'],
+      where: ['isScaling', 'isArchived'],
+    }),
   ])
-
-  const projects = [...layer2s, ...layer3s].filter((p) => p.isArchived)
 
   const entries = projects.map((project) =>
     getScalingArchivedEntry(
@@ -31,20 +43,32 @@ export async function getScalingArchivedEntries() {
   return groupByTabs(entries.sort(compareTvl))
 }
 
-export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>
+export interface ScalingArchivedEntry extends CommonScalingEntry {
+  category: ScalingProjectCategory
+  purposes: string[]
+  provider: ScalingProjectStack | undefined
+  risks: RosetteValue[] | undefined
+  totalTvl: number | undefined
+  tvlOrder: number
+}
 
 function getScalingArchivedEntry(
-  project: Layer2 | Layer3,
+  project: ProjectWith<
+    'scalingInfo' | 'statuses' | 'scalingRisks',
+    'countdowns'
+  >,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
-) {
+): ScalingArchivedEntry {
   return {
     ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
-    category: project.display.category,
-    purposes: project.display.purposes,
-    provider: project.display.provider,
-    risks: project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
+    category: project.scalingInfo.type,
+    purposes: project.scalingInfo.purposes,
+    provider: project.scalingInfo.stack,
+    risks: getL2Risks(
+      project.scalingRisks.stacked ?? project.scalingRisks.self,
+    ),
     totalTvl: latestTvl?.breakdown.total,
-    tvlOrder: latestTvl?.breakdown.total ?? 0,
+    tvlOrder: latestTvl?.breakdown.total ?? -1,
   }
 }

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xda672a0914120d6b8788c13e90ab8801ffe0087c
+
+# Diff at Wed, 15 Jan 2025 13:35:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21465483
+- current block number: 21630210
+
+## Description
+
+Nethermind signer size increased to 3.
+
+## Watched changes
+
+```diff
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      values.signerSize:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0x6c58969bd600f3cc53761d45cded299e14a788b8
 
 # Diff at Mon, 23 Dec 2024 13:29:31 GMT:

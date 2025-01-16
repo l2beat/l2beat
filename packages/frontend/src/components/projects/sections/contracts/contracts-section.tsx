@@ -2,7 +2,11 @@
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import { type DiagramParams } from '~/utils/project/get-diagram-params'
-import { ContractEntry, type TechnologyContract } from '../contract-entry'
+import {
+  ContractEntry,
+  type TechnologyContract,
+  technologyContractKey,
+} from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
 import { type Reference } from '../reference-list'
@@ -82,7 +86,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={props.diagram} />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-xs text-secondary">
             {props.diagram.caption}
           </figcaption>
         </figure>
@@ -96,7 +100,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <div className="my-4">
             {unchangedContracts.map((contract) => (
               <ContractEntry
-                key={`${contract.name}-${contract.chain}`}
+                key={technologyContractKey(contract)}
                 contract={contract}
                 className="my-4"
                 type="contract"
@@ -124,7 +128,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                 <div className="my-4">
                   {unchangedContracts.map((contract) => (
                     <ContractEntry
-                      key={`${contract.name}-${contract.chain}`}
+                      key={technologyContractKey(contract)}
                       contract={contract}
                       className="my-4"
                       type="contract"
@@ -152,9 +156,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <div className="my-4">
             {unchangedEscrows.map((contract) => (
               <ContractEntry
-                key={`${contract.name}-${contract.chain}-${contract.addresses
-                  .map((a) => a.address)
-                  .join('-')}`}
+                key={technologyContractKey(contract)}
                 contract={contract}
                 className="my-4"
                 type="contract"
@@ -195,7 +197,7 @@ function ImplementationHasChangedContracts(props: {
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry
-          key={`${contract.name}-${contract.chain}`}
+          key={technologyContractKey(contract)}
           contract={contract}
           className="my-4 p-0"
           type="contract"
