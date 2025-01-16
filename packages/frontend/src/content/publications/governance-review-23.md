@@ -52,7 +52,7 @@ Arbitrum DAO keeps pushing forward in all directions, with the most prevalent di
 
 **Temp Check**
 
-[Pilot for a Questbook Jumpstart fund for problem definition and DAO improvement](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0xd096c5d610d4455bcae4bff719d18345939c5d6b20d56c6a1f37d0247ad10f71) - ends on uly 22 at 22:59 UTC.
+[Pilot for a Questbook Jumpstart fund for problem definition and DAO improvement](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0xd096c5d610d4455bcae4bff719d18345939c5d6b20d56c6a1f37d0247ad10f71) - ends on July 22 at 22:59 UTC.
 
 [Furucombo's Misuse of Funds](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x07bea6e32d32b4d3ed20faec6950c3546e2319bc2497716c53ee05995d4a00eb) - ends on July 26 at 13:45 UTC
 
