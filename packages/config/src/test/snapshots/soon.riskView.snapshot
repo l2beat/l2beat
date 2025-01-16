@@ -2,7 +2,7 @@
 
 {
   dataAvailability: {
-    description: "Proof construction and state derivation rely fully on data that is NOT published on chain. Sequencer commitments are not checked against the EigenDA ServiceManager DA bridge."
+    description: "Proof construction and state derivation fully rely on data that is posted on EigenDA. Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain."
     sentiment: "bad"
     sources: [
       {
