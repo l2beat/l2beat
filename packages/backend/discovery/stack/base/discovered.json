@@ -1,7 +1,7 @@
 {
   "name": "stack",
   "chain": "base",
-  "blockNumber": 22016633,
+  "blockNumber": 25121106,
   "configHash": "0x0b84e0eae36c9b147a964b5ac6d273826fe44395a32b11dc3458e5ac44323a5b",
   "contracts": [
     {
@@ -176,7 +176,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619800",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619801",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -237,7 +237,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 18994023
+          "prevBlockNum": 24352927
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
@@ -307,6 +307,7 @@
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
@@ -319,8 +320,8 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 11,
+        "multisigThreshold": "3 of 8 (38%)",
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -415,10 +416,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 21124800,
-        "latestOutputIndex": 488,
-        "nextBlockNumber": 21168000,
-        "nextOutputIndex": 489,
+        "latestBlockNumber": 27345600,
+        "latestOutputIndex": 632,
+        "nextBlockNumber": 27388800,
+        "nextOutputIndex": 633,
         "PROPOSER": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
         "startingBlockNumber": 0,
         "startingTimestamp": 1709680111,
@@ -446,6 +447,7 @@
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x39f15b577F4F9eD6b819169Ac9fa0bE6eD857258" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     { "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2" },
     { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
     { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
