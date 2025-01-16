@@ -20,8 +20,6 @@ export const educhain: Layer3 = orbitStackL3({
   display: {
     name: 'EDU Chain',
     slug: 'edu-chain',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'EDU Chain is Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative “Learn Own Earn” model for education.',
     links: {
