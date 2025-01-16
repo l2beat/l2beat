@@ -68,6 +68,13 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   bridge: DA_BRIDGES.NONE,
 }
 
+export const EIGENDA_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.EIGEN_DA,
+  riskView: RISK_VIEW.DATA_EIGENDA(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
+  bridge: DA_BRIDGES.NONE,
+}
+
 export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
