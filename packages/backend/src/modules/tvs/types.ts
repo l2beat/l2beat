@@ -91,6 +91,6 @@ export type PriceConfig = {
 
 export interface TokenValue {
   tokenId: string
-  project: ProjectId
+  projectId: ProjectId
   valueUsd: number
 }
