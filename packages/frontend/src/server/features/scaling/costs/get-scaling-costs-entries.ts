@@ -42,7 +42,7 @@ function getScalingCostEntry(
   tvl: number | undefined,
 ): ScalingCostsEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes, syncStatuses: undefined }),
     href: `/scaling/projects/${project.display.slug}#onchain-costs`,
     costsWarning: project.display.costsWarning,
     tvlOrder: tvl ?? -1,

@@ -6,6 +6,7 @@ import {
   type ScalingProjectStack,
 } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
 import { type SyncStatus } from '~/types/sync-status'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
@@ -91,7 +92,7 @@ function getScalingLivenessEntry(
     ...getCommonScalingEntry2({
       project,
       changes,
-      syncStatuses: data?.syncStatus,
+      syncStatuses: compact([data?.syncStatus]),
     }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,

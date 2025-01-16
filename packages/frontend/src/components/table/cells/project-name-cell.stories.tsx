@@ -18,7 +18,7 @@ export const All: Story = {
         underReview: 'config',
         redWarning: 'Red warning message',
         verificationWarning: true,
-        syncStatusInfo: 'Sync status info',
+        syncStatusesInfo: [{ content: 'Sync status info', type: undefined }],
       },
     },
   },

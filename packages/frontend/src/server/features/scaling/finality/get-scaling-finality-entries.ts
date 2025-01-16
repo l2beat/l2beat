@@ -10,6 +10,7 @@ import {
   type WarningValueWithSentiment,
   notUndefined,
 } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
 import { type SyncStatus } from '~/types/sync-status'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
@@ -137,7 +138,7 @@ function getScalingFinalityEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatus: data?.syncStatus,
+      syncStatuses: compact([data?.syncStatus]),
     }),
     category: project.display.category,
     provider: project.display.provider,

@@ -43,18 +43,18 @@ export interface CommonScalingEntry extends CommonProjectEntry {
 interface Params {
   project: Layer2 | Layer3
   changes: ProjectChanges | undefined
-  syncStatus: SyncStatus | undefined
+  syncStatuses: SyncStatus[] | undefined
 }
 
 // TODO: Once this is the only version being used remove the 2 and the old one
 export function getCommonScalingEntry2({
   project,
   changes,
-  syncStatus,
+  syncStatuses,
 }: {
   project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>
   changes: ProjectChanges | undefined
-  syncStatus: SyncStatus | undefined
+  syncStatuses: SyncStatus[] | undefined
 }): CommonScalingEntry {
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
@@ -78,16 +78,7 @@ export function getCommonScalingEntry2({
         highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
         implementationChanged: !!changes?.implementationChanged,
       }),
-      syncStatusInfo:
-        syncStatus?.isSynced === false
-          ? `The data for this item is not synced since ${formatTimestamp(
-              syncStatus.syncedUntil,
-              {
-                mode: 'datetime',
-                longMonthName: true,
-              },
-            )}.`
-          : undefined,
+      syncStatusesInfo: getSyncStatusInfo(syncStatuses),
       countdowns: project.countdowns,
     },
     tab:
@@ -113,7 +104,7 @@ export function getCommonScalingEntry2({
 export function getCommonScalingEntry({
   project,
   changes,
-  syncStatus,
+  syncStatuses,
 }: Params): CommonScalingEntry {
   const isRollup =
     project.display.category === 'Optimistic Rollup' ||
@@ -138,16 +129,7 @@ export function getCommonScalingEntry({
         highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
         implementationChanged: !!changes?.implementationChanged,
       }),
-      syncStatusInfo:
-        syncStatus?.isSynced === false
-          ? `The data for this item is not synced since ${formatTimestamp(
-              syncStatus.syncedUntil,
-              {
-                mode: 'datetime',
-                longMonthName: true,
-              },
-            )}.`
-          : undefined,
+      syncStatusesInfo: getSyncStatusInfo(syncStatuses),
       countdowns: getCountdowns(project),
     },
     tab: isProjectOther(project)
@@ -195,4 +177,26 @@ function getRaas(projectBadges: BadgeId[]) {
     return 'No RaaS'
   }
   return badges[badge].display.name
+}
+
+function getSyncStatusInfo(syncStatuses: SyncStatus[] | undefined) {
+  if (!syncStatuses) {
+    return undefined
+  }
+  const isSynced = syncStatuses.every((s) => s.isSynced)
+  if (isSynced) {
+    return undefined
+  }
+  return syncStatuses.map((s) => ({
+    type: s.type,
+    content:
+      s.content ??
+      `The data for this item is not synced since ${formatTimestamp(
+        s.syncedUntil,
+        {
+          mode: 'datetime',
+          longMonthName: true,
+        },
+      )}.`,
+  }))
 }

@@ -1,12 +1,12 @@
-import { type SyncStatus } from '~/types/sync-status'
+import { type SyncStatusInfo } from '~/types/sync-status'
 import { GrayedOut } from './grayed-out'
 
 interface Props {
-  syncStatus: SyncStatus | undefined
+  syncStatus: SyncStatusInfo | undefined
   children: React.ReactNode
 }
 export function SyncStatusWrapper({ syncStatus, children }: Props) {
-  if (!syncStatus || syncStatus.isSynced) {
+  if (!syncStatus) {
     return children
   }
 

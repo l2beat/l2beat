@@ -65,7 +65,7 @@ function getScalingProjectActivityEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatus: data?.syncStatus,
+      syncStatuses: compact([data?.syncStatus]),
     }),
     href: `/scaling/projects/${project.display.slug}#activity`,
     dataSource: project.display.activityDataSource,

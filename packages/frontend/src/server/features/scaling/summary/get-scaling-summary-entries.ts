@@ -110,15 +110,13 @@ function getScalingSummaryEntry(
       : undefined
   const associatedTokensExcludedWarnings = compact([project.display.tvlWarning])
 
-  const activitySyncStatus = activity
-    ? getActivitySyncStatus(activity.syncedUntil)
-    : undefined
-
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatus: activitySyncStatus,
+      syncStatuses: activity
+        ? [getActivitySyncStatus(activity.syncedUntil)]
+        : undefined,
     }),
     stage:
       isProjectOther(project) || !project.stage

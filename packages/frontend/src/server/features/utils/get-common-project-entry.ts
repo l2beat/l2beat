@@ -1,4 +1,5 @@
 import { type ProjectId } from '@l2beat/shared-pure'
+import { type SyncStatusInfo } from '~/types/sync-status'
 import { type UnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectCountdownsWithContext } from '../scaling/utils/get-countdowns'
 
@@ -15,7 +16,7 @@ export interface CommonProjectEntry {
         redWarning?: string
         verificationWarning?: boolean
         underReview?: UnderReviewStatus
-        syncStatusInfo?: string
+        syncStatusesInfo?: SyncStatusInfo[]
         countdowns?: ProjectCountdownsWithContext
       }
     | undefined

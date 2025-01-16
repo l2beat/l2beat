@@ -18,6 +18,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -99,10 +100,17 @@ export const scalingSummaryColumns = [
       if (!data) {
         return <NoDataBadge />
       }
+
+      const activitySyncStatus =
+        ctx.row.original.statuses?.syncStatusesInfo?.find(
+          (s) => s.type === 'activity',
+        )
       return (
-        <ValueWithPercentageChange change={data?.change}>
-          {formatActivityCount(ctx.getValue())}
-        </ValueWithPercentageChange>
+        <SyncStatusWrapper syncStatus={activitySyncStatus}>
+          <ValueWithPercentageChange change={data?.change}>
+            {formatActivityCount(ctx.getValue())}
+          </ValueWithPercentageChange>
+        </SyncStatusWrapper>
       )
     },
     sortUndefined: 'last',

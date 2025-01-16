@@ -66,8 +66,12 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             </TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.syncStatusInfo && (
-          <NotSyncedIcon content={project.statuses.syncStatusInfo} />
+        {project.statuses?.syncStatusesInfo && (
+          <NotSyncedIcon
+            content={project.statuses.syncStatusesInfo
+              .map((s) => s.content)
+              .join('\n')}
+          />
         )}
         {project.statuses?.countdowns?.otherMigration &&
           !featureFlags.othersMigrated() && (
