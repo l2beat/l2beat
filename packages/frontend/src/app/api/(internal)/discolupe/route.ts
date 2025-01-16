@@ -8,7 +8,7 @@ import {
 } from '@l2beat/config'
 import { NextResponse } from 'next/server'
 import { getCostsProjects } from '~/server/features/scaling/costs/utils/get-costs-projects'
-import { getFinalityConfigurations } from '~/server/features/scaling/finality/utils/get-finality-configurations'
+import { getFinalityProjects } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getLiveness } from '~/server/features/scaling/liveness/get-liveness'
 import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
@@ -31,9 +31,7 @@ async function getResponse() {
   const tvl = await get7dTvlBreakdown()
   const costs = getCostsProjects().map((c) => c.id.toString())
   const liveness = Object.keys(await getLiveness())
-  const finality = getFinalityConfigurations().map((f) =>
-    f.projectId.toString(),
-  )
+  const finality = (await getFinalityProjects()).map((f) => f.id.toString())
 
   return {
     success: true,
