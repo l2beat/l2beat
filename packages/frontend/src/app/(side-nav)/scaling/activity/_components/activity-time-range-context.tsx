@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function ActivityTimeRangeContextProvider({ children }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('30d')
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
   return (
     <ActivityTimeRangeContext.Provider
       value={{
