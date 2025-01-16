@@ -33,6 +33,23 @@ export const soon: Layer2 = opStackL2({
     },
     // no activityDataSource due to SVM
   },
+  usingAltVm: true,
+  nonTemplateTechnology: {
+    otherConsiderations: [
+      {
+        name: 'Solana Virtual Machine is supported',
+        description:
+          'OP stack chains are usually pursuing the EVM Equivalence model. But Soon implements the rust-based Solana virtual machine (SVM) which uses parallel processing.',
+        risks: [],
+        references: [
+          {
+            text: 'Soon Docs - Decoupled SVM',
+            href: 'https://docs.soo.network/introduction/decoupled-svm',
+          },
+        ],
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1696566432), // TODO: update
   isNodeAvailable: false,
   discoveryDrivenData: true,
