@@ -16,11 +16,11 @@ export const soon: Layer2 = opStackL2({
   //daProvider: EIGEN_DA_PROVIDER,
   additionalBadges: [Badge.DA.EigenDA],
   daProvider: {
-    layer: DA_LAYERS.FRAXTAL_DA,
+    layer: DA_LAYERS.EIGEN_DA,
     riskView: {
       value: 'External',
       description:
-        'Proof construction and state derivation rely fully on data that is NOT published on chain. Fraxtal uses a separate data availability module developed by the Frax Core Team, and data availability attestations are not published on chain.',
+        'Proof construction and state derivation rely fully on data that is NOT published on chain. Sequencer commitments are not checked against the EigenDA ServiceManager DA bridge.',
       sentiment: 'bad',
     },
     technology: {
