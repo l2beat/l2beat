@@ -3654,6 +3654,19 @@
   ],
   "linea": [
     {
+      "symbol": "SOULS",
+      "address": "0xeC859566fC5d7ED84Ac823509F3f7db06C461b20",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "inETH",
       "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
       "source": "external",

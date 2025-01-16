@@ -10574,6 +10574,27 @@
       "supply": "zero"
     },
     {
+      "name": "Unfettered Ecosystem",
+      "coingeckoId": "the-unfettered-souls",
+      "address": "0xeC859566fC5d7ED84Ac823509F3f7db06C461b20",
+      "symbol": "SOULS",
+      "decimals": 18,
+      "deploymentTimestamp": 1726228368,
+      "coingeckoListingTimestamp": 1685491200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30591/large/souls_200px.png?1726596994",
+      "chainId": 59144,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
+    {
       "name": "USDC",
       "coingeckoId": "bridged-usd-coin-linea",
       "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
