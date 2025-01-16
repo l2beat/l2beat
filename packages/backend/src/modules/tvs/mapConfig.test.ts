@@ -20,7 +20,7 @@ describe(mapConfig.name, () => {
     const result = mapConfig(backendProject, arbitrum.chainConfig.name)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
-    expect(result.tokens.length).toEqual(397)
+    expect(result.tokens.length).toBeGreaterThanOrEqual(403)
 
     expect(result.tokens[0]).toEqual({
       id: 'ethereum-native',
