@@ -12,7 +12,7 @@ export const educhain: Layer3 = orbitStackL3({
   discovery,
   additionalBadges: [
     Badge.DA.DAC,
-    // Badge.L3ParentChain.Arbitrum,
+    Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Gelato,
   ],
   additionalPurposes: ['Social'],
