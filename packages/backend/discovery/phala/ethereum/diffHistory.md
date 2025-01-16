@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2e560882d4cb7fb96abfe91800fc417486f7a736
+Generated with discovered.json: 0x1f8a38e3fb1c36a203009aa3e66f51611628168c
 
-# Diff at Thu, 16 Jan 2025 08:16:00 GMT:
+# Diff at Thu, 16 Jan 2025 12:09:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a739892e4565ca2cf8f67abed360c494a770dcea block: 21630146
+- comparing to: main@3513cb068688b9fa7f9ddd40447f5f70d088c2cf block: 21630146
 - current block number: 21635788
 
 ## Description
@@ -19,6 +19,23 @@ Old verifier frozen.
       values.oldVerifier3.1:
 -        false
 +        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630146 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGateway (0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5:
++        ["0x0000000000000000000000000000000000000000",false]
+      fieldMeta.oldVerifier5:
++        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."}
     }
 ```
 

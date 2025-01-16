@@ -122,6 +122,7 @@
         "oldVerifier2": ["0x0000000000000000000000000000000000000000", false],
         "oldVerifier3": ["0xE780809121774D06aD9B0EEeC620fF4B3913Ced1", true],
         "oldVerifier4": ["0x0000000000000000000000000000000000000000", false],
+        "oldVerifier5": ["0x0000000000000000000000000000000000000000", false],
         "opSuccinctVerifier": [
           "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",
           false
@@ -141,6 +142,9 @@
         },
         "oldVerifier4": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
@@ -1355,6 +1359,6 @@
     "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x3f953bd6fe2c34eb89b0d4dfac66dfa4e597a9d4012a2dde6443edd5e47f6945",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813"
+    "succinct/SP1SuccinctGateway": "0xfd0c65c6bcfc5771c227135f9829fdd9c57aa549ecf7fb870d5b387a117ba317"
   }
 }

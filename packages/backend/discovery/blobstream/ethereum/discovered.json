@@ -46,7 +46,7 @@
         },
         {
           "permission": "configure",
-          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "target": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
           "via": []
         }
       ],
@@ -57,8 +57,9 @@
         "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
         "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
         "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
+        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true]
+        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -72,6 +73,9 @@
         },
         "oldVerifier4": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
@@ -345,6 +349,19 @@
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
+      "sinceTimestamp": 1729727135,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
+        "VERSION": "v3.0.0"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -352,11 +369,11 @@
           "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
         }
       ],
-      "sinceTimestamp": 1729727135,
+      "sinceTimestamp": 1735949699,
       "values": {
         "$immutable": true,
-        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
-        "VERSION": "v3.0.0"
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
       }
     },
     {
@@ -642,12 +659,21 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "succinct/SP1Blobstream": "0x9b561e8f866e43abfbf30d5612a028aecb95be8441698251d61ab44b3d870955",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
+    "succinct/SP1SuccinctGateway": "0xfd0c65c6bcfc5771c227135f9829fdd9c57aa549ecf7fb870d5b387a117ba317",
     "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
   }
 }

@@ -1,25 +1,63 @@
-Generated with discovered.json: 0x94065a1a092ff00829876449d43e027fad40ea43
+Generated with discovered.json: 0x46e392c71f19d2e96bdd21e42d22e30d1b144be2
 
-# Diff at Thu, 16 Jan 2025 08:28:55 GMT:
+# Diff at Thu, 16 Jan 2025 12:09:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a739892e4565ca2cf8f67abed360c494a770dcea block: 21630305
+- comparing to: main@3513cb068688b9fa7f9ddd40447f5f70d088c2cf block: 21630305
 - current block number: 21635855
 
 ## Description
 
-Verifier unpaused.
+New verifier added, old one frozen.
 
 ## Watched changes
 
 ```diff
     contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
     +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
-+++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
-      values.verifier.1:
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5.1:
 -        false
 +        true
     }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630305 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      issuedPermissions.1.target:
+-        "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier.0:
+-        "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5:
++        ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",false]
+      fieldMeta.oldVerifier5:
++        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."}
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x4dacf0edbf35077522b521884aad81792a036d93
