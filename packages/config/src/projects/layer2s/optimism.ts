@@ -585,7 +585,7 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      `Member of the SuperchainProxyAdminOwner.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',
