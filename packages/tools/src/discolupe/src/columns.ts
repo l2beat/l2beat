@@ -103,11 +103,90 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: IndicatorContainer,
   },
   {
-    header: 'Milestones & Incidents',
+    header: 'Costs Configured',
+    id: 'z5',
+    align: 'right',
+    fn: (project: DiscoLupeProject) => (project.costsConfigured ? 'Yes' : 'No'),
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Liveness Configured',
     id: 'vl',
     align: 'right',
     fn: (project: DiscoLupeProject) =>
-      project.milestones && project.milestones.length > 0 ? 'Yes' : 'No',
+      project.livenessConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Finality Configured',
+    id: 'i7',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.finalityConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Milestones & Incidents Configured',
+    id: '5k',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.milestonesConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Operator Configured',
+    id: 'wq',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.operatorConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Withdrawl Configured',
+    id: 'of',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.withdrawalsConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Other Considerations Configured',
+    id: '0f',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.otherConsiderationsConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'State Derivation Configured',
+    id: 'yk',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.stateDerivationConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'State Validation Configured',
+    id: '14',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.stateValidationConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Upgrades & Governance Configured',
+    id: 'v5',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.upgradesAndGovernanceConfigured ? 'Yes' : 'No',
+    displayFn: IndicatorContainer,
+  },
+  {
+    header: 'Knowledge Nuggets Configured',
+    id: 'k7',
+    align: 'right',
+    fn: (project: DiscoLupeProject) =>
+      project.knowledgeNuggetsConfigured ? 'Yes' : 'No',
     displayFn: IndicatorContainer,
   },
 ] as const

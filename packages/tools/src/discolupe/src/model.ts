@@ -14,7 +14,18 @@ export const DiscoLupeProject = z.object({
   isArchived: z.boolean(),
   isUpcoming: z.boolean(),
   isUnderReview: z.boolean(),
-  milestones: z.array(z.object({})).optional(),
+
+  costsConfigured: z.boolean(),
+  livenessConfigured: z.boolean(),
+  finalityConfigured: z.boolean(),
+  milestonesConfigured: z.boolean(),
+  operatorConfigured: z.boolean(),
+  withdrawalsConfigured: z.boolean(),
+  otherConsiderationsConfigured: z.boolean(),
+  stateDerivationConfigured: z.boolean(),
+  stateValidationConfigured: z.boolean(),
+  upgradesAndGovernanceConfigured: z.boolean(),
+  knowledgeNuggetsConfigured: z.boolean(),
 })
 export type DiscoLupeProject = z.infer<typeof DiscoLupeProject>
 
