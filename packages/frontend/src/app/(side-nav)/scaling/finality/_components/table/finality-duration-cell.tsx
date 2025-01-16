@@ -15,7 +15,7 @@ import { type FinalityDataPoint } from '~/server/features/scaling/finality/schem
 import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { DurationCell } from './duration-cell'
-import { GrayedOut } from './grayed-out'
+import { SyncStatusWrapper } from './sync-status-wrapper'
 
 type BaseProps = {
   syncStatus: SyncStatus
@@ -41,13 +41,10 @@ export function FinalityDurationCell(props: Props & BaseProps) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        {props.syncStatus.isSynced ? (
+        <SyncStatusWrapper syncStatus={props.syncStatus}>
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
-        ) : (
-          <GrayedOut>
-            <DurationCell durationInSeconds={props.timings.averageInSeconds} />
-          </GrayedOut>
-        )}
+        </SyncStatusWrapper>
+        {}
 
         {props.warning && (
           <RoundedWarningIcon
@@ -58,7 +55,7 @@ export function FinalityDurationCell(props: Props & BaseProps) {
       </TooltipTrigger>
       <TooltipContent>
         <div className="font-medium">
-          {!props.syncStatus.isSynced && (
+          {props.syncStatus && (
             <>
               <span className="whitespace-pre text-balance">
                 {`Values have not been synced since\n${format(

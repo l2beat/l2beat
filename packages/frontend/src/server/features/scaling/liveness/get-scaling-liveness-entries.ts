@@ -157,7 +157,7 @@ export interface LivenessTypeData {
   '30d': LivenessDatapoint | undefined
   '90d': LivenessDatapoint | undefined
   max: LivenessDatapoint | undefined
-  syncStatus: SyncStatus
+  syncStatus: SyncStatus | undefined
   warning: string | undefined
 }
 
@@ -178,7 +178,7 @@ function getSubTypeData(
     '30d': data['30d'],
     '90d': data['90d'],
     max: data.max,
-    syncStatus: { isSynced, syncedUntil: data.syncedUntil },
+    syncStatus: isSynced ? undefined : { syncedUntil: data.syncedUntil },
     warning,
   }
 }

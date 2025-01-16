@@ -60,7 +60,7 @@ export function LivenessIntervalCell(props: {
         )}
       </TooltipTrigger>
       <TooltipContent>
-        {syncStatus && !syncStatus.isSynced && (
+        {syncStatus && (
           <>
             <span className="whitespace-pre text-balance font-medium">
               Values have not been synced since{'\n'}

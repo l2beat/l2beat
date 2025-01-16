@@ -8,9 +8,9 @@ import {
   isUnderReview,
   isVerified,
 } from '@l2beat/config'
+import { compact } from 'lodash'
 import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
 import { type SyncStatus } from '~/types/sync-status'
-import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
@@ -43,7 +43,11 @@ export interface CommonScalingEntry extends CommonProjectEntry {
 interface Params {
   project: Layer2 | Layer3
   changes: ProjectChanges | undefined
-  syncStatuses: SyncStatus[] | undefined
+  syncStatuses: (SyncStatus | undefined)[] | undefined
+}
+
+type Params2 = Omit<Params, 'project'> & {
+  project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>
 }
 
 // TODO: Once this is the only version being used remove the 2 and the old one
@@ -51,11 +55,7 @@ export function getCommonScalingEntry2({
   project,
   changes,
   syncStatuses,
-}: {
-  project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>
-  changes: ProjectChanges | undefined
-  syncStatuses: SyncStatus[] | undefined
-}): CommonScalingEntry {
+}: Params2): CommonScalingEntry {
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
@@ -78,7 +78,7 @@ export function getCommonScalingEntry2({
         highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
         implementationChanged: !!changes?.implementationChanged,
       }),
-      syncStatusesInfo: getSyncStatusInfo(syncStatuses),
+      syncStatuses: compact(syncStatuses),
       countdowns: project.countdowns,
     },
     tab:
@@ -129,7 +129,7 @@ export function getCommonScalingEntry({
         highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
         implementationChanged: !!changes?.implementationChanged,
       }),
-      syncStatusesInfo: getSyncStatusInfo(syncStatuses),
+      syncStatuses: compact(syncStatuses),
       countdowns: getCountdowns(project),
     },
     tab: isProjectOther(project)
@@ -177,26 +177,4 @@ function getRaas(projectBadges: BadgeId[]) {
     return 'No RaaS'
   }
   return badges[badge].display.name
-}
-
-function getSyncStatusInfo(syncStatuses: SyncStatus[] | undefined) {
-  if (!syncStatuses) {
-    return undefined
-  }
-  const isSynced = syncStatuses.every((s) => s.isSynced)
-  if (isSynced) {
-    return undefined
-  }
-  return syncStatuses.map((s) => ({
-    type: s.type,
-    content:
-      s.content ??
-      `The data for this item is not synced since ${formatTimestamp(
-        s.syncedUntil,
-        {
-          mode: 'datetime',
-          longMonthName: true,
-        },
-      )}.`,
-  }))
 }

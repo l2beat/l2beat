@@ -11,7 +11,7 @@ import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
-import { NotSyncedIcon } from '../../badge/not-synced-badge'
+import { NotSyncedIcon } from '../../not-synced/not-synced-icon'
 import { PrimaryValueCell } from './primary-value-cell'
 
 export interface ProjectCellProps {
@@ -66,12 +66,8 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
             </TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.syncStatusesInfo && (
-          <NotSyncedIcon
-            content={project.statuses.syncStatusesInfo
-              .map((s) => s.content)
-              .join('\n')}
-          />
+        {project.statuses?.syncStatuses && (
+          <NotSyncedIcon syncStatuses={project.statuses.syncStatuses} />
         )}
         {project.statuses?.countdowns?.otherMigration &&
           !featureFlags.othersMigrated() && (

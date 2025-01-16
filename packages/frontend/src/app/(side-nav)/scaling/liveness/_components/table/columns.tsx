@@ -79,7 +79,7 @@ export const columns = [
     cell: (ctx) => {
       const entry = ctx.row.original
       const showComingSoon =
-        !entry.data?.syncStatus.isSynced ||
+        !!entry.data?.syncStatus ||
         LIVENESS_ANOMALIES_COMING_SOON_PROJECTS.includes(entry.id.toString())
 
       return (
