@@ -1,28 +1,36 @@
 import {
-  type Layer2,
-  type Layer3,
+  ProjectService,
+  ProjectWith,
   type ScalingProjectDisplay,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
+import { env } from 'process'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
-  type ProjectChanges,
   getProjectsChangeReport,
+  type ProjectChanges,
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry,
+  getCommonScalingEntry2,
 } from '../get-common-scaling-entry'
 import {
   type ActivityProjectTableData,
   getActivityTable,
 } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
-import { getActivityProjects } from './utils/get-activity-projects'
 
 export async function getScalingActivityEntries() {
-  const projects = getActivityProjects().filter((p) => !p.isArchived)
+  const unfilteredProjects = await ProjectService.STATIC.getProjects({
+    select: ['statuses', 'scalingInfo', 'activityInfo'],
+    optional: ['countdowns'],
+    where: ['isScaling'],
+    whereNot: ['isUpcoming', 'isArchived'],
+  })
+  const projects = unfilteredProjects.filter(
+    (p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id.toString()),
+  )
   const [projectsChangeReport, activityData] = await Promise.all([
     getProjectsChangeReport(),
     getActivityTable(projects),
@@ -57,18 +65,21 @@ export interface ScalingActivityEntry extends CommonScalingEntry {
 }
 
 function getScalingProjectActivityEntry(
-  project: Layer2 | Layer3,
+  project: ProjectWith<
+    'statuses' | 'scalingInfo' | 'activityInfo',
+    'countdowns'
+  >,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
   return {
-    ...getCommonScalingEntry({
+    ...getCommonScalingEntry2({
       project,
       changes,
       syncStatus: data?.syncStatus,
     }),
-    href: `/scaling/projects/${project.display.slug}#activity`,
-    dataSource: project.display.activityDataSource,
+    href: `/scaling/projects/${project.slug}#activity`,
+    dataSource: project.activityInfo.dataSource,
     data,
   }
 }

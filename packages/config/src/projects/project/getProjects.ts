@@ -6,7 +6,7 @@ import { Layer2, ProjectLivenessInfo, layer2s } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
 import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
-import { Project, ProjectCostsInfo } from './Project'
+import { Project, ProjectActivityInfo, ProjectCostsInfo } from './Project'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -63,6 +63,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): Project {
     },
     livenessInfo: getLivenessInfo(p),
     costsInfo: getCostsInfo(p),
+    activityInfo: getActivityInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
     countdowns: otherMigrationContext
@@ -103,6 +104,12 @@ function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
     return {
       warning: p.display.costsWarning,
     }
+  }
+}
+
+function getActivityInfo(p: Layer2 | Layer3): ProjectActivityInfo | undefined {
+  if (p.config.transactionApi) {
+    return { dataSource: p.display.activityDataSource }
   }
 }
 

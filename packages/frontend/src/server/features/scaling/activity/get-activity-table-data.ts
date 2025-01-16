@@ -1,4 +1,4 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { layer2s, layer3s, ProjectWith } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
@@ -14,7 +14,7 @@ import {
 } from './utils/get-weekly-change'
 import { sumTpsCount, sumUopsCount } from './utils/sum-activity-count'
 
-export async function getActivityTable(projects: (Layer2 | Layer3)[]) {
+export async function getActivityTable(projects: ProjectWith[]) {
   if (env.MOCK) {
     return getMockActivityTableData()
   }
@@ -24,7 +24,7 @@ export async function getActivityTable(projects: (Layer2 | Layer3)[]) {
 export type ActivityProjectTableData = NonNullable<ActivityTableData[string]>
 type ActivityTableData = Awaited<ReturnType<typeof getActivityTableData>>
 
-async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
+async function getActivityTableData(projects: ProjectWith[]) {
   const db = getDb()
   const range = getFullySyncedActivityRange('max')
   const records = await db.activity.getByProjectsAndTimeRange(
