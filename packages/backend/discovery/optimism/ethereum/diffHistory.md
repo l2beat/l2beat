@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x8cc47113990b6181bf259591b851a1043b275f2b
+Generated with discovered.json: 0xa7d60765787b7138d923398ee5b825bedea49016
 
-# Diff at Fri, 17 Jan 2025 15:21:20 GMT:
+# Diff at Fri, 17 Jan 2025 15:45:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a3fe43c976ccbecb3f9ef2736f8bd675ce03433e block: 21628485
+- comparing to: main@2d3991ce1ae3368f038eb9c3b9af6535a89035be block: 21628485
 - current block number: 21645071
 
 ## Description
@@ -56,6 +56,14 @@ discovery. Values are for block 21628485 (main branch discovery), not current.
     +++ description: Collecting sequencer, base- and L1 fees from L2.
       description:
 +        "Collecting sequencer, base- and L1 fees from L2."
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      references:
++        [{"text":"Security Council members - Optimism Collective Governance Forum","href":"https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"}]
     }
 ```
 

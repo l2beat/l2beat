@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 21645071,
-  "configHash": "0x6d6c987e5e3fec6d54a06dc55b28635783674280eabbeab3021cb0efc12b495f",
+  "configHash": "0xd04945ab6ea78b85d7a87e4c0fe548edfd651349322bb8ac50e730c3e6bf36be",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -1486,7 +1486,13 @@
         "nonce": 10,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "derivedName": "GnosisSafe",
+      "references": [
+        {
+          "text": "Security Council members - Optimism Collective Governance Forum",
+          "href": "https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"
+        }
+      ]
     },
     {
       "name": "DeputyGuardianModule",

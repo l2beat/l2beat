@@ -59,6 +59,12 @@
       "description": "Stores DAI deposited from the attached L1DAITokenBridge."
     },
     "SecurityCouncilMultisig": {
+      "references": [
+        {
+          "text": "Security Council members - Optimism Collective Governance Forum",
+          "href": "https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"
+        }
+      ],
       "fields": {
         "isL2beatStillAnOwner": {
           "handler": {
