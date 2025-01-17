@@ -89,6 +89,7 @@ export const polygonpos: Layer2 = {
       discovery.getEscrowDetails({
         // ERC20Predicate
         address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
+        premintedTokens: ['TRADE'],
         tokens: '*',
         ...upgrades,
       }),

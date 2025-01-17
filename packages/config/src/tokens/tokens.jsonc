@@ -1,6 +1,176 @@
 {
   "ethereum": [
     {
+      "symbol": "XCHNG",
+      "address": "0xb712d62fe84258292d1961b5150a19bc4ab49026"
+    },
+    {
+      "symbol": "SPEC",
+      "address": "0xadf7c35560035944e805d98ff17d58cde2449389"
+    },
+    {
+      "symbol": "ARC",
+      "address": "0xc82e3db60a52cf7529253b4ec688f631aad9e7c2"
+    },
+    {
+      "symbol": "GALA",
+      "address": "0xd1d2eb1b1e90b638588728b4130137d262c87cae"
+    },
+    {
+      "symbol": "BADGER",
+      "address": "0x3472a5a71965499acd81997a54bba8d852c6e53d"
+    },
+    {
+      "symbol": "FIS",
+      "address": "0xef3a930e1ffffacd2fc13434ac81bd278b0ecc8d"
+    },
+    {
+      "symbol": "FARM",
+      "address": "0xa0246c9032bc3a600820415ae600c6388619a14d"
+    },
+    {
+      "symbol": "GEAR",
+      "address": "0xba3335588d9403515223f109edc4eb7269a9ab5d"
+    },
+    {
+      "symbol": "PNK",
+      "deploymentTimestamp": 1521078220,
+      "address": "0x93ed3fbe21207ec2e8f2d3c3de6e058cb73bc04d"
+    },
+    {
+      "symbol": "PORK",
+      "address": "0xb9f599ce614feb2e1bbe58f180f370d05b39344e"
+    },
+    {
+      "symbol": "STORJ",
+      "deploymentTimestamp": 1497888995,
+      "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac"
+    },
+    {
+      "symbol": "GTC",
+      "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f"
+    },
+    {
+      "symbol": "KIBSHI",
+      "address": "0x02e7f808990638e9e67e1f00313037ede2362361"
+    },
+    {
+      "symbol": "TRB",
+      "address": "0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0"
+    },
+    {
+      "symbol": "WAMPL",
+      "address": "0xedb171c18ce90b633db442f2a6f72874093b49ef"
+    },
+    {
+      "symbol": "MLN",
+      "deploymentTimestamp": 1548528970,
+      "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892"
+    },
+    {
+      "symbol": "scrvUSD",
+      "category": "stablecoin",
+      "address": "0x0655977feb2f289a4ab78af67bab0d17aab84367"
+    },
+    {
+      "symbol": "T",
+      "address": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5"
+    },
+    {
+      "symbol": "CTX",
+      "address": "0x321c2fe4446c7c963dc41dd58879af648838f98d"
+    },
+    {
+      "symbol": "FOOM",
+      "address": "0xd0d56273290d339aaf1417d9bfa1bb8cfe8a0933"
+    },
+    {
+      "symbol": "COW",
+      "address": "0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab"
+    },
+    {
+      "symbol": "MOON",
+      "address": "0xb2490e357980ce57bf5745e181e537a64eb367b1"
+    },
+    {
+      "symbol": "EURS",
+      "category": "stablecoin",
+      "deploymentTimestamp": 1529686012,
+      "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8"
+    },
+    {
+      "symbol": "LON",
+      "address": "0x0000000000095413afc295d19edeb1ad7b71c952"
+    },
+    {
+      "symbol": "VITA",
+      "address": "0x81f8f0bb1cb2a06649e51913a151f0e7ef6fa321"
+    },
+    {
+      "symbol": "AXGT",
+      "address": "0xdd66781d0e9a08d4fbb5ec7bac80b691be27f21d"
+    },
+    {
+      "symbol": "PSP",
+      "address": "0xcafe001067cdef266afb7eb5a286dcfd277f3de5"
+    },
+    {
+      "symbol": "BITCOIN",
+      "address": "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9"
+    },
+    {
+      "symbol": "OGN",
+      "deploymentTimestamp": 1538435171,
+      "address": "0x8207c1ffc5b6804f6024322ccf34f29c3541ae26"
+    },
+    {
+      "symbol": "OVR",
+      "address": "0x21bfbda47a0b4b5b1248c767ee49f7caa9b23697"
+    },
+    {
+      "symbol": "OLAS",
+      "address": "0x0001a500a6b18995b03f44bb040a5ffc28e45cb0"
+    },
+    {
+      "symbol": "ETH+",
+      "category": "ether",
+      "address": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8"
+    },
+    {
+      "symbol": "APW",
+      "address": "0x4104b135dbc9609fc1a9490e61369036497660c8"
+    },
+    {
+      "symbol": "ALI",
+      "address": "0x6b0b3a982b4634ac68dd83a4dbf02311ce324181"
+    },
+    {
+      "symbol": "FOX",
+      "deploymentTimestamp": 1553639047,
+      "address": "0xc770eefad204b5180df6a14ee197d99d808ee52d"
+    },
+    {
+      "symbol": "FORT",
+      "address": "0x41545f8b9472d758bb669ed8eaeeecd7a9c4ec29"
+    },
+    {
+      "symbol": "DOG",
+      "address": "0xbaac2b4491727d78d2b78815144570b9f2fe8899"
+    },
+    {
+      "symbol": "eUSD",
+      "category": "stablecoin",
+      "address": "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f"
+    },
+    {
+      "symbol": "TRADE",
+      "address": "0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1"
+    },
+    {
+      "symbol": "WXM",
+      "address": "0xde654f497A563dd7A121c176a125dD2F11F13a83"
+    },
+    {
       "symbol": "UNP",
       "address": "0x23d7Ff057c696fEE679c60cEf61Fee6614218f04"
     },
@@ -22,6 +192,7 @@
     },
     {
       "symbol": "USDS",
+      "category": "stablecoin",
       "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
     },
     {
@@ -1945,6 +2116,20 @@
   ],
   "arbitrum": [
     {
+      "symbol": "XBG",
+      "address": "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "EDU",
       "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
       "coingeckoId": "edu-coin",
@@ -3653,6 +3838,19 @@
     }
   ],
   "linea": [
+    {
+      "symbol": "SOULS",
+      "address": "0xeC859566fC5d7ED84Ac823509F3f7db06C461b20",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "inETH",
       "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
@@ -5422,6 +5620,24 @@
         "bridges": [
           {
             "name": "Hyperlane (HypERC20)"
+          }
+        ]
+      }
+    }
+  ],
+  "ink": [
+    {
+      "symbol": "USD₮0",
+      "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
