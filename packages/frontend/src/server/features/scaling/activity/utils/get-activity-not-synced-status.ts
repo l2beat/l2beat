@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type NotSyncedStatus } from '~/types/sync-status'
+import { type NotSyncedStatus } from '~/types/not-synced-status'
 import { formatTimestamp } from '~/utils/dates'
 
 export function getActivityNotSyncedStatus(

@@ -1,7 +1,7 @@
 import { type Project } from '@l2beat/config'
 import { compact } from 'lodash'
 import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
-import { type NotSyncedStatus } from '~/types/sync-status'
+import { type NotSyncedStatus } from '~/types/not-synced-status'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'

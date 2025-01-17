@@ -20,7 +20,7 @@ import {
   type ActivityLatestUopsData,
   getActivityLatestUops,
 } from '../activity/get-activity-latest-tps'
-import { getActivityNotSyncedStatus } from '../activity/utils/get-activity-sync-status'
+import { getActivityNotSyncedStatus } from '../activity/utils/get-activity-not-synced-status'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,

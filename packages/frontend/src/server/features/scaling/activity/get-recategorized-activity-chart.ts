@@ -6,8 +6,8 @@ import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { aggregateActivityRecords } from './utils/aggregate-activity-records'
+import { getActivityNotSyncedStatus } from './utils/get-activity-not-synced-status'
 import { getActivityProjects } from './utils/get-activity-projects'
-import { getActivityNotSyncedStatus } from './utils/get-activity-sync-status'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import {
   type ActivityProjectFilter,

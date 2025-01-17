@@ -19,7 +19,7 @@ import {
   getActivityTable,
 } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
-import { getActivityNotSyncedStatus } from './utils/get-activity-sync-status'
+import { getActivityNotSyncedStatus } from './utils/get-activity-not-synced-status'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ProjectService.STATIC.getProjects({

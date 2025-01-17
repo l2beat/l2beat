@@ -1,4 +1,4 @@
-import { type NotSyncedStatus } from '~/types/sync-status'
+import { type NotSyncedStatus } from '~/types/not-synced-status'
 
 interface Props {
   syncStatus: NotSyncedStatus

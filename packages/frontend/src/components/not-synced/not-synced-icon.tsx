@@ -1,5 +1,5 @@
 import { ClockIcon } from '~/icons/clock'
-import { type NotSyncedStatus } from '~/types/sync-status'
+import { type NotSyncedStatus } from '~/types/not-synced-status'
 import {
   Tooltip,
   TooltipContent,
