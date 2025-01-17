@@ -121,6 +121,10 @@ export const avail: BlockchainDaLayer = {
     consensusFinality: 60, //seconds
     unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
   },
+  throughput: {
+    size: 2000, // 2 MB
+    frequency: 20, // 20 seconds
+  },
   dataAvailabilitySampling: {
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
     erasureCodingProof: DasErasureCodingProof.ValidityProofs,
