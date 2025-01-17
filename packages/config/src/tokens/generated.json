@@ -465,6 +465,20 @@
       "supply": "zero"
     },
     {
+      "name": "Autonolas",
+      "coingeckoId": "autonolas",
+      "address": "0x0001A500A6B18995B03f44bb040A5fFc28E45CB0",
+      "symbol": "OLAS",
+      "decimals": 18,
+      "deploymentTimestamp": 1656584807,
+      "coingeckoListingTimestamp": 1690502400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31099/large/OLAS-token.png?1696529930",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Axelar",
       "coingeckoId": "axelar",
       "address": "0x467719aD09025FcC6cF6F8311755809d45a5E5f3",
@@ -488,6 +502,20 @@
       "coingeckoListingTimestamp": 1604448000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "AxonDAO Governance Token",
+      "coingeckoId": "axondao-governance-token",
+      "address": "0xDd66781D0E9a08D4FBb5eC7BAc80B691BE27F21D",
+      "symbol": "AXGT",
+      "decimals": 18,
+      "deploymentTimestamp": 1697894819,
+      "coingeckoListingTimestamp": 1708041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35290/large/AXGT-logo-7.png?1708076161",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1207,6 +1235,20 @@
       "supply": "zero"
     },
     {
+      "name": "Cryptex",
+      "coingeckoId": "cryptex-finance",
+      "address": "0x321C2fE4446C7c963dc41Dd58879AF648838f98D",
+      "symbol": "CTX",
+      "decimals": 18,
+      "deploymentTimestamp": 1617682867,
+      "coingeckoListingTimestamp": 1619049600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14932/large/CTX_Logo_200px.png?1723514786",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Curve DAO Token",
       "coingeckoId": "curve-dao-token",
       "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
@@ -1579,7 +1621,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1677113123,
       "coingeckoListingTimestamp": 1670630400,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28445/large/0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f.png?1696527441",
       "chainId": 1,
       "source": "canonical",
@@ -1746,7 +1788,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1681974875,
       "coingeckoListingTimestamp": 1716422400,
-      "category": "other",
+      "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38061/large/ETH__Logo.png?1716440789",
       "chainId": 1,
       "source": "canonical",
@@ -1916,6 +1958,20 @@
       "coingeckoListingTimestamp": 1711065600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36339/large/IMG_3928.png?1727165842",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "FOOM",
+      "coingeckoId": "foom",
+      "address": "0xd0D56273290D339aaF1417D9bfa1bb8cFe8A0933",
+      "symbol": "FOOM",
+      "decimals": 18,
+      "deploymentTimestamp": 1686655307,
+      "coingeckoListingTimestamp": 1692316800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31308/large/f.png?1696530127",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2215,6 +2271,20 @@
       "supply": "zero"
     },
     {
+      "name": "Gitcoin",
+      "coingeckoId": "gitcoin",
+      "address": "0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F",
+      "symbol": "GTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1620856082,
+      "coingeckoListingTimestamp": 1621900800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15810/large/gitcoin.png?1696515429",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Gnosis Token",
       "coingeckoId": "gnosis",
       "address": "0x6810e776880C02933D47DB1b9fc05908e5386b96",
@@ -2364,6 +2434,20 @@
       "coingeckoListingTimestamp": 1663718400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/27374/large/logo_200.png?1696526418",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "HarryPotterObamaSonic10Inu",
+      "coingeckoId": "harrypotterobamasonic10in",
+      "address": "0x72e4f9F808C49A2a61dE9C5896298920Dc4EEEa9",
+      "symbol": "BITCOIN",
+      "decimals": 8,
+      "deploymentTimestamp": 1683700391,
+      "coingeckoListingTimestamp": 1684108800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30323/large/hpos10i_logo_casino_night-dexview.png?1696529224",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2588,6 +2672,20 @@
       "coingeckoListingTimestamp": 1603843200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12966/large/kp3r_logo.jpg?1696512754",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "KiboShib",
+      "coingeckoId": "kiboshib",
+      "address": "0x02e7F808990638E9e67E1f00313037EDe2362361",
+      "symbol": "KIBSHI",
+      "decimals": 18,
+      "deploymentTimestamp": 1670512931,
+      "coingeckoListingTimestamp": 1678147200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29335/large/foto_no_exif_%2811%29%282%29_%281%29.png?1696528285",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3013,6 +3111,20 @@
       "supply": "zero"
     },
     {
+      "name": "Melon Token",
+      "coingeckoId": "melon",
+      "address": "0xec67005c4E498Ec7f55E092bd1d35cbC47C91892",
+      "symbol": "MLN",
+      "decimals": 18,
+      "deploymentTimestamp": 1548528970,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/605/large/Enzyme_Icon_Secondary.png?1696501803",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Merit Circle",
       "coingeckoId": "merit-circle",
       "address": "0x949D48EcA67b17269629c7194F4b727d4Ef9E5d6",
@@ -3120,6 +3232,20 @@
       "coingeckoListingTimestamp": 1706313600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34862/large/profile_pic_test_%281%29.jpg?1716085666",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Moons",
+      "coingeckoId": "moon",
+      "address": "0xb2490e357980cE57bF5745e181e537a64Eb367B1",
+      "symbol": "MOON",
+      "decimals": 18,
+      "deploymentTimestamp": 1660059776,
+      "coingeckoListingTimestamp": 1603324800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11222/large/Moons.png?1696511153",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3531,6 +3657,20 @@
       "supply": "zero"
     },
     {
+      "name": "OriginToken",
+      "coingeckoId": "origin-protocol",
+      "address": "0x8207c1FfC5B6804F6024322CcF34F29c3541Ae26",
+      "symbol": "OGN",
+      "decimals": 18,
+      "deploymentTimestamp": 1538435171,
+      "coingeckoListingTimestamp": 1578614400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3296/large/op.jpg?1696504006",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Orion Money Token",
       "coingeckoId": "orion-money",
       "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4",
@@ -3545,6 +3685,20 @@
       "supply": "zero"
     },
     {
+      "name": "OVR",
+      "coingeckoId": "ovr",
+      "address": "0x21BfBDa47A0B4B5b1248c767Ee49F7caA9B23697",
+      "symbol": "OVR",
+      "decimals": 18,
+      "deploymentTimestamp": 1606687578,
+      "coingeckoListingTimestamp": 1608508800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13429/large/LOGO-OVER-ICON-200X200PX.png?1699396496",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Param",
       "coingeckoId": "param",
       "address": "0x69A1e699f562D7Af66Fc6cc473d99f4430C3AcD2",
@@ -3554,6 +3708,20 @@
       "coingeckoListingTimestamp": 1716940800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37697/large/param200.png?1715234889",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "ParaSwap",
+      "coingeckoId": "paraswap",
+      "address": "0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5",
+      "symbol": "PSP",
+      "decimals": 18,
+      "deploymentTimestamp": 1636966698,
+      "coingeckoListingTimestamp": 1636934400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20403/large/ep7GqM19_400x400.jpg?1696519812",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4231,6 +4399,20 @@
       "supply": "zero"
     },
     {
+      "name": "Savings crvUSD",
+      "coingeckoId": "savings-crvusd",
+      "address": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+      "symbol": "scrvUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1730404991,
+      "coingeckoListingTimestamp": 1731888000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51712/large/scrvUSD200x200.png?1731899723",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Savings Dai",
       "coingeckoId": "savings-dai",
       "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
@@ -4637,6 +4819,20 @@
       "supply": "zero"
     },
     {
+      "name": "STASIS EURS Token",
+      "coingeckoId": "stasis-eurs",
+      "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+      "symbol": "EURS",
+      "decimals": 2,
+      "deploymentTimestamp": 1529686012,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/5164/large/EURS_300x300.png?1696505680",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Status Network Token",
       "coingeckoId": "status",
       "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
@@ -4660,6 +4856,20 @@
       "coingeckoListingTimestamp": 1700611200,
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "StorjToken",
+      "coingeckoId": "storj",
+      "address": "0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC",
+      "symbol": "STORJ",
+      "decimals": 8,
+      "deploymentTimestamp": 1497888995,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/949/large/storj.png?1696502065",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4903,6 +5113,20 @@
       "supply": "zero"
     },
     {
+      "name": "Tellor Tributes",
+      "coingeckoId": "tellor",
+      "address": "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+      "symbol": "TRB",
+      "decimals": 18,
+      "deploymentTimestamp": 1613850551,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9644/large/Blk_icon_current.png?1696509713",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Tensorplex Staked TAO",
       "coingeckoId": "tensorplex-staked-tao",
       "address": "0xB60acD2057067DC9ed8c083f5aa227a244044fD6",
@@ -5001,6 +5225,20 @@
       "supply": "zero"
     },
     {
+      "name": "Threshold Network Token",
+      "coingeckoId": "threshold-network-token",
+      "address": "0xCdF7028ceAB81fA0C6971208e83fa7872994beE5",
+      "symbol": "T",
+      "decimals": 18,
+      "deploymentTimestamp": 1640944196,
+      "coingeckoListingTimestamp": 1641168000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22228/large/nFPNiSbL_400x400.jpg?1696521570",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Tokemak",
       "coingeckoId": "tokemak",
       "address": "0x2e9d63788249371f1DFC918a52f8d799F4a38C94",
@@ -5010,6 +5248,20 @@
       "coingeckoListingTimestamp": 1628294400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17495/large/tokemak-avatar-200px-black.png?1696517036",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Tokenlon",
+      "coingeckoId": "tokenlon",
+      "address": "0x0000000000095413afC295d19EDeb1Ad7B71c952",
+      "symbol": "LON",
+      "decimals": 18,
+      "deploymentTimestamp": 1608523100,
+      "coingeckoListingTimestamp": 1608681600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13454/large/lon_logo.png?1696513217",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5218,7 +5470,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1725290327,
       "coingeckoListingTimestamp": 1727136000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
       "chainId": 1,
       "source": "canonical",
@@ -5304,6 +5556,20 @@
       "coingeckoListingTimestamp": 1703721600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34057/large/LOGOMARK.png?1708356054",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "VitaDAO Token",
+      "coingeckoId": "vitadao",
+      "address": "0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321",
+      "symbol": "VITA",
+      "decimals": 18,
+      "deploymentTimestamp": 1623977434,
+      "coingeckoListingTimestamp": 1624492800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16580/large/QmRjwywiAfpzSfQTuWM3zCTghSHN7G6ohQaar7Ht6WANUp.png?1696516140",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5416,6 +5682,20 @@
       "coingeckoListingTimestamp": 1690156800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1696529903",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Wrapped Ampleforth",
+      "coingeckoId": "wrapped-ampleforth",
+      "address": "0xEDB171C18cE90B633DB442f2A6F72874093b49Ef",
+      "symbol": "wAMPL",
+      "decimals": 18,
+      "deploymentTimestamp": 1632315593,
+      "coingeckoListingTimestamp": 1637798400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20825/large/photo_2021-11-25_02-05-11.jpg?1696520218",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

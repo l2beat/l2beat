@@ -1,7 +1,98 @@
 {
   "ethereum": [
     {
+      "symbol": "STORJ",
+      "deploymentTimestamp": 1497888995,
+      "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac"
+    },
+    {
+      "symbol": "GTC",
+      "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f"
+    },
+    {
+      "symbol": "KIBSHI",
+      "address": "0x02e7f808990638e9e67e1f00313037ede2362361"
+    },
+    {
+      "symbol": "TRB",
+      "address": "0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0"
+    },
+    {
+      "symbol": "wAMPL",
+      "address": "0xedb171c18ce90b633db442f2a6f72874093b49ef"
+    },
+    {
+      "symbol": "MLN",
+      "deploymentTimestamp": 1548528970,
+      "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892"
+    },
+    {
+      "symbol": "scrvUSD",
+      "category": "stablecoin",
+      "address": "0x0655977feb2f289a4ab78af67bab0d17aab84367"
+    },
+    {
+      "symbol": "T",
+      "address": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5"
+    },
+    {
+      "symbol": "CTX",
+      "address": "0x321c2fe4446c7c963dc41dd58879af648838f98d"
+    },
+    {
+      "symbol": "FOOM",
+      "address": "0xd0d56273290d339aaf1417d9bfa1bb8cfe8a0933"
+    },
+    {
+      "symbol": "COW",
+      "address": "0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab"
+    },
+    {
+      "symbol": "MOON",
+      "address": "0xb2490e357980ce57bf5745e181e537a64eb367b1"
+    },
+    {
+      "symbol": "EURS",
+      "category": "stablecoin",
+      "deploymentTimestamp": 1529686012,
+      "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8"
+    },
+    {
+      "symbol": "LON",
+      "address": "0x0000000000095413afc295d19edeb1ad7b71c952"
+    },
+    {
+      "symbol": "VITA",
+      "address": "0x81f8f0bb1cb2a06649e51913a151f0e7ef6fa321"
+    },
+    {
+      "symbol": "AXGT",
+      "address": "0xdd66781d0e9a08d4fbb5ec7bac80b691be27f21d"
+    },
+    {
+      "symbol": "PSP",
+      "address": "0xcafe001067cdef266afb7eb5a286dcfd277f3de5"
+    },
+    {
+      "symbol": "BITCOIN",
+      "address": "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9"
+    },
+    {
+      "symbol": "OGN",
+      "deploymentTimestamp": 1538435171,
+      "address": "0x8207c1ffc5b6804f6024322ccf34f29c3541ae26"
+    },
+    {
+      "symbol": "OVR",
+      "address": "0x21bfbda47a0b4b5b1248c767ee49f7caa9b23697"
+    },
+    {
+      "symbol": "OLAS",
+      "address": "0x0001a500a6b18995b03f44bb040a5ffc28e45cb0"
+    },
+    {
       "symbol": "ETH+",
+      "category": "ether",
       "address": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8"
     },
     {
@@ -27,6 +118,7 @@
     },
     {
       "symbol": "eUSD",
+      "category": "stablecoin",
       "address": "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f"
     },
     {
@@ -59,6 +151,7 @@
     },
     {
       "symbol": "USDS",
+      "category": "stablecoin",
       "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
     },
     {
