@@ -6,7 +6,7 @@ import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_componen
 import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
-import { NotSyncedBanner } from '~/components/not-synced-banner'
+import { NotSyncedBanner } from '~/components/not-synced/not-synced-banner'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
@@ -71,7 +71,7 @@ export function ProjectActivityChart({
           {...data}
           showEthereum={showMainnet}
           singleProject
-          syncedUntil={chart?.syncStatus.syncedUntil}
+          syncedUntil={chart?.syncedUntil}
           metric={metric}
           type={getChartType(category)}
           projectName={projectName}
@@ -127,9 +127,7 @@ export function ProjectActivityChart({
             <RadioGroupItem value="lin">LIN</RadioGroupItem>
           </RadioGroup>
         </div>
-        {chart && !chart.syncStatus.isSynced && (
-          <NotSyncedBanner what="Activity" data={chart} />
-        )}
+        {chart?.syncWarning && <NotSyncedBanner content={chart.syncWarning} />}
       </section>
     </ChartProvider>
   )

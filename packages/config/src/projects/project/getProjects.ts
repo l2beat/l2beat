@@ -50,6 +50,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       hostChain: getHostChain(
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),
+      reasonsForBeingOther: p.display.reasonsForBeingOther,
       stack: p.display.provider,
       raas: getRaas(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',

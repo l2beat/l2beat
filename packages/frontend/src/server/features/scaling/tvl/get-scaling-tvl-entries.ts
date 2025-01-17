@@ -59,7 +59,10 @@ function getScalingTvlEntry(
   data: ProjectSevenDayTvlBreakdown | undefined,
 ): ScalingTvlEntry | undefined {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+    }),
     href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvl: {
       data,

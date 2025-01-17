@@ -24,44 +24,43 @@ describe(mapConfig.name, () => {
 
     expect(result.tokens[0]).toEqual({
       id: 'ethereum-native',
-      category: 'ether',
-      source: 'canonical',
-      decimals: 18,
-
-      address: undefined,
+      ticker: 'ETH',
       amount: {
-        operator: 'balanceOfEscrow',
-        arguments: [
+        type: 'balanceOfEscrow',
+        address: EthereumAddress.ZERO,
+        chain: 'arbitrum',
+        escrowAddresses: [
           '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
           '0xcEe284F754E854890e311e3280b767F80797180d',
           '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
           '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
         ],
+        decimals: 18,
       },
-      chain: 'arbitrum',
-      ticker: 'ETH',
       sinceTimestamp: new UnixTime(1622243344),
       untilTimestamp: undefined,
+      category: 'ether',
+      source: 'canonical',
       isAssociated: false,
     })
 
     expect(result.tokens.find((t) => t.ticker === 'ARB')).toEqual({
       id: 'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
-      category: 'other',
-      source: 'canonical',
-      decimals: 18,
-      address: EthereumAddress('0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1'),
+      ticker: 'ARB',
       amount: {
-        operator: 'balanceOfEscrow',
-        arguments: [
+        type: 'balanceOfEscrow',
+        address: EthereumAddress('0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1'),
+        chain: 'arbitrum',
+        escrowAddresses: [
           '0xcEe284F754E854890e311e3280b767F80797180d',
           '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
         ],
+        decimals: 18,
       },
-      chain: 'arbitrum',
-      ticker: 'ARB',
       sinceTimestamp: new UnixTime(1623784100),
       untilTimestamp: undefined,
+      category: 'other',
+      source: 'canonical',
       isAssociated: true,
     })
   })

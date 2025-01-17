@@ -4,7 +4,6 @@ import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { Skeleton } from '~/components/core/skeleton'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { type SyncStatus } from '~/types/sync-status'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
@@ -25,7 +24,7 @@ type CostsAvailableData = {
   compute: number
   overhead: number
   txCount: number | undefined
-  syncStatus: SyncStatus
+  isSynced: boolean
 }
 
 type CostsNotAvailableData = {
@@ -45,7 +44,12 @@ export const scalingCostsColumns = [
       columnHelper.accessor('data.total', {
         header: 'Total cost',
         cell: (ctx) => (
-          <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+          <SyncStatusWrapper
+            isSynced={
+              ctx.row.original.data.type === 'available' &&
+              ctx.row.original.data.isSynced
+            }
+          >
             <CostsTotalCell
               data={ctx.row.original.data}
               warning={ctx.row.original.costsWarning}
@@ -65,7 +69,12 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.calldata', {
     header: 'Calldata',
     cell: (ctx) => (
-      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+      <SyncStatusWrapper
+        isSynced={
+          ctx.row.original.data.type === 'available' &&
+          ctx.row.original.data.isSynced
+        }
+      >
         <CostsBreakdownValueCell data={ctx.row.original.data} type="calldata" />
       </SyncStatusWrapper>
     ),
@@ -85,7 +94,12 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.blobs', {
     header: 'Blobs',
     cell: (ctx) => (
-      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+      <SyncStatusWrapper
+        isSynced={
+          ctx.row.original.data.type === 'available' &&
+          ctx.row.original.data.isSynced
+        }
+      >
         <CostsBreakdownValueCell data={ctx.row.original.data} type="blobs" />
       </SyncStatusWrapper>
     ),
@@ -105,7 +119,12 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.compute', {
     header: 'Compute',
     cell: (ctx) => (
-      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+      <SyncStatusWrapper
+        isSynced={
+          ctx.row.original.data.type === 'available' &&
+          ctx.row.original.data.isSynced
+        }
+      >
         <CostsBreakdownValueCell data={ctx.row.original.data} type="compute" />
       </SyncStatusWrapper>
     ),
@@ -124,7 +143,12 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.overhead', {
     header: 'Overhead',
     cell: (ctx) => (
-      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+      <SyncStatusWrapper
+        isSynced={
+          ctx.row.original.data.type === 'available' &&
+          ctx.row.original.data.isSynced
+        }
+      >
         <CostsBreakdownValueCell data={ctx.row.original.data} type="overhead" />
       </SyncStatusWrapper>
     ),
