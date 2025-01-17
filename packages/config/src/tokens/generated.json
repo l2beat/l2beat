@@ -5830,7 +5830,7 @@
       "name": "Wrapped Ampleforth",
       "coingeckoId": "wrapped-ampleforth",
       "address": "0xEDB171C18cE90B633DB442f2A6F72874093b49Ef",
-      "symbol": "wAMPL",
+      "symbol": "WAMPL",
       "decimals": 18,
       "deploymentTimestamp": 1632315593,
       "coingeckoListingTimestamp": 1637798400,
