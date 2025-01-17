@@ -2,13 +2,15 @@
 
 import NextPlausibleProvider from 'next-plausible'
 import { useTheme } from 'next-themes'
+import { env } from '~/env'
 
 export function PlausibleProvider({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme()
+  console.log('resolvedTheme', resolvedTheme)
   return (
     <NextPlausibleProvider
-      domain="new-analytics.l2beat.com"
-      enabled={true}
+      domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+      enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
       pageviewProps={{
         theme: resolvedTheme ?? 'light',
       }}

@@ -11,8 +11,6 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import NextPlausibleProvider from 'next-plausible'
-import { env } from '~/env'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -41,41 +39,29 @@ export default async function RootLayout({
         />
       </head>
       <body className={roboto.variable}>
-        {/* We have two plausible providers:
-          1. NextPlausibleProvider - default one that we have always used
-             it's only used for page views so it should work fine even with the new one.
-          2. PlausibleProvider - experimental one that is reporting as a separate domain
-             it enables us to track custom properties like theme or custom events.
-             Any usePlausible hook will use this one because original context is overriden.
-        */}
-        <NextPlausibleProvider
-          domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-          enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
-        >
-          <TRPCReactProvider>
-            <ThemeProvider
-              attribute="class"
-              storageKey="l2beat-theme"
-              disableTransitionOnChange
-            >
-              <PlausibleProvider>
-                <TooltipProvider delayDuration={300} disableHoverableContent>
-                  <GlossaryContextProvider
-                    terms={terms.map((term) => ({
-                      id: term.id,
-                      matches: [term.data.term, ...(term.data.match ?? [])],
-                    }))}
-                  >
-                    <SearchBarContextProvider projects={searchBarProjects}>
-                      {children}
-                    </SearchBarContextProvider>
-                    <ProgressBar />
-                  </GlossaryContextProvider>
-                </TooltipProvider>
-              </PlausibleProvider>
-            </ThemeProvider>
-          </TRPCReactProvider>
-        </NextPlausibleProvider>
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute="class"
+            storageKey="l2beat-theme"
+            disableTransitionOnChange
+          >
+            <PlausibleProvider>
+              <TooltipProvider delayDuration={300} disableHoverableContent>
+                <GlossaryContextProvider
+                  terms={terms.map((term) => ({
+                    id: term.id,
+                    matches: [term.data.term, ...(term.data.match ?? [])],
+                  }))}
+                >
+                  <SearchBarContextProvider projects={searchBarProjects}>
+                    {children}
+                  </SearchBarContextProvider>
+                  <ProgressBar />
+                </GlossaryContextProvider>
+              </TooltipProvider>
+            </PlausibleProvider>
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   )
