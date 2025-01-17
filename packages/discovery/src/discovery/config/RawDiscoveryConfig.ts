@@ -85,21 +85,21 @@ export const ExternalReference = z.object({
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
-  canActIndependently: z.boolean().optional(),
-  ignoreDiscovery: z.optional(z.boolean()),
+  canActIndependently: z.boolean().default(false),
+  ignoreDiscovery: z.boolean().default(false),
   proxyType: z.optional(ManualProxyType),
   displayName: z.string().optional(),
   ignoreInWatchMode: z.optional(z.array(z.string())),
-  ignoreMethods: z.optional(z.array(z.string())),
-  ignoreRelatives: z.optional(z.array(z.string())),
+  ignoreMethods: z.array(z.string()).default([]),
+  ignoreRelatives: z.array(z.string()).default([]),
   fields: z
     .record(z.string().regex(/^\$?[a-z_][a-z\d_]*$/i), DiscoveryContractField)
-    .optional(),
+    .default({}),
   description: z.optional(z.string()),
   // TODO: in fields?
-  methods: z.optional(z.record(z.string(), z.string())),
-  types: z.optional(z.record(z.string(), DiscoveryCustomType)),
-  manualSourcePaths: z.optional(z.record(z.string())),
+  methods: z.record(z.string(), z.string()).default({}),
+  types: z.record(z.string(), DiscoveryCustomType).default({}),
+  manualSourcePaths: z.record(z.string()).default({}),
   references: z.optional(z.array(ExternalReference)),
 })
 

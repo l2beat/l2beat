@@ -4,7 +4,7 @@ import * as z from 'zod'
 export const BytesFromString = z
   .string()
   .regex(HEX_REGEX)
-  .transform((x) => Bytes.fromHex(x))
+  .transform((x) => Bytes.fromHex(x).toString())
 
 export const NumberFromString = z
   .string()

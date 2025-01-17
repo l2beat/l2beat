@@ -4,8 +4,8 @@ import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { merge } from 'lodash'
 import { ConfigReader } from './ConfigReader'
-import { ContractConfig } from './ContractConfig'
-import type {
+import { ContractConfig, createContractConfig } from './ContractConfig'
+import {
   DiscoveryContract,
   DiscoveryCustomType,
   RawDiscoveryConfig,
@@ -51,7 +51,7 @@ export class DiscoveryConfig {
   for(addressOrName: string | EthereumAddress): ContractConfig {
     const overrides = this.getOverrides(addressOrName)
 
-    return new ContractConfig(overrides, this.configTypes())
+    return createContractConfig(overrides, this.configTypes())
   }
 
   get raw(): RawDiscoveryConfig {
@@ -117,11 +117,12 @@ export class DiscoveryConfig {
       throw new Error(`Cannot resolve ${nameOrAddress.toString()}`)
     }
 
-    const override =
+    const unparsedOverride =
       this.config.overrides?.[address.toString()] ??
       this.config.overrides?.[name ?? ''] ??
       {}
 
+    const override = DiscoveryContract.parse(unparsedOverride)
     return { name, address, ...override }
   }
 
