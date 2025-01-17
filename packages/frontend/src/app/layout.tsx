@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import PlausibleProvider from 'next-plausible'
-import { ThemeProvider } from 'next-themes'
+import { ThemeProvider, useTheme } from 'next-themes'
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
@@ -40,16 +40,13 @@ export default async function RootLayout({
         />
       </head>
       <body className={roboto.variable}>
-        <PlausibleProvider
-          domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-          enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
-        >
-          <TRPCReactProvider>
-            <ThemeProvider
-              attribute="class"
-              storageKey="l2beat-theme"
-              disableTransitionOnChange
-            >
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute="class"
+            storageKey="l2beat-theme"
+            disableTransitionOnChange
+          >
+            <CustomPlausibleProvider>
               <TooltipProvider delayDuration={300} disableHoverableContent>
                 <GlossaryContextProvider
                   terms={terms.map((term) => ({
@@ -63,10 +60,27 @@ export default async function RootLayout({
                   <ProgressBar />
                 </GlossaryContextProvider>
               </TooltipProvider>
-            </ThemeProvider>
-          </TRPCReactProvider>
-        </PlausibleProvider>
+            </CustomPlausibleProvider>
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
+  )
+}
+
+function CustomPlausibleProvider({ children }: { children: React.ReactNode }) {
+  const { resolvedTheme } = useTheme()
+  return (
+    <PlausibleProvider
+      domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+      enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
+      pageviewProps={{
+        theme: resolvedTheme ?? 'light',
+      }}
+      hash
+      taggedEvents
+    >
+      {children}
+    </PlausibleProvider>
   )
 }
