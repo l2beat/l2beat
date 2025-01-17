@@ -229,8 +229,8 @@
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
-        "getOwners": { "severity": "LOW" },
-        "getThreshold": { "severity": "HIGH" }
+        "getOwners": { "severity": "LOW", "type": "PERMISSION" },
+        "getThreshold": { "severity": "HIGH", "type": "PERMISSION" }
       },
       "derivedName": "GnosisSafe"
     },
@@ -438,7 +438,8 @@
       "fieldMeta": {
         "StateCommitmentChain": {
           "severity": "HIGH",
-          "description": "Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers."
+          "description": "Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers.",
+          "type": "CODE_CHANGE"
         }
       },
       "derivedName": "Lib_AddressManager"

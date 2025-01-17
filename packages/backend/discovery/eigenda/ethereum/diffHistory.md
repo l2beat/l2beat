@@ -1,4 +1,214 @@
-Generated with discovered.json: 0x248258291ddfcb0f132eda74900a620d89e237a6
+Generated with discovered.json: 0x224371302f1be1dea83525efc565103e1d6b8a13
+
+# Diff at Fri, 17 Jan 2025 11:07:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 21628459
+- current block number: 21628459
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628459 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      fieldMeta.quorumCount.type:
++        "RISK_PARAMETER"
+      fieldMeta.ejectionCooldown.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBase (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      fieldMeta.BLOCK_STALE_MEASURE.type:
++        "RISK_PARAMETER"
+      fieldMeta.quorumAdversaryThresholdPercentages.type:
++        "RISK_PARAMETER"
+      fieldMeta.quorumConfirmationThresholdPercentages.type:
++        "RISK_PARAMETER"
+      fieldMeta.batchConfirmers.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract EigenStrategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+Generated with discovered.json: 0x1ee0c66e32c739049ac33e9c2ad09d167841a33d
 
 # Diff at Wed, 15 Jan 2025 07:42:16 GMT:
 

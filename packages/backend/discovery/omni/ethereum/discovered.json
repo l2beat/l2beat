@@ -420,7 +420,8 @@
       "fieldMeta": {
         "validatorList": {
           "severity": "MEDIUM",
-          "description": "Array of the signers in the validator multisig"
+          "description": "Array of the signers in the validator multisig",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "BridgeValidators"

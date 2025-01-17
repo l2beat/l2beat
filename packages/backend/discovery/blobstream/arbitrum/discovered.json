@@ -124,11 +124,13 @@
       "fieldMeta": {
         "headerRangeProvers": {
           "severity": "LOW",
-          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX."
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.",
+          "type": "PERMISSION"
         },
         "nextHeaderProvers": {
           "severity": "LOW",
-          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX."
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "SuccinctGateway"

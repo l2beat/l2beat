@@ -828,7 +828,8 @@
         },
         "plugs": {
           "severity": "LOW",
-          "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain."
+          "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.",
+          "type": "CODE_CHANGE"
         }
       },
       "derivedName": "Socket"

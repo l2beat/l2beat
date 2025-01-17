@@ -63,7 +63,8 @@
       "fieldMeta": {
         "COLOSSEUM": {
           "severity": "HIGH",
-          "description": "Contract used to challenge state roots and prove fraud."
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "type": "CODE_CHANGE"
         }
       },
       "derivedName": "L2OutputOracle"
@@ -354,11 +355,13 @@
       "fieldMeta": {
         "COLOSSEUM": {
           "severity": "HIGH",
-          "description": "Contract used to challenge state roots and prove fraud."
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "type": "CODE_CHANGE"
         },
         "transactionCount": {
           "severity": "HIGH",
-          "description": "Increases with each Security Council action."
+          "description": "Increases with each Security Council action.",
+          "type": "L2"
         }
       },
       "derivedName": "SecurityCouncil"

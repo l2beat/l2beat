@@ -121,11 +121,13 @@
       "fieldMeta": {
         "policyAdmin": {
           "severity": "MEDIUM",
-          "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals."
+          "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.",
+          "type": "PERMISSION"
         },
         "required": {
           "severity": "HIGH",
-          "description": "Threshold of the bridge governance admin multisig"
+          "description": "Threshold of the bridge governance admin multisig",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "EthVaultImpl"

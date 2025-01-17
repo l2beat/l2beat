@@ -135,11 +135,13 @@
       "fieldMeta": {
         "rollupProviders": {
           "severity": "LOW",
-          "description": "Can call the ProcessRollup function"
+          "description": "Can call the ProcessRollup function",
+          "type": "PERMISSION"
         },
         "verifier": {
           "severity": "LOW",
-          "description": "Address of the ZK verifier."
+          "description": "Address of the ZK verifier.",
+          "type": "PERMISSION"
         }
       }
     },

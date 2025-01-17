@@ -388,14 +388,16 @@
         },
         "quorumCount": {
           "severity": "HIGH",
-          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config"
+          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
+          "type": "RISK_PARAMETER"
         },
         "registeredOperators": {
           "description": "List of all registered operators ids"
         },
         "ejectionCooldown": {
           "severity": "MEDIUM",
-          "description": "The time in seconds that an operator must wait before being able to re-register after being ejected."
+          "description": "The time in seconds that an operator must wait before being able to re-register after being ejected.",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "RegistryCoordinator"
@@ -439,15 +441,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -546,15 +551,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -627,15 +635,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -678,15 +689,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -729,15 +743,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -780,15 +797,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -817,15 +837,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "StrategyBase"
@@ -869,15 +892,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1019,19 +1045,23 @@
       "fieldMeta": {
         "BLOCK_STALE_MEASURE": {
           "severity": "MEDIUM",
-          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert."
+          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert.",
+          "type": "RISK_PARAMETER"
         },
         "quorumAdversaryThresholdPercentages": {
           "severity": "MEDIUM",
-          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on."
+          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.",
+          "type": "RISK_PARAMETER"
         },
         "quorumConfirmationThresholdPercentages": {
           "severity": "MEDIUM",
-          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on."
+          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.",
+          "type": "RISK_PARAMETER"
         },
         "batchConfirmers": {
           "severity": "MEDIUM",
-          "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge."
+          "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "EigenDAServiceManager"
@@ -1075,15 +1105,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1126,15 +1159,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1177,15 +1213,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1228,15 +1267,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1273,15 +1315,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1324,15 +1369,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },

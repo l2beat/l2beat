@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5ef1b98efd39e42556b90242afa4a42a43fc289b
+
+# Diff at Fri, 17 Jan 2025 11:07:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 21579380
+- current block number: 21579380
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579380 (main branch discovery), not current.
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      fieldMeta.validatorList.type:
++        "PERMISSION"
+    }
+```
+
 Generated with discovered.json: 0xb29db7782b209f4c6705d03393b3d8139a13f482
 
 # Diff at Wed, 08 Jan 2025 11:13:15 GMT:

@@ -1232,15 +1232,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },

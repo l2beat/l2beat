@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xcf2e284b8c83c4df873bde22dd8f247c8cc5929d
+
+# Diff at Fri, 17 Jan 2025 11:08:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      fieldMeta.policyAdmin.type:
++        "PERMISSION"
+      fieldMeta.required.type:
++        "PERMISSION"
+    }
+```
+
 Generated with discovered.json: 0x5ab02c379209488d67b40755b0562076d19c466b
 
 # Diff at Fri, 29 Nov 2024 09:08:53 GMT:

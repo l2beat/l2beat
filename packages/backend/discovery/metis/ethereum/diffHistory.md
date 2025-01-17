@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x765f1b4bcf93572183649fe8804ee37dd26a7e4b
+
+# Diff at Fri, 17 Jan 2025 11:07:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      fieldMeta.getOwners.type:
++        "PERMISSION"
+      fieldMeta.getThreshold.type:
++        "PERMISSION"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta.StateCommitmentChain.type:
++        "CODE_CHANGE"
+    }
+```
+
 Generated with discovered.json: 0x5e91894fac1cc33d8a28a8c428389bbff89ad8e9
 
 # Diff at Wed, 04 Dec 2024 14:21:32 GMT:

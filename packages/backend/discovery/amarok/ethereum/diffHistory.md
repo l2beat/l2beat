@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x7f1ed54a70869448e8fd69f282d3d3923a430dbe
+Generated with discovered.json: 0xc67bebff0a59072f5c4e381ed74616c71d8c1c2f
+
+# Diff at Fri, 17 Jan 2025 11:06:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 21629064
+- current block number: 21629064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629064 (main branch discovery), not current.
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      fieldMeta.watcherManager.type:
++        "PERMISSION"
+    }
+```
+
+```diff
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d) {
+    +++ description: None
+      fieldMeta.WATCHERS.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0x928d06b615df002af069b0d831fde9c695890f54
 
 # Diff at Wed, 15 Jan 2025 09:44:43 GMT:
 

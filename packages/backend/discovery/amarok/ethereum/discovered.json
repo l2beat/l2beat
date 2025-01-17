@@ -333,7 +333,8 @@
         },
         "watcherManager": {
           "severity": "MEDIUM",
-          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected."
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "RootManager"
@@ -494,7 +495,8 @@
       "fieldMeta": {
         "WATCHERS": {
           "severity": "LOW",
-          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors."
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "WatcherManager"

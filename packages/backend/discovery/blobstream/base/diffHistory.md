@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x78d645bdd1c4db4518a71ddb070d7dba5adfda19
+
+# Diff at Fri, 17 Jan 2025 11:09:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 25112167
+- current block number: 25112167
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25112167 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      fieldMeta.headerRangeProvers.type:
++        "PERMISSION"
+      fieldMeta.nextHeaderProvers.type:
++        "PERMISSION"
+    }
+```
+
 Generated with discovered.json: 0x033936bc27cb3f4400257157fea42bf0205fc92a
 
 # Diff at Thu, 16 Jan 2025 12:10:00 GMT:

@@ -342,11 +342,13 @@
       "fieldMeta": {
         "getOwners": {
           "severity": "LOW",
-          "description": "Signers of the multisig"
+          "description": "Signers of the multisig",
+          "type": "PERMISSION"
         },
         "getThreshold": {
           "severity": "HIGH",
-          "description": "Should be 4/8 per official docs"
+          "description": "Should be 4/8 per official docs",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "GnosisSafe"

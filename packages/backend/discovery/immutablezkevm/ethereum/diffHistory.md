@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xc8d604b51c7d509844cfe63b0c0844e51fb78a1a
+
+# Diff at Fri, 17 Jan 2025 11:07:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 20977341
+- current block number: 20977341
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20977341 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      fieldMeta.withdrawalDelay.type:
++        "RISK_PARAMETER"
+      fieldMeta.withdrawalQueueActivated.type:
++        "RISK_PARAMETER"
+    }
+```
+
 Generated with discovered.json: 0x7e6442db55ead0c5549d6a7ce89ac9e53bde5f8b
 
 # Diff at Mon, 21 Oct 2024 11:06:40 GMT:

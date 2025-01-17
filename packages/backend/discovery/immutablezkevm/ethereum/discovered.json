@@ -152,11 +152,13 @@
       "fieldMeta": {
         "withdrawalDelay": {
           "severity": "MEDIUM",
-          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated."
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "type": "RISK_PARAMETER"
         },
         "withdrawalQueueActivated": {
           "severity": "LOW",
-          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism."
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "RootERC20BridgeFlowRate"

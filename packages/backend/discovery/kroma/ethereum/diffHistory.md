@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xa8d7f2a3d8ee4e06aaa3e7bb83011f7c0a5beb80
+
+# Diff at Fri, 17 Jan 2025 11:07:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9519f9f486064de9d488882e4ff83187f496daa3 block: 21141582
+- current block number: 21141582
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141582 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      fieldMeta.COLOSSEUM.type:
++        "CODE_CHANGE"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      fieldMeta.COLOSSEUM.type:
++        "CODE_CHANGE"
+      fieldMeta.transactionCount.type:
++        "L2"
+    }
+```
+
 Generated with discovered.json: 0xff6fd8a4c854beb6a880cda7353de79d84875215
 
 # Diff at Fri, 10 Jan 2025 15:24:04 GMT:
