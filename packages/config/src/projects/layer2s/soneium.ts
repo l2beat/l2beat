@@ -459,7 +459,7 @@ export const soneium: Layer2 = {
       link: 'https://x.com/donnoh_eth/status/1879210463952818472',
       date: '2025-01-14T00:00:00Z',
       description:
-        'RPC providers restrict IP-infringing tokens - can still be used by forcing txs directly from the L1.',
+        'RPC providers blacklist IP-infringing tokens - can still be used by forcing txs directly from the L1.',
       type: 'incident',
     },
     {
