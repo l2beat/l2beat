@@ -80,6 +80,24 @@ export const corn: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   discoveryDrivenData: true,
+  chainConfig: {
+    name: 'corn',
+    chainId: 21000000,
+    explorerUrl: 'https://maizenet-explorer.usecorn.com/',
+    explorerApi: {
+      url: 'https://maizenet-explorer.usecorn.com/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1732012151),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 3228,
+        version: '3',
+      },
+    ],
+  },
   milestones: [
     {
       name: 'Mainnet launch',
