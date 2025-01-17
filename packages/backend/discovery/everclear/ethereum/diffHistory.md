@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xc8f7d08c6353556f640d1a01f7667065a04a5e8f
+
+# Diff at Thu, 16 Jan 2025 08:05:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a739892e4565ca2cf8f67abed360c494a770dcea block: 21628389
+- current block number: 21635740
+
+## Description
+
+Fastconfirmer added, minimum assertion period reduced to 1 block. This single EOA can push malicious state and withdraw from that state in the next block.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
++        {"permission":"validate","target":"0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA","via":[{"address":"0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]}
+      issuedPermissions.3:
++        {"permission":"validate","target":"0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA","via":[]}
+      issuedPermissions.2.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.2.target:
+-        "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.2.via.0:
++        {"address":"0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B","delay":0}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "fastconfirm"
+      issuedPermissions.1.target:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
+      issuedPermissions.1.via.0.address:
+-        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
++        "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501"
+      issuedPermissions.1.via.0.description:
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501"
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        75
++        1
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        2
+      values.validators.1:
++        "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EverclearFastconfirmerMultisig (0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2.sol                               | 1032 ++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
 Generated with discovered.json: 0x953ce27630bc06d272a14b1ea19b6c5bda740a3f
 
 # Diff at Wed, 15 Jan 2025 07:28:44 GMT:

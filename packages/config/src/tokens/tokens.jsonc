@@ -1945,6 +1945,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "EDU",
+      "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
+      "coingeckoId": "edu-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDX",
       "address": "0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
       "source": "native",

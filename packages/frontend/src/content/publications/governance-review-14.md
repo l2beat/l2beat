@@ -82,7 +82,7 @@ Devansh [submitted an RFC](https://forum.arbitrum.foundation/t/proposal-non-cons
 
 ### **Introducing Arbitrum Fellowships**
 
-We (L2BEAT) [published a post](https://forum.arbitrum.foundation/t/introducing-arbitrum-fellowships/23235) introducing the Arbitrum Fellowships. Borrowing from Lord of the Rings nonmeclature, fellowships are groups of people united by their pursuit of a desire. Desires are basically needs that the DAO has — think incentives, game development, community growth, etc. The purpose of each fellowship is to ideate, discuss, research, and establish a plan through which we can address the DAO’s desires. \
+We (L2BEAT) [published a post](https://forum.arbitrum.foundation/t/introducing-arbitrum-fellowships/23235) introducing the Arbitrum Fellowships. Borrowing from Lord of the Rings nomenclature, fellowships are groups of people united by their pursuit of a desire. Desires are basically needs that the DAO has — think incentives, game development, community growth, etc. The purpose of each fellowship is to ideate, discuss, research, and establish a plan through which we can address the DAO’s desires. \
  \
 The end goal of the fellowships is to experiment with creating a streamlined process to facilitate discussions around a desire that eventually leads to some sort of actionable result.
 

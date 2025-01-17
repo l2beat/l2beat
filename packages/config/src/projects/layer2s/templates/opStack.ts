@@ -68,6 +68,13 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   bridge: DA_BRIDGES.NONE,
 }
 
+export const EIGENDA_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.EIGEN_DA,
+  riskView: RISK_VIEW.DATA_EIGENDA(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
+  bridge: DA_BRIDGES.NONE,
+}
+
 export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
@@ -141,6 +148,7 @@ interface OpStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
+  usingAltVm?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -217,6 +225,9 @@ function opStackCommon(
     upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
+  const automaticBadges = templateVars.usingAltVm
+    ? [Badge.Stack.OPStack, daBadge]
+    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
   return {
     isArchived: templateVars.isArchived,
@@ -401,10 +412,7 @@ function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: mergeBadges(
-      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
   }
 }
 

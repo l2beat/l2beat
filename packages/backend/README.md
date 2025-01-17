@@ -190,7 +190,7 @@ sixHourly data 93 days to the past and hourly data 10 days to the past.
 
 ### `cache` feature
 
-The cache feature is running functions every 10 minutes that would be ran on endpoint invoke.
+The cache feature is running functions every 10 minutes that would be run on endpoint invoke.
 
 **Feature flags:**
 

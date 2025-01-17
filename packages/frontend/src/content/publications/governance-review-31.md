@@ -303,7 +303,7 @@ The first onchain proposal for ZKsync is up on Tally and it’s about a 325,000,
 [[TPP-001] ZKsync Ignite Program: Creating a Liquidity Hub for ZKsync](https://vote.zknation.io/dao/proposal/61143334896738427838139044418897411872404555684850233057602201527014096413671?govId=eip155:324:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) – ends on November 12 at 17:18 UTC
 
 
-### **Delegate Meetup @ Devcon 7 thailand - ACTION FOR DELGATES: TOPIC CURATION**
+### **Delegate Meetup @ Devcon 7 thailand - ACTION FOR DELEGATES: TOPIC CURATION**
 
 On Tuesday, November 12th the ZKsync Governance Systems Team (Gov Team) is hosting a small ZKsync Delegate Meetup 8 in Bangkok. The gathering will focus on workshopping key topics that are at the top of Delegates' minds in the early months following the launch of ZK Nation.
 

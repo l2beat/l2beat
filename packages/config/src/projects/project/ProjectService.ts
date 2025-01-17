@@ -1,19 +1,16 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { Project } from './Project'
+import { BaseProject } from './BaseProject'
 import { getProjects } from './getProjects'
 
 type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt'
-type Key = Exclude<keyof Project, BasicKeys>
+type Key = Exclude<keyof BaseProject, BasicKeys>
 // Black magic: https://stackoverflow.com/a/78872927
 type OptionalToUndefined<T> = { [K in {} & keyof T]: T[K] }
 type Simplify<T> = T extends object ? { [K in keyof T]: T[K] } : T
 
-export type ProjectWith<
-  K extends Key = never,
-  O extends Key = never,
-> = Simplify<
-  Pick<Required<Project>, K | BasicKeys> &
-    OptionalToUndefined<Pick<Project, O | BasicKeys>>
+export type Project<K extends Key = never, O extends Key = never> = Simplify<
+  Pick<Required<BaseProject>, K | BasicKeys> &
+    OptionalToUndefined<Pick<BaseProject, O | BasicKeys>>
 >
 
 export class ProjectService {
@@ -23,7 +20,7 @@ export class ProjectService {
 
   constructor(private _getProjects = getProjects) {}
 
-  private projects: Promise<Project[]> | undefined
+  private projects: Promise<BaseProject[]> | undefined
 
   async getProject<K extends Key = never, O extends Key = never>(query: {
     id?: ProjectId
@@ -32,7 +29,7 @@ export class ProjectService {
     optional?: O[]
     where?: Key[]
     whereNot?: Key[]
-  }): Promise<ProjectWith<K, O> | undefined> {
+  }): Promise<Project<K, O> | undefined> {
     const projects = await this.getAllProjects()
     const project = projects.find(
       createFilter({
@@ -53,7 +50,7 @@ export class ProjectService {
     optional?: O[]
     where?: Key[]
     whereNot?: Key[]
-  }): Promise<ProjectWith<K, O>[]> {
+  }): Promise<Project<K, O>[]> {
     const projects = await this.getAllProjects()
     return projects.filter(createFilter(query)).map(createMap(query))
   }
@@ -73,7 +70,7 @@ function createFilter(query: {
   where?: Key[]
   whereNot?: Key[]
 }) {
-  return function filter(project: Project): boolean {
+  return function filter(project: BaseProject): boolean {
     return (
       (!query.ids || query.ids.includes(project.id)) &&
       (!query.slugs || query.slugs.includes(project.slug)) &&
@@ -96,9 +93,9 @@ function createMap<K extends Key, O extends Key>(query: {
     'addedAt',
     ...(query.select ?? []),
     ...(query.optional ?? []),
-  ] as (keyof ProjectWith<K, O>)[]
-  return function map(project: Project) {
-    const result = {} as ProjectWith<K, O>
+  ] as (keyof Project<K, O>)[]
+  return function map(project: BaseProject) {
+    const result = {} as Project<K, O>
     for (const key of keys) {
       // biome-ignore lint/suspicious/noExplicitAny: Can't index for some reason
       result[key] = (project as any)[key]

@@ -15,18 +15,14 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const entries = await getScalingActivityEntries()
-  const rollupsIds = entries.rollups.map((project) => project.id)
-  await Promise.all([
+  const [entries] = await Promise.all([
+    getScalingActivityEntries(),
     api.activity.chart.prefetch({
-      range: '30d',
-      filter: {
-        type: 'projects',
-        projectIds: rollupsIds,
-      },
+      range: '1y',
+      filter: { type: 'rollups' },
     }),
     api.activity.chartStats.prefetch({
-      filter: { type: 'projects', projectIds: rollupsIds },
+      filter: { type: 'rollups' },
     }),
   ])
 

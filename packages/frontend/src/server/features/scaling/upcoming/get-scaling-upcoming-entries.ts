@@ -1,13 +1,13 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 
 export async function getScalingUpcomingEntries() {
@@ -31,10 +31,10 @@ export interface ScalingUpcomingEntry extends CommonScalingEntry {
 }
 
 function getScalingUpcomingEntry(
-  project: ProjectWith<'scalingInfo' | 'statuses', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses', 'countdowns'>,
 ): ScalingUpcomingEntry {
   return {
-    ...getCommonScalingEntry2({
+    ...getCommonScalingEntry({
       project,
       changes: undefined,
       syncStatus: undefined,

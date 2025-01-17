@@ -1,4 +1,4 @@
-import { type ProjectWith } from '@l2beat/config'
+import { type Project } from '@l2beat/config'
 import { getCollectionEntry } from '~/content/get-collection'
 import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { getProofVerification } from '../../_utils/get-proof-verification'
@@ -14,7 +14,7 @@ export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
 }
 
 export function getZkCatalogProjectDetails(
-  project: ProjectWith<'proofVerification', 'isScaling'>,
+  project: Project<'proofVerification', 'isScaling'>,
   verifiersStatues: VerifiersStatuses,
 ): ZkCatalogProjectDetails {
   const descriptionEntry = getCollectionEntry(

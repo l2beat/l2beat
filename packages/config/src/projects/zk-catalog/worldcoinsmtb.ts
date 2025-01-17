@@ -4,11 +4,11 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../project/Project'
+import { BaseProject } from '../project/BaseProject'
 import { PERFORMED_BY } from './common/performedBy'
 import { PROOFS } from './common/proofSystems'
 
-export const worldcoinsmtb: Project = {
+export const worldcoinsmtb: BaseProject = {
   id: ProjectId('worldcoinsmtb'),
   slug: 'worldcoin-smtb',
   name: 'Worldcoin SMTB',

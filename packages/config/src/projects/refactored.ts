@@ -1,4 +1,4 @@
-import { Project } from './project/Project'
+import { BaseProject } from './project/BaseProject'
 import { nebraupa } from './zk-catalog/nebraupa'
 import { payy } from './zk-catalog/payy'
 import { risczero } from './zk-catalog/risczero'
@@ -9,7 +9,7 @@ import { worldcoinsemaphore } from './zk-catalog/worldcoinsemaphore'
 import { worldcoinsmtb } from './zk-catalog/worldcoinsmtb'
 
 // TODO: Once all projects are refactored this will simply become `projects`
-export const refactored: Project[] = [
+export const refactored: BaseProject[] = [
   nebraupa,
   payy,
   risczero,

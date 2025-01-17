@@ -121,6 +121,7 @@
   "OpStackAbsolutePrestate": {
     "typeCaster": "Mapping",
     "arg": {
+      // source: https://github.com/ethereum-optimism/optimism/blob/4da39879eb494967500fc5cc54d9352d295d9515/op-program/prestates/releases.json
       "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
       "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
       "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",

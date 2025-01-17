@@ -18,7 +18,6 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
-import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
@@ -73,7 +72,6 @@ export class Application {
       config.api.port,
       logger,
       modules.flatMap((x) => x?.routers ?? []),
-      getErrorReportingMiddleware(),
     )
 
     if (config.isReadonly) {

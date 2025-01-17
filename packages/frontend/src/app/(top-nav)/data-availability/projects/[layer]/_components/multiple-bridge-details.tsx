@@ -1,4 +1,5 @@
-import Link from 'next/link'
+'use client'
+
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { Button, buttonVariants } from '~/components/core/button'
 import {
@@ -13,6 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { useRouterWithProgressBar } from '~/components/progress-bar'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
@@ -27,6 +29,8 @@ interface Props {
 }
 
 export function MultipleBridgeDetails({ project }: Props) {
+  const router = useRouterWithProgressBar()
+
   return (
     <div className="flex flex-row items-end gap-10 pt-4 md:py-0">
       {/* Left side (table with title and banner) */}
@@ -49,25 +53,28 @@ export function MultipleBridgeDetails({ project }: Props) {
           </div>
           <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg max-md:bg-header-secondary md:gap-0 md:rounded-t-none">
             {project.bridges.map((bridge, index) => (
-              <div
+              <label
                 key={bridge.id}
+                htmlFor={bridge.id}
                 className={cn(
-                  'flex min-h-[56px] flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                  'flex min-h-[56px] cursor-pointer flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
                   index === project.bridges.length - 1 && 'md:border-b-0',
                   // Hide 3rd and further bridges on mobile (will be shown in a drawer)
                   index > 2 && 'max-md:hidden',
                   index === 0 && 'md:rounded-t-none',
                 )}
               >
-                <div className="flex items-center px-1 md:px-3">
-                  <Link
-                    href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
-                  >
-                    <RadioButtonLikeIcon
-                      selected={bridge.id === project.selectedBridge.id}
-                    />
-                  </Link>
-                </div>
+                <RadioButton
+                  id={bridge.id}
+                  value={bridge.id}
+                  checked={bridge.id === project.selectedBridge.id}
+                  onChange={() => {
+                    router.push(
+                      `/data-availability/projects/${project.slug}/${bridge.slug}`,
+                    )
+                  }}
+                />
+
                 <div className="flex flex-1 items-center text-sm font-bold text-primary">
                   {bridge.name}
                 </div>
@@ -99,7 +106,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                     </Tooltip>
                   )}
                 </div>
-              </div>
+              </label>
             ))}
             <div
               className={cn(
@@ -123,15 +130,21 @@ export function MultipleBridgeDetails({ project }: Props) {
                   </div>
                   <div>
                     {project.bridges.map((bridge) => (
-                      <div
+                      <label
                         key={bridge.id}
-                        className="flex flex-row items-center gap-2 border-b border-gray-200 py-3 dark:border-zinc-700"
+                        htmlFor={bridge.id}
+                        className="flex cursor-pointer flex-row items-center gap-2 border-b border-gray-200 py-3 dark:border-zinc-700"
                       >
-                        <div>
-                          <RadioButtonLikeIcon
-                            selected={bridge.id === project.selectedBridge.id}
-                          />
-                        </div>
+                        <RadioButton
+                          id={bridge.id}
+                          value={bridge.id}
+                          checked={bridge.id === project.selectedBridge.id}
+                          onChange={() => {
+                            router.push(
+                              `/data-availability/projects/${project.slug}/${bridge.slug}`,
+                            )
+                          }}
+                        />
                         <div className="flex-1 text-sm font-semibold text-zinc-800 dark:text-zinc-300">
                           {bridge.name}
                         </div>
@@ -141,7 +154,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                             hasNoBridge={bridge.type === 'NoBridge'}
                           />
                         </div>
-                      </div>
+                      </label>
                     ))}
                   </div>
                   <DrawerFooter className="flex flex-row justify-center pt-6">
@@ -174,15 +187,20 @@ export function MultipleBridgeDetails({ project }: Props) {
   )
 }
 
-function RadioButtonLikeIcon({ selected }: { selected: boolean }) {
+function RadioButton({ className, ...props }: React.ComponentProps<'input'>) {
   return (
-    <div
-      className={cn(
-        'flex size-5 items-center justify-center rounded-full border-2 bg-pure-white',
-        selected ? 'border-brand' : 'border-divider',
-      )}
-    >
-      {selected ? <div className="size-3 rounded-full bg-brand"></div> : null}
+    <div className="grid place-items-center px-1 md:px-3">
+      <input
+        type="radio"
+        name="bridge"
+        className={cn(
+          'peer relative col-start-1 row-start-1 aspect-square size-5 cursor-pointer',
+          'appearance-none rounded-full border-2 border-divider bg-pure-white checked:border-brand dark:bg-pure-black',
+          className,
+        )}
+        {...props}
+      />
+      <div className="z-[2] col-start-1 row-start-1 hidden aspect-square size-3 rounded-full bg-brand peer-checked:block " />
     </div>
   )
 }

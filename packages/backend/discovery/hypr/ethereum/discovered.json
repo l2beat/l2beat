@@ -1,7 +1,7 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 21078654,
+  "blockNumber": 21637077,
   "configHash": "0xfc6e17a7554fe5d1fa6e148a4b4faae7e2c64561dd4bff2409d7d593bf230b80",
   "contracts": [
     {
@@ -305,6 +305,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -318,8 +319,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 56,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -392,7 +393,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620188",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620189",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -452,8 +453,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 20137678
+          "prevBoughtGas": 492334,
+          "prevBlockNum": 21493619
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xBB08cf90DEb93492b463f1Ee5DA9453e51643586",
@@ -570,6 +571,7 @@
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     { "address": "0x4deaE37ec8f53E66AA1F55C75Ab0182f984EA68c" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     { "address": "0x6D4c6D77a87F5aA89444dcCb37A65AEEb152717F" },
     { "address": "0x7A28B193dab5566bB1781f131A1d15603F2577D8" },
     {
