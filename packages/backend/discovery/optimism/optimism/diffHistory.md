@@ -1,3 +1,159 @@
+Generated with discovered.json: 0x7579d43377e077b798870c96b9ab5dd39e3ff46a
+
+# Diff at Fri, 17 Jan 2025 15:29:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3fe43c976ccbecb3f9ef2736f8bd675ce03433e block: 130664390
+- current block number: 130763685
+
+## Description
+
+discodrive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 130664390 (main branch discovery), not current.
+
+```diff
+    contract MintManagerOwner (0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","target":"0x5C4e7Ba1E219E47948e6e3F55019A647bA501005","description":"change the OP token owner to a different MintManager and therefore change the inflation policy."}]
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      description:
++        "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function."
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      description:
++        "Provides the current gas price for L2 transactions."
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      description:
++        "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token."
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      description:
++        "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1."
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      description:
++        "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens."
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      description:
++        "Simple contract that returns the latest L1 block number."
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      description:
++        "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token."
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      description:
++        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      description:
++        "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface."
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      description:
++        "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens."
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      description:
++        "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1."
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      description:
++        "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      description:
++        "Contracts to register schemas for the Ethereum Attestation Service (EAS)."
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      description:
++        "Contract containing the main logic for the Ethereum Attestation Service (EAS)."
+    }
+```
+
+```diff
+    contract OPToken (0x4200000000000000000000000000000000000042) {
+    +++ description: The OP token contract. The minting policy is controlled by the 0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.
+      description:
++        "The OP token contract. The minting policy is controlled by the 0x5C4e7Ba1E219E47948e6e3F55019A647bA501005."
+    }
+```
+
+```diff
+    contract MintManager (0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      description:
++        "Controls the OP inflation rate, which is currently hardcoded to 2% annually."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x7be928a6d0d1902aa60c5057b4207d8c28b3bbdb
 
 # Diff at Wed, 15 Jan 2025 07:52:54 GMT:

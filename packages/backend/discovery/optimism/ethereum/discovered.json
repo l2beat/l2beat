@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 21628485,
-  "configHash": "0xbe59aa86c92f5a61c63e7b58df7ff3d0d1c6ad279c5159b214cd68b55bebe65e",
+  "blockNumber": 21645071,
+  "configHash": "0x6d6c987e5e3fec6d54a06dc55b28635783674280eabbeab3021cb0efc12b495f",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -82,6 +82,7 @@
       "sourceHashes": [
         "0x4c5465ff113d9808b9b99013be373f52fcb90c8df71628dd658f0adbceff1366"
       ],
+      "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
       "sinceTimestamp": 1625675779,
       "values": {
         "$immutable": true,
@@ -320,12 +321,13 @@
       "sourceHashes": [
         "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
       ],
+      "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "2d 13h",
+        "timeSinceLastL2beatInteraction": "3d 18h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -400,7 +402,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292774758",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292775159",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -548,7 +550,7 @@
         "name": "Wrapped Ether",
         "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "symbol": "WETH",
-        "totalSupply": "12807594000000000000",
+        "totalSupply": "17375188000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -581,13 +583,15 @@
       }
     },
     {
-      "name": "L1Escrow",
+      "name": "L1DAIEscrow",
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
       "sourceHashes": [
         "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
       ],
+      "description": "Stores DAI deposited from the attached L1DAITokenBridge.",
       "sinceTimestamp": 1625675683,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "L1Escrow"
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -825,6 +829,7 @@
       "sourceHashes": [
         "0x9fdc8650f5cfe4f5ce38accccf178614c6a57917867d6ee7fcc9c5a690ade600"
       ],
+      "description": "Custom escrow for SNX bridged via canonical messaging.",
       "sinceTimestamp": 1620680982,
       "values": {
         "$immutable": true,
@@ -1328,11 +1333,12 @@
       "sourceHashes": [
         "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101"
       ],
+      "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"],
       "sinceTimestamp": 1672938575,
       "values": {
         "$immutable": true,
-        "getNextSequenceId": 114,
+        "getNextSequenceId": 119,
         "initialized": true,
         "safeMode": false
       },
@@ -1409,8 +1415,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 3334219,
-          "prevBlockNum": 21628454
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 21645069
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1570,7 +1576,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 5257,
+        "gameCount": 5313,
         "gameImpls": [
           "0x27B81db41F586016694632193b99E45b1a27B8f8",
           "0x91a661891248d8C4916FB4a1508492a5e2CBcb87",

@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x8cc47113990b6181bf259591b851a1043b275f2b
+
+# Diff at Fri, 17 Jan 2025 15:21:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3fe43c976ccbecb3f9ef2736f8bd675ce03433e block: 21628485
+- current block number: 21645071
+
+## Description
+
+discodrive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628485 (main branch discovery), not current.
+
+```diff
+    contract L1DAITokenBridge (0x10E6593CDda8c58a1d0f14C5164B376352a55f2F) {
+    +++ description: Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.
+      description:
++        "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract."
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      description:
++        "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+    }
+```
+
+```diff
+    contract L1DAIEscrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
+      name:
+-        "L1Escrow"
++        "L1DAIEscrow"
+      description:
++        "Stores DAI deposited from the attached L1DAITokenBridge."
+    }
+```
+
+```diff
+    contract SynthetixBridgeEscrow (0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) {
+    +++ description: Custom escrow for SNX bridged via canonical messaging.
+      description:
++        "Custom escrow for SNX bridged via canonical messaging."
+    }
+```
+
+```diff
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa) {
+    +++ description: Collecting sequencer, base- and L1 fees from L2.
+      description:
++        "Collecting sequencer, base- and L1 fees from L2."
+    }
+```
+
 Generated with discovered.json: 0xcbfd5e6976e458f359bc7d888d9027efbc84c7e9
 
 # Diff at Thu, 16 Jan 2025 10:14:45 GMT:
