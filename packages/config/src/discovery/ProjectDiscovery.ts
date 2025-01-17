@@ -402,6 +402,7 @@ export class ProjectDiscovery {
       ...(userReferences ?? []),
       ...(contract.references ?? []),
     ]
+
     return [
       {
         name: contract.name,
@@ -964,7 +965,7 @@ export class ProjectDiscovery {
           ...this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
-            contract.references,
+            [],
             true,
           ),
         )
