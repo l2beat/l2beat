@@ -10264,6 +10264,28 @@
       }
     },
     {
+      "name": "USD₮0",
+      "coingeckoId": "tether",
+      "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1735904404,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 57073,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Clip Finance",
       "coingeckoId": "clip-finance",
       "address": "0x4Ea77a86d6E70FfE8Bb947FC86D68a7F086f198a",

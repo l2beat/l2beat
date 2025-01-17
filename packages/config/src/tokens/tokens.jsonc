@@ -5453,5 +5453,23 @@
         ]
       }
     }
+  ],
+  "ink": [
+    {
+      "symbol": "USD₮0",
+      "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
   ]
 }
