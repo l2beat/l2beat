@@ -103,9 +103,12 @@ function resolvePermissionedName(
   rootName: string,
   account: ScalingProjectPermissionedAccount,
   permissions: ProjectParams['permissions'],
-): [string, boolean] {
-  let realName = false
-  let name = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
+): {
+  name: string
+  redirectToName: boolean
+} {
+  const initialName = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
+  let name = initialName
 
   if (permissions !== undefined && permissions !== 'UnderReview') {
     const matchingPermissions = permissions.filter(
@@ -118,7 +121,6 @@ function resolvePermissionedName(
     )
     const firstMatchingPermission = matchingPermissions[0]
     if (matchingPermissions.length === 1 && firstMatchingPermission) {
-      realName = true
       name = firstMatchingPermission.name
     }
 
@@ -127,12 +129,11 @@ function resolvePermissionedName(
     )
     const firstMultisig = multisigs[0]
     if (multisigs.length === 1 && firstMultisig) {
-      realName = true
       name = firstMultisig.name
     }
   }
 
-  return [name, realName]
+  return { name, redirectToName: name !== initialName }
 }
 
 function toTechnologyContract(
@@ -146,18 +147,17 @@ function toTechnologyContract(
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
       const address = account.address.toString()
-      const [name, realName] = resolvePermissionedName(
+      const permissionedName = resolvePermissionedName(
         permission.name,
         account,
         projectParams.permissions,
       )
       return {
-        name,
+        name: permissionedName.name,
         address,
-        href:
-          permission.fromRole === true && realName
-            ? `#${name}`
-            : `${etherscanUrl}/address/${address}#code`,
+        href: permissionedName.redirectToName
+          ? `#${permissionedName.name}`
+          : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
         verificationStatus: toVerificationStatus(
           verificationStatusForChain[address],
@@ -183,14 +183,14 @@ function toTechnologyContract(
       : permission.name
 
   const participants = permission.participants?.map((account) => {
-    const [name] = resolvePermissionedName(
+    const permissionedName = resolvePermissionedName(
       permission.name,
       account,
       projectParams.permissions,
     )
 
     return {
-      name,
+      name: permissionedName.name,
       href: `${etherscanUrl}/address/${account.address.toString()}#code`,
       verificationStatus: toVerificationStatus(
         verificationStatusForChain[account.address.toString()],
