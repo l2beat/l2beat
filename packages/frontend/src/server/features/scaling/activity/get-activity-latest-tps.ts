@@ -41,10 +41,7 @@ async function getActivityLatestUopsData(projects: Project[]) {
           {
             pastDayUops,
             change: calculatePercentageChange(pastDayUops, previousDayUops),
-            syncedUntil:
-              projectId === 'polygon-pos'
-                ? new UnixTime(1723788346)
-                : lastRecord.timestamp,
+            syncedUntil: lastRecord.timestamp,
           },
         ] as const
       })
