@@ -56,7 +56,7 @@ export class L2CostRepository extends BaseRepository {
 
     return query.map((r) => ({
       ...r,
-      totalCostInWei: Number(r.totalCostInWei),
+      totalCostInWei: BigInt(r.totalCostInWei),
     }))
   }
 

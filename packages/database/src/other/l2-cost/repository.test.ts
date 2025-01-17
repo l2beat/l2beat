@@ -151,11 +151,11 @@ describeDatabase(L2CostRepository.name, (db) => {
       expect(result).toEqualUnsorted([
         {
           configurationId: txIdA,
-          totalCostInWei: 300,
+          totalCostInWei: 300n,
         },
         {
           configurationId: txIdB,
-          totalCostInWei: 400,
+          totalCostInWei: 400n,
         },
       ])
     })
