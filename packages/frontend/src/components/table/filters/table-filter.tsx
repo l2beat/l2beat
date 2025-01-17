@@ -1,4 +1,5 @@
 'use client'
+import { usePlausible } from 'next-plausible'
 import { type KeyboardEvent, type MouseEvent, useCallback } from 'react'
 import {
   Select,
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export function TableFilter({ title, options, value, onValueChange }: Props) {
+  const plausible = usePlausible()
   const onClick = useCallback(
     (e: MouseEvent) => {
       if (value !== undefined) {
@@ -50,6 +52,12 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
           onValueChange(undefined)
           return
         }
+        plausible('filter-selected', {
+          props: {
+            filter: title,
+            value: newValue,
+          },
+        })
         onValueChange(newValue)
       }}
       disabled={options.length < 2 && !value}
