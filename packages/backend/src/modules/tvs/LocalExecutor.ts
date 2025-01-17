@@ -1,3 +1,4 @@
+import path from 'path'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import { LocalStorage } from './LocalStorage'
@@ -10,7 +11,7 @@ export class LocalExecutor {
   private readonly valueService: ValueService
 
   constructor() {
-    const storage = new LocalStorage()
+    const storage = new LocalStorage(path.join(__dirname, 'local-data.json'))
     this.dataFormulaExecutor = new DataFormulaExecutor(storage)
     this.valueService = new ValueService(storage)
   }
