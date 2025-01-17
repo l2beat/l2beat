@@ -9996,6 +9996,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "XBorg",
+      "coingeckoId": "xborg",
+      "address": "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
+      "symbol": "XBG",
+      "decimals": 18,
+      "deploymentTimestamp": 1718226921,
+      "coingeckoListingTimestamp": 1724198400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39830/large/XBorg_Logo.png?1724209192",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "Ether",
       "coingeckoId": "ethereum",
       "symbol": "ETH",

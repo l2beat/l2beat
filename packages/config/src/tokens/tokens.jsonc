@@ -1945,6 +1945,20 @@
   ],
   "arbitrum": [
     {
+      "symbol": "XBG",
+      "address": "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "EDU",
       "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
       "coingeckoId": "edu-coin",
