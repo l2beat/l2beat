@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7579d43377e077b798870c96b9ab5dd39e3ff46a
+Generated with discovered.json: 0x0c50241b7546677cc79aa634f2a5c21b30bd8bbb
 
-# Diff at Fri, 17 Jan 2025 15:29:17 GMT:
+# Diff at Fri, 17 Jan 2025 15:40:08 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a3fe43c976ccbecb3f9ef2736f8bd675ce03433e block: 130664390
+- comparing to: main@2d3991ce1ae3368f038eb9c3b9af6535a89035be block: 130664390
 - current block number: 130763685
 
 ## Description
@@ -21,6 +21,14 @@ discovery. Values are for block 130664390 (main branch discovery), not current.
     +++ description: None
       receivedPermissions:
 +        [{"permission":"configure","target":"0x5C4e7Ba1E219E47948e6e3F55019A647bA501005","description":"change the OP token owner to a different MintManager and therefore change the inflation policy."}]
+    }
+```
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+      description:
++        "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     }
 ```
 

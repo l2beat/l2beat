@@ -40,9 +40,14 @@
     "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager",
     "0x4200000000000000000000000000000000000014": "L2ERC721Bridge",
     "0x4200000000000000000000000000000000000020": "SchemaRegistry",
-    "0x4200000000000000000000000000000000000021": "EAS"
+    "0x4200000000000000000000000000000000000021": "EAS",
+    "0x4200000000000000000000000000000000000002": "DeployerWhitelist",
+    "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias"
   },
   "overrides": {
+    "DeployerWhitelist": {
+      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
+    },
     "MintManager": {
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
       "fields": {

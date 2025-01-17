@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 130763685,
-  "configHash": "0x0178175496824a63c76d1f9256c6b1780b1148ec6684b6fdf34a1ecfd583c32d",
+  "configHash": "0x0dfb898147afa1692a4ded7fcccadafdf44184c99cf8aae7e7c220f7ed694bed",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -50,6 +50,7 @@
         "0x40a3a457f0e922425ed48d80603e24e652453f57be197487f62795991cff2c2b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -70,7 +71,8 @@
         "$upgradeCount": 0,
         "owner": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "DeployerWhitelist"
     },
     {
       "name": "L2CrossDomainMessenger",
@@ -761,6 +763,7 @@
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     {
+      "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "receivedPermissions": [
         {
