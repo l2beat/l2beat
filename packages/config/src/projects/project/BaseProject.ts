@@ -72,6 +72,7 @@ export interface ProjectScalingInfo {
   type: ScalingProjectCategory
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
+  reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   hostChain: {
     id: ProjectId
     slug: string
