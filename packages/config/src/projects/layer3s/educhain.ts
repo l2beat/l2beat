@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -18,6 +19,10 @@ export const educhain: Layer3 = orbitStackL3({
   additionalPurposes: ['Social'],
   hostChain: ProjectId('arbitrum'),
   display: {
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+      REASON_FOR_BEING_OTHER.SMALL_DAC,
+    ],
     name: 'EDU Chain',
     slug: 'edu-chain',
     description:
