@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "blockNumber": 21629240,
-  "configHash": "0x1ffd5c810c2955cfbe8255a0d5269b912bcd25f7db64af6f3caedada34e3d63e",
+  "configHash": "0x29c9a22a65810cda3b5ecaa3053eea6fdd57d466171f26944bee60533a2fb774",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -2256,7 +2256,7 @@
     "opstack/L1StandardBridge": "0x7646e8d311af4d3b67dc674e167b6f42a20accc7ae822efd2d49ad8ab877f7bf",
     "opstack/MIPS": "0x2c304ef99a23cb31331231c111188b04a54bacddeaac088b13abd2c81ff74217",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal2": "0xdb11d2f7a8ea7a7cf25298feb8edc6f567ae5eca0d6f3acde5323cd958b9a50f",
+    "opstack/OptimismPortal2": "0x201fe48d54023099ede7c007f353e5a0319f8fa9dd0e92a467035f33388dff15",
     "opstack/PermissionedDisputeGame": "0xc05a1885a0b7e9921833d6a3cab40198b3381578b3fec8cbe3d81515b8443ede",
     "opstack/PreimageOracle": "0x523c74a9550e7030e60a4508d1775811a97958c35b5093d36b8cba6981360a35",
     "opstack/SuperchainConfig": "0x76190197170f60e32f3e466ca757cb0bde1055ea134384678dd0911e7a5338ef",
