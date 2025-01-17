@@ -8,8 +8,8 @@ export function PlausibleProvider({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme()
   return (
     <NextPlausibleProvider
-      domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-      enabled={true}
+      domain="new-analytics.l2beat.com"
+      enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
       pageviewProps={{
         theme: resolvedTheme ?? 'light',
       }}
