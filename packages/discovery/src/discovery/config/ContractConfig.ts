@@ -30,6 +30,10 @@ export class ContractConfig {
     return this.overrides.name
   }
 
+  get address(): EthereumAddress {
+    return this.overrides.address
+  }
+
   get canActIndependently(): boolean | undefined {
     return this.overrides.canActIndependently ?? false
   }
@@ -79,7 +83,7 @@ export class ContractConfig {
   }
 
   get methods(): Record<string, string> {
-      return this.overrides.methods ??{}
+    return this.overrides.methods ?? {}
   }
 
   get types(): Record<string, DiscoveryCustomType> {

@@ -4,7 +4,7 @@ import {
   DiscoveryOutput,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { DiscoveryContract } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
+import { ContractConfig } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
@@ -23,7 +23,6 @@ import {
   Field,
   FieldValue,
 } from './types'
-import { ContractConfig } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 
 export function getProject(configReader: ConfigReader, project: string) {
   const chains = configReader.readAllChainsForProject(project)

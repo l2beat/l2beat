@@ -10,7 +10,7 @@ import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { TemplateService } from '../analysis/TemplateService'
 import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { CommonAddressNames } from './DiscoveryOverrides'
+import { CommonAddressNames } from './DiscoveryConfig'
 import {
   DiscoveryCustomType,
   GlobalTypes,

@@ -44,16 +44,19 @@ const CONFIG = new DiscoveryConfig(
 describe(DiscoveryConfig.name, () => {
   describe('overrides', () => {
     it('gets override for given address, ignoring common name since it is already named', () => {
-      const result = CONFIG.overrides.get(ADDRESS_B)
-      expect(result).toEqual({ ...OVERRIDE_B, address: ADDRESS_B, name: 'B' })
+      const result = CONFIG.for(ADDRESS_B)
+      expect(result.name).toEqual('B')
+      expect(result.address).toEqual(ADDRESS_B)
     })
     it('gets name from commonAddressNames if exists and not already named', () => {
-      const result = CONFIG.overrides.get(ADDRESS_C)
-      expect(result).toEqual({ address: ADDRESS_C, name: 'C Common Name' })
+      const result = CONFIG.for(ADDRESS_C)
+      expect(result.name).toEqual('C Common Name')
+      expect(result.address).toEqual(ADDRESS_C)
     })
     it('gets override for given name', () => {
-      const result = CONFIG.overrides.get('A')
-      expect(result).toEqual({ ...OVERRIDE_A, address: ADDRESS_A, name: 'A' })
+      const result = CONFIG.for('A')
+      expect(result.name).toEqual('A')
+      expect(result.address).toEqual(ADDRESS_A)
     })
     it('throws if override is not found', () => {
       expect(() => CONFIG.for('C')).toThrow()

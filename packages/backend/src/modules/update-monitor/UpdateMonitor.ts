@@ -4,12 +4,8 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
   diffDiscovery,
-  normalizeDiffPath,
 } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  DiscoveryOutput,
-} from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   assert,
   ChainConverter,
@@ -95,8 +91,7 @@ export class UpdateMonitor {
         )
 
         const diff = diffDiscovery(committed.contracts, discovery.contracts)
-
-        const severityCounts = countSeverities(diff, committed.contracts)
+        const severityCounts = countSeverities(diff)
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
@@ -339,10 +334,7 @@ const errorCount = new Gauge({
   help: 'Value showing amount of errors in the update cycle',
 })
 
-function countSeverities(
-  diffs: DiscoveryDiff[],
-  contracts: ContractParameters[],
-) {
+function countSeverities(diffs: DiscoveryDiff[]) {
   const result = { low: 0, medium: 0, high: 0, unknown: 0 }
 
   for (const diff of diffs) {
