@@ -73,7 +73,7 @@ export const getCachedRecategorizedActivityChartData = cache(
         adjustedRange,
       ),
     ])
-    const syncStatus = getActivityNotSyncedStatus(adjustedRange[1])
+    const notSyncedStatus = getActivityNotSyncedStatus(adjustedRange[1])
 
     const aggregatedRollupsEntries =
       aggregateActivityRecords(rollupsEntries) ?? {}
@@ -90,7 +90,7 @@ export const getCachedRecategorizedActivityChartData = cache(
       Object.values(aggregatedOthersEntries).length === 0 &&
       Object.values(aggregatedEthereumEntries).length === 0
     ) {
-      return { data: [], syncStatus }
+      return { data: [], notSyncedStatus }
     }
 
     const startTimestamp = Math.min(
@@ -129,7 +129,7 @@ export const getCachedRecategorizedActivityChartData = cache(
     )
     return {
       data,
-      syncStatus,
+      notSyncedStatus,
     }
   },
   ['recategorized-activity-chart-data'],
@@ -157,6 +157,6 @@ function getMockRecategorizedActivityChart(
       9000,
       12000,
     ]),
-    syncStatus: getActivityNotSyncedStatus(adjustedRange[1]),
+    notSyncedStatus: getActivityNotSyncedStatus(adjustedRange[1]),
   }
 }
