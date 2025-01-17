@@ -15,7 +15,7 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { Database, UpdateMonitorRecord } from '@l2beat/database'
 import { Clock } from '../../tools/Clock'
-import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
+import { DiscoveryRunner } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateNotifier } from './UpdateNotifier'
 
@@ -108,7 +108,10 @@ describe(UpdateMonitor.name, () => {
       sendDailyReminder: async () => {},
     })
     discoveryRunner = mockObject<DiscoveryRunner>({
-      run: async () => ({ discovery: DISCOVERY_RESULT, flatSources: {} }),
+      discoverWithRetry: async () => ({
+        discovery: DISCOVERY_RESULT,
+        flatSources: {},
+      }),
       chain: 'ethereum',
       getBlockNumber: async () => BLOCK_NUMBER,
     })
@@ -118,7 +121,10 @@ describe(UpdateMonitor.name, () => {
     it('iterates over runners and dispatches updates', async () => {
       const discoveryRunnerEth = discoveryRunner
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
-        run: async () => ({ discovery: DISCOVERY_RESULT, flatSources: {} }),
+        discoverWithRetry: async () => ({
+          discovery: DISCOVERY_RESULT,
+          flatSources: {},
+        }),
         chain: 'arbitrum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -172,7 +178,7 @@ describe(UpdateMonitor.name, () => {
       )
 
       // runs discovery for every project
-      expect(discoveryRunnerEth.run).toHaveBeenCalledTimes(2)
+      expect(discoveryRunnerEth.discoverWithRetry).toHaveBeenCalledTimes(2)
 
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
@@ -218,7 +224,7 @@ describe(UpdateMonitor.name, () => {
       const discoveryB = DISCOVERY_RESULT
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn()
+        discoverWithRetry: mockFn()
           .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
           .resolvesToOnce({ discovery: discoveryB, flatSources: {} })
           .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
@@ -244,30 +250,30 @@ describe(UpdateMonitor.name, () => {
       // reads all the configs
       expect(configReader.readAllConfigsForChain).toHaveBeenCalledTimes(1)
       // runs discovery for every project
-      expect(discoveryRunner.run).toHaveBeenCalledTimes(4)
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(4)
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         1,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
-        OPTIONS,
+        LOGGER,
       )
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
-        OPTIONS,
+        LOGGER,
       )
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         3,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
-        OPTIONS,
+        LOGGER,
       )
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         4,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
-        OPTIONS,
+        LOGGER,
       )
       // calls repository (and gets undefined)
       expect(repository.findLatest).toHaveBeenCalledTimes(2)
@@ -336,7 +342,7 @@ describe(UpdateMonitor.name, () => {
         ChainId.ETHEREUM,
       )
       // runs discovery
-      expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(2)
       // does not send a notification
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
     })
@@ -357,7 +363,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().throws('Error'),
+        discoverWithRetry: mockFn().throws('Error'),
         chain: 'ethereum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -403,23 +409,23 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn(),
+        discoverWithRetry: mockFn(),
         chain: 'ethereum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
 
-      discoveryRunner.run.resolvesToOnce({
+      discoveryRunner.discoverWithRetry.resolvesToOnce({
         discovery: { ...DISCOVERY_RESULT },
         flatSources: {},
       })
-      discoveryRunner.run.resolvesToOnce({
+      discoveryRunner.discoverWithRetry.resolvesToOnce({
         discovery: {
           ...DISCOVERY_RESULT,
           contracts: [],
         },
         flatSources: {},
       })
-      discoveryRunner.run.resolvesToOnce({
+      discoveryRunner.discoverWithRetry.resolvesToOnce({
         discovery: {
           ...DISCOVERY_RESULT,
           contracts: [],
@@ -440,18 +446,18 @@ describe(UpdateMonitor.name, () => {
 
       await updateMonitor.updateChain(discoveryRunner, new UnixTime(0))
 
-      expect(discoveryRunner.run).toHaveBeenCalledTimes(2)
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(2)
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         1,
         config,
         BLOCK_NUMBER - 1,
-        OPTIONS,
+        LOGGER,
       )
-      expect(discoveryRunner.run).toHaveBeenNthCalledWith(
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         config,
         BLOCK_NUMBER,
-        OPTIONS,
+        LOGGER,
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(repository.upsert).toHaveBeenCalledTimes(1)
@@ -464,7 +470,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: async () => {
+        discoverWithRetry: async () => {
           throw new Error('error')
         },
         chain: 'ethereum',
@@ -514,7 +520,7 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn()
+        discoverWithRetry: mockFn()
           .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
           .resolvesToOnce({ discovery: discoveryB, flatSources: {} }),
         chain: 'ethereum',
@@ -559,7 +565,7 @@ describe(UpdateMonitor.name, () => {
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesToOnce({
+        discoverWithRetry: mockFn().resolvesToOnce({
           discovery: dbEntry.discovery,
           flatSources: {},
         }),
@@ -600,7 +606,10 @@ describe(UpdateMonitor.name, () => {
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesToOnce({ discovery: committed, flatSources: {} }),
+        discoverWithRetry: mockFn().resolvesToOnce({
+          discovery: committed,
+          flatSources: {},
+        }),
         chain: 'ethereum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -660,7 +669,10 @@ describe(UpdateMonitor.name, () => {
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: async () => ({ discovery: mockProject, flatSources: {} }),
+        discoverWithRetry: async () => ({
+          discovery: mockProject,
+          flatSources: {},
+        }),
         chain: 'ethereum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -681,11 +693,11 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
       )
 
-      expect(discoveryRunner.run).toHaveBeenCalledTimes(1)
-      expect(discoveryRunner.run).toHaveBeenCalledWith(
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(1)
+      expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledWith(
         mockConfig(PROJECT_A),
         BLOCK_NUMBER - 1,
-        OPTIONS,
+        LOGGER,
       )
     })
   })
@@ -693,7 +705,7 @@ describe(UpdateMonitor.name, () => {
   describe(UpdateMonitor.prototype.generateDailyReminder.name, () => {
     it('does not cross-contaminate between chains', async () => {
       const discoveryRunnerEth = mockObject<DiscoveryRunner>({
-        run: async () => ({
+        discoverWithRetry: async () => ({
           discovery: {
             ...DISCOVERY_RESULT,
             contracts: [
@@ -710,7 +722,7 @@ describe(UpdateMonitor.name, () => {
         getBlockNumber: async () => BLOCK_NUMBER,
       })
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
-        run: async () => ({
+        discoverWithRetry: async () => ({
           discovery: DISCOVERY_RESULT_ARB_2,
           flatSources: {},
         }),
@@ -796,7 +808,10 @@ describe(UpdateMonitor.name, () => {
     it('generates the daily reminder for two different chains', async () => {
       const discoveryRunnerEth = discoveryRunner
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
-        run: async () => ({ discovery: DISCOVERY_RESULT, flatSources: {} }),
+        discoverWithRetry: async () => ({
+          discovery: DISCOVERY_RESULT,
+          flatSources: {},
+        }),
         chain: 'arbitrum',
         getBlockNumber: async () => BLOCK_NUMBER,
       })
@@ -956,6 +971,4 @@ const mockDiff: DiscoveryDiff[] = [
   },
 ]
 
-const OPTIONS: DiscoveryRunnerOptions = {
-  logger: Logger.SILENT.for('UpdateMonitor'),
-}
+const LOGGER = Logger.SILENT.for('UpdateMonitor')

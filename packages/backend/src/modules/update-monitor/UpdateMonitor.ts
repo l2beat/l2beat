@@ -174,12 +174,10 @@ export class UpdateMonitor {
       runner,
       projectConfig,
     )
-    const { discovery, flatSources } = await runner.run(
+    const { discovery, flatSources } = await runner.discoverWithRetry(
       projectConfig,
       blockNumber,
-      {
-        logger: this.logger,
-      },
+      this.logger,
     )
 
     if (!previousDiscovery || !discovery) return
@@ -276,12 +274,10 @@ export class UpdateMonitor {
       )
     }
 
-    const result = await runner.run(
+    const result = await runner.discoverWithRetry(
       projectConfig,
       previousDiscovery.blockNumber,
-      {
-        logger: this.logger,
-      },
+      this.logger,
     )
 
     return result.discovery

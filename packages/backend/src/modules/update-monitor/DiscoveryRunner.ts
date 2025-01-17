@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
-  ConfigReader,
   DiscoveryConfig,
   DiscoveryEngine,
   DiscoveryLogger,
@@ -37,28 +36,11 @@ export class DiscoveryRunner {
   constructor(
     private readonly allProviders: AllProviders,
     private readonly discoveryEngine: DiscoveryEngine,
-    private readonly configReader: ConfigReader,
     readonly chain: string,
   ) {}
 
   async getBlockNumber(): Promise<number> {
     return await this.allProviders.getLatestBlockNumber(this.chain)
-  }
-
-  async run(
-    projectConfig: DiscoveryConfig,
-    blockNumber: number,
-    options: DiscoveryRunnerOptions,
-  ): Promise<DiscoveryRunResult> {
-    const config = projectConfig
-
-    return await this.discoverWithRetry(
-      config,
-      blockNumber,
-      options.logger,
-      options.maxRetries,
-      options.retryDelayMs,
-    )
   }
 
   private async discover(
