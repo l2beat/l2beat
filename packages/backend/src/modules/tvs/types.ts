@@ -94,8 +94,3 @@ export interface TokenValue {
   projectId: ProjectId
   valueUsd: number
 }
-
-export interface LocalStorageJSON {
-  prices: Record<string, number>
-  amounts: Record<string, bigint>
-}

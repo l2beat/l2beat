@@ -1,7 +1,11 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DataStorage } from './DataStorage'
-import { LocalStorageJSON } from './types'
+
+interface LocalStorageJSON {
+  prices: Record<string, number>
+  amounts: Record<string, bigint>
+}
 
 export class LocalStorage implements DataStorage {
   private prices: Map<string, number>
