@@ -71,7 +71,7 @@ export function ProjectActivityChart({
           {...data}
           showEthereum={showMainnet}
           singleProject
-          syncedUntil={chart?.notSyncedStatus?.syncedUntil}
+          syncedUntil={chart?.syncedUntil}
           metric={metric}
           type={getChartType(category)}
           projectName={projectName}
@@ -127,9 +127,7 @@ export function ProjectActivityChart({
             <RadioGroupItem value="lin">LIN</RadioGroupItem>
           </RadioGroup>
         </div>
-        {chart && !!chart.notSyncedStatus && (
-          <NotSyncedBanner status={chart.notSyncedStatus} />
-        )}
+        {chart?.syncWarning && <NotSyncedBanner content={chart.syncWarning} />}
       </section>
     </ChartProvider>
   )

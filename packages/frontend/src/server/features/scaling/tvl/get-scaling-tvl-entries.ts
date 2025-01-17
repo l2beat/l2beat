@@ -62,7 +62,6 @@ function getScalingTvlEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: undefined,
     }),
     href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvl: {

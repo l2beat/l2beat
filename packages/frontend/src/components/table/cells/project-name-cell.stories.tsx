@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { type Meta, type StoryObj } from '@storybook/react'
 import { ProjectNameCell } from './project-name-cell'
 
@@ -19,12 +18,7 @@ export const All: Story = {
         underReview: 'config',
         redWarning: 'Red warning message',
         verificationWarning: true,
-        notSynced: [
-          {
-            content: 'Some random content saying that this is not synced',
-            syncedUntil: UnixTime.now().add(-2, 'days').toNumber(),
-          },
-        ],
+        syncWarning: 'Some random content saying that this is not synced',
       },
     },
   },

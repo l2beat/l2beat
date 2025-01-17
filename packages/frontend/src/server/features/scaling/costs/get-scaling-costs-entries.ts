@@ -53,7 +53,6 @@ function getScalingCostEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: undefined,
     }),
     href: `/scaling/projects/${project.slug}#onchain-costs`,
     costsWarning: project.costsInfo.warning,

@@ -54,7 +54,6 @@ function getScalingRiskEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: undefined,
     }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
     tvlOrder: tvl ?? -1,

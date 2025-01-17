@@ -4,7 +4,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getCostsForProjects } from './get-costs-for-projects'
 import { type LatestCostsProjectResponse } from './types'
-import { getCostsNotSyncedStatus } from './utils/get-costs-not-synced-status'
+import { isCostsSynced } from './utils/is-costs-synced'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
 
@@ -30,13 +30,13 @@ export const getCachedCostsTableData = cache(
 
     return Object.fromEntries(
       Object.entries(projectsCosts).map(([projectId, costs]) => {
-        const notSyncedStatus = getCostsNotSyncedStatus(costs.syncedUntil)
+        const isSynced = isCostsSynced(costs.syncedUntil)
         return [
           projectId,
           {
             ...withTotal(costs),
-            isSynced: !notSyncedStatus,
             txCount: projectsActivity[projectId],
+            isSynced,
           },
         ]
       }),

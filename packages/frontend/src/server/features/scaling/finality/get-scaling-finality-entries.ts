@@ -19,7 +19,7 @@ import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityProjectData } from './schema'
-import { getFinalityNotSyncedStatus } from './utils/get-finality-not-synced-status'
+import { getFinalitySyncWarning } from './utils/is-finality-synced'
 
 export async function getFinalityProjects() {
   const projects = await ProjectService.STATIC.getProjects({
@@ -92,15 +92,13 @@ function getScalingFinalityEntry(
     return
   }
 
-  const notSyncedStatus = getFinalityNotSyncedStatus(
-    finalityProjectData.syncedUntil,
-  )
+  const syncWarning = getFinalitySyncWarning(finalityProjectData.syncedUntil)
 
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: [notSyncedStatus],
+      syncWarning,
     }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
@@ -119,7 +117,7 @@ function getScalingFinalityEntry(
             warning: project.finalityInfo?.warnings?.stateUpdateDelay,
           }
         : undefined,
-      isSynced: !notSyncedStatus,
+      isSynced: !syncWarning,
     },
     finalizationPeriod: project.finalityInfo.finalizationPeriod,
     tvlOrder: tvl ?? -1,

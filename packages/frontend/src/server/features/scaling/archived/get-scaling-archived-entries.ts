@@ -61,7 +61,6 @@ function getScalingArchivedEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: undefined,
     }),
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,

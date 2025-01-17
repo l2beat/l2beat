@@ -23,7 +23,7 @@ import {
   type AnomalyIndicatorEntry,
   toAnomalyIndicatorEntries,
 } from './utils/get-anomaly-entries'
-import { getLivenessNotSyncedStatus } from './utils/get-liveness-not-synced-status'
+import { getLivenessSyncWarning } from './utils/is-liveness-synced'
 
 export async function getScalingLivenessEntries() {
   const [tvl, projectsChangeReport, liveness, projects] = await Promise.all([
@@ -77,13 +77,13 @@ function getScalingLivenessEntry(
   }
 
   const lowestSyncedUntil = getLowestSyncedUntil(liveness)
-  const notSyncedStatus = getLivenessNotSyncedStatus(lowestSyncedUntil)
-  const data = getLivenessData(liveness, project, !notSyncedStatus)
+  const syncWarning = getLivenessSyncWarning(lowestSyncedUntil)
+  const data = getLivenessData(liveness, project, !syncWarning)
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: [notSyncedStatus],
+      syncWarning,
     }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,

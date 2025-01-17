@@ -6,9 +6,9 @@ import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { aggregateActivityRecords } from './utils/aggregate-activity-records'
-import { getActivityNotSyncedStatus } from './utils/get-activity-not-synced-status'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
+import { getActivitySyncWarning } from './utils/is-activity-synced'
 import {
   type ActivityProjectFilter,
   createActivityProjectsFilter,
@@ -73,7 +73,9 @@ export const getCachedRecategorizedActivityChartData = cache(
         adjustedRange,
       ),
     ])
-    const notSyncedStatus = getActivityNotSyncedStatus(adjustedRange[1])
+
+    const syncedUntil = adjustedRange[1]
+    const syncWarning = getActivitySyncWarning(syncedUntil)
 
     const aggregatedRollupsEntries =
       aggregateActivityRecords(rollupsEntries) ?? {}
@@ -90,7 +92,7 @@ export const getCachedRecategorizedActivityChartData = cache(
       Object.values(aggregatedOthersEntries).length === 0 &&
       Object.values(aggregatedEthereumEntries).length === 0
     ) {
-      return { data: [], notSyncedStatus }
+      return { data: [], syncWarning, syncedUntil: syncedUntil.toNumber() }
     }
 
     const startTimestamp = Math.min(
@@ -129,7 +131,8 @@ export const getCachedRecategorizedActivityChartData = cache(
     )
     return {
       data,
-      notSyncedStatus,
+      syncWarning,
+      syncedUntil: syncedUntil.toNumber(),
     }
   },
   ['recategorized-activity-chart-data'],
@@ -157,6 +160,7 @@ function getMockRecategorizedActivityChart(
       9000,
       12000,
     ]),
-    notSyncedStatus: getActivityNotSyncedStatus(adjustedRange[1]),
+    syncWarning: getActivitySyncWarning(adjustedRange[1]),
+    syncedUntil: adjustedRange[1].toNumber(),
   }
 }

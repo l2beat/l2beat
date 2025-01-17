@@ -59,7 +59,6 @@ function getScalingDaEntry(
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: undefined,
     }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,

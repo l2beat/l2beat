@@ -19,7 +19,7 @@ import {
   getActivityTable,
 } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
-import { getActivityNotSyncedStatus } from './utils/get-activity-not-synced-status'
+import { getActivitySyncWarning } from './utils/is-activity-synced'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ProjectService.STATIC.getProjects({
@@ -69,14 +69,14 @@ function getScalingProjectActivityEntry(
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
-  const notSyncedStatus = data
-    ? getActivityNotSyncedStatus(data.syncedUntil)
+  const syncWarning = data
+    ? getActivitySyncWarning(data.syncedUntil)
     : undefined
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: [notSyncedStatus],
+      syncWarning,
     }),
     href: `/scaling/projects/${project.slug}#activity`,
     dataSource: project.activityInfo.dataSource,
@@ -85,7 +85,7 @@ function getScalingProjectActivityEntry(
           tps: data.tps,
           uops: data.uops,
           ratio: data.ratio,
-          isSynced: !notSyncedStatus,
+          isSynced: !syncWarning,
         }
       : undefined,
   }
@@ -96,7 +96,7 @@ function getEthereumEntry(
   tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
   const notSyncedStatus = data
-    ? getActivityNotSyncedStatus(data.syncedUntil)
+    ? getActivitySyncWarning(data.syncedUntil)
     : undefined
   return {
     id: ProjectId.ETHEREUM,

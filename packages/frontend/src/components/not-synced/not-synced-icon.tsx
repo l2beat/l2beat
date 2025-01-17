@@ -1,17 +1,16 @@
 import { ClockIcon } from '~/icons/clock'
-import { type NotSyncedStatus } from '~/types/not-synced-status'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
 
-interface NotSyncedBadgeProps {
-  notSyncedStatuses: NotSyncedStatus[] | undefined
+interface Props {
+  content: string
 }
 
-export function NotSyncedIcon({ notSyncedStatuses }: NotSyncedBadgeProps) {
-  if (!notSyncedStatuses || notSyncedStatuses.length === 0) {
+export function NotSyncedIcon({ content }: Props) {
+  if (!content) {
     return null
   }
 
@@ -20,9 +19,7 @@ export function NotSyncedIcon({ notSyncedStatuses }: NotSyncedBadgeProps) {
       <TooltipTrigger>
         <ClockIcon />
       </TooltipTrigger>
-      <TooltipContent>
-        {notSyncedStatuses.map((s) => s.content).join('\n')}
-      </TooltipContent>
+      <TooltipContent>{content}</TooltipContent>
     </Tooltip>
   )
 }

@@ -20,7 +20,7 @@ import {
   type ActivityLatestUopsData,
   getActivityLatestUops,
 } from '../activity/get-activity-latest-tps'
-import { getActivityNotSyncedStatus } from '../activity/utils/get-activity-not-synced-status'
+import { getActivitySyncWarning } from '../activity/utils/is-activity-synced'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
@@ -113,15 +113,15 @@ function getScalingSummaryEntry(
       : undefined
   const associatedTokensExcludedWarnings = compact(project.tvlInfo?.warnings)
 
-  const activityNotSyncedStatus = activity
-    ? getActivityNotSyncedStatus(activity.syncedUntil)
+  const activitySyncWarning = activity
+    ? getActivitySyncWarning(activity.syncedUntil)
     : undefined
 
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      notSyncedStatuses: [activityNotSyncedStatus],
+      syncWarning: activitySyncWarning,
     }),
     stage:
       project.scalingInfo.isOther || !project.scalingStage
@@ -145,7 +145,7 @@ function getScalingSummaryEntry(
     activity: activity && {
       pastDayUops: activity.pastDayUops,
       change: activity.change,
-      isSynced: !activityNotSyncedStatus,
+      isSynced: !activitySyncWarning,
     },
     tvlOrder: latestTvl?.breakdown.total ?? -1,
     risks: getL2Risks(
