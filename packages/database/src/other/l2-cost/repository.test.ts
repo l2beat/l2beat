@@ -124,6 +124,43 @@ describeDatabase(L2CostRepository.name, (db) => {
     })
   })
 
+  describe(L2CostRepository.prototype.getGasSumByTimeRangeAndConfigId
+    .name, () => {
+    it('should return sum of gas used for given time range and configurations id', async () => {
+      // add second record to txIdA
+      await repository.insertMany([
+        {
+          timestamp: START.add(-1, 'hours'),
+          txHash: '0x4',
+          configurationId: txIdA,
+          gasUsed: 200,
+          gasPrice: 1n,
+          calldataLength: 100,
+          calldataGasUsed: 100,
+          blobGasPrice: null,
+          blobGasUsed: null,
+        },
+      ])
+
+      const result = await repository.getGasSumByTimeRangeAndConfigId(
+        [txIdA, txIdB],
+        START.add(-1, 'hours'),
+        START,
+      )
+
+      expect(result).toEqualUnsorted([
+        {
+          configurationId: txIdA,
+          totalCostInWei: 300,
+        },
+        {
+          configurationId: txIdB,
+          totalCostInWei: 400,
+        },
+      ])
+    })
+  })
+
   describe(L2CostRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
