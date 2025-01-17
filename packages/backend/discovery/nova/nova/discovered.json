@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 79888653,
+  "blockNumber": 81620827,
   "configHash": "0x3126f9b4d9710b222723513b08bf8aceb05d8d9785ffaef88e905065048b4801",
   "contracts": [
     {
@@ -342,6 +342,7 @@
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -415,7 +416,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2333,
+        "exitNum": 2374,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2CustomGateway"
@@ -441,16 +442,16 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
+          "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
+          "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
+          "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
           "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
           "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
-          "0x1716C1C037e4968D5A06d4d080904F9B7a6508f2",
-          "0xeA4A4A886aCA47DD0167B4aEE5B1345e18D20Ee5",
           "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
           "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
-          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
           "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
-          "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
@@ -509,7 +510,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 858,
+        "exitNum": 878,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2ERC20Gateway"
@@ -578,6 +579,7 @@
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -638,7 +640,7 @@
         "l2Gateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "228776137865927120728272"
+        "totalSupply": "221776137865927120728272"
       },
       "derivedName": "L2CustomGatewayToken"
     }
@@ -649,27 +651,27 @@
     { "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae" },
     { "address": "0x02C2599aa929e2509741b44F3a13029745aB1AB2" },
     { "address": "0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641" },
-    { "address": "0x1716C1C037e4968D5A06d4d080904F9B7a6508f2" },
     { "address": "0x290Aa3E7533c873B3326DabFe7579e86ed951428" },
     { "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93" },
     { "address": "0x375906ADFD34D93236084F462BB2dB0D92129Fe1" },
-    { "address": "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF" },
     { "address": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999" },
+    { "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71" },
     { "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09" },
     { "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C" },
+    { "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B" },
     { "address": "0x5a09A94eE8198D3c474d723337aa58023810022C" },
     { "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1" },
     { "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7" },
-    { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
+    { "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67" },
     { "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe" },
     { "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F" },
     { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
+    { "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8" },
     { "address": "0xA221f29236996BDEfA5C585acdD407Ec84D78447" },
     { "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1" },
     { "address": "0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2" },
     { "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33" },
     { "address": "0xE4E2121b479017955Be0b175305B35f312330BaE" },
-    { "address": "0xeA4A4A886aCA47DD0167B4aEE5B1345e18D20Ee5" },
     { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
     {
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",

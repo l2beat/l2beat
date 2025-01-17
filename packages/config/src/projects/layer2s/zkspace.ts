@@ -44,25 +44,24 @@ export const zkspace: Layer2 = {
     Badge.Fork.ZKsyncLiteFork,
   ],
   display: {
-    name: 'ZKSpace',
+    name: 'ZKBase',
     slug: 'zkspace',
     description:
-      'ZKSpace consists of three main parts: an AMM DEX utilizing ZK Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
+      'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
     purposes: ['NFT', 'Exchange', 'Payments'],
     provider: 'ZKsync Lite',
     category: 'ZK Rollup',
     links: {
-      websites: ['https://zks.org/'],
-      apps: ['https://zks.app'],
+      websites: ['https://zkbase.org/'],
+      apps: ['https://zkbase.app'],
       documentation: ['https://en.wiki.zks.org/'],
-      explorers: ['https://zkspace.info'],
+      explorers: ['https://explorer.zkbase.app/'],
       repositories: ['https://github.com/l2labs/zkswap-contracts'],
       socialMedia: [
-        'https://medium.com/@zkspaceofficial',
-        'https://twitter.com/ZKSpaceOfficial',
-        'https://discord.gg/UbjmQfUVvf',
+        'https://discord.gg/MJKtaYcYw8',
+        'https://twitter.com/ZKBaseOfficial',
         'https://t.me/ZKSpaceOfficial',
-        'https://reddit.com/r/ZKSwap_Official/',
+        'https://medium.com/zkswap',
       ],
     },
     liveness: {
@@ -113,13 +112,11 @@ export const zkspace: Layer2 = {
       },
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -268,6 +265,13 @@ export const zkspace: Layer2 = {
     },
   ],
   milestones: [
+    {
+      name: 'ZKSpace Officially Upgrades to ZKBase',
+      link: 'https://zkbaseofficial.medium.com/zkbase-is-undergoing-a-brand-new-upgrade-and-setting-sail-again-in-2024-3d71418a10e1',
+      date: '2023-12-29T00:00:00Z',
+      description: 'The ZKSpace team has rebranded to ZKBase.',
+      type: 'general',
+    },
     {
       name: 'ZKSpace launched',
       link: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',

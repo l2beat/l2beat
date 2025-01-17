@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -7,6 +8,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import {
   OthersInfo,
   RollupsInfo,
@@ -17,7 +19,6 @@ import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingSummaryFilters } from '../../_components/scaling-summary-filters'
-import { OthersComingSoonNotice } from './table/others-coming-soon-notice'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
@@ -31,6 +32,17 @@ export function ScalingSummaryTables(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others.filter(includeFilters),
   }
+
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [props.others, props.rollups, props.validiumsAndOptimiums],
+  )
 
   const initialSort = {
     id: 'total',
@@ -53,7 +65,7 @@ export function ScalingSummaryTables(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length}
@@ -71,7 +83,7 @@ export function ScalingSummaryTables(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
+          <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
             <ScalingSummaryValidiumsAndOptimiumsTable
               entries={filteredEntries.validiumsAndOptimiums}
@@ -80,14 +92,12 @@ export function ScalingSummaryTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
-            {filteredEntries.others.length > 0 ? (
-              <>
-                <OthersInfo />
-                <ScalingSummaryOthersTable entries={filteredEntries.others} />
-              </>
-            ) : (
-              <OthersComingSoonNotice />
-            )}
+            <OthersInfo />
+            <ScalingSummaryOthersTable entries={filteredEntries.others} />
+            <OtherMigrationTabNotice
+              projectsToBeMigrated={projectToBeMigratedToOthers}
+              className="mt-2"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

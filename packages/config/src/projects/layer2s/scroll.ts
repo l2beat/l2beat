@@ -319,13 +319,11 @@ export const scroll: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: {
       ...STATE_ZKP_SN,
@@ -455,7 +453,7 @@ export const scroll: Layer2 = {
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
   },
   stateValidation: {
     description:
@@ -683,7 +681,7 @@ export const scroll: Layer2 = {
         description: 'Plonk verifier used to verify ZK proofs for bundles.',
       }),
       discovery.getContractDetails('L1ETHGateway', {
-        description: 'Contract used to bridge ETH from L1 to L2.',
+        description: 'Deprecated: Contract used to bridge ETH from L1 to L2.',
         ...upgradesScrollMultisig,
       }),
       discovery.getContractDetails('L1WETHGateway', {

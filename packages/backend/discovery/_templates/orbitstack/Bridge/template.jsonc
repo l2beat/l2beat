@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Bridge",
-  "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+  "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
   "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
   "ignoreInWatchMode": [
     "delayedMessageCount",

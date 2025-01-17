@@ -140,13 +140,11 @@ const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   createdAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
   display: {
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -170,6 +168,8 @@ export const taiko: Layer2 = {
         'https://twitter.com/taikoxyz',
         'https://discord.gg/taikoxyz',
         'https://taiko.mirror.xyz',
+        'https://community.taiko.xyz',
+        'https://youtube.com/@taikoxyz',
       ],
       rollupCodes: 'https://rollup.codes/taiko',
     },

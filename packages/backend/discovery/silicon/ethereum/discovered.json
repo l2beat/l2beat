@@ -1,7 +1,7 @@
 {
   "name": "silicon",
   "chain": "ethereum",
-  "blockNumber": 20783770,
+  "blockNumber": 21628488,
   "configHash": "0x55fe800cde3eb82b5ff1b72431891c79eaae617dc3d576966728d56ff81ec969",
   "contracts": [
     {
@@ -75,6 +75,7 @@
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -128,7 +129,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x67f2d2f637913c14386cac67ab9920d8cb6a2c5cb72002a3a48fd12c40b3809c",
+        "lastAccInputHash": "0x940009389e1c2a9d77944bc16db31823d7835e044b918fc05710adf92fd6f0bf",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "silicon-zk",

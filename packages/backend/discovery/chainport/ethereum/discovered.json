@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 21357562,
+  "blockNumber": 21543439,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
   "contracts": [
     {
@@ -15,17 +15,19 @@
         "$immutable": true,
         "allMembers": [
           "0x894107B7b5051409f279E8300774B2f62Febe057",
-          "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8",
-          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+          "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609",
+          "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
         ],
         "chainportCongress": "0xB6b4C7aC240b1f176c5589d064733066a83884a1",
         "getAllMemberAddresses": [
           "0x894107B7b5051409f279E8300774B2f62Febe057",
-          "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8",
-          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+          "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7",
+          "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609",
+          "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
         ],
-        "getMinimalQuorum": 2,
-        "getNumberOfMembers": 3,
+        "getMinimalQuorum": 3,
+        "getNumberOfMembers": 4,
         "name": "ChainportCongressMembersRegistry"
       },
       "derivedName": "ChainportCongressMembersRegistry"
@@ -211,7 +213,7 @@
     }
   ],
   "eoas": [
-    { "address": "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8" },
+    { "address": "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd" },
     {
       "name": "EOAVault5",
       "address": "0x873089bC765a1C0AFAd48e34fCd305d17D81be87"

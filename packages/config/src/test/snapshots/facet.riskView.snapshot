@@ -1,0 +1,34 @@
+// facet riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: Infinity
+    description: "All of the data needed for proof construction is published on Ethereum L1."
+    sentiment: "good"
+    value: "Onchain"
+  }
+  exitWindow: {
+    definingMetric: -12
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    sentiment: "bad"
+    value: "Cannot withdraw"
+  }
+  sequencerFailure: {
+    description: "Users can self sequence transactions by sending them on L1. There is no privileged operator."
+    sentiment: "good"
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: -Infinity
+    description: "Currently the system permits invalid state roots. More details in project overview."
+    sentiment: "bad"
+    value: "None"
+  }
+}

@@ -89,6 +89,7 @@ export const polygonpos: Layer2 = {
       discovery.getEscrowDetails({
         // ERC20Predicate
         address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
+        premintedTokens: ['TRADE'],
         tokens: '*',
         ...upgrades,
       }),
@@ -124,18 +125,16 @@ export const polygonpos: Layer2 = {
       startBlock: 5000000,
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.POLYGON_POS_DA],
-      bridge: {
-        value: `${currentValidatorSetSize} validators`,
-        sentiment: 'warning',
-        description:
-          'The bridge verifies that at least 2/3+1 of the Polygon PoS stake has signed off on the checkpoint. The StakeManager contract is the source of truth for the current validator set.',
-      },
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.POLYGON_POS_DA],
+    bridge: {
+      value: `${currentValidatorSetSize} validators`,
+      sentiment: 'warning',
+      description:
+        'The bridge verifies that at least 2/3+1 of the Polygon PoS stake has signed off on the checkpoint. The StakeManager contract is the source of truth for the current validator set.',
+    },
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_POS,

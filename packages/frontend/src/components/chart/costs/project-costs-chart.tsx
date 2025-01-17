@@ -15,9 +15,9 @@ import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'
 import { ProjectChartTimeRange } from '../core/chart-time-range'
-import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 import { CostsChartHover } from './costs-chart-hover'
 import { CostsChartLegend } from './costs-chart-legend'
+import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export function ProjectCostsChart({ milestones, projectId }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('30d')
+  const [range, setRange] = useState<CostsTimeRange>('1y')
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
@@ -58,32 +58,10 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       >
         <ChartControlsWrapper>
           <ProjectChartTimeRange range={chartRange} />
-          <ChartTimeRangeControls
+          <CostsChartTimeRangeControls
             projectSection
-            value={range}
-            setValue={setRange}
-            options={[
-              {
-                value: '1d',
-                label: '1D',
-              },
-              {
-                value: '7d',
-                label: '7D',
-              },
-              {
-                value: '30d',
-                label: '30D',
-              },
-              {
-                value: '90d',
-                label: '90D',
-              },
-              {
-                value: '180d',
-                label: '180D',
-              },
-            ]}
+            timeRange={range}
+            setTimeRange={setRange}
           />
         </ChartControlsWrapper>
         <Chart className="mt-4" />

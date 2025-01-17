@@ -17,6 +17,7 @@ import {
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { formatThroughput } from '~/utils/number-format/format-throughput'
 
 interface Props {
   stats: ProjectStat[]
@@ -28,7 +29,7 @@ export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
   const partitionedByThree = chunkArray(stats, GROUPS)
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5">
       {partitionedByThree.map((statGroup, i) => {
         const isLastGroup = i === partitionedByThree.length - 1
 
@@ -75,7 +76,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row items-center gap-1.5">
-        <span className="whitespace-pre text-xs text-gray-500 dark:text-gray-600">
+        <span className="whitespace-pre text-xs text-secondary">
           {props.title}
         </span>
         {props.tooltip && (
@@ -120,7 +121,7 @@ export function getCommonDaProjectStats(
     title: 'TVS',
     value: formatCurrency(project.header.tvs, 'usd'),
     tooltip:
-      'Total value secured (TVS) is the sum of the total value locked (TVL) across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVL of sovereign rollups.',
+      'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
   })
 
   // Economic security
@@ -160,6 +161,17 @@ export function getCommonDaProjectStats(
     title: 'Duration of storage',
     ...durationOfStorage,
   })
+
+  if (project.header.throughput) {
+    stats.push({
+      title: 'Max throughput',
+      value: formatThroughput(
+        project.header.throughput.size,
+        project.header.throughput.frequency,
+        { fromUnit: 'KB' },
+      ),
+    })
+  }
 
   return stats
 }

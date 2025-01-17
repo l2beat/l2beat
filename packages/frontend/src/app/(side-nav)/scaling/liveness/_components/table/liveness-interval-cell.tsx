@@ -1,6 +1,5 @@
 import { type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/badge'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
 import {
   Tooltip,
@@ -11,7 +10,6 @@ import { WarningBar } from '~/components/warning-bar'
 import { useIsClient } from '~/hooks/use-is-client'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type LivenessDataPoint } from '~/server/features/scaling/liveness/types'
-import { formatTimestamp } from '~/utils/dates'
 import { DurationCell } from '../../../finality/_components/table/duration-cell'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { LivenessDurationCell } from '../liveness-duration-cell'
@@ -30,7 +28,7 @@ export function LivenessIntervalCell(props: {
 
   const data = props.entry.data?.[props.dataType]
   const durationInSeconds = data?.averageInSeconds
-  const syncStatus = props.entry.data?.syncStatus
+  const isSynced = props.entry.data?.isSynced
 
   if (!durationInSeconds) {
     const tooltipText = getNonApplicableTooltipText(props.dataType, props.entry)
@@ -52,7 +50,7 @@ export function LivenessIntervalCell(props: {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <SyncStatusWrapper syncStatus={syncStatus}>
+        <SyncStatusWrapper isSynced={isSynced}>
           <DurationCell durationInSeconds={durationInSeconds} />
         </SyncStatusWrapper>
         {data.warning && (
@@ -60,19 +58,7 @@ export function LivenessIntervalCell(props: {
         )}
       </TooltipTrigger>
       <TooltipContent>
-        {syncStatus && !syncStatus.isSynced && (
-          <>
-            <span className="whitespace-pre text-balance font-medium">
-              Values have not been synced since{'\n'}
-              {formatTimestamp(syncStatus.syncedUntil, {
-                mode: 'datetime',
-                longMonthName: true,
-              })}
-            </span>
-            <HorizontalSeparator className="my-2 dark:border-slate-600" />
-          </>
-        )}
-        {<LivenessTooltip data={data} />}
+        <LivenessTooltip data={data} />
         {data.warning && (
           <WarningBar
             className="mt-2"

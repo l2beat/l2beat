@@ -2,9 +2,9 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   ChainConfig,
-  DataAvailabilityHistory,
   KnowledgeNugget,
   Milestone,
+  ProjectDataAvailability,
   ScalingProjectConfig,
   ScalingProjectContracts,
   ScalingProjectDisplay,
@@ -46,7 +46,7 @@ export interface Layer3 {
   /** Rollup stage */
   stage?: StageConfig
   /** Data availability of scaling project */
-  dataAvailability?: DataAvailabilityHistory
+  dataAvailability?: ProjectDataAvailability
   /** Deep dive into layer3 technology */
   technology: ScalingProjectTechnology
   /** Open-source node details */
@@ -65,8 +65,6 @@ export interface Layer3 {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: BadgeId[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
 }
 
 export interface Layer3Config extends ScalingProjectConfig {

@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -6,6 +7,7 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import {
   OthersInfo,
   RollupsInfo,
@@ -29,6 +31,17 @@ export function ScalingRiskTables(props: Props) {
     others: props.others.filter(includeFilters),
   }
 
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [props.others, props.rollups, props.validiumsAndOptimiums],
+  )
+
   const initialSort = {
     id: '#',
     desc: false,
@@ -50,7 +63,7 @@ export function ScalingRiskTables(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length}
@@ -69,7 +82,7 @@ export function ScalingRiskTables(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
+          <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
             <ScalingRiskTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
@@ -79,6 +92,10 @@ export function ScalingRiskTables(props: Props) {
             <DirectoryTabsContent value="others">
               <OthersInfo />
               <ScalingRiskTable entries={filteredEntries.others} />
+              <OtherMigrationTabNotice
+                projectsToBeMigrated={projectToBeMigratedToOthers}
+                className="mt-2"
+              />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

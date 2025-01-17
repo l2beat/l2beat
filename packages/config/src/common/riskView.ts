@@ -249,6 +249,21 @@ export function DATA_AVAIL(
   }
 }
 
+export function DATA_EIGENDA(
+  isUsingServiceManager: boolean,
+): ScalingProjectRiskViewEntry {
+  const additional = isUsingServiceManager
+    ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
+    : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation fully rely on data that is posted on EigenDA.` +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
 export const DATA_POS: ScalingProjectRiskViewEntry = {
   value: 'PoS network',
   description:
@@ -281,12 +296,12 @@ function capitalize(str: string): string {
 }
 
 export function NATIVE_AND_CANONICAL(
-  nativeTokens = 'ETH',
+  gasTokens = ['ETH'],
   isAre: 'is' | 'are' = 'is',
 ): ScalingProjectRiskViewEntry {
   return {
     value: 'Native & Canonical',
-    description: `${nativeTokens} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
+    description: `${gasTokens.join(', ')} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
     sentiment: 'good',
   }
 }
@@ -350,6 +365,13 @@ export function SEQUENCER_SELF_SEQUENCE(
     sentiment: 'good',
     definingMetric: delay,
   }
+}
+
+const SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER: ScalingProjectRiskViewEntry = {
+  value: 'Self sequence',
+  description:
+    'Users can self sequence transactions by sending them on L1. There is no privileged operator.',
+  sentiment: 'good',
 }
 
 export function SEQUENCER_SELF_SEQUENCE_ZK(
@@ -662,6 +684,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
   DATA_AVAIL,
+  DATA_EIGENDA,
   DATA_POS,
 
   // validatedBy
@@ -676,6 +699,7 @@ export const RISK_VIEW = {
   // sequencerFailure
   SEQUENCER_SELF_SEQUENCE,
   SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
   SEQUENCER_FORCE_VIA_L1,
   SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
   SEQUENCER_FORCE_VIA_L1_LOOPRING,

@@ -1,3 +1,151 @@
+Generated with discovered.json: 0xc8f7d08c6353556f640d1a01f7667065a04a5e8f
+
+# Diff at Thu, 16 Jan 2025 08:05:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a739892e4565ca2cf8f67abed360c494a770dcea block: 21628389
+- current block number: 21635740
+
+## Description
+
+Fastconfirmer added, minimum assertion period reduced to 1 block. This single EOA can push malicious state and withdraw from that state in the next block.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
++        {"permission":"validate","target":"0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA","via":[{"address":"0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501","delay":0,"description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]}
+      issuedPermissions.3:
++        {"permission":"validate","target":"0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA","via":[]}
+      issuedPermissions.2.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.2.target:
+-        "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.2.via.0:
++        {"address":"0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B","delay":0}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "fastconfirm"
+      issuedPermissions.1.target:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
+      issuedPermissions.1.via.0.address:
+-        "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
++        "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501"
+      issuedPermissions.1.via.0.description:
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501"
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        75
++        1
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        2
+      values.validators.1:
++        "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EverclearFastconfirmerMultisig (0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2.sol                               | 1032 ++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
+Generated with discovered.json: 0x953ce27630bc06d272a14b1ea19b6c5bda740a3f
+
+# Diff at Wed, 15 Jan 2025 07:28:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21471461
+- current block number: 21628389
+
+## Description
+
+Two signers added to Gelato MS, now 4/10.
+
+## Watched changes
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.9:
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.8:
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.7:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.6:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+      values.$members.5:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+      values.$members.4:
+-        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.3:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.2:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+      values.$members.1:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.0:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x90fc529b58b455b2841378316e854f905fcd6a5e
+
+# Diff at Wed, 08 Jan 2025 10:44:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@20bf0eaa1dce373e2c004314fef59d2d1bdf5502 block: 21471461
+- current block number: 21471461
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21471461 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x4eb4fB614e1aa3634513319F4Ec7334bC4321356) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      description:
+-        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
++        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0xaabce4f94461ae606fc51cfc9055ea64e36a36ca
 
 # Diff at Tue, 24 Dec 2024 09:33:53 GMT:

@@ -28,7 +28,7 @@ export const blast: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
     tvlWarning: {
-      content: 'The TVL does account for rehypothecated tokens.',
+      content: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -91,7 +91,7 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     // timestamp of the first blob tx
     minTimestamp: new UnixTime(1716846455),
     l2BlockTimeSeconds: 2,

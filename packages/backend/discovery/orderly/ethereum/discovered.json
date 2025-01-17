@@ -1,7 +1,7 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 21078674,
+  "blockNumber": 21637081,
   "configHash": "0x4c4cf0395dd1e496e090c97e2591714a19744192f38a7a6829d6bcfd806d512e",
   "contracts": [
     {
@@ -64,6 +64,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -77,8 +78,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 56,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -137,10 +138,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 16839000,
-        "latestOutputIndex": 9354,
-        "nextBlockNumber": 16840800,
-        "nextOutputIndex": 9355,
+        "latestBlockNumber": 20208600,
+        "latestOutputIndex": 11226,
+        "nextBlockNumber": 20210400,
+        "nextOutputIndex": 11227,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
@@ -302,7 +303,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21051339
+          "prevBlockNum": 21606065
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
@@ -423,7 +424,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619862",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619866",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -489,7 +490,7 @@
         "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -522,6 +523,7 @@
     { "address": "0x08aA34cC843CeEBcC88A627F18430294aA9780be" },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     { "address": "0x71884086Cfacc370cf5EC34363Bf3938C6c6d888" },
     {
       "address": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
@@ -842,7 +844,7 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L1StandardBridge": "0x7646e8d311af4d3b67dc674e167b6f42a20accc7ae822efd2d49ad8ab877f7bf",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
     "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"

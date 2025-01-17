@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x562fccede2ebbf826b9387521eb8aa4414aa0fe9
+
+# Diff at Wed, 08 Jan 2025 09:08:58 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 21564418
+- current block number: 21564418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21564418 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
+Generated with discovered.json: 0x08cf2c4e25744f7a6789f00dfd8095dbc77dd493
+
+# Diff at Mon, 06 Jan 2025 09:06:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@76c326507f3e17f647665da0edde4da6efb7079d block: 21388259
+- current block number: 21564418
+
+## Description
+
+Add external wsteth escrow (matches template).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21388259 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L1ERC20TokenBridge (0x912C7271a6A3622dfb8B218eb46a6122aB046C79)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
 Generated with discovered.json: 0xe28dc8a373f6a6e9c1c5f56db7248039a2e48164
 
 # Diff at Thu, 12 Dec 2024 18:36:42 GMT:

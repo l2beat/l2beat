@@ -18,6 +18,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -71,12 +72,9 @@ export const scalingSummaryColumns = [
     },
     {
       id: 'total',
-      header: 'Total value locked',
+      header: 'Total value secured',
       cell: (ctx) => {
         const value = ctx.row.original.tvl
-        if (value.breakdown?.total === undefined) {
-          return <NoDataBadge />
-        }
 
         return (
           <TotalCell
@@ -91,7 +89,7 @@ export const scalingSummaryColumns = [
       meta: {
         align: 'right',
         tooltip:
-          'Total Value Locked is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
       },
     },
   ),
@@ -102,10 +100,13 @@ export const scalingSummaryColumns = [
       if (!data) {
         return <NoDataBadge />
       }
+
       return (
-        <ValueWithPercentageChange change={data?.change}>
-          {formatActivityCount(ctx.getValue())}
-        </ValueWithPercentageChange>
+        <SyncStatusWrapper isSynced={data.isSynced}>
+          <ValueWithPercentageChange change={data?.change}>
+            {formatActivityCount(ctx.getValue())}
+          </ValueWithPercentageChange>
+        </SyncStatusWrapper>
       )
     },
     sortUndefined: 'last',

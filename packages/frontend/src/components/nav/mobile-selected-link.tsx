@@ -8,8 +8,8 @@ export function MobileSelectedLink({ groups }: { groups: NavGroup[] }) {
   const pathname = usePathname()
   const selectedGroup = groups.find((group) =>
     group.type === 'single'
-      ? group.href === pathname
-      : group.links.some((link) => link.href === pathname),
+      ? pathname.startsWith(group.href)
+      : group.links.some((link) => pathname.startsWith(link.href)),
   )
 
   if (!selectedGroup) return null

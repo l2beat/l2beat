@@ -6,5 +6,16 @@
     "getNumToResolve",
     "resolutionCheckpoints",
     "resolvedSubgames"
-  ]
+  ],
+  "fields": {
+    "absolutePrestateDecoded": {
+      "description": "Prestate tag for known prestates.",
+      "handler": {
+        "type": "call",
+        "method": "absolutePrestate",
+        "args": []
+      },
+      "returnType": "(OpStackAbsolutePrestate)"
+    }
+  }
 }

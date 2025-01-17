@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 import { SentimentText } from '../../sentiment-text'
-import { WarningBar } from '../../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { PizzaRosetteLabels } from '../pizza/pizza-rosette-labels'
 import {
   IndividualPizzaRosetteIcon,
@@ -31,6 +31,7 @@ export interface Props {
   isUpcoming?: boolean
   isUnderReview?: boolean
   className?: string
+  background?: 'header' | 'surface'
 }
 
 export function BigIndividualRosette(props: Props) {
@@ -53,6 +54,7 @@ export function BigIndividualRosette(props: Props) {
           l3={props.l3}
           isUnderReview={isUnderReview}
           className={cn(props.isUpcoming && 'opacity-30')}
+          background={props.background}
         />
         {props.isUpcoming && (
           <UpcomingBadge className="absolute left-[90px] top-[130px]" />
@@ -75,6 +77,7 @@ export function BigIndividualRosette(props: Props) {
               l2={props.l2}
               l3={props.l3}
               isUnderReview={isUnderReview}
+              background={props.background}
             />
           </TooltipTrigger>
           <PizzaRosetteLabels
@@ -109,6 +112,7 @@ function RosetteTooltipContent() {
         </span>
         <SentimentText
           sentiment={content.outer.sentiment}
+          vibrant={true}
           className="flex items-center gap-1 font-medium"
         >
           {content.outer.value}
@@ -117,7 +121,7 @@ function RosetteTooltipContent() {
           <WarningBar
             icon={RoundedWarningIcon}
             text={content.outer.warning.value}
-            color={content.outer.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+            color={sentimentToWarningBarColor(content.outer.warning.sentiment)}
           />
         )}
         <span className="text-xs">{content.outer.description}</span>
@@ -128,6 +132,7 @@ function RosetteTooltipContent() {
         </span>
         <SentimentText
           sentiment={content.inner.sentiment}
+          vibrant={true}
           className="flex items-center gap-1 font-medium"
         >
           {content.inner.value}
@@ -136,7 +141,7 @@ function RosetteTooltipContent() {
           <WarningBar
             icon={RoundedWarningIcon}
             text={content.inner.warning.value}
-            color={content.inner.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+            color={sentimentToWarningBarColor(content.inner.warning.sentiment)}
           />
         )}
 

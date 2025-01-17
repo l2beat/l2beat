@@ -42,7 +42,7 @@ export const fluence: Layer2 = orbitStackL2({
       tokens: '*',
     }),
   ],
-  nativeToken: 'FLT',
+  gasTokens: ['FLT'],
   associatedTokens: ['FLT'],
   rpcUrl: 'https://rpc.mainnet.fluence.dev',
   bridge: discovery.getContract('ERC20Bridge'),

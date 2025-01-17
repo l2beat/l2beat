@@ -1,3 +1,168 @@
+Generated with discovered.json: 0x3503eafda0d0da3d8088681cdf0a5034540c9393
+
+# Diff at Wed, 08 Jan 2025 12:04:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21428964
+- current block number: 21579626
+
+## Description
+
+New plugs and owner changes to a new socket EOA.
+
+## Watched changes
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.144:
++        "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.143:
++        "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.142:
++        "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.141:
++        "0x95c879322BA01e1c7Fe5EB3F3724C49C6aF7e426"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.140:
++        "0x3Deb3254730eEF7c50fb5b133CA0EaeA2e59127d"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.139:
++        "0x1a0e7Efa0F74703A930B2b1Cb6565b1d8981dd85"
+    }
+```
+
+```diff
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xeeF6520437A6545b4F325F6675C4CD49812d457b)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428964 (main branch discovery), not current.
+
+```diff
+    contract USD0++ Vault Polynomial (0xDf9Fa2b420689384E8DD55a706262DC0ED37020F) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+      sourceHashes:
++        ["0xc3321c0d760c3f5fe8845b9fdd3fb32455ca5317920d929526142e921ddc68d9"]
+    }
+```
+
 Generated with discovered.json: 0x9cdfbc24d1629059d43619ffceb966fdb28a3f57
 
 # Diff at Wed, 18 Dec 2024 10:57:41 GMT:

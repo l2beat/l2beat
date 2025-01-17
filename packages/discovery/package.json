@@ -31,9 +31,11 @@
     "ethers": "^5.7.2",
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
+    "lru_map": "0.4.1",
     "mkdirp": "^3.0.0",
     "node-fetch": "^2.6.7",
     "prettier": "^3.0.3",
+    "redis": "^4.7.0",
     "rimraf": "^5.0.0",
     "sqlite3": "^5.1.6",
     "zod": "^3.22.2"

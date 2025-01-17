@@ -1,3 +1,145 @@
+Generated with discovered.json: 0x033936bc27cb3f4400257157fea42bf0205fc92a
+
+# Diff at Thu, 16 Jan 2025 12:10:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3513cb068688b9fa7f9ddd40447f5f70d088c2cf block: 25072565
+- current block number: 25112167
+
+## Description
+
+New verifier added, old one frozen.
+
+## Watched changes
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5.1:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25072565 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      issuedPermissions.1.target:
+-        "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.verifier.0:
+-        "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15.
+      values.oldVerifier5:
++        ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",false]
+      fieldMeta.oldVerifier5:
++        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."}
+    }
+```
+
+```diff
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"configure","target":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x6286fe7d65df00c74c33fdfb8bdc278b379f5dac
+
+# Diff at Wed, 15 Jan 2025 09:48:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 24772641
+- current block number: 25072565
+
+## Description
+
+New Vkey: [v4](https://github.com/succinctlabs/sp1-blobstream/blob/89e058052c0b691898c5b56a62a6fa0270b31627/contracts/script/UpdateVkey.s.sol#L26).
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb"
++        "0x00e30cadab0b8ad6a5f115c5131a14afce4ec4bbf8acf7c821951778a2d97660"
+    }
+```
+
+Generated with discovered.json: 0xdb2b5c704d7ff88d4e06fdd48ea0c7fa14ca5416
+
+# Diff at Wed, 08 Jan 2025 11:10:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 23434494
+- current block number: 24772641
+
+## Description
+
+Remove relayer1 as it is no longer approved.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.isRelayer1Approved:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 23434494 (main branch discovery), not current.
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      issuedPermissions.4:
+-        {"permission":"upgrade","target":"0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6","via":[]}
+      issuedPermissions.3.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.3.target:
+-        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
++        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      issuedPermissions.2.target:
+-        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
++        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
+      issuedPermissions.1.target:
+-        "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d"
++        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      values.relayers.2:
+-        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.1:
+-        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
++        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+      values.relayers.0:
+-        "0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"
++        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
+    }
+```
+
 Generated with discovered.json: 0x59df2631957c2fcd2298bc15d340ec886934759c
 
 # Diff at Thu, 19 Dec 2024 11:57:29 GMT:

@@ -117,6 +117,7 @@ describe(ProjectDiscovery.name, () => {
           chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
+          references: undefined,
           upgradeability: {
             admins: [
               EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
@@ -138,6 +139,7 @@ describe(ProjectDiscovery.name, () => {
           chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
+          references: undefined,
           upgradeability: {
             admins: [
               EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
@@ -159,6 +161,7 @@ describe(ProjectDiscovery.name, () => {
           chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
+          references: undefined,
           upgradeability: {
             admins: [
               EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
@@ -180,6 +183,7 @@ describe(ProjectDiscovery.name, () => {
           chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
+          references: undefined,
           upgradeability: {
             admins: [],
             implementations: [
@@ -199,6 +203,7 @@ describe(ProjectDiscovery.name, () => {
           chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
+          references: undefined,
           upgradeability: {
             proxyType: 'EIP1967 proxy',
             implementations: [

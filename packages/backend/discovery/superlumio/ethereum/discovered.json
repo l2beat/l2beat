@@ -1,7 +1,7 @@
 {
   "name": "superlumio",
   "chain": "ethereum",
-  "blockNumber": 21078678,
+  "blockNumber": 21637088,
   "configHash": "0xa3de6d87fe249159212ec9db1b3ae80c61b4d82bc4ff5937332cbbd63540a240",
   "contracts": [
     {
@@ -77,6 +77,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -90,8 +91,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 56,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -126,7 +127,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625339",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625348",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -228,7 +229,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21058087
+          "prevBlockNum": 21578420
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c",
@@ -356,7 +357,7 @@
         "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -513,10 +514,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 10648800,
-        "latestOutputIndex": 492,
-        "nextBlockNumber": 10670400,
-        "nextOutputIndex": 493,
+        "latestBlockNumber": 14018400,
+        "latestOutputIndex": 648,
+        "nextBlockNumber": 14040000,
+        "nextOutputIndex": 649,
         "PROPOSER": "0xb6E2Eee22b684f6AAb2083097F7E874994bA930e",
         "startingBlockNumber": 0,
         "startingTimestamp": 1708984631,
@@ -535,6 +536,7 @@
     { "address": "0x2919934b66E68B1b6E0d32258B6DE9954463e183" },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     {
       "address": "0x5c53f2fF1030C7fbC0616fD5B8fC6bE97aa27e00",
       "receivedPermissions": [
@@ -868,7 +870,7 @@
     "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x9111ef1dcd42452953522f42115f0396e80b8ffacbe0ee0e3f62763880a6b6cc",
+    "opstack/L1StandardBridge": "0x7646e8d311af4d3b67dc674e167b6f42a20accc7ae822efd2d49ad8ab877f7bf",
     "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",

@@ -1,8 +1,8 @@
 import { type ValueRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary, uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
+import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getTvlProjects } from './utils/get-tvl-projects'
@@ -52,11 +52,11 @@ export const getCachedRecategorizedTvlChartData = cache(
     const projectsFilter = createTvlProjectsFilter(filter)
     const tvlProjects = getTvlProjects(projectsFilter)
 
-    const rollups = tvlProjects.filter(({ category }) => category === 'Rollups')
+    const rollups = tvlProjects.filter(({ category }) => category === 'rollups')
     const validiumsAndOptimiums = tvlProjects.filter(
-      ({ category }) => category === 'ValidiumOrOptimiums',
+      ({ category }) => category === 'validiumsAndOptimiums',
     )
-    const others = tvlProjects.filter(({ category }) => category === 'Others')
+    const others = tvlProjects.filter(({ category }) => category === 'others')
 
     const [rollupValues, validiumAndOptimiumsValues, othersValues] =
       await Promise.all([
@@ -136,8 +136,7 @@ function getMockTvlChartData({
   const target = getTvlTargetTimestamp().toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from =
-    days !== Infinity ? target.add(-days, 'days') : new UnixTime(1573776000)
+  const from = days !== null ? target.add(-days, 'days') : MIN_TIMESTAMPS.tvl
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {

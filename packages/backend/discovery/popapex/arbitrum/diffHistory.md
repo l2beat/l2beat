@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x30220c3c81f4d68dd4e2f9d5ad41e3b751d9541f
+
+# Diff at Thu, 16 Jan 2025 12:44:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b471de2d691e0c6d99ad89859efde79edd3d4dfb block: 287772924
+- current block number: 296027251
+
+## Description
+
+ConduitMultisig2 signer change.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.8:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.7:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.6:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.5:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.4:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.3:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.2:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.1:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.0:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "3 of 9 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x6d1aaaadfce800cf0037e68a2a5bdbcd2eeda096
+
+# Diff at Wed, 08 Jan 2025 10:45:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@20bf0eaa1dce373e2c004314fef59d2d1bdf5502 block: 287772924
+- current block number: 287772924
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287772924 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      description:
+-        "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
++        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+    }
+```
+
 Generated with discovered.json: 0x0f7beb172ab2406543612f097a2858bec4ebcca7
 
 # Diff at Mon, 23 Dec 2024 12:53:01 GMT:

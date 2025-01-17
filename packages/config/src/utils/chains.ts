@@ -1,6 +1,6 @@
 import { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
 
-export type Project = Layer2 | Layer3 | Bridge
+export type CommonProject = Layer2 | Layer3 | Bridge
 
 /**
  * This function is used by checkVerifiedContracts.ts script to know on which
@@ -9,13 +9,13 @@ export type Project = Layer2 | Layer3 | Bridge
  * @param projects
  * @returns chain names of all the contracts and escrows in the provided projects.
  */
-export function getChainNames(...projects: Project[]): string[] {
+export function getChainNames(...projects: CommonProject[]): string[] {
   return projects
     .flatMap(getProjectDevIds)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-export function getProjectDevIds(project: Project): string[] {
+export function getProjectDevIds(project: CommonProject): string[] {
   const escrowContracts = project.config.escrows.flatMap((escrow) => {
     if (!escrow.newVersion) {
       return []

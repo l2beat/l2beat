@@ -7,12 +7,12 @@ import { Providers } from '../../providers/Providers'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { FinalityIndexer } from './FinalityIndexer'
-import { LineaT2IAnalyzer } from './analyzers/LineaT2IAnalyzer'
 import { LoopringT2IAnalyzer } from './analyzers/LoopringT2IAnalyzer'
 import { ScrollT2IAnalyzer } from './analyzers/ScrollT2IAnalyzer'
 import { StarknetT2IAnalyzer } from './analyzers/StarknetT2IAnalyzer'
 import { ZkSyncLiteT2IAnalyzer } from './analyzers/ZkSyncLiteT2IAnalyzer'
 import { ArbitrumT2IAnalyzer } from './analyzers/arbitrum/ArbitrumT2IAnalyzer'
+import { LineaT2IAnalyzer } from './analyzers/linea/LineaT2IAnalyzer'
 import { OpStackStateUpdateAnalyzer } from './analyzers/opStack/OpStackStateUpdateAnalyzer'
 import { OpStackT2IAnalyzer } from './analyzers/opStack/OpStackT2IAnalyzer'
 import { PolygonZkEvmT2IAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmT2IAnalyzer'
@@ -94,10 +94,10 @@ function initializeConfigurations(
             projectId: configuration.projectId,
             analyzers: {
               timeToInclusion: new LineaT2IAnalyzer(
+                blobProvider,
                 ethereumClient,
                 database,
                 configuration.projectId,
-                providers.clients.getRpcClient(configuration.projectId),
               ),
             },
             minTimestamp: configuration.minTimestamp,
@@ -116,7 +116,7 @@ function initializeConfigurations(
             minTimestamp: configuration.minTimestamp,
             stateUpdateMode: configuration.stateUpdate,
           }
-        case 'OPStack-blob':
+        case 'OPStack':
           return {
             projectId: configuration.projectId,
             analyzers: {

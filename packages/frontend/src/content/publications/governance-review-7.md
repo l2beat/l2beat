@@ -93,7 +93,7 @@ J_Nicolas from PolygonLabs - zkEVM [announced](https://forum.polygon.technology/
 
 **Discuss with L2BEAT**
 
-We’re interested in discussing both the Polygon Restaking Layer and the Account Abstraction poroposals.
+We’re interested in discussing both the Polygon Restaking Layer and the Account Abstraction proposals.
 
 **When/where to catch us:**
 

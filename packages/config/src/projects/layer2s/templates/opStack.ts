@@ -68,6 +68,13 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   bridge: DA_BRIDGES.NONE,
 }
 
+export const EIGENDA_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.EIGEN_DA,
+  riskView: RISK_VIEW.DATA_EIGENDA(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
+  bridge: DA_BRIDGES.NONE,
+}
+
 export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
@@ -95,6 +102,7 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  architectureImage?: string
   isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
@@ -138,6 +146,9 @@ interface OpStackConfigCommon {
   additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  riskView?: ScalingProjectRiskView
+  gasTokens?: string[]
+  usingAltVm?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -152,7 +163,6 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
   }
   stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
-  nativeToken?: string
 }
 
 function opStackCommon(
@@ -171,9 +181,12 @@ function opStackCommon(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
 
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -212,6 +225,9 @@ function opStackCommon(
     upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
+  const automaticBadges = templateVars.usingAltVm
+    ? [Badge.Stack.OPStack, daBadge]
+    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
   return {
     isArchived: templateVars.isArchived,
@@ -280,7 +296,7 @@ function opStackCommon(
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
-        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
         references: [
           {
             text: 'Sequencing Window - OP Mainnet Specs',
@@ -396,11 +412,7 @@ function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: mergeBadges(
-      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.additionalBadges ?? [],
-    ),
-    discoveryDrivenData: templateVars.discoveryDrivenData,
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
   }
 }
 
@@ -429,18 +441,21 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
 
   if (daProvider === undefined) {
     assert(
@@ -464,7 +479,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     ...opStackCommon(templateVars),
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage,
+      architectureImage: templateVars.architectureImage ?? architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category:
@@ -503,6 +518,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: portal.address,
@@ -570,7 +586,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    dataAvailability: [
+    dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -588,8 +604,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
-    ],
-    riskView: {
+    riskView: templateVars.riskView ?? {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
         secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
@@ -770,7 +785,9 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(
+      templateVars.gasTokens ?? ['ETH'],
+    ),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }
 
@@ -867,18 +884,17 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         : templateVars.stage,
     dataAvailability:
       daProvider !== undefined
-        ? [
-            addSentimentToDataAvailability({
-              layers: daProvider.fallback
-                ? [daProvider.layer, daProvider.fallback]
-                : [daProvider.layer],
-              bridge: daProvider.bridge,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }),
-          ]
+        ? addSentimentToDataAvailability({
+            layers: daProvider.fallback
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
+            bridge: daProvider.bridge,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+          })
         : baseChain.dataAvailability,
     config: {
       associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: false,

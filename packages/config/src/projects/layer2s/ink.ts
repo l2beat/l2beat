@@ -138,6 +138,7 @@ export const ink: Layer2 = {
   display: {
     name: 'Ink',
     slug: 'ink',
+    stateValidationImage: 'opfp',
     description:
       'Ink is an Optimistic Rollup built with the OP Stack by Kraken exchange.',
     purposes: ['Universal'],
@@ -192,7 +193,7 @@ export const ink: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       minTimestamp: new UnixTime(1733502012),
       genesisTimestamp: new UnixTime(1733498411),
       l2BlockTimeSeconds: 2,
@@ -228,13 +229,11 @@ export const ink: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: (() => {
       assert(
@@ -283,11 +282,13 @@ export const ink: Layer2 = {
       references: [
         {
           text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: 'https://etherscan.io/address/0x10d7B35078d3baabB96Dd45a9143B94be65b12CD#code',
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            disputeGameFactory,
+          )}#code`,
         },
         {
           text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059#code',
+          href: 'https://etherscan.io/address/0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963#code',
         },
       ],
     },
@@ -312,7 +313,7 @@ export const ink: Layer2 = {
     },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
           text: 'Sequencing Window - OP Mainnet Specs',
@@ -443,6 +444,25 @@ export const ink: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
+  chainConfig: {
+    name: 'ink',
+    chainId: 57073,
+    blockscoutV2ApiUrl: 'https://explorer.inkonchain.com/api/v2/',
+    explorerUrl: 'https://explorer.inkonchain.com/',
+    explorerApi: {
+      url: 'https://explorer.inkonchain.com/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1733498411),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1,
+        version: '3',
+      },
+    ],
+  },
   milestones: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

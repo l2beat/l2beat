@@ -44,13 +44,11 @@ const challengePeriod = discovery.getContractValue<number>(
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
   createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   display: {
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Fuel Ignition',
@@ -205,7 +203,7 @@ export const fuel: Layer2 = {
     },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
           text: 'FuelMessagePortalV3.sol - Etherscan source code, sendMessage function',
@@ -281,7 +279,7 @@ export const fuel: Layer2 = {
       ),
     },
     ...discovery.getMultisigPermission(
-      'FuelMultisig',
+      'FuelSecurityCouncil',
       'Can upgrade the FuelERC20Gateway, FuelMessagePortal and FuelChainState contracts, potentially gaining access to all funds. It can unpause contracts and remove L2->L1 messages from the blacklist. It can also limit the tokens that can be bridged to L2.',
     ),
   ],
@@ -289,18 +287,18 @@ export const fuel: Layer2 = {
     addresses: [
       discovery.getContractDetails('FuelERC20Gateway', {
         description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
-        upgradableBy: ['FuelMultisig'],
+        upgradableBy: ['FuelSecurityCouncil'],
         upgradeDelay: 'None',
       }),
       discovery.getContractDetails('FuelMessagePortal', {
         description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
-        upgradableBy: ['FuelMultisig'],
+        upgradableBy: ['FuelSecurityCouncil'],
         upgradeDelay: 'None',
       }),
       discovery.getContractDetails('FuelChainState', {
         description:
           'Contract that allows state root submissions and settlement.',
-        upgradableBy: ['FuelMultisig'],
+        upgradableBy: ['FuelSecurityCouncil'],
         upgradeDelay: 'None',
       }),
     ],

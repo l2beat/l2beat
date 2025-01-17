@@ -5,8 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { useIsClient } from '~/hooks/use-is-client'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
 import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
 import { Skeleton } from '../../core/skeleton'
@@ -44,15 +44,16 @@ export function ChartTimeRangeControls<T extends string>({
   if (showSelect) {
     return (
       <Select value={value} onValueChange={setValue}>
-        <SelectTrigger className="z-[0] h-8">
+        <SelectTrigger className={cn('z-[0] h-8 bg-surface-secondary')}>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-surface-secondary">
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
               disabled={option.disabled}
+              className="focus:bg-surface-tertiary"
             >
               {option.label}
             </SelectItem>

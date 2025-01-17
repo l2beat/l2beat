@@ -16,7 +16,7 @@ export const winr: Layer3 = orbitStackL3({
     Badge.RaaS.Conduit,
   ],
   additionalPurposes: ['Gaming'],
-  hostChain: ProjectId.ARBITRUM,
+  hostChain: ProjectId('arbitrum'),
   display: {
     reasonsForBeingOther: [
       REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -38,7 +38,7 @@ export const winr: Layer3 = orbitStackL3({
   },
   rpcUrl: 'https://rpc.winr.games',
   associatedTokens: ['WINR'],
-  nativeToken: 'WINR',
+  gasTokens: ['WINR'],
   nonTemplateEscrows: [
     {
       chain: 'arbitrum',

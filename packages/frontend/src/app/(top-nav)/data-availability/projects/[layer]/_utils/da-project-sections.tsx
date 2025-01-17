@@ -7,11 +7,7 @@ import {
   type NoDaBridge,
   type OnChainDaBridge,
 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type ManuallyVerifiedContracts,
-} from '@l2beat/shared-pure'
-import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -27,9 +23,9 @@ type RegularDetailsParams = {
   daBridge: OnChainDaBridge | DacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
-  manuallyVerifiedContracts: ManuallyVerifiedContracts
   projectsChangeReport: ProjectsChangeReport
-  evaluatedGrissiniValues: RosetteValue[]
+  layerGrissiniValues: RosetteValue[]
+  bridgeGrissiniValues: RosetteValue[]
 }
 
 export function getRegularDaProjectSections({
@@ -37,9 +33,9 @@ export function getRegularDaProjectSections({
   daBridge,
   isVerified,
   contractsVerificationStatuses,
-  manuallyVerifiedContracts,
   projectsChangeReport,
-  evaluatedGrissiniValues,
+  layerGrissiniValues,
+  bridgeGrissiniValues,
 }: RegularDetailsParams) {
   const relatedScalingProject =
     daBridge.type === 'DAC' && daBridge.usedIn.length === 1
@@ -55,7 +51,6 @@ export function getRegularDaProjectSections({
       dacUsedIn: relatedScalingProject,
     },
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
   )
 
   const contractsSection = getMultiChainContractsSection(
@@ -68,7 +63,6 @@ export function getRegularDaProjectSections({
       dacUsedIn: relatedScalingProject,
     },
     contractsVerificationStatuses,
-    manuallyVerifiedContracts,
     projectsChangeReport,
   )
 
@@ -92,7 +86,7 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: evaluatedGrissiniValues,
+      grissiniValues: layerGrissiniValues,
     },
   })
 
@@ -122,7 +116,7 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
+      grissiniValues: bridgeGrissiniValues,
       hideRisks: daBridge.type === 'NoBridge',
     },
   })

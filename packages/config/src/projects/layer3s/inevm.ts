@@ -12,7 +12,7 @@ export const inevm: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
   additionalPurposes: ['Interoperability'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
-  hostChain: ProjectId.ARBITRUM,
+  hostChain: ProjectId('arbitrum'),
   display: {
     reasonsForBeingOther: [
       REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -49,7 +49,7 @@ export const inevm: Layer3 = orbitStackL3({
       tokens: '*',
     }),
   ],
-  // nativeToken: 'INJ',
+  // gasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   rpcUrl: 'https://inevm.calderachain.xyz/http',
   discovery,

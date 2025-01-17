@@ -1,3 +1,146 @@
+Generated with discovered.json: 0xcee509905e5d8edf024841e772a1c85cfb0bb15f
+
+# Diff at Fri, 10 Jan 2025 15:23:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13c134b0211f75779d58c36868cbda90565479ce block: 21579385
+- current block number: 21579385
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579385 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xc98f03651ddf430db5e0fa5d49b57551e01975529019ff3fbc1897109cd6dc9e"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xcd6a67da07fdd0ff4f75a99bf03d70659a6a00d98f1219b1aff2756b7ce971bd"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV0 (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x29ee0fd7e29697f9960266e0f8fc2b84b927300952d489ee40ea3cff695bd819"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x438a888895bdfdd405a223087c58ce76dcd866a0c5e208b94c63e83922724cb3"]
+      references:
++        [{"text":"Source Code","href":"https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"}]
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xdd6da115b0a4c879746bcca2a71fa1daa79f7e3a074369d9246f614b327e9322"]
+      references:
++        [{"text":"Source Code","href":"https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"}]
+    }
+```
+
+Generated with discovered.json: 0x16c05b9aad122da9bb70b5a2bef9a422726b1ce1
+
+# Diff at Wed, 08 Jan 2025 11:14:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21543805
+- current block number: 21579385
+
+## Description
+
+One address removed from the whitelist (for actors that can set the l2 base fee on L1).
+
+## Watched changes
+
+```diff
+    contract Whitelist (0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37) {
+    +++ description: None
+      values.whitelisted.1:
+-        "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"
+      values.whitelisted.0:
+-        "0x21b8a9F5a4640c3FC13E19C48e776173e1210995"
++        "0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"
+    }
+```
+
+Generated with discovered.json: 0x92c5aa762d09f5cd371ec95e75a5e9d0e39f8600
+
+# Diff at Fri, 03 Jan 2025 11:58:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21465455
+- current block number: 21543805
+
+## Description
+
+Scroll operator addresses removed / changed.
+
+## Watched changes
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.provers.3:
+-        "0x74b286304576625557629C47E9E8702383D9eF92"
+      values.provers.2:
+-        "0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c"
+      values.provers.1:
+-        "0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06"
++        "0x74b286304576625557629C47E9E8702383D9eF92"
+      values.provers.0:
+-        "0x356483dC32B004f32Ea0Ce58F7F88879886e9074"
++        "0x6F9D816c4ec365Fe8Fc6898c785Be0E2D51bEC2c"
+      values.sequencers.3:
+-        "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
+      values.sequencers.2:
+-        "0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B"
+      values.sequencers.1:
+-        "0x2ce8B4A516ebBc8B425764a867B742F76C2244c7"
++        "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
+      values.sequencers.0:
+-        "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f"
++        "0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B"
+    }
+```
+
 Generated with discovered.json: 0x384419632caf39432c39bdffcdd60bf8377b7b8d
 
 # Diff at Mon, 23 Dec 2024 13:24:40 GMT:

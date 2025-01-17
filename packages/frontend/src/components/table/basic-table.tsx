@@ -59,6 +59,7 @@ export function BasicTable<T extends CommonProjectEntry>(
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
   const actualHeader = maxDepth === 1 ? headerGroups[1]! : headerGroups[0]!
 
+  const rows = getTableRows(props.table)
   return (
     <Table>
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
@@ -155,12 +156,16 @@ export function BasicTable<T extends CommonProjectEntry>(
         </TableHeaderRow>
       </TableHeader>
       <TableBody>
-        {props.children ??
-          props.table
-            .getRowModel()
-            .rows.map((row) => (
+        {props.children ?? (
+          <>
+            {rows.ethereumEntry && (
+              <BasicTableRow row={rows.ethereumEntry} {...props} />
+            )}
+            {rows.rest.map((row) => (
               <BasicTableRow row={row} key={row.id} {...props} />
             ))}
+          </>
+        )}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
       </TableBody>
     </Table>
@@ -248,7 +253,7 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
     return (
       <React.Fragment key={header.id}>
         <colgroup
-          className={cn(!header.isPlaceholder && 'bg-surface-table-group')}
+          className={cn(!header.isPlaceholder && 'bg-header-secondary')}
         >
           {range(header.colSpan).map((i) => (
             <col key={`${header.id}-${i}`} />
@@ -327,4 +332,21 @@ export function getBasicTableHref(
   }
 
   return `${href}#${hash}`
+}
+
+function getTableRows<T extends CommonProjectEntry>(table: TanstackTable<T>) {
+  const rows = table.getRowModel().rows
+
+  let ethereumEntry: Row<T> | undefined
+  const rest: Row<T>[] = []
+
+  for (const row of rows) {
+    if (row.original.slug === 'ethereum') {
+      ethereumEntry = row
+      continue
+    }
+    rest.push(row)
+  }
+
+  return { ethereumEntry, rest }
 }

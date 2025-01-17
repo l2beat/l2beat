@@ -13,7 +13,7 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 import { SentimentText } from '../../sentiment-text'
-import { WarningBar } from '../../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
 import { TwoRowCell } from './two-row-cell'
 
@@ -75,7 +75,7 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
               className="mb-2"
               text={risk.warning.value}
               icon={RoundedWarningIcon}
-              color={risk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+              color={sentimentToWarningBarColor(risk.warning.sentiment)}
               ignoreMarkdown
             />
           )}

@@ -5,7 +5,7 @@
   "main": "./build/data.json",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "./scripts/build.sh",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "clean": "rm -rf build",
     "discover": "ts-node --transpile-only scripts/discoveryWrapperCli.ts",
@@ -28,13 +28,12 @@
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
+    "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "restore-tvl": "pnpm --filter ../database restore-tvl",
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev"
   },
   "dependencies": {
-    "@bugsnag/js": "^7.22.3",
-    "@bugsnag/plugin-koa": "^7.19.0",
     "@google-cloud/bigquery": "^7.3.0",
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "workspace:*",

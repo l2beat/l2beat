@@ -353,12 +353,12 @@ export const linea: Layer2 = {
         to: 'proofSubmissions',
       },
     },
-    // finality: { // fn sigs changed in the alpha v4 upgrade, and the finality analyzer would only work with blob data (basti has a working branch)
-    //   type: 'Linea',
-    //   lag: 0,
-    //   minTimestamp: new UnixTime(1717588271),
-    //   stateUpdate: 'disabled',
-    // },
+    finality: {
+      type: 'Linea',
+      lag: 0,
+      minTimestamp: new UnixTime(1717588271),
+      stateUpdate: 'disabled',
+    },
   },
   chainConfig: {
     name: 'linea',
@@ -380,13 +380,11 @@ export const linea: Layer2 = {
     ],
     coingeckoPlatform: 'linea',
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,

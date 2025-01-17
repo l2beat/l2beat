@@ -1,7 +1,7 @@
 {
   "name": "xchain",
   "chain": "ethereum",
-  "blockNumber": 21465246,
+  "blockNumber": 21637090,
   "configHash": "0x57f98e53babcb348bd5378a6ab30ba2cc79502ca75aa60a8c58466ec4a895a56",
   "contracts": [
     {
@@ -200,7 +200,7 @@
         "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -240,11 +240,11 @@
           "0x6c8faa6b06d4bDD5Af628ac28954736a0fC0BD6b"
         ],
         "allowedOutboxList": ["0x0b8071337dcB089478Ea740efC10904d9F359141"],
-        "delayedMessageCount": 54,
+        "delayedMessageCount": 55,
         "rollup": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerInbox": "0x47861E0419BE83d0175818a09221B6DF2EFD7793",
-        "sequencerMessageCount": 1367,
-        "sequencerReportedSubMessageCount": 1464410
+        "sequencerMessageCount": 1610,
+        "sequencerReportedSubMessageCount": 1897240
       }
     },
     {
@@ -296,7 +296,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 1367,
+        "batchCount": 1610,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x74978411BbBCbC466e79fb855DAe981997100deB"],
         "bridge": "0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1",
@@ -326,7 +326,7 @@
         "rollup": "0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 54,
+        "totalDelayedMessagesRead": 55,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -426,6 +426,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -439,8 +440,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 70,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -699,12 +700,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 396,
+        "firstUnresolvedNode": 444,
         "inbox": "0xE961Ef06c26D0f032F0298c97C41e648d3bb715a",
         "isERC20Enabled": false,
         "lastStakeBlock": 19938496,
-        "latestConfirmed": 395,
-        "latestNodeCreated": 406,
+        "latestConfirmed": 443,
+        "latestNodeCreated": 454,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0b8071337dcB089478Ea740efC10904d9F359141",
@@ -801,6 +802,7 @@
     },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
+    { "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628" },
     {
       "address": "0x74978411BbBCbC466e79fb855DAe981997100deB",
       "receivedPermissions": [
@@ -1429,7 +1431,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
+    "orbitstack/Bridge": "0xbf3086cfe461b5cddc0ca0473fd46a2d3d521ef3860d13221d24c902c0013175",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
     "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",

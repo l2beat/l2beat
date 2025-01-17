@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function CostsTimeRangeContextProvider({ children }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('30d')
+  const [range, setRange] = useState<CostsTimeRange>('1y')
   return (
     <CostsTimeRangeContext.Provider
       value={{

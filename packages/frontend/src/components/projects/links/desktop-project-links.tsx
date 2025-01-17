@@ -22,15 +22,15 @@ interface Props {
 
 export function DesktopProjectLinks({ projectLinks }: Props) {
   return (
-    <div>
-      <NavigationMenu>
+    <NavigationMenu asChild>
+      <div>
         <NavigationMenuList>
           {projectLinks.map((link) => (
             <ProjectLinkItem key={link.name} projectLink={link} />
           ))}
         </NavigationMenuList>
-      </NavigationMenu>
-    </div>
+      </div>
+    </NavigationMenu>
   )
 }
 
@@ -44,6 +44,8 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
           target="_blank"
           className={cn(
             navigationMenuTriggerStyle(),
+            'bg-header-secondary',
+            'ring-inset ring-brand focus:ring-2',
             'flex flex-row items-center gap-1.5',
           )}
         >
@@ -61,11 +63,11 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger>
+      <NavigationMenuTrigger className="bg-header-secondary ring-inset ring-brand focus:ring-2">
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
+      <NavigationMenuContent className="bg-header-secondary">
         {projectLink.links.map((link) => {
           const parsedSocial =
             projectLink.name === 'Social' ? parseSocial(link) : undefined
@@ -77,6 +79,7 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
               target="_blank"
               className={cn(
                 navigationMenuTriggerStyle(),
+                'bg-header-secondary hover:bg-surface-tertiary focus:bg-surface-tertiary',
                 'flex w-full justify-start gap-1.5',
               )}
             >

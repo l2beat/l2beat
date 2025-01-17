@@ -1,25 +1,33 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import {
+  type Project,
+  ProjectService,
+  type WarningWithSentiment,
+} from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import {
-  type SevenDayTvlBreakdown,
+  type ProjectSevenDayTvlBreakdown,
   get7dTvlBreakdown,
 } from './utils/get-7d-tvl-breakdown'
 
 export async function getScalingTvlEntries() {
-  const projects = [...layer2s, ...layer3s].filter(
-    (project) => !project.isUpcoming && !project.isArchived,
-  )
-
-  const [projectsChangeReport, tvl] = await Promise.all([
+  const [projectsChangeReport, tvl, projects] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvlBreakdown(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'scalingInfo', 'tvlInfo'],
+      optional: ['countdowns'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
   ])
 
   const entries = projects
@@ -30,35 +38,37 @@ export async function getScalingTvlEntries() {
         tvl.projects[project.id.toString()],
       ),
     )
-    .filter((entry) => entry.tvl.data)
+    .filter((entry) => entry !== undefined)
     .sort(compareStageAndTvl)
 
   return groupByTabs(entries)
 }
 
-export type ScalingTvlEntry = Awaited<ReturnType<typeof getScalingTvlEntry>>
+export interface ScalingTvlEntry extends CommonScalingEntry {
+  tvl: {
+    data: ProjectSevenDayTvlBreakdown | undefined
+    associatedTokens: string[]
+    warnings: WarningWithSentiment[]
+  }
+  tvlOrder: number
+}
+
 function getScalingTvlEntry(
-  project: Layer2 | Layer3,
+  project: Project<'scalingInfo' | 'statuses' | 'tvlInfo', 'countdowns'>,
   changes: ProjectChanges,
-  latestTvl: SevenDayTvlBreakdown['projects'][string] | undefined,
-) {
+  data: ProjectSevenDayTvlBreakdown | undefined,
+): ScalingTvlEntry | undefined {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
-    href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
+    ...getCommonScalingEntry({
+      project,
+      changes,
+    }),
+    href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvl: {
-      data: latestTvl && {
-        total: latestTvl.total,
-        breakdown: latestTvl.breakdown,
-        change: latestTvl.change,
-        associatedTokensExcludedChange:
-          latestTvl.associatedTokensExcludedChange,
-      },
-      associatedTokens: project.config.associatedTokens ?? [],
-      warnings: [project.display.tvlWarning].filter(notUndefined),
+      data,
+      associatedTokens: project.tvlInfo.associatedTokens,
+      warnings: project.tvlInfo.warnings,
     },
-    tvlOrder:
-      (latestTvl?.breakdown.canonical ?? 0) +
-      (latestTvl?.breakdown.native ?? 0) +
-      (latestTvl?.breakdown.external ?? 0),
+    tvlOrder: data?.breakdown.total ?? -1,
   }
 }

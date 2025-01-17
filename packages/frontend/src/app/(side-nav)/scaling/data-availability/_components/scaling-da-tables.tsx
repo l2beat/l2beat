@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -6,19 +7,20 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import {
   OthersInfo,
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
+import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
-import { ScalingDataAvailabilityTable } from './table/scaling-da-table'
+import { ScalingDaTable } from './table/scaling-da-table'
 
-type Props = TabbedScalingEntries<ScalingDataAvailabilityEntry>
+type Props = TabbedScalingEntries<ScalingDaEntry>
 
 export function ScalingDaTables(props: Props) {
   const includeFilters = useScalingFilter()
@@ -28,6 +30,18 @@ export function ScalingDaTables(props: Props) {
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others.filter(includeFilters),
   }
+
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
+        .filter((project) => project.statuses?.countdowns?.otherMigration)
+        .map((project) => ({
+          slug: project.slug,
+          name: project.name,
+        })),
+    [props.others, props.rollups, props.validiumsAndOptimiums],
+  )
+
   const initialSort = {
     id: '#',
     desc: false,
@@ -48,7 +62,7 @@ export function ScalingDaTables(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
             <CountBadge>
               {filteredEntries.validiumsAndOptimiums.length}
@@ -63,25 +77,24 @@ export function ScalingDaTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingDataAvailabilityTable
-              entries={filteredEntries.rollups}
-              rollups
-            />
+            <ScalingDaTable entries={filteredEntries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
+          <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <ScalingDataAvailabilityTable
-              entries={filteredEntries.validiumsAndOptimiums}
-            />
+            <ScalingDaTable entries={filteredEntries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {filteredEntries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />
-              <ScalingDataAvailabilityTable entries={filteredEntries.others} />
+              <ScalingDaTable entries={filteredEntries.others} />
+              <OtherMigrationTabNotice
+                projectsToBeMigrated={projectToBeMigratedToOthers}
+                className="mt-2"
+              />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

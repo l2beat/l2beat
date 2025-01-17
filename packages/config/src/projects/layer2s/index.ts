@@ -27,6 +27,7 @@ import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
+import { corn } from './corn'
 import { coti } from './coti'
 import { creator } from './creator'
 import { cronoszkevm } from './cronoszkevm'
@@ -43,6 +44,7 @@ import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
+import { facet } from './facet'
 import { fhenix } from './fhenix'
 import { fluence } from './fluence'
 import { fluent } from './fluent'
@@ -60,6 +62,7 @@ import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { gwyneth } from './gwyneth'
 import { happychain } from './happychain'
+import { haust } from './haust'
 import { hemi } from './hemi'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
@@ -89,6 +92,7 @@ import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
+import { memento } from './memento'
 import { metal } from './metal'
 import { metis } from './metis'
 import { millicent } from './millicent'
@@ -116,6 +120,7 @@ import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
 import { payy } from './payy'
+import { phala } from './phala'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
@@ -221,6 +226,7 @@ export const layer2s: Layer2[] = [
   cyber,
   canvasconnect,
   coti,
+  corn,
   creator,
   cronoszkevm,
   dbk,
@@ -234,6 +240,7 @@ export const layer2s: Layer2[] = [
   edgeless,
   ethernity,
   everclear,
+  facet,
   fhenix,
   fluence,
   fluent,
@@ -252,6 +259,7 @@ export const layer2s: Layer2[] = [
   gwyneth,
   hemi,
   happychain,
+  haust,
   hermez,
   hybrid,
   hychain,
@@ -282,6 +290,7 @@ export const layer2s: Layer2[] = [
   eclipse,
   mantapacific,
   mantle,
+  memento,
   metal,
   metis,
   mint,
@@ -309,6 +318,7 @@ export const layer2s: Layer2[] = [
   parallel,
   patex,
   payy,
+  phala,
   playchain,
   plumenetwork,
   polygonmiden,

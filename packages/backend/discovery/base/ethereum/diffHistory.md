@@ -1,3 +1,206 @@
+Generated with discovered.json: 0x0287d4c942d7e9c017e5b1c3983ac69509e72661
+
+# Diff at Thu, 16 Jan 2025 10:14:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3513cb068688b9fa7f9ddd40447f5f70d088c2cf block: 21628432
+- current block number: 21628432
+
+## Description
+
+Add decoding of absolute prestate hashes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628432 (main branch discovery), not current.
+
+```diff
+    contract FaultDisputeGame (0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
++++ description: Prestate tag for known prestates.
+      values.absolutePrestateDecoded:
++        "v1.4.0 (govApproved)"
+      fieldMeta:
++        {"absolutePrestateDecoded":{"description":"Prestate tag for known prestates."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9":"v1.4.1-rc.2 (cannon64)","0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2":"v1.4.1-rc.2","0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b":"v1.4.0 (cannon64)","0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568":"v1.4.0 (govApproved)","0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725":"v1.4.0-rc.2 (cannon64)","0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095":"v1.4.0-rc.2","0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6":"v1.4.0-rc.1 (cannon64)","0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe":"v1.4.0-rc.1","0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc":"v1.3.1-ink","0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c":"v1.3.1 (govApproved)","0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a":"v1.3.1-rc.1","0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922":"v1.3.0-rc.3","0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba":"v1.3.0-rc.2","0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673":"v1.3.0-rc.1","0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea":"v1.2.0 (govApproved)","0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b":"v1.1.0","0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e":"v1.0.1","0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55":"v1.0.0 (govApproved)","0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421":"v0.3.0","0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808":"v0.2.0","0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538":"v0.1.0","0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd":"v0.0.1"}}]
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xF62c15e2F99d4869A925B8F57076cD85335832A2) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
++++ description: Prestate tag for known prestates.
+      values.absolutePrestateDecoded:
++        "v1.4.0 (govApproved)"
+      fieldMeta:
++        {"absolutePrestateDecoded":{"description":"Prestate tag for known prestates."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9":"v1.4.1-rc.2 (cannon64)","0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2":"v1.4.1-rc.2","0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b":"v1.4.0 (cannon64)","0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568":"v1.4.0 (govApproved)","0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725":"v1.4.0-rc.2 (cannon64)","0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095":"v1.4.0-rc.2","0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6":"v1.4.0-rc.1 (cannon64)","0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe":"v1.4.0-rc.1","0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc":"v1.3.1-ink","0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c":"v1.3.1 (govApproved)","0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a":"v1.3.1-rc.1","0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922":"v1.3.0-rc.3","0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba":"v1.3.0-rc.2","0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673":"v1.3.0-rc.1","0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea":"v1.2.0 (govApproved)","0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b":"v1.1.0","0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e":"v1.0.1","0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55":"v1.0.0 (govApproved)","0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421":"v0.3.0","0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808":"v0.2.0","0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538":"v0.1.0","0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd":"v0.0.1"}}]
+    }
+```
+
+Generated with discovered.json: 0x866814316f0b8d05b0e46326753663375d715b3e
+
+# Diff at Wed, 15 Jan 2025 07:37:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21585153
+- current block number: 21628432
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585153 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0x8162b70f249c2ffb273240611d6848b12ba7114e
+
+# Diff at Thu, 09 Jan 2025 06:32:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 21573134
+- current block number: 21585153
+
+## Description
+
+Note: The PermissionedDisputeGame and FaultDisputeGame contracts are not identical to the ones used by OP mainnet (minor changes).
+
+New MIPS, PermissionedDisputeGame, FaultDisputeGame contracts.
+
+- interop: add `hashL2toL2CrossDomainMessage()` and `_dependencySet` (in 'encoding' and 'hashing' libraries)
+- formatting and doc changes
+- removal of interfaces (IDisputeGame, IFaultDisputeGame)
+- no changes in DelayedWETH
+
+### MIPS
+
+Refactor: [64bit architecture and multithreading support](https://github.com/ethereum-optimism/docs/issues/1066).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x19009dEBF8954B610f207D5925EEDe827805986e)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract DisputeGameFactory (0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0x19009dEBF8954B610f207D5925EEDe827805986e"
++        "0xF62c15e2F99d4869A925B8F57076cD85335832A2"
+      values.gameImpls.0:
+-        "0xCd3c0194db74C23807D4B90A5181e1B28cF7007C"
++        "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0xCd3c0194db74C23807D4B90A5181e1B28cF7007C)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0xF62c15e2F99d4869A925B8F57076cD85335832A2)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21573134 => .flat}/FaultDisputeGame.sol | 601 +++++++++++---------
+ .../ethereum/{.flat@21573134 => .flat}/MIPS.sol    | 444 +++++++++++----
+ .../PermissionedDisputeGame.sol                    | 623 ++++++++++++---------
+ 3 files changed, 1009 insertions(+), 659 deletions(-)
+```
+
+Generated with discovered.json: 0x374c33b6877ee2614be249fc8b8cbe8105b4f807
+
+# Diff at Wed, 08 Jan 2025 08:58:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 21573134
+- current block number: 21573134
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21573134 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
+Generated with discovered.json: 0x9bb8d6009e9f1a4109085ffc2c21b7eab10d0e29
+
+# Diff at Tue, 07 Jan 2025 14:18:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9139908c611ea9cf6755f22c4be71ff58d7dc547 block: 21388295
+- current block number: 21573134
+
+## Description
+
+Add sky / maker USDS escrow (canonical external).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21388295 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Escrow (0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x53bf656cb3e16e506d5d5788ac81e19d0e034b8f
 
 # Diff at Thu, 12 Dec 2024 18:44:40 GMT:

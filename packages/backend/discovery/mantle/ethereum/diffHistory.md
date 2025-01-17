@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xf202b3e2b7deb442dc71e59c448b9307497b8d31
+
+# Diff at Wed, 15 Jan 2025 07:44:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 20928041
+- current block number: 21628468
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0x56a3eef31355d8dbf683b9b688070ace8be3d26e
+
+# Diff at Wed, 08 Jan 2025 09:03:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 20928041
+- current block number: 20928041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
 Generated with discovered.json: 0xe53857c87cf6112b4a07960caadccfe172c5ded2
 
 # Diff at Fri, 01 Nov 2024 12:09:55 GMT:

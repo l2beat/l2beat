@@ -45,9 +45,6 @@ function collectUsedTemplatesWithHashes(
 export function processAnalysis(
   results: Analysis[],
 ): Pick<DiscoveryOutput, 'contracts' | 'eoas' | 'abis'> {
-  // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
-  // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
-
   const resolvedPermissions = resolveAnalysis(results)
 
   const { contracts, abis } = getContracts(results)
@@ -62,6 +59,12 @@ export function processAnalysis(
             resolvedPermissions,
             x.combinedMeta?.permissions,
           )
+
+        const references = undefinedIfEmpty([
+          ...(x.selfMeta?.references ?? []),
+          ...(x.references ?? []),
+        ])
+
         return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
@@ -94,6 +97,7 @@ export function processAnalysis(
             Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
+          references,
         } satisfies ContractParameters)
       }),
     eoas: results
@@ -142,6 +146,14 @@ function getContracts(results: Analysis[]): {
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
+}
+
+function undefinedIfEmpty<T>(array: T[]): T[] | undefined {
+  if (array.length === 0) {
+    return undefined
+  }
+
+  return array
 }
 
 export function sortByKeys<T extends object>(obj: T): T {

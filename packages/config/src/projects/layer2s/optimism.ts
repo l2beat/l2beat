@@ -160,6 +160,7 @@ export const optimism: Layer2 = {
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',
+    stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     description:
@@ -260,7 +261,7 @@ export const optimism: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(105235064),
     },
     finality: {
-      type: 'OPStack-blob',
+      type: 'OPStack',
       // timestamp of the first blob tx
       minTimestamp: new UnixTime(1710375155),
       l2BlockTimeSeconds: 2,
@@ -343,13 +344,11 @@ export const optimism: Layer2 = {
     ],
     coingeckoPlatform: 'optimistic-ethereum',
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
@@ -397,7 +396,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xA6f3DFdbf4855a43c529bc42EDE96797252879af#code',
+          href: 'https://etherscan.io/address/0x27B81db41F586016694632193b99E45b1a27B8f8#code',
         },
       ],
     },
@@ -422,7 +421,7 @@ export const optimism: Layer2 = {
     },
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
           text: 'Sequencing Window - OP Mainnet Specs',
@@ -578,7 +577,7 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',
-      'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+      'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency.',
     ),
     ...discovery.getMultisigPermission(
       'OpFoundationUpgradeSafe',
@@ -586,7 +585,7 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      `Member of the SuperchainProxyAdminOwner.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',

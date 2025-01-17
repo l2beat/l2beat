@@ -2,7 +2,10 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
-import { useScalingFilter } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import {
+  useScalingFilter,
+  useScalingFilterValues,
+} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
   type CostsMetric,
   useCostsMetricContext,
@@ -31,14 +34,16 @@ import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
+  tab: Exclude<CostsProjectsFilter['type'], 'all' | 'projects'>
   entries: ScalingCostsEntry[]
   milestones: Milestone[]
 }
 
-export function ScalingCostsChart({ milestones, entries }: Props) {
+export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { metric, setMetric } = useCostsMetricContext()
+  const filters = useScalingFilterValues()
 
   const onMetricChange = (metric: CostsMetric) => {
     setMetric(metric)
@@ -56,11 +61,17 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
   )
 
   const filter = useMemo<CostsProjectsFilter>(() => {
+    if (filters.isEmpty) {
+      return {
+        type: tab,
+      }
+    }
+
     return {
       type: 'projects',
       projectIds: filteredEntries.map((project) => project.id),
     }
-  }, [filteredEntries])
+  }, [filteredEntries, filters.isEmpty, tab])
 
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
@@ -100,6 +111,7 @@ export function ScalingCostsChart({ milestones, entries }: Props) {
           <CostsChartTimeRangeControls
             timeRange={range}
             setTimeRange={setRange}
+            metric={metric}
           />
         </ChartControlsWrapper>
       </ChartProvider>

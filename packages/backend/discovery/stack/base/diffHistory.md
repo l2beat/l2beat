@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xf25e9366c843c2f9765ad13c3debb5c5609efb85
+
+# Diff at Thu, 16 Jan 2025 12:46:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b471de2d691e0c6d99ad89859efde79edd3d4dfb block: 22016633
+- current block number: 25121106
+
+## Description
+
+ConduitMultisig3 signer change.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.7:
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.6:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.5:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.4:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.3:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.2:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.1:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.0:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+    }
+```
+
+Generated with discovered.json: 0xf2983a73343f66270efcace00d7d02ff7a1dfb31
+
+# Diff at Wed, 08 Jan 2025 09:09:49 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 22016633
+- current block number: 22016633
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22016633 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0xbA256039AEdaD407692D8Deb366308BE6Bb2515C) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
 Generated with discovered.json: 0x0662edc2080a5bdee8daac6b6ed2bae93af6aa79
 
 # Diff at Tue, 05 Nov 2024 16:03:43 GMT:

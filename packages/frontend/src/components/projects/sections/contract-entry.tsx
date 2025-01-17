@@ -12,6 +12,7 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
 import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
+import { type Participant, ParticipantsEntry } from './permissions/participants'
 import { UpgradeConsiderations } from './permissions/upgrade-considerations'
 import {
   type UsedInProject,
@@ -27,6 +28,7 @@ export interface TechnologyContract {
   upgradeableBy?: string[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
+  participants?: Participant[]
   upgradeConsiderations?: string
   references: Reference[]
   implementationChanged: boolean
@@ -122,6 +124,9 @@ export function ContractEntry({
               {contract.upgradeDelay}
             </p>
           )}
+          {contract.participants && (
+            <ParticipantsEntry participants={contract.participants} />
+          )}
           {sharedProxies && sharedProxies.length !== 0 && (
             <UsedInProjectEntry
               label="Proxy used in"
@@ -188,4 +193,10 @@ function getCalloutProps(
     color: undefined,
     icon: <BulletIcon className="size-5" />,
   }
+}
+
+export function technologyContractKey(contract: TechnologyContract) {
+  return `${contract.name}-${contract.chain}-${contract.addresses
+    .map((a) => a.address)
+    .join('-')}`
 }

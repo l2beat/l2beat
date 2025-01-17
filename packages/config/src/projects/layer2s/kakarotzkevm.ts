@@ -22,7 +22,9 @@ export const kakarotzkevm: Layer2 = upcomingL2({
         'https://twitter.com/KakarotZkEvm',
         'https://t.me/KakarotZkEvm',
         'https://discord.gg/kakarotzkevm',
+        'https://linkedin.com/company/kkrt-labs',
       ],
+      rollupCodes: 'https://rollup.codes/kakarot',
     },
   },
 })

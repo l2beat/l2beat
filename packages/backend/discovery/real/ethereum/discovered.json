@@ -1,7 +1,7 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 21465235,
+  "blockNumber": 21628399,
   "configHash": "0x3417021c76fe0aa029324cb339e219447152dc5ebaf84f02035aeee6aa9d0dab",
   "contracts": [
     {
@@ -47,7 +47,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 238,
+        "nonce": 329,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -150,7 +150,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "Bridge",
-      "description": "Escrow contract for the project's gas token (Can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -190,12 +190,12 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 5107,
+        "delayedMessageCount": 5132,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 3352,
-        "sequencerReportedSubMessageCount": 1295507
+        "sequencerMessageCount": 3443,
+        "sequencerReportedSubMessageCount": 1336938
       }
     },
     {
@@ -357,7 +357,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3352,
+        "batchCount": 3443,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
@@ -388,7 +388,7 @@
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 5107,
+        "totalDelayedMessagesRead": 5132,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -414,15 +414,15 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "getAllStrategiesValue": "296299793905257488368",
+        "getAllStrategiesValue": "291472304538727506960",
         "getAllStrategyPendingValue": 0,
         "getStrategies": {
           "addrs": ["0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
           "allocations": [1000000]
         },
         "getTotalInvestedValue": {
-          "_value": "296299793905257488368",
-          "strategiesValue": ["296299793905257488368"]
+          "_value": "291472304538727506960",
+          "strategiesValue": ["291472304538727506960"]
         },
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -438,7 +438,7 @@
       "sinceTimestamp": 1710542279,
       "values": {
         "$immutable": true,
-        "getTokenPrice": "1018979531570760836",
+        "getTokenPrice": "1020739299183951394",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -458,9 +458,9 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getInvestedValue": "296299793905257488368",
+        "getInvestedValue": "291472304538727506960",
         "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
-        "getTotalValue": "296299793905257488368",
+        "getTotalValue": "291472304538727506960",
         "governance": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
         "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
@@ -699,11 +699,13 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
           "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
-          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -712,8 +714,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 17,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -766,8 +768,8 @@
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1018979531570760836",
-        "totalSupply": "293245883585735636192"
+        "tokenPrice": "1020739299183951394",
+        "totalSupply": "287431368753786941820"
       },
       "derivedName": "Real"
     },
@@ -873,12 +875,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2848,
+        "firstUnresolvedNode": 2939,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 2847,
-        "latestNodeCreated": 2847,
+        "latestConfirmed": 2938,
+        "latestNodeCreated": 2938,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -1138,7 +1140,7 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "$immutable": true,
-        "getBalance": "2501303167698575449",
+        "getBalance": "1907235000600212360",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -1174,7 +1176,7 @@
       "values": {
         "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1018979531570760836",
+        "currentSharePrice": "1020739299183951394",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
@@ -1182,12 +1184,12 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proposal": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1734928235,
+        "rebaseTime": 1736914811,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "2501303167698575449",
+        "withdrawableAmountInPast": "1907235000600212360",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "2464975113010747144",
+        "withdrawingSharesInPast": "1881175113010747144",
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"
@@ -1265,6 +1267,7 @@
     { "address": "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     { "address": "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c" },
+    { "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9" },
     {
       "address": "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62",
       "receivedPermissions": [
@@ -1292,8 +1295,9 @@
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
     { "address": "0x6bD40C6f7849160FE217D07a73E15f4ef8222283" },
     { "address": "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD" },
+    { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
-    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     {
       "address": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
       "receivedPermissions": [
@@ -2349,7 +2353,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/Bridge": "0x6e309bce5a8758ba24f800f3c0135c502fd5cc22724da5165d8368377eb6c9c8",
+    "orbitstack/Bridge": "0xbf3086cfe461b5cddc0ca0473fd46a2d3d521ef3860d13221d24c902c0013175",
     "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
     "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
     "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",
