@@ -29,13 +29,6 @@ export const corn: Layer2 = underReviewL2({
     activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.corn-rpc.com',
-  transactionApi: {
-    type: 'rpc',
-    startBlock: 1,
-    defaultUrl: 'https://mainnet.corn-rpc.com',
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
   escrows: [
     {
       address: EthereumAddress('0x00943b11764176C3a8323aEFCBd6fE70CFb6272d'),
