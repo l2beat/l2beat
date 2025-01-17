@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('corn')
 export const corn: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
-  additionalBadges: [Badge.DA.DAC],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   display: {
     reasonsForBeingOther: [
       REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
