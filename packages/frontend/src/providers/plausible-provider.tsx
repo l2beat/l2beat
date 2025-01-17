@@ -10,7 +10,7 @@ export function PlausibleProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextPlausibleProvider
       domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-      enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
+      enabled={true}
       pageviewProps={{
         theme: resolvedTheme ?? 'light',
       }}
