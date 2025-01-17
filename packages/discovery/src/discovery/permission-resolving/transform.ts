@@ -120,4 +120,6 @@ function sort<T extends ReceivedPermission | IssuedPermission>(
   })
 }
 
-const zeroToUndefined = (x: number) => (x === 0 ? undefined : x)
+function zeroToUndefined(x: number) {
+    return x === 0 ? undefined : x
+}
