@@ -338,6 +338,20 @@
       "supply": "zero"
     },
     {
+      "name": "APWine Token",
+      "coingeckoId": "apwine",
+      "address": "0x4104b135DBC9609Fc1A9490E61369036497660c8",
+      "symbol": "APW",
+      "decimals": 18,
+      "deploymentTimestamp": 1621244447,
+      "coingeckoListingTimestamp": 1621382400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15597/large/spectra.png?1696515232",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Aragon Network Token",
       "coingeckoId": "aragon",
       "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e",
@@ -390,6 +404,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Artificial Liquid Intelligence Token",
+      "coingeckoId": "alethea-artificial-liquid-intelligence-token",
+      "address": "0x6B0b3a982b4634aC68dD83a4DBF02311cE324181",
+      "symbol": "ALI",
+      "decimals": 18,
+      "deploymentTimestamp": 1634066524,
+      "coingeckoListingTimestamp": 1644796800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22062/large/ALI-v2.webp?1728501978",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1544,6 +1572,20 @@
       "supply": "zero"
     },
     {
+      "name": "Electronic Dollar",
+      "coingeckoId": "electronic-usd",
+      "address": "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+      "symbol": "eUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1677113123,
+      "coingeckoListingTimestamp": 1670630400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28445/large/0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f.png?1696527441",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "ENA",
       "coingeckoId": "ethena",
       "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
@@ -1692,6 +1734,20 @@
       "coingeckoListingTimestamp": 1636416000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/19785/large/acatxTm8_400x400.jpg?1696519207",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "ETHPlus",
+      "coingeckoId": "reserve-protocol-eth-plus",
+      "address": "0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8",
+      "symbol": "ETH+",
+      "decimals": 18,
+      "deploymentTimestamp": 1681974875,
+      "coingeckoListingTimestamp": 1716422400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38061/large/ETH__Logo.png?1716440789",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1879,6 +1935,20 @@
       "supply": "zero"
     },
     {
+      "name": "Forta",
+      "coingeckoId": "forta",
+      "address": "0x41545f8b9472D758bB669ed8EaEEEcD7a9C4Ec29",
+      "symbol": "FORT",
+      "decimals": 18,
+      "deploymentTimestamp": 1631023968,
+      "coingeckoListingTimestamp": 1655251200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25060/large/Forta_lgo_%281%29.png?1696524210",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Fortune",
       "coingeckoId": "ebisusbay-fortune",
       "address": "0x884255F543b40AcCB5feE3a4b2D1f74bc065C257",
@@ -1888,6 +1958,20 @@
       "coingeckoListingTimestamp": 1686873600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/30768/large/fortune_token.png?1696529636",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "FOX",
+      "coingeckoId": "shapeshift-fox-token",
+      "address": "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d",
+      "symbol": "FOX",
+      "decimals": 18,
+      "deploymentTimestamp": 1553639047,
+      "coingeckoListingTimestamp": 1592524800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9988/large/fox_token.png?1728373561",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3699,6 +3783,20 @@
       "supply": "zero"
     },
     {
+      "name": "Polytrade",
+      "coingeckoId": "polytrade",
+      "address": "0x6e5970DBd6fc7eb1f29C6D2eDF2bC4c36124C0C1",
+      "symbol": "TRADE",
+      "decimals": 18,
+      "deploymentTimestamp": 1621508933,
+      "coingeckoListingTimestamp": 1629331200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16416/large/Logo_colored_200.png?1696516012",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "PowerLedger",
       "coingeckoId": "power-ledger",
       "address": "0x595832F8FC6BF59c85C527fEC3740A1b7a361269",
@@ -4861,6 +4959,20 @@
       "supply": "zero"
     },
     {
+      "name": "The Doge NFT",
+      "coingeckoId": "the-doge-nft",
+      "address": "0xBAac2B4491727D78D2b78815144570b9f2Fe8899",
+      "symbol": "DOG",
+      "decimals": 18,
+      "deploymentTimestamp": 1630372277,
+      "coingeckoListingTimestamp": 1630540800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18111/large/Doge.png?1696517615",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "THE TRUTH",
       "coingeckoId": "ufo-gaming",
       "address": "0x249e38Ea4102D0cf8264d3701f1a0E39C4f2DC3B",
@@ -5234,6 +5346,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/425/large/waves.png?1696501700",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "WeatherXM",
+      "coingeckoId": "weatherxm-network",
+      "address": "0xde654f497A563dd7A121c176a125dD2F11F13a83",
+      "symbol": "WXM",
+      "decimals": 18,
+      "deploymentTimestamp": 1702991063,
+      "coingeckoListingTimestamp": 1717027200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38154/large/weatherxm-network-logo.png?1716668976",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

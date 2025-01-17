@@ -1,6 +1,43 @@
 {
   "ethereum": [
     {
+      "symbol": "ETH+",
+      "address": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8"
+    },
+    {
+      "symbol": "APW",
+      "address": "0x4104b135dbc9609fc1a9490e61369036497660c8"
+    },
+    {
+      "symbol": "ALI",
+      "address": "0x6b0b3a982b4634ac68dd83a4dbf02311ce324181"
+    },
+    {
+      "symbol": "FOX",
+      "deploymentTimestamp": 1553639047,
+      "address": "0xc770eefad204b5180df6a14ee197d99d808ee52d"
+    },
+    {
+      "symbol": "FORT",
+      "address": "0x41545f8b9472d758bb669ed8eaeeecd7a9c4ec29"
+    },
+    {
+      "symbol": "DOG",
+      "address": "0xbaac2b4491727d78d2b78815144570b9f2fe8899"
+    },
+    {
+      "symbol": "eUSD",
+      "address": "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f"
+    },
+    {
+      "symbol": "TRADE",
+      "address": "0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1"
+    },
+    {
+      "symbol": "WXM",
+      "address": "0xde654f497A563dd7A121c176a125dD2F11F13a83"
+    },
+    {
       "symbol": "UNP",
       "address": "0x23d7Ff057c696fEE679c60cEf61Fee6614218f04"
     },
