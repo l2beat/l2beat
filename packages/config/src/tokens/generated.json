@@ -8962,6 +8962,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "EDU Coin",
+      "coingeckoId": "edu-coin",
+      "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
+      "symbol": "EDU",
+      "decimals": 18,
+      "deploymentTimestamp": 1719996579,
+      "coingeckoListingTimestamp": 1682640000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29948/large/EDU_Logo.png?1696528874",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Eigenpie",
       "coingeckoId": "eigenpie",
       "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",

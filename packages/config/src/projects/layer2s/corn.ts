@@ -9,7 +9,7 @@ export const corn: Layer2 = underReviewL2({
   display: {
     name: 'Corn',
     slug: 'corn',
-    category: 'Optimistic Rollup',
+    category: 'Optimium',
     provider: 'Arbitrum',
     description:
       'Corn is an Orbit Stack-based Layer 2 chain focused on Bitcoin-centric DeFi applications. Corn uses Bitcorn (BTCN) as its gas token, the popCORN System for long-term incentives, and LayerZero for cross-chain asset transfers.',

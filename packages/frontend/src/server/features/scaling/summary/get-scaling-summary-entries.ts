@@ -112,7 +112,6 @@ function getScalingSummaryEntry(
         })
       : undefined
   const associatedTokensExcludedWarnings = compact(project.tvlInfo?.warnings)
-
   const activitySyncWarning = activity
     ? getActivitySyncWarning(activity.syncedUntil)
     : undefined
@@ -130,7 +129,7 @@ function getScalingSummaryEntry(
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
     dataAvailability: project.scalingDa,
-    reasonsForBeingOther: project.countdowns?.otherMigration?.reasons,
+    reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,
