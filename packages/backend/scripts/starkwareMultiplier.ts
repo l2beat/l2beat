@@ -1,0 +1,146 @@
+import { getEnv } from '@l2beat/backend-tools'
+import { createDatabase } from '@l2beat/database'
+import { TrackedTxCostsConfig } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
+import { command, optional, positional, run, string } from 'cmd-ts'
+import { makeConfig } from '../src/config/makeConfig'
+
+const args = {
+  project: positional({
+    type: string,
+    displayName: 'projectId',
+    description: 'Project id to check multipliers',
+  }),
+  startDate: positional({
+    type: optional(string),
+    displayName: 'start date',
+    description: 'Start date of the period to check multipliers (dd-mm-yyyy)',
+  }),
+  endDate: positional({
+    type: optional(string),
+    displayName: 'end date',
+    description: 'End date of the period to check multipliers (dd-mm-yyyy)',
+  }),
+}
+
+const customerIds = {
+  starknet: 'gcp-starknet-production_starknet-mainnet',
+  paradex: 'cp-paradigm-otc-prod_potc-production',
+}
+
+const cmd = command({
+  name: 'starkware-multiplier',
+  args,
+  handler: async (args) => {
+    const env = getEnv()
+    const config = makeConfig(env, { name: 'Script/Local', isLocal: true })
+
+    if (!Object.keys(customerIds).includes(args.project)) {
+      throw new Error(`Project ${args.project} is not supported`)
+    }
+    const [startDate, endDate] = getDates(args.startDate, args.endDate)
+
+    const db = createDatabase({
+      ...config.database.connection,
+      ...config.database.connectionPoolSize,
+    })
+
+    const projectConfig = config.projects.find(
+      (p) => p.projectId === args.project,
+    )
+    const costsConfigs = projectConfig?.trackedTxsConfig?.filter(
+      (c): c is TrackedTxCostsConfig =>
+        c.sinceTimestamp.lte(endDate) &&
+        (!c.untilTimestamp || c.untilTimestamp.gte(startDate)) &&
+        c.type === 'l2costs',
+    )
+
+    if (!costsConfigs || costsConfigs?.length === 0) {
+      return
+    }
+
+    const proofConfigs = costsConfigs.filter(
+      (c) => c.subtype === 'proofSubmissions',
+    )
+    const batchConfigs = costsConfigs.filter(
+      (c) => c.subtype === 'batchSubmissions',
+    )
+
+    const costsByConfig = await db.l2Cost.getGasSumByTimeRangeAndConfigId(
+      [...proofConfigs, ...batchConfigs].map((c) => c.id),
+      startDate,
+      endDate,
+    )
+    const costsInEth = costsByConfig.map((c) => ({
+      ...c,
+      totalEthCost: weiToEth(c.totalCostInWei),
+    }))
+
+    const totalProofCost = proofConfigs.reduce((acc, c) => {
+      const cost = costsInEth.find((cost) => cost.configurationId === c.id)
+      return acc + (cost ? cost.totalEthCost : 0)
+    }, 0)
+    const totalBatchSubmissionCost = batchConfigs.reduce((acc, c) => {
+      const cost = costsInEth.find((cost) => cost.configurationId === c.id)
+      return acc + (cost ? cost.totalEthCost : 0)
+    }, 0)
+
+    const data = await fetchStarkwareApi(args.project, startDate, endDate)
+
+    const actualProofMultiplier = data.proof_cost_eth / totalProofCost
+    const actualBatchMultiplier =
+      data.onchain_data_cost_eth / totalBatchSubmissionCost
+
+    console.log('Actual proof multiplier:', actualProofMultiplier)
+    for (const c of proofConfigs) {
+      console.log('Proof config:', c.id, 'Multiplier:', c.costMultiplier)
+    }
+    console.log('Actual batch submissions multiplier:', actualBatchMultiplier)
+    for (const c of batchConfigs) {
+      console.log('Proof config:', c.id, 'Multiplier:', c.costMultiplier)
+    }
+  },
+})
+
+run(cmd, process.argv.slice(2))
+
+async function fetchStarkwareApi(
+  projectId: string,
+  startDate: UnixTime,
+  endDate: UnixTime,
+) {
+  const customerId = customerIds[projectId as keyof typeof customerIds]
+  const res = await fetch(
+    `http://sharp-bi.provingservice.io/sharp_bi/aggregations/cost?day_start=${startDate.toYYYYMMDD()}&day_end=${endDate.toYYYYMMDD()}&customer_id=${customerId}`,
+  )
+  const data = (await res.json()) as {
+    proof_cost_eth: number
+    onchain_data_cost_eth: number
+  }
+  return data
+}
+
+function getDates(startDate: string | undefined, endDate: string | undefined) {
+  if (!startDate) {
+    console.log('No start date provided, using default value (yesterday)')
+  }
+  if (!endDate) {
+    console.log('No end date provided, using default value (today)')
+  }
+  const start = startDate
+    ? UnixTime.fromDate(new Date(startDate))
+    : UnixTime.now().toStartOf('day').add(-1, 'days')
+  const end = endDate
+    ? UnixTime.fromDate(new Date(endDate))
+    : UnixTime.now().toStartOf('day')
+  return [start, end]
+}
+
+function weiToEth(wei: bigint): number {
+  // Biggest wei we can get from DB is 2^63-1 which divided by 1e9 is safe to parse to Number
+  const integerPartGwei = Number(wei / 1_000_000_000n)
+  const fractionPartGwei = Number(wei % 1_000_000_000n)
+  const gwei = integerPartGwei + fractionPartGwei / 1_000_000_000
+
+  return gwei / 1_000_000_000
+}

@@ -27,6 +27,7 @@
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
+    "starkware-multiplier": "ts-node --transpile-only scripts/starkwareMultiplier.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "restore-tvl": "pnpm --filter ../database restore-tvl",
