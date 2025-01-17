@@ -103,7 +103,8 @@ function resolvePermissionedName(
   rootName: string,
   account: ScalingProjectPermissionedAccount,
   permissions: ProjectParams['permissions'],
-): string {
+): [string, boolean] {
+  let realName = false
   let name = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
 
   if (permissions !== undefined && permissions !== 'UnderReview') {
@@ -117,6 +118,7 @@ function resolvePermissionedName(
     )
     const firstMatchingPermission = matchingPermissions[0]
     if (matchingPermissions.length === 1 && firstMatchingPermission) {
+      realName = true
       name = firstMatchingPermission.name
     }
 
@@ -125,11 +127,12 @@ function resolvePermissionedName(
     )
     const firstMultisig = multisigs[0]
     if (multisigs.length === 1 && firstMultisig) {
+      realName = true
       name = firstMultisig.name
     }
   }
 
-  return name
+  return [name, realName]
 }
 
 function toTechnologyContract(
@@ -143,7 +146,7 @@ function toTechnologyContract(
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
       const address = account.address.toString()
-      const name = resolvePermissionedName(
+      const [name, realName] = resolvePermissionedName(
         permission.name,
         account,
         projectParams.permissions,
@@ -152,7 +155,7 @@ function toTechnologyContract(
         name,
         address,
         href:
-          permission.fromRole === true
+          permission.fromRole === true && realName
             ? `#${name}`
             : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
@@ -180,7 +183,7 @@ function toTechnologyContract(
       : permission.name
 
   const participants = permission.participants?.map((account) => {
-    const name = resolvePermissionedName(
+    const [name] = resolvePermissionedName(
       permission.name,
       account,
       projectParams.permissions,
