@@ -5,11 +5,15 @@ import {
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
 
-interface NotSyncedBadgeProps {
-  content?: string
+interface Props {
+  content: string
 }
 
-export function NotSyncedIcon({ content }: NotSyncedBadgeProps) {
+export function NotSyncedIcon({ content }: Props) {
+  if (!content) {
+    return null
+  }
+
   return (
     <Tooltip>
       <TooltipTrigger>
