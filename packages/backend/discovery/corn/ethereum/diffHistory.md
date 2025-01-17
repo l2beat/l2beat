@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8891685e7b2fc27b1bd92b7a24e702180bb6cd16
+Generated with discovered.json: 0xf9064957f9522b1fe9291d4a939acb66351ff5c3
 
-# Diff at Fri, 17 Jan 2025 06:23:30 GMT:
+# Diff at Fri, 17 Jan 2025 06:56:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@1d87738af0941aaf4af591699a4b95396cfa786d block: 21629156
-- current block number: 21642390
+- current block number: 21642560
 
 ## Description
 
@@ -65,11 +65,11 @@ discovery. Values are for block 21629156 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CornMultiSig (0xCff1ad9f09b32252171207e8525c90B18D4E2C7D) {
+    contract CornMultisig (0xCff1ad9f09b32252171207e8525c90B18D4E2C7D) {
     +++ description: None
       name:
 -        "Safe"
-+        "CornMultiSig"
++        "CornMultisig"
       receivedPermissions:
 +        [{"permission":"configure","target":"0x828C71bc1D7A34F32FfA624240633b6B7272C3D6","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d","via":[{"address":"0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"},{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0x37693F11f3D724E55D0B03D5F328D8202C913243","via":[{"address":"0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"},{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA","via":[{"address":"0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"},{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0x6282197777e7c318C7209bd7059110886aa429C6","via":[{"address":"0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"},{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C","via":[{"address":"0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"},{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0x828C71bc1D7A34F32FfA624240633b6B7272C3D6","via":[{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0x8672705351C81f40B55b1ac2A1998de66166d0eA","via":[{"address":"0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"},{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]},{"permission":"upgrade","target":"0xBb309FFFC24F77927d7C4eb86BaA67D8f9dC0EB8","via":[{"address":"0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"},{"address":"0x8672705351C81f40B55b1ac2A1998de66166d0eA"}]}]
       directlyReceivedPermissions:

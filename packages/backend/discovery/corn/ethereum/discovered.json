@@ -1,8 +1,8 @@
 {
   "name": "corn",
   "chain": "ethereum",
-  "blockNumber": 21642390,
-  "configHash": "0xa97e8aa161fe7d2947647b7d1b6d625217c8b81f4e8e4bd88e795bf80f068eee",
+  "blockNumber": 21642560,
+  "configHash": "0xfbdc4f9c177ce6105cc843d4c23308a3ac623be73d0c9ac8907f1ef2b74b910a",
   "contracts": [
     {
       "name": "wBTC Escrow",
@@ -694,7 +694,7 @@
       }
     },
     {
-      "name": "CornMultiSig",
+      "name": "CornMultisig",
       "address": "0xCff1ad9f09b32252171207e8525c90B18D4E2C7D",
       "template": "GnosisSafe",
       "sourceHashes": [
