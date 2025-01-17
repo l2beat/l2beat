@@ -1,13 +1,16 @@
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DataStorage } from './DataStorage'
+import { LocalStorageJSON } from './types'
 
 export class LocalStorage implements DataStorage {
-  private readonly prices: Map<string, number>
-  private readonly amounts: Map<string, bigint>
+  private prices: Map<string, number>
+  private amounts: Map<string, bigint>
 
-  constructor() {
-    this.prices = new Map()
-    this.amounts = new Map()
+  constructor(private readonly filePath: string) {
+    const { amounts, prices } = this.readLocalFile()
+    this.prices = prices
+    this.amounts = amounts
   }
 
   async writePrice(
@@ -16,6 +19,7 @@ export class LocalStorage implements DataStorage {
     price: number,
   ): Promise<void> {
     this.prices.set(key(id, timestamp), price)
+    this.saveToFile()
     return await Promise.resolve()
   }
 
@@ -35,6 +39,7 @@ export class LocalStorage implements DataStorage {
     amount: bigint,
   ): Promise<void> {
     this.amounts.set(key(id, timestamp), amount)
+    this.saveToFile()
     return await Promise.resolve()
   }
 
@@ -46,6 +51,37 @@ export class LocalStorage implements DataStorage {
     }
 
     return await Promise.resolve(amount)
+  }
+
+  private readLocalFile() {
+    if (existsSync(this.filePath)) {
+      const data = JSON.parse(
+        readFileSync(this.filePath, 'utf8'),
+      ) as LocalStorageJSON
+      return {
+        prices: new Map(
+          Object.entries(data.prices).map(([k, v]) => [k, Number(v)]),
+        ),
+        amounts: new Map(
+          Object.entries(data.amounts).map(([k, v]) => [k, BigInt(v)]),
+        ),
+      }
+    } else {
+      return {
+        prices: new Map(),
+        amounts: new Map(),
+      }
+    }
+  }
+
+  private saveToFile() {
+    const data = {
+      prices: Object.fromEntries(this.prices),
+      amounts: Object.fromEntries(
+        Array.from(this.amounts.entries()).map(([k, v]) => [k, v.toString()]),
+      ),
+    }
+    writeFileSync(this.filePath, JSON.stringify(data, null, 2))
   }
 }
 
