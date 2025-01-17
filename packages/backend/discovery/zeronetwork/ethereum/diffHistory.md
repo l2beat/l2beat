@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xab166545a2588bbd76b93f28d22f506719790396
+
+# Diff at Fri, 17 Jan 2025 08:39:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@684bb8793c10fca3b27baef551e527bab3fa9d01 block: 21635860
+- current block number: 21643075
+
+## Description
+
+Upgrade succeeded.
+
+## Watched changes
+
+```diff
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: None
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        544
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        544
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xd3086b71c95ce83e7f3d30ab1890ada2334695a05b65715e56f42d96b22c8674"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x7b0af260425de30b0e854d299e07bc093703a3dd
 
 # Diff at Thu, 16 Jan 2025 08:29:56 GMT:

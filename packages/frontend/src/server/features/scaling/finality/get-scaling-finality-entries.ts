@@ -5,8 +5,7 @@ import {
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
-import { UnixTime, type WarningValueWithSentiment } from '@l2beat/shared-pure'
-import { type SyncStatus } from '~/types/sync-status'
+import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -20,6 +19,7 @@ import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getFinality } from './get-finality'
 import { type FinalityProjectData } from './schema'
+import { getFinalitySyncWarning } from './utils/is-finality-synced'
 
 export async function getFinalityProjects() {
   const projects = await ProjectService.STATIC.getProjects({
@@ -73,7 +73,7 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
           warning: WarningValueWithSentiment | undefined
         }
       | undefined
-    syncStatus: SyncStatus
+    isSynced: boolean
   }
   finalizationPeriod: number | undefined
   tvlOrder: number
@@ -88,59 +88,38 @@ function getScalingFinalityEntry(
   finalityProjectData: FinalityProjectData | undefined,
   tvl: number | undefined,
 ): ScalingFinalityEntry | undefined {
-  const data = getFinalityData(finalityProjectData, project)
-  if (!data) {
-    return
-  }
-  return {
-    ...getCommonScalingEntry({
-      project,
-      changes,
-      syncStatus: data?.syncStatus,
-    }),
-    category: project.scalingInfo.type,
-    provider: project.scalingInfo.stack,
-    dataAvailabilityMode: project.scalingDa?.mode,
-    data,
-    finalizationPeriod: project.finalityInfo.finalizationPeriod,
-    tvlOrder: tvl ?? -1,
-  }
-}
-
-function getFinalityData(
-  finalityProjectData: FinalityProjectData | undefined,
-  project: Project<'finalityInfo'>,
-) {
   if (!finalityProjectData) {
     return
   }
 
-  const data = {
-    timeToInclusion: {
-      averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
-      minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
-      maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
-      warning: project.finalityInfo?.warnings?.timeToInclusion,
+  const syncWarning = getFinalitySyncWarning(finalityProjectData.syncedUntil)
+
+  return {
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncWarning,
+    }),
+    category: project.scalingInfo.type,
+    provider: project.scalingInfo.stack,
+    dataAvailabilityMode: project.scalingDa?.mode,
+    data: {
+      timeToInclusion: {
+        averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
+        minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
+        maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
+        warning: project.finalityInfo?.warnings?.timeToInclusion,
+      },
+      stateUpdateDelay: finalityProjectData.stateUpdateDelays
+        ? {
+            averageInSeconds:
+              finalityProjectData.stateUpdateDelays.averageInSeconds,
+            warning: project.finalityInfo?.warnings?.stateUpdateDelay,
+          }
+        : undefined,
+      isSynced: !syncWarning,
     },
-    stateUpdateDelay: finalityProjectData.stateUpdateDelays
-      ? {
-          averageInSeconds:
-            finalityProjectData.stateUpdateDelays.averageInSeconds,
-          warning: project.finalityInfo?.warnings?.stateUpdateDelay,
-        }
-      : undefined,
-    syncStatus: {
-      isSynced: isSynced(finalityProjectData.syncedUntil),
-      syncedUntil: finalityProjectData.syncedUntil,
-    },
+    finalizationPeriod: project.finalityInfo.finalizationPeriod,
+    tvlOrder: tvl ?? -1,
   }
-
-  return data
-}
-
-function isSynced(syncedUntil: number) {
-  return UnixTime.now()
-    .add(-1, 'days')
-    .add(-1, 'hours')
-    .lte(new UnixTime(syncedUntil))
 }

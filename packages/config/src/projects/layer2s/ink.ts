@@ -444,6 +444,25 @@ export const ink: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
+  chainConfig: {
+    name: 'ink',
+    chainId: 57073,
+    blockscoutV2ApiUrl: 'https://explorer.inkonchain.com/api/v2/',
+    explorerUrl: 'https://explorer.inkonchain.com/',
+    explorerApi: {
+      url: 'https://explorer.inkonchain.com/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1733498411),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1,
+        version: '3',
+      },
+    ],
+  },
   milestones: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

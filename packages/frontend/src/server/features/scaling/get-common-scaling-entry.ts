@@ -1,7 +1,5 @@
 import { type Project } from '@l2beat/config'
 import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
-import { type SyncStatus } from '~/types/sync-status'
-import { formatTimestamp } from '~/utils/dates'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
@@ -32,11 +30,11 @@ export interface CommonScalingEntry
 export function getCommonScalingEntry({
   project,
   changes,
-  syncStatus,
+  syncWarning,
 }: {
   project: Project<'scalingInfo' | 'statuses', 'countdowns'>
   changes: ProjectChanges | undefined
-  syncStatus: SyncStatus | undefined
+  syncWarning?: string
 }): CommonScalingEntry {
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
@@ -60,16 +58,7 @@ export function getCommonScalingEntry({
         highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
         implementationChanged: !!changes?.implementationChanged,
       }),
-      syncStatusInfo:
-        syncStatus?.isSynced === false
-          ? `The data for this item is not synced since ${formatTimestamp(
-              syncStatus.syncedUntil,
-              {
-                mode: 'datetime',
-                longMonthName: true,
-              },
-            )}.`
-          : undefined,
+      syncWarning,
       countdowns: project.countdowns,
     },
     tab: project.scalingInfo.isOther

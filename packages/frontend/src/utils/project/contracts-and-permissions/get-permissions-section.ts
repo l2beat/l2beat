@@ -103,8 +103,12 @@ function resolvePermissionedName(
   rootName: string,
   account: ScalingProjectPermissionedAccount,
   permissions: ProjectParams['permissions'],
-): string {
-  let name = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
+): {
+  name: string
+  redirectToName: boolean
+} {
+  const initialName = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
+  let name = initialName
 
   if (permissions !== undefined && permissions !== 'UnderReview') {
     const matchingPermissions = permissions.filter(
@@ -129,7 +133,7 @@ function resolvePermissionedName(
     }
   }
 
-  return name
+  return { name, redirectToName: name !== initialName }
 }
 
 function toTechnologyContract(
@@ -143,18 +147,17 @@ function toTechnologyContract(
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
       const address = account.address.toString()
-      const name = resolvePermissionedName(
+      const permissionedName = resolvePermissionedName(
         permission.name,
         account,
         projectParams.permissions,
       )
       return {
-        name,
+        name: permissionedName.name,
         address,
-        href:
-          permission.fromRole === true
-            ? `#${name}`
-            : `${etherscanUrl}/address/${address}#code`,
+        href: permissionedName.redirectToName
+          ? `#${permissionedName.name}`
+          : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
         verificationStatus: toVerificationStatus(
           verificationStatusForChain[address],
@@ -180,14 +183,14 @@ function toTechnologyContract(
       : permission.name
 
   const participants = permission.participants?.map((account) => {
-    const name = resolvePermissionedName(
+    const permissionedName = resolvePermissionedName(
       permission.name,
       account,
       projectParams.permissions,
     )
 
     return {
-      name,
+      name: permissionedName.name,
       href: `${etherscanUrl}/address/${account.address.toString()}#code`,
       verificationStatus: toVerificationStatus(
         verificationStatusForChain[account.address.toString()],

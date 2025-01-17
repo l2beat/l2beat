@@ -19,6 +19,7 @@ import {
   getActivityTable,
 } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
+import { getActivitySyncWarning } from './utils/is-activity-synced'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ProjectService.STATIC.getProjects({
@@ -58,7 +59,24 @@ export async function getScalingActivityEntries() {
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
   dataSource: ScalingProjectDisplay['activityDataSource']
-  data: ActivityProjectTableData | undefined
+  data:
+    | {
+        tps: ActivityData
+        uops: ActivityData
+        ratio: number
+        isSynced: boolean
+      }
+    | undefined
+}
+
+interface ActivityData {
+  change: number
+  pastDayCount: number
+  summedCount: number
+  maxCount: {
+    value: number
+    timestamp: number
+  }
 }
 
 function getScalingProjectActivityEntry(
@@ -66,15 +84,25 @@ function getScalingProjectActivityEntry(
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
+  const syncWarning = data
+    ? getActivitySyncWarning(data.syncedUntil)
+    : undefined
   return {
     ...getCommonScalingEntry({
       project,
       changes,
-      syncStatus: data?.syncStatus,
+      syncWarning,
     }),
     href: `/scaling/projects/${project.slug}#activity`,
     dataSource: project.activityInfo.dataSource,
-    data,
+    data: data
+      ? {
+          tps: data.tps,
+          uops: data.uops,
+          ratio: data.ratio,
+          isSynced: !syncWarning,
+        }
+      : undefined,
   }
 }
 
@@ -82,6 +110,9 @@ function getEthereumEntry(
   data: ActivityProjectTableData,
   tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
+  const notSyncedStatus = data
+    ? getActivitySyncWarning(data.syncedUntil)
+    : undefined
   return {
     id: ProjectId.ETHEREUM,
     name: 'Ethereum',
@@ -93,7 +124,12 @@ function getEthereumEntry(
     stageOrder: 3,
     filterable: undefined,
     dataSource: 'Blockchain RPC',
-    data,
+    data: {
+      tps: data.tps,
+      uops: data.uops,
+      ratio: data.ratio,
+      isSynced: !notSyncedStatus,
+    },
     statuses: undefined,
   }
 }

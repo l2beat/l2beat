@@ -35,7 +35,7 @@ export default async function Page() {
         Padding from directory tabs can not be removed because it is needed
         for the tabs to be sticky
       */}
-      <div className="-mt-4 flex flex-col gap-6">
+      <div className="flex flex-col gap-6 lg:-mt-4">
         <DirectoryTabs defaultValue="public">
           <DirectoryTabsList>
             <DirectoryTabsTrigger value="public">
