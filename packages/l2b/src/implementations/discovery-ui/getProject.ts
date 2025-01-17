@@ -105,13 +105,13 @@ function contractFromDiscovery(
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
-    const oField = contractConfig.fields[name]
+    const field = contractConfig.fields[name]
     return {
-      description: oField?.description,
-      handler: oField?.handler,
+      description: field?.description,
+      handler: field?.handler,
       ignoreInWatchMode: contractConfig.ignoreInWatchMode?.includes(name),
       ignoreRelatives: contractConfig.ignoreRelatives?.includes(name),
-      severity: oField?.severity,
+      severity: field?.severity,
     }
   }
 
