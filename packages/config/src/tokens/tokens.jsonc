@@ -1,6 +1,47 @@
 {
   "ethereum": [
     {
+      "symbol": "XCHNG",
+      "address": "0xb712d62fe84258292d1961b5150a19bc4ab49026"
+    },
+    {
+      "symbol": "SPEC",
+      "address": "0xadf7c35560035944e805d98ff17d58cde2449389"
+    },
+    {
+      "symbol": "ARC",
+      "address": "0xc82e3db60a52cf7529253b4ec688f631aad9e7c2"
+    },
+    {
+      "symbol": "GALA",
+      "address": "0xd1d2eb1b1e90b638588728b4130137d262c87cae"
+    },
+    {
+      "symbol": "BADGER",
+      "address": "0x3472a5a71965499acd81997a54bba8d852c6e53d"
+    },
+    {
+      "symbol": "FIS",
+      "address": "0xef3a930e1ffffacd2fc13434ac81bd278b0ecc8d"
+    },
+    {
+      "symbol": "FARM",
+      "address": "0xa0246c9032bc3a600820415ae600c6388619a14d"
+    },
+    {
+      "symbol": "GEAR",
+      "address": "0xba3335588d9403515223f109edc4eb7269a9ab5d"
+    },
+    {
+      "symbol": "PNK",
+      "deploymentTimestamp": 1521078220,
+      "address": "0x93ed3fbe21207ec2e8f2d3c3de6e058cb73bc04d"
+    },
+    {
+      "symbol": "PORK",
+      "address": "0xb9f599ce614feb2e1bbe58f180f370d05b39344e"
+    },
+    {
       "symbol": "STORJ",
       "deploymentTimestamp": 1497888995,
       "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac"
