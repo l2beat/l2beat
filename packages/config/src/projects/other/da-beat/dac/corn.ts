@@ -1,8 +1,8 @@
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
+import { corn } from '../../../layer2s/corn'
 import { AnytrustDAC } from '../templates/anytrust-template'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
-import { corn } from '../../../layer2s/corn'
 
 const discovery = new ProjectDiscovery('corn')
 

@@ -25,7 +25,10 @@ export const corn: Layer2 = orbitStackL2({
       websites: ['https://usecorn.com/'],
       apps: ['https://usecorn.com/app'],
       documentation: ['https://docs.usecorn.com/'],
-      explorers: ['https://cornscan.io/'],
+      explorers: [
+        'https://maizenet-explorer.usecorn.com/',
+        'https://cornscan.io/',
+      ],
       repositories: ['https://github.com/usecorn'],
       socialMedia: [
         'https://x.com/use_corn',
