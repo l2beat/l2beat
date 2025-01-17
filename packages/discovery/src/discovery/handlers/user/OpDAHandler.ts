@@ -77,9 +77,11 @@ export class OpStackDAHandler implements Handler {
 
     const hasTxs = lastTxs.length > 0
 
-    const isSomeTxsLengthEqualToCelestiaDAExample = hasTxs && lastTxs.some(
-      (tx) => tx.input.length === OP_STACK_CELESTIA_DA_EXAMPLE_INPUT.length,
-    )
+    const isSomeTxsLengthEqualToCelestiaDAExample =
+      hasTxs &&
+      lastTxs.some(
+        (tx) => tx.input.length === OP_STACK_CELESTIA_DA_EXAMPLE_INPUT.length,
+      )
 
     const rpcTxs = await Promise.all(
       lastTxs.map((tx) => provider.getTransaction(tx.hash)),
@@ -88,9 +90,8 @@ export class OpStackDAHandler implements Handler {
     if (missingIndex !== -1) {
       throw new Error(`Transaction ${lastTxs[missingIndex]?.hash} is missing`)
     }
-    const isSequencerSendingBlobTx = hasTxs && rpcTxs.some(
-      (tx) => tx?.type === BLOB_TX_TYPE,
-    )
+    const isSequencerSendingBlobTx =
+      hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
 
     return {
       field: this.field,
