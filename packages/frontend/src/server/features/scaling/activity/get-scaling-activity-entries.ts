@@ -60,8 +60,23 @@ export async function getScalingActivityEntries() {
 export interface ScalingActivityEntry extends CommonScalingEntry {
   dataSource: ScalingProjectDisplay['activityDataSource']
   data:
-    | (Omit<ActivityProjectTableData, 'syncedUntil'> & { isSynced: boolean })
+    | {
+        tps: ActivityData
+        uops: ActivityData
+        ratio: number
+        isSynced: boolean
+      }
     | undefined
+}
+
+interface ActivityData {
+  change: number
+  pastDayCount: number
+  summedCount: number
+  maxCount: {
+    value: number
+    timestamp: number
+  }
 }
 
 function getScalingProjectActivityEntry(
