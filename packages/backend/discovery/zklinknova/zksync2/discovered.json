@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 43367152,
-  "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
+  "configHash": "0x64cd02bce8e8ddff218ab96ff00525afb50a2afc4b7560b06d8f4daa08a0a37f",
   "contracts": [
     {
       "name": "EraOwner",
@@ -136,6 +136,7 @@
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",

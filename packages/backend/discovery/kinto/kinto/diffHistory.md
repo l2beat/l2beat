@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x97e205d1db7d0d63b40331cd288b73365092991b
+
+# Diff at Fri, 17 Jan 2025 09:03:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13de2427c9dfb1215132f54a8df2575c2d08f010 block: 696015
+- current block number: 696015
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 696015 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
++        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
+    }
+```
+
 Generated with discovered.json: 0x820c8568602f8dd9d7266c97ba0ddb8a7d2727e4
 
 # Diff at Tue, 24 Dec 2024 11:54:46 GMT:

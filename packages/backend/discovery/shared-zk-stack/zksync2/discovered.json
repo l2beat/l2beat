@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 44113900,
-  "configHash": "0x21ae6606a13e918f3d6bf6dc010d84fad998cc1ceae7eca7cb2ad993ed21d286",
+  "configHash": "0xcf833e3005db4f44f7bb1aff9b0e90e400816e35144f0d2c06e89f2c083c6c8b",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -365,6 +365,7 @@
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",

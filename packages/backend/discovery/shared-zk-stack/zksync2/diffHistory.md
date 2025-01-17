@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x83b48b9c165db74deedcd7832d69cd8b0f175e28
+
+# Diff at Fri, 17 Jan 2025 09:05:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13de2427c9dfb1215132f54a8df2575c2d08f010 block: 44113900
+- current block number: 44113900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 44113900 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x7834eee0c00ff2ede2944dbdc6c7a1d9a38b154e
 
 # Diff at Wed, 06 Nov 2024 12:10:20 GMT:

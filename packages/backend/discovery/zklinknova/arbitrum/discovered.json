@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "arbitrum",
   "blockNumber": 249925893,
-  "configHash": "0x4e258a6d37db579d90ca6b8795256e842346300928c347ad3abfdd97b2620488",
+  "configHash": "0x1d90a4e62b46ff43c20d78f2a1a369af4d425009c465ff4b88b2e893430b5d48",
   "contracts": [
     {
       "name": "ArbitrumProxyAdmin",
