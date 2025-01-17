@@ -118,6 +118,7 @@ describe(diffDiscovery.name, () => {
             after: 'false',
             description: undefined,
             severity: undefined,
+            type: undefined,
           },
         ],
       },
@@ -221,6 +222,7 @@ describe(diffDiscovery.name, () => {
             description: undefined,
             key: 'description',
             severity: undefined,
+            type: undefined,
           },
           {
             after: '2',
@@ -228,6 +230,7 @@ describe(diffDiscovery.name, () => {
             description: undefined,
             key: 'values.v',
             severity: undefined,
+            type: undefined,
           },
         ],
         description: 'hello sailor',

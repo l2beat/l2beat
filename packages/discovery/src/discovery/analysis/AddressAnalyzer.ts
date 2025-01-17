@@ -234,6 +234,7 @@ export class AddressAnalyzer {
       result[key] = {
         severity: value.severity,
         description: value.description,
+        type: value.type,
       }
     }
 

@@ -40,6 +40,7 @@ export interface DiscoveryCustomType {
 export interface FieldMeta {
   description?: string
   severity?: ContractFieldSeverity
+  type?: ContractValueType[] | ContractValueType
 }
 
 export type PermissionType =
