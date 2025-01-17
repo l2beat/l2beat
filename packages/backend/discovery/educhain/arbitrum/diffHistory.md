@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xf8f1e268b6b3862850480fe10f277d6bcc51e396
+
+# Diff at Fri, 17 Jan 2025 08:36:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@684bb8793c10fca3b27baef551e527bab3fa9d01 block: 296064838
+- current block number: 296310685
+
+## Description
+
+Gelato MS upgraded to known shape, 1 signer removed, threshold decreased to 4.
+
+## Watched changes
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.8:
+-        "0xebD4919C075417a86F19713dADe101852867A04F"
+      values.$members.7:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0xebD4919C075417a86F19713dADe101852867A04F"
+      values.$members.6:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.5:
+-        "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 9 (56%)"
++        "4 of 8 (50%)"
+      derivedName:
+-        "GnosisSafe"
++        "GnosisSafeL2"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GelatoMultisig/GnosisSafeL2.sol}               | 759 ++++++++++++---------
+ 1 file changed, 419 insertions(+), 340 deletions(-)
+```
+
 Generated with discovered.json: 0x00f4759f35e96750a0526be09c27e1a730c8a0d5
 
 # Diff at Thu, 16 Jan 2025 15:20:55 GMT:
