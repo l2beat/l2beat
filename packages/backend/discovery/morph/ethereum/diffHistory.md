@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x64a8a841ac666e08988b629b27f536f1dcc4f353
+
+# Diff at Sat, 18 Jan 2025 16:51:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@400cfe1ca700b8b710220906f278f002c698d3c8 block: 21465401
+- current block number: 21465401
+
+## Description
+
+Added new ProxyAdmin shape.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465401 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      template:
++        "global/ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x2591eb0e4fbd08ad6c30f25e6cfddda2cd92d0eb
 
 # Diff at Mon, 23 Dec 2024 13:12:40 GMT:

@@ -155,6 +155,7 @@
     {
       "name": "ProxyAdmin",
       "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
@@ -1699,6 +1700,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
   }
 }

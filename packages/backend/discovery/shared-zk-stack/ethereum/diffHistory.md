@@ -1,3 +1,172 @@
+Generated with discovered.json: 0x6c3f22905097b2093ecbe58b56b197fdcf14b3be
+
+# Diff at Sat, 18 Jan 2025 17:01:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@400cfe1ca700b8b710220906f278f002c698d3c8 block: 21630370
+- current block number: 21652230
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
+      issuedPermissions.0.via.1:
++        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1","delay":0}
+      issuedPermissions.0.via.0:
++        {"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897","delay":0}
+      template:
++        "shared-zk-stack/BridgeHub"
+      description:
++        "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations."
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      description:
+-        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
+      fieldMeta:
+-        {"getOwners":{"severity":"LOW","description":"Signers of the multisig"},"getThreshold":{"severity":"HIGH","description":"Should be 4/8 per official docs"}}
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.
+      values.executionDelay_fmt:
++        "21h"
+      template:
++        "shared-zk-stack/ValidatorTimelock"
+      description:
++        "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h."
+    }
+```
+
+```diff
+    contract GenesisUpgrade (0x6e2BC597F1e83F9fC7c1f69157F2C12476873971) {
+    +++ description: Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts.
+      template:
++        "shared-zk-stack/GenesisUpgrade"
+      description:
++        "Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts."
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: 
+      template:
++        "shared-zk-stack/ProtocolUpgradeHandler"
+      description:
++        ""
+      issuedPermissions:
++        [{"permission":"configure","target":"0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","via":[]},{"permission":"configure","target":"0xBDFfCC71FE84020238F2990a6D2954e87355De0D","via":[]},{"permission":"configure","target":"0xD677e09324F8Bb3cC64F009973693f751c33A888","via":[]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      template:
++        "shared-zk-stack/SecurityCouncil"
+      description:
++        "Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3)."
+      receivedPermissions:
++        [{"permission":"configure","target":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897","description":"soft freeze, hard freeze, approve a protocol upgrade."}]
+      references:
++        [{"text":"Security Council members - ZK Nation docs","href":"https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x303a465B659cBB0ab36eE643eA362c509EEb5213"},{"permission":"upgrade","target":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"},{"permission":"upgrade","target":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","target":"0x303a465B659cBB0ab36eE643eA362c509EEb5213"},{"permission":"upgrade","target":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"},{"permission":"upgrade","target":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"}]
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
+      issuedPermissions.0.via.1:
++        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1","delay":0}
+      issuedPermissions.0.via.0:
++        {"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897","delay":0}
+      template:
++        "shared-zk-stack/StateTransitionManager"
+      description:
++        "Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic)."
+    }
+```
+
+```diff
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      template:
++        "shared-zk-stack/Guardians"
+      description:
++        "Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2."
+      receivedPermissions:
++        [{"permission":"configure","target":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897","description":"extend the legal veto period, approve a protocol upgrade."}]
+      references:
++        [{"text":"Guardians - ZK Nation docs","href":"https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians"}]
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
+      issuedPermissions.0.via.1:
++        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1","delay":0}
+      issuedPermissions.0.via.0:
++        {"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897","delay":0}
+      template:
++        "shared-zk-stack/L1SharedBridge"
+      description:
++        "This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era."
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29) {
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+      template:
++        "shared-zk-stack/EmergencyUpgradeBoard"
+      description:
++        "A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897."
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]},{"permission":"upgrade","target":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]},{"permission":"upgrade","target":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]
+    }
+```
+
 Generated with discovered.json: 0x089edefbfba6e10c0a05b5f4799e7ef7af5a1815
 
 # Diff at Fri, 10 Jan 2025 11:44:13 GMT:
