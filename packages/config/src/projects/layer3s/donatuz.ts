@@ -41,7 +41,7 @@ export const donatuz: Layer3 = opStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  genesisTimestamp: new UnixTime(1726497628), //TODO: change this
+  genesisTimestamp: new UnixTime(1719319433),
   rpcUrl: 'https://rpc.donatuz.com',
   isNodeAvailable: true,
   discoveryDrivenData: true,

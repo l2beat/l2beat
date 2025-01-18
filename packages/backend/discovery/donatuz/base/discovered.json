@@ -1,7 +1,7 @@
 {
   "name": "donatuz",
   "chain": "base",
-  "blockNumber": 25206973,
+  "blockNumber": 25215421,
   "configHash": "0xa019a79f6f92940c5f84fe8749ab5f7542750c9978609c5f431974dfc0ae892b",
   "contracts": [
     {
@@ -34,7 +34,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620037",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620038",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -251,10 +251,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 17841600,
-        "latestOutputIndex": 412,
-        "nextBlockNumber": 17884800,
-        "nextOutputIndex": 413,
+        "latestBlockNumber": 17884800,
+        "latestOutputIndex": 413,
+        "nextBlockNumber": 17928000,
+        "nextOutputIndex": 414,
         "PROPOSER": "0xfB04981fa938f03b82B4Ca8F5B1FAAA1A547306B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1719319433,
@@ -389,7 +389,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 25203262
+          "prevBlockNum": 25210022
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xa096dD38362bd2cE3C696474329989960722A7Fd",

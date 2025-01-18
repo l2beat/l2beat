@@ -2,16 +2,15 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
-    description: "All of the data needed for proof construction is published on Ethereum L1."
-    sentiment: "good"
+    description: "Proof construction and state derivation fully rely on data that is posted on EigenDA. Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain."
+    sentiment: "bad"
     sources: [
       {
         contract: "OptimismPortal"
         references: []
       }
     ]
-    value: "Onchain"
+    value: "External"
   }
   destinationToken: {
     description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
@@ -74,10 +73,15 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
-    description: "All of the data needed for proof construction is published on Ethereum L1."
-    sentiment: "good"
-    value: "Onchain"
+    description: "Proof construction and state derivation fully rely on data that is posted on EigenDA. Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain."
+    sentiment: "bad"
+    sources: [
+      {
+        contract: "OptimismPortal"
+        references: []
+      }
+    ]
+    value: "External"
   }
   destinationToken: {
     description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."

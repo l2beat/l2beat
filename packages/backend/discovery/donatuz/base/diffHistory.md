@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xbc1fec50c2e4f11b62634bf038a322e5d040ed64
+Generated with discovered.json: 0x04f441b71ab8ebaf6311eda3e9be9fb42a88a29b
 
-# Diff at Sat, 18 Jan 2025 14:56:18 GMT:
+# Diff at Sat, 18 Jan 2025 17:10:15 GMT:
 
-- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 25206973
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current block number: 25215421
 
 ## Description
 
-Initial discovery run
+Initial discovery run: Standard opstack L3 Optimium on Base with 100% known shapes, practically no canonical TVL. The data commitments are correctly encoded for alt-DA mode with EigenDA (0x00 id byte) as target.
 
 ## Initial discovery
 
