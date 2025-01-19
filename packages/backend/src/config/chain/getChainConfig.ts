@@ -147,8 +147,7 @@ function getOtherChains(env: Env): ChainApi[] {
       indexerApis: [],
       blockApis: [
         {
-          // TODO: rename to zksynclite
-          type: 'zksync',
+          type: 'zksynclite',
           url: 'https://api.zksync.io/api/v0.2',
           callsPerMinute: 3_000,
           retryStrategy: 'RELIABLE',
