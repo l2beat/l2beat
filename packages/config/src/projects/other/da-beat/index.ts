@@ -12,6 +12,7 @@ import { arbitrumNovaDac } from './dac/arbitrumnova'
 import { astarZkEvmDac } from './dac/astarzkEVM'
 import { automataDA } from './dac/automataDA'
 import { blessnetDac } from './dac/blessnet'
+import { cornDac } from './dac/corn'
 import { cyberDA } from './dac/cyberDA'
 import { degenDac } from './dac/degen'
 import { ebichainDac } from './dac/ebichain'
@@ -67,6 +68,7 @@ export const daLayers = applyProcessor([
   arbitrumNovaDac,
   astarZkEvmDac,
   blessnetDac,
+  cornDac,
   cyberDA,
   degenDac,
   ebichainDac,

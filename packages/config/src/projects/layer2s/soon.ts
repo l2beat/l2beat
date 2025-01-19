@@ -13,7 +13,10 @@ export const soon: Layer2 = opStackL2({
   daProvider: EIGENDA_DA_PROVIDER,
   additionalBadges: [Badge.DA.EigenDA, Badge.VM.SolanaVM],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+    reasonsForBeingOther: [
+      REASON_FOR_BEING_OTHER.NO_PROOFS,
+      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    ],
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',
     slug: 'soon',

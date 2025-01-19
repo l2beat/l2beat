@@ -37,7 +37,6 @@ function getScalingUpcomingEntry(
     ...getCommonScalingEntry({
       project,
       changes: undefined,
-      syncStatus: undefined,
     }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,

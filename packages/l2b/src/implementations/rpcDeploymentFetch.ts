@@ -21,6 +21,7 @@ export async function getContractCreationTimestamp(
   )
 
   const block = await provider.getBlock(creationBlock)
+  console.log(block.number)
   return new UnixTime(block.timestamp)
 }
 
