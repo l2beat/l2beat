@@ -121,5 +121,5 @@ function sort<T extends ReceivedPermission | IssuedPermission>(
 }
 
 function zeroToUndefined(x: number) {
-    return x === 0 ? undefined : x
+  return x === 0 ? undefined : x
 }
