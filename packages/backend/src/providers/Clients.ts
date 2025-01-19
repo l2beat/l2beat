@@ -73,7 +73,7 @@ export function initClients(config: Config, logger: Logger): Clients {
           break
         }
 
-        case 'zksync': {
+        case 'zksynclite': {
           const zksyncLiteClient = new ZksyncLiteClient({
             sourceName: 'zksynclite',
             url: blockApi.url,
