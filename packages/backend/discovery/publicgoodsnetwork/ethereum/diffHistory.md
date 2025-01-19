@@ -109,7 +109,7 @@ Generated with discovered.json: 0x450ab2617c6d7c7826a6f90f48870b03e998d403
 
 Upgrade to a new version of OptimismPortal which adds an `IEthBalanceWithdrawer` that allows the `BALANCE_CLAIMER` address to withdraw ETH and bypass the usual OP stack proving of withdrawals.
 
-A similar uprade is made to the L1StandardBridge regarding ERC20 tokens, and referencing the same privileged address which is the following SC:
+A similar upgrade is made to the L1StandardBridge regarding ERC20 tokens, and referencing the same privileged address which is the following SC:
 
 ### BalanceClaimer.sol
 

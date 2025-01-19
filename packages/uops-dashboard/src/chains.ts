@@ -1,5 +1,5 @@
 export type Chain = {
-  /** Id for internal purposes, set it to an arbitraty string*/
+  /** Id for internal purposes, set it to an arbitrary string*/
   id: string
   /** This will be displayed on the UOPS explorer */
   name: string
