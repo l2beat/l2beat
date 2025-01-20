@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 124973335,
-  "configHash": "0xbf569e6669339b91a3f510749a95e24884b7ff466bbb69e6efb44846047ad172",
+  "configHash": "0x2864dfcbeffa1a4418e7e746985c35c5fb17ca8e21feec35fb637db8770e5d1f",
   "contracts": [
     {
       "name": "OptimismOwner",
@@ -439,8 +439,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
-    "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "zklinknova/secondaryGateway": "0x158951e7297f2d4fa3d6bef7b6047d1d475e781367c84efa4d5e2a0b4b2ca8a8",
+    "zklinknova/secondaryZkLink": "0xd2a55890bc3cf07126d1f74361c846ae82393447e9b8fb387647b79107c171e4"
   }
 }

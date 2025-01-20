@@ -2,7 +2,7 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 20640703,
-  "configHash": "0x8a591324e40a30c710cd4945a74a4cd5f7f8cc53c7b6802a87a7b9233fde62df",
+  "configHash": "0x8d4866c70fcff8644256ff79bf7def1b9c8e45f991cdad79f4ffe10984277d46",
   "contracts": [
     {
       "name": "Committee",
@@ -837,6 +837,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

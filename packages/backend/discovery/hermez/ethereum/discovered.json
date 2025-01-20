@@ -2,7 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "blockNumber": 21387322,
-  "configHash": "0xd13d7d9b7d206ea002d15a07d74498431546ba3a59fb1910f0fb456f584bb637",
+  "configHash": "0xe9f472f657e597d8f31f270abb560c5b85df47930fb48cc22de864fe3b68d677",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -640,6 +640,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

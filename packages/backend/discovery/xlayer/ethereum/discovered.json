@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 21579520,
-  "configHash": "0x41f7202e7223768d95de7a663ef06fc1542f47bf61b335cdaae8febae517cd75",
+  "configHash": "0x5fe03ef944f620355c5cb07ebd60481d7b318a35bf013a954856a9dd5d02b06e",
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
@@ -352,6 +352,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

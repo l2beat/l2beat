@@ -2,7 +2,7 @@
   "name": "nomad",
   "chain": "ethereum",
   "blockNumber": 19531994,
-  "configHash": "0xfb467e6b9ab858c1d1c3e015cef485c6f6f857e7aa631e3963d36849d272027c",
+  "configHash": "0xb8755091c65c9ec39c0dadd5bb51908ba9185e850dd1ab4d45a9045000cf5703",
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
@@ -683,6 +683,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

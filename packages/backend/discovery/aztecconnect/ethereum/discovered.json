@@ -2,7 +2,7 @@
   "name": "aztecconnect",
   "chain": "ethereum",
   "blockNumber": 21041827,
-  "configHash": "0x34c6ecbf26d3b527966ac5f23ebe82cb2b6f85b74245e73ce7783409390c2b89",
+  "configHash": "0x1a4d57a02d9087eb8a7eb984c199221700e8282c2e837ce8e3eeccafeaa78c61",
   "contracts": [
     {
       "name": "AztecFeeDistributor",
@@ -469,7 +469,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

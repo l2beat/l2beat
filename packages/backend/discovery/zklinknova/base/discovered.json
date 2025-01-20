@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "base",
   "blockNumber": 19378036,
-  "configHash": "0xc4cb6082ab978216ca9503853445f4db483a867b3aba1e9df9d35927fe49898c",
+  "configHash": "0x38188551f17cfe1cd31ceac9c5644a3276a9cb3691b89ea1d52f842e92daa9dd",
   "contracts": [
     {
       "name": "BaseL2Gateway",
@@ -439,8 +439,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
-    "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "zklinknova/secondaryGateway": "0x158951e7297f2d4fa3d6bef7b6047d1d475e781367c84efa4d5e2a0b4b2ca8a8",
+    "zklinknova/secondaryZkLink": "0xd2a55890bc3cf07126d1f74361c846ae82393447e9b8fb387647b79107c171e4"
   }
 }

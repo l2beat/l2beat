@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 21579380,
-  "configHash": "0xe7e2181ba52dc7df5fa6c9434105df59650e73fd85b68bd5e05dee5a2b659649",
+  "configHash": "0x234f21c317f24b881b0c8f184d2dfea1f8594fb7c8acc94611fa0ac963ab8d00",
   "contracts": [
     {
       "name": "OmniBridgeGovernance",
@@ -879,6 +879,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }
