@@ -45,15 +45,6 @@
     "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": "DelayedWETH_PermissionedGames",
     "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
   },
-  "types": {
-    "DisputeGameMap": {
-      "typeCaster": "Mapping",
-      "arg": {
-        "0": "FaultDisputeGame",
-        "1": "PermissionedDisputeGame"
-      }
-    }
-  },
   "overrides": {
     "L1DAIEscrow": {
       "description": "Stores DAI deposited from the attached L1DAITokenBridge."

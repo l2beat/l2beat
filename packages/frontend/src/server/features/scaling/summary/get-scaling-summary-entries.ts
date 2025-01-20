@@ -35,7 +35,7 @@ import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 export async function getScalingSummaryEntries() {
   const projects = await ProjectService.STATIC.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks'],
-    optional: ['countdowns', 'tvlInfo', 'scalingDa', 'scalingStage'],
+    optional: ['tvlInfo', 'scalingDa', 'scalingStage'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -96,7 +96,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
 function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks',
-    'countdowns' | 'tvlInfo' | 'scalingDa' | 'scalingStage'
+    'tvlInfo' | 'scalingDa' | 'scalingStage'
   >,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,

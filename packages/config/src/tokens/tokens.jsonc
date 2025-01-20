@@ -5625,6 +5625,131 @@
       }
     }
   ],
+  "corn": [
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LBTC",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "coingeckoId": "lombard-staked-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "eBTC",
+      "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+      "coingeckoId": "ether-fi-staked-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x85aDfA60dDf86b67E6fD493Bd2c774b2eD772D14",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC.e",
+      "category": "stablecoin",
+      "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
+      "source": "external",
+      "coingeckoId": "usd-coin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WETH",
+      "category": "ether",
+      "address": "0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
+      "source": "external",
+      "coingeckoId": "ethereum",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "stBTC",
+      "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
+      "source": "external",
+      "coingeckoId": "lorenzo-stbtc",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
   "ink": [
     {
       "symbol": "USD₮0",

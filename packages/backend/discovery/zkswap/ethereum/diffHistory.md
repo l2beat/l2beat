@@ -1,4 +1,98 @@
-Generated with discovered.json: 0x1dc398d207e1b1d3310710e811c8e0fdc1c10dd3
+Generated with discovered.json: 0x8e3f7929edd8be66a9714de8d035a62abcac16bf
+
+# Diff at Mon, 20 Jan 2025 11:10:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20311131
+- current block number: 20311131
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311131 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x02ecef526f806f06357659fFD14834fe82Ef4B04) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      issuedPermissions.0.to:
++        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+    }
+```
+
+```diff
+    contract Verifier (0x27C229937745d697d28FC7853d1bFEA7331Edf56) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      issuedPermissions.0.to:
++        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+    }
+```
+
+```diff
+    contract PairManager (0x661121AE41edE3f6FECDed922c59acC19A3ea9B3) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      issuedPermissions.0.to:
++        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x714B2D10210f2A3a7AA614F949259C87613689aB) {
+    +++ description: None
+      receivedPermissions.4.target:
+-        "0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
+      receivedPermissions.4.from:
++        "0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
+      receivedPermissions.3.target:
+-        "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+      receivedPermissions.3.from:
++        "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+      receivedPermissions.2.target:
+-        "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3"
+      receivedPermissions.2.from:
++        "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3"
+      receivedPermissions.1.target:
+-        "0x27C229937745d697d28FC7853d1bFEA7331Edf56"
+      receivedPermissions.1.from:
++        "0x27C229937745d697d28FC7853d1bFEA7331Edf56"
+      receivedPermissions.0.target:
+-        "0x02ecef526f806f06357659fFD14834fe82Ef4B04"
+      receivedPermissions.0.from:
++        "0x02ecef526f806f06357659fFD14834fe82Ef4B04"
+    }
+```
+
+```diff
+    contract ZkSync (0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      issuedPermissions.0.to:
++        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+    }
+```
+
+```diff
+    contract VerifierExit (0x961369d347EF7A6896BDD39cBE2B89e3911f521f) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      issuedPermissions.0.to:
++        "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+    }
+```
+
+Generated with discovered.json: 0x058a15acf81e695fd70095ddcb4cd99b7adc56bd
 
 # Diff at Mon, 14 Oct 2024 10:58:14 GMT:
 

@@ -35,7 +35,7 @@ export function discoveryNeedsRefresh(
       contract.template !== undefined &&
       allShapes[contract.template].hashes.length > 0
     ) {
-      if (config.overrides.get(contract.address).extends === undefined) {
+      if (config.for(contract.address).extends === undefined) {
         if (matchingTemplates.length === 0) {
           return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
         }

@@ -12,7 +12,7 @@ export function getIgnoredMethods(
   viewABI: ethers.utils.Interface,
 ) {
   let ignoreMethods: DashboardContractField[] | undefined = undefined
-  const override = config.overrides.get(contract.address)
+  const override = config.for(contract.address)
   if (override.ignoreMethods) {
     ignoreMethods = override.ignoreMethods.map((field) => {
       return {

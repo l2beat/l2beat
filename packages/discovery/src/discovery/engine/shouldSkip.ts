@@ -7,7 +7,7 @@ export function shouldSkip(
   depth: number,
   counter: number,
 ): string | undefined {
-  if (config.overrides.get(address).ignoreDiscovery) {
+  if (config.for(address).ignoreDiscovery) {
     return 'ignored'
   }
 

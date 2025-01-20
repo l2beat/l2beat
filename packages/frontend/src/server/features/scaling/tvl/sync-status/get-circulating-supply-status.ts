@@ -1,4 +1,4 @@
-import { getCirculatingSupplyIndexerId } from '@l2beat/config'
+import { getCirculatingSupplyIndexerId } from '@l2beat/backend-shared'
 import {
   type AmountConfigEntry,
   type CirculatingSupplyEntry,

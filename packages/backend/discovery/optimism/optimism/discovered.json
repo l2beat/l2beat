@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 130763685,
-  "configHash": "0x0dfb898147afa1692a4ded7fcccadafdf44184c99cf8aae7e7c220f7ed694bed",
+  "blockNumber": 130664390,
+  "configHash": "0x7c3f4a2962ba6c5930dac17eb17ac327c703e3c3444eab4ffe83fcd02d7d2912",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -54,13 +54,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -86,13 +81,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["messageNonce"],
@@ -129,13 +119,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
@@ -182,13 +167,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -217,13 +197,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -251,13 +226,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -283,13 +253,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -314,13 +279,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1664918265,
@@ -355,13 +315,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -412,13 +367,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -444,13 +394,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -478,79 +423,74 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000002"
+          "from": "0x4200000000000000000000000000000000000002"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000007"
+          "from": "0x4200000000000000000000000000000000000007"
         },
         {
           "permission": "upgrade",
-          "target": "0x420000000000000000000000000000000000000F"
+          "from": "0x420000000000000000000000000000000000000F"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000010"
+          "from": "0x4200000000000000000000000000000000000010"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000011"
+          "from": "0x4200000000000000000000000000000000000011"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000012"
+          "from": "0x4200000000000000000000000000000000000012"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000013"
+          "from": "0x4200000000000000000000000000000000000013"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000014"
+          "from": "0x4200000000000000000000000000000000000014"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000015"
+          "from": "0x4200000000000000000000000000000000000015"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000016"
+          "from": "0x4200000000000000000000000000000000000016"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000017"
+          "from": "0x4200000000000000000000000000000000000017"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000018"
+          "from": "0x4200000000000000000000000000000000000018"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000019"
+          "from": "0x4200000000000000000000000000000000000019"
         },
         {
           "permission": "upgrade",
-          "target": "0x420000000000000000000000000000000000001A"
+          "from": "0x420000000000000000000000000000000000001A"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000020"
+          "from": "0x4200000000000000000000000000000000000020"
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000021"
+          "from": "0x4200000000000000000000000000000000000021"
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -577,13 +517,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -610,13 +545,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -643,13 +573,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -680,13 +605,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [
-            {
-              "address": "0x4200000000000000000000000000000000000018",
-              "delay": 0
-            }
-          ]
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -768,89 +688,89 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000002",
+          "from": "0x4200000000000000000000000000000000000002",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000007",
+          "from": "0x4200000000000000000000000000000000000007",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x420000000000000000000000000000000000000F",
+          "from": "0x420000000000000000000000000000000000000F",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000010",
+          "from": "0x4200000000000000000000000000000000000010",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000011",
+          "from": "0x4200000000000000000000000000000000000011",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000012",
+          "from": "0x4200000000000000000000000000000000000012",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000013",
+          "from": "0x4200000000000000000000000000000000000013",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000014",
+          "from": "0x4200000000000000000000000000000000000014",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000015",
+          "from": "0x4200000000000000000000000000000000000015",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000016",
+          "from": "0x4200000000000000000000000000000000000016",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000017",
+          "from": "0x4200000000000000000000000000000000000017",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000018",
+          "from": "0x4200000000000000000000000000000000000018",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000019",
+          "from": "0x4200000000000000000000000000000000000019",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x420000000000000000000000000000000000001A",
+          "from": "0x420000000000000000000000000000000000001A",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000020",
+          "from": "0x4200000000000000000000000000000000000020",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4200000000000000000000000000000000000021",
+          "from": "0x4200000000000000000000000000000000000021",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x4200000000000000000000000000000000000018"
+          "from": "0x4200000000000000000000000000000000000018"
         }
       ]
     },
@@ -1382,7 +1302,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

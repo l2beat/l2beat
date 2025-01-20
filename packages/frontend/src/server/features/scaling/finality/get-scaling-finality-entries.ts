@@ -24,7 +24,7 @@ import { getFinalitySyncWarning } from './utils/is-finality-synced'
 export async function getFinalityProjects() {
   const projects = await ProjectService.STATIC.getProjects({
     select: ['statuses', 'scalingInfo', 'finalityInfo', 'finalityConfig'],
-    optional: ['countdowns', 'scalingDa'],
+    optional: ['scalingDa'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -80,10 +80,7 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
 }
 
 function getScalingFinalityEntry(
-  project: Project<
-    'scalingInfo' | 'statuses' | 'finalityInfo',
-    'countdowns' | 'scalingDa'
-  >,
+  project: Project<'scalingInfo' | 'statuses' | 'finalityInfo', 'scalingDa'>,
   changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
   tvl: number | undefined,
@@ -95,11 +92,7 @@ function getScalingFinalityEntry(
   const syncWarning = getFinalitySyncWarning(finalityProjectData.syncedUntil)
 
   return {
-    ...getCommonScalingEntry({
-      project,
-      changes,
-      syncWarning,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncWarning }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
     dataAvailabilityMode: project.scalingDa?.mode,

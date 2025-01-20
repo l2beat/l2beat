@@ -1,17 +1,19 @@
 import {
   type BackendProject,
-  type Bridge,
-  type Layer2,
-  type Layer3,
   bridgeToBackendProject,
-  bridges,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
   layer2ToBackendProject,
-  layer2s,
   layer3ToBackendProject,
-  layer3s,
   toBackendProject,
+} from '@l2beat/backend-shared'
+import {
+  type Bridge,
+  type Layer2,
+  type Layer3,
+  bridges,
+  layer2s,
+  layer3s,
 } from '@l2beat/config'
 import {
   assert,

@@ -2,7 +2,7 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21630186,
-  "configHash": "0xe296e313abe7ac0bad12697a4ed750d8b5b1476794e5ff0ab09642461c887fd1",
+  "configHash": "0xdbdf317f30c905de8b646b75ed90e7c504b5ed666cc9de5edca8fdb3d7ff1cbb",
   "contracts": [
     {
       "name": "Factory",
@@ -601,7 +601,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
           "via": []
         }
       ],
@@ -809,7 +809,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
           "via": []
         }
       ],
@@ -862,7 +862,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5a54fe5234E811466D5366846283323c954310B2"
+          "from": "0x5a54fe5234E811466D5366846283323c954310B2"
         }
       ],
       "sinceTimestamp": 1661448939,
@@ -996,7 +996,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          "from": "0x902F09715B6303d4173037652FA7377e5b98089E"
         }
       ],
       "sinceTimestamp": 1647317012,
@@ -2884,6 +2884,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

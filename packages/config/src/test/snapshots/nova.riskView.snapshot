@@ -48,7 +48,7 @@
   }
   stateValidation: {
     definingMetric: 13
-    description: "Fraud proofs allow 13 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
+    description: "Fraud proofs allow 13 WHITELISTED actors watching the chain to prove that the state is incorrect. At least 5 Challengers are external to the Operator. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "warning"
     value: "Fraud proofs (INT)"

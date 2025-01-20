@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 21434844,
-  "configHash": "0x33ccda097a401b6333105619455017c874536ca6f3d8789d19c47ef650e6946f",
+  "configHash": "0x853d9212dfa92949b49a3aa696242fd9f5eba0ebc6a2a531d75dd9d48184d3bb",
   "contracts": [
     {
       "name": "TokenBridge",
@@ -17,34 +17,19 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "via": [
-            {
-              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
-              "delay": 0
-            },
-            {
-              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-              "delay": 0
-            }
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
           ]
         },
         {
           "permission": "upgrade",
-          "target": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
           "via": [
-            {
-              "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-              "delay": 0
-            },
-            {
-              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
-              "delay": 0
-            },
-            {
-              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-              "delay": 0
-            }
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
           ]
         }
       ],
@@ -190,7 +175,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x504A330327A089d8364C4ab3811Ee26976d388ce"
+          "from": "0x504A330327A089d8364C4ab3811Ee26976d388ce"
         }
       ],
       "sinceTimestamp": 1691086259,
@@ -211,7 +196,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+          "to": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
           "via": []
         }
       ],
@@ -254,12 +239,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions in the Timelock."
         },
         {
           "permission": "upgrade",
-          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "via": [
             { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
             { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
@@ -267,7 +252,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "via": [
             { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
             { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
@@ -277,7 +262,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xd6B95c960779c72B8C6752119849318E5d550574"
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -351,44 +336,29 @@
       "issuedPermissions": [
         {
           "permission": "operateLinea",
-          "target": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+          "to": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
           "via": []
         },
         {
           "permission": "operateLinea",
-          "target": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
+          "to": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "via": [
-            {
-              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
-              "delay": 0
-            },
-            {
-              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-              "delay": 0
-            }
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
           ]
         },
         {
           "permission": "upgrade",
-          "target": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
           "via": [
-            {
-              "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-              "delay": 0
-            },
-            {
-              "address": "0xd6B95c960779c72B8C6752119849318E5d550574",
-              "delay": 0
-            },
-            {
-              "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-              "delay": 0
-            }
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
           ]
         }
       ],
@@ -609,25 +579,21 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "propose transactions in the Timelock.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xF24f1DC519d88246809B660eb56D94048575d083",
-          "via": [
-            {
-              "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
-              "delay": 0,
-              "description": "propose transactions in the Timelock."
-            }
-          ]
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "propose transactions in the Timelock.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+          "from": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
         }
       ],
       "sinceTimestamp": 1689150959,
@@ -679,13 +645,13 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions in the Timelock.",
           "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "via": [
             { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
             { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
@@ -694,7 +660,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "via": [
             { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
             { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
@@ -705,7 +671,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+          "from": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         }
       ],
       "sinceTimestamp": 1700506439,
@@ -781,11 +747,11 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
         },
         {
           "permission": "upgrade",
-          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
         }
       ],
       "sinceTimestamp": 1689158711,
@@ -807,7 +773,7 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
         }
       ]
     },
@@ -818,7 +784,7 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
         }
       ]
     },
@@ -1342,10 +1308,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "linea/LineaRollup": "0xef3c5b89a0f59fd674142bd2ca0d7efcc8f0ca2b1698e9c9b9c7b22394a05e8b",
-    "linea/Timelock": "0x6ac440cffe46557709ca6e27336e9cce1a0c13bb34fbac95db79eb2148cb12ff",
-    "linea/TokenBridge": "0xc7f437cd95670bba903eb5000ed21ebe4bd697a425d8392364aad7253a2d60fb"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "linea/LineaRollup": "0x2a2bb0695f88233d3ed1d56a00b6c7a30ec7cca3f3b7a2ac8dca2ca019097f75",
+    "linea/Timelock": "0x7193e0837f3bc1ca55d33b891a49e9e451c4764a01b2abdae5a0e3fcdf560a02",
+    "linea/TokenBridge": "0x09a1d318631fb84e57a760e85453b3cb13e2f49e6ae8ab902307c13ac2727dba"
   }
 }

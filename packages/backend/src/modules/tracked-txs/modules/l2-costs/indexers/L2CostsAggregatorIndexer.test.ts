@@ -1,13 +1,5 @@
+import { BackendProject } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import {
-  EthereumAddress,
-  Hash256,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-
-import { BackendProject } from '@l2beat/config'
 import {
   AggregatedL2CostRecord,
   Database,
@@ -16,6 +8,13 @@ import {
   L2CostRecord,
 } from '@l2beat/database'
 import { TrackedTxId, createTrackedTxId } from '@l2beat/shared'
+import {
+  EthereumAddress,
+  Hash256,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
 import {

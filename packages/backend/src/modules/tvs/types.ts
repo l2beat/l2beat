@@ -85,6 +85,14 @@ export interface Token {
   isAssociated: boolean
 }
 
+export function isEscrowToken(token: Token): token is EscrowToken {
+  return token.amount.type === 'balanceOfEscrow'
+}
+
+export type EscrowToken = Token & {
+  amount: BalanceOfEscrowAmountFormula
+}
+
 export type PriceSources = Map<string, PriceSource[]>
 
 export type PriceSource = CoingeckoPriceSource | CoinMarketCapPriceSource

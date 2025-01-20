@@ -57,6 +57,7 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
         delay: entry.delay,
         permission: entry.type,
         description: entry.description,
+        condition: entry.condition,
       })
     }
   }

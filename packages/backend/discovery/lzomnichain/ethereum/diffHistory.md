@@ -1,4 +1,110 @@
-Generated with discovered.json: 0x4af3aff0252c55574995b6b9c12af13894e795a9
+Generated with discovered.json: 0xcc5e67d0c8a5a323f9faa5e39a319ce5c896fe92
+
+# Diff at Mon, 20 Jan 2025 11:09:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21465397
+- current block number: 21465397
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465397 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982"
+      receivedPermissions.0.from:
++        "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982"
+    }
+```
+
+```diff
+    contract  (0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+      issuedPermissions.0.to:
++        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+    }
+```
+
+```diff
+    contract EuraEscrow (0x4Fa745FCCC04555F2AFA8874cd23961636CdF982) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b"
+      issuedPermissions.0.to:
++        "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b"
+    }
+```
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+      issuedPermissions.0.to:
++        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+    }
+```
+
+```diff
+    contract  (0x6BD792911F4B3714E88FbDf32B351632e7d22c70) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+      issuedPermissions.0.to:
++        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+      issuedPermissions.0.to:
++        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x5a54fe5234E811466D5366846283323c954310B2"
+      receivedPermissions.1.from:
++        "0x5a54fe5234E811466D5366846283323c954310B2"
+      receivedPermissions.0.target:
+-        "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
+      receivedPermissions.0.from:
++        "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x902F09715B6303d4173037652FA7377e5b98089E"
+      receivedPermissions.1.from:
++        "0x902F09715B6303d4173037652FA7377e5b98089E"
+      receivedPermissions.0.target:
+-        "0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
+      receivedPermissions.0.from:
++        "0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
+    }
+```
+
+Generated with discovered.json: 0x410eb4f6436db82029982f1794ec6bc6a83bb320
 
 # Diff at Thu, 12 Dec 2024 18:08:36 GMT:
 

@@ -32,7 +32,7 @@ export async function getScalingLivenessEntries() {
     getLiveness(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'livenessInfo'],
-      optional: ['countdowns', 'scalingDa'],
+      optional: ['scalingDa'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -64,10 +64,7 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
 }
 
 function getScalingLivenessEntry(
-  project: Project<
-    'scalingInfo' | 'statuses' | 'livenessInfo',
-    'countdowns' | 'scalingDa'
-  >,
+  project: Project<'scalingInfo' | 'statuses' | 'livenessInfo', 'scalingDa'>,
   changes: ProjectChanges,
   liveness: LivenessProject | undefined,
   tvl: number | undefined,
@@ -80,11 +77,7 @@ function getScalingLivenessEntry(
   const syncWarning = getLivenessSyncWarning(lowestSyncedUntil)
   const data = getLivenessData(liveness, project, !syncWarning)
   return {
-    ...getCommonScalingEntry({
-      project,
-      changes,
-      syncWarning,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncWarning }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
     data,

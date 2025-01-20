@@ -16,7 +16,7 @@ import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
   OneTransactionListResult,
-  TwentyTransactionListResult,
+  TransactionListResult,
   tryParseEtherscanResponse,
 } from './EtherscanModels'
 import {
@@ -200,54 +200,29 @@ export class EtherscanClient implements IEtherscanClient {
     return new UnixTime(parseInt(resp.timeStamp, 10))
   }
 
-  async getLast10OutgoingTxs(
+  async getAtMost10RecentOutgoingTxs(
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]> {
-    // NOTE(radomski): There is a retry here because Etherscan sometimes
-    // responds with 200, no error, everything is supposed to be fine but the
-    // amount of txs they returns is less then expected. This happens every
-    // so often, but makes our UpdateMonitor channel rife with processing
-    // errors
-    let attempts = 0
-    while (true) {
-      try {
-        const response = await this.callWithRetries('account', 'txlist', {
-          address: address.toString(),
-          startblock: '0',
-          endblock: blockNumber.toString(),
-          page: '1',
-          offset: '20',
-          sort: 'desc',
-        })
+    const response = await this.callWithRetries('account', 'txlist', {
+      address: address.toString(),
+      startblock: '0',
+      endblock: blockNumber.toString(),
+      page: '1',
+      offset: '50',
+      sort: 'desc',
+    })
 
-        const resp = TwentyTransactionListResult.parse(response)
-        assert(resp)
-        const outgoingTxs = resp
-          .filter((tx) => EthereumAddress(tx.from) === address)
-          .slice(0, 10)
+    const resp = TransactionListResult.parse(response)
+    const outgoingTxs = resp
+      .filter((tx) => EthereumAddress(tx.from) === address)
+      .slice(0, 10)
 
-        assert(
-          outgoingTxs.length === 10,
-          'Not enough outgoing transactions, expected 10, received ' +
-            outgoingTxs.length.toString(),
-        )
-
-        return outgoingTxs.map((r) => ({
-          input: r.input,
-          to: EthereumAddress(r.to),
-          hash: Hash256(r.hash),
-        }))
-      } catch (error) {
-        attempts++
-        const result = shouldRetry(attempts, error)
-        if (result.shouldStop) {
-          throw error
-        }
-        this.logger.warn('Retrying', { attempts, error })
-        await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
-      }
-    }
+    return outgoingTxs.map((r) => ({
+      input: r.input,
+      to: EthereumAddress(r.to),
+      hash: Hash256(r.hash),
+    }))
   }
 
   async callWithRetries(

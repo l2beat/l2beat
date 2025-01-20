@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "polygonzkevm",
   "blockNumber": 14728552,
-  "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
+  "configHash": "0xa4215d074c6d48a4ec97fc9b051ebe7573f4e3e27f09369afd13cce8ef852e55",
   "contracts": [
     {
       "name": "",
@@ -27,7 +27,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+          "from": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
         }
       ],
       "sinceTimestamp": 1679974014,
@@ -89,7 +89,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"
+          "from": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"
         }
       ],
       "sinceTimestamp": 1679975850,
@@ -136,7 +136,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3c2269811836af69497E5F486A85D7316753cf62",
+          "to": "0x3c2269811836af69497E5F486A85D7316753cf62",
           "via": []
         }
       ],
@@ -167,7 +167,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
           "via": []
         }
       ],
@@ -1587,6 +1587,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

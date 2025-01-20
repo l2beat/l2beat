@@ -7,6 +7,7 @@ import {
   ScalingProjectStack,
 } from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+import { BridgeDisplay, BridgeRiskView } from '../bridges'
 import {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
@@ -30,6 +31,8 @@ export interface BaseProject {
   addedAt: UnixTime
   // data
   statuses?: ProjectStatuses
+  bridgeInfo?: ProjectBridgeInfo
+  bridgeRisks?: BridgeRiskView
   scalingInfo?: ProjectScalingInfo
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
@@ -50,7 +53,6 @@ export interface BaseProject {
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
-  countdowns?: ProjectCountdowns
   // tags
   isBridge?: true
   isScaling?: true
@@ -65,6 +67,18 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
+  // countdowns
+  otherMigration?: {
+    expiresAt: number
+    pretendingToBe: ScalingProjectCategory
+    reasons: ReasonForBeingInOther[]
+  }
+}
+
+export interface ProjectBridgeInfo {
+  category: BridgeDisplay['category']
+  destination: string[]
+  validatedBy: string
 }
 
 export interface ProjectScalingInfo {
@@ -110,12 +124,4 @@ export interface ProjectCostsInfo {
 
 export interface ProjectActivityInfo {
   dataSource?: ScalingProjectDisplay['activityDataSource']
-}
-
-export interface ProjectCountdowns {
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ScalingProjectCategory
-    reasons: ReasonForBeingInOther[]
-  }
 }

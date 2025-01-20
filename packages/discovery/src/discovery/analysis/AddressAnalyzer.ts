@@ -6,9 +6,8 @@ import {
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { ContractConfig } from '../config/ContractConfig'
 import {
-  DiscoveryContractField,
   DiscoveryCustomType,
   ExternalReference,
 } from '../config/RawDiscoveryConfig'
@@ -77,13 +76,12 @@ export class AddressAnalyzer {
   async analyze(
     provider: IProvider,
     address: EthereumAddress,
-    overrides: ContractOverrides | undefined,
-    types: Record<string, DiscoveryCustomType> | undefined,
+    config: ContractConfig,
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
     if (code.length === 0) {
-      return { type: 'EOA', name: overrides?.name, address }
+      return { type: 'EOA', name: config.name, address }
     }
 
     const deployment = await provider.getDeployment(address)
@@ -91,20 +89,23 @@ export class AddressAnalyzer {
     const templateErrors: Record<string, string> = {}
     let extendedTemplate: ExtendedTemplate | undefined = undefined
 
-    if (overrides?.extends !== undefined) {
+    if (config.extends !== undefined) {
+      const templateValues = this.templateService.loadContractTemplate(
+        config.extends,
+      )
+      config.pushValues(templateValues)
       extendedTemplate = {
-        template: overrides.extends,
+        template: config.extends,
         reason: 'byExtends',
-        templateHash: this.templateService.getTemplateHash(overrides.extends),
+        templateHash: this.templateService.getTemplateHash(config.extends),
       }
     } else if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
         // extend template even on error to make sure pruning works
-        overrides = this.templateService.applyTemplateOnContractOverrides(
-          overrides ?? { address },
-          template,
-        )
+        const templateValues =
+          this.templateService.loadContractTemplate(template)
+        config.pushValues(templateValues)
         extendedTemplate = {
           template,
           reason: 'byReferrer',
@@ -122,7 +123,7 @@ export class AddressAnalyzer {
     const proxy = await this.proxyDetector.detectProxy(
       provider,
       address,
-      overrides?.proxyType,
+      config.proxyType,
     )
     const implementations = get$Implementations(proxy?.values)
     const beacons = get$Beacons(proxy?.values)
@@ -132,15 +133,11 @@ export class AddressAnalyzer {
       provider,
       address,
       implementations,
-      overrides?.manualSourcePaths ?? {},
+      config.manualSourcePaths,
     )
 
-    const name = overrides?.name ?? sources.name
-    // Match templates by shape only if there are no explicitly set
-    if (
-      overrides?.extends === undefined &&
-      (suggestedTemplates === undefined || suggestedTemplates.size === 0)
-    ) {
+    const name = config.name ?? sources.name
+    if (extendedTemplate === undefined) {
       const matchingTemplates = this.templateService.findMatchingTemplates(
         sources,
         address,
@@ -148,10 +145,9 @@ export class AddressAnalyzer {
       const template = matchingTemplates[0]
       if (template !== undefined) {
         // extend template even on error to make sure pruning works
-        overrides = this.templateService.applyTemplateOnContractOverrides(
-          overrides ?? { address },
-          template,
-        )
+        const templateValues =
+          this.templateService.loadContractTemplate(template)
+        config.pushValues(templateValues)
         extendedTemplate = {
           template,
           reason: 'byShapeMatch',
@@ -165,13 +161,7 @@ export class AddressAnalyzer {
     }
 
     const { results, values, errors, usedTypes } =
-      await this.handlerExecutor.execute(
-        provider,
-        address,
-        sources.abi,
-        overrides,
-        types,
-      )
+      await this.handlerExecutor.execute(provider, address, sources.abi, config)
 
     const proxyResults = Object.entries(proxy?.values ?? {}).map(
       ([field, value]): HandlerResult => ({ field, value }),
@@ -184,9 +174,9 @@ export class AddressAnalyzer {
     ]
     const relatives = getRelativesWithSuggestedTemplates(
       results.concat(proxyResults),
-      overrides?.ignoreRelatives,
+      config.ignoreRelatives,
       ignoredAddresses,
-      overrides?.fields,
+      config.fields,
     )
 
     const mergedValues = {
@@ -201,7 +191,7 @@ export class AddressAnalyzer {
     > = {
       type: 'Contract',
       name,
-      derivedName: overrides?.name !== undefined ? sources.name : undefined,
+      derivedName: config.name !== undefined ? sources.name : undefined,
       isVerified: sources.isVerified,
       address,
       deploymentTimestamp: deployment?.timestamp,
@@ -209,53 +199,42 @@ export class AddressAnalyzer {
       implementations: implementations,
       proxyType: proxy?.type,
       values: mergedValues,
-      fieldsMeta: this.getFieldsMeta(extendedTemplate, overrides),
-      errors: { ...templateErrors, ...(errors ?? {}) },
+      fieldsMeta: this.getFieldsMeta(config),
+      errors: { ...templateErrors, ...errors },
       abis: sources.abis,
       sourceBundles: sources.sources,
       extendedTemplate,
-      ignoreInWatchMode: overrides?.ignoreInWatchMode,
-      references: overrides?.references,
+      ignoreInWatchMode: config.ignoreInWatchMode,
+      references: config.references,
       relatives,
       usedTypes,
     }
 
     const analysis: AnalyzedContract = {
       ...analysisWithoutMeta,
-      selfMeta: getSelfMeta(overrides, analysisWithoutMeta),
+      selfMeta: getSelfMeta(config, analysisWithoutMeta),
       targetsMeta: getTargetsMeta(
         address,
         mergedValues,
-        overrides?.fields,
+        config.fields,
         analysisWithoutMeta,
       ),
     }
     return analysis
   }
 
-  getFieldsMeta(
-    template: ExtendedTemplate | undefined,
-    overrides: ContractOverrides | undefined,
-  ): Record<string, FieldMeta> {
+  getFieldsMeta(config: ContractConfig): Record<string, FieldMeta> {
     const result: Record<string, FieldMeta> = {}
-    const fieldOverrides: Record<string, DiscoveryContractField>[] = [
-      overrides?.fields ?? {},
-      template !== undefined
-        ? (this.templateService.loadContractTemplate(template.template)
-            .fields ?? {})
-        : {},
-    ]
 
-    for (const override of fieldOverrides) {
-      for (const [key, value] of Object.entries(override)) {
-        if (value.severity === undefined && value.description === undefined) {
-          continue
-        }
+    for (const [key, value] of Object.entries(config.fields)) {
+      if (value.severity === undefined && value.description === undefined) {
+        continue
+      }
 
-        result[key] = {
-          severity: value.severity,
-          description: value.description,
-        }
+      result[key] = {
+        severity: value.severity,
+        description: value.description,
+        type: value.type,
       }
     }
 

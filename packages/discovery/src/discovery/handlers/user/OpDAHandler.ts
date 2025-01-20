@@ -66,29 +66,32 @@ export class OpStackDAHandler implements Handler {
       referenceInput,
     )
     const sequencerAddress = valueToAddress(resolved)
-    const last10Txs = await provider.raw(
+    const lastTxs = await provider.raw(
       `optimism_sequencer_100.${sequencerAddress}.${provider.blockNumber}`,
       ({ etherscanClient }) =>
-        etherscanClient.getLast10OutgoingTxs(
+        etherscanClient.getAtMost10RecentOutgoingTxs(
           sequencerAddress,
           provider.blockNumber,
         ),
     )
 
-    const isSomeTxsLengthEqualToCelestiaDAExample = last10Txs.some(
-      (tx) => tx.input.length === OP_STACK_CELESTIA_DA_EXAMPLE_INPUT.length,
-    )
+    const hasTxs = lastTxs.length > 0
+
+    const isSomeTxsLengthEqualToCelestiaDAExample =
+      hasTxs &&
+      lastTxs.some(
+        (tx) => tx.input.length === OP_STACK_CELESTIA_DA_EXAMPLE_INPUT.length,
+      )
 
     const rpcTxs = await Promise.all(
-      last10Txs.map((tx) => provider.getTransaction(tx.hash)),
+      lastTxs.map((tx) => provider.getTransaction(tx.hash)),
     )
     const missingIndex = rpcTxs.findIndex((x) => x === undefined)
     if (missingIndex !== -1) {
-      throw new Error(`Transaction ${last10Txs[missingIndex]?.hash} is missing`)
+      throw new Error(`Transaction ${lastTxs[missingIndex]?.hash} is missing`)
     }
-    const isSequencerSendingBlobTx = rpcTxs.some(
-      (tx) => tx?.type === BLOB_TX_TYPE,
-    )
+    const isSequencerSendingBlobTx =
+      hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
 
     return {
       field: this.field,
