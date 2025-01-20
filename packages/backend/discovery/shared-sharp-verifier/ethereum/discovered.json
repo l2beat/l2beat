@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 20842982,
-  "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
+  "configHash": "0xcb8a7d4ce9bfcb12646aae539933a6cb1a5adff6dc93a830fe26d1f8ddf6bbd5",
   "contracts": [
     {
       "name": "EcdsaPointsXColumn",
@@ -3592,10 +3592,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "shared-sharp-verifier/CpuFrilessVerifier": "0xb42862e90423c9b08d651f6e88d11d4880078ecbe06b72d2387f0cb906526cb1",
-    "shared-sharp-verifier/DeprecatedVerifier": "0xd2279a320c1ee8e95b9990e28e9f4382c1cb9ddd8493a36417796e57a77222a2",
-    "shared-sharp-verifier/ignoreCompute": "0xa8aa26763cc2441a6b27a0af65fbedb173bdc79f80d6b91e42c0980da6c2c5c9",
-    "shared-sharp-verifier/Verifier": "0xd2279a320c1ee8e95b9990e28e9f4382c1cb9ddd8493a36417796e57a77222a2"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "shared-sharp-verifier/CpuFrilessVerifier": "0x41d369233eb8a0207fd48fbe940a4e0ab06295a94d6669a959019970a81db7da",
+    "shared-sharp-verifier/DeprecatedVerifier": "0x012dbda6a77d47f7beaa2aca69ddc6a4c9bf4ed0f4243d89e87e6557f7df0ca9",
+    "shared-sharp-verifier/ignoreCompute": "0x0358b2eda802c8b4ec92b902d6a479235a936bafa19c6829ec47b9fbcc1f94a9",
+    "shared-sharp-verifier/Verifier": "0x012dbda6a77d47f7beaa2aca69ddc6a4c9bf4ed0f4243d89e87e6557f7df0ca9"
   }
 }

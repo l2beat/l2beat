@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x74a0bd9e62d2f078c801005c6e9c78eda44a3d4b
+
+# Diff at Mon, 20 Jan 2025 09:25:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21630802
+- current block number: 21630802
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630802 (main branch discovery), not current.
+
+```diff
+    contract StrategyBase (0xe9FA8F904d97854C7389b68923262ADCC6C27827) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
 Generated with discovered.json: 0x434c03e0fa629b40e852489020fc87bbcd13652f
 
 # Diff at Wed, 15 Jan 2025 15:33:40 GMT:

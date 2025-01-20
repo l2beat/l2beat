@@ -54,7 +54,7 @@ function getContract(
   const isInitial = config.initialAddresses.includes(contract.address)
   const discoveredBy = getDiscoveredBy(discovery, config, contract)
   const upgradeabilityParams = getUpgradeabilityParams(discovery, contract)
-  const description = config.overrides.get(contract.address).description
+  const description = config.for(contract.address).description
 
   if (contract.unverified) {
     return {

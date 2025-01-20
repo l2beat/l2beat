@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21141582,
-  "configHash": "0x8306cca6df0128b8f1deddcef59957bfdbf980c11692808977427ab75ed0e0a5",
+  "configHash": "0x4513f01cc2b55780cfe66c3f7cf64fa49ba6b1ab1cab6743c22d70108821839b",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -63,7 +63,8 @@
       "fieldMeta": {
         "COLOSSEUM": {
           "severity": "HIGH",
-          "description": "Contract used to challenge state roots and prove fraud."
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "type": "CODE_CHANGE"
         }
       },
       "derivedName": "L2OutputOracle"
@@ -354,11 +355,13 @@
       "fieldMeta": {
         "COLOSSEUM": {
           "severity": "HIGH",
-          "description": "Contract used to challenge state roots and prove fraud."
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "type": "CODE_CHANGE"
         },
         "transactionCount": {
           "severity": "HIGH",
-          "description": "Increases with each Security Council action."
+          "description": "Increases with each Security Council action.",
+          "type": "L2"
         }
       },
       "derivedName": "SecurityCouncil"
@@ -2494,6 +2497,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -48,7 +48,6 @@ export function createUpdateMonitorModule(
   const runners = chains.map((chainConfig) =>
     createDiscoveryRunner(
       http,
-      configReader,
       peripherals,
       DiscoveryLogger.SILENT,
       chains,

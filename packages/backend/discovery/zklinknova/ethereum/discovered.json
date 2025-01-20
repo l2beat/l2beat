@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "blockNumber": 20675743,
-  "configHash": "0x926c1d4f92efc3c362c193fa5a34b633e505eab448e99c54080049146daa7591",
+  "configHash": "0xe456937ba6117fc6ffca5782cfbd58adc167d167dc64f12165f53d4a59c34cda",
   "contracts": [
     {
       "name": "Arbitrator",
@@ -1209,8 +1209,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
-    "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "zklinknova/secondaryGateway": "0x158951e7297f2d4fa3d6bef7b6047d1d475e781367c84efa4d5e2a0b4b2ca8a8",
+    "zklinknova/secondaryZkLink": "0xd2a55890bc3cf07126d1f74361c846ae82393447e9b8fb387647b79107c171e4"
   }
 }

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2628c3ddf425826024d28dd0149fd9690b0d27bd
+
+# Diff at Mon, 20 Jan 2025 09:25:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21635833
+- current block number: 21635833
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635833 (main branch discovery), not current.
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      fieldMeta.programHash.type:
++        "CODE_CHANGE"
+    }
+```
+
 Generated with discovered.json: 0xfc5f74026a824d06653c797febe62bc4319357fa
 
 # Diff at Thu, 16 Jan 2025 08:25:02 GMT:

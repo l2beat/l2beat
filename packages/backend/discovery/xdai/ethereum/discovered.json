@@ -2,7 +2,7 @@
   "name": "xdai",
   "chain": "ethereum",
   "blockNumber": 21429285,
-  "configHash": "0x59ffd13a471a781fe21e38e7e993c0f120a7cb7c91414a2d694aa5b8f3b8327d",
+  "configHash": "0x3d1610a04f9b20ec076103e9623b7a1cb838a3bcc4c19e89c901bf1c103fe5cf",
   "contracts": [
     {
       "name": "Unitroller",
@@ -934,6 +934,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

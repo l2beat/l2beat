@@ -2,7 +2,7 @@
   "name": "opticsV1",
   "chain": "ethereum",
   "blockNumber": 19532023,
-  "configHash": "0xf4d522e6a76c655c0c448063299964cc131f8af0b7e12d3b1a91e5de9f315683",
+  "configHash": "0x6d5e22145e2a34b19279c9991909fddbe9c8c1473c087dd05df093eb8003e239",
   "contracts": [
     {
       "name": "ReplicaUpgradeBeacon",
@@ -639,6 +639,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

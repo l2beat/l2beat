@@ -1,6 +1,6 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { ContractConfig } from '../config/ContractConfig'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { IProvider } from '../provider/IProvider'
 import { HandlerResult } from './Handler'
@@ -13,20 +13,19 @@ export class HandlerExecutor {
     provider: IProvider,
     address: EthereumAddress,
     abi: string[],
-    overrides: ContractOverrides | undefined,
-    types: Record<string, DiscoveryCustomType> | undefined,
+    config: ContractConfig,
   ): Promise<{
     results: HandlerResult[]
     values: Record<string, ContractValue | undefined> | undefined
-    errors: Record<string, string> | undefined
+    errors: Record<string, string>
     usedTypes: DiscoveryCustomType[]
   }> {
-    const handlers = getHandlers(abi, overrides)
+    const handlers = getHandlers(abi, config)
     const results = await executeHandlers(provider, handlers, address)
     const { values, errors, usedTypes } = decodeHandlerResults(
       results,
-      overrides?.fields,
-      types,
+      config.fields,
+      config.types,
     )
     return { results, values, errors, usedTypes }
   }

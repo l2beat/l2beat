@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0xfb6bc994436e70de3fffa0c12685cc2eccbf57bb251ab2757b2bfee894348a24",
+  "configHash": "0xfb568c9586729959c11f829db0e60d8de1886352535a06acdc5b2d014dbbad83",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -333,7 +333,8 @@
         },
         "watcherManager": {
           "severity": "MEDIUM",
-          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected."
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "RootManager"
@@ -494,7 +495,8 @@
       "fieldMeta": {
         "WATCHERS": {
           "severity": "LOW",
-          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors."
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "WatcherManager"
@@ -3475,8 +3477,8 @@
     ]
   },
   "usedTemplates": {
-    "amarok/Relayer": "0x63e51799ac3fb7cd705bce6f217f47d287e3479046939df47e1119cf0fe070af",
-    "amarok/RelayerProxyHub": "0x02ec2a805c99a0858133d5e1237846ac6f72cc06deb9b2371e9bb80d3110144c",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "amarok/Relayer": "0x8420bd193754b39fbfe441219c96ff1b0081e61db93b859647b8f2d3607d7741",
+    "amarok/RelayerProxyHub": "0x9cb4edf0a1f069de9367fe2969edcadc5b8d97e21857dd7d3123f4ddf61b05c6",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }
