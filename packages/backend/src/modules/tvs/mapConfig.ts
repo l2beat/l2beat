@@ -71,7 +71,7 @@ function updateToken(token: Token, escrow: BackendProjectEscrow) {
   amountFormula.escrowAddresses.push(escrow.address)
 
   // update sinceTimestamp if needed
-  if (escrow.sinceTimestamp < token.sinceTimestamp) {
+  if (escrow.sinceTimestamp.lt(token.sinceTimestamp)) {
     token.sinceTimestamp = escrow.sinceTimestamp
   }
 
@@ -81,7 +81,7 @@ function updateToken(token: Token, escrow: BackendProjectEscrow) {
   } else if (
     escrow.untilTimestamp &&
     token.untilTimestamp &&
-    escrow.untilTimestamp > token.untilTimestamp
+    escrow.untilTimestamp.gt(token.untilTimestamp)
   ) {
     token.untilTimestamp = escrow.untilTimestamp
   }
