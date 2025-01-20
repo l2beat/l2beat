@@ -1,12 +1,11 @@
+import { ChainConfig } from '@l2beat/config'
 import {
   assert,
   AggLayerNativeEtherPreminted,
   AssetId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../backend'
-import { ethereum } from '../../chains/ethereum'
-import { ChainConfig } from '../../common'
+import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '../aggLayer'
 
 export function getAggLayerNativeEtherPremintedEntry(
@@ -18,7 +17,7 @@ export function getAggLayerNativeEtherPremintedEntry(
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
   // We are hardcoding assetId because aggLayerNativeEtherPreminted is a canonical token
-  const assetId = AssetId.create(ethereum.name, 'native')
+  const assetId = AssetId.create('ethereum', 'native')
   const type = 'aggLayerNativeEtherPreminted'
   const dataSource = `${chain.name}_agglayer`
   const premintedAmount = escrow.sharedEscrow.premintedAmount

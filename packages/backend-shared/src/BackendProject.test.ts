@@ -1,5 +1,4 @@
-import { layer2s } from '../projects/layer2s'
-
+import { ScalingProjectEscrow, layer2s } from '@l2beat/config'
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -15,7 +14,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { ScalingProjectEscrow } from '../common'
 import { layer2ToBackendProject, mapTokens } from './BackendProject'
 
 describe('BackendProject', () => {

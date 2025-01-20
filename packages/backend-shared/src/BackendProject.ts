@@ -1,4 +1,16 @@
 import {
+  Bridge,
+  Layer2,
+  Layer2FinalityConfig,
+  Layer2LivenessConfig,
+  Layer2TxConfig,
+  Layer3,
+  ScalingProjectEscrow,
+  ScalingProjectTransactionApi,
+  SharedEscrow,
+  tokenList,
+} from '@l2beat/config'
+import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   TrackedTxConfigEntry,
@@ -11,20 +23,6 @@ import {
   TokenBridgedUsing,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  ScalingProjectEscrow,
-  SharedEscrow,
-} from '../common/ScalingProjectEscrow'
-import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
-import {
-  Bridge,
-  Layer2,
-  Layer2FinalityConfig,
-  Layer2LivenessConfig,
-  Layer2TxConfig,
-  Layer3,
-} from '../projects'
-import { tokenList } from '../tokens'
 import { chainConverter } from './utils'
 
 export interface BackendProject {

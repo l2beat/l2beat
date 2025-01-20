@@ -1,6 +1,6 @@
-import { assert, AmountConfigEntry } from '@l2beat/shared-pure'
-import { BackendProject } from '../../../backend'
-import { ethereum } from '../../../chains/ethereum'
+import { chains } from '@l2beat/config'
+import { assert, AmountConfigEntry, ChainId } from '@l2beat/shared-pure'
+import { BackendProject } from '../../../BackendProject'
 import { getEscrowEntry } from '../escrow'
 
 export function addSharedEscrowsL1Tokens(
@@ -11,6 +11,9 @@ export function addSharedEscrowsL1Tokens(
   if (projectsWithL1Tokens.length === 0) {
     return entries
   }
+
+  const ethereum = chains.find((x) => x.chainId === ChainId.ETHEREUM)
+  assert(ethereum !== undefined)
 
   projectsWithL1Tokens.forEach((project) => {
     const escrow = findEscrowWithL1Tokens(project)

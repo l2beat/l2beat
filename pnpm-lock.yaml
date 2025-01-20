@@ -199,6 +199,28 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@swc/core@1.7.40(@swc/helpers@0.5.13))(@types/node@22.8.2)(typescript@5.6.3)
 
+  packages/backend-shared:
+    dependencies:
+      '@l2beat/config':
+        specifier: workspace:*
+        version: link:../config
+      '@l2beat/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/lodash':
+        specifier: ^4.17.12
+        version: 4.17.13
+
   packages/backend-tools:
     dependencies:
       '@elastic/elasticsearch':

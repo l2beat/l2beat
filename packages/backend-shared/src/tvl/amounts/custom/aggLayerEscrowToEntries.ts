@@ -1,9 +1,6 @@
+import { ChainConfig, chains, tokenList } from '@l2beat/config'
 import { assert, AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../../backend'
-import { chains } from '../../../chains'
-import { ethereum } from '../../../chains/ethereum'
-import { ChainConfig } from '../../../common/ChainConfig'
-import { tokenList } from '../../../tokens'
+import { BackendProject, BackendProjectEscrow } from '../../../BackendProject'
 import { getAggLayerL2TokenEntry } from '../aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from '../aggLayerNativeEtherPreminted'
 import { getAggLayerNativeEtherWrappedEntry } from '../aggLayerNativeEtherWrapped'
@@ -45,7 +42,7 @@ export function aggLayerEscrowToEntries(
     const chain = getChain(project)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
     const l1Weth = tokenList.find(
-      (t) => AssetId.create(ethereum.name, t.address) === AssetId.WETH,
+      (t) => AssetId.create('ethereum', t.address) === AssetId.WETH,
     )
     assert(l1Weth, 'Ethereum WETH token not found')
 

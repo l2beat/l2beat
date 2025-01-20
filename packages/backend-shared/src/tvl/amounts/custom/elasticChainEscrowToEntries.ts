@@ -1,8 +1,11 @@
-import { assert, AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../../backend'
-import { chains } from '../../../chains'
-import { ethereum } from '../../../chains/ethereum'
-import { tokenList } from '../../../tokens'
+import { chains, tokenList } from '@l2beat/config'
+import {
+  assert,
+  AmountConfigEntry,
+  AssetId,
+  ChainId,
+} from '@l2beat/shared-pure'
+import { BackendProject, BackendProjectEscrow } from '../../../BackendProject'
 import { getElasticChainEtherEntry } from '../elasticChainEther'
 import { getElasticChainL2TokenEntry } from '../elasticChainL2Tokens'
 
@@ -39,9 +42,11 @@ export function elasticChainEscrowToEntries(
   }
 
   const ether = tokenList.find(
-    (t) => AssetId.create(ethereum.name, t.address) === AssetId.ETH,
+    (t) => AssetId.create('ethereum', t.address) === AssetId.ETH,
   )
   assert(ether, 'ETH on ethereum not found')
+  const ethereum = chains.find((x) => x.chainId === ChainId.ETHEREUM)
+  assert(ethereum !== undefined)
 
   const etherEntry = getElasticChainEtherEntry(
     ethereum,

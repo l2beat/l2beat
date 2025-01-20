@@ -1,3 +1,4 @@
+import { ChainConfig } from '@l2beat/config'
 import {
   assert,
   AssetId,
@@ -5,8 +6,8 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, chainConverter } from '../../backend'
-import { ChainConfig } from '../../common'
+import { BackendProject } from '../../BackendProject'
+import { chainConverter } from '../../utils'
 
 export function getTotalSupplyEntry(
   chain: ChainConfig,

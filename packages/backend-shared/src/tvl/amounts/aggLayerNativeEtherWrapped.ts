@@ -1,3 +1,4 @@
+import { ChainConfig } from '@l2beat/config'
 import {
   assert,
   AggLayerNativeEtherWrapped,
@@ -5,9 +6,7 @@ import {
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../backend'
-import { ethereum } from '../../chains/ethereum'
-import { ChainConfig } from '../../common'
+import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 
 export function getAggLayerNativeEtherWrappedEntry(
   chain: ChainConfig,
@@ -21,7 +20,7 @@ export function getAggLayerNativeEtherWrappedEntry(
   assert(l1WETH.address, 'Ethereum WETH token not found')
 
   // We are hardcoding assetId because aggLayerNativeEtherWrapped is a canonical token
-  const assetId = AssetId.create(ethereum.name, l1WETH.address)
+  const assetId = AssetId.create('ethereum', l1WETH.address)
   const type = 'aggLayerNativeEtherWrapped'
   const dataSource = `${chain.name}_agglayer`
   const symbol = 'ETH'

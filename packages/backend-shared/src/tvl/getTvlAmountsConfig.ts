@@ -1,3 +1,4 @@
+import { ChainConfig, chains, tokenList } from '@l2beat/config'
 import {
   assert,
   AmountConfigEntry,
@@ -6,11 +7,8 @@ import {
   Token,
 } from '@l2beat/shared-pure'
 import { keyBy } from 'lodash'
-import { chainToProject } from '../backend'
-import { BackendProject, BackendProjectEscrow } from '../backend/BackendProject'
-import { chains } from '../chains'
-import { ChainConfig } from '../common'
-import { tokenList } from '../tokens'
+import { BackendProject, BackendProjectEscrow } from '../BackendProject'
+import { chainToProject } from '../utils'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'
 import { aggLayerEscrowToEntries } from './amounts/custom/aggLayerEscrowToEntries'

@@ -1,21 +1,20 @@
+import { ChainConfig } from '@l2beat/config'
 import {
   assert,
   AssetId,
-  ElasticChainL2Token,
+  ElasticChainEther,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../backend'
-import { ethereum } from '../../chains/ethereum'
-import { ChainConfig } from '../../common'
+import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
-export function getElasticChainL2TokenEntry(
+export function getElasticChainEtherEntry(
   chain: ChainConfig,
   token: Token,
   escrow: BackendProjectEscrow,
   project: BackendProject,
-): ElasticChainL2Token {
+): ElasticChainEther {
   assert(escrow.sharedEscrow?.type === 'ElasticChain')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
   assert(token.address, 'Token address is required for ElasticChain escrow')
@@ -34,12 +33,13 @@ export function getElasticChainL2TokenEntry(
     : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-  // We are hardcoding assetId because elasticChainL2Token is a canonical token
-  const assetId = AssetId.create(ethereum.name, token.address)
-  const type = 'elasticChainL2Token'
+  // We are hardcoding assetId because elasticChainEther is a canonical token
+  const assetId = AssetId.create('ethereum', 'native')
+  const type = 'elasticChainEther'
   const dataSource = `${project.projectId}_elastic_chain`
 
   return {
+    address: token.address,
     assetId: assetId,
     category: token.category,
     chain: project.projectId,
@@ -48,8 +48,6 @@ export function getElasticChainL2TokenEntry(
     escrowAddress: escrow.address,
     includeInTotal,
     isAssociated,
-    l1Address: token.address,
-    l2BridgeAddress: escrow.sharedEscrow.l2BridgeAddress,
     project: project.projectId,
     sinceTimestamp: sinceTimestamp,
     source: source,
