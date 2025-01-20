@@ -1,7 +1,4 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -12,6 +9,7 @@ import {
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   ChainConfig,
@@ -59,9 +57,8 @@ import {
   Layer2TxConfig,
 } from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { mergeBadges } from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
-const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
@@ -314,7 +311,7 @@ const wmrValidForBlobstream = [
 
 function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
-  explorerLinkFormat: string,
+  explorerUrl: string | undefined,
   blockNumberOpcodeTimeSeconds: number,
 ): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const nativeContractRisks = templateVars.nonTemplateContractRisks ?? [
@@ -460,13 +457,12 @@ function orbitStackCommon(
                   text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
                   href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
                 },
-                {
-                  text: 'SequencerInbox.sol - Etherscan source code, addSequencerL2BatchFromOrigin function',
-                  href: getCodeLink(
-                    templateVars.sequencerInbox,
-                    explorerLinkFormat,
-                  ),
-                },
+                ...explorerReferences(explorerUrl, [
+                  {
+                    text: 'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                    address: safeGetImplementation(templateVars.sequencerInbox),
+                  },
+                ]),
               ],
             },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
@@ -487,10 +483,12 @@ function orbitStackCommon(
             selfSequencingDelaySeconds,
           )} in which a Sequencer has failed to include a transaction that was directly posted to the smart contract, it can be forcefully included by anyone on the host chain, which finalizes its ordering.`,
         references: [
-          {
-            text: 'SequencerInbox.sol - Etherscan source code, forceInclusion function',
-            href: getCodeLink(templateVars.sequencerInbox, explorerLinkFormat),
-          },
+          ...explorerReferences(explorerUrl, [
+            {
+              text: 'SequencerInbox.sol - source code, forceInclusion function',
+              address: safeGetImplementation(templateVars.sequencerInbox),
+            },
+          ]),
           {
             text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
             href: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
@@ -712,7 +710,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     type: 'layer3',
     ...orbitStackCommon(
       templateVars,
-      getExplorerLinkFormat(templateVars.hostChain),
+      baseChain.chainConfig?.explorerUrl,
       blockNumberOpcodeTimeSeconds,
     ),
     hostChain: templateVars.hostChain,
@@ -896,7 +894,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
+    ...orbitStackCommon(templateVars, ethereum.explorerUrl, 12),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
@@ -1061,42 +1059,4 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       finality: templateVars.finality,
     },
   }
-}
-
-function getExplorerLinkFormat(hostChain: ProjectId): string {
-  if (hostChain === ProjectId('ethereum')) {
-    return ETHEREUM_EXPLORER_URL
-  } else if (hostChain === ProjectId('arbitrum')) {
-    return 'https://arbiscan.io/address/{0}#code'
-  } else if (hostChain === ProjectId('base')) {
-    return 'https://basescan.org/address/{0}#code'
-  } else if (hostChain === ProjectId('nova')) {
-    return 'https://nova.arbiscan.io/address/{0}#code'
-  }
-
-  assert(false, `Host chain ${hostChain.toString()} is not supported`)
-}
-
-function getCodeLink(
-  contract: ContractParameters,
-  explorerUrlFormat: string,
-  implementationIndex?: number,
-): string {
-  return explorerUrlFormat.replace(
-    '{0}',
-    safeGetImplementation(contract, implementationIndex),
-  )
-}
-
-function safeGetImplementation(
-  contract: ContractParameters,
-  implementationIndex?: number,
-): string {
-  const implementation = get$Implementations(contract.values)[
-    implementationIndex ?? 0
-  ]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
 }
