@@ -7,7 +7,9 @@ describe('references', () => {
       differentKey: { a: [123, 42], b: 'hello' },
     }
 
-    expect(() => resolveReferenceFromValues('{{key}}', values)).toThrow("Missing")
+    expect(() => resolveReferenceFromValues('{{key}}', values)).toThrow(
+      'Missing',
+    )
   })
 
   it('resolves to complex objects', () => {
