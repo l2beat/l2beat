@@ -133,7 +133,7 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
     sentiment = 'warning'
   } else {
     descriptionBase =
-      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Among those are less than 5 Challengers that are external to the Operator. ` +
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. There are fewer than 5 Challengers external to the Operator among these. ` +
       'Interactive proofs (INT) require multiple transactions over time to resolve.'
     sentiment = 'bad'
   }
