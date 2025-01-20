@@ -1,4 +1,4 @@
-import { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../../projects'
+import { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../projects'
 
 export function isVerified(
   project: Layer2 | Layer3 | Bridge | DaLayer,
