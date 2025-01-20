@@ -1,5 +1,5 @@
 'use client'
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
+import { type ReasonForBeingInOther } from '@l2beat/config'
 import { Callout } from '~/components/callout'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'

@@ -1,4 +1,4 @@
-import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/common/projectCountdowns'
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 
