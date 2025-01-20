@@ -3,7 +3,7 @@ import {
   PriceId,
   createAmountId,
   createPriceId,
-} from '@l2beat/config'
+} from '@l2beat/backend-shared'
 import {
   AmountConfigEntry,
   AssetId,

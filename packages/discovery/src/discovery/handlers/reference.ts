@@ -69,11 +69,11 @@ export function resolveReferenceFromValues(
   previousResults: Record<string, ContractValue | undefined>,
 ): ContractValue {
   const dependency = getReferencedName(value)
-  if (!dependency) {
+  if (dependency === undefined) {
     return value
   }
   const result = previousResults[dependency]
-  if (!result) {
+  if (result === undefined) {
     throw new Error(`Missing dependency: ${dependency}`)
   }
   return result

@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
+import { useTracking } from '~/hooks/use-custom-event'
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
 
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export function TableFilter({ title, options, value, onValueChange }: Props) {
+  const { track } = useTracking()
   const onClick = useCallback(
     (e: MouseEvent) => {
       if (value !== undefined) {
@@ -50,6 +52,12 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
           onValueChange(undefined)
           return
         }
+        track('filterChanged', {
+          props: {
+            name: title,
+            value: newValue,
+          },
+        })
         onValueChange(newValue)
       }}
       disabled={options.length < 2 && !value}

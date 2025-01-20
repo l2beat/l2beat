@@ -10,16 +10,16 @@ import { HandlerResult } from './Handler'
 
 export function decodeHandlerResults(
   results: HandlerResult[],
-  fieldOverrides?: DiscoveryContract['fields'],
-  types?: Record<string, DiscoveryCustomType>,
+  fieldOverrides: DiscoveryContract['fields'],
+  types: Record<string, DiscoveryCustomType>,
 ): {
   values: ContractParameters['values']
-  errors: ContractParameters['errors']
+  errors: Record<string, string>
   usedTypes: DiscoveryCustomType[]
 } {
   const values: ContractParameters['values'] = {}
   const errors: ContractParameters['errors'] = {}
-  const typeApplier = new TypeApplier(types ?? {})
+  const typeApplier = new TypeApplier(types)
 
   for (const result of results) {
     if (result.value !== undefined) {

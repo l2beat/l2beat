@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21585288,
+  "blockNumber": 21635855,
   "configHash": "0x6a97439e4e2b92fe494e30ca9d22bd730417850ff10762f95b0d7592a49b656e",
   "contracts": [
     {
@@ -17,17 +17,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "to": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+          "description": "can freeze the Vector contract and update the list of authorized relayers.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+          "to": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
+          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+          "to": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
           "via": []
         }
       ],
@@ -75,13 +77,13 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 203,
-        "latestBlock": 815760,
-        "relayers": ["0x44eb418a966ff47f5af6f48aea6afde0bf193a8d"],
+        "latestAuthoritySetId": 210,
+        "latestBlock": 846480,
+        "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
-        "vectorXProgramVkey": "0x00285180a989ed2d6aa8194220690d0d45f2907535d3d3c09e4cb29f6dbe3d4d",
+        "vectorXProgramVkey": "0x00d0279ddadaccdbdb6142981d3830f9ada20ed4e2925ed186ae2be5806e3402",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
@@ -98,12 +100,14 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
           "via": []
         }
       ],
@@ -114,8 +118,9 @@
         "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
         "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
         "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
+        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", false]
+        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -129,6 +134,9 @@
         },
         "oldVerifier4": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
@@ -148,12 +156,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
           "description": "can freeze the Vector contract and update the list of authorized relayers."
         },
         {
           "permission": "upgrade",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -175,7 +183,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -192,7 +200,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
       ],
@@ -211,7 +219,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -222,18 +230,31 @@
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ],
       "sinceTimestamp": 1729727135,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
         "VERSION": "v3.0.0"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
+      "sinceTimestamp": 1735949699,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
       }
     }
   ],
@@ -243,29 +264,28 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
         }
       ]
     },
     { "address": "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5" },
     { "address": "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A" },
-    {
-      "name": "Relayer",
-      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
-        }
-      ]
-    },
     { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
     { "address": "0xAD379D3275a18bd4BB741C3b291a3778D51c3304" },
     { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" },
     { "address": "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2" },
+    {
+      "address": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
+        }
+      ]
+    },
     { "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e" },
     { "address": "0xE458b870F2F59a49915591282f1Bb688901767AD" }
   ],
@@ -428,11 +448,20 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
-    "succinct/SP1Vector": "0xc2941a3d35e633cd5608c0d372ed85b4804a8ed7044f0b4e186b69899469e624"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "succinct/SP1SuccinctGateway": "0xdffa954da9f9e5a14a8da6adcdac47a00ceca0950311adc899da5a6983719276",
+    "succinct/SP1Vector": "0x7801bbb3b264e3bddc9abce63433fd8c23000e7658d82ca3805fcc9036d16679"
   }
 }

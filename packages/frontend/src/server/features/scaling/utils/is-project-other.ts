@@ -1,4 +1,4 @@
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
+import { type ReasonForBeingInOther } from '@l2beat/config'
 import { featureFlags } from '~/consts/feature-flags'
 
 export function isProjectOther<

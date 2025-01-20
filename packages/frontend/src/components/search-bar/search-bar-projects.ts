@@ -1,4 +1,4 @@
-import { ProjectService, type ProjectWith } from '@l2beat/config'
+import { type Project, ProjectService } from '@l2beat/config'
 import { type SearchBarProject } from './search-bar-entry'
 
 export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
@@ -71,10 +71,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
 }
 
 function getKind(
-  p: ProjectWith<
-    never,
-    'scalingInfo' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
-  >,
+  p: Project<never, 'scalingInfo' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'>,
 ): SearchBarProject['kind'] {
   if (p.scalingInfo?.layer === 'layer2') return 'layer2'
   if (p.scalingInfo?.layer === 'layer3') return 'layer3'

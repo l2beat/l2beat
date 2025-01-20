@@ -1,39 +1,96 @@
-import { CoingeckoId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  CoingeckoId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
-export type DataOperator =
-  | 'balanceOfEscrow'
-  | 'totalSupply'
-  | 'circulatingSupply'
-
-export function isDataOperator(value: string): value is DataOperator {
-  return ['balanceOfEscrow', 'totalSupply', 'circulatingSupply'].includes(value)
-}
-
-export type CalculationOperator = 'sum' | 'diff'
-
-export type Operator = DataOperator | CalculationOperator
-
-export type Argument = Formula | string | number
+export type Operator = 'sum' | 'diff'
 
 export interface Formula {
   operator: Operator
-  arguments?: Argument[]
+  arguments: ValueFormula[]
 }
 
+export type ValueFormula = {
+  amount: AmountFormula
+  // token ticker
+  ticker: string
+}
+
+export type AmountFormula =
+  | BalanceOfEscrowAmountFormula
+  | TotalSupplyAmountFormula
+  | CirculatingSupplyAmountFormula
+
+export interface BalanceOfEscrowAmountFormula {
+  type: 'balanceOfEscrow'
+  // token contract address
+  address: EthereumAddress
+  // token chain
+  chain: string
+  // escrow contract addresses
+  escrowAddresses: string[]
+  // decimals
+  decimals: number
+}
+
+export interface TotalSupplyAmountFormula {
+  type: 'totalSupply'
+  // token contract address
+  address: EthereumAddress
+  // token chain
+  chain: string
+  // decimals
+  decimals: number
+}
+
+export interface CirculatingSupplyAmountFormula {
+  type: 'circulatingSupply'
+  // token ticker
+  ticker: string
+}
+
+export interface AmountConfigBase {
+  id: string
+}
+
+export type BalanceOfEscrowAmountConfig = BalanceOfEscrowAmountFormula &
+  AmountConfigBase
+
+export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
+  AmountConfigBase
+
+export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
+  AmountConfigBase
+
+export type AmountConfig =
+  | BalanceOfEscrowAmountConfig
+  | TotalSupplyAmountConfig
+  | CirculatingSupplyAmountConfig
+
+// token deployed to single chain
 export interface Token {
   id: string
-  amount: Formula
-  address: EthereumAddress
-  chain: string
   ticker: string
-  sinceTimestamp: number
-  untilTimestamp: number
-  decimals: number
+  amount: AmountFormula
+  // we need this formula to handle relations between tokens on the same chain
+  valueForProject?: Formula
+  // we need this formula to handle relations between chains (L2/L3)
+  valueForTotal?: Formula
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   category: 'ether' | 'stablecoin' | 'other'
   source: 'canonical' | 'external' | 'native'
-  isAssociated: string
-  // TODO: do we really need this?
-  displayTicker?: string
+  isAssociated: boolean
+}
+
+export function isEscrowToken(token: Token): token is EscrowToken {
+  return token.amount.type === 'balanceOfEscrow'
+}
+
+export type EscrowToken = Token & {
+  amount: BalanceOfEscrowAmountFormula
 }
 
 export type PriceSources = Map<string, PriceSource[]>
@@ -49,43 +106,20 @@ interface CoinMarketCapPriceSource {
 }
 
 export type TvsConfig = {
-  project: ProjectId
+  projectId: ProjectId
   tokens: Token[]
 }
 
-export type AmountConfig =
-  | BalanceAmountConfig
-  | TotalSupplyAmountConfig
-  | CirculatingSupplyAmountConfig
-
-export interface BalanceAmountConfig {
-  id: string // hash(type,tokenId,holder).slice(0,8)
-  type: 'balanceOf'
-  address: EthereumAddress // unsafe
-  chain: string
-  escrows: string[] // 0x654321...
-}
-
-export interface TotalSupplyAmountConfig {
-  id: string // hash(type,tokenId).slice(0,8)
-  type: 'totalSupply'
-  address: EthereumAddress // unsafe
-  chain: string
-}
-
-export interface CirculatingSupplyAmountConfig {
-  id: string // hash(type,tokenId).slice(0,8)
-  type: 'circulatingSupply'
-  ticker: string
-}
-
 export type PriceConfig = {
-  id: string // hash(type, tokenId)
+  id: string
   ticker: string
 }
 
 export interface TokenValue {
   tokenId: string
-  project: ProjectId
-  valueUsd: number
+  projectId: ProjectId
+  amount: bigint
+  value: number
+  valueForProject?: number
+  valueForTotal?: number
 }

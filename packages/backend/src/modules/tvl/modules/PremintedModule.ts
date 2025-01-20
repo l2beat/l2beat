@@ -1,4 +1,4 @@
-import { ConfigMapping } from '@l2beat/config'
+import { ConfigMapping } from '@l2beat/backend-shared'
 import { assert, PremintedEntry, ProjectId } from '@l2beat/shared-pure'
 import { TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'

@@ -1,4 +1,5 @@
-import { bridges, layer2s, layer3s, toBackendProject } from '@l2beat/config'
+import { toBackendProject } from '@l2beat/backend-shared'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
 import {
   assert,
   EthereumAddress,

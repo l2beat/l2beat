@@ -1,4 +1,4 @@
-import { type ProjectWith } from '@l2beat/config'
+import { type Project } from '@l2beat/config'
 import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { getProofVerification } from './get-proof-verification'
 import { type TrustedSetup, getTrustedSetup } from './get-trusted-setup'
@@ -11,7 +11,7 @@ export interface ZkCatalogEntry extends ZkCatalogProofVerification {
 }
 
 export function getZkCatalogEntries(
-  projects: ProjectWith<'proofVerification'>[],
+  projects: Project<'proofVerification'>[],
   verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogEntry[] {
   return projects

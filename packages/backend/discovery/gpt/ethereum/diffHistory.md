@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xfefa2eea1f1591cc7d48c4d83ed641816edeba5f
+
+# Diff at Mon, 20 Jan 2025 11:09:33 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21628462
+- current block number: 21628462
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628462 (main branch discovery), not current.
+
+```diff
+    contract GptProtocolDAC (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract DACProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"
+      directlyReceivedPermissions.0.from:
++        "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"
+    }
+```
+
+Generated with discovered.json: 0x995d8baa2ff158e4a0ea6f11adef584786f95b3c
+
+# Diff at Wed, 15 Jan 2025 07:42:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 20676773
+- current block number: 21628462
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20676773 (main branch discovery), not current.
+
+```diff
+    contract DACProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0xc95e2ee9b64a05feae5e290a7c42226c54d55ae2
 
 # Diff at Mon, 21 Oct 2024 11:06:16 GMT:

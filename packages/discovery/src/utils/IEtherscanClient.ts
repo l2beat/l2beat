@@ -49,7 +49,7 @@ export interface IEtherscanClient {
   ): Promise<Hash256 | undefined>
 
   getFirstTxTimestamp(address: EthereumAddress): Promise<UnixTime>
-  getLast10OutgoingTxs(
+  getAtMost10RecentOutgoingTxs(
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Transaction[]>

@@ -17,13 +17,14 @@ type Story = StoryObj<typeof meta>
 
 export const Unchecked: Story = {
   args: {
+    name: 'unchecked',
     children: 'Unchecked',
   },
 }
 
 export const Checked: Story = {
   args: {
-    id: 'checked',
+    name: 'checked',
     children: 'Checked',
     checked: true,
   },
@@ -31,6 +32,7 @@ export const Checked: Story = {
 
 export const Disabled: Story = {
   args: {
+    name: 'disabled',
     children: 'Disabled',
     disabled: true,
   },

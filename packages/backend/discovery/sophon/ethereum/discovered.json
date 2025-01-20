@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 21429615,
-  "configHash": "0x44fa86ae672b7be5ab690c0a041b5627ee7c81615eabd27aa01a78390fb1ac06",
+  "configHash": "0x433d106659755808cfb4c5b17959feaa7b2b6c1c4f51bb0ea3f8ba46a11a942d",
   "contracts": [
     {
       "name": "SophonZkEvm",
@@ -210,7 +210,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
+          "from": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -321,7 +321,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD",
+          "to": "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD",
           "via": []
         }
       ],
@@ -648,8 +648,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce",
-    "shared-zk-stack/L1USDCBridge": "0x399ee312da0d9adfcb26ebd7d25a527f0db9c2af4890258d5b3a4d04d1baf055"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42",
+    "shared-zk-stack/L1USDCBridge": "0x76f3122eede9ca9aa44a5309ed016ebdb226df16dffc395108138bc8a3fc74ab"
   }
 }

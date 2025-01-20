@@ -8,7 +8,7 @@
     value: "External (DAC)"
   }
   exitWindow: {
-    definingMetric: -86400000
+    definingMetric: -345600
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
@@ -22,9 +22,9 @@
     value: "Self propose"
   }
   sequencerFailure: {
-    definingMetric: 86400000
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1000d delay on this operation."
-    secondLine: "1000d delay"
+    definingMetric: 345600
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 4d delay on this operation."
+    secondLine: "4d delay"
     sentiment: "good"
     value: "Self sequence"
   }
@@ -47,7 +47,7 @@
     value: "External (DAC)"
   }
   exitWindow: {
-    definingMetric: -86400000
+    definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
@@ -60,8 +60,8 @@
     value: "Self propose"
   }
   sequencerFailure: {
-    definingMetric: 86443200
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1000d 12h delay on this operation."
+    definingMetric: 388800
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 4d 12h delay on this operation."
     sentiment: "good"
     value: "Self sequence"
   }

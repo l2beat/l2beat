@@ -1,5 +1,5 @@
+import { BackendProject } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { BackendProject } from '@l2beat/config'
 import { AnomalyRecord, Database, LivenessRecord } from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'

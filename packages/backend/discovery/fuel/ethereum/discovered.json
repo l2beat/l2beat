@@ -1,11 +1,11 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "blockNumber": 21242136,
-  "configHash": "0x7ee2ae0e7ba0d97eafbf9768cea8a382c341485e3e89653ce61b973f1e0afac0",
+  "blockNumber": 21630407,
+  "configHash": "0xa6893c97dbd2d381e8a73c865c4480cddac0234bc6d13d51ec21bdb7631c37d8",
   "contracts": [
     {
-      "name": "FuelMultisig",
+      "name": "FuelSecurityCouncil",
       "address": "0x32da601374b38154f05904B16F44A1911Aa6f314",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -38,10 +38,16 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 39,
+        "nonce": 42,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "derivedName": "GnosisSafe",
+      "references": [
+        {
+          "text": "Security Council members - Fuel Ignition docs",
+          "href": "https://docs.fuel.network/docs/verified-addresses/security-council/#fuel-bridge-security-council"
+        }
+      ]
     },
     {
       "name": "Safe",
@@ -66,7 +72,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 4,
+        "nonce": 7,
         "VERSION": "1.4.1"
       }
     },
@@ -196,15 +202,15 @@
             "members": ["0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "85079029443000000000",
-        "currentPeriodEnd": 1732584167,
+        "currentPeriodAmount": "81122095978000000000",
+        "currentPeriodEnd": 1737429947,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 219765,
+        "getNextOutgoingMessageNonce": 245380,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -213,7 +219,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "19131428798708000000000",
+        "totalDeposited": "14452843843978000000000",
         "withdrawalsPaused": false
       },
       "derivedName": "FuelMessagePortalV3"
@@ -281,15 +287,15 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
+          "from": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
         },
         {
           "permission": "upgrade",
-          "target": "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
+          "from": "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
         },
         {
           "permission": "upgrade",
-          "target": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
+          "from": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
         }
       ]
     },
@@ -628,6 +634,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

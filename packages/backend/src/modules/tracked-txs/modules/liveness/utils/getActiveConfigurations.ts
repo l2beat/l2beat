@@ -1,4 +1,4 @@
-import { BackendProject } from '@l2beat/config'
+import { BackendProject } from '@l2beat/backend-shared'
 import { TrackedTxConfigEntry, TrackedTxLivenessConfig } from '@l2beat/shared'
 import { SavedConfiguration } from '@l2beat/shared-pure'
 import { getSyncedUntil } from '../../../utils/getSyncedUntil'

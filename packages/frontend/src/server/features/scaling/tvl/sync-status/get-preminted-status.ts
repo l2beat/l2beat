@@ -1,4 +1,4 @@
-import { getPremintedIndexerId } from '@l2beat/config'
+import { getPremintedIndexerId } from '@l2beat/backend-shared'
 import {
   type AmountConfigEntry,
   type PremintedEntry,

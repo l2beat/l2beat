@@ -21,6 +21,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -50,19 +51,20 @@ export const morph: Layer2 = {
   type: 'layer2',
   id: ProjectId('morph'),
   createdAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
     name: 'Morph',
     slug: 'morph',
     description:
-      'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs.',
+      'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs and has plans for decentralizing the Sequencer. Their mission is to build the first blockchain for consumers, where user-friendly applications integrate seamlessly into everyday life, becoming indispensable utilities.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://morphl2.io'],
-      apps: ['https://bridge-holesky.morphl2.io'],
+      apps: ['https://bridge.morphl2.io/'],
       documentation: ['https://docs.morphl2.io'],
-      explorers: ['https://explorer-holesky.morphl2.io'],
+      explorers: ['https://explorer.morphl2.io'],
       repositories: ['https://github.com/morph-l2'],
       socialMedia: [
         'https://twitter.com/MorphL2',
@@ -72,6 +74,7 @@ export const morph: Layer2 = {
         'https://youtube.com/@morphofficiall2',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   stage: getStage({
     stage0: {
@@ -94,6 +97,12 @@ export const morph: Layer2 = {
     },
   }),
   config: {
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://rpc.morphl2.io',
+      startBlock: 1,
+      defaultCallsPerMinute: 300,
+    },
     escrows: [
       {
         address: EthereumAddress('0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304'),

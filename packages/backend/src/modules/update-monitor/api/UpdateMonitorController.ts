@@ -1,3 +1,5 @@
+import { BackendProject } from '@l2beat/backend-shared'
+import { Database } from '@l2beat/database'
 import {
   ConfigReader,
   DiscoveryChainConfig,
@@ -5,9 +7,6 @@ import {
   DiscoveryDiff,
 } from '@l2beat/discovery'
 import { ChainConverter } from '@l2beat/shared-pure'
-
-import { BackendProject } from '@l2beat/config'
-import { Database } from '@l2beat/database'
 import { getDashboardContracts } from './props/getDashboardContracts'
 import {
   DashboardProject,

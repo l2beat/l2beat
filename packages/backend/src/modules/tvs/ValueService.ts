@@ -1,6 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DataStorage } from './DataStorage'
-import { Formula, TokenValue, TvsConfig, isDataOperator } from './types'
+import {
+  AmountFormula,
+  Formula,
+  TokenValue,
+  TvsConfig,
+  ValueFormula,
+} from './types'
 
 export class ValueService {
   constructor(private readonly storage: DataStorage) {}
@@ -15,21 +21,30 @@ export class ValueService {
       const values: TokenValue[] = []
 
       for (const token of config.tokens) {
-        let amount = 0n
-        if (isDataOperator(token.amount.operator)) {
-          amount = await this.storage.getAmount(token.id, timestamp)
-        } else {
-          amount = await this.executeFormula(token.amount, timestamp)
-        }
+        const amount = await this.executeAmountFormula(token.amount, timestamp)
+        const value = await this.executeValueFormula(
+          {
+            amount: token.amount,
+            ticker: token.ticker,
+          } as ValueFormula,
+          timestamp,
+        )
 
-        const price = await this.storage.getPrice(token.id, timestamp)
+        const valueForProject = token.valueForProject
+          ? await this.executeFormula(token.valueForProject, timestamp)
+          : undefined
 
-        const valueUsd = Number(amount * BigInt(price)) // transform bigint into dollars with cents
+        const valueForTotal = token.valueForTotal
+          ? await this.executeFormula(token.valueForTotal, timestamp)
+          : undefined
 
         values.push({
           tokenId: token.id,
-          project: config.project,
-          valueUsd,
+          projectId: config.projectId,
+          amount,
+          value,
+          valueForProject,
+          valueForTotal,
         })
       }
 
@@ -39,10 +54,31 @@ export class ValueService {
     return await Promise.resolve(result)
   }
 
+  async executeAmountFormula(
+    _formula: AmountFormula,
+    timestamp: UnixTime,
+  ): Promise<bigint> {
+    //TODO: replace with function that generates configId from formula
+    const amount = this.storage.getAmount('configId', timestamp)
+    return await Promise.resolve(amount)
+  }
+
+  async executeValueFormula(
+    formula: ValueFormula,
+    timestamp: UnixTime,
+  ): Promise<number> {
+    //TODO: replace with function that generates configId from ticker
+    const price = await this.storage.getPrice('ticker', timestamp)
+    const amount = await this.executeAmountFormula(formula.amount, timestamp)
+    const value = Number(amount * BigInt(price))
+    return value
+  }
+
   async executeFormula(
     _formula: Formula,
     _timestamp: UnixTime,
-  ): Promise<bigint> {
-    return await Promise.resolve(BigInt(0))
+  ): Promise<number> {
+    // TODO implement
+    return await Promise.resolve(0)
   }
 }

@@ -1,5 +1,5 @@
+import { createAmountId, createPriceId } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { createAmountId, createPriceId } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import {
   AssetId,

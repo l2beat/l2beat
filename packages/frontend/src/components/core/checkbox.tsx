@@ -2,6 +2,8 @@
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import * as React from 'react'
+import { useId } from 'react'
+import { useTracking } from '~/hooks/use-custom-event'
 import { CheckIcon } from '~/icons/check'
 import { cn } from '~/utils/cn'
 
@@ -9,9 +11,13 @@ const Checkbox = ({
   ref,
   className,
   children,
+  name,
   ...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root>) => {
-  const id = React.useId()
+}: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
+  name: string
+}) => {
+  const id = useId()
+  const { track } = useTracking()
   return (
     <label
       htmlFor={id}
@@ -23,14 +29,23 @@ const Checkbox = ({
       )}
     >
       <CheckboxPrimitive.Root
-        ref={ref}
         id={id}
+        ref={ref}
         className={cn(
           'peer size-5 shrink-0 rounded bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
           'data-[state=unchecked]:border-2 data-[state=unchecked]:border-surface-tertiary',
         )}
         {...props}
+        onCheckedChange={(checked) => {
+          props.onCheckedChange?.(checked)
+          track('checkboxChanged', {
+            props: {
+              name,
+              value: checked.valueOf().toString(),
+            },
+          })
+        }}
       >
         <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded bg-brand text-current">
           <CheckIcon

@@ -1,4 +1,8 @@
-import { INDEXER_NAMES, createAmountId, createIndexerTag } from '@l2beat/config'
+import {
+  INDEXER_NAMES,
+  createAmountId,
+  createIndexerTag,
+} from '@l2beat/backend-shared'
 import { AmountRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'

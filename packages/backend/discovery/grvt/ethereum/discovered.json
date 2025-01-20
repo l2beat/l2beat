@@ -1,8 +1,8 @@
 {
   "name": "grvt",
   "chain": "ethereum",
-  "blockNumber": 21593895,
-  "configHash": "0x35ca969755d07174650f2df892e33267574c94be867916fe1ef2befba2b307b2",
+  "blockNumber": 21629172,
+  "configHash": "0xf8252995b12414a318c199b3e896c95755ffa0f84ee5e18574c9cb6486ded3dd",
   "contracts": [
     {
       "name": "GrvtChainAdminMultisig",
@@ -16,15 +16,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+          "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
         },
         {
           "permission": "upgrade",
-          "target": "0xAB3B124052F0389D1cbED221d912026Ac995bb95"
-        },
-        {
-          "permission": "upgrade",
-          "target": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+          "from": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -58,7 +54,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+          "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
           "via": []
         }
       ],
@@ -135,41 +131,6 @@
       }
     },
     {
-      "name": "GRVTBaseToken",
-      "address": "0xAB3B124052F0389D1cbED221d912026Ac995bb95",
-      "sourceHashes": [
-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xe19fc504687e88f72274f713332e2e4570adb2e6149766f313409ed981cbfd7d"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "target": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1727768603,
-      "values": {
-        "$admin": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
-        "$implementation": "0x633040F0AE46f2E9759c33Cc552cDa73c52d3AF8",
-        "$pastUpgrades": [
-          [
-            "2024-10-01T07:43:23.000Z",
-            "0x092ee92662b13724e707b6c8158bb1906b841e17034dfe8a33242a913f1d3b93",
-            ["0x633040F0AE46f2E9759c33Cc552cDa73c52d3AF8"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "name": "GRVTBaseToken",
-        "symbol": "GBT",
-        "totalSupply": "5300541194335152988749892502228755547482451690626866874486667604731359325"
-      }
-    },
-    {
       "name": "GRVTBridgeProxy",
       "address": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
       "sourceHashes": [
@@ -180,7 +141,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+          "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
           "via": []
         }
       ],
@@ -210,7 +171,8 @@
         },
         "owner": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "GRVTBridgeProxy"
     },
     {
       "name": "GrvtZkEvm",
@@ -361,26 +323,26 @@
         "getBaseToken": "0xAB3B124052F0389D1cbED221d912026Ac995bb95",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 270,
+        "getFirstUnprocessedPriorityTx": 282,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 4,
+        "getPriorityQueueSize": 2,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 222,
-        "getTotalBatchesExecuted": 218,
-        "getTotalBatchesVerified": 221,
-        "getTotalBlocksCommitted": 222,
-        "getTotalBlocksExecuted": 218,
-        "getTotalBlocksVerified": 221,
-        "getTotalPriorityTxs": 274,
+        "getTotalBatchesCommitted": 245,
+        "getTotalBatchesExecuted": 241,
+        "getTotalBatchesVerified": 245,
+        "getTotalBlocksCommitted": 245,
+        "getTotalBlocksExecuted": 241,
+        "getTotalBlocksVerified": 245,
+        "getTotalPriorityTxs": 284,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -518,38 +480,6 @@
       "function tokenMultiplierSetter() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x633040F0AE46f2E9759c33Cc552cDa73c52d3AF8": [
-      "constructor()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(address defaultAdmin)",
-      "function mint(address to, uint256 amount)",
-      "function name() view returns (string)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
-    ],
     "0x70F3FBf8a427155185Ec90BED8a3434203de9604": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
@@ -570,12 +500,6 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "0xAB3B124052F0389D1cbED221d912026Ac995bb95": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0xaD193aDe635576d8e9f7ada71Af2137b16c64075": [
       "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
@@ -762,7 +686,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42"
   }
 }

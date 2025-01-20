@@ -11,7 +11,7 @@ import {
   isDaBridgeVerified,
 } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { type UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -152,18 +152,14 @@ export async function getDaProjectEntry(
   const layerGrissiniValues = mapLayerRisksToRosetteValues(evaluatedRisks)
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(evaluatedRisks)
 
-  const evaluatedGrissiniValues = [
-    ...layerGrissiniValues,
-    ...bridgeGrissiniValues,
-  ]
-
   const sections = getRegularDaProjectSections({
     daLayer,
     daBridge,
     isVerified: common.isVerified,
     contractsVerificationStatuses,
     projectsChangeReport,
-    evaluatedGrissiniValues,
+    layerGrissiniValues,
+    bridgeGrissiniValues,
   })
 
   return {

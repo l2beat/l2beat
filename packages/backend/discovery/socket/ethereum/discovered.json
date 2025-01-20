@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "blockNumber": 21579626,
-  "configHash": "0xb5ce17cb1c9c00fea8d4213e87c3d8579a04a2db4839ef0f4e2fdd6516de1262",
+  "configHash": "0x09bbda0606030645871c2a478ad409f2d3a64b0376656982a7b649f0cc4a2112",
   "contracts": [
     {
       "name": "WETH Vault Kinto",
@@ -828,7 +828,8 @@
         },
         "plugs": {
           "severity": "LOW",
-          "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain."
+          "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.",
+          "type": "CODE_CHANGE"
         }
       },
       "derivedName": "Socket"
@@ -4029,6 +4030,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -1,15 +1,16 @@
 'use client'
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
+import type { ReasonForBeingInOther } from '@l2beat/config'
 import { Callout } from '~/components/callout'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { CloseIcon } from '~/icons/close'
+import { OtherMigrationContainer } from './other-migration-container'
 
 export function WhyAmIHereNotice({
   reasons,
 }: { reasons: ReasonForBeingInOther[] }) {
   return (
-    <div className="border-brand p-4 max-md:border-x-0 max-md:bg-brand/25 max-md:dark:bg-brand/15 md:mt-10 md:rounded-lg md:border-2 md:p-8">
+    <OtherMigrationContainer>
       <h2 className="mr-auto text-2xl font-bold md:text-3xl">
         Why is the project listed in others?
       </h2>
@@ -38,7 +39,7 @@ export function WhyAmIHereNotice({
         </CustomLink>
         .
       </p>
-    </div>
+    </OtherMigrationContainer>
   )
 }
 

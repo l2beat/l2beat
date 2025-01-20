@@ -10,7 +10,7 @@ const minSimilarity = option({
   type: number,
   long: 'min-similarity',
   short: 's',
-  defaultValue: () => 0.8,
+  defaultValue: () => 0.5,
   defaultValueIsSerializable: true,
 })
 

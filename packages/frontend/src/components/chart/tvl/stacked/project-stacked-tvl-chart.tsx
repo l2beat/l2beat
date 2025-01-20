@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
@@ -36,7 +36,7 @@ export function ProjectStackedTvlChart({
   isBridge,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
-  const [timeRange, setTimeRange] = useState<TvlChartRange>('30d')
+  const [timeRange, setTimeRange] = useState<TvlChartRange>('1y')
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   if (tokens && token) {

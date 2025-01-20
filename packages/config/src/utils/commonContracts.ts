@@ -17,13 +17,14 @@ import {
   DaLayer,
   Layer2,
   Layer3,
-  Project,
   ScalingProjectContract,
   ScalingProjectPermission,
   bridges,
   layer2s,
   layer3s,
 } from '..'
+
+type CommonProject = Layer2 | Layer3 | Bridge
 
 type Params =
   | {
@@ -58,7 +59,10 @@ export function getCommonContractsIn(project: Params) {
 const memo = new Map<Hash256, Record<string, ReferenceInfo[]>>()
 
 function findCommonContractsMemoized(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  projects: Pick<
+    CommonProject,
+    'id' | 'contracts' | 'permissions' | 'display'
+  >[],
   hostChain: string = 'ethereum',
 ) {
   const hash = hashJson(hostChain + JSON.stringify(projects.map((p) => p.id)))
@@ -73,7 +77,10 @@ function findCommonContractsMemoized(
 }
 
 function findCommonContracts(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  projects: Pick<
+    CommonProject,
+    'id' | 'contracts' | 'permissions' | 'display'
+  >[],
   hostChain: string,
 ) {
   const configReader = new ConfigReader('../backend')
@@ -153,7 +160,10 @@ type ReferenceInfo = {
 }
 
 function pickOutReferencedEntries(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  projects: Pick<
+    CommonProject,
+    'id' | 'contracts' | 'permissions' | 'display'
+  >[],
   commonContracts: Record<string, ProjectId[]>,
 ): Record<string, ReferenceInfo[]> {
   const result: Record<string, ReferenceInfo[]> = {}
@@ -197,7 +207,7 @@ function pickOutReferencedEntries(
 }
 
 function projectContainsAddressAsContract(
-  project: Pick<Project, 'contracts'>,
+  project: Pick<CommonProject, 'contracts'>,
   address: string,
 ): ScalingProjectContract | undefined {
   if (project.contracts === undefined) {
@@ -220,7 +230,7 @@ function projectContainsAddressAsContract(
 }
 
 function getPermissionContainingAddress(
-  project: Pick<Project, 'permissions'>,
+  project: Pick<CommonProject, 'permissions'>,
   address: string,
 ): ScalingProjectPermission | undefined {
   if (

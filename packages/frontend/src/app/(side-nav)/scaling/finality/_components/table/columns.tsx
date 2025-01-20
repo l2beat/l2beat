@@ -74,7 +74,7 @@ export const scalingFinalityColumns = [
           scope="timeToInclusion"
           warning={data.timeToInclusion.warning}
           timings={data.timeToInclusion}
-          syncStatus={data.syncStatus}
+          isSynced={data.isSynced}
         />
       )
     },
@@ -98,7 +98,7 @@ export const scalingFinalityColumns = [
             scope="stateUpdateDelay"
             warning={data.stateUpdateDelay.warning}
             timings={data.stateUpdateDelay}
-            syncStatus={data.syncStatus}
+            isSynced={data.isSynced}
           />
         )
       ) : (

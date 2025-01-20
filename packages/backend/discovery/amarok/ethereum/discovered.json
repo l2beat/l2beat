@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 21388078,
-  "configHash": "0xfb6bc994436e70de3fffa0c12685cc2eccbf57bb251ab2757b2bfee894348a24",
+  "blockNumber": 21629064,
+  "configHash": "0xfb568c9586729959c11f829db0e60d8de1886352535a06acdc5b2d014dbbad83",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -27,7 +27,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 963348,
+        "getLastCompletedSnapshotId": 964963,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -37,7 +37,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0x2e5977a453dcc1960c70c405a3afdd160edee0b8b51d1497f1574bfc3f74b716",
+        "outboundRoot": "0x3020d50fa768daaa20f7eb477caf8cfa7c0ec4f1ec1217e46ab17120aa9078c2",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -71,7 +71,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "122306299377179413814361032",
+        "totalSupply": "122923639654567608578461171",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -90,7 +90,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+          "from": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
         }
       ],
       "sinceTimestamp": 1693752671,
@@ -236,7 +236,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"],
         "multisigThreshold": "7 of 9 (78%)",
-        "nonce": 74,
+        "nonce": 76,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -253,7 +253,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1734026411,
+        "getCurrentTime": 1736934215,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -309,7 +309,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1734024347,
+        "lastSavedAggregateRootTimestamp": 1736927159,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -333,7 +333,8 @@
         },
         "watcherManager": {
           "severity": "MEDIUM",
-          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected."
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "RootManager"
@@ -423,17 +424,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
-          "via": [
-            {
-              "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-              "delay": 0
-            }
-          ]
+          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
+          "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
           "via": []
         }
       ],
@@ -494,7 +490,8 @@
       "fieldMeta": {
         "WATCHERS": {
           "severity": "LOW",
-          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors."
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "WatcherManager"
@@ -515,7 +512,7 @@
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 204
+        "numProposals": 205
       },
       "derivedName": "GovernorV2"
     },
@@ -632,7 +629,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 763,
+        "nonce": 775,
         "VERSION": "1.3.0"
       }
     },
@@ -920,7 +917,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 68806,
+        "nonce": 69048,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -1022,7 +1019,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
+          "to": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
           "via": []
         }
       ],
@@ -1074,17 +1071,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
-          "via": [
-            {
-              "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-              "delay": 0
-            }
-          ]
+          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
+          "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
           "via": []
         }
       ],
@@ -1170,13 +1162,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["0xbe8109517300c78f2bbdC00d9EA8Cf597160017E"],
+        "$members": [
+          "0x8B85EA591d41F29F5c741ea22Ed6B4ad71a750ba",
+          "0xbe8109517300c78f2bbdC00d9EA8Cf597160017E"
+        ],
         "$threshold": 1,
         "domainSeparator": "0xdd36ef1d1be1948ff409df66d0d8b2846dbecbfe577e22362e58f66a6ac3ccbc",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 3,
         "VERSION": "1.3.0"
       }
     },
@@ -1217,19 +1212,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+          "from": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
         }
       ],
       "sinceTimestamp": 1603880884,
@@ -1295,11 +1290,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
         },
         {
           "permission": "upgrade",
-          "target": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1326,7 +1321,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
         "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 210,
+        "nonce": 211,
         "VERSION": "1.3.0"
       }
     },
@@ -1494,7 +1489,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
+          "from": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
         }
       ]
     },
@@ -1504,6 +1499,7 @@
     { "address": "0x7ce49752fFA7055622f444df3c69598748cb2E5f" },
     { "address": "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315" },
     { "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe" },
+    { "address": "0x8B85EA591d41F29F5c741ea22Ed6B4ad71a750ba" },
     { "address": "0x8cb19CE8EEDF740389D428879a876A3B030B9170" },
     { "address": "0x8D09e20b835009E5320cC11E6a6F00aF451aD669" },
     {
@@ -3471,8 +3467,8 @@
     ]
   },
   "usedTemplates": {
-    "amarok/Relayer": "0x63e51799ac3fb7cd705bce6f217f47d287e3479046939df47e1119cf0fe070af",
-    "amarok/RelayerProxyHub": "0x02ec2a805c99a0858133d5e1237846ac6f72cc06deb9b2371e9bb80d3110144c",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "amarok/Relayer": "0x8420bd193754b39fbfe441219c96ff1b0081e61db93b859647b8f2d3607d7741",
+    "amarok/RelayerProxyHub": "0x9cb4edf0a1f069de9367fe2969edcadc5b8d97e21857dd7d3123f4ddf61b05c6",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -1,7 +1,4 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -10,6 +7,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -59,12 +57,19 @@ import {
   Layer2TxConfig,
 } from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { mergeBadges } from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+  bridge: DA_BRIDGES.NONE,
+}
+
+export const EIGENDA_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.EIGEN_DA,
+  riskView: RISK_VIEW.DATA_EIGENDA(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
 }
 
@@ -141,6 +146,7 @@ interface OpStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
+  usingAltVm?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -159,6 +165,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 
 function opStackCommon(
   templateVars: OpStackConfigCommon,
+  explorerUrl?: string,
 ): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
   const discoveryDrivenSections = templateVars.discoveryDrivenData
@@ -217,6 +224,9 @@ function opStackCommon(
     upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
+  const automaticBadges = templateVars.usingAltVm
+    ? [Badge.Stack.OPStack, daBadge]
+    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
   return {
     isArchived: templateVars.isArchived,
@@ -236,14 +246,12 @@ function opStackCommon(
             isCritical: true,
           },
         ],
-        references: [
+        references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, deleteL2Outputs function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              l2OutputOracle,
-            )}#code`,
+            text: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
+            address: safeGetImplementation(l2OutputOracle),
           },
-        ],
+        ]),
       },
       dataAvailability: templateVars.nonTemplateTechnology
         ?.dataAvailability ?? {
@@ -254,34 +262,27 @@ function opStackCommon(
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
           },
-          {
-            text: 'BatchInbox - Etherscan address',
-            href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
-          },
-          {
-            text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              portal,
-            )}#code`,
-          },
+          ...explorerReferences(explorerUrl, [
+            { text: 'BatchInbox - address', address: sequencerInbox },
+            {
+              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              address: safeGetImplementation(portal),
+            },
+          ]),
         ],
       },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_OPERATOR,
-        references: [
+        references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, CHALLENGER address',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              l2OutputOracle,
-            )}#code`,
+            text: 'L2OutputOracle.sol - source code, CHALLENGER address',
+            address: safeGetImplementation(l2OutputOracle),
           },
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER address',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              l2OutputOracle,
-            )}#code`,
+            text: 'L2OutputOracle.sol - source code, PROPOSER address',
+            address: safeGetImplementation(l2OutputOracle),
           },
-        ],
+        ]),
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
@@ -291,12 +292,12 @@ function opStackCommon(
             text: 'Sequencing Window - OP Mainnet Specs',
             href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
           },
-          {
-            text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              portal,
-            )}#code`,
-          },
+          ...explorerReferences(explorerUrl, [
+            {
+              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              address: safeGetImplementation(portal),
+            },
+          ]),
         ],
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
@@ -309,26 +310,20 @@ function opStackCommon(
               'FINALIZATION_PERIOD_SECONDS',
             ),
           ),
-          references: [
+          references: explorerReferences(explorerUrl, [
             {
-              text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-              href: `https://etherscan.io/address/${safeGetImplementation(
-                portal,
-              )}#code`,
+              text: 'OptimismPortal.sol - source code, proveWithdrawalTransaction function',
+              address: safeGetImplementation(portal),
             },
             {
-              text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-              href: `https://etherscan.io/address/${safeGetImplementation(
-                portal,
-              )}#code`,
+              text: 'OptimismPortal.sol - source code, finalizeWithdrawalTransaction function',
+              address: safeGetImplementation(portal),
             },
             {
-              text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-              href: `https://etherscan.io/address/${safeGetImplementation(
-                l2OutputOracle,
-              )}#code`,
+              text: 'L2OutputOracle.sol - source code, PROPOSER check',
+              address: safeGetImplementation(l2OutputOracle),
             },
-          ],
+          ]),
           risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
         },
         {
@@ -401,10 +396,7 @@ function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: mergeBadges(
-      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
   }
 }
 
@@ -468,7 +460,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
 
   return {
     type: 'layer2',
-    ...opStackCommon(templateVars),
+    ...opStackCommon(templateVars, ethereum.explorerUrl),
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       architectureImage: templateVars.architectureImage ?? architectureImage,
@@ -820,7 +812,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 
   return {
     type: 'layer3',
-    ...opStackCommon(templateVars),
+    ...opStackCommon(templateVars, baseChain.chainConfig?.explorerUrl),
     hostChain: templateVars.hostChain,
     display: {
       architectureImage,
@@ -922,14 +914,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     },
     stateDerivation: templateVars.stateDerivation,
   }
-}
-
-function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = get$Implementations(contract.values)[0]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
 }
 
 function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {

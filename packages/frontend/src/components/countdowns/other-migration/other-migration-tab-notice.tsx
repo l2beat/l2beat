@@ -1,3 +1,4 @@
+// TODO: Figure out how to what to do about it
 import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/common/projectCountdowns'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Countdown } from '~/components/countdown'

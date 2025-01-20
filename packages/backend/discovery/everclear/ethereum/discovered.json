@@ -1,8 +1,8 @@
 {
   "name": "everclear",
   "chain": "ethereum",
-  "blockNumber": 21471461,
-  "configHash": "0x776ba3b8fa5ed2574a454474695f88cce019d656fcc61727da02a0e1f8fc9b24",
+  "blockNumber": 21635740,
+  "configHash": "0x1150aac00b6852d4613f4a265b62d9001d57f43fd314881e05195a9d5abbb502",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -29,16 +29,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -105,39 +99,39 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x149e3df73d9D48cb6573555De9256cc1456F50B5"
+          "from": "0x149e3df73d9D48cb6573555De9256cc1456F50B5"
         },
         {
           "permission": "upgrade",
-          "target": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"
+          "from": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"
         },
         {
           "permission": "upgrade",
-          "target": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356"
+          "from": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356"
         },
         {
           "permission": "upgrade",
-          "target": "0x7B0517E0104dB60198f9d573C0aB8d480207827E"
+          "from": "0x7B0517E0104dB60198f9d573C0aB8d480207827E"
         },
         {
           "permission": "upgrade",
-          "target": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495"
+          "from": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495"
         },
         {
           "permission": "upgrade",
-          "target": "0xA880b3fC75928695ac75e06793277aC4bEA84a3E"
+          "from": "0xA880b3fC75928695ac75e06793277aC4bEA84a3E"
         },
         {
           "permission": "upgrade",
-          "target": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+          "from": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
         },
         {
           "permission": "upgrade",
-          "target": "0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8"
+          "from": "0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8"
         },
         {
           "permission": "upgrade",
-          "target": "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
+          "from": "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         }
       ],
       "sinceTimestamp": 1725539051,
@@ -159,16 +153,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -208,16 +196,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -244,11 +226,11 @@
           "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         ],
         "allowedOutboxList": ["0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
-        "delayedMessageCount": 236,
+        "delayedMessageCount": 285,
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "sequencerMessageCount": 209,
-        "sequencerReportedSubMessageCount": 449548
+        "sequencerMessageCount": 255,
+        "sequencerReportedSubMessageCount": 584641
       }
     },
     {
@@ -264,21 +246,16 @@
       "issuedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x54F9375F5a6CEA1eECc561FC7f309aD8Cb633Ef9",
+          "to": "0x54F9375F5a6CEA1eECc561FC7f309aD8Cb633Ef9",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -295,7 +272,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 209,
+        "batchCount": 255,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x54F9375F5a6CEA1eECc561FC7f309aD8Cb633Ef9"],
         "bridge": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
@@ -326,7 +303,7 @@
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 235,
+        "totalDelayedMessagesRead": 284,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -366,16 +343,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -413,16 +384,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -459,32 +424,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
+          "from": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14"
         },
         {
           "permission": "configure",
-          "target": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
-          "target": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C"
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C"
         }
       ],
       "sinceTimestamp": 1725539051,
@@ -531,13 +490,13 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x149e3df73d9D48cb6573555De9256cc1456F50B5",
+          "from": "0x149e3df73d9D48cb6573555De9256cc1456F50B5",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -545,7 +504,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
+          "from": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -553,7 +512,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
+          "from": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -561,7 +520,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
+          "from": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -569,7 +528,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
+          "from": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -577,7 +536,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xA880b3fC75928695ac75e06793277aC4bEA84a3E",
+          "from": "0xA880b3fC75928695ac75e06793277aC4bEA84a3E",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -585,7 +544,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
+          "from": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -593,12 +552,12 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
           "via": [{ "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8",
+          "from": "0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -606,7 +565,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D",
+          "from": "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D",
           "via": [
             { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" },
             { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }
@@ -616,7 +575,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
+          "from": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -625,11 +584,13 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
           "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
-          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
@@ -638,8 +599,8 @@
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 17,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -658,29 +619,32 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
-          "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0,
-              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-            }
-          ]
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }]
+        },
+        {
+          "permission": "fastconfirm",
+          "to": "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
-          "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            }
-          ]
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "via": [{ "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" }]
         },
         {
           "permission": "validate",
-          "target": "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
+          "to": "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "to": "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -714,7 +678,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anyTrustFastConfirmer": "0x0000000000000000000000000000000000000000",
+        "anyTrustFastConfirmer": "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501",
         "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
@@ -724,26 +688,29 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 194,
+        "firstUnresolvedNode": 253,
         "inbox": "0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
         "isERC20Enabled": false,
         "lastStakeBlock": 20711424,
-        "latestConfirmed": 193,
-        "latestNodeCreated": 206,
+        "latestConfirmed": 252,
+        "latestNodeCreated": 252,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
-        "minimumAssertionPeriod": 75,
+        "minimumAssertionPeriod": 1,
         "outbox": "0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
         "owner": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
         "paused": false,
         "rollupDeploymentBlock": 20684364,
         "rollupEventInbox": "0xdE3fdE71a026236b6b5C35505643FF4155EAb20D",
         "sequencerInbox": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "setValidatorCount": 1,
+        "setValidatorCount": 2,
         "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"],
+        "validators": [
+          "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
+          "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501"
+        ],
         "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
@@ -815,16 +782,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -876,16 +837,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "to": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
           "via": [
-            {
-              "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B",
-              "delay": 0
-            },
-            {
-              "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14",
-              "delay": 0
-            }
+            { "address": "0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B" },
+            { "address": "0x305042e5A81424f2f824f93Ff2195b5712D7dE14" }
           ]
         }
       ],
@@ -904,6 +859,43 @@
         "bridge": "0x4eb4fB614e1aa3634513319F4Ec7334bC4321356",
         "rollup": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C"
       }
+    },
+    {
+      "name": "EverclearFastconfirmerMultisig",
+      "address": "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        },
+        {
+          "permission": "validate",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1736935619,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": ["0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"],
+        "$threshold": 1,
+        "domainSeparator": "0xb7a0b285c36e9c348d313ad86f78311ede04cafa47206b7d58a4bc776336abd8",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 15,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
     }
   ],
   "eoas": [
@@ -912,25 +904,21 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
+          "from": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
           "description": "Add/remove batchPosters (Sequencers)."
-        },
-        {
-          "permission": "fastconfirm",
-          "target": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
         }
       ]
     },
     { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
+    { "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9" },
     { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
     {
       "address": "0x54F9375F5a6CEA1eECc561FC7f309aD8Cb633Ef9",
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
+          "from": "0x7B0517E0104dB60198f9d573C0aB8d480207827E",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
@@ -938,19 +926,32 @@
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
     { "address": "0x8533308595A46552912E5632FF57d3462F72fE74" },
+    { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
     { "address": "0x9EcE0898142303Ef0f97567F5E37a9DF7F52ac87" },
     {
       "address": "0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA",
       "receivedPermissions": [
         {
+          "permission": "fastconfirm",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501" }]
+        },
+        {
           "permission": "validate",
-          "target": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
-    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     { "address": "0xe18A1D28C1C693a0A0FB10d836F8D6FeF52ABA0e" },
     { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" }
   ],
@@ -1610,6 +1611,9 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501": [
+      "constructor(address _singleton)"
+    ],
     "0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02": [
       "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
       "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
@@ -1633,26 +1637,76 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
+    ],
+    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/Bridge": "0xbf3086cfe461b5cddc0ca0473fd46a2d3d521ef3860d13221d24c902c0013175",
-    "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
-    "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
-    "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",
-    "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
-    "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
-    "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
-    "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
-    "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
-    "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
-    "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy_fastConfirm": "0x2314bbfa0104764ce632ec231b12e2b142a94db57f5442ae68d4a52be7794651",
-    "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
-    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777",
-    "orbitstack/ValidatorUtils": "0x1345b7ce8347b1c8e9609c7b5a42e7494c8447ed73249c9494da50911d9a1e4a"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "orbitstack/Bridge": "0x02984ca06256841587f09fd5671a658acdc704f6b3a98579811309921a1063f5",
+    "orbitstack/ChallengeManager": "0x511c91d2d0c30ba36cfdc45e36511cd5e286868b62513aed4ac0004a9a4ac4b2",
+    "orbitstack/ERC20Gateway": "0x1902aa5e8c940ebb1f40a3cdb36925575c7c13e97f2b4bc5cf73a3a4e41197a8",
+    "orbitstack/GatewayRouter": "0x57e66cd5765c08d76b31b366167343f1a22e10db8384e1de79c8b3b786352006",
+    "orbitstack/Inbox": "0x1a37f67487d4a0e7a64586c6a12a57a7c4c9bbda928b5bbf9d34e06009923ffe",
+    "orbitstack/OneStepProofEntry": "0x95d627339856b26a15c61f0b4e7dbe6728675622517166c789b5a9f1a9951894",
+    "orbitstack/OneStepProver0": "0x6853e4950af75701e2dbcdbf2c47045d4d4ae24c37b90202dc94c97cd6569b1d",
+    "orbitstack/OneStepProverHostIo": "0x80d870cc4304c0d427dba6afa06fd3be64b345938cbe57fc2d12cc4bf059ea4a",
+    "orbitstack/OneStepProverMath": "0x382bfd15b161d0a0588281b1810b215f6bce5e128c3650eeb73f0ec859357dff",
+    "orbitstack/OneStepProverMemory": "0x973dd6c2b5696917108d9ebedc29886dc0d44797c5a8d07b19cb00e9d0e22cdc",
+    "orbitstack/Outbox": "0x313c4d684275d134c39273e2203cd22456797f13c7d9679d8273b2913b97701b",
+    "orbitstack/RollupEventInbox": "0x86d307e9f7696ba92a3e1288a07fef7fb8ea4ba3d376375a0fa61024c268c4a4",
+    "orbitstack/RollupProxy_fastConfirm": "0x19d5e40f64048910ca708ebf7b8b9120866b9da318a6c772f8eee4a5c1757b22",
+    "orbitstack/SequencerInbox": "0xfdccd4dc31a4dbdaad883381fcb1e291b76c65f37aa2ca3a4a69ee9e5b5adae3",
+    "orbitstack/UpgradeExecutor": "0xaf0a15f64126e4be843d5576606ecddde8c85282213f6e84f322ec91c1b2938a",
+    "orbitstack/ValidatorUtils": "0x5e8ffb9a8b9fa57243aaef25fcc9414f9f2ccf362e21ce679a293fbd50c5ade8"
   }
 }

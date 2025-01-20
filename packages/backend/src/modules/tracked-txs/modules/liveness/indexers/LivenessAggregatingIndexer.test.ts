@@ -1,5 +1,5 @@
+import { BackendProject } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { BackendProject } from '@l2beat/config'
 import {
   AggregatedLivenessRecord,
   Database,
