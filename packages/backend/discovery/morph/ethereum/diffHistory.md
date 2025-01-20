@@ -1,16 +1,18 @@
-Generated with discovered.json: 0x2937af2b5fd9a3c1fb1f2d836797710ca7bf626b
+Generated with discovered.json: 0x72f1722fef77263dbdc89f0ae4a67e13359d4916
 
-# Diff at Mon, 20 Jan 2025 17:04:12 GMT:
+# Diff at Mon, 20 Jan 2025 19:26:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@dcd1272b687a01381d2cbcd98213070f430a92aa block: 21465401
-- current block number: 21667075
+- comparing to: main@3a16743af72fb4c941689b26d336a59661143f06 block: 21465401
+- current block number: 21667783
 
 ## Description
 
 Upgrades to MorphRollup, L1MessageQueueWithGasPriceOracle, L1CrossDomainMessenger to **deprecate skipping / dropping messages from the queue**.
 
-There is no enforcement of the processing of the queue.
+There is no enforcement of the processing of the queue. 
+
+The EnforcedTxGateway is still paused (It is, apart from the L1CrossDomainMessenger, the only address that can append messages to the L1MessageQueue) and thus queuing transactions is currently not possible.
 
 Some Challengers are apparently run by bitget / bitget wallet.
 

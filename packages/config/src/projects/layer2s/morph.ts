@@ -176,7 +176,7 @@ export const morph: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       sources: [
         {
           contract: 'L1MessageQueueWithGasPriceOracle',
@@ -254,10 +254,14 @@ export const morph: Layer2 = {
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.ENQUEUE,
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code',
+          text: 'EnforcedTxGateway proxy - PAUSED - Etherscan source code',
+          href: 'https://etherscan.io/address//0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7#readProxyContract#F7',
+        },
+        {
+          text: 'EnforcedTxGateway.sol implementation - Etherscan source code',
           href: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
         },
         {
