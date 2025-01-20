@@ -52,9 +52,9 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
           onValueChange(undefined)
           return
         }
-        customEvent('filterSelected', {
+        customEvent('filterChanged', {
           props: {
-            filter: title,
+            name: title,
             value: newValue,
           },
         })
