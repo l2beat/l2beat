@@ -43,6 +43,13 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: DivContainer,
   },
   {
+    header: 'Category',
+    id: 'ww',
+    align: 'right',
+    fn: (project: DiscoLupeProject) => project.display.category,
+    displayFn: DivContainer,
+  },
+  {
     header: 'TVL',
     id: 'ig',
     align: 'right',
