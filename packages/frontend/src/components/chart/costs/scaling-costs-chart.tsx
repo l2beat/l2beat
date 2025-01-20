@@ -148,7 +148,7 @@ function UnitControls({
       {loading ? (
         <Skeleton className="h-8 w-[156px]" />
       ) : (
-        <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroup name="costsChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
           <RadioGroupItem value="eth">ETH</RadioGroupItem>
           <RadioGroupItem value="gas">GAS</RadioGroupItem>

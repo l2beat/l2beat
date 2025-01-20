@@ -14,6 +14,7 @@ export function TvlChartTimeRangeControls({
 }: Props) {
   return (
     <ChartTimeRangeControls
+      name="tvlTimeRange"
       projectSection={projectSection}
       value={timeRange}
       setValue={setTimeRange}

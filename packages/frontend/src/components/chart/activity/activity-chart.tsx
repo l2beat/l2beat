@@ -171,6 +171,7 @@ function Controls({
       <div className="flex gap-1">
         {isClient ? (
           <RadioGroup
+            name="activityChartScale"
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >
@@ -182,6 +183,7 @@ function Controls({
         )}
         {isClient ? (
           <Checkbox
+            name="showMainnetActivity"
             checked={showMainnet}
             onCheckedChange={(state) => setShowMainnet(!!state)}
           >
