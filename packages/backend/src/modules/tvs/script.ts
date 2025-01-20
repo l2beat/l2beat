@@ -14,7 +14,7 @@ async function main() {
 
   const backendProject = layer2ToBackendProject(arbitrum)
 
-  const config = mapConfig(backendProject, arbitrum.chainConfig.name)
+  const config = mapConfig(backendProject, arbitrum.chainConfig)
 
   const localExecutor = new LocalExecutor()
   const tvs = await localExecutor.run(config, [UnixTime.now()])
