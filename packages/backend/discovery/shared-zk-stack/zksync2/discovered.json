@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 44113900,
+  "blockNumber": 54131125,
   "configHash": "0xca6cf546c630f648adbbf422e467f0beb24279f0df191259625f45da7d852f7b",
   "contracts": [
     {
@@ -22,7 +22,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726241615,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -40,7 +40,7 @@
         "lateQuorumVoteExtension": 604800,
         "name": "ZkTokenGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 0,
+        "proposalQueuedCount": 1,
         "proposalThreshold": "21000000000000000000000000",
         "PROPOSE_GUARDIAN": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
         "state": [],
@@ -151,7 +151,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726241615,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -237,14 +237,24 @@
               "0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4",
               "0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d",
               "0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b",
-              "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+              "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+              "0xe546AEaaC57584da7554e7F88154DeDAD30A82b0",
+              "0x11791c6249631555cEb75CB39128789E3954c2EC",
+              "0x3BC3f64d084bE6d3336f10340DC8424290FFc4ab",
+              "0xDa2fBE31Fd47Af741bdB3dBC4eb662dA0107D33a",
+              "0x6b689B93B368c7C25E6e5ecaeAb23C11F8C2c392",
+              "0x2CC6c7b1a59A23fB3faCAFe4A3791C5c8A58Cbcc",
+              "0xD375A20d93C2F7C6a83B19C5ae153cF2C6e09ba9",
+              "0x2ADa5C15BC4FEE97EC2463ce4F8E4557174B8Dcf",
+              "0x4E86e74237Eb1f9432810eB5ab5861368d2f5964",
+              "0x178bFf5A197FB4499526D04Db602C45cEDCA40a9"
             ]
           },
           "BURNER_ROLE": { "adminRole": "BURNER_ADMIN_ROLE", "members": [] }
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1726241615,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -263,7 +273,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "11277876635000000000000000000"
+        "totalSupply": "12446027554145200000000000000"
       },
       "derivedName": "ZkTokenV2"
     },
@@ -285,7 +295,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1726241615,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -302,7 +312,7 @@
         "lateQuorumVoteExtension": 604800,
         "name": "ZkProtocolGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 0,
+        "proposalQueuedCount": 3,
         "proposalThreshold": "21000000000000000000000000",
         "state": [],
         "timelock": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
