@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4e1a4a6041d4f2ea890a93826f6985a301f402c1
+Generated with discovered.json: 0xcef964c430c9aaff812f5a76aff322636e79017a
 
-# Diff at Mon, 20 Jan 2025 07:50:34 GMT:
+# Diff at Mon, 20 Jan 2025 11:15:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@400cfe1ca700b8b710220906f278f002c698d3c8 block: 44113900
@@ -71,6 +71,8 @@ discovery. Values are for block 44113900 (main branch discovery), not current.
 +        "21"
       description:
 +        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D","via":[]},{"permission":"configure","target":"0xe788e09324F8bb3cc64f009973693f751C33b999","via":[]}]
       receivedPermissions:
 +        [{"permission":"configure","target":"0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6","description":"propose transactions."}]
       usedTypes:
@@ -100,7 +102,7 @@ discovery. Values are for block 44113900 (main branch discovery), not current.
 
 ```diff
     contract TokenTimelockController (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6) {
-    +++ description: Timelock contract allowing the queuing of transactions with a minimum delay of 3d.
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
       values.Canceller:
 +        ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"]
       values.Executor:
@@ -112,7 +114,7 @@ discovery. Values are for block 44113900 (main branch discovery), not current.
       template:
 +        "shared-zk-stack/TimelockController"
       description:
-+        "Timelock contract allowing the queuing of transactions with a minimum delay of 3d."
++        "Timelock contract allowing the queueing of transactions with a minimum delay of 3d."
       issuedPermissions:
 +        [{"permission":"configure","target":"0x10560f8B7eE37571AD7E3702EEb12Bc422036E89","via":[]}]
       receivedPermissions:
@@ -129,6 +131,8 @@ discovery. Values are for block 44113900 (main branch discovery), not current.
 +        "21"
       description:
 +        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
+      issuedPermissions:
++        [{"permission":"configure","target":"0xe788e09324F8bb3cc64f009973693f751C33b999","via":[]}]
       receivedPermissions:
 +        [{"permission":"configure","target":"0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19","description":"propose transactions."}]
       usedTypes:
@@ -180,7 +184,7 @@ discovery. Values are for block 44113900 (main branch discovery), not current.
 
 ```diff
     contract GovOpsTimelockController (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19) {
-    +++ description: Timelock contract allowing the queuing of transactions with a minimum delay of 3d.
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
       values.Canceller:
 +        ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"]
       values.Executor:
@@ -192,7 +196,7 @@ discovery. Values are for block 44113900 (main branch discovery), not current.
       template:
 +        "shared-zk-stack/TimelockController"
       description:
-+        "Timelock contract allowing the queuing of transactions with a minimum delay of 3d."
++        "Timelock contract allowing the queueing of transactions with a minimum delay of 3d."
       issuedPermissions:
 +        [{"permission":"configure","target":"0x496869a7575A1f907D1C5B1eca28e4e9E382afAb","via":[]}]
     }

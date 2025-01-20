@@ -618,7 +618,7 @@
       "sourceHashes": [
         "0xe59fe71de493915d874d4d22b4637434d86b42759b4d5fd2dddf4f25cfdd1544"
       ],
-      "description": "",
+      "description": "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -1846,7 +1846,7 @@
     "shared-zk-stack/GenesisUpgrade": "0x6e295bc30b812594e40ad48eb8fd46a7d922ac2210bbcf91d0bed438ddb4fa31",
     "shared-zk-stack/Guardians": "0x59a0c452c8ff2da8e5af9a084ef85c3a11830e92b3621ae65b725d5dc433e1b4",
     "shared-zk-stack/L1SharedBridge": "0x7830fa23519ce928c93094b649fc63bc45cb302ff18ccbac0082b497c4c86a74",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0xdc7078967aa9ed0ed2ba92a7ac3f2bce116f70f3be58280b668cb8b2d12a3632",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0x96ba971fe11492e4be4d0dad55a04c66d986f1eccd295d9108af2dbff2614cec",
     "shared-zk-stack/SecurityCouncil": "0x2564c51e045f84c489a3bd6fcc64ae4871226c1bde2b425f07c9ca5c11db0a72",
     "shared-zk-stack/StateTransitionManager": "0x65cc333a0daf26e460ebe3ea8eab16cca4c01f63f3d3c87d2a83ea13f4f69a33",
     "shared-zk-stack/ValidatorTimelock": "0x4cc1fd0defc8d9ccafef2cc8a2f34b00fd02e053049318c4a091d71b8355b325"

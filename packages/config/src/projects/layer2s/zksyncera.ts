@@ -394,7 +394,7 @@ export const zksyncera: Layer2 = zkStackL2({
     }),
     discovery.getContractDetails('EraChainAdminProxy', {
       description:
-        'Intermediary governance contract proxies the *Elastic Chain Operator* role for the shared contracts and the *ChainAdmin* role for ZKsync Era.',
+        'Intermediary governance contract that proxies the *Elastic Chain Operator* role for the shared contracts and the *ChainAdmin* role for ZKsync Era.',
     }),
     discovery.getContractDetails(
       'ValidatorTimelockOld',

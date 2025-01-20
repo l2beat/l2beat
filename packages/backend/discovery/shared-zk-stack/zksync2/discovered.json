@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 54112338,
-  "configHash": "0xf2874daf4faca542628cedcf9bc6ced27d5974d1dc38962b680f938262444333",
+  "configHash": "0x9baff20c2a9805a0975725a69e2cf9bbf9471c54d13426a475ea0f3121eb0df2",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -12,6 +12,18 @@
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "target": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+          "via": []
+        }
+      ],
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -124,7 +136,7 @@
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
-      "description": "Timelock contract allowing the queuing of transactions with a minimum delay of 3d.",
+      "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -185,6 +197,13 @@
         "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
       ],
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+          "via": []
+        }
+      ],
       "receivedPermissions": [
         {
           "permission": "configure",
@@ -415,7 +434,7 @@
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
-      "description": "Timelock contract allowing the queuing of transactions with a minimum delay of 3d.",
+      "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -508,11 +527,30 @@
     },
     {
       "name": "ZKFoundationMultisig_l2Alias",
-      "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"
+      "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
+        }
+      ]
     },
     {
       "name": "Guardians_l2Alias",
-      "address": "0xe788e09324F8bb3cc64f009973693f751C33b999"
+      "address": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
+        },
+        {
+          "permission": "configure",
+          "target": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
+        }
+      ]
     }
   ],
   "abis": {
@@ -920,7 +958,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "shared-zk-stack/TimelockController": "0x5d615e5b5197f72a27055f755ae3c2e44609ac5f4a9808733463734737c54720",
+    "shared-zk-stack/TimelockController": "0x05f9e5428914411383f7290056d11a74a1fbfa040345c6fd068a85d07af766a2",
     "shared-zk-stack/ZkGovernor": "0xb693401be61369eb92404836cce46b56604bcea2ca8d97b17014babce20077e2",
     "shared-zk-stack/ZkToken": "0xb197c055fc8b3ada2ad6b16f0bd98e598aad2847ddcc43e0bf986f2c0b06bba2"
   }

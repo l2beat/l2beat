@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+  "ignoreMethods": [
+    "l2LogsRootHash",
+    "storedBlockHash",
+    "storedBatchHash",
+    "getName"
+  ],
+  "ignoreInWatchMode": [
+    "getPriorityQueueSize",
+    "getTotalBlocksCommitted",
+    "getTotalBlocksExecuted",
+    "getTotalBlocksVerified",
+    "getTotalBatchesExecuted",
+    "getTotalBatchesVerified",
+    "getTotalBatchesCommitted",
+    "getTotalPriorityTxs",
+    "priorityQueueFrontOperation",
+    "getFirstUnprocessedPriorityTx"
+  ],
+  "fields": {
+    "txFilterer": {
+      "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "stateFromEvent",
+        "event": "NewTransactionFilterer",
+        "returnParams": ["oldTransactionFilterer", "newTransactionFilterer"]
+      }
+    },
+    "validators": {
+      "handler": {
+        "type": "zksynceraValidators"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "commit, prove, execute, revert batches directly in the main Diamond contract. Usually proxied through a ValidatorTimelock contract."
+          }
+        ]
+      }
+    },
+    "getProtocolVersion": {
+      "description": "Protocol version, increments with each protocol change.",
+      "severity": "MEDIUM"
+    },
+    "getVerifierParams": {
+      "description": "Verifier parameters used for proving batches.",
+      "severity": "LOW"
+    },
+    "facets": {
+      "handler": {
+        "type": "eip2535Facets"
+      }
+    },
+    "daMode": {
+      "handler": {
+        "type": "storage",
+        "slot": 38,
+        "offset": 0,
+        "returnType": "uint8"
+      }
+    }
+  }
+}

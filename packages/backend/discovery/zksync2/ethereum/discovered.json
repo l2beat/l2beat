@@ -1,15 +1,17 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 21630311,
-  "configHash": "0xe2054510e432dbe29b6e89dae0e4fdc84380cce9f77bc89e47a38b23fe68e052",
+  "blockNumber": 21664404,
+  "configHash": "0xd447e4f823898be860ea0a7c64f547fb821fa6c53e19cd164449a5f92bfa8e1e",
   "contracts": [
     {
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
       "values": {
         "$immutable": true,
@@ -22,18 +24,29 @@
       "sourceHashes": [
         "0x33d82f6564cf2a54b6bf9c51d42620b2702ccfa9393f498a5bee57c108a66055"
       ],
+      "description": "Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
+          "description": "set addresses (validators) that can commit, prove, exeute, revert batches through this contract."
+        }
+      ],
       "sinceTimestamp": 1701258227,
       "values": {
         "$immutable": true,
         "minDelay": 0,
+        "minDelay_formatted": "0s",
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Governance"
     },
     {
       "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea",
         "0x081a1805983e86cd6a80ed48c012c26bf9a39473c0f1e69b357afff240f027a0",
@@ -42,6 +55,14 @@
         "0xdf47c6cd4fcffcfa4a670e1544e2391acc365cd7fd9b8e7583d58b28dff50c40"
       ],
       "proxyType": "EIP2535 diamond proxy",
+      "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -360,26 +381,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3267227,
+        "getFirstUnprocessedPriorityTx": 3267514,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 81,
+        "getPriorityQueueSize": 37,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 496110,
-        "getTotalBatchesExecuted": 496077,
-        "getTotalBatchesVerified": 496106,
-        "getTotalBlocksCommitted": 496110,
-        "getTotalBlocksExecuted": 496077,
-        "getTotalBlocksVerified": 496106,
-        "getTotalPriorityTxs": 3267308,
+        "getTotalBatchesCommitted": 496283,
+        "getTotalBatchesExecuted": 496235,
+        "getTotalBatchesVerified": 496278,
+        "getTotalBlocksCommitted": 496283,
+        "getTotalBlocksExecuted": 496235,
+        "getTotalBlocksVerified": 496278,
+        "getTotalPriorityTxs": 3267551,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -388,8 +409,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xb629d37a41d58b8c34aeebe8d4f253730014db5ce54f11e3036e942b38246918",
-          "expirationTimestamp": 1736871011,
+          "canonicalTxHash": "0xfe86f2ba81ae37835f0fa7645c3b05b0f24872a44786e99283c0e478367fb376",
+          "expirationTimestamp": 1737279599,
           "layer2Tip": 0
         },
         "txFilterer": [],
@@ -405,11 +426,11 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change"
+          "description": "Protocol version, increments with each protocol change."
         },
         "getVerifierParams": {
           "severity": "LOW",
-          "description": "Verifier parameters used for proving batches"
+          "description": "Verifier parameters used for proving batches."
         }
       },
       "derivedName": "DiamondProxy"
@@ -422,6 +443,7 @@
         "0x8d6377528b46831d215e352a53f276acbd18ec4bc66c04894dd72dad36288c4d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
       "sinceTimestamp": 1698065351,
       "values": {
         "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -460,6 +482,7 @@
         "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
       "sinceTimestamp": 1676370683,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
@@ -525,6 +548,21 @@
       "sourceHashes": [
         "0x2aff1337a5d8a9be27e6d384ec8a2efd746fb4b73195773c82f3e42e2210c8ed"
       ],
+      "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. Usually proxied through a ValidatorTimelock contract."
+        }
+      ],
       "sinceTimestamp": 1709850611,
       "values": {
         "$immutable": true,
@@ -538,6 +576,7 @@
           ]
         },
         "executionDelay": 75600,
+        "executionDelay_formatted": "21h",
         "getName": "ValidatorTimelock",
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -919,5 +958,8 @@
       "function revertBatchesSharedBridge(uint256, uint256 _newLastBatch)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "shared-zk-stack/Diamond": "0x74b2cd22a0996cdb71049630fb6dee8c9be595146dca00d7f6855a5eff7e853c",
+    "shared-zk-stack/Verifier": "0x210138ef9d88c0db040ebeca12b4211d42de8834cbc585be5eb18440d9b62403"
+  }
 }

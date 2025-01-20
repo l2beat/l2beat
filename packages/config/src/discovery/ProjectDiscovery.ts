@@ -818,6 +818,7 @@ export class ProjectDiscovery {
       validate: 'A Validator',
       operateLinea: 'An Operator',
       fastconfirm: 'A FastConfirmer',
+      validateZkStack: 'A Validator',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -877,6 +878,7 @@ export class ProjectDiscovery {
       validate: 'Can act as a Validator',
       operateLinea: 'Can act as an Operator',
       fastconfirm: 'Can act as a FastConfirmer',
+      validateZkStack: 'Can act as a Validator',
     }
 
     return Object.entries(
@@ -1133,6 +1135,12 @@ const roleDescriptions: {
     name: 'AnyTrust FastConfirmer',
     description:
       'Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.',
+  },
+  validateZkStack: {
+    // ZK stack specific
+    name: 'Validator',
+    description:
+      'Actors permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.',
   },
 }
 

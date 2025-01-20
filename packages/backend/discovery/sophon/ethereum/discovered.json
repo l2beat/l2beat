@@ -240,9 +240,11 @@
     {
       "name": "Verifier",
       "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
+      "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1717507391,
       "values": {
         "$immutable": true,
@@ -650,6 +652,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
     "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce",
-    "shared-zk-stack/L1USDCBridge": "0x399ee312da0d9adfcb26ebd7d25a527f0db9c2af4890258d5b3a4d04d1baf055"
+    "shared-zk-stack/L1USDCBridge": "0x399ee312da0d9adfcb26ebd7d25a527f0db9c2af4890258d5b3a4d04d1baf055",
+    "shared-zk-stack/Verifier": "0x210138ef9d88c0db040ebeca12b4211d42de8834cbc585be5eb18440d9b62403"
   }
 }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6c3f22905097b2093ecbe58b56b197fdcf14b3be
+Generated with discovered.json: 0xcaa7a9d29a47073074e5cbb9976627088085cba2
 
-# Diff at Sat, 18 Jan 2025 17:01:08 GMT:
+# Diff at Mon, 20 Jan 2025 11:16:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@400cfe1ca700b8b710220906f278f002c698d3c8 block: 21630370
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6c3f22905097b2093ecbe58b56b197fdcf14b3be
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+discodrive zk stack.
 
 ## Config/verification related changes
 
@@ -67,11 +67,11 @@ discovery. Values are for block 21630370 (main branch discovery), not current.
 
 ```diff
     contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
-    +++ description: 
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
       template:
 +        "shared-zk-stack/ProtocolUpgradeHandler"
       description:
-+        ""
++        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
       issuedPermissions:
 +        [{"permission":"configure","target":"0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","via":[]},{"permission":"configure","target":"0xBDFfCC71FE84020238F2990a6D2954e87355De0D","via":[]},{"permission":"configure","target":"0xD677e09324F8Bb3cC64F009973693f751c33A888","via":[]}]
       directlyReceivedPermissions:

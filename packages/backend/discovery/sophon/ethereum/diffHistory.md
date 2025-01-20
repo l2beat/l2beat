@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xffd001c497169cbc3b1f43617a6cea5e2b9e02e1
+
+# Diff at Mon, 20 Jan 2025 11:10:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@400cfe1ca700b8b710220906f278f002c698d3c8 block: 21429615
+- current block number: 21429615
+
+## Description
+
+discodrive zk stack.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429615 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604) {
+    +++ description: Implements the ZK proof verification logic.
+      template:
++        "shared-zk-stack/Verifier"
+      description:
++        "Implements the ZK proof verification logic."
+    }
+```
+
 Generated with discovered.json: 0x01edddd129ce4880a2833eea307b2095e355ab11
 
 # Diff at Wed, 18 Dec 2024 13:08:26 GMT:

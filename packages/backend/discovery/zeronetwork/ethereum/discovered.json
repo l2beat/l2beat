@@ -7,9 +7,11 @@
     {
       "name": "Verifier",
       "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "template": "shared-zk-stack/Verifier",
       "sourceHashes": [
         "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
       ],
+      "description": "Implements the ZK proof verification logic.",
       "sinceTimestamp": 1730327279,
       "values": {
         "$immutable": true,
@@ -74,6 +76,7 @@
     {
       "name": "ZeroNetworkZkEvm",
       "address": "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+      "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
         "0x081a1805983e86cd6a80ed48c012c26bf9a39473c0f1e69b357afff240f027a0",
@@ -82,6 +85,7 @@
         "0xdf47c6cd4fcffcfa4a670e1544e2391acc365cd7fd9b8e7583d58b28dff50c40"
       ],
       "proxyType": "EIP2535 diamond proxy",
+      "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -91,6 +95,7 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
+        "getFirstUnprocessedPriorityTx",
         "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1729268915,
@@ -265,11 +270,11 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change"
+          "description": "Protocol version, increments with each protocol change."
         },
         "getVerifierParams": {
           "severity": "LOW",
-          "description": "Verifier parameters used for proving batches"
+          "description": "Verifier parameters used for proving batches."
         },
         "daMode": { "description": "0 = rollup; 1 = Validium" }
       },
@@ -555,6 +560,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce"
+    "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce",
+    "shared-zk-stack/Diamond": "0x74b2cd22a0996cdb71049630fb6dee8c9be595146dca00d7f6855a5eff7e853c",
+    "shared-zk-stack/Verifier": "0x210138ef9d88c0db040ebeca12b4211d42de8834cbc585be5eb18440d9b62403"
   }
 }

@@ -53,6 +53,7 @@ export type PermissionType =
   | 'configure'
   | 'upgrade'
   | 'act'
+  | 'validateZkStack'
 
 export interface ResolvedPermissionPath {
   address: EthereumAddress
