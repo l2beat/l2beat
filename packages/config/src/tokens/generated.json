@@ -7838,6 +7838,28 @@
       }
     },
     {
+      "name": "Astar Token",
+      "coingeckoId": "astar",
+      "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
+      "symbol": "ASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1734968141,
+      "coingeckoListingTimestamp": 1642377600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22617/large/astr.png?1696521933",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "ENA",
       "coingeckoId": "ethena",
       "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",

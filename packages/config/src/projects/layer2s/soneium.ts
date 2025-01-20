@@ -269,6 +269,25 @@ export const soneium: Layer2 = {
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     })(),
   },
+  chainConfig: {
+    name: 'soneium',
+    chainId: 1868,
+    blockscoutV2ApiUrl: 'https://soneium.blockscout.com/api/v2',
+    explorerUrl: 'https://soneium.blockscout.com/',
+    explorerApi: {
+      url: 'https://soneium.blockscout.com/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1733134751),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1,
+        version: '3',
+      },
+    ],
+  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
