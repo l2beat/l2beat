@@ -1,3 +1,5 @@
+import { BackendProject, BackendProjectEscrow } from '@l2beat/backend-shared'
+import { ChainConfig, tokenList } from '@l2beat/config'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { Token as LegacyToken } from '@l2beat/shared-pure'
 import {
@@ -6,14 +8,12 @@ import {
   BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountFormula,
   EscrowToken,
-  isEscrowToken,
   PriceConfig,
   Token,
   TotalSupplyAmountFormula,
   TvsConfig,
+  isEscrowToken,
 } from './types'
-import { BackendProject, BackendProjectEscrow } from '@l2beat/backend-shared'
-import { ChainConfig, tokenList } from '@l2beat/config'
 
 export function mapConfig(
   project: BackendProject,
