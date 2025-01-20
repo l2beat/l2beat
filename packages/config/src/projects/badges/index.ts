@@ -317,6 +317,13 @@ export const badges = {
     },
     type: BadgeType.Stack,
   },
+  SNStack: {
+    display: {
+      name: 'Built on the SN Stack',
+      description: 'The project is built on the SN Stack',
+    },
+    type: BadgeType.Stack,
+  },
   LoopringFork: {
     display: {
       name: 'Fork of Loopring',
