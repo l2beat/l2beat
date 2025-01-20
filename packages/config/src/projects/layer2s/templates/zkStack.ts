@@ -177,7 +177,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
 
   const scMemberCount = discovery.getContractValue<string[]>(
     'SecurityCouncil',
-    'members',
+    '$members',
   ).length
   const scApprovalThreshold = discovery.getContractValue<number>(
     'SecurityCouncil',
@@ -189,7 +189,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   )
   const guardiansMemberCount = discovery.getContractValue<string[]>(
     'Guardians',
-    'members',
+    '$members',
   ).length
   const guardiansMainThreshold = discovery.getContractValue<number>(
     'Guardians',

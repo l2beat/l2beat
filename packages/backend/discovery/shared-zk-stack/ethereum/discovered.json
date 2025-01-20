@@ -805,20 +805,7 @@
       "sinceTimestamp": 1723146191,
       "values": {
         "$immutable": true,
-        "APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD": 6,
-        "EIP1271_THRESHOLD": 9,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "SecurityCouncil",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "HARD_FREEZE_THRESHOLD": 9,
-        "hardFreezeNonce": 0,
-        "members": [
+        "$members": [
           "0x13f07d9BF17615f6a17F272fe1A913168C275A66",
           "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a",
           "0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F",
@@ -832,6 +819,20 @@
           "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e",
           "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231"
         ],
+        "$threshold": 9,
+        "APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD": 6,
+        "EIP1271_THRESHOLD": 9,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "SecurityCouncil",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "HARD_FREEZE_THRESHOLD": 9,
+        "hardFreezeNonce": 0,
         "PROTOCOL_UPGRADE_HANDLER": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "RECOMMENDED_SOFT_FREEZE_THRESHOLD": 3,
         "SOFT_FREEZE_CONSERVATIVE_THRESHOLD": 9,
@@ -1029,6 +1030,17 @@
       "sinceTimestamp": 1723146191,
       "values": {
         "$immutable": true,
+        "$members": [
+          "0x015318c16AE443a20DE0A776dB06a59F0D279057",
+          "0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D",
+          "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384",
+          "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f",
+          "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857",
+          "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69",
+          "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0",
+          "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf"
+        ],
+        "$threshold": 5,
         "APPROVE_UPGRADE_GUARDIANS_THRESHOLD": 5,
         "CANCEL_L2_GOVERNOR_PROPOSAL_THRESHOLD": 5,
         "EIP1271_THRESHOLD": 5,
@@ -1042,16 +1054,6 @@
           "extensions": []
         },
         "EXTEND_LEGAL_VETO_THRESHOLD": 2,
-        "members": [
-          "0x015318c16AE443a20DE0A776dB06a59F0D279057",
-          "0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D",
-          "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384",
-          "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f",
-          "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857",
-          "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69",
-          "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0",
-          "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf"
-        ],
         "nonce": 0,
         "PROPOSE_L2_GOVERNOR_PROPOSAL_THRESHOLD": 5,
         "PROTOCOL_UPGRADE_HANDLER": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
@@ -1844,10 +1846,10 @@
     "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce",
     "shared-zk-stack/EmergencyUpgradeBoard": "0x65a380140cb6aeb04d7f7a20b388b08ea217b0b38387b95cdef9323520f35e5b",
     "shared-zk-stack/GenesisUpgrade": "0x6e295bc30b812594e40ad48eb8fd46a7d922ac2210bbcf91d0bed438ddb4fa31",
-    "shared-zk-stack/Guardians": "0x59a0c452c8ff2da8e5af9a084ef85c3a11830e92b3621ae65b725d5dc433e1b4",
+    "shared-zk-stack/Guardians": "0x72098f89b263ea08f64e4fa4ff6ec4e6387c23b5ba43a7f29eb0c2acd3144ccd",
     "shared-zk-stack/L1SharedBridge": "0x7830fa23519ce928c93094b649fc63bc45cb302ff18ccbac0082b497c4c86a74",
     "shared-zk-stack/ProtocolUpgradeHandler": "0x96ba971fe11492e4be4d0dad55a04c66d986f1eccd295d9108af2dbff2614cec",
-    "shared-zk-stack/SecurityCouncil": "0x2564c51e045f84c489a3bd6fcc64ae4871226c1bde2b425f07c9ca5c11db0a72",
+    "shared-zk-stack/SecurityCouncil": "0x7adf8073c4a026af3da7f05de86198d6c85014f4bd664bf0508cc3b4cecd1830",
     "shared-zk-stack/StateTransitionManager": "0x65cc333a0daf26e460ebe3ea8eab16cca4c01f63f3d3c87d2a83ea13f4f69a33",
     "shared-zk-stack/ValidatorTimelock": "0x4cc1fd0defc8d9ccafef2cc8a2f34b00fd02e053049318c4a091d71b8355b325"
   }
