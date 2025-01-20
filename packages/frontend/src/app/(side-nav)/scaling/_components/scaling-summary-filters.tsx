@@ -23,7 +23,7 @@ export function ScalingSummaryFilters({ items, className }: Props) {
     >
       <ScalingFilters items={items} showHostChainFilter showDALayerFilter />
       <Checkbox
-        id="excludeAssociatedTokens"
+        name="excludeAssociatedTokens"
         checked={excludeAssociatedTokens}
         onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
         className="max-md:ml-4"

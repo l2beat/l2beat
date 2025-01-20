@@ -90,7 +90,7 @@ export function ScalingStackedTvlChart({ milestones, entries, tab }: Props) {
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
             <Checkbox
-              id="excludeAssociatedTokens"
+              name="excludeAssociatedTokens"
               checked={excludeAssociatedTokens}
               onCheckedChange={(checked) =>
                 setExcludeAssociatedTokens(!!checked)
