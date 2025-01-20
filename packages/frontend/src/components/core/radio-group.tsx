@@ -2,24 +2,43 @@
 
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import * as React from 'react'
+import { useCustomEvent } from '~/hooks/use-custom-event'
 import { cn } from '~/utils/cn'
 
 const RadioGroup = ({
   ref,
   className,
   variant,
+  name,
+  onValueChange,
+  enableTracking = true,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root> & {
+  name: string
   variant?: 'highlighted'
+  enableTracking?: boolean
 }) => {
+  const customEvent = useCustomEvent()
   return (
     <RadioGroupPrimitive.Root
+      name={name}
       className={cn(
         'group/radio-group inline-flex h-8 w-max items-center gap-1 rounded-lg p-1 font-medium',
         'bg-surface-primary primary-card:bg-surface-secondary',
         className,
       )}
       {...props}
+      onValueChange={(val) => {
+        onValueChange?.(val)
+        if (enableTracking) {
+          customEvent('radioGroupChanged', {
+            props: {
+              name: name,
+              value: val,
+            },
+          })
+        }
+      }}
       data-variant={variant}
       ref={ref}
     />

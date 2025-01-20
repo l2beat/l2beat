@@ -171,6 +171,7 @@ function Controls({
       <div className="flex gap-1">
         {isClient ? (
           <RadioGroup
+            name="activityChartScale"
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >

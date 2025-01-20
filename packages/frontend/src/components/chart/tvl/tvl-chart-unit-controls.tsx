@@ -16,7 +16,7 @@ export function TvlChartUnitControls({ unit, setUnit, children }: Props) {
   return (
     <div className="flex flex-wrap items-center gap-1">
       {isClient ? (
-        <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroup name="tvsChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
           <RadioGroupItem value="eth">ETH</RadioGroupItem>
         </RadioGroup>

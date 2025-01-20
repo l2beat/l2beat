@@ -121,6 +121,7 @@ export function ProjectActivityChart({
             </Checkbox>
           </div>
           <RadioGroup
+            name="activityChartScale"
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >

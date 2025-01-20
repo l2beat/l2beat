@@ -1,8 +1,9 @@
 import { usePlausible } from 'next-plausible'
 
 type MyEvents = {
-  filterSelected: { name: string; value: string }
-  checkboxChecked: { id: string; value: string }
+  filterChanged: { name: string; value: string }
+  checkboxChanged: { name: string; value: string }
+  radioGroupChanged: { name: string; value: string }
   searchBarProjectSelected: { name: string }
   uopsExplorerSelected: never
 }

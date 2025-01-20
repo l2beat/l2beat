@@ -130,7 +130,7 @@ function TokenChartUnitControls({
   return (
     <div className="flex flex-wrap items-center gap-2">
       {isClient ? (
-        <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroup name="tokenChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
           <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
         </RadioGroup>
