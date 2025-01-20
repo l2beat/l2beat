@@ -104,6 +104,7 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
 
 export function STATE_ARBITRUM_FRAUD_PROOFS(
   nOfChallengers: number,
+  hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
 ): ScalingProjectRiskViewEntry {
   const challengePeriod = challengeWindowSeconds
@@ -125,11 +126,16 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
       'Interactive proofs (INT) require multiple transactions over time to resolve. ' +
       'The challenge protocol can be subject to delay attacks.'
     sentiment = 'bad'
-  } else {
+  } else if (hasAtLeastFiveExternalChallengers) {
     descriptionBase =
-      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. ` +
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. At least 5 Challengers are external to the Operator. ` +
       'Interactive proofs (INT) require multiple transactions over time to resolve.'
     sentiment = 'warning'
+  } else {
+    descriptionBase =
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Among those are less than 5 Challengers that are external to the Operator. ` +
+      'Interactive proofs (INT) require multiple transactions over time to resolve.'
+    sentiment = 'bad'
   }
 
   return {
