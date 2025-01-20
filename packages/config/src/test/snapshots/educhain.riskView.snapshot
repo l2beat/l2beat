@@ -30,7 +30,7 @@
   }
   stateValidation: {
     definingMetric: 6
-    description: "Fraud proofs allow 6 WHITELISTED actors watching the chain to prove that the state is incorrect. Among those are less than 5 Challengers that are external to the Operator. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
+    description: "Fraud proofs allow 6 WHITELISTED actors watching the chain to prove that the state is incorrect. There are fewer than 5 Challengers external to the Operator among these. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
@@ -67,7 +67,7 @@
   }
   stateValidation: {
     definingMetric: 6
-    description: "Fraud proofs allow 6 WHITELISTED actors watching the chain to prove that the state is incorrect. Among those are less than 5 Challengers that are external to the Operator. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
+    description: "Fraud proofs allow 6 WHITELISTED actors watching the chain to prove that the state is incorrect. There are fewer than 5 Challengers external to the Operator among these. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
