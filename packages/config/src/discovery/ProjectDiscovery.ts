@@ -347,7 +347,7 @@ export class ProjectDiscovery {
   getMultisigDescription(identifier: string): string[] {
     const contract = this.getContract(identifier)
     assert(
-      contract.proxyType === 'gnosis safe',
+      isMultisigLike(contract),
       `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
     )
 
@@ -526,7 +526,7 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     const contract = contracts.find((contract) => contract.address === address)
-    const isMultisig = contract?.proxyType === 'gnosis safe'
+    const isMultisig = isMultisigLike(contract)
 
     const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
 
@@ -738,7 +738,7 @@ export class ProjectDiscovery {
   ): string[] {
     const safesWithThisMember = this.discoveries
       .flatMap((discovery) => discovery.contracts)
-      .filter((contract) => contract.proxyType === 'gnosis safe')
+      .filter((contract) => isMultisigLike(contract))
       .filter((contract) =>
         toAddressArray(contract.values?.$members).includes(
           contractOrEoa.address,
@@ -949,7 +949,7 @@ export class ProjectDiscovery {
       ...contracts.filter(
         (contract) =>
           contract.receivedPermissions === undefined &&
-          contract.proxyType === 'gnosis safe',
+          isMultisigLike(contract),
       ),
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
@@ -959,7 +959,7 @@ export class ProjectDiscovery {
 
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
-      if (contract.proxyType === 'gnosis safe') {
+      if (isMultisigLike(contract)) {
         result.push(
           ...this.getMultisigPermission(
             contract.address.toString(),
@@ -1010,8 +1010,8 @@ export class ProjectDiscovery {
     )
     const result = contracts
       .filter((contract) => !gnosisModules.includes(contract.address))
-      .filter((contracts) => contracts.receivedPermissions === undefined)
-      .filter((contracts) => contracts.proxyType !== 'gnosis safe')
+      .filter((contract) => contract.receivedPermissions === undefined)
+      .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {
         const upgradersWithDelay: Record<string, number> = Object.fromEntries(
           contract.issuedPermissions
@@ -1146,4 +1146,15 @@ export function trimTrailingDots(s: string): string {
 
 function formatPermissionDescription(description: string): string {
   return description !== '' ? ` - ${trimTrailingDots(description)}` : ''
+}
+
+function isMultisigLike(contract: ContractParameters | undefined): boolean {
+  if (contract === undefined) {
+    return false
+  }
+
+  const hasMembers = contract.values?.['$members'] !== undefined
+  const hasThreshold = contract.values?.['$threshold'] !== undefined
+
+  return hasMembers && hasThreshold
 }
