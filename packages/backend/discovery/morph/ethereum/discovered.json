@@ -1,7 +1,7 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 21465401,
+  "blockNumber": 21667075,
   "configHash": "0x4e5901f3c4e42d961a6c108c50668aaf79105c895fa259a271896324b00dda1c",
   "contracts": [
     {
@@ -239,9 +239,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 5957,
+        "nextCrossDomainMessageIndex": 6059,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 5873,
+        "pendingQueueIndex": 6042,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -597,8 +597,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 7863,
-        "lastFinalizedBatchIndex": 7624,
+        "lastCommittedBatchIndex": 8509,
+        "lastFinalizedBatchIndex": 8296,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -828,7 +828,7 @@
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 5957,
+        "messageNonce": 6059,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
