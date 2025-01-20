@@ -22,7 +22,7 @@
   }
   sequencerFailure: {
     definingMetric: 43200
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 12h delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
     secondLine: "12h delay"
     sentiment: "good"
     value: "Self sequence"
