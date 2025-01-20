@@ -11,10 +11,12 @@ import {
   AmountFormula,
   BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountFormula,
+  EscrowToken,
   PriceConfig,
   Token,
   TotalSupplyAmountFormula,
   TvsConfig,
+  isEscrowToken,
 } from './types'
 
 export function mapConfig(
@@ -38,10 +40,12 @@ export function mapConfig(
         )
       }
 
-      const exisitingToken = tokens.get(legacyToken.id)
+      const existingToken = tokens.get(legacyToken.id)
 
-      if (exisitingToken) {
-        updateToken(exisitingToken, escrow)
+      if (existingToken) {
+        assert(isEscrowToken(existingToken))
+        const updatedEscrowToken = updateEscrowToken(existingToken, escrow)
+        tokens.set(existingToken.id, updatedEscrowToken)
       } else {
         const token = createToken(legacyToken, project, chain, escrow)
         tokens.set(token.id, token)
@@ -64,26 +68,39 @@ export function mapConfig(
   }
 }
 
-function updateToken(token: Token, escrow: BackendProjectEscrow) {
-  const amountFormula = token.amount as BalanceOfEscrowAmountFormula
+function updateEscrowToken(
+  token: EscrowToken,
+  escrow: BackendProjectEscrow,
+): Token {
+  // add this escrow to tokens esccrows list
+  const escrowAddresses = [...token.amount.escrowAddresses, escrow.address]
 
-  // add escrow to the amount formula
-  amountFormula.escrowAddresses.push(escrow.address)
-
+  let sinceTimestamp = token.sinceTimestamp
   // update sinceTimestamp if needed
   if (escrow.sinceTimestamp.lt(token.sinceTimestamp)) {
-    token.sinceTimestamp = escrow.sinceTimestamp
+    sinceTimestamp = escrow.sinceTimestamp
   }
 
+  let untilTimestamp = token.untilTimestamp
   // reset or update  untilTimestamp if needed
   if (!escrow.untilTimestamp && token.untilTimestamp) {
-    token.untilTimestamp = undefined
+    untilTimestamp = undefined
   } else if (
     escrow.untilTimestamp &&
     token.untilTimestamp &&
     escrow.untilTimestamp.gt(token.untilTimestamp)
   ) {
-    token.untilTimestamp = escrow.untilTimestamp
+    untilTimestamp = escrow.untilTimestamp
+  }
+
+  return {
+    ...token,
+    amount: {
+      ...token.amount,
+      escrowAddresses,
+    },
+    sinceTimestamp,
+    untilTimestamp,
   }
 }
 
