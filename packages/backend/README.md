@@ -123,7 +123,7 @@ The tvl feature is configured via the following environment variables:
 
 ### `tracked-txs` feature
 
-The tracked-txx feature is configured via the following environment variables:
+The tracked-txs feature is configured via the following environment variables:
 
 - `BIGQUERY_CLIENT_EMAIL` - BigQuery credentials
 - `BIGQUERY_PRIVATE_KEY` - BigQuery credentials

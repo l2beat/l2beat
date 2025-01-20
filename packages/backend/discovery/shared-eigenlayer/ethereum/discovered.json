@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21630802,
-  "configHash": "0x2a0f2b4378ebb567e147ffb138d0e096696153617dfb443aba58dfcbbc620f90",
+  "configHash": "0xf85c538ba4e7568ccf0691ac05f0068bf050d584f98e621c440e15e684f8a054",
   "contracts": [
     {
       "name": "DepositContract",
@@ -1136,15 +1136,18 @@
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -2285,8 +2288,8 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

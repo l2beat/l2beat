@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 295612328,
-  "configHash": "0x7ce82aed984bee2ddba4926b8b4b3729e64a78877c09ef4b2fad92e173bfe2c4",
+  "configHash": "0xfba15de15b58a1af6f18816243a4173ba0abfd57fbc5e76d31679ffe700fdf64",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -1919,8 +1919,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "orbitstack/UpgradeExecutor": "0xaf0a15f64126e4be843d5576606ecddde8c85282213f6e84f322ec91c1b2938a"
   }
 }

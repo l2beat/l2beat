@@ -2,7 +2,7 @@
   "name": "layerzerov2oft",
   "chain": "ethereum",
   "blockNumber": 21387348,
-  "configHash": "0x7fda11b24b5eed1d80b7cd4d4072385ee8cff7a3cc6537727d204842c13b9d88",
+  "configHash": "0xf2830209197d6a2c1360bb0d3be7bd27eb8d7e7d1c92784dfabf9e964d6377d0",
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
@@ -2876,6 +2876,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

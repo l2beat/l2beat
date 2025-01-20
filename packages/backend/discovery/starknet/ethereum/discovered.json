@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21635833,
-  "configHash": "0xe10e1699237ec9e48dd13199558b1c0c9ee5e38d7579c50297557fc865985ae5",
+  "configHash": "0x309fb9418bf7794a016e14ae5adf06151f1834c5cc5af68486696ab8ca8e986d",
   "contracts": [
     {
       "name": "BridgeMultisig",
@@ -1004,7 +1004,8 @@
       "fieldMeta": {
         "programHash": {
           "severity": "HIGH",
-          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated."
+          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+          "type": "CODE_CHANGE"
         }
       },
       "derivedName": "Starknet"
@@ -2826,6 +2827,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

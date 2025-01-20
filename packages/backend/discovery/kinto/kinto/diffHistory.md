@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x0b963353bd62c14884afec5fa202cd6824a74805
+Generated with discovered.json: 0x3b90c528a7e398c505007bb8ada131133fc280af
 
-# Diff at Mon, 20 Jan 2025 10:43:59 GMT:
+# Diff at Mon, 20 Jan 2025 11:10:43 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 696015
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 696015
 - current block number: 696015
 
 ## Description
@@ -61,9 +61,6 @@ discovery. Values are for block 696015 (main branch discovery), not current.
 ```diff
     contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
     +++ description: None
-      sourceHashes.0:
--        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
-+        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       issuedPermissions.0.target:
 -        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       issuedPermissions.0.to:
@@ -306,6 +303,33 @@ discovery. Values are for block 696015 (main branch discovery), not current.
 +        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
       issuedPermissions.0.description:
 +        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+    }
+```
+
+Generated with discovered.json: 0x8314641173b04fc416b0ddc480f7e7f30211a3dc
+
+# Diff at Mon, 20 Jan 2025 09:26:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 696015
+- current block number: 696015
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 696015 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
++        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
     }
 ```
 

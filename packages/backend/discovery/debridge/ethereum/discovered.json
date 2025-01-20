@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "blockNumber": 19531527,
-  "configHash": "0xda2ff96fd6b62e3e863cfa2a09f32c1024251fbb46b4a150e1db5ed44869d008",
+  "configHash": "0xd4bb91644c00c0e0af30f98f9dd9c2a076e1d4407f0ad5628b0233c5783d6c3d",
   "contracts": [
     {
       "name": "DeBridgeGate",
@@ -832,6 +832,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

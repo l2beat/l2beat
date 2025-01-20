@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4059a26fc230e4bbc35a273ec2e9906e4dce607d
+Generated with discovered.json: 0x9f41391feff196e9cca390cda362be374256bf0a
 
-# Diff at Mon, 20 Jan 2025 10:43:15 GMT:
+# Diff at Mon, 20 Jan 2025 11:09:53 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21629810
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21629810
 - current block number: 21629810
 
 ## Description
@@ -47,6 +47,40 @@ discovery. Values are for block 21629810 (main branch discovery), not current.
 -        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
       issuedPermissions.0.to:
 +        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
+    }
+```
+
+Generated with discovered.json: 0x550dea5c3e912345157a92bde5f3591ea6c43999
+
+# Diff at Mon, 20 Jan 2025 09:25:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21629810
+- current block number: 21629810
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629810 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      fieldMeta.maxTotalBalance.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      fieldMeta.programHash.type:
++        "CODE_CHANGE"
     }
 ```
 

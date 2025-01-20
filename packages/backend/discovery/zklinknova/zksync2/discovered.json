@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 43367152,
-  "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
+  "configHash": "0x20b76f78a20373c3ad15cd1161f8b1bd015260716eeecae4dffa221b4cf2ea10",
   "contracts": [
     {
       "name": "EraOwner",
@@ -235,7 +235,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

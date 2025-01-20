@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 19825348,
-  "configHash": "0x337a5ff15a122bd974e00bbfe46a4cf2b443ee344d041a199bbf3b8bf4e15bda",
+  "configHash": "0x14cb48c062be6dc832518a6b1c6cfbd4cfb5b339f343c2e74362484283589f1c",
   "contracts": [
     {
       "name": "AggregationRouterV4",
@@ -1251,6 +1251,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

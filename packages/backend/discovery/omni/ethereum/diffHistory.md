@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xeee045a5733075b2e76b58f69ae25ed538989df0
+Generated with discovered.json: 0xe2d1d68cc760157d9da2710a3ea1520096eff046
 
-# Diff at Mon, 20 Jan 2025 10:43:13 GMT:
+# Diff at Mon, 20 Jan 2025 11:09:49 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21579380
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21579380
 - current block number: 21579380
 
 ## Description
@@ -71,6 +71,32 @@ discovery. Values are for block 21579380 (main branch discovery), not current.
 -        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
       issuedPermissions.0.to:
 +        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+Generated with discovered.json: 0x3cf15bbf09c942810f45bdc12b41ad94c8b309bb
+
+# Diff at Mon, 20 Jan 2025 09:25:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21579380
+- current block number: 21579380
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579380 (main branch discovery), not current.
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      fieldMeta.validatorList.type:
++        "PERMISSION"
     }
 ```
 

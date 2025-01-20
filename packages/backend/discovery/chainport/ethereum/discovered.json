@@ -2,7 +2,7 @@
   "name": "chainport",
   "chain": "ethereum",
   "blockNumber": 21543439,
-  "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
+  "configHash": "0xd1b342a48f2681cdf91085cb05c619f3338c0cd8872a0430433f77bc006335fd",
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -340,6 +340,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

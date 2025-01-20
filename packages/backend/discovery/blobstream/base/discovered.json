@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 25112167,
-  "configHash": "0x1453a541b747a69f4a56448c7cd60c171ae55f647f985ffeebf04d4888e83719",
+  "configHash": "0x7aa56a120f649ca7d05da099d1d2d9ed783599b3395221e693af1dac7ab9e455",
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -156,11 +156,13 @@
       "fieldMeta": {
         "headerRangeProvers": {
           "severity": "LOW",
-          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX."
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.",
+          "type": "PERMISSION"
         },
         "nextHeaderProvers": {
           "severity": "LOW",
-          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX."
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "SuccinctGateway"
@@ -794,9 +796,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0x9b561e8f866e43abfbf30d5612a028aecb95be8441698251d61ab44b3d870955",
-    "succinct/SP1SuccinctGateway": "0xfd0c65c6bcfc5771c227135f9829fdd9c57aa549ecf7fb870d5b387a117ba317",
-    "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "succinct/SP1Blobstream": "0xc923f0ea69810f65b34ffc59eaa1cd6fdf2a924dba13dc8cbfa71ddde982ead2",
+    "succinct/SP1SuccinctGateway": "0xdffa954da9f9e5a14a8da6adcdac47a00ceca0950311adc899da5a6983719276",
+    "succinct/SuccinctGateway": "0x6b44128c0a4c6cf1adb6fd78a757b40be48d8b70234442deb52fa64c906d1a42"
   }
 }

@@ -1,4 +1,4 @@
-import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { ContractConfig } from '../config/ContractConfig'
 import { Handler } from './Handler'
 import { getSystemHandlers } from './getSystemHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
@@ -6,11 +6,11 @@ import { getUserHandler } from './user'
 
 export function getHandlers(
   abi: string[],
-  overrides: ContractOverrides | undefined,
+  config: ContractConfig,
 ): (Handler | ErrorHandler)[] {
-  const systemHandlers = getSystemHandlers(abi, overrides)
+  const systemHandlers = getSystemHandlers(abi, config)
   const userHandlers: (Handler | ErrorHandler)[] = []
-  for (const [field, definition] of Object.entries(overrides?.fields ?? {})) {
+  for (const [field, definition] of Object.entries(config.fields)) {
     if (definition.handler !== undefined) {
       try {
         userHandlers.push(getUserHandler(field, definition.handler ?? {}, abi))

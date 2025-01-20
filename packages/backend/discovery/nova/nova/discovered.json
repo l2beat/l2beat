@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 81620827,
-  "configHash": "0x3126f9b4d9710b222723513b08bf8aceb05d8d9785ffaef88e905065048b4801",
+  "configHash": "0x7c667c0414a095e63eccdb1697975af9a971f881c7871f646c6f72b978b0a50b",
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -1078,8 +1078,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "orbitstack/UpgradeExecutor": "0xaf0a15f64126e4be843d5576606ecddde8c85282213f6e84f322ec91c1b2938a"
   }
 }

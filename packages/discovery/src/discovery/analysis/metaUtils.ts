@@ -9,7 +9,7 @@ import {
   get$Implementations,
 } from '@l2beat/discovery-types'
 import { uniqBy } from 'lodash'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { ContractConfig } from '../config/ContractConfig'
 import {
   DiscoveryContractField,
   ExternalReference,
@@ -90,38 +90,33 @@ export function interpolateString(
 }
 
 export function getSelfMeta(
-  overrides: ContractOverrides | undefined,
+  config: ContractConfig,
   analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   let description: string | undefined = undefined
-  if (overrides?.description !== undefined) {
-    description = interpolateString(overrides?.description, analysis)
+  if (config.description !== undefined) {
+    description = interpolateString(config.description, analysis)
   }
 
   let references: ExternalReference[] | undefined
-  if (overrides?.manualSourcePaths !== undefined) {
-    const addresses = [
-      analysis.address,
-      ...get$Implementations(analysis.values),
-    ]
+  const addresses = [analysis.address, ...get$Implementations(analysis.values)]
 
-    for (const address of addresses) {
-      const manualSourcePath = overrides.manualSourcePaths[address.toString()]
-      if (manualSourcePath === undefined) {
-        continue
-      }
-
-      references ??= []
-      references.push({
-        text: 'Source Code',
-        href: manualSourcePath,
-      })
+  for (const address of addresses) {
+    const manualSourcePath = config.manualSourcePaths[address.toString()]
+    if (manualSourcePath === undefined) {
+      continue
     }
+
+    references ??= []
+    references.push({
+      text: 'Source Code',
+      href: manualSourcePath,
+    })
   }
 
   const result = {
-    canActIndependently: overrides?.canActIndependently,
-    displayName: overrides?.displayName,
+    canActIndependently: config.canActIndependently,
+    displayName: config.displayName,
     description,
     references,
     permissions: undefined,

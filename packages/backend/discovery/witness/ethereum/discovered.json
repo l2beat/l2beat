@@ -2,7 +2,7 @@
   "name": "witness",
   "chain": "ethereum",
   "blockNumber": 20491473,
-  "configHash": "0x5a18dc94a699ce771faca7fc8fd756e0d22f96fe60d5e177d853ca3c8c90f379",
+  "configHash": "0x271dae2021804d278c07a38d665fb6d6a92123fc674159d78c7580ec08dc83df",
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -334,6 +334,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

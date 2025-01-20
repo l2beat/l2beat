@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe88a32c13da19049c8f0d026b84c6a9a8c5ef7b3
+Generated with discovered.json: 0xe8f675e4605cac8b7dc34ca254a4b2673ccf1a35
 
-# Diff at Mon, 20 Jan 2025 10:44:02 GMT:
+# Diff at Mon, 20 Jan 2025 11:10:47 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 43367152
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 43367152
 - current block number: 43367152
 
 ## Description
@@ -63,6 +63,30 @@ discovery. Values are for block 43367152 (main branch discovery), not current.
 -        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
       directlyReceivedPermissions.0.from:
 +        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+    }
+```
+
+Generated with discovered.json: 0xbc0da7a671fb75c037a2abf4a7d170c44302e21f
+
+# Diff at Mon, 20 Jan 2025 09:26:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 43367152
+- current block number: 43367152
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 43367152 (main branch discovery), not current.
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
       displayName:
 +        "ProxyAdmin"
     }

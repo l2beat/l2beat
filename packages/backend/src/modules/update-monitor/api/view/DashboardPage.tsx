@@ -6,7 +6,7 @@ import { Diff } from './components/Diff'
 import { Page } from './components/Page'
 import { reactToHtml } from './components/reactToHtml'
 
-import { getContractField, sortBySeverity } from '@l2beat/discovery'
+import { sortBySeverity } from '@l2beat/discovery'
 
 interface DashboardPageProps {
   projects: Record<string, DashboardProject[]>
@@ -97,22 +97,18 @@ function ChangedDetectedDropdown({
         </summary>
         <p>
           {project.diff.map((d, index) => {
-            const contract = project.config?.getContract(d.name)
             return (
               <p style={{ marginTop: '8px' }} key={index}>
                 <span style={{ fontWeight: 'bold' }}>
                   {d.name} - {d.address.toString()}
                 </span>
                 <br />
-                <span>
-                  {`+++ description: ${contract?.description ?? 'None'}`}
-                </span>
+                <span>{`+++ description: ${d.description ?? 'None'}`}</span>
                 <ul>
-                  {sortBySeverity(d.diff, contract).map((x, index2) => {
-                    const field = getContractField(contract, x.key)
+                  {sortBySeverity(d.diff).map((x, index2) => {
                     return (
                       <li key={index2} style={{ marginLeft: '12px' }}>
-                        <Diff diff={x} field={field} />
+                        <Diff diff={x} />
                       </li>
                     )
                   })}

@@ -2,7 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "blockNumber": 21365608,
-  "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
+  "configHash": "0xc9a078602b114115b941385e8ac4ff441b8ce1869394f0785a01ce9f4816ad14",
   "contracts": [
     {
       "name": "Multisig 1",
@@ -720,6 +720,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

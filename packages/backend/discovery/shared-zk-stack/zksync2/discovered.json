@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 44113900,
-  "configHash": "0x21ae6606a13e918f3d6bf6dc010d84fad998cc1ceae7eca7cb2ad993ed21d286",
+  "configHash": "0xca6cf546c630f648adbbf422e467f0beb24279f0df191259625f45da7d852f7b",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -799,7 +799,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "shared-zk-stack/ZkGovernor": "0xe15d64e5edc29411af258c9d294f406eed6ab8e538f5a7818a7d9c2e6784c2e2"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "shared-zk-stack/ZkGovernor": "0xd80c94c3d28dfdb1063efbe5f5da6328d5508522a0674abd94eb28f8008a654d"
   }
 }

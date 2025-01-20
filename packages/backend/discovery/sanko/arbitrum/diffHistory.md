@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe94f4080ec49ee6a27634673dfd7a9dde3279cd7
+Generated with discovered.json: 0x2005947d5da94de9a0179a53adaac6efe4590673
 
-# Diff at Mon, 20 Jan 2025 10:43:51 GMT:
+# Diff at Mon, 20 Jan 2025 11:10:34 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 287773244
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 287773244
 - current block number: 287773244
 
 ## Description
@@ -318,7 +318,7 @@ discovery. Values are for block 287773244 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x8078a2df6205a5c33e8d27ad0aca354cbacce12d
+Generated with discovered.json: 0x3cf33e0c9d87d880a7f1f7fd194a9e0c9a9a44de
 
 # Diff at Wed, 08 Jan 2025 10:45:01 GMT:
 

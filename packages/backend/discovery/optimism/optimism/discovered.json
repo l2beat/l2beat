@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 130664390,
-  "configHash": "0x31a3019cd0013048c71bd882672a02bed221167c8934d74ae1189dbeb3ceb61b",
+  "configHash": "0x7c3f4a2962ba6c5930dac17eb17ac327c703e3c3444eab4ffe83fcd02d7d2912",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -1263,7 +1263,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x916ec3e1d96d56fdcf037a25916a183c0921a2ab
+Generated with discovered.json: 0x09025dd2bd5e6d3c8d7fe47ac565179d0073fd06
 
-# Diff at Mon, 20 Jan 2025 10:43:46 GMT:
+# Diff at Mon, 20 Jan 2025 11:10:28 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 295956426
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 295956426
 - current block number: 295956426
 
 ## Description
@@ -115,6 +115,34 @@ discovery. Values are for block 295956426 (main branch discovery), not current.
 -        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
       receivedPermissions.0.from:
 +        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+Generated with discovered.json: 0xf4f7a07aa780a1e95f0e748cb84b132c3f2d4eb8
+
+# Diff at Mon, 20 Jan 2025 09:25:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 295956426
+- current block number: 295956426
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 295956426 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      fieldMeta.headerRangeProvers.type:
++        "PERMISSION"
+      fieldMeta.nextHeaderProvers.type:
++        "PERMISSION"
     }
 ```
 

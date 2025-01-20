@@ -1,5 +1,4 @@
 import {
-  ConfigReader,
   DiscoveryChainConfig,
   DiscoveryLogger,
   DiscoveryCache as IDiscoveryCache,
@@ -18,7 +17,6 @@ import { DiscoveryRunner } from './DiscoveryRunner'
 
 export function createDiscoveryRunner(
   http: HttpClient,
-  configReader: ConfigReader,
   peripherals: Peripherals,
   discoveryLogger: DiscoveryLogger,
   chainConfigs: DiscoveryChainConfig[],
@@ -45,7 +43,7 @@ export function createDiscoveryRunner(
     chain,
   )
 
-  return new DiscoveryRunner(allProviders, discoveryEngine, configReader, chain)
+  return new DiscoveryRunner(allProviders, discoveryEngine, chain)
 }
 
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {

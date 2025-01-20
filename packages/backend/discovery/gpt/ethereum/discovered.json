@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21628462,
-  "configHash": "0x053abff33590a72ba8325cd454e20b4de2c557bf4f2050207cc3c1934538c2e9",
+  "configHash": "0x492a276fe0e24cc14a7c4ac3b6e1d6d3427721121e25610066ea3c8bd8498ded",
   "contracts": [
     {
       "name": "Verifier",
@@ -337,6 +337,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

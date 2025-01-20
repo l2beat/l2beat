@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x624b58cf73b019ddf84e3980bef4b4826a387022
+Generated with discovered.json: 0x9b7b6c787576a3feea73a81c20ba63815740a4ea
 
-# Diff at Mon, 20 Jan 2025 10:44:02 GMT:
+# Diff at Mon, 20 Jan 2025 11:10:47 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 44113900
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 44113900
 - current block number: 44113900
 
 ## Description
@@ -35,6 +35,30 @@ discovery. Values are for block 44113900 (main branch discovery), not current.
 -        "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
       directlyReceivedPermissions.0.from:
 +        "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+    }
+```
+
+Generated with discovered.json: 0x1952ccf0e63752ab6ffe2e2b850c6daa6c251323
+
+# Diff at Mon, 20 Jan 2025 09:26:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 44113900
+- current block number: 44113900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 44113900 (main branch discovery), not current.
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
       displayName:
 +        "ProxyAdmin"
     }

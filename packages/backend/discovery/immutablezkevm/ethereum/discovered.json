@@ -2,7 +2,7 @@
   "name": "immutablezkevm",
   "chain": "ethereum",
   "blockNumber": 20977341,
-  "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
+  "configHash": "0x9e1609e44e22f40efa087f8aafb1db523b7540f6fb962b49add1b147a62e55f0",
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -142,11 +142,13 @@
       "fieldMeta": {
         "withdrawalDelay": {
           "severity": "MEDIUM",
-          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated."
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "type": "RISK_PARAMETER"
         },
         "withdrawalQueueActivated": {
           "severity": "LOW",
-          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism."
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "RootERC20BridgeFlowRate"
@@ -521,7 +523,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

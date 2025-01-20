@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x44e71bde7c7550d360b92560806424f5927505f9
+Generated with discovered.json: 0xf4257ce5241978fd108d06d4bc6f1faad08e051d
 
-# Diff at Mon, 20 Jan 2025 10:43:09 GMT:
+# Diff at Mon, 20 Jan 2025 11:09:45 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21242106
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21242106
 - current block number: 21242106
 
 ## Description
@@ -155,6 +155,42 @@ discovery. Values are for block 21242106 (main branch discovery), not current.
 -        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       issuedPermissions.0.to:
 +        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+Generated with discovered.json: 0x6a10bd6445b4572b3e0aa53692b4db70a921cca7
+
+# Diff at Mon, 20 Jan 2025 09:25:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      fieldMeta.getOwners.type:
++        "PERMISSION"
+      fieldMeta.getThreshold.type:
++        "PERMISSION"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta.StateCommitmentChain.type:
++        "CODE_CHANGE"
     }
 ```
 
