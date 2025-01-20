@@ -107,6 +107,4 @@ export const TransactionListEntry = z.object({
 })
 
 export const OneTransactionListResult = z.array(TransactionListEntry).length(1)
-export const TwentyTransactionListResult = z
-  .array(TransactionListEntry)
-  .length(20)
+export const TransactionListResult = z.array(TransactionListEntry)
