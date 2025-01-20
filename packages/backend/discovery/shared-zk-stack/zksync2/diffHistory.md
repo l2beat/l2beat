@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x079e02fd625cb6f100f843470a2c5144657c22dd
+
+# Diff at Mon, 20 Jan 2025 12:14:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@658eb33e9afd98eac45a3037d195357115d19a86 block: 44113900
+- current block number: 54131125
+
+## Description
+
+Config related: zksync2 discovery was deactivated for some time and is now re-enabled, these updates are old.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
+    +++ description: None
+      values.proposalQueuedCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: None
+      values.accessControl.MINTER_ROLE.members.18:
++        "0x178bFf5A197FB4499526D04Db602C45cEDCA40a9"
+      values.accessControl.MINTER_ROLE.members.17:
++        "0x4E86e74237Eb1f9432810eB5ab5861368d2f5964"
+      values.accessControl.MINTER_ROLE.members.16:
++        "0x2ADa5C15BC4FEE97EC2463ce4F8E4557174B8Dcf"
+      values.accessControl.MINTER_ROLE.members.15:
++        "0xD375A20d93C2F7C6a83B19C5ae153cF2C6e09ba9"
+      values.accessControl.MINTER_ROLE.members.14:
++        "0x2CC6c7b1a59A23fB3faCAFe4A3791C5c8A58Cbcc"
+      values.accessControl.MINTER_ROLE.members.13:
++        "0x6b689B93B368c7C25E6e5ecaeAb23C11F8C2c392"
+      values.accessControl.MINTER_ROLE.members.12:
++        "0xDa2fBE31Fd47Af741bdB3dBC4eb662dA0107D33a"
+      values.accessControl.MINTER_ROLE.members.11:
++        "0x3BC3f64d084bE6d3336f10340DC8424290FFc4ab"
+      values.accessControl.MINTER_ROLE.members.10:
++        "0x11791c6249631555cEb75CB39128789E3954c2EC"
+      values.accessControl.MINTER_ROLE.members.9:
++        "0xe546AEaaC57584da7554e7F88154DeDAD30A82b0"
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: None
+      values.proposalQueuedCount:
+-        0
++        3
+    }
+```
+
 Generated with discovered.json: 0x9b7b6c787576a3feea73a81c20ba63815740a4ea
 
 # Diff at Mon, 20 Jan 2025 11:10:47 GMT:

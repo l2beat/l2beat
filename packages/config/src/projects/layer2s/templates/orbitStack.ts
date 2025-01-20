@@ -146,6 +146,7 @@ interface OrbitStackConfigCommon {
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
+  hasAtLeastFiveExternalChallengers?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -621,6 +622,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
         nOfChallengers,
+        templateVars.hasAtLeastFiveExternalChallengers ?? false,
         challengePeriodSeconds,
       ),
       secondLine: formatChallengePeriod(challengePeriodSeconds),
@@ -992,6 +994,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
+          templateVars.hasAtLeastFiveExternalChallengers ?? false,
           challengePeriodSeconds,
         ),
         secondLine: formatChallengePeriod(challengePeriodSeconds),
