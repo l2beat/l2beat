@@ -109,6 +109,7 @@ export function ProjectActivityChart({
               projectChart
             />
             <Checkbox
+              id="showMainnetActivity"
               checked={showMainnet}
               onCheckedChange={(state) => setShowMainnet(!!state)}
             >

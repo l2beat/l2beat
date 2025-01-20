@@ -2,16 +2,24 @@
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import * as React from 'react'
+import { useCustomEvent } from '~/hooks/use-custom-event'
 import { CheckIcon } from '~/icons/check'
 import { cn } from '~/utils/cn'
 
 const Checkbox = ({
+  id,
   ref,
   className,
   children,
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  onCheckedChange,
+  enableTracking = true,
   ...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root>) => {
-  const id = React.useId()
+}: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
+  id: string
+  enableTracking?: boolean
+}) => {
+  const customEvent = useCustomEvent()
   return (
     <label
       htmlFor={id}
@@ -23,13 +31,24 @@ const Checkbox = ({
       )}
     >
       <CheckboxPrimitive.Root
-        ref={ref}
         id={id}
+        ref={ref}
         className={cn(
           'peer size-5 shrink-0 rounded bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
           'data-[state=unchecked]:border-2 data-[state=unchecked]:border-surface-tertiary',
         )}
+        onCheckedChange={(checked) => {
+          onCheckedChange?.(checked)
+          if (enableTracking) {
+            customEvent('checkboxChecked', {
+              props: {
+                id: id,
+                value: checked.valueOf().toString(),
+              },
+            })
+          }
+        }}
         {...props}
       >
         <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded bg-brand text-current">
