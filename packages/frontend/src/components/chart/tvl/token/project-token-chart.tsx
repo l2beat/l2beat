@@ -1,5 +1,5 @@
 'use client'
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { TokenCombobox } from '~/components/token-combobox'
