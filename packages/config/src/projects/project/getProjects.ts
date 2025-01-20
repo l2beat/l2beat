@@ -151,6 +151,12 @@ function bridgeToProject(p: Bridge): BaseProject {
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
     },
+    bridgeInfo: {
+      category: p.display.category,
+      destination: p.technology.destination,
+      validatedBy: p.riskView.validatedBy.value,
+    },
+    bridgeRisks: p.riskView,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
