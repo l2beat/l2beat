@@ -1,7 +1,4 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -10,6 +7,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   ChainConfig,
@@ -50,7 +48,6 @@ import {
   mergeBadges,
   safeGetImplementation,
 } from './utils'
-import { ethereum } from '../../../chains/ethereum'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer

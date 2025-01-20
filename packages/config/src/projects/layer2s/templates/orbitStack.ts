@@ -1,7 +1,4 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -11,7 +8,8 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { template, unionBy } from 'lodash'
+import { unionBy } from 'lodash'
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   ChainConfig,
@@ -60,7 +58,6 @@ import {
 } from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
-import { ethereum } from '../../../chains/ethereum'
 
 const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
@@ -463,7 +460,7 @@ function orbitStackCommon(
                 ...explorerReferences(explorerUrl, [
                   {
                     text: 'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
-                    address: safeGetImplementation(templateVars.sequencerInbox)
+                    address: safeGetImplementation(templateVars.sequencerInbox),
                   },
                 ]),
               ],
@@ -1063,4 +1060,3 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     },
   }
 }
-

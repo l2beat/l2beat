@@ -1,3 +1,7 @@
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
 import { unionBy } from 'lodash'
 import {
@@ -5,10 +9,6 @@ import {
   ScalingProjectRiskViewEntry,
 } from '../../../common'
 import { BadgeId, badges } from '../../badges'
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
 
 export function mergeBadges(
   inherentBadges: BadgeId[],

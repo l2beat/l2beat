@@ -1,7 +1,4 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
