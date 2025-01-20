@@ -101,7 +101,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     router.push(item.href)
     customEvent('searchBarProjectSelected', {
       props: {
-        project: item.name,
+        name: item.name,
       },
     })
   }
