@@ -1,7 +1,7 @@
 {
   "name": "educhain",
   "chain": "arbitrum",
-  "blockNumber": 296310685,
+  "blockNumber": 297394465,
   "configHash": "0x41948154eaf05c3987dfe8e0b0c95a402e43845a73d24ea5ae7f392001f2f2ef",
   "contracts": [
     {
@@ -92,12 +92,12 @@
           "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
         ],
         "allowedOutboxList": ["0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
-        "delayedMessageCount": 73,
+        "delayedMessageCount": 363,
         "nativeToken": "0xf8173a39c56a554837C4C7f104153A005D284D11",
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 1533,
-        "sequencerReportedSubMessageCount": 145439
+        "sequencerMessageCount": 1784,
+        "sequencerReportedSubMessageCount": 452607
       }
     },
     {
@@ -421,7 +421,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1533,
+        "batchCount": 1784,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x0816e1EeE08C701001e5a846f5ae2ee93FABb608"],
         "bridge": "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -452,7 +452,7 @@
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 73,
+        "totalDelayedMessagesRead": 359,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -493,6 +493,24 @@
         },
         {
           "permission": "validate",
+          "to": "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "to": "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "to": "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": []
+        },
+        {
+          "permission": "validate",
           "to": "0xbdA6d4ecbb176e12314361DF779bdB428f368163",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
@@ -502,6 +520,12 @@
           "to": "0xbdA6d4ecbb176e12314361DF779bdB428f368163",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "validate",
+          "to": "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -545,12 +569,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1536,
+        "firstUnresolvedNode": 1611,
         "inbox": "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "lastStakeBlock": 20410965,
-        "latestConfirmed": 1535,
-        "latestNodeCreated": 1535,
+        "latestConfirmed": 1610,
+        "latestNodeCreated": 1610,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -559,14 +583,18 @@
         "rollupDeploymentBlock": 20389981,
         "rollupEventInbox": "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251",
         "sequencerInbox": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "setValidatorCount": 2,
+        "setValidatorCount": 4,
         "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
         "validators": [
+          "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
+          "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
           "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b",
-          "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
+          "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
+          "0xbdA6d4ecbb176e12314361DF779bdB428f368163",
+          "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
         ],
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
@@ -743,18 +771,18 @@
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
-          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
-          "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
+          "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
+          "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
           "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-          "0xebD4919C075417a86F19713dADe101852867A04F"
+          "0xB65540bBA534E88EB4a5062D0E6519C07063b259",
+          "0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "$threshold": 4,
         "domainSeparator": "0x505b441132966089aacbbaf12f347d6e6136ae9f92621539b4ab6660c699d6fe",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 1,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -937,7 +965,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1510,
+        "nonce": 1585,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -977,12 +1005,45 @@
       ]
     },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
+    { "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9" },
     { "address": "0x44c0da87e4443F275503aB429bEE40fe265b59AF" },
+    { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
     { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
+    {
+      "address": "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
     { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
+    {
+      "address": "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
+    { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
     { "address": "0x9E8f79EE5177aBDd76EDfC7D72c8Dc0F16955ae3" },
+    {
+      "address": "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
     { "address": "0xA9f18587F6dE8B1c89a4AdD2c953AB66eD532015" },
-    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xB65540bBA534E88EB4a5062D0E6519C07063b259" },
     {
       "address": "0xbdA6d4ecbb176e12314361DF779bdB428f368163",
       "receivedPermissions": [
@@ -1005,9 +1066,16 @@
         }
       ]
     },
-    { "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849" },
-    { "address": "0xebD4919C075417a86F19713dADe101852867A04F" },
-    { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" },
+    {
+      "address": "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
     { "address": "0xFd25B25576cC0d510F62C88A166F84b3e25208C7" }
   ],
   "abis": {

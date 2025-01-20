@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x27008dde2974308c46fa9e75232eff449d34e271
+
+# Diff at Mon, 20 Jan 2025 12:08:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@658eb33e9afd98eac45a3037d195357115d19a86 block: 296310685
+- current block number: 297394465
+
+## Description
+
+GelatoMS signer changes + add validators.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.8:
++        {"permission":"validate","to":"0xedbFE5493367F8fBc340276503D3c18D2C02E9AE","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.7:
++        {"permission":"validate","to":"0xbdA6d4ecbb176e12314361DF779bdB428f368163","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]}
+      issuedPermissions.6:
++        {"permission":"validate","to":"0xbdA6d4ecbb176e12314361DF779bdB428f368163","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.5:
++        {"permission":"validate","to":"0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.4.to:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
+      issuedPermissions.4.via.0:
+-        {"address":"0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}
+      issuedPermissions.3.to:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        2
++        4
+      values.validators.5:
++        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
+      values.validators.4:
++        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
+      values.validators.3:
++        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
+      values.validators.2:
++        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
+      values.validators.1:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
+      values.validators.0:
+-        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
++        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.7:
+-        "0xebD4919C075417a86F19713dADe101852867A04F"
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.$members.6:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.4:
+-        "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.3:
+-        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
++        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+    }
+```
+
 Generated with discovered.json: 0x1755885958825a674390ad712febe94130859227
 
 # Diff at Mon, 20 Jan 2025 11:10:29 GMT:
