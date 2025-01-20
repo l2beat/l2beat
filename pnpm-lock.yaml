@@ -507,6 +507,9 @@ importers:
       '@l2beat/backend':
         specifier: workspace:*
         version: link:../backend
+      '@l2beat/backend-shared':
+        specifier: workspace:*
+        version: link:../backend-shared
       '@l2beat/config':
         specifier: workspace:*
         version: link:../config
