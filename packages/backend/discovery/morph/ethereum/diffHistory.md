@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x72f1722fef77263dbdc89f0ae4a67e13359d4916
+
+# Diff at Mon, 20 Jan 2025 19:26:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3a16743af72fb4c941689b26d336a59661143f06 block: 21465401
+- current block number: 21667783
+
+## Description
+
+Upgrades to MorphRollup, L1MessageQueueWithGasPriceOracle, L1CrossDomainMessenger to **deprecate skipping / dropping messages from the queue**.
+
+There is no enforcement of the processing of the queue. 
+
+The EnforcedTxGateway is still paused (It is, apart from the L1CrossDomainMessenger, the only address that can append messages to the L1MessageQueue) and thus queuing transactions is currently not possible.
+
+Some Challengers are apparently run by bitget / bitget wallet.
+
+## Watched changes
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      sourceHashes.1:
+-        "0xe43c8aca9b520edaff0a7339959cee77a47b241a07c6d0dd9836e466caf35e72"
++        "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
+      values.$implementation:
+-        "0x828F68e2E05a34fA836416F124350E25021876ac"
++        "0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA"
+      values.$pastUpgrades.2:
++        ["2025-01-13T08:11:59.000Z","0x60cc38cb058516da361ecd5f548fc9216fbcda9eb08255b529ebbf78dac44f7b",["0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      sourceHashes.1:
+-        "0x2b50f40d48451dfa5ae761371d1c0b18c8c827b34d17c401f629bc743888721e"
++        "0xdbd7245a43b9bfda69e999525405cc2d3a44e2a5d60c8fcbc75bb2d4987837be"
+      values.$implementation:
+-        "0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"
++        "0x43190DfD1F572Cb56B1942B44482d1774151D77A"
+      values.$pastUpgrades.4:
++        ["2025-01-13T07:31:59.000Z","0x809b1d9bba9fd8f61c038603ddf7a6f0a079db83a4a6d341cf23d2af5764a9be",["0x43190DfD1F572Cb56B1942B44482d1774151D77A"]]
+      values.$upgradeCount:
+-        4
++        5
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      sourceHashes.1:
+-        "0x1a0a7d2a0ed1f83c7043abd7a9f1f24c979e7e86e258c7968ed007894fbf2a4a"
++        "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
+      values.$implementation:
+-        "0xB8F0871bc0832cb756f07fFC4bDdC8b6bf8577b5"
++        "0x0cC37d5239F9027A1269f53D83c73084D538f3a9"
+      values.$pastUpgrades.2:
++        ["2025-01-13T08:10:23.000Z","0x908d9fce8cd9a787900543daabf45936a8873b543f593030f3edceeca35543f8",["0x0cC37d5239F9027A1269f53D83c73084D538f3a9"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1CrossDomainMessenger.sol                     |  71 +-------------
+ .../L1MessageQueueWithGasPriceOracle.sol           |  75 ++------------
+ .../MorphRollup/Rollup.sol                         | 108 +++------------------
+ 3 files changed, 23 insertions(+), 231 deletions(-)
+```
+
 Generated with discovered.json: 0x4b1155ee8d29fc6ba304940cc3148b73d7aa5d5e
 
 # Diff at Mon, 20 Jan 2025 11:09:46 GMT:
