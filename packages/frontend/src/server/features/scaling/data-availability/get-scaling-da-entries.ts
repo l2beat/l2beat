@@ -23,7 +23,6 @@ export async function getScalingDaEntries() {
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa'],
-      optional: ['countdowns'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -51,15 +50,12 @@ export interface ScalingDaEntry extends CommonScalingEntry {
 }
 
 function getScalingDaEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingDa'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingDaEntry {
   return {
-    ...getCommonScalingEntry({
-      project,
-      changes,
-    }),
+    ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
     provider: project.scalingInfo.stack,

@@ -38,6 +38,14 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       redWarning: p.display.redWarning,
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
+      // countdowns
+      otherMigration: otherMigrationContext
+        ? {
+            expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
+            pretendingToBe: p.display.category,
+            reasons: otherMigrationContext.reasonsForBeingOther,
+          }
+        : undefined,
     },
     scalingInfo: {
       layer: p.type,
@@ -73,15 +81,6 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     activityInfo: getActivityInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
-    countdowns: otherMigrationContext
-      ? {
-          otherMigration: {
-            expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
-            pretendingToBe: p.display.category,
-            reasons: otherMigrationContext.reasonsForBeingOther,
-          },
-        }
-      : undefined,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
