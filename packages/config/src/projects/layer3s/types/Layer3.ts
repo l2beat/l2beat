@@ -17,8 +17,8 @@ import { ScalingProjectStateDerivation } from '../../../common/ScalingProjectSta
 import { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
 import { type BadgeId } from '../../badges'
+import { DacDaLayer } from '../../da-beat/types/DaLayer'
 import { StageConfig } from '../../layer2s'
-import { DacDaLayer } from '../../other'
 
 export interface Layer3 {
   type: 'layer3'

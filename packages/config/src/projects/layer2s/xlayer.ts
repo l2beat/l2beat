@@ -8,8 +8,8 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { PolygoncdkDAC } from '../other/da-beat/templates/polygoncdk-template'
-import { DacTransactionDataType } from '../other/da-beat/types'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
+import { DacTransactionDataType } from '../da-beat/types'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 

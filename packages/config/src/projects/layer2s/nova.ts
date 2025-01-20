@@ -4,13 +4,13 @@ import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { DAC } from '../other/da-beat/templates/dac-template'
+import { DAC } from '../da-beat/templates/dac-template'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
   DacTransactionDataType,
-} from '../other/da-beat/types'
+} from '../da-beat/types'
 import {
   WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,

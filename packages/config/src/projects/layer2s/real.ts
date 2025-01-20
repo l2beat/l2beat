@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 

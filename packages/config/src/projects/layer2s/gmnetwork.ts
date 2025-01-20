@@ -10,8 +10,8 @@ import {
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
   DacTransactionDataType,
-} from '../other/da-beat/types'
-import { DaChallengeMechanism } from '../other/da-beat/types/DaChallengeMechanism'
+} from '../da-beat/types'
+import { DaChallengeMechanism } from '../da-beat/types/DaChallengeMechanism'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 

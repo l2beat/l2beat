@@ -10,7 +10,7 @@ import {
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-} from '../other/da-beat/types'
+} from '../da-beat/types'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 

@@ -3,9 +3,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
+import { DaEconomicSecurityRisk } from '../da-beat/types'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
-import { DaEconomicSecurityRisk } from '../other/da-beat/types'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')

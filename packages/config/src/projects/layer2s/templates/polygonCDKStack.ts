@@ -40,7 +40,7 @@ import {
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, BadgeId, badges } from '../../badges'
-import { DacDaLayer } from '../../other/da-beat/types/DaLayer'
+import { DacDaLayer } from '../../da-beat/types/DaLayer'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 import {

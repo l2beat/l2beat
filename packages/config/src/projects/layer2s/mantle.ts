@@ -11,9 +11,9 @@ import {
   DaFraudDetectionRisk,
   DaUpgradeabilityRisk,
   DacDaLayer,
-} from '../other/da-beat/types'
-import { DaRelayerFailureRisk } from '../other/da-beat/types/DaRelayerFailureRisk'
-import { DacTransactionDataType } from '../other/da-beat/types/DacTransactionDataType'
+} from '../da-beat/types'
+import { DaRelayerFailureRisk } from '../da-beat/types/DaRelayerFailureRisk'
+import { DacTransactionDataType } from '../da-beat/types/DacTransactionDataType'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 

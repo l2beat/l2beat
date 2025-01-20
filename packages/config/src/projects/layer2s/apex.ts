@@ -31,7 +31,7 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { StarkexDAC } from '../other/da-beat/templates/starkex-template'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('apex')
