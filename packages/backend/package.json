@@ -25,7 +25,6 @@
     "test": "./scripts/run_tests.sh",
     "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
-    "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
