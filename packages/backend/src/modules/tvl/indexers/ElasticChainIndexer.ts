@@ -1,4 +1,4 @@
-import { INDEXER_NAMES } from '@l2beat/config'
+import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import {
   assert,
   Configuration,

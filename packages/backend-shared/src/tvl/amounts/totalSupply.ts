@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BackendProject } from '../../BackendProject'
-import { chainConverter } from '../../utils'
+import { chainConverter } from '../../chainConverter'
 
 export function getTotalSupplyEntry(
   chain: ChainConfig,

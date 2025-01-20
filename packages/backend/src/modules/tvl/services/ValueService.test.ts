@@ -1,4 +1,4 @@
-import { AmountId, PriceId } from '@l2beat/config'
+import { AmountId, PriceId } from '@l2beat/backend-shared'
 import { Database } from '@l2beat/database'
 import {
   AmountConfigEntry,

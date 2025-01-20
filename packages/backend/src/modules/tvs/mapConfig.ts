@@ -1,4 +1,5 @@
-import { BackendProject, BackendProjectEscrow, tokenList } from '@l2beat/config'
+import { BackendProject, BackendProjectEscrow } from '@l2beat/backend-shared'
+import { tokenList } from '@l2beat/config'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { Token as LegacyToken } from '@l2beat/shared-pure'
 import {

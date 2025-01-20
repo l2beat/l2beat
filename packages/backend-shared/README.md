@@ -1,5 +1,3 @@
-# @l2beat/shared-pure
+# @l2beat/backend-shared
 
-### Warning
-
-This package will be imported inside `frontend`, put only pure JS dependencies there.
+This is a temporary package that will (hopefully) only live until the TVS is refactored. The main purpose is to share old TVL related code that won't be needed on the frontend after the refactor.

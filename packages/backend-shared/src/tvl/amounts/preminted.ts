@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
-import { chainConverter } from '../../utils'
+import { chainConverter } from '../../chainConverter'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getPremintedEntry(

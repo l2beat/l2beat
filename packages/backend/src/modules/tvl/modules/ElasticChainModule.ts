@@ -1,4 +1,4 @@
-import { ConfigMapping, createAmountId } from '@l2beat/config'
+import { ConfigMapping, createAmountId } from '@l2beat/backend-shared'
 import {
   assert,
   ElasticChainEther,

@@ -1,13 +1,12 @@
+import { createIndexerId } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import {
   ChildIndexer,
   Indexer,
   IndexerOptions,
   RetryStrategy,
 } from '@l2beat/uif'
-
-import { createIndexerId } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import { IndexerService } from './IndexerService'
 import { assertUniqueIndexerId } from './ids'
 import { IndexerTags } from './types'

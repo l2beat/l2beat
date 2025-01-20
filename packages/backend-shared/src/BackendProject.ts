@@ -23,7 +23,7 @@ import {
   TokenBridgedUsing,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { chainConverter } from './utils'
+import { chainConverter } from './chainConverter'
 
 export interface BackendProject {
   projectId: ProjectId

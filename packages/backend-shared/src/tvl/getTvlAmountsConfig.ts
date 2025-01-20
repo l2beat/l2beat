@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { keyBy } from 'lodash'
 import { BackendProject, BackendProjectEscrow } from '../BackendProject'
-import { chainToProject } from '../utils'
+import { chainToProject } from '../chainConverter'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'
 import { aggLayerEscrowToEntries } from './amounts/custom/aggLayerEscrowToEntries'

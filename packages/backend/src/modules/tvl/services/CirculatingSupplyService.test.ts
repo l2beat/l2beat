@@ -1,4 +1,4 @@
-import { createAmountId } from '@l2beat/config'
+import { createAmountId } from '@l2beat/backend-shared'
 import { AmountRecord } from '@l2beat/database'
 import {
   CirculatingSupplyProvider,
