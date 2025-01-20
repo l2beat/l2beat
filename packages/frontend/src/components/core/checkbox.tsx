@@ -11,8 +11,6 @@ const Checkbox = ({
   ref,
   className,
   children,
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  onCheckedChange,
   enableTracking = true,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
@@ -38,8 +36,9 @@ const Checkbox = ({
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
           'data-[state=unchecked]:border-2 data-[state=unchecked]:border-surface-tertiary',
         )}
+        {...props}
         onCheckedChange={(checked) => {
-          onCheckedChange?.(checked)
+          props.onCheckedChange?.(checked)
           if (enableTracking) {
             customEvent('checkboxChecked', {
               props: {
@@ -49,7 +48,6 @@ const Checkbox = ({
             })
           }
         }}
-        {...props}
       >
         <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded bg-brand text-current">
           <CheckIcon
