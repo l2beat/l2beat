@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xfe278a2fdc9abc13ac5e3eb105a87dce945b5f1b
+
+# Diff at Mon, 20 Jan 2025 12:05:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@658eb33e9afd98eac45a3037d195357115d19a86 block: 21637371
+- current block number: 21665575
+
+## Description
+
+Upgrade of the L1StandardBridge with a one-line change: ERC20SharedDecimals = 9 (was 12).
+
+## Watched changes
+
+```diff
+    contract L1StandardBridge (0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      sourceHashes.1:
+-        "0xe2afd35e21cefc5b6eda770f7082c3916b8353d50c158a857cfc2ada89027f5b"
++        "0x31171ab8eadf4234ec9b516f45a99b4ba57e9270edb7dd669d39db328abe95eb"
+      values.$implementation:
+-        "0x3d20b96e5635CfCFF58c9CE66017F2240313B47C"
++        "0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A"
+      values.ERC20SharedDecimals:
+-        12
++        9
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21637371 => .flat}/L1StandardBridge/L1StandardBridge.sol     | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x74ecb7d8e4aea3ba5765a37a91c823535f5096fd
 
 # Diff at Mon, 20 Jan 2025 11:10:09 GMT:
