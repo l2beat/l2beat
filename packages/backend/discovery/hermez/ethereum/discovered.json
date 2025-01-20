@@ -13,11 +13,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
+          "from": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
         },
         {
           "permission": "upgrade",
-          "target": "0xA68D85dF56E733A06443306A095646317B5Fa633"
+          "from": "0xA68D85dF56E733A06443306A095646317B5Fa633"
         }
       ],
       "sinceTimestamp": 1616482354,
@@ -37,7 +37,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+          "to": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
           "via": []
         }
       ],
@@ -188,7 +188,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+          "to": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
           "via": []
         }
       ],

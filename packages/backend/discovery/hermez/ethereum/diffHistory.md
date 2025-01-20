@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x1ab170774710f6152d413c4c7b3a7f812e287cc9
+
+# Diff at Mon, 20 Jan 2025 11:09:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21387322
+- current block number: 21387322
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387322 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xA68D85dF56E733A06443306A095646317B5Fa633"
+      receivedPermissions.1.from:
++        "0xA68D85dF56E733A06443306A095646317B5Fa633"
+      receivedPermissions.0.target:
+-        "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
+      receivedPermissions.0.from:
++        "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
+    }
+```
+
+```diff
+    contract HermezAuctionProtocol (0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
+      issuedPermissions.0.to:
++        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
+    }
+```
+
+```diff
+    contract Hermez (0xA68D85dF56E733A06443306A095646317B5Fa633) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
+      issuedPermissions.0.to:
++        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
+    }
+```
+
 Generated with discovered.json: 0x4e982d831d9da2ac30c110b470b1173a47b70540
 
 # Diff at Thu, 12 Dec 2024 15:29:13 GMT:

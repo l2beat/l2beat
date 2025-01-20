@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xa893c8442ee1fdc35a2077a55cbc6fe3d92ab56f
+
+# Diff at Mon, 20 Jan 2025 11:10:20 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21635855
+- current block number: 21635855
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635855 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      issuedPermissions.2.target:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      issuedPermissions.2.to:
++        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      issuedPermissions.1.target:
+-        "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
+      issuedPermissions.1.to:
++        "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
+      issuedPermissions.1.description:
++        "can call commitHeaderRange() to commit block ranges to the Vector contract."
+      issuedPermissions.0.target:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      issuedPermissions.0.to:
++        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      issuedPermissions.0.description:
++        "can freeze the Vector contract and update the list of authorized relayers."
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      issuedPermissions.1.target:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      issuedPermissions.1.to:
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      issuedPermissions.1.description:
++        "can verify proofs for the header range [latestBlock, targetBlock] proof."
+      issuedPermissions.0.target:
+-        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+      issuedPermissions.0.to:
++        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+      issuedPermissions.0.description:
++        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+    }
+```
+
+```diff
+    contract AvailMultisig (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.1.from:
++        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.0.target:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.0.from:
++        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      receivedPermissions.0.from:
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      receivedPermissions.0.from:
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
 Generated with discovered.json: 0x597df2b9f6a80e61eec7ffdfe64a32b78a1ba709
 
 # Diff at Thu, 16 Jan 2025 12:09:52 GMT:

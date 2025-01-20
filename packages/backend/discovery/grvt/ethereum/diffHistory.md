@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x3e4e125ce1f591d7454b63febc302b661cdcd315
+
+# Diff at Mon, 20 Jan 2025 11:09:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21629172
+- current block number: 21629172
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629172 (main branch discovery), not current.
+
+```diff
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+      receivedPermissions.1.from:
++        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+      receivedPermissions.0.target:
+-        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+      receivedPermissions.0.from:
++        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+      issuedPermissions.0.to:
++        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+      issuedPermissions.0.to:
++        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+    }
+```
+
 Generated with discovered.json: 0x0b37aeb60b3c8badba363a35a5d7211e4895cd5c
 
 # Diff at Wed, 15 Jan 2025 10:05:54 GMT:

@@ -40,6 +40,7 @@ export const RawPermissionConfiguration = z.object({
   type: Permission,
   delay: z.union([z.number(), z.string()]).default(0),
   description: z.string().optional(),
+  condition: z.string().optional(),
 })
 
 export type PermissionConfiguration = RawPermissionConfiguration & {

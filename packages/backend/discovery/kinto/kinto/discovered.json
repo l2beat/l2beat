@@ -14,7 +14,8 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.",
           "via": []
         }
       ],
@@ -53,7 +54,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
         }
       ],
@@ -168,7 +169,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "via": []
         }
       ],
@@ -245,7 +246,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "via": []
         }
       ],
@@ -358,7 +359,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
           "via": []
         }
       ],
@@ -590,32 +591,32 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
           "via": []
         }
       ],
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
+          "from": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
           "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
         },
         {
           "permission": "configure",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         },
         {
           "permission": "upgrade",
-          "target": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+          "from": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
         },
         {
           "permission": "upgrade",
-          "target": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+          "from": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
         },
         {
           "permission": "upgrade",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
         }
       ],
       "ignoreInWatchMode": ["getNonce"],
@@ -832,13 +833,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [
-            {
-              "address": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-              "delay": 0
-            }
-          ]
+          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -911,12 +907,13 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
@@ -1144,12 +1141,13 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "send tokens and ETH from the Treasury to any address without delay.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
@@ -1178,13 +1176,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [
-            {
-              "address": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-              "delay": 0
-            }
-          ]
+          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -1219,36 +1212,31 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [
-            {
-              "address": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-              "delay": 0
-            }
-          ]
+          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
+          "from": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
           "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x87799989341A07F495287B1433eea98398FD73aA",
+          "from": "0x87799989341A07F495287B1433eea98398FD73aA",
           "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "from": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
           "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x9eC0253E4174a14C0536261888416451A407Bf79"
+          "from": "0x9eC0253E4174a14C0536261888416451A407Bf79"
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -1282,23 +1270,24 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
+          "from": "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
         },
         {
           "permission": "upgrade",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+          "from": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
         }
       ],
       "ignoreInWatchMode": ["totalWallets"],
@@ -1469,15 +1458,15 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x340487b92808B84c2bd97C87B590EE81267E04a7"
+          "from": "0x340487b92808B84c2bd97C87B590EE81267E04a7"
         },
         {
           "permission": "upgrade",
-          "target": "0x87799989341A07F495287B1433eea98398FD73aA"
+          "from": "0x87799989341A07F495287B1433eea98398FD73aA"
         },
         {
           "permission": "upgrade",
-          "target": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+          "from": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -1497,30 +1486,30 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
+          "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
           "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
         },
         {
           "permission": "configure",
-          "target": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
+          "from": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
           "description": "send tokens and ETH from the Treasury to any address without delay."
         },
         {
           "permission": "configure",
-          "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
           "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
         },
         {
           "permission": "upgrade",
-          "target": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+          "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
         },
         {
           "permission": "upgrade",
-          "target": "0x793500709506652Fcc61F0d2D0fDa605638D4293"
+          "from": "0x793500709506652Fcc61F0d2D0fDa605638D4293"
         },
         {
           "permission": "upgrade",
-          "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+          "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
         }
       ],
       "sinceTimestamp": 1729791296,
@@ -1731,42 +1720,49 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+          "to": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
+          "to": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
+          "to": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
+          "to": "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
+          "to": "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
+          "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "via": []
         }
       ],
@@ -1913,15 +1909,15 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87"
+          "from": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87"
         },
         {
           "permission": "upgrade",
-          "target": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA"
+          "from": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA"
         },
         {
           "permission": "upgrade",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
         }
       ]
     },
@@ -1936,7 +1932,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
@@ -1948,7 +1944,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
@@ -1959,7 +1955,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
@@ -1970,7 +1966,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]
@@ -1984,7 +1980,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
       ]

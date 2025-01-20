@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x9cb0d818ae4c3802e11adb6a90c1c46cb027b55d
+
+# Diff at Mon, 20 Jan 2025 11:09:18 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21041827
+- current block number: 21041827
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041827 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
+      receivedPermissions.0.from:
++        "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
+      issuedPermissions.0.to:
++        "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
+    }
+```
+
 Generated with discovered.json: 0x76e236f9cfe6da09cec92f53897e57d028a1bcc8
 
 # Diff at Tue, 10 Dec 2024 10:37:00 GMT:

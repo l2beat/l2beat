@@ -17,17 +17,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+          "to": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+          "description": "can freeze the Vector contract and update the list of authorized relayers.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
+          "to": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
+          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
+          "to": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
           "via": []
         }
       ],
@@ -98,12 +100,14 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
           "via": []
         }
       ],
@@ -152,12 +156,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
           "description": "can freeze the Vector contract and update the list of authorized relayers."
         },
         {
           "permission": "upgrade",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -196,7 +200,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
       ],
@@ -242,7 +246,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
         }
       ],
@@ -260,7 +264,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
         }
       ]
     },
@@ -277,7 +281,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
           "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
         }
       ]

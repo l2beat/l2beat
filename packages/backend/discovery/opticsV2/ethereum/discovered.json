@@ -26,7 +26,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],
@@ -116,19 +116,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785"
+          "from": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785"
         },
         {
           "permission": "upgrade",
-          "target": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892"
+          "from": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892"
         },
         {
           "permission": "upgrade",
-          "target": "0xa73a3a74C7044B5411bD61E1990618A1400DA379"
+          "from": "0xa73a3a74C7044B5411bD61E1990618A1400DA379"
         },
         {
           "permission": "upgrade",
-          "target": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+          "from": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
         }
       ],
       "sinceTimestamp": 1637960876,
@@ -149,7 +149,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],
@@ -225,7 +225,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],
@@ -294,7 +294,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],

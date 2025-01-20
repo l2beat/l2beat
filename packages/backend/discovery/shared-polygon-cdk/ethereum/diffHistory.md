@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x95d93485b0295b88fab5a8b17c26c08512ed060e
+
+# Diff at Mon, 20 Jan 2025 11:10:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630065
+- current block number: 21630065
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630065 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      directlyReceivedPermissions.2.target:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      directlyReceivedPermissions.2.from:
++        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      directlyReceivedPermissions.1.target:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      directlyReceivedPermissions.1.from:
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      directlyReceivedPermissions.0.target:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      directlyReceivedPermissions.0.from:
++        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+    }
+```
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      receivedPermissions.2.from:
++        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      receivedPermissions.1.target:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      receivedPermissions.1.from:
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      receivedPermissions.0.target:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      receivedPermissions.0.from:
++        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      directlyReceivedPermissions.0.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      directlyReceivedPermissions.0.from:
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+    }
+```
+
 Generated with discovered.json: 0x1aa428ec03d5ea277b8f7a1b84b6121a4e31a444
 
 # Diff at Wed, 15 Jan 2025 13:05:51 GMT:

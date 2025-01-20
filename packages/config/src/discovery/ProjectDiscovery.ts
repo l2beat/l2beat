@@ -10,7 +10,7 @@ import {
   type DiscoveryOutput,
   EoaParameters,
   PermissionType,
-  ResolvedPermission,
+  ReceivedPermission,
   ResolvedPermissionPath,
   get$Admins,
   get$Implementations,
@@ -826,7 +826,7 @@ export class ProjectDiscovery {
     return Object.entries(
       groupBy(
         contractOrEoa.receivedPermissions ?? [],
-        (value: ResolvedPermission) => {
+        (value: ReceivedPermission) => {
           return [
             value.permission,
             value.via !== undefined ? formatVia(value.via) : '',
@@ -846,7 +846,7 @@ export class ProjectDiscovery {
       const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
       const addressesString = showTargets
         ? entries
-            .map((entry) => this.getContract(entry.target.toString()).name)
+            .map((entry) => this.getContract(entry.from.toString()).name)
             .join(', ')
         : ''
 
@@ -882,7 +882,7 @@ export class ProjectDiscovery {
     return Object.entries(
       groupBy(
         contractOrEoa.directlyReceivedPermissions ?? [],
-        (value: ResolvedPermission) =>
+        (value: ReceivedPermission) =>
           value.permission + ':' + (value.description ?? ''),
       ),
     ).map(([key, entries]) => {
@@ -891,7 +891,7 @@ export class ProjectDiscovery {
       const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
       const addressesString = showTargets
         ? entries
-            .map((entry) => this.getContract(entry.target.toString()).name)
+            .map((entry) => this.getContract(entry.from.toString()).name)
             .join(', ')
         : ''
 
@@ -1017,12 +1017,10 @@ export class ProjectDiscovery {
           contract.issuedPermissions
             ?.filter((p) => p.permission === 'upgrade')
             .map((p) => {
-              const entry = this.getEntryByAddress(p.target)
+              const entry = this.getEntryByAddress(p.to)
               const address =
                 entry?.name ??
-                (this.isEOA(p.target)
-                  ? this.getEOAName(p.target)
-                  : p.target.toString())
+                (this.isEOA(p.to) ? this.getEOAName(p.to) : p.to.toString())
               const delay =
                 (p.delay ?? 0) + sum(p.via?.map((v) => v.delay ?? 0) ?? [])
               return [address, delay]

@@ -36,7 +36,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
+          "to": "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
           "via": []
         }
       ],
@@ -176,7 +176,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"
+          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"
         }
       ]
     },

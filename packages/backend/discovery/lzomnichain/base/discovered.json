@@ -1243,7 +1243,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+          "to": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
           "via": []
         }
       ],
@@ -1307,7 +1307,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          "from": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
         }
       ],
       "sinceTimestamp": 1689301191,

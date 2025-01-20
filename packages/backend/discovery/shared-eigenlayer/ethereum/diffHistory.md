@@ -1,3 +1,377 @@
+Generated with discovered.json: 0x3c7ec59ae737010538346a41761c1ba592615aac
+
+# Diff at Mon, 20 Jan 2025 11:10:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630802
+- current block number: 21630802
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630802 (main branch discovery), not current.
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      directlyReceivedPermissions.0.from:
++        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      directlyReceivedPermissions.0.from:
++        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      receivedPermissions.0.from:
++        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      directlyReceivedPermissions.7.target:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      directlyReceivedPermissions.7.from:
++        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      directlyReceivedPermissions.6.target:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      directlyReceivedPermissions.6.from:
++        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      directlyReceivedPermissions.5.target:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      directlyReceivedPermissions.5.from:
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      directlyReceivedPermissions.4.target:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      directlyReceivedPermissions.4.from:
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      directlyReceivedPermissions.3.target:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      directlyReceivedPermissions.3.from:
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      directlyReceivedPermissions.2.target:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      directlyReceivedPermissions.2.from:
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      directlyReceivedPermissions.1.target:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      directlyReceivedPermissions.1.from:
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      directlyReceivedPermissions.0.target:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+      directlyReceivedPermissions.0.from:
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
+      directlyReceivedPermissions.0.from:
++        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: None
+      receivedPermissions.7.target:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      receivedPermissions.7.from:
++        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      receivedPermissions.6.target:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      receivedPermissions.6.from:
++        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      receivedPermissions.5.target:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.5.from:
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.4.target:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.4.from:
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.3.target:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      receivedPermissions.3.from:
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      receivedPermissions.2.target:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.2.from:
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.1.target:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.1.from:
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.0.target:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+      receivedPermissions.0.from:
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.0.target:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      receivedPermissions.8.target:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      receivedPermissions.8.from:
++        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      receivedPermissions.7.target:
+-        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      receivedPermissions.7.from:
++        "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd"
+      receivedPermissions.6.target:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.6.from:
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      receivedPermissions.5.target:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.5.from:
++        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      receivedPermissions.4.target:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      receivedPermissions.4.from:
++        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      receivedPermissions.3.target:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      receivedPermissions.3.from:
++        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      receivedPermissions.2.target:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.2.from:
++        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      receivedPermissions.1.target:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.1.from:
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      receivedPermissions.0.target:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+      receivedPermissions.0.from:
++        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    }
+```
+
 Generated with discovered.json: 0x74a0bd9e62d2f078c801005c6e9c78eda44a3d4b
 
 # Diff at Mon, 20 Jan 2025 09:25:18 GMT:

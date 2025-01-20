@@ -1,3 +1,277 @@
+Generated with discovered.json: 0xb64fb12ad7c0ba866205db300934491b303764ef
+
+# Diff at Mon, 20 Jan 2025 11:10:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 130664390
+- current block number: 130664390
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 130664390 (main branch discovery), not current.
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      directlyReceivedPermissions.15.target:
+-        "0x4200000000000000000000000000000000000021"
+      directlyReceivedPermissions.15.from:
++        "0x4200000000000000000000000000000000000021"
+      directlyReceivedPermissions.14.target:
+-        "0x4200000000000000000000000000000000000020"
+      directlyReceivedPermissions.14.from:
++        "0x4200000000000000000000000000000000000020"
+      directlyReceivedPermissions.13.target:
+-        "0x420000000000000000000000000000000000001A"
+      directlyReceivedPermissions.13.from:
++        "0x420000000000000000000000000000000000001A"
+      directlyReceivedPermissions.12.target:
+-        "0x4200000000000000000000000000000000000019"
+      directlyReceivedPermissions.12.from:
++        "0x4200000000000000000000000000000000000019"
+      directlyReceivedPermissions.11.target:
+-        "0x4200000000000000000000000000000000000018"
+      directlyReceivedPermissions.11.from:
++        "0x4200000000000000000000000000000000000018"
+      directlyReceivedPermissions.10.target:
+-        "0x4200000000000000000000000000000000000017"
+      directlyReceivedPermissions.10.from:
++        "0x4200000000000000000000000000000000000017"
+      directlyReceivedPermissions.9.target:
+-        "0x4200000000000000000000000000000000000016"
+      directlyReceivedPermissions.9.from:
++        "0x4200000000000000000000000000000000000016"
+      directlyReceivedPermissions.8.target:
+-        "0x4200000000000000000000000000000000000015"
+      directlyReceivedPermissions.8.from:
++        "0x4200000000000000000000000000000000000015"
+      directlyReceivedPermissions.7.target:
+-        "0x4200000000000000000000000000000000000014"
+      directlyReceivedPermissions.7.from:
++        "0x4200000000000000000000000000000000000014"
+      directlyReceivedPermissions.6.target:
+-        "0x4200000000000000000000000000000000000013"
+      directlyReceivedPermissions.6.from:
++        "0x4200000000000000000000000000000000000013"
+      directlyReceivedPermissions.5.target:
+-        "0x4200000000000000000000000000000000000012"
+      directlyReceivedPermissions.5.from:
++        "0x4200000000000000000000000000000000000012"
+      directlyReceivedPermissions.4.target:
+-        "0x4200000000000000000000000000000000000011"
+      directlyReceivedPermissions.4.from:
++        "0x4200000000000000000000000000000000000011"
+      directlyReceivedPermissions.3.target:
+-        "0x4200000000000000000000000000000000000010"
+      directlyReceivedPermissions.3.from:
++        "0x4200000000000000000000000000000000000010"
+      directlyReceivedPermissions.2.target:
+-        "0x420000000000000000000000000000000000000F"
+      directlyReceivedPermissions.2.from:
++        "0x420000000000000000000000000000000000000F"
+      directlyReceivedPermissions.1.target:
+-        "0x4200000000000000000000000000000000000007"
+      directlyReceivedPermissions.1.from:
++        "0x4200000000000000000000000000000000000007"
+      directlyReceivedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000002"
+      directlyReceivedPermissions.0.from:
++        "0x4200000000000000000000000000000000000002"
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
 Generated with discovered.json: 0x739f5bcf6fd7385b048391104c685042326f2e9c
 
 # Diff at Wed, 15 Jan 2025 07:52:54 GMT:

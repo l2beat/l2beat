@@ -16,12 +16,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
         },
         {
           "permission": "upgrade",
-          "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -56,17 +56,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
+          "to": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
+          "description": "can call newFinalizedState() to prove the latest HotShot state.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
           "via": []
         }
       ],
@@ -122,7 +124,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can call newFinalizedState() to prove the latest HotShot state."
         }
       ]

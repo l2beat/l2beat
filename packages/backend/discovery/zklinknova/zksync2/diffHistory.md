@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xe8f675e4605cac8b7dc34ca254a4b2673ccf1a35
+
+# Diff at Mon, 20 Jan 2025 11:10:47 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 43367152
+- current block number: 43367152
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 43367152 (main branch discovery), not current.
+
+```diff
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+      receivedPermissions.1.from:
++        "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+      receivedPermissions.0.target:
+-        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+      receivedPermissions.0.from:
++        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+      directlyReceivedPermissions.0.target:
+-        "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+      directlyReceivedPermissions.0.from:
++        "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+    }
+```
+
+```diff
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      issuedPermissions.0.to:
++        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+    }
+```
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+      directlyReceivedPermissions.0.from:
++        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+    }
+```
+
 Generated with discovered.json: 0xbc0da7a671fb75c037a2abf4a7d170c44302e21f
 
 # Diff at Mon, 20 Jan 2025 09:26:15 GMT:

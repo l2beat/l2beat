@@ -15,14 +15,9 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-              "delay": 0,
-              "description": "set and change address mappings."
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         }
       ],
       "sinceTimestamp": 1689106799,
@@ -44,24 +39,19 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-              "delay": 0
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+          "from": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
           "description": "withdraw ETH escrowed in the OptimismPortal."
         },
         {
           "permission": "configure",
-          "target": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+          "from": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
           "description": "withdraw ERC-20 tokens escrowed in the bridge."
         }
       ],
@@ -95,11 +85,11 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+          "from": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
         },
         {
           "permission": "guard",
-          "target": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+          "from": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -139,38 +129,38 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
+          "from": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
           "permission": "configure",
-          "target": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
+          "from": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         },
         {
           "permission": "upgrade",
-          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "from": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
+          "from": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
+          "from": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+          "from": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+          "from": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         }
@@ -178,7 +168,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
+          "from": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -220,23 +210,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
+          "to": "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-              "delay": 0
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
@@ -341,23 +327,18 @@
       "issuedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
+          "to": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
           "via": []
         },
         {
           "permission": "propose",
-          "target": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
+          "to": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-              "delay": 0
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -411,23 +392,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "to": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "description": "withdraw ETH escrowed in the OptimismPortal.",
           "via": []
         },
         {
           "permission": "guard",
-          "target": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
+          "to": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-              "delay": 0
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         }
       ],
       "ignoreInWatchMode": ["params"],
@@ -472,28 +449,28 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
+          "from": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
           "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
-          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+          "from": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
         },
         {
           "permission": "upgrade",
-          "target": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+          "from": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
         },
         {
           "permission": "upgrade",
-          "target": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+          "from": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
         },
         {
           "permission": "upgrade",
-          "target": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+          "from": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
         },
         {
           "permission": "upgrade",
-          "target": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+          "from": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         }
       ],
@@ -518,19 +495,15 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "to": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "description": "withdraw ERC-20 tokens escrowed in the bridge.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4",
-              "delay": 0,
-              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         }
       ],
       "sinceTimestamp": 1689106811,
@@ -559,7 +532,7 @@
       "receivedPermissions": [
         {
           "permission": "propose",
-          "target": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+          "from": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
         }
       ]
     },
@@ -569,7 +542,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+          "from": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
         }
       ]
     },

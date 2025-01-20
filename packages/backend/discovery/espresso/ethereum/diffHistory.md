@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x9bde8758aa93e235b0bd7a040266b71e1dbe9c71
+
+# Diff at Mon, 20 Jan 2025 11:09:28 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21372994
+- current block number: 21372994
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21372994 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+      receivedPermissions.1.from:
++        "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+      receivedPermissions.0.target:
+-        "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+      receivedPermissions.0.from:
++        "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+    }
+```
+
+```diff
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      issuedPermissions.2.target:
+-        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      issuedPermissions.2.to:
++        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      issuedPermissions.1.target:
+-        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+      issuedPermissions.1.to:
++        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+      issuedPermissions.1.description:
++        "can call newFinalizedState() to prove the latest HotShot state."
+      issuedPermissions.0.target:
+-        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      issuedPermissions.0.to:
++        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      issuedPermissions.0.description:
++        "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
+    }
+```
+
 Generated with discovered.json: 0x7d7cd8a406e24ad5c89e87f0a3ecd35e7d023ff5
 
 # Diff at Tue, 10 Dec 2024 15:28:04 GMT:

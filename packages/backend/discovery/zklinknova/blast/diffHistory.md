@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xd09b9526402ce26af9879a0e0194df71bfd94f7f
+
+# Diff at Mon, 20 Jan 2025 11:10:49 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 8312690
+- current block number: 8312690
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8312690 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      issuedPermissions.0.to:
++        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+    }
+```
+
+```diff
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      issuedPermissions.0.to:
++        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+    }
+```
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      receivedPermissions.1.from:
++        "0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      receivedPermissions.0.target:
+-        "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
+      receivedPermissions.0.from:
++        "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+      issuedPermissions.0.to:
++        "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+      receivedPermissions.0.from:
++        "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+    }
+```
+
 Generated with discovered.json: 0xa227a1c88fe0005e848803e254ee84d9bbb7607a
 
 # Diff at Mon, 21 Oct 2024 11:15:50 GMT:
