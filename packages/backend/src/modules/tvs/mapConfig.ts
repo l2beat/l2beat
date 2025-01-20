@@ -1,20 +1,31 @@
-import { BackendProject, BackendProjectEscrow, tokenList } from '@l2beat/config'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  BackendProject,
+  BackendProjectEscrow,
+  ChainConfig,
+  tokenList,
+} from '@l2beat/config'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { Token as LegacyToken } from '@l2beat/shared-pure'
 import {
   AmountConfig,
   AmountFormula,
   BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountFormula,
+  EscrowToken,
   PriceConfig,
   Token,
   TotalSupplyAmountFormula,
   TvsConfig,
+  isEscrowToken,
 } from './types'
 
-export function mapConfig(project: BackendProject, chain: string): TvsConfig {
+export function mapConfig(
+  project: BackendProject,
+  chain: ChainConfig,
+): TvsConfig {
   const tokens: Map<string, Token> = new Map()
 
+  // map escrows to tokens
   for (const escrow of project.escrows) {
     // TODO - implement support for shared escrows
     if (escrow.sharedEscrow) {
@@ -29,15 +40,26 @@ export function mapConfig(project: BackendProject, chain: string): TvsConfig {
         )
       }
 
-      const exisitingToken = tokens.get(legacyToken.id)
+      const existingToken = tokens.get(legacyToken.id)
 
-      if (exisitingToken) {
-        updateToken(exisitingToken, escrow)
+      if (existingToken) {
+        assert(isEscrowToken(existingToken))
+        const updatedEscrowToken = updateEscrowToken(existingToken, escrow)
+        tokens.set(existingToken.id, updatedEscrowToken)
       } else {
-        const token = createToken(legacyToken, escrow, project, chain)
+        const token = createToken(legacyToken, project, chain, escrow)
         tokens.set(token.id, token)
       }
     }
+  }
+
+  // map totalSupply and circulatingSupply tokens
+  const nonZeroSupplyTokens = tokenList.filter(
+    (t) => t.supply !== 'zero' && t.chainId === chain.chainId,
+  )
+  for (const legacyToken of nonZeroSupplyTokens) {
+    const token = createToken(legacyToken, project, chain)
+    tokens.set(token.id, token)
   }
 
   return {
@@ -46,60 +68,100 @@ export function mapConfig(project: BackendProject, chain: string): TvsConfig {
   }
 }
 
-function updateToken(token: Token, escrow: BackendProjectEscrow) {
-  const amountFormula = token.amount as BalanceOfEscrowAmountFormula
+function updateEscrowToken(
+  token: EscrowToken,
+  escrow: BackendProjectEscrow,
+): Token {
+  // add this escrow to tokens esccrows list
+  const escrowAddresses = [...token.amount.escrowAddresses, escrow.address]
 
-  // add escrow to the amount formula
-  amountFormula.escrowAddresses.push(escrow.address)
-
+  let sinceTimestamp = token.sinceTimestamp
   // update sinceTimestamp if needed
-  if (escrow.sinceTimestamp < token.sinceTimestamp) {
-    token.sinceTimestamp = escrow.sinceTimestamp
+  if (escrow.sinceTimestamp.lt(token.sinceTimestamp)) {
+    sinceTimestamp = escrow.sinceTimestamp
   }
 
+  let untilTimestamp = token.untilTimestamp
   // reset or update  untilTimestamp if needed
   if (!escrow.untilTimestamp && token.untilTimestamp) {
-    token.untilTimestamp = undefined
+    untilTimestamp = undefined
   } else if (
     escrow.untilTimestamp &&
     token.untilTimestamp &&
-    escrow.untilTimestamp > token.untilTimestamp
+    escrow.untilTimestamp.gt(token.untilTimestamp)
   ) {
-    token.untilTimestamp = escrow.untilTimestamp
+    untilTimestamp = escrow.untilTimestamp
+  }
+
+  return {
+    ...token,
+    amount: {
+      ...token.amount,
+      escrowAddresses,
+    },
+    sinceTimestamp,
+    untilTimestamp,
   }
 }
 
 function createToken(
   legacyToken: LegacyToken,
-  escrow: BackendProjectEscrow,
   project: BackendProject,
-  chain: string,
+  chain: ChainConfig,
+  escrow?: BackendProjectEscrow,
 ): Token {
   let amountFormula: AmountFormula
+  let sinceTimestamp: UnixTime
+  let untilTimestamp: UnixTime | undefined
 
   switch (legacyToken.supply) {
     case 'zero':
+      assert(escrow, 'Escrow is required for zero supply tokens')
+
       amountFormula = {
         type: 'balanceOfEscrow',
         address: legacyToken.address ?? EthereumAddress.ZERO,
-        chain,
+        chain: chain.name,
         escrowAddresses: [escrow.address],
         decimals: legacyToken.decimals,
       } as BalanceOfEscrowAmountFormula
+
+      sinceTimestamp = escrow.sinceTimestamp
+      untilTimestamp = escrow.untilTimestamp
       break
     case 'totalSupply':
+      assert(
+        chain.minTimestampForTvl,
+        'Chain with token should have minTimestamp',
+      )
+
       amountFormula = {
         type: 'totalSupply',
         address: legacyToken.address,
-        chain,
+        chain: chain.name,
         decimals: legacyToken.decimals,
       } as TotalSupplyAmountFormula
+
+      sinceTimestamp = UnixTime.max(
+        chain.minTimestampForTvl,
+        legacyToken.sinceTimestamp,
+      )
       break
     case 'circulatingSupply':
+      assert(
+        chain.minTimestampForTvl,
+        'Chain with token should have minTimestamp',
+      )
+
       amountFormula = {
         type: 'circulatingSupply',
         ticker: legacyToken.symbol,
       } as CirculatingSupplyAmountFormula
+
+      sinceTimestamp = UnixTime.max(
+        chain.minTimestampForTvl,
+        legacyToken.sinceTimestamp,
+      )
       break
 
     default:
@@ -110,8 +172,8 @@ function createToken(
     id: legacyToken.id,
     ticker: mapCoingeckoIdToTicker(legacyToken.coingeckoId),
     amount: amountFormula,
-    sinceTimestamp: escrow.sinceTimestamp,
-    untilTimestamp: escrow.untilTimestamp,
+    sinceTimestamp,
+    untilTimestamp,
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated:
