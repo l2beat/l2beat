@@ -3,12 +3,12 @@ import {
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
+  type DaRelayerFailureRisk,
   type DaUpgradeabilityRisk,
   type DacDaLayer,
   daLayers,
   isDaBridgeVerified,
 } from '@l2beat/config'
-import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'

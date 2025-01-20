@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import {
   useScalingFilter,

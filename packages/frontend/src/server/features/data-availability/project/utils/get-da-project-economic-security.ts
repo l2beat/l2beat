@@ -1,5 +1,5 @@
 import { type DaLayer } from '@l2beat/config'
-import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
+import { daEconomicSecurityMeta } from '@l2beat/config'
 import { round } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'

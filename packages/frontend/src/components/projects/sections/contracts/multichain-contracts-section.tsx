@@ -1,5 +1,5 @@
 'use client'
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import type { UsedInProject } from '@l2beat/config'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
