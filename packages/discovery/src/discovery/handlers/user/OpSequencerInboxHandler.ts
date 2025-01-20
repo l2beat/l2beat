@@ -54,10 +54,10 @@ export class OpStackSequencerInboxHandler implements Handler {
     )
     const sequencerAddress = valueToAddress(resolved)
 
-    const last10Txs = await provider.raw(
+    const lastTxs = await provider.raw(
       `optimism_sequencer_100.${sequencerAddress}.${provider.blockNumber}`,
       ({ etherscanClient }) =>
-        etherscanClient.getLast10OutgoingTxs(
+        etherscanClient.getAtMost10RecentOutgoingTxs(
           sequencerAddress,
           provider.blockNumber,
         ),
@@ -65,11 +65,15 @@ export class OpStackSequencerInboxHandler implements Handler {
 
     return {
       field: this.field,
-      value: this.getInboxAddress(last10Txs),
+      value: this.getInboxAddress(lastTxs),
     }
   }
 
   getInboxAddress(lastTxs: Transaction[]): string {
+    if (lastTxs.length === 0) {
+      return EthereumAddress.ZERO
+    }
+
     const toAddresses = lastTxs.map((tx) => tx.to)
     const occurrence = toAddresses.reduce(
       (acc, address) => {
