@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Timelock contract allowing the queuing of transactions with a minimum delay of {{getMinDelay_formatted}}.",
+  "fields": {
+    "getMinDelay_formatted": {
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "Proposer": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "propose transactions."
+          }
+          // {
+          //   "type": "act",
+          //   "delay": "{{getMinDelay}}",
+          // }
+        ]
+      }
+    },
+    "Canceller": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "cancel queued transactions."
+          }
+        ]
+      }
+    },
+    "Executor": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "execute transactions that are ready."
+          }
+        ]
+      }
+    }
+  }
+}

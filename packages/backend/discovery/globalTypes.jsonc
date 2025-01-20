@@ -3,6 +3,10 @@
     "typeCaster": "Undecimal",
     "arg": { "decimals": 18 }
   },
+  "Undecimal24": {
+    "typeCaster": "Undecimal",
+    "arg": { "decimals": 24 }
+  },
   "ZkSyncAddress": {
     "typeCaster": "ChainPrefix",
     "arg": { "prefix": "zksync2" }
