@@ -41,12 +41,14 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
           "via": []
         }
       ],
@@ -94,7 +96,8 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
+          "to": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH.",
           "via": []
         }
       ],
@@ -146,22 +149,25 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "to": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "to": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "to": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "to": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
           "via": []
         }
       ],
@@ -239,12 +245,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "can freeze the bridge contract and update the list of authorized relayers."
         },
         {
           "permission": "upgrade",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -282,7 +288,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
       ],
@@ -318,7 +324,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+          "from": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
           "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
         }
       ],
@@ -365,7 +371,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
         }
       ],
@@ -395,7 +401,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
       ]
@@ -412,7 +418,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
       ]

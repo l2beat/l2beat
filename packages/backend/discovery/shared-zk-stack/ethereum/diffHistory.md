@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x4f01faf69bce177a1aca4901a4d03c771ca40cc9
+
+# Diff at Mon, 20 Jan 2025 10:43:27 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21630370
+- current block number: 21630370
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.from:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.1.target:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.1.from:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.0.target:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.0.from:
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
 Generated with discovered.json: 0x089edefbfba6e10c0a05b5f4799e7ef7af5a1815
 
 # Diff at Fri, 10 Jan 2025 11:44:13 GMT:

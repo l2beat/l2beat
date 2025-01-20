@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xd667208537cfb0488c09be2a077fee11813711df
+
+# Diff at Mon, 20 Jan 2025 10:43:27 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21628488
+- current block number: 21628488
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628488 (main branch discovery), not current.
+
+```diff
+    contract SiliconDAC (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7"
+    }
+```
+
+```diff
+    contract DACProxyAdmin (0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
+      directlyReceivedPermissions.0.from:
++        "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
+    }
+```
+
 Generated with discovered.json: 0xcf9760cdbe875e0599d315e123b0a8c2ab5929d3
 
 # Diff at Wed, 15 Jan 2025 07:48:05 GMT:

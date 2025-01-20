@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xc189c3968909018991c0b0345b3d8fdf821249a3
+
+# Diff at Mon, 20 Jan 2025 10:43:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21429285
+- current block number: 21429285
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429285 (main branch discovery), not current.
+
+```diff
+    contract GnosisBridgeGovernanceMultisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
+      receivedPermissions.1.from:
++        "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
+      receivedPermissions.0.target:
+-        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+      receivedPermissions.0.from:
++        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+    }
+```
+
+```diff
+    contract SDaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+```diff
+    contract BridgeValidators (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
 Generated with discovered.json: 0x6f91cfd9809161d39ed0afdf82df03bb7b4cbfa6
 
 # Diff at Wed, 18 Dec 2024 12:02:02 GMT:

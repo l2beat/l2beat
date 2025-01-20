@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
           "via": []
         }
       ],
@@ -127,7 +127,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
           "via": []
         }
       ],
@@ -162,7 +162,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
           "via": []
         }
       ],
@@ -221,7 +221,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
           "via": []
         }
       ],
@@ -308,7 +308,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "to": "0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
           "via": []
         }
       ],
@@ -367,23 +367,23 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
+          "from": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
         },
         {
           "permission": "upgrade",
-          "target": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464"
+          "from": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464"
         },
         {
           "permission": "upgrade",
-          "target": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824"
+          "from": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824"
         },
         {
           "permission": "upgrade",
-          "target": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c"
+          "from": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c"
         },
         {
           "permission": "upgrade",
-          "target": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
+          "from": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
         }
       ],
       "sinceTimestamp": 1637594986,

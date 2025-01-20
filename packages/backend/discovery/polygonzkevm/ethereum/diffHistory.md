@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x0689f23c39db4e5a05c39bb9d06f0090ebfc36cf
+
+# Diff at Mon, 20 Jan 2025 10:43:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21630127
+- current block number: 21630127
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630127 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      issuedPermissions.0.to:
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      issuedPermissions.0.to:
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      issuedPermissions.0.to:
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+      receivedPermissions.2.from:
++        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+      receivedPermissions.1.target:
+-        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+      receivedPermissions.1.from:
++        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+      receivedPermissions.0.target:
+-        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+      receivedPermissions.0.from:
++        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+    }
+```
+
 Generated with discovered.json: 0x99126e8497882a7e95ffdc8bb66627d14eff065a
 
 # Diff at Wed, 15 Jan 2025 13:18:34 GMT:

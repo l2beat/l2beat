@@ -17,16 +17,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            },
-            {
-              "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
-              "delay": 0
-            }
+            { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" },
+            { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" }
           ]
         }
       ],
@@ -96,13 +90,13 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
+          "from": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF",
+          "from": "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF",
           "via": [
             { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" },
             { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }
@@ -110,7 +104,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x68466622Aae5a9Ffd02530247d75Dd107f06B333",
+          "from": "0x68466622Aae5a9Ffd02530247d75Dd107f06B333",
           "via": [
             { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" },
             { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }
@@ -118,7 +112,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x7983403dDA368AA7d67145a9b81c5c517F364c42",
+          "from": "0x7983403dDA368AA7d67145a9b81c5c517F364c42",
           "via": [
             { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" },
             { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }
@@ -126,7 +120,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
+          "from": "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
           "via": [
             { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" },
             { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }
@@ -134,7 +128,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
+          "from": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
           "via": [
             { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" },
             { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }
@@ -142,7 +136,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A",
+          "from": "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A",
           "via": [
             { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" },
             { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }
@@ -150,7 +144,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
+          "from": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
           "via": [
             { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" },
             { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }
@@ -158,14 +152,14 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
+          "from": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
           "via": [{ "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+          "from": "0xa5D23c69894241825dAffB570c3c742C0F52df96"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -224,16 +218,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            },
-            {
-              "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
-              "delay": 0
-            }
+            { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" },
+            { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" }
           ]
         }
       ],
@@ -281,16 +269,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            },
-            {
-              "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
-              "delay": 0
-            }
+            { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" },
+            { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" }
           ]
         }
       ],
@@ -339,16 +321,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            },
-            {
-              "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
-              "delay": 0
-            }
+            { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" },
+            { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" }
           ]
         }
       ],
@@ -397,21 +373,16 @@
       "issuedPermissions": [
         {
           "permission": "sequence",
-          "target": "0xBa369bd77a346babCd282cB1a015194E8ec54542",
+          "to": "0xBa369bd77a346babCd282cB1a015194E8ec54542",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            },
-            {
-              "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
-              "delay": 0
-            }
+            { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" },
+            { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" }
           ]
         }
       ],
@@ -494,16 +465,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            },
-            {
-              "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
-              "delay": 0
-            }
+            { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" },
+            { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" }
           ]
         }
       ],
@@ -536,32 +501,26 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            },
-            {
-              "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
-              "delay": 0
-            }
+            { "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" },
+            { "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
+          "from": "0xBbc3872E30C91ef69336937838c2a283F79f7E68"
         },
         {
           "permission": "configure",
-          "target": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
+          "from": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
-          "target": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239"
+          "from": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239"
         }
       ],
       "sinceTimestamp": 1716053843,
@@ -607,31 +566,31 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"
+          "from": "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"
         },
         {
           "permission": "upgrade",
-          "target": "0x68466622Aae5a9Ffd02530247d75Dd107f06B333"
+          "from": "0x68466622Aae5a9Ffd02530247d75Dd107f06B333"
         },
         {
           "permission": "upgrade",
-          "target": "0x7983403dDA368AA7d67145a9b81c5c517F364c42"
+          "from": "0x7983403dDA368AA7d67145a9b81c5c517F364c42"
         },
         {
           "permission": "upgrade",
-          "target": "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19"
+          "from": "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19"
         },
         {
           "permission": "upgrade",
-          "target": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3"
+          "from": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3"
         },
         {
           "permission": "upgrade",
-          "target": "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
+          "from": "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
         },
         {
           "permission": "upgrade",
-          "target": "0xa5D23c69894241825dAffB570c3c742C0F52df96"
+          "from": "0xa5D23c69894241825dAffB570c3c742C0F52df96"
         }
       ],
       "sinceTimestamp": 1716053843,
@@ -654,28 +613,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0,
-              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-          "via": [
-            {
-              "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96",
-              "delay": 0
-            }
-          ]
+          "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+          "via": [{ "address": "0xa5D23c69894241825dAffB570c3c742C0F52df96" }]
         },
         {
           "permission": "validate",
-          "target": "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634",
+          "to": "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         }
       ],
@@ -797,7 +747,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
+          "from": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
           "description": "Add/remove batchPosters (Sequencers)."
         }
       ]
@@ -807,7 +757,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
+          "from": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -823,7 +773,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
+          "from": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]

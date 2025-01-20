@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x83a7b8cf6cf981738d16b48364b0f952cea5a15f
+
+# Diff at Mon, 20 Jan 2025 10:44:00 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 11108774
+- current block number: 11108774
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 11108774 (main branch discovery), not current.
+
+```diff
+    contract  (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xFe7C30860D01e28371D40434806F4A8fcDD3A098"
+      issuedPermissions.0.to:
++        "0xFe7C30860D01e28371D40434806F4A8fcDD3A098"
+    }
+```
+
+```diff
+    contract  (0xFe7C30860D01e28371D40434806F4A8fcDD3A098) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+      receivedPermissions.0.from:
++        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+    }
+```
+
 Generated with discovered.json: 0x3af63570b5d6a20ea734fb1f8c15d24dd6685caa
 
 # Diff at Mon, 21 Oct 2024 11:14:44 GMT:

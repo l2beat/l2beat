@@ -42,13 +42,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": [
-            {
-              "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-              "delay": 0
-            }
-          ]
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         }
       ],
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
@@ -134,7 +129,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
           "via": []
         }
       ],
@@ -164,44 +159,44 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x918778e825747a892b17C66fe7D24C618262867d",
+          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
           "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
-          "target": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
           "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+          "from": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
         },
         {
           "permission": "upgrade",
-          "target": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+          "from": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
         },
         {
           "permission": "upgrade",
-          "target": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+          "from": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
         },
         {
           "permission": "upgrade",
-          "target": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
           "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+          "from": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
         },
         {
           "permission": "upgrade",
-          "target": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+          "from": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+          "from": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -331,7 +326,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
           "via": []
         }
       ],
@@ -385,11 +380,11 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+          "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
         },
         {
           "permission": "upgrade",
-          "target": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+          "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
         }
       ],
       "sinceTimestamp": 1710314795,
@@ -410,7 +405,8 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "description": "set and change address mappings.",
           "via": []
         }
       ],
@@ -471,7 +467,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
           "via": []
         }
       ],
@@ -534,13 +530,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-          "via": [
-            {
-              "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-              "delay": 0
-            }
-          ]
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -654,7 +645,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
           "via": []
         }
       ],
@@ -687,7 +678,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
           "via": []
         }
       ],

@@ -210,7 +210,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
+          "from": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -321,7 +321,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD",
+          "to": "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD",
           "via": []
         }
       ],

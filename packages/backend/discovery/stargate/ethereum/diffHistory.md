@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xfc9fa2c924df23bf9edc31b7892e90a1d81c9093
+
+# Diff at Mon, 20 Jan 2025 10:43:31 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21630186
+- current block number: 21630186
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630186 (main branch discovery), not current.
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+      issuedPermissions.0.to:
++        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+      issuedPermissions.0.to:
++        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x5a54fe5234E811466D5366846283323c954310B2"
+      receivedPermissions.0.from:
++        "0x5a54fe5234E811466D5366846283323c954310B2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x902F09715B6303d4173037652FA7377e5b98089E"
+      receivedPermissions.0.from:
++        "0x902F09715B6303d4173037652FA7377e5b98089E"
+    }
+```
+
 Generated with discovered.json: 0x361675df7e736c4d467c948c7483b8e6bd05aa44
 
 # Diff at Mon, 25 Nov 2024 10:52:49 GMT:

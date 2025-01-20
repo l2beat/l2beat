@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x4d08d0d1a55ba68744a84b1383b6d12aeddbbc71
+
+# Diff at Mon, 20 Jan 2025 10:43:42 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21086404
+- current block number: 21086404
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21086404 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+    }
+```
+
+```diff
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17) {
+    +++ description: None
+      receivedPermissions.3.target:
+-        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      receivedPermissions.3.from:
++        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      receivedPermissions.2.target:
+-        "0x997CfB0838544f68E59f877EDc905001456F125b"
+      receivedPermissions.2.from:
++        "0x997CfB0838544f68E59f877EDc905001456F125b"
+      receivedPermissions.1.target:
+-        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      receivedPermissions.1.from:
++        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      receivedPermissions.0.target:
+-        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      receivedPermissions.0.from:
++        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      directlyReceivedPermissions.0.target:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      directlyReceivedPermissions.0.from:
++        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      issuedPermissions.0.target:
+-        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+    }
+```
+
+```diff
+    contract Bridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      directlyReceivedPermissions.3.target:
+-        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      directlyReceivedPermissions.3.from:
++        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      directlyReceivedPermissions.2.target:
+-        "0x997CfB0838544f68E59f877EDc905001456F125b"
+      directlyReceivedPermissions.2.from:
++        "0x997CfB0838544f68E59f877EDc905001456F125b"
+      directlyReceivedPermissions.1.target:
+-        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      directlyReceivedPermissions.1.from:
++        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      directlyReceivedPermissions.0.target:
+-        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      directlyReceivedPermissions.0.from:
++        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+    }
+```
+
 Generated with discovered.json: 0x2b2e54ebaa715689032be51ee9755e657a59162b
 
 # Diff at Thu, 31 Oct 2024 15:07:02 GMT:

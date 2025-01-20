@@ -191,13 +191,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
-          "via": [
-            {
-              "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-              "delay": 0
-            }
-          ]
+          "to": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+          "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
         }
       ],
       "ignoreInWatchMode": ["clock", "totalSupply"],
@@ -365,10 +360,11 @@
       "sourceHashes": [
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
         }
       ],
       "sinceTimestamp": 1716317321,
@@ -385,14 +381,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+          "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
         }
       ]
     },

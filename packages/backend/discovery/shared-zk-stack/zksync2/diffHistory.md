@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x624b58cf73b019ddf84e3980bef4b4826a387022
+
+# Diff at Mon, 20 Jan 2025 10:44:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 44113900
+- current block number: 44113900
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 44113900 (main branch discovery), not current.
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+      directlyReceivedPermissions.0.from:
++        "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x7834eee0c00ff2ede2944dbdc6c7a1d9a38b154e
 
 # Diff at Wed, 06 Nov 2024 12:10:20 GMT:

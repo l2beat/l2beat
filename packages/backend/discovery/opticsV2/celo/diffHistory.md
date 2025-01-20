@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x7cafa77f6bdf8615f8b2df574e98118ef14b8e10
+
+# Diff at Mon, 20 Jan 2025 10:44:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 26689586
+- current block number: 26689586
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
+    contract UpgradeBeaconController (0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
+      receivedPermissions.0.from:
++        "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
+    }
+```
+
+```diff
+    contract BeaconProxy (0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee"
+      issuedPermissions.0.to:
++        "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee"
+    }
+```
+
 Generated with discovered.json: 0xd9713d32cd23debf6e05ea259a050fcff80dd2b4
 
 # Diff at Mon, 21 Oct 2024 11:15:30 GMT:

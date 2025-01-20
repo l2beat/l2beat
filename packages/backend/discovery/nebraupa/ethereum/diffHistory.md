@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x783d822a5cb68779064b48e1d18f77f7cfc740c4
+
+# Diff at Mon, 20 Jan 2025 10:43:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 20826378
+- current block number: 20826378
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20826378 (main branch discovery), not current.
+
+```diff
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xb463603469Bf31f189E3F6625baf8378880Df14e"
+      issuedPermissions.0.to:
++        "0xb463603469Bf31f189E3F6625baf8378880Df14e"
+    }
+```
+
+```diff
+    contract NebraOwner (0xb463603469Bf31f189E3F6625baf8378880Df14e) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
+      receivedPermissions.0.from:
++        "0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
+    }
+```
+
 Generated with discovered.json: 0x20d629f2352792f8b05f530f6575da125446c07a
 
 # Diff at Mon, 21 Oct 2024 11:08:02 GMT:

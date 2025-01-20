@@ -1,3 +1,223 @@
+Generated with discovered.json: 0x55240f2089cd3d222a68a5bdebf19759360ad366
+
+# Diff at Mon, 20 Jan 2025 10:43:35 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21630233
+- current block number: 21630233
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630233 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract Risc0Verifier (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract SP1Verifier (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.13.target:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.13.from:
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.12.target:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      receivedPermissions.12.from:
++        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      receivedPermissions.11.target:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.11.from:
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.10.target:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
+      receivedPermissions.10.from:
++        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
+      receivedPermissions.9.target:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      receivedPermissions.9.from:
++        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      receivedPermissions.8.target:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      receivedPermissions.8.from:
++        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      receivedPermissions.7.target:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.7.from:
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.6.target:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.6.from:
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.5.target:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.5.from:
++        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.4.target:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      receivedPermissions.4.from:
++        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      receivedPermissions.3.target:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+      receivedPermissions.3.from:
++        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+      receivedPermissions.2.target:
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+      receivedPermissions.2.from:
++        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+      receivedPermissions.1.target:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.1.from:
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.0.target:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.0.from:
++        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      issuedPermissions.0.to:
++        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+    }
+```
+
 Generated with discovered.json: 0x65b9e2aa46a89f9b24232079da351448c0001664
 
 # Diff at Wed, 15 Jan 2025 13:39:32 GMT:

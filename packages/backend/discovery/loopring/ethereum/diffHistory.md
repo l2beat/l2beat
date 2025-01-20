@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xe447d794b30bd6f815ed56affd84fee6f44ab19d
+
+# Diff at Mon, 20 Jan 2025 10:43:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21543795
+- current block number: 21543795
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543795 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
+      issuedPermissions.0.to:
++        "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97"
+    }
+```
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
+      receivedPermissions.0.from:
++        "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
+    }
+```
+
 Generated with discovered.json: 0xe7de9a00edfb55f35a05af5ce29dfbecd1edb236
 
 # Diff at Fri, 03 Jan 2025 11:56:44 GMT:

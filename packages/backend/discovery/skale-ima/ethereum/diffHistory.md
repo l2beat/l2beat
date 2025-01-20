@@ -1,3 +1,139 @@
+Generated with discovered.json: 0xd15e6e42393cbb5379febb11cbabecf973246187
+
+# Diff at Mon, 20 Jan 2025 10:43:28 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21285734
+- current block number: 21285734
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285734 (main branch discovery), not current.
+
+```diff
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      issuedPermissions.0.to:
++        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627) {
+    +++ description: None
+      receivedPermissions.7.target:
+-        "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986"
+      receivedPermissions.7.from:
++        "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986"
+      receivedPermissions.6.target:
+-        "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669"
+      receivedPermissions.6.from:
++        "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669"
+      receivedPermissions.5.target:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      receivedPermissions.5.from:
++        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      receivedPermissions.4.target:
+-        "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d"
+      receivedPermissions.4.from:
++        "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d"
+      receivedPermissions.3.target:
+-        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      receivedPermissions.3.from:
++        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      receivedPermissions.2.target:
+-        "0x588801cA36558310D91234aFC2511502282b1621"
+      receivedPermissions.2.from:
++        "0x588801cA36558310D91234aFC2511502282b1621"
+      receivedPermissions.1.target:
+-        "0x49F583d263e4Ef938b9E09772D3394c71605Df94"
+      receivedPermissions.1.from:
++        "0x49F583d263e4Ef938b9E09772D3394c71605Df94"
+      receivedPermissions.0.target:
+-        "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a"
+      receivedPermissions.0.from:
++        "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a"
+    }
+```
+
 Generated with discovered.json: 0x1c2ac7625f15b79882eeb33d996a7925f7977340
 
 # Diff at Thu, 28 Nov 2024 10:54:46 GMT:

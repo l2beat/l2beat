@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xe65a40db43c9a0d4de5696033c2b1a98ab82dc02
+
+# Diff at Mon, 20 Jan 2025 10:42:51 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 20640703
+- current block number: 20640703
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20640703 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
+      issuedPermissions.0.to:
++        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
+    }
+```
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      receivedPermissions.0.target:
+-        "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"
+      receivedPermissions.0.from:
++        "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"
+    }
+```
+
 Generated with discovered.json: 0x3fecf8693e8f367272c311041880c272398285bb
 
 # Diff at Mon, 21 Oct 2024 12:43:55 GMT:

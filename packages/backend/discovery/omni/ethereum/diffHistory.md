@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xeee045a5733075b2e76b58f69ae25ed538989df0
+
+# Diff at Mon, 20 Jan 2025 10:43:13 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21579380
+- current block number: 21579380
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579380 (main branch discovery), not current.
+
+```diff
+    contract OmniBridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.2.from:
++        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.1.target:
+-        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.1.from:
++        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.0.target:
+-        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+      receivedPermissions.0.from:
++        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+```diff
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
+      issuedPermissions.0.to:
++        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
 Generated with discovered.json: 0xb29db7782b209f4c6705d03393b3d8139a13f482
 
 # Diff at Wed, 08 Jan 2025 11:13:15 GMT:

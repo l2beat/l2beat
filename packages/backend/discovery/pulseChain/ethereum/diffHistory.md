@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x3a2d417933ab734a85bba41f2c0127d04aa6da07
+
+# Diff at Mon, 20 Jan 2025 10:43:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 17968825
+- current block number: 17968825
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17968825 (main branch discovery), not current.
+
+```diff
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
+      issuedPermissions.0.to:
++        "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
+    }
+```
+
+```diff
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+      issuedPermissions.0.to:
++        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+    }
+```
+
+```diff
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+      issuedPermissions.0.to:
++        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+    }
+```
+
 Generated with discovered.json: 0x920aabcb8de6f7c5188d1d3dd1cb18be9d763b06
 
 # Diff at Mon, 21 Oct 2024 11:09:20 GMT:

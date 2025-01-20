@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xbe07d8491138fcdbf63b6657da6e162b3fec0e84
+
+# Diff at Mon, 20 Jan 2025 10:43:34 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21141679
+- current block number: 21141679
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141679 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
+      receivedPermissions.1.from:
++        "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
+      receivedPermissions.0.target:
+-        "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
+      receivedPermissions.0.from:
++        "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
+    }
+```
+
+```diff
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"
+      receivedPermissions.0.from:
++        "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"
+    }
+```
+
+```diff
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+      issuedPermissions.0.to:
++        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+    }
+```
+
+```diff
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+      issuedPermissions.0.to:
++        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+    }
+```
+
+```diff
+    contract Bridge (0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
+      issuedPermissions.0.to:
++        "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
+    }
+```
+
 Generated with discovered.json: 0xe90b55da15bd118c537a47b11110c4d2bcee4971
 
 # Diff at Fri, 08 Nov 2024 08:19:03 GMT:

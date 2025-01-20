@@ -1,3 +1,207 @@
+Generated with discovered.json: 0x32be56e34fb5a233282de4fcc21a23a6f43fa204
+
+# Diff at Mon, 20 Jan 2025 10:43:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 20675743
+- current block number: 20675743
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675743 (main branch discovery), not current.
+
+```diff
+    contract Arbitrator (0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (0x273D59aed2d793167c162E64b9162154B07583C0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
+      receivedPermissions.0.from:
++        "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
+    }
+```
+
+```diff
+    contract BlastL1Gateway (0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract BaseL1Gateway (0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      issuedPermissions.0.to:
++        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract zkLink (0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract MantaL1Gateway (0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      issuedPermissions.0.to:
++        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract LineaL1Gateway (0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
+      issuedPermissions.0.to:
++        "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
+    }
+```
+
+```diff
+    contract EthereumOwner (0xdb4D755E3b8735314147b9bB146327C269701E2D) {
+    +++ description: None
+      receivedPermissions.9.target:
+-        "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
+      receivedPermissions.9.from:
++        "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
+      receivedPermissions.8.target:
+-        "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
+      receivedPermissions.8.from:
++        "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
+      receivedPermissions.7.target:
+-        "0x986c905087a663db3C81ad319b94c1E9dd388e92"
+      receivedPermissions.7.from:
++        "0x986c905087a663db3C81ad319b94c1E9dd388e92"
+      receivedPermissions.6.target:
+-        "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+      receivedPermissions.6.from:
++        "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+      receivedPermissions.5.target:
+-        "0x803460416C2682Ac54FccF03eF77b10A12f2809b"
+      receivedPermissions.5.from:
++        "0x803460416C2682Ac54FccF03eF77b10A12f2809b"
+      receivedPermissions.4.target:
+-        "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D"
+      receivedPermissions.4.from:
++        "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D"
+      receivedPermissions.3.target:
+-        "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
+      receivedPermissions.3.from:
++        "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
+      receivedPermissions.2.target:
+-        "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
+      receivedPermissions.2.from:
++        "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
+      receivedPermissions.1.target:
+-        "0x273D59aed2d793167c162E64b9162154B07583C0"
+      receivedPermissions.1.from:
++        "0x273D59aed2d793167c162E64b9162154B07583C0"
+      receivedPermissions.0.target:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      receivedPermissions.0.from:
++        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+    }
+```
+
+```diff
+    contract MantleL1Gateway (0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract EraL1Gateway (0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      issuedPermissions.0.to:
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
 Generated with discovered.json: 0xb196c8da8a4a958aa81033a436592155e0a5143c
 
 # Diff at Mon, 21 Oct 2024 11:24:41 GMT:

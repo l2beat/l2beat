@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x1fe5939dab13ba3809eba5f7f5ca4a4eb4e6c552
+
+# Diff at Mon, 20 Jan 2025 10:43:22 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 20017695
+- current block number: 20017695
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017695 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+      issuedPermissions.0.to:
++        "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
 Generated with discovered.json: 0x5ee98ba844f32d21f380f1e1218afb42e0878c64
 
 # Diff at Mon, 21 Oct 2024 11:09:45 GMT:

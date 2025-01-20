@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xa566c6a3c420ff66b8d8d39b5c1d96a2f32a952c
+
+# Diff at Mon, 20 Jan 2025 10:43:56 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 19378036
+- current block number: 19378036
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19378036 (main branch discovery), not current.
+
+```diff
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      issuedPermissions.0.to:
++        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
+      issuedPermissions.0.to:
++        "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"
+      receivedPermissions.0.from:
++        "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"
+    }
+```
+
+```diff
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      issuedPermissions.0.to:
++        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+    }
+```
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
+      receivedPermissions.0.from:
++        "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
+    }
+```
+
 Generated with discovered.json: 0x5733934da56ba2cffe47060853dad61345f9409c
 
 # Diff at Mon, 21 Oct 2024 11:14:14 GMT:

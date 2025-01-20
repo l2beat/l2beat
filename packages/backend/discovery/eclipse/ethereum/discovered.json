@@ -366,15 +366,15 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"
+          "from": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"
         },
         {
           "permission": "upgrade",
-          "target": "0xb23B2492f7A9631104A5877F7FFA00633660968d"
+          "from": "0xb23B2492f7A9631104A5877F7FFA00633660968d"
         },
         {
           "permission": "upgrade",
-          "target": "0xD7E4b67E735733aC98a88F13d087D8aac670E644"
+          "from": "0xD7E4b67E735733aC98a88F13d087D8aac670E644"
         }
       ]
     },

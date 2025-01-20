@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x0dd795e69d8f66def1d5e689088c60898194d56e
+
+# Diff at Mon, 20 Jan 2025 10:43:30 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 19825381
+- current block number: 19825381
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825381 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xF5C9F957705bea56a7e806943f98F7777B995826"
+      receivedPermissions.0.from:
++        "0xF5C9F957705bea56a7e806943f98F7777B995826"
+    }
+```
+
+```diff
+    contract StarkExchange (0xF5C9F957705bea56a7e806943f98F7777B995826) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B"
+      issuedPermissions.1.to:
++        "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B"
+      issuedPermissions.0.target:
+-        "0x5918481F777dBe437De249492B90AffB4e655de4"
+      issuedPermissions.0.to:
++        "0x5918481F777dBe437De249492B90AffB4e655de4"
+    }
+```
+
 Generated with discovered.json: 0xdf7892827a8e93cb623e9fdfda48b9b09f5ca8a6
 
 # Diff at Mon, 21 Oct 2024 11:10:34 GMT:

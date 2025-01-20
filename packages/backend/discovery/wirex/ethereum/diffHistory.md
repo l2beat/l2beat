@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xa95adbdcc06041f6a6d5bffa3e8e84ec2a840b07
+
+# Diff at Mon, 20 Jan 2025 10:43:39 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21628493
+- current block number: 21628493
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628493 (main branch discovery), not current.
+
+```diff
+    contract DACProxyAdmin (0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
+      directlyReceivedPermissions.0.from:
++        "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
+    }
+```
+
+```diff
+    contract WirexPayChainDAC (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
 Generated with discovered.json: 0x10ab6fdd255020a72045d2a47cfc2e25abf7f464
 
 # Diff at Wed, 15 Jan 2025 07:48:58 GMT:

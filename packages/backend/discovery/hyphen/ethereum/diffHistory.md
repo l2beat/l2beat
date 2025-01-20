@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x02757b3f57faa77d2b6746efac31730155d30f43
+
+# Diff at Mon, 20 Jan 2025 10:43:00 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 20138492
+- current block number: 20138492
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9"
+      receivedPermissions.2.from:
++        "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9"
+      receivedPermissions.1.target:
+-        "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168"
+      receivedPermissions.1.from:
++        "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168"
+      receivedPermissions.0.target:
+-        "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b"
+      receivedPermissions.0.from:
++        "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b"
+    }
+```
+
+```diff
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x13a4cC0750296bB72Eb0006febec306551A4f472"
+      issuedPermissions.0.to:
++        "0x13a4cC0750296bB72Eb0006febec306551A4f472"
+    }
+```
+
+```diff
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x13a4cC0750296bB72Eb0006febec306551A4f472"
+      issuedPermissions.0.to:
++        "0x13a4cC0750296bB72Eb0006febec306551A4f472"
+    }
+```
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x13a4cC0750296bB72Eb0006febec306551A4f472"
+      issuedPermissions.0.to:
++        "0x13a4cC0750296bB72Eb0006febec306551A4f472"
+    }
+```
+
 Generated with discovered.json: 0xd3249b0edf4ffd9964cc4224dac381b3e0f7bb67
 
 # Diff at Mon, 21 Oct 2024 11:06:31 GMT:

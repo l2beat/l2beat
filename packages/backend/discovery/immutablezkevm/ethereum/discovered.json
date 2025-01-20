@@ -24,13 +24,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD2C37fC6fD89563187f3679304975655e448D192",
-          "via": [
-            {
-              "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
-              "delay": 0
-            }
-          ]
+          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
+          "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         }
       ],
       "sinceTimestamp": 1702962623,
@@ -104,13 +99,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD2C37fC6fD89563187f3679304975655e448D192",
-          "via": [
-            {
-              "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
-              "delay": 0
-            }
-          ]
+          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
+          "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         }
       ],
       "ignoreInWatchMode": ["withdrawalQueueActivated"],
@@ -173,19 +163,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "from": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
           "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "from": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
           "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+          "from": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -221,11 +211,11 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+          "from": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
         },
         {
           "permission": "upgrade",
-          "target": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+          "from": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
         }
       ],
       "sinceTimestamp": 1702962527,

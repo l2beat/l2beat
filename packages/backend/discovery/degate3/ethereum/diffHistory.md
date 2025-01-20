@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xb5794dad9c4885a3ba92d3a9e0ae1eaeb7bc9539
+
+# Diff at Mon, 20 Jan 2025 10:42:51 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21394291
+- current block number: 21394291
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21394291 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x9C07A72177c5A05410cA338823e790876E79D73B"
+      receivedPermissions.0.from:
++        "0x9C07A72177c5A05410cA338823e790876E79D73B"
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf2991507952d9594E71A44A54fb19f3109D213A5"
+      issuedPermissions.0.to:
++        "0xf2991507952d9594E71A44A54fb19f3109D213A5"
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d"
+      issuedPermissions.0.to:
++        "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d"
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x54D7aE423Edb07282645e740C046B9373970a168"
+      receivedPermissions.0.from:
++        "0x54D7aE423Edb07282645e740C046B9373970a168"
+    }
+```
+
 Generated with discovered.json: 0x29e736789907b252ae40de83fcafe0098877c62a
 
 # Diff at Fri, 13 Dec 2024 14:49:01 GMT:

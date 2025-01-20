@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xea0105015420248a5b5b2fb20fc6d32bc34bfccd
+
+# Diff at Mon, 20 Jan 2025 10:43:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21635772
+- current block number: 21635772
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635772 (main branch discovery), not current.
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+      issuedPermissions.0.to:
++        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+      issuedPermissions.0.to:
++        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
+      receivedPermissions.2.from:
++        "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
+      receivedPermissions.1.target:
+-        "0x624631881655a310adcF0d1336658Cc977609b72"
+      receivedPermissions.1.from:
++        "0x624631881655a310adcF0d1336658Cc977609b72"
+      receivedPermissions.0.target:
+-        "0x3ca373F5ecB92ac762f9876f6e773082A4589995"
+      receivedPermissions.0.from:
++        "0x3ca373F5ecB92ac762f9876f6e773082A4589995"
+    }
+```
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+      issuedPermissions.0.to:
++        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+      issuedPermissions.0.to:
++        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+    }
+```
+
+```diff
+    contract LightLinkERC20Bridge (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+      issuedPermissions.0.to:
++        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+      issuedPermissions.0.to:
++        "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
 Generated with discovered.json: 0x5546eedb4eff9f9b01bdfcb50e2cb76c18d72697
 
 # Diff at Thu, 16 Jan 2025 08:12:44 GMT:

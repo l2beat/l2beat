@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xac1fba4b10c48cfe1a34c0d7ba3d6f2bafb489c2
+
+# Diff at Mon, 20 Jan 2025 10:43:53 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 249925893
+- current block number: 249925893
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 249925893 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
+      receivedPermissions.0.from:
++        "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
+    }
+```
+
+```diff
+    contract ArbitrumL2Gateway (0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F"
+      issuedPermissions.0.to:
++        "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F"
+    }
+```
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
+      receivedPermissions.1.from:
++        "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
+      receivedPermissions.0.target:
+-        "0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
+      receivedPermissions.0.from:
++        "0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48698A17D193bFc882395AC06a1DEdbb222F2917"
+      issuedPermissions.0.to:
++        "0x48698A17D193bFc882395AC06a1DEdbb222F2917"
+    }
+```
+
+```diff
+    contract zkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F"
+      issuedPermissions.0.to:
++        "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F"
+    }
+```
+
 Generated with discovered.json: 0xf45dea9be489be071590ac3905e4336d4bded35d
 
 # Diff at Mon, 21 Oct 2024 11:13:49 GMT:

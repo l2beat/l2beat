@@ -1,3 +1,333 @@
+Generated with discovered.json: 0xf60b90388bba6d31873df945449fa741b742b382
+
+# Diff at Mon, 20 Jan 2025 10:43:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21141582
+- current block number: 21141582
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141582 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.0.target:
+-        "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
+      receivedPermissions.0.from:
++        "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
+    }
+```
+
+```diff
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the permission to submit the output root. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      receivedPermissions.14.target:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
+      receivedPermissions.14.from:
++        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
+      receivedPermissions.13.target:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      receivedPermissions.13.from:
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      receivedPermissions.12.target:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.12.from:
++        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.11.target:
+-        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      receivedPermissions.11.from:
++        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      receivedPermissions.10.target:
+-        "0x827962404D7104202C5aaa6b929115C8211d9596"
+      receivedPermissions.10.from:
++        "0x827962404D7104202C5aaa6b929115C8211d9596"
+      receivedPermissions.9.target:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      receivedPermissions.9.from:
++        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      receivedPermissions.8.target:
+-        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      receivedPermissions.8.from:
++        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      receivedPermissions.7.target:
+-        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      receivedPermissions.7.from:
++        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      receivedPermissions.6.target:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      receivedPermissions.6.from:
++        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      receivedPermissions.5.target:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      receivedPermissions.5.from:
++        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      receivedPermissions.4.target:
+-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      receivedPermissions.4.from:
++        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      receivedPermissions.3.target:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.3.from:
++        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.2.target:
+-        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      receivedPermissions.2.from:
++        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      receivedPermissions.1.target:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.1.from:
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.0.target:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      receivedPermissions.0.from:
++        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+    }
+```
+
+```diff
+    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      issuedPermissions.0.to:
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+    }
+```
+
+```diff
+    contract SpectrumHub (0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9841bC06C8284095824e9397AC818aD1114C444C"
+      issuedPermissions.0.to:
++        "0x9841bC06C8284095824e9397AC818aD1114C444C"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract SpectrumCore (0x88b6bBb148748C18B377A57c9d4E6c714AF28078) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xd26F4195B147b988E7497779f7DED22ba130204d"
+      issuedPermissions.0.to:
++        "0xd26F4195B147b988E7497779f7DED22ba130204d"
+    }
+```
+
+```diff
+    contract SH_ProxyAdmin (0x9841bC06C8284095824e9397AC818aD1114C444C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+      issuedPermissions.0.to:
++        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+      receivedPermissions.0.target:
+-        "0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5"
+      receivedPermissions.0.from:
++        "0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5"
+    }
+```
+
+```diff
+    contract AssetManager (0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3) {
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+      issuedPermissions.0.to:
++        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+      receivedPermissions.0.target:
+-        "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474"
+      receivedPermissions.0.from:
++        "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474"
+    }
+```
+
+```diff
+    contract  (0xacA91C74748090f861E25D142B6fCB265c6171c8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+      issuedPermissions.0.to:
++        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract SC_ProxyAdmin (0xd26F4195B147b988E7497779f7DED22ba130204d) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+      issuedPermissions.0.to:
++        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+      receivedPermissions.0.target:
+-        "0x88b6bBb148748C18B377A57c9d4E6c714AF28078"
+      receivedPermissions.0.from:
++        "0x88b6bBb148748C18B377A57c9d4E6c714AF28078"
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
+```diff
+    contract spETH (0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4"
+      issuedPermissions.0.to:
++        "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4"
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      issuedPermissions.0.to:
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+    }
+```
+
 Generated with discovered.json: 0xff6fd8a4c854beb6a880cda7353de79d84875215
 
 # Diff at Fri, 10 Jan 2025 15:24:04 GMT:

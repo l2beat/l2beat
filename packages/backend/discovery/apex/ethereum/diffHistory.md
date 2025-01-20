@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xe5deef6cf036f992aaa13da9f4b1efdd59066fab
+
+# Diff at Mon, 20 Jan 2025 10:42:42 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 19825348
+- current block number: 19825348
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825348 (main branch discovery), not current.
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xef75e1199B0599BA823b7770AcE8eb34864a1D55"
+      issuedPermissions.1.to:
++        "0xef75e1199B0599BA823b7770AcE8eb34864a1D55"
+      issuedPermissions.0.target:
+-        "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6"
+      issuedPermissions.0.to:
++        "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6"
+    }
+```
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
+      receivedPermissions.0.from:
++        "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
+    }
+```
+
+```diff
+    contract StarkExchangeUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x53c6Ec9640761c669B800088F097E01A8207Ac8b"
+      issuedPermissions.0.to:
++        "0x53c6Ec9640761c669B800088F097E01A8207Ac8b"
+    }
+```
+
 Generated with discovered.json: 0x76affb07ad86247dd4883bc927fdb3f472cd98c6
 
 # Diff at Mon, 21 Oct 2024 11:04:12 GMT:

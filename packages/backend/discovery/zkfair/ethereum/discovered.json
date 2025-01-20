@@ -45,13 +45,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [
-            {
-              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-              "delay": 0
-            }
-          ]
+          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         }
       ],
       "sinceTimestamp": 1702879355,
@@ -100,29 +95,29 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
+          "from": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
           "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+          "from": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
           "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x997CfB0838544f68E59f877EDc905001456F125b",
+          "from": "0x997CfB0838544f68E59f877EDc905001456F125b",
           "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+          "from": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
           "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+          "from": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
         }
       ],
       "sinceTimestamp": 1702879391,
@@ -169,13 +164,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [
-            {
-              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-              "delay": 0
-            }
-          ]
+          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         }
       ],
       "sinceTimestamp": 1702879331,
@@ -246,13 +236,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [
-            {
-              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-              "delay": 0
-            }
-          ]
+          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         }
       ],
       "sinceTimestamp": 1702879319,
@@ -310,13 +295,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
-          "via": [
-            {
-              "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
-              "delay": 0
-            }
-          ]
+          "to": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17",
+          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
         }
       ],
       "sinceTimestamp": 1702879283,
@@ -354,19 +334,19 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+          "from": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
         },
         {
           "permission": "upgrade",
-          "target": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+          "from": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
         },
         {
           "permission": "upgrade",
-          "target": "0x997CfB0838544f68E59f877EDc905001456F125b"
+          "from": "0x997CfB0838544f68E59f877EDc905001456F125b"
         },
         {
           "permission": "upgrade",
-          "target": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+          "from": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
         }
       ],
       "sinceTimestamp": 1702879259,

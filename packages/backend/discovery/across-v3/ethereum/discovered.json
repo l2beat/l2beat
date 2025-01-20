@@ -236,7 +236,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "to": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
           "via": []
         }
       ],
@@ -472,7 +472,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xB524735356985D2f267FA010D681f061DfF03715"
+          "from": "0xB524735356985D2f267FA010D681f061DfF03715"
         }
       ],
       "sinceTimestamp": 1683067175,
@@ -643,7 +643,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+          "from": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
         }
       ],
       "ignoreInWatchMode": ["rootBundleProposal"],

@@ -1,3 +1,111 @@
+Generated with discovered.json: 0xcff97e4f8edd33209fa162739a2bae65488528f2
+
+# Diff at Mon, 20 Jan 2025 10:42:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21628459
+- current block number: 21628459
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628459 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      receivedPermissions.5.target:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      receivedPermissions.5.from:
++        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      receivedPermissions.4.target:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      receivedPermissions.4.from:
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      receivedPermissions.3.target:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      receivedPermissions.3.from:
++        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      receivedPermissions.2.target:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      receivedPermissions.2.from:
++        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      receivedPermissions.1.target:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      receivedPermissions.1.from:
++        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      receivedPermissions.0.target:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      receivedPermissions.0.from:
++        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
 Generated with discovered.json: 0x1ee0c66e32c739049ac33e9c2ad09d167841a33d
 
 # Diff at Wed, 15 Jan 2025 07:42:16 GMT:

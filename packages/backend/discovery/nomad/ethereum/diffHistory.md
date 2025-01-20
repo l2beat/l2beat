@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xd50d377c9f31ed8eba65b34a83762ea3e2504ba7
+
+# Diff at Mon, 20 Jan 2025 10:43:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 19531994
+- current block number: 19531994
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531994 (main branch discovery), not current.
+
+```diff
+    contract ReplicaBeaconProxy (0x049b51e531Fd8f90da6d92EA83dC4125002F20EF) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+      issuedPermissions.0.to:
++        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0x3009C99D370B780304D2098196f1EBF779a4777a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+      issuedPermissions.0.to:
++        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+      issuedPermissions.0.to:
++        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+      issuedPermissions.0.to:
++        "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e"
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e) {
+    +++ description: None
+      receivedPermissions.3.target:
+-        "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
+      receivedPermissions.3.from:
++        "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
+      receivedPermissions.2.target:
+-        "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3"
+      receivedPermissions.2.from:
++        "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3"
+      receivedPermissions.1.target:
+-        "0x3009C99D370B780304D2098196f1EBF779a4777a"
+      receivedPermissions.1.from:
++        "0x3009C99D370B780304D2098196f1EBF779a4777a"
+      receivedPermissions.0.target:
+-        "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF"
+      receivedPermissions.0.from:
++        "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF"
+    }
+```
+
 Generated with discovered.json: 0x1339e3af2ed178b2c74dc9815dec85177c1e5847
 
 # Diff at Mon, 21 Oct 2024 11:08:05 GMT:

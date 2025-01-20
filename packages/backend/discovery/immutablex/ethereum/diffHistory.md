@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x26faebb010ad47fd07874c6a01e90bc9dab3af67
+
+# Diff at Mon, 20 Jan 2025 10:43:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d37909731c5dab208d93f6fab16e54f7312a4e7f block: 21387345
+- current block number: 21387345
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387345 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
+      issuedPermissions.0.to:
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+    }
+```
+
+```diff
+    contract IMXProxyGovernanceMultisig2 (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+      receivedPermissions.0.from:
++        "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+    }
+```
+
 Generated with discovered.json: 0x2765b3f4780f90f735cd928d71f7c1cbd1830a75
 
 # Diff at Thu, 12 Dec 2024 15:33:43 GMT:
