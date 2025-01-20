@@ -1,5 +1,5 @@
+import { ConfigMapping } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigMapping } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../../config/Config'

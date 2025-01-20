@@ -8,7 +8,6 @@ import {
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ethereum } from '../chains/ethereum'
 import { createAmountId } from './createAmountId'
 import { createPriceId } from './createPriceId'
 
@@ -54,12 +53,12 @@ export class ConfigMapping {
         break
       case 'aggLayerL2Token':
       case 'elasticChainL2Token':
-        assetId = AssetId.create(ethereum.name, amountConfig.l1Address)
+        assetId = AssetId.create('ethereum', amountConfig.l1Address)
         break
       case 'aggLayerNativeEtherPreminted':
       case 'aggLayerNativeEtherWrapped':
       case 'elasticChainEther':
-        assetId = AssetId.create(ethereum.name, 'native')
+        assetId = AssetId.create('ethereum', 'native')
         break
       default:
         assertUnreachable(amountConfig)

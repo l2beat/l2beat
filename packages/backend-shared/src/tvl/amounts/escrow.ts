@@ -1,3 +1,4 @@
+import { ChainConfig } from '@l2beat/config'
 import {
   assert,
   AssetId,
@@ -5,12 +6,8 @@ import {
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  BackendProject,
-  BackendProjectEscrow,
-  chainConverter,
-} from '../../backend'
-import { ChainConfig } from '../../common'
+import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import { chainConverter } from '../../chainConverter'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getEscrowEntry(

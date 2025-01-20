@@ -1,24 +1,23 @@
+import { ChainConfig } from '@l2beat/config'
 import {
   assert,
-  AggLayerL2Token,
   AssetId,
+  ElasticChainL2Token,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../backend'
-import { ethereum } from '../../chains/ethereum'
-import { ChainConfig } from '../../common'
+import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
-export function getAggLayerL2TokenEntry(
+export function getElasticChainL2TokenEntry(
   chain: ChainConfig,
   token: Token,
   escrow: BackendProjectEscrow,
   project: BackendProject,
-): AggLayerL2Token {
-  assert(escrow.sharedEscrow?.type === 'AggLayer')
+): ElasticChainL2Token {
+  assert(escrow.sharedEscrow?.type === 'ElasticChain')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  assert(token.address, 'Token address is required for AggLayer escrow')
+  assert(token.address, 'Token address is required for ElasticChain escrow')
 
   const source = escrow.source ?? 'canonical'
   const sinceTimestamp = UnixTime.max(
@@ -34,11 +33,10 @@ export function getAggLayerL2TokenEntry(
     : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-  // We are hardcoding assetId because aggLayerL2Token is a canonical token
-  const assetId = AssetId.create(ethereum.name, token.address)
-  const type = 'aggLayerL2Token'
-  const originNetwork = 0
-  const dataSource = `${chain.name}_agglayer`
+  // We are hardcoding assetId because elasticChainL2Token is a canonical token
+  const assetId = AssetId.create('ethereum', token.address)
+  const type = 'elasticChainL2Token'
+  const dataSource = `${project.projectId}_elastic_chain`
 
   return {
     assetId: assetId,
@@ -50,7 +48,7 @@ export function getAggLayerL2TokenEntry(
     includeInTotal,
     isAssociated,
     l1Address: token.address,
-    originNetwork: originNetwork,
+    l2BridgeAddress: escrow.sharedEscrow.l2BridgeAddress,
     project: project.projectId,
     sinceTimestamp: sinceTimestamp,
     source: source,

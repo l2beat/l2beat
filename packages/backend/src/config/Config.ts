@@ -1,3 +1,4 @@
+import { BackendProject } from '@l2beat/backend-shared'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
 import {
   AmountConfigEntry,
@@ -6,8 +7,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { BackendProject } from '@l2beat/config'
 import { ChainConverter } from '@l2beat/shared-pure'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'

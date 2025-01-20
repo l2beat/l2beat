@@ -1,24 +1,23 @@
+import { ChainConfig } from '@l2beat/config'
 import {
   assert,
+  AggLayerL2Token,
   AssetId,
-  ElasticChainEther,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../backend'
-import { ethereum } from '../../chains/ethereum'
-import { ChainConfig } from '../../common'
+import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
-export function getElasticChainEtherEntry(
+export function getAggLayerL2TokenEntry(
   chain: ChainConfig,
   token: Token,
   escrow: BackendProjectEscrow,
   project: BackendProject,
-): ElasticChainEther {
-  assert(escrow.sharedEscrow?.type === 'ElasticChain')
+): AggLayerL2Token {
+  assert(escrow.sharedEscrow?.type === 'AggLayer')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  assert(token.address, 'Token address is required for ElasticChain escrow')
+  assert(token.address, 'Token address is required for AggLayer escrow')
 
   const source = escrow.source ?? 'canonical'
   const sinceTimestamp = UnixTime.max(
@@ -34,13 +33,13 @@ export function getElasticChainEtherEntry(
     : (escrow.includeInTotal ?? true)
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-  // We are hardcoding assetId because elasticChainEther is a canonical token
-  const assetId = AssetId.create(ethereum.name, 'native')
-  const type = 'elasticChainEther'
-  const dataSource = `${project.projectId}_elastic_chain`
+  // We are hardcoding assetId because aggLayerL2Token is a canonical token
+  const assetId = AssetId.create('ethereum', token.address)
+  const type = 'aggLayerL2Token'
+  const originNetwork = 0
+  const dataSource = `${chain.name}_agglayer`
 
   return {
-    address: token.address,
     assetId: assetId,
     category: token.category,
     chain: project.projectId,
@@ -49,6 +48,8 @@ export function getElasticChainEtherEntry(
     escrowAddress: escrow.address,
     includeInTotal,
     isAssociated,
+    l1Address: token.address,
+    originNetwork: originNetwork,
     project: project.projectId,
     sinceTimestamp: sinceTimestamp,
     source: source,

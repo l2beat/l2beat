@@ -1,4 +1,4 @@
-import { INDEXER_NAMES, createAmountId } from '@l2beat/config'
+import { INDEXER_NAMES, createAmountId } from '@l2beat/backend-shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'

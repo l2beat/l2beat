@@ -1,4 +1,5 @@
-import { layer2ToBackendProject, layer2s } from '@l2beat/config'
+import { layer2ToBackendProject } from '@l2beat/backend-shared'
+import { layer2s } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './LocalExecutor'
 import { mapConfig } from './mapConfig'

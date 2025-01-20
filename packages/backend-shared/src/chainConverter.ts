@@ -1,7 +1,5 @@
+import { chains, layer2s, layer3s } from '@l2beat/config'
 import { ChainConverter, ChainId, ProjectId } from '@l2beat/shared-pure'
-import { chains } from '../chains'
-import { layer2s } from '../projects/layer2s'
-import { layer3s } from '../projects/layer3s'
 
 export const chainConverter = new ChainConverter(
   chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
