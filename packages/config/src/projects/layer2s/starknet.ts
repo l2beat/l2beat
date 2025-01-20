@@ -252,7 +252,8 @@ export const starknet: Layer2 = {
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-
+    redWarning:
+      'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     links: {
       apps: ['https://starkgate.starknet.io/'],
       websites: [
