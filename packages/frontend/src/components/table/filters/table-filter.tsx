@@ -1,5 +1,4 @@
 'use client'
-import { usePlausible } from 'next-plausible'
 import { type KeyboardEvent, type MouseEvent, useCallback } from 'react'
 import {
   Select,
@@ -8,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
+import { useCustomEvent } from '~/hooks/use-custom-event'
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
 
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export function TableFilter({ title, options, value, onValueChange }: Props) {
-  const plausible = usePlausible()
+  const customEvent = useCustomEvent()
   const onClick = useCallback(
     (e: MouseEvent) => {
       if (value !== undefined) {
@@ -52,7 +52,7 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
           onValueChange(undefined)
           return
         }
-        plausible('filter-selected', {
+        customEvent('filterSelected', {
           props: {
             filter: title,
             value: newValue,

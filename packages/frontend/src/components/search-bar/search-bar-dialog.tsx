@@ -3,7 +3,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import { groupBy } from 'lodash'
-import { usePlausible } from 'next-plausible'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type Entries } from 'type-fest'
@@ -17,6 +16,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/command'
+import { useCustomEvent } from '~/hooks/use-custom-event'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import {
@@ -36,7 +36,7 @@ interface Props {
 
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const plausible = usePlausible()
+  const customEvent = useCustomEvent()
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
   const router = useRouterWithProgressBar()
@@ -99,7 +99,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     setOpen(false)
     setValue('')
     router.push(item.href)
-    plausible('search-bar-project-selected', {
+    customEvent('searchBarProjectSelected', {
       props: {
         project: item.name,
       },
