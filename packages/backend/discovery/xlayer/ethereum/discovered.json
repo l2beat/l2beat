@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 21579520,
+  "blockNumber": 21665594,
   "configHash": "0x5fe03ef944f620355c5cb07ebd60481d7b318a35bf013a954856a9dd5d02b06e",
   "contracts": [
     {
@@ -94,7 +94,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "admin": "0x491619874b866c3cDB7C8553877da223525ead01",
+        "admin": "0xa90B4C8B8807569980F6cC958c8905383136B5eA",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
         "dataAvailabilityProtocol": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
@@ -113,11 +113,11 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xa586790a94da1daa575462b222a666e4eebf9de5ae44275bdbed058e14844e8e",
+        "lastAccInputHash": "0xab3122c69c7fb71c1a268124014ca757185975fb0784424ee58cdce36be10b12",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
-        "pendingAdmin": "0x0000000000000000000000000000000000000000",
+        "pendingAdmin": "0xa90B4C8B8807569980F6cC958c8905383136B5eA",
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
@@ -141,13 +141,13 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08" },
     {
       "name": "LocalAdmin",
       "address": "0x491619874b866c3cDB7C8553877da223525ead01"
     },
     { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
+    { "address": "0xa90B4C8B8807569980F6cC958c8905383136B5eA" },
     { "address": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1" },
     {
       "name": "DACProxyAdminOwner",
