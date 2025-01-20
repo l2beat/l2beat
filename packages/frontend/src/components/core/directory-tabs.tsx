@@ -2,6 +2,7 @@
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
+import { useCustomEvent } from '~/hooks/use-custom-event'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from './overflow-wrapper'
 
@@ -12,9 +13,30 @@ import { OverflowWrapper } from './overflow-wrapper'
 const DirectoryTabs = ({
   ref,
   defaultValue,
+  onValueChange,
+  enableTracking = true,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) => {
-  return <TabsPrimitive.Root ref={ref} defaultValue={defaultValue} {...props} />
+}: React.ComponentProps<typeof TabsPrimitive.Root> & {
+  enableTracking?: boolean
+}) => {
+  const customEvent = useCustomEvent()
+  return (
+    <TabsPrimitive.Root
+      ref={ref}
+      defaultValue={defaultValue}
+      onValueChange={(value) => {
+        onValueChange?.(value)
+        if (enableTracking) {
+          customEvent('directoryTabsChanged', {
+            props: {
+              value,
+            },
+          })
+        }
+      }}
+      {...props}
+    />
+  )
 }
 DirectoryTabs.displayName = TabsPrimitive.Root.displayName
 

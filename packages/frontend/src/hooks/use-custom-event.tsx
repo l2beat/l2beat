@@ -4,6 +4,7 @@ type MyEvents = {
   filterChanged: { name: string; value: string }
   checkboxChanged: { name: string; value: string }
   radioGroupChanged: { name: string; value: string }
+  directoryTabsChanged: { value: string }
   searchBarProjectSelected: { name: string }
   uopsExplorerSelected: never
 }
