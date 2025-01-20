@@ -1,12 +1,7 @@
-import { type Bridge, isUnderReview, isVerified } from '@l2beat/config'
+import { type Project } from '@l2beat/config'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { type CommonProjectEntry } from '../utils/get-common-project-entry'
-
-interface Params {
-  bridge: Bridge
-  changes: ProjectChanges
-}
 
 export interface CommonBridgesEntry extends CommonProjectEntry {
   filterable: {
@@ -16,25 +11,27 @@ export interface CommonBridgesEntry extends CommonProjectEntry {
 }
 
 export function getCommonBridgesEntry({
-  bridge,
+  project,
   changes,
-}: Params): CommonBridgesEntry {
+}: {
+  project: Project<'statuses' | 'bridgeInfo'>
+  changes: ProjectChanges
+}): CommonBridgesEntry {
   return {
-    id: bridge.id,
-    slug: bridge.display.slug,
-    name: bridge.display.name,
-    shortName: bridge.display.shortName,
-    href: `/bridges/projects/${bridge.display.slug}`,
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    shortName: project.shortName,
+    href: `/bridges/projects/${project.slug}`,
     filterable: {
-      type: bridge.display.category,
-      validatedBy: bridge.riskView?.validatedBy.value,
+      type: project.bridgeInfo.category,
+      validatedBy: project.bridgeInfo.validatedBy,
     },
     statuses: {
-      // TODO: Check if this is correct
-      yellowWarning: bridge.display.warning,
-      verificationWarning: !isVerified(bridge),
+      yellowWarning: project.statuses.yellowWarning,
+      verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
-        isUnderReview: isUnderReview(bridge),
+        isUnderReview: project.statuses.isUnderReview,
         ...changes,
       }),
     },

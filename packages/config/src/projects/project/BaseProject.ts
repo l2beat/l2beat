@@ -7,6 +7,7 @@ import {
   ScalingProjectStack,
 } from '../../common'
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+import { BridgeDisplay, BridgeRiskView } from '../bridges'
 import {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
@@ -30,6 +31,8 @@ export interface BaseProject {
   addedAt: UnixTime
   // data
   statuses?: ProjectStatuses
+  bridgeInfo?: ProjectBridgeInfo
+  bridgeRisks?: BridgeRiskView
   scalingInfo?: ProjectScalingInfo
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
@@ -65,6 +68,12 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
+}
+
+export interface ProjectBridgeInfo {
+  category: BridgeDisplay['category']
+  destination: string[]
+  validatedBy: string
 }
 
 export interface ProjectScalingInfo {

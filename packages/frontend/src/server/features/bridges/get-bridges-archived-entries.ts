@@ -1,7 +1,7 @@
 import {
   type BridgeDisplay,
   type BridgeRiskView,
-  bridges,
+  ProjectService,
 } from '@l2beat/config'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
@@ -21,22 +21,25 @@ export interface BridgesArchivedEntry extends CommonBridgesEntry {
 export async function getBridgesArchivedEntries(): Promise<
   BridgesArchivedEntry[]
 > {
-  const [tvl7dBreakdown, projectsChangeReport] = await Promise.all([
+  const [tvl7dBreakdown, projectsChangeReport, projects] = await Promise.all([
     get7dTokenBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
+      where: ['isBridge', 'isArchived'],
+    }),
   ])
 
-  return bridges
-    .filter((bridge) => bridge.isArchived)
-    .map((bridge) => {
-      const tvl = tvl7dBreakdown.projects[bridge.id.toString()]
-      const changes = projectsChangeReport.getChanges(bridge.id)
+  return projects
+    .map((project) => {
+      const tvl = tvl7dBreakdown.projects[project.id.toString()]
+      const changes = projectsChangeReport.getChanges(project.id)
       return {
-        ...getCommonBridgesEntry({ bridge, changes }),
-        type: bridge.display.category,
-        validatedBy: bridge.riskView?.validatedBy,
+        ...getCommonBridgesEntry({ project, changes }),
+        type: project.bridgeInfo.category,
+        validatedBy: project.bridgeRisks.validatedBy,
         totalTvl: tvl?.breakdown.total,
-        tvlOrder: tvl?.breakdown.total ?? 0,
+        tvlOrder: tvl?.breakdown.total ?? -1,
       }
     })
     .sort(compareTvl)
