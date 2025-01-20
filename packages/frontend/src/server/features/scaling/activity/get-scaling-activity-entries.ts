@@ -24,7 +24,6 @@ import { getActivitySyncWarning } from './utils/is-activity-synced'
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ProjectService.STATIC.getProjects({
     select: ['statuses', 'scalingInfo', 'activityInfo'],
-    optional: ['countdowns'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -80,7 +79,7 @@ interface ActivityData {
 }
 
 function getScalingProjectActivityEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'activityInfo', 'countdowns'>,
+  project: Project<'statuses' | 'scalingInfo' | 'activityInfo'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
@@ -88,11 +87,7 @@ function getScalingProjectActivityEntry(
     ? getActivitySyncWarning(data.syncedUntil)
     : undefined
   return {
-    ...getCommonScalingEntry({
-      project,
-      changes,
-      syncWarning,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncWarning }),
     href: `/scaling/projects/${project.slug}#activity`,
     dataSource: project.activityInfo.dataSource,
     data: data
