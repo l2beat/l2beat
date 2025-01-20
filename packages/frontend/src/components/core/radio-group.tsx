@@ -11,12 +11,10 @@ const RadioGroup = ({
   variant,
   name,
   onValueChange,
-  enableTracking = true,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root> & {
   name: string
   variant?: 'highlighted'
-  enableTracking?: boolean
 }) => {
   const { track } = useTracking()
   return (
@@ -30,14 +28,12 @@ const RadioGroup = ({
       {...props}
       onValueChange={(val) => {
         onValueChange?.(val)
-        if (enableTracking) {
-          track('radioGroupChanged', {
-            props: {
-              name: name,
-              value: val,
-            },
-          })
-        }
+        track('radioGroupChanged', {
+          props: {
+            name: name,
+            value: val,
+          },
+        })
       }}
       data-variant={variant}
       ref={ref}

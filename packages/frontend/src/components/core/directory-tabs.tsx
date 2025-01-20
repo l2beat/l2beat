@@ -14,11 +14,8 @@ const DirectoryTabs = ({
   ref,
   defaultValue,
   onValueChange,
-  enableTracking = true,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root> & {
-  enableTracking?: boolean
-}) => {
+}: React.ComponentProps<typeof TabsPrimitive.Root>) => {
   const { track } = useTracking()
   return (
     <TabsPrimitive.Root
@@ -26,13 +23,11 @@ const DirectoryTabs = ({
       defaultValue={defaultValue}
       onValueChange={(value) => {
         onValueChange?.(value)
-        if (enableTracking) {
-          track('directoryTabsChanged', {
-            props: {
-              value,
-            },
-          })
-        }
+        track('directoryTabsChanged', {
+          props: {
+            value,
+          },
+        })
       }}
       {...props}
     />

@@ -11,12 +11,10 @@ const Checkbox = ({
   ref,
   className,
   children,
-  enableTracking = true,
   name,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
   name: string
-  enableTracking?: boolean
 }) => {
   const id = useId()
   const { track } = useTracking()
@@ -41,14 +39,12 @@ const Checkbox = ({
         {...props}
         onCheckedChange={(checked) => {
           props.onCheckedChange?.(checked)
-          if (enableTracking) {
-            track('checkboxChanged', {
-              props: {
-                name,
-                value: checked.valueOf().toString(),
-              },
-            })
-          }
+          track('checkboxChanged', {
+            props: {
+              name,
+              value: checked.valueOf().toString(),
+            },
+          })
         }}
       >
         <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded bg-brand text-current">
