@@ -6,7 +6,7 @@ import { env } from '~/env'
 
 export function PlausibleProvider({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme()
-  console.log('resolvedTheme', resolvedTheme)
+
   return (
     <NextPlausibleProvider
       domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
