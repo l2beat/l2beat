@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
-import { chains } from '../../../../../../..'
+import { chains } from '../../../../../../chains'
 import { OnChainDaBridge } from '../../../../types'
 import { DaLinks } from '../../../../types/DaLinks'
 
