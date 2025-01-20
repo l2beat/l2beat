@@ -1,3 +1,72 @@
+Generated with discovered.json: 0xdbdb1340e6fba71b420ba1d6aa279fdc2bac5cef
+
+# Diff at Mon, 20 Jan 2025 16:52:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dcd1272b687a01381d2cbcd98213070f430a92aa block: 21628485
+- current block number: 21667015
+
+## Description
+
+discodrive!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628485 (main branch discovery), not current.
+
+```diff
+    contract L1DAITokenBridge (0x10E6593CDda8c58a1d0f14C5164B376352a55f2F) {
+    +++ description: Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.
+      description:
++        "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract."
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      description:
++        "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+    }
+```
+
+```diff
+    contract L1DAIEscrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
+      name:
+-        "L1Escrow"
++        "L1DAIEscrow"
+      description:
++        "Stores DAI deposited from the attached L1DAITokenBridge."
+    }
+```
+
+```diff
+    contract SynthetixBridgeEscrow (0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) {
+    +++ description: Custom escrow for SNX bridged via canonical messaging.
+      description:
++        "Custom escrow for SNX bridged via canonical messaging."
+    }
+```
+
+```diff
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa) {
+    +++ description: Collecting sequencer, base- and L1 fees from L2.
+      description:
++        "Collecting sequencer, base- and L1 fees from L2."
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      references:
++        [{"text":"Security Council members - Optimism Collective Governance Forum","href":"https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"}]
+    }
+```
+
 Generated with discovered.json: 0x8041ea0cdb624733b4720a0c5e34a4532f51cbe4
 
 # Diff at Mon, 20 Jan 2025 11:09:51 GMT:
