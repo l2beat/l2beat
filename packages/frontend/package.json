@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@l2beat/backend": "workspace:*",
+    "@l2beat/backend-shared": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/discovery": "workspace:*",

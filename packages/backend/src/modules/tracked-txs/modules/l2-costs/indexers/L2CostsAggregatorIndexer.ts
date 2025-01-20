@@ -1,4 +1,4 @@
-import { BackendProject } from '@l2beat/config'
+import { BackendProject } from '@l2beat/backend-shared'
 import {
   AggregatedL2CostRecord,
   Database,

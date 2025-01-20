@@ -1,6 +1,6 @@
 import {
+  type Project,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectRiskView,
 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -10,7 +10,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -21,7 +21,6 @@ export async function getScalingRiskEntries() {
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks'],
-      optional: ['countdowns'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -32,7 +31,7 @@ export async function getScalingRiskEntries() {
       getScalingRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id] ?? 0,
+        tvl[project.id],
       ),
     )
     .sort(compareStageAndTvl)
@@ -46,16 +45,13 @@ export interface ScalingRiskEntry extends CommonScalingEntry {
 }
 
 function getScalingRiskEntry(
-  project: ProjectWith<
-    'scalingInfo' | 'statuses' | 'scalingRisks',
-    'countdowns'
-  >,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
   changes: ProjectChanges,
-  tvl: number,
-) {
+  tvl: number | undefined,
+): ScalingRiskEntry {
   return {
-    ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
-    tvlOrder: tvl,
+    tvlOrder: tvl ?? -1,
   }
 }

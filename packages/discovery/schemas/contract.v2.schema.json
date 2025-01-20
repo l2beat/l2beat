@@ -112,7 +112,8 @@
           "type": "integer",
           "minimum": 0
         },
-        "description": { "type:": ["string", "null"] }
+        "description": { "type:": ["string", "null"] },
+        "condition": { "type:": ["string", "null"] }
       }
     },
     "stackCategory": {

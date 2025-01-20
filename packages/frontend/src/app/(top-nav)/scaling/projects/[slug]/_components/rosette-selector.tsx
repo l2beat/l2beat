@@ -25,6 +25,8 @@ export function RosetteSelector({
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <RadioGroup
+        name="rosetteType"
+        className="bg-header-secondary"
         value={rosetteType}
         onValueChange={setRosetteType}
         disabled={isDisabled}

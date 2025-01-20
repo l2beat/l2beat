@@ -1,6 +1,8 @@
 import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { createContractConfig } from '../config/ContractConfig'
+import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -11,6 +13,12 @@ import { AddressAnalyzer } from './AddressAnalyzer'
 import { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
+  const overrides = DiscoveryContract.parse({})
+  const config = createContractConfig(
+    { address: EthereumAddress.random(), ...overrides },
+    {},
+  )
+
   describe(AddressAnalyzer.prototype.analyze.name, () => {
     it('handles EOAs', async () => {
       const provider = mockObject<IProvider>({
@@ -29,7 +37,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 
@@ -125,7 +133,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 
@@ -247,7 +255,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 
@@ -365,7 +373,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 

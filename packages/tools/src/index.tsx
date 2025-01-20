@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router'
 import { Layout } from './Layout'
 import { DecoderApp } from './decoder/DecoderApp'
+import { DiscoLupe } from './discolupe/DiscoLupe'
 import { SimulatorApp } from './simulator/SimulatorApp'
 
 const queryClient = new QueryClient()
@@ -20,6 +21,7 @@ ReactDOM.createRoot(root).render(
             <Route index element={<AutoRedirect />} />
             <Route path="/decoder" element={<DecoderApp />} />
             <Route path="/simulator" element={<SimulatorApp />} />
+            <Route path="/discolupe" element={<DiscoLupe />} />
           </Route>
         </Routes>
       </BrowserRouter>

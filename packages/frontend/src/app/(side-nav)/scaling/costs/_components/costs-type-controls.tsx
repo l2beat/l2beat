@@ -13,6 +13,7 @@ export function CostsMetricControls<T extends string>({
 }: Props<T>) {
   return (
     <RadioGroup
+      name="costsMetric"
       value={value}
       onValueChange={onValueChange}
       variant="highlighted"

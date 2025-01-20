@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "blockNumber": 21387345,
-  "configHash": "0xcb3a1fbd264bac8f82c1c6f045589ffca400a3e9dc186180115706a7d5a6d227",
+  "configHash": "0x5d2b1411cf968dce1ab01791956187eb9604e12f971e1e8a541d9333d2b6a26a",
   "contracts": [
     {
       "name": "Committee",
@@ -61,7 +61,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD2C37fC6fD89563187f3679304975655e448D192",
+          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
           "via": []
         }
       ],
@@ -246,7 +246,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -657,6 +657,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -23,7 +23,7 @@ export default async function Page() {
   }))
 
   return (
-    <>
+    <div className="reading">
       <Header />
       <ContentWrapper>
         <main className="flex">
@@ -61,7 +61,7 @@ export default async function Page() {
         </main>
       </ContentWrapper>
       <ScrollToTopButton />
-    </>
+    </div>
   )
 }
 

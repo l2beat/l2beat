@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 21579366,
-  "configHash": "0x095fcfd945197d147275446dd612c9a9d466577219ff0c82160e1bafb10e2735",
+  "blockNumber": 21635651,
+  "configHash": "0x5a137f0ce6dd2fa1ab4c72d92489595855f7af45c699beff33fc11c4c9bee9ca",
   "contracts": [
     {
       "name": "NextHeaderVerifier",
@@ -41,12 +41,14 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
           "via": []
         }
       ],
@@ -57,8 +59,9 @@
         "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
         "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
         "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
+        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", false]
+        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -72,6 +75,9 @@
         },
         "oldVerifier4": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
@@ -90,7 +96,8 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
+          "to": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH.",
           "via": []
         }
       ],
@@ -120,11 +127,13 @@
       "fieldMeta": {
         "headerRangeProvers": {
           "severity": "LOW",
-          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX."
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.",
+          "type": "PERMISSION"
         },
         "nextHeaderProvers": {
           "severity": "LOW",
-          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX."
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "SuccinctGateway"
@@ -142,22 +151,25 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "to": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "to": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "to": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
+          "to": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
           "via": []
         }
       ],
@@ -198,7 +210,7 @@
             "members": ["0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"]
           }
         },
-        "blobstreamProgramVkey": "0x00a6ea49173d4b0b544a24a5a7474e76d1fda8f0f7e541cbb294d2b7249d7bcb",
+        "blobstreamProgramVkey": "0x00e30cadab0b8ad6a5f115c5131a14afce4ec4bbf8acf7c821951778a2d97660",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 10000,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -210,13 +222,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 3432600,
+        "latestBlock": 3560400,
         "nextHeaderFunctionId_depcrecated": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
         "relayers": [
           "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
           "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
         ],
-        "state_proofNonce": 1804,
+        "state_proofNonce": 1875,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -235,12 +247,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "can freeze the bridge contract and update the list of authorized relayers."
         },
         {
           "permission": "upgrade",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -261,7 +273,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -278,7 +290,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
       ],
@@ -297,7 +309,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -314,7 +326,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+          "from": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
           "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
         }
       ],
@@ -345,18 +357,31 @@
       "sourceHashes": [
         "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
       ],
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "target": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ],
       "sinceTimestamp": 1729727135,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
         "VERSION": "v3.0.0"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
+      "sinceTimestamp": 1735949699,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
       }
     },
     {
@@ -378,7 +403,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
       ]
@@ -395,7 +420,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
       ]
@@ -642,12 +667,21 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "succinct/SP1Blobstream": "0x9b561e8f866e43abfbf30d5612a028aecb95be8441698251d61ab44b3d870955",
-    "succinct/SP1SuccinctGateway": "0x5af3d6226c3a9cafb9ace51e298ebaf62d5bf4c6c0c730ff25f87e605cbce813",
-    "succinct/SuccinctGateway": "0xedb29a5b187cf5adc571adc13878db3c1938a5e3d1a944b30afa7f81b407ca01"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "succinct/SP1Blobstream": "0xc923f0ea69810f65b34ffc59eaa1cd6fdf2a924dba13dc8cbfa71ddde982ead2",
+    "succinct/SP1SuccinctGateway": "0xdffa954da9f9e5a14a8da6adcdac47a00ceca0950311adc899da5a6983719276",
+    "succinct/SuccinctGateway": "0x6b44128c0a4c6cf1adb6fd78a757b40be48d8b70234442deb52fa64c906d1a42"
   }
 }

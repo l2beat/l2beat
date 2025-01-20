@@ -5,15 +5,6 @@
   "initialAddresses": [
     "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364" // SystemConfig
   ],
-  "types": {
-    "DisputeGameMap": {
-      "typeCaster": "Mapping",
-      "arg": {
-        "0": "FaultDisputeGame",
-        "1": "PermissionedDisputeGame"
-      }
-    }
-  },
   "overrides": {
     "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD": {
       // permissionedGamesTotal from the template ignored as they are using permissioned games by default

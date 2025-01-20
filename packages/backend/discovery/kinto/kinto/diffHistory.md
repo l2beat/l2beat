@@ -1,3 +1,338 @@
+Generated with discovered.json: 0x3b90c528a7e398c505007bb8ada131133fc280af
+
+# Diff at Mon, 20 Jan 2025 11:10:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 696015
+- current block number: 696015
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 696015 (main branch discovery), not current.
+
+```diff
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      issuedPermissions.0.target:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.0.to:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.0.description:
++        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+    }
+```
+
+```diff
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      receivedPermissions.0.target:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.0.from:
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+    }
+```
+
+```diff
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.0.to:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+    }
+```
+
+```diff
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd) {
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+      issuedPermissions.0.target:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.0.to:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+    }
+```
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      issuedPermissions.0.to:
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      issuedPermissions.0.to:
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      receivedPermissions.4.target:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.4.from:
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.3.target:
+-        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+      receivedPermissions.3.from:
++        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+      receivedPermissions.2.target:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.2.from:
++        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.1.target:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.1.from:
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.0.target:
+-        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
+      receivedPermissions.0.from:
++        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x340487b92808B84c2bd97C87B590EE81267E04a7) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.
+      issuedPermissions.1.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.1.to:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.to:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.description:
++        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      issuedPermissions.1.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.1.to:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.to:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.description:
++        "send tokens and ETH from the Treasury to any address without delay."
+    }
+```
+
+```diff
+    contract  (0x87799989341A07F495287B1433eea98398FD73aA) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+    }
+```
+
+```diff
+    contract  (0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      receivedPermissions.2.target:
+-        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      receivedPermissions.2.from:
++        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      receivedPermissions.1.target:
+-        "0x87799989341A07F495287B1433eea98398FD73aA"
+      receivedPermissions.1.from:
++        "0x87799989341A07F495287B1433eea98398FD73aA"
+      receivedPermissions.0.target:
+-        "0x340487b92808B84c2bd97C87B590EE81267E04a7"
+      receivedPermissions.0.from:
++        "0x340487b92808B84c2bd97C87B590EE81267E04a7"
+      directlyReceivedPermissions.0.target:
+-        "0x9eC0253E4174a14C0536261888416451A407Bf79"
+      directlyReceivedPermissions.0.from:
++        "0x9eC0253E4174a14C0536261888416451A407Bf79"
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.
+      issuedPermissions.1.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.1.to:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.to:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.0.description:
++        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+      receivedPermissions.1.target:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      receivedPermissions.1.from:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      receivedPermissions.0.target:
+-        "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
+      receivedPermissions.0.from:
++        "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9eC0253E4174a14C0536261888416451A407Bf79) {
+    +++ description: None
+      directlyReceivedPermissions.2.target:
+-        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      directlyReceivedPermissions.2.from:
++        "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
+      directlyReceivedPermissions.1.target:
+-        "0x87799989341A07F495287B1433eea98398FD73aA"
+      directlyReceivedPermissions.1.from:
++        "0x87799989341A07F495287B1433eea98398FD73aA"
+      directlyReceivedPermissions.0.target:
+-        "0x340487b92808B84c2bd97C87B590EE81267E04a7"
+      directlyReceivedPermissions.0.from:
++        "0x340487b92808B84c2bd97C87B590EE81267E04a7"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      receivedPermissions.5.target:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      receivedPermissions.5.from:
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      receivedPermissions.4.target:
+-        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
+      receivedPermissions.4.from:
++        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
+      receivedPermissions.3.target:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      receivedPermissions.3.from:
++        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      receivedPermissions.2.target:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      receivedPermissions.2.from:
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      receivedPermissions.1.target:
+-        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
+      receivedPermissions.1.from:
++        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
+      receivedPermissions.0.target:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      receivedPermissions.0.from:
++        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+      issuedPermissions.7.target:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.7.to:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.6.target:
+-        "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a"
+      issuedPermissions.6.to:
++        "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a"
+      issuedPermissions.6.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.5.target:
+-        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+      issuedPermissions.5.to:
++        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+      issuedPermissions.5.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.4.target:
+-        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
+      issuedPermissions.4.to:
++        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
+      issuedPermissions.4.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.3.target:
+-        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
+      issuedPermissions.3.to:
++        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
+      issuedPermissions.3.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.2.target:
+-        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
+      issuedPermissions.2.to:
++        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
+      issuedPermissions.2.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.1.target:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.1.to:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.1.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.0.target:
+-        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
+      issuedPermissions.0.to:
++        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
+      issuedPermissions.0.description:
++        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+    }
+```
+
+Generated with discovered.json: 0x8314641173b04fc416b0ddc480f7e7f30211a3dc
+
+# Diff at Mon, 20 Jan 2025 09:26:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 696015
+- current block number: 696015
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 696015 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
++        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
+    }
+```
+
 Generated with discovered.json: 0x820c8568602f8dd9d7266c97ba0ddb8a7d2727e4
 
 # Diff at Tue, 24 Dec 2024 11:54:46 GMT:

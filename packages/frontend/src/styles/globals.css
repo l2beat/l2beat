@@ -7,49 +7,53 @@
 
 @layer base {
   :root {
-    --primary: #131215;
-    --primary-invert: #fafafa;
-    --secondary: #5f6470;
+    --primary: 260deg 7.69% 7.65%;
+    --primary-invert: 0deg 0% 98%;
+    --secondary: 222deg 8.21% 40.6%;
     --negative: 0 100% 42%;
-    --brand: 285 63% 53%;
-    --background: #e6e7ec;
-    --surface-primary: #fafafa;
-    --surface-secondary: #e6e7ec;
-    --surface-tertiary: #ccd0da;
-    --surface-table-group: #eeeff4;
-    --icon-secondary: #5f6470;
-    --overlay: #181b2d99;
-    --divider: #ccd0da;
-    --indicator-rollups: #ef43b4;
-    --indicator-validiums-optimiums: #36a3a3;
-    --indicator-others: #ab8000;
-    --indicator-ethereum: #2a5bd8;
-    --positive: #007408;
-    --link-stroke: #badaff;
-    --link: #2a5bd8;
+    --brand: 285deg 62.7% 52.7%;
+    --background: 230deg 13.6% 91.4%;
+    --background-reading: 0deg 0% 98%;
+    --surface-primary: 0deg 0% 98%;
+    --surface-secondary: 230deg 13.6% 91.4%;
+    --surface-tertiary: 223deg 15.9% 82.7%;
+    --header-primary: 0deg 0% 100%;
+    --header-secondary: 230deg 21.4% 94.5%;
+    --icon-secondary: 222deg 8.21% 40.6%;
+    --overlay: 231deg 30.4% 13.5% / 60%;
+    --divider: 223deg 15.9% 82.7%;
+    --indicator-rollups: 321deg 84.3% 60%;
+    --indicator-validiums-optimiums: 180deg 50.2% 42.5%;
+    --indicator-others: 44.9deg 100% 33.5%;
+    --indicator-ethereum: 223deg 69% 50.6%;
+    --positive: 124deg 100% 22.7%;
+    --link-stroke: 212deg 100% 86.5%;
+    --link: 223deg 69% 50.6%;
   }
 
   .dark {
-    --primary: #fafafa;
-    --primary-invert: #131215;
-    --secondary: #868b98;
+    --primary: 0deg 0% 98%;
+    --primary-invert: 260deg 7.69% 7.65%;
+    --secondary: 223deg 8.04% 56.1%;
     --negative: 0 100% 50%;
-    --brand: 284 87% 76%;
-    --background: #000000;
-    --surface-primary: #17191f;
-    --surface-secondary: #393c43;
-    --surface-tertiary: #464a52;
-    --surface-table-group: #22262f;
-    --icon-secondary: #5f6470;
-    --overlay: #00000099;
-    --divider: #3f4454;
-    --indicator-rollups: #db8bf7;
-    --indicator-validiums-optimiums: #3ac5e1;
-    --indicator-others: #dfd043;
-    --indicator-ethereum: #53a2ff;
-    --positive: #15ca60;
-    --link-stroke: #152a4b;
-    --link: #53a2ff;
+    --brand: 284deg 87.1% 75.7%;
+    --background: 0deg 0% 0%;
+    --background-reading: 0deg 0% 0%;
+    --surface-primary: 225deg 14.8% 10.6%;
+    --surface-secondary: 222deg 8.06% 24.3%;
+    --surface-tertiary: 220deg 7.89% 29.8%;
+    --header-primary: 225deg 14.8% 10.6%;
+    --header-secondary: 222deg 16% 15.9%;
+    --icon-secondary: 222deg 8.21% 40.6%;
+    --overlay: 0deg 0% 0% / 60%;
+    --divider: 226deg 14.3% 28.8%;
+    --indicator-rollups: 284deg 87.1% 75.7%;
+    --indicator-validiums-optimiums: 190deg 73.6% 55.5%;
+    --indicator-others: 54.2deg 70.9% 56.9%;
+    --indicator-ethereum: 212deg 100% 66.3%;
+    --positive: 145deg 81.2% 43.7%;
+    --link-stroke: 217deg 56.3% 18.8%;
+    --link: 212deg 100% 66.3%;
   }
 }
 
@@ -76,31 +80,11 @@
   }
 
   body {
-    @apply bg-white dark:bg-neutral-900 text-base text-primary md:text-lg font-sans transition-colors selection:bg-[#ab3bd24c] dark:selection:bg-[#db8bf780];
+    @apply bg-background text-base text-primary md:text-lg font-sans selection:bg-brand/30 dark:selection:bg-brand/50;
   }
 
-  body:has(.sidebar) {
-    @apply bg-background;
-  }
-
-  /* 
-   It has to be done this way because we want to keep the old styles for select component for top nav pages.
-   It can not be achieved by using sidebar variant as the content is rendered inside a portal (outside div containing sidebar classname).
-   Temporary solution until project page is redesigned to new colors.
-  */
-  body:has(.sidebar) [data-role="select-content"] {
-    @apply bg-surface-secondary;
-  }
-  body:has(.sidebar) [data-role="select-content"] [role="option"] {
-    @apply focus:bg-surface-tertiary;
-  }
-  body:has(.sidebar.main-page-card) [data-role="select-content"] {
-    @apply bg-surface-primary;
-  }
-  body:has(.sidebar.main-page-card)
-    [data-role="select-content"]
-    [role="option"] {
-    @apply focus:bg-surface-secondary;
+  body:has(.reading) {
+    @apply bg-background-reading;
   }
 }
 

@@ -8,7 +8,6 @@ import {
   type StandaloneDacBridge,
 } from '@l2beat/config'
 import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -25,7 +24,8 @@ type RegularDetailsParams = {
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
-  evaluatedGrissiniValues: RosetteValue[]
+  layerGrissiniValues: RosetteValue[]
+  bridgeGrissiniValues: RosetteValue[]
 }
 
 export function getRegularDaProjectSections({
@@ -34,7 +34,8 @@ export function getRegularDaProjectSections({
   isVerified,
   contractsVerificationStatuses,
   projectsChangeReport,
-  evaluatedGrissiniValues,
+  layerGrissiniValues,
+  bridgeGrissiniValues,
 }: RegularDetailsParams) {
   const permissionsSection =
     daBridge.type === 'NoBridge'
@@ -84,7 +85,7 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: evaluatedGrissiniValues,
+      grissiniValues: layerGrissiniValues,
     },
   })
 
@@ -114,7 +115,7 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
+      grissiniValues: bridgeGrissiniValues,
       hideRisks: daBridge.type === 'NoBridge',
     },
   })

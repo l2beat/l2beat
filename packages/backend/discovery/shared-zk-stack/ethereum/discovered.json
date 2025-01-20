@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21585244,
-  "configHash": "0xa25551c44b45705357b49bfa42e1c5ba88292bdf03753ba9f7423b62f86983f1",
+  "blockNumber": 21630370,
+  "configHash": "0x78c9490b84036e218aa335e7b740c13465b5b686f9856931cea0c019536d359f",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -114,7 +114,8 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
         "upgradeTimestamps": [
-          { "_protocolVersion": 103079215106, "_upgradeTimestamp": 1722521507 }
+          { "_protocolVersion": 103079215106, "_upgradeTimestamp": 1722521507 },
+          { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1736517600 }
         ]
       },
       "fieldMeta": {
@@ -135,7 +136,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "to": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
           "via": []
         }
       ],
@@ -202,6 +203,8 @@
         "CronosDiamond": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
         "CronosSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "getHyperchain": [],
+        "GrvtDiamond": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
+        "GrvtSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -333,17 +336,19 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 170,
+        "nonce": 172,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
         "getOwners": {
           "severity": "LOW",
-          "description": "Signers of the multisig"
+          "description": "Signers of the multisig",
+          "type": "PERMISSION"
         },
         "getThreshold": {
           "severity": "HIGH",
-          "description": "Should be 4/8 per official docs"
+          "description": "Should be 4/8 per official docs",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "GnosisSafe"
@@ -442,7 +447,11 @@
         ],
         "executionDelay": 75600,
         "getName": "ValidatorTimelock",
-        "grvtThirdBatchTS": 1733327159,
+        "grvtValidatorsAdded": [
+          "0x58D14960E0a2be353eDdE61ad719196A2b816522",
+          "0x0b114d4675Cb79507e68F2616c93e124122c6ef0"
+        ],
+        "grvtValidatorsRemoved": [],
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
@@ -470,10 +479,6 @@
       },
       "fieldMeta": {
         "abstractThirdBatchTS": {
-          "severity": "MEDIUM",
-          "description": "If non-zero, the third batch has been posted (launch monitor)."
-        },
-        "grvtThirdBatchTS": {
           "severity": "MEDIUM",
           "description": "If non-zero, the third batch has been posted (launch monitor)."
         }
@@ -821,15 +826,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
         },
         {
           "permission": "upgrade",
-          "target": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
         },
         {
           "permission": "upgrade",
-          "target": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
         }
       ],
       "sinceTimestamp": 1717520627,
@@ -849,7 +854,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "to": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
           "via": []
         }
       ],
@@ -1004,7 +1009,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "to": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
           "via": []
         }
       ],
@@ -1092,6 +1097,7 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
+    { "address": "0x0b114d4675Cb79507e68F2616c93e124122c6ef0" },
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
@@ -1122,6 +1128,7 @@
     { "address": "0x4cc87B0A504047967CeD9A955431B3229237e7de" },
     { "address": "0x53A26f48ED901336D7C165B85E6F43d9F8dBeAA7" },
     { "address": "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222" },
+    { "address": "0x58D14960E0a2be353eDdE61ad719196A2b816522" },
     { "address": "0x5B87156f1e4Da117c5B49571aa80C836b007e479" },
     { "address": "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C" },
     { "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991" },
@@ -1711,7 +1718,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42"
   }
 }

@@ -11,24 +11,26 @@ describe(transformToReceived.name, () => {
     )
     const resolved: ResolvedPermission[] = [
       {
-        permission: 'configure',
         path: [
           {
             address: EthereumAddress(
               '0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef',
             ),
             delay: 112233,
+            gives: 'configure',
           },
           {
             address: EthereumAddress(
               '0x9E6204F750cD866b299594e2aC9eA824E2e5f95c',
             ),
             delay: 0,
+            gives: 'act',
           },
           {
             address: EthereumAddress(
               '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
             ),
+            gives: 'act',
             delay: 5566,
           },
           {
@@ -36,23 +38,25 @@ describe(transformToReceived.name, () => {
               '0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49',
             ),
             delay: 0,
+            gives: undefined,
           },
         ],
       },
       {
-        permission: 'upgrade',
         path: [
           {
             address: EthereumAddress(
               '0x1a0ad011913A150f69f6A19DF447A0CfD9551054',
             ),
             delay: 0,
+            gives: 'upgrade',
           },
           {
             address: EthereumAddress(
               '0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49',
             ),
             delay: 0,
+            gives: undefined,
           },
         ],
       },
@@ -76,15 +80,17 @@ describe(transformToReceived.name, () => {
     expect(directlyReceivedPermissions).toEqual([
       {
         description: undefined,
+        condition: undefined,
         permission: 'configure',
-        target: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
+        from: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
         delay: 112233,
         via: undefined,
       },
       {
         description: undefined,
+        condition: undefined,
         permission: 'upgrade',
-        target: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
+        from: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
         delay: undefined,
         via: undefined,
       },
@@ -93,29 +99,33 @@ describe(transformToReceived.name, () => {
     expect(receivedPermissions).toEqual([
       {
         permission: 'configure',
-        target: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
+        from: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
         delay: 112233,
         description: undefined,
+        condition: undefined,
         via: [
           {
             address: EthereumAddress(
               '0x9E6204F750cD866b299594e2aC9eA824E2e5f95c',
             ),
             delay: undefined,
+            condition: undefined,
           },
           {
             address: EthereumAddress(
               '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
             ),
             delay: 5566,
+            condition: undefined,
           },
         ],
       },
       {
         permission: 'upgrade',
-        target: EthereumAddress('0x1a0ad011913A150f69f6A19DF447A0CfD9551054'),
+        from: EthereumAddress('0x1a0ad011913A150f69f6A19DF447A0CfD9551054'),
         delay: undefined,
         description: undefined,
+        condition: undefined,
         via: undefined,
       },
     ])
@@ -127,59 +137,63 @@ describe(transformToReceived.name, () => {
     )
     const resolved: ResolvedPermission[] = [
       {
-        permission: 'configure',
         path: [
           {
             address: EthereumAddress(
               '0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef',
             ),
             delay: 0,
+            gives: 'configure',
           },
           {
             address: EthereumAddress(
               '0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49',
             ),
             delay: 0,
+            gives: undefined,
           },
         ],
       },
       {
-        permission: 'upgrade',
         path: [
           {
             address: EthereumAddress(
               '0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef',
             ),
             delay: 0,
+            gives: 'upgrade',
           },
           {
             address: EthereumAddress(
               '0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49',
             ),
             delay: 0,
+            gives: undefined,
           },
         ],
       },
       {
-        permission: 'configure',
         path: [
           {
             address: EthereumAddress(
               '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
             ),
             delay: 0,
+            gives: 'configure',
           },
           {
             address: EthereumAddress(
               '0x9E6204F750cD866b299594e2aC9eA824E2e5f95c',
             ),
             delay: 0,
+            gives: 'act',
           },
           {
             address: EthereumAddress(
               '0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49',
             ),
             delay: 0,
+            gives: undefined,
           },
         ],
       },
@@ -215,15 +229,17 @@ describe(transformToReceived.name, () => {
       {
         delay: undefined,
         description: undefined,
+        condition: undefined,
         permission: 'configure',
-        target: EthereumAddress('0xC72aE5c7cc9a332699305E29F68Be66c73b60542'),
+        from: EthereumAddress('0xC72aE5c7cc9a332699305E29F68Be66c73b60542'),
         via: undefined,
       },
       {
         delay: 8899,
         description: undefined,
+        condition: undefined,
         permission: 'upgrade',
-        target: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
+        from: EthereumAddress('0x3e2Ea9B92B7E48A52296fD261dc26fd995284631'),
         via: undefined,
       },
     ])

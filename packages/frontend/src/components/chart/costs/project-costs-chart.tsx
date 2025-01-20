@@ -26,7 +26,7 @@ interface Props {
 }
 
 export function ProjectCostsChart({ milestones, projectId }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('30d')
+  const [range, setRange] = useState<CostsTimeRange>('1y')
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
@@ -86,7 +86,7 @@ function UnitControls({
       {loading ? (
         <Skeleton className="h-8 w-[156px]" />
       ) : (
-        <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroup name="costsChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
           <RadioGroupItem value="eth">ETH</RadioGroupItem>
           <RadioGroupItem value="gas">GAS</RadioGroupItem>

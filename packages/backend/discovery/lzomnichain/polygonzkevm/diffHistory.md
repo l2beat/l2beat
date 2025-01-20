@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x7c96508acebcdf6c9e3d4e90477e6533defba93c
+Generated with discovered.json: 0xcd9f04bc5ab5770bced9676857f8a541162e2b7a
+
+# Diff at Mon, 20 Jan 2025 11:10:45 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 14728552
+- current block number: 14728552
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14728552 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+      receivedPermissions.0.from:
++        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"
+      receivedPermissions.0.from:
++        "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"
+    }
+```
+
+```diff
+    contract  (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3c2269811836af69497E5F486A85D7316753cf62"
+      issuedPermissions.0.to:
++        "0x3c2269811836af69497E5F486A85D7316753cf62"
+    }
+```
+
+```diff
+    contract  (0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+      issuedPermissions.0.to:
++        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+    }
+```
+
+Generated with discovered.json: 0xdf57fce5d6f49a86f9144662a7ba3a82ea76ce95
 
 # Diff at Mon, 21 Oct 2024 11:15:19 GMT:
 

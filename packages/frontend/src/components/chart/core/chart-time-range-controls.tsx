@@ -12,6 +12,7 @@ import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
 import { Skeleton } from '../../core/skeleton'
 
 interface Props<T extends string> {
+  name: string
   value: T | undefined
   setValue: (range: T) => void
   options: { value: T; disabled?: boolean; label: string }[]
@@ -19,6 +20,7 @@ interface Props<T extends string> {
 }
 
 export function ChartTimeRangeControls<T extends string>({
+  name,
   value,
   setValue,
   options,
@@ -44,15 +46,16 @@ export function ChartTimeRangeControls<T extends string>({
   if (showSelect) {
     return (
       <Select value={value} onValueChange={setValue}>
-        <SelectTrigger className="z-[0] h-8">
+        <SelectTrigger className={cn('z-[0] h-8 bg-surface-secondary')}>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-surface-secondary">
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
               disabled={option.disabled}
+              className="focus:bg-surface-tertiary"
             >
               {option.label}
             </SelectItem>
@@ -63,7 +66,7 @@ export function ChartTimeRangeControls<T extends string>({
   }
 
   return (
-    <RadioGroup value={value} onValueChange={setValue}>
+    <RadioGroup name={name} value={value} onValueChange={setValue}>
       {options.map((option) => (
         <RadioGroupItem
           key={option.value}

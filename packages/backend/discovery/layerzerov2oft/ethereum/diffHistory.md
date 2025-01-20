@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xeb9c45c21d98aef44cd88289f1b52433e95201cc
+Generated with discovered.json: 0xf536f7bfc336f80cd9d5643513263143b83a7d2e
+
+# Diff at Mon, 20 Jan 2025 11:09:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21387348
+- current block number: 21387348
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387348 (main branch discovery), not current.
+
+```diff
+    contract  (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+      issuedPermissions.0.to:
++        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xe16d201cA134345601631D327a971A3741646B0d"
+      issuedPermissions.0.to:
++        "0xe16d201cA134345601631D327a971A3741646B0d"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+      receivedPermissions.0.from:
++        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
+      receivedPermissions.0.from:
++        "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
+    }
+```
+
+Generated with discovered.json: 0x4c2ba200f4be2c36d2f0705ec8b9c7823d73a211
 
 # Diff at Thu, 12 Dec 2024 15:37:10 GMT:
 

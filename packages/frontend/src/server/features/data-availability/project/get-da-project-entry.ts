@@ -151,18 +151,14 @@ export async function getDaProjectEntry(
   const layerGrissiniValues = mapLayerRisksToRosetteValues(evaluatedRisks)
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(evaluatedRisks)
 
-  const evaluatedGrissiniValues = [
-    ...layerGrissiniValues,
-    ...bridgeGrissiniValues,
-  ]
-
   const sections = getRegularDaProjectSections({
     daLayer,
     daBridge,
     isVerified: common.isVerified,
     contractsVerificationStatuses,
     projectsChangeReport,
-    evaluatedGrissiniValues,
+    layerGrissiniValues,
+    bridgeGrissiniValues,
   })
 
   return {

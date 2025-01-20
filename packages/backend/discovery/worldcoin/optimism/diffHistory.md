@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xa5c4ad01efb96895119974629f2421c7ff52337a
+Generated with discovered.json: 0x8ffe105e35674c540751c663c82d874534c23c78
+
+# Diff at Mon, 20 Jan 2025 11:10:42 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 127729542
+- current block number: 127729542
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 127729542 (main branch discovery), not current.
+
+```diff
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      issuedPermissions.0.to:
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    }
+```
+
+```diff
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      issuedPermissions.0.to:
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    }
+```
+
+Generated with discovered.json: 0x6ae1975a26ebbfc9a9d3c107131fea6338523f7b
 
 # Diff at Fri, 08 Nov 2024 09:24:54 GMT:
 

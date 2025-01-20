@@ -85,23 +85,23 @@ export async function getL3ProjectDetails({
 
   await Promise.all([
     api.tvl.chart.prefetch({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart.prefetch({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
   ])
   const [tvlChartData, activityChartData, tokens] = await Promise.all([
     api.tvl.chart({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     getTokensForProject(project),

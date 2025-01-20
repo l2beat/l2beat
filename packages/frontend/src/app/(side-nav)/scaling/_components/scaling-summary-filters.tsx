@@ -8,14 +8,9 @@ import { ScalingFilters } from './scaling-filters'
 interface Props {
   items: FilterableScalingEntry[]
   className?: string
-  showRollupsOnly?: boolean
 }
 
-export function ScalingSummaryFilters({
-  items,
-  className,
-  showRollupsOnly,
-}: Props) {
+export function ScalingSummaryFilters({ items, className }: Props) {
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
@@ -26,13 +21,9 @@ export function ScalingSummaryFilters({
         className,
       )}
     >
-      <ScalingFilters
-        items={items}
-        showRollupsFilter={showRollupsOnly}
-        showHostChainFilter
-        showDALayerFilter
-      />
+      <ScalingFilters items={items} showHostChainFilter showDALayerFilter />
       <Checkbox
+        name="excludeAssociatedTokens"
         checked={excludeAssociatedTokens}
         onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
         className="max-md:ml-4"

@@ -160,6 +160,7 @@ export const optimism: Layer2 = {
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',
+    stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     description:
@@ -576,7 +577,7 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',
-      'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+      'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency.',
     ),
     ...discovery.getMultisigPermission(
       'OpFoundationUpgradeSafe',
@@ -584,7 +585,7 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${livenessInterval}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      `Member of the SuperchainProxyAdminOwner.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',

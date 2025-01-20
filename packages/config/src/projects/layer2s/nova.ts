@@ -109,6 +109,7 @@ export const nova: Layer2 = orbitStackL2({
     Badge.Other.L3HostChain,
   ],
   discovery,
+  hasAtLeastFiveExternalChallengers: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

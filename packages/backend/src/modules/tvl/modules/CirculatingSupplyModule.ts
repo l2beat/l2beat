@@ -1,7 +1,6 @@
+import { ConfigMapping, createAmountId } from '@l2beat/backend-shared'
 import { assert, CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-
-import { ConfigMapping, createAmountId } from '@l2beat/config'
 import { TvlConfig } from '../../../config/Config'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'

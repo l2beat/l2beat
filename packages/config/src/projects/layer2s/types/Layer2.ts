@@ -80,12 +80,13 @@ export type Layer2Display = ScalingProjectDisplay & {
   /** Technology provider */
   provider?: ScalingProjectStack
   /** Tooltip contents for liveness tab for given project */
-  liveness?: Layer2LivenessDisplay
+  liveness?: ProjectLivenessInfo
   finality?: Layer2FinalityDisplay
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }
-export interface Layer2LivenessDisplay {
+
+export interface ProjectLivenessInfo {
   explanation?: string
   warnings?: {
     stateUpdates?: string

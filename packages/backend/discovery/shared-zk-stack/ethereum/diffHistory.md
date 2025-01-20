@@ -1,3 +1,150 @@
+Generated with discovered.json: 0xddf66763fd2f8f422ceeeff1382e701e28511520
+
+# Diff at Mon, 20 Jan 2025 11:10:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630370
+- current block number: 21630370
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.from:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.1.target:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.1.from:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.0.target:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.0.from:
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+Generated with discovered.json: 0x9689f25484248ef4dcada49eedef9676e5c7572e
+
+# Diff at Mon, 20 Jan 2025 09:25:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21630370
+- current block number: 21630370
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      fieldMeta.getOwners.type:
++        "PERMISSION"
+      fieldMeta.getThreshold.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0x089edefbfba6e10c0a05b5f4799e7ef7af5a1815
+
+# Diff at Fri, 10 Jan 2025 11:44:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e594a564c9c62a7edef1a6e3f64f955bf70aa8eb block: 21585244
+- current block number: 21593851
+
+## Description
+
+UpgradeTimestamp added for the latest ZKsync Protocol Upgrade v25 (QoL upgrade, partly reviewed below).
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.1:
++        {"_protocolVersion":107374182400,"_upgradeTimestamp":1736517600}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585244 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.GrvtDiamond:
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.GrvtSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.grvtThirdBatchTS:
+-        1733327159
+      values.grvtValidatorsAdded:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
++        []
+      fieldMeta.grvtThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
 Generated with discovered.json: 0x403fce2f16a4bdb19d6487a08be2ae753e9a6875
 
 # Diff at Thu, 09 Jan 2025 06:50:39 GMT:

@@ -1,10 +1,10 @@
 import {
-  type Layer2,
-  type Layer3,
+  type Project,
+  ProjectService,
   type ScalingProjectDisplay,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { compact } from 'lodash'
+import { env } from '~/env'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -19,10 +19,17 @@ import {
   getActivityTable,
 } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
-import { getActivityProjects } from './utils/get-activity-projects'
+import { getActivitySyncWarning } from './utils/is-activity-synced'
 
 export async function getScalingActivityEntries() {
-  const projects = getActivityProjects().filter((p) => !p.isArchived)
+  const unfilteredProjects = await ProjectService.STATIC.getProjects({
+    select: ['statuses', 'scalingInfo', 'activityInfo'],
+    where: ['isScaling'],
+    whereNot: ['isUpcoming', 'isArchived'],
+  })
+  const projects = unfilteredProjects.filter(
+    (p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id.toString()),
+  )
   const [projectsChangeReport, activityData] = await Promise.all([
     getProjectsChangeReport(),
     getActivityTable(projects),
@@ -39,13 +46,11 @@ export async function getScalingActivityEntries() {
         activityData[project.id],
       ),
     )
-    .concat(
-      compact([
-        getEthereumEntry(ethereumData, 'Rollups'),
-        getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-        getEthereumEntry(ethereumData, 'Others'),
-      ]),
-    )
+    .concat([
+      getEthereumEntry(ethereumData, 'Rollups'),
+      getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
+      getEthereumEntry(ethereumData, 'Others'),
+    ])
     .sort(compareActivityEntry)
 
   return groupByTabs(entries)
@@ -53,23 +58,46 @@ export async function getScalingActivityEntries() {
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
   dataSource: ScalingProjectDisplay['activityDataSource']
-  data: ActivityProjectTableData | undefined
+  data:
+    | {
+        tps: ActivityData
+        uops: ActivityData
+        ratio: number
+        isSynced: boolean
+      }
+    | undefined
+}
+
+interface ActivityData {
+  change: number
+  pastDayCount: number
+  summedCount: number
+  maxCount: {
+    value: number
+    timestamp: number
+  }
 }
 
 function getScalingProjectActivityEntry(
-  project: Layer2 | Layer3,
+  project: Project<'statuses' | 'scalingInfo' | 'activityInfo'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
+  const syncWarning = data
+    ? getActivitySyncWarning(data.syncedUntil)
+    : undefined
   return {
-    ...getCommonScalingEntry({
-      project,
-      changes,
-      syncStatus: data?.syncStatus,
-    }),
-    href: `/scaling/projects/${project.display.slug}#activity`,
-    dataSource: project.display.activityDataSource,
-    data,
+    ...getCommonScalingEntry({ project, changes, syncWarning }),
+    href: `/scaling/projects/${project.slug}#activity`,
+    dataSource: project.activityInfo.dataSource,
+    data: data
+      ? {
+          tps: data.tps,
+          uops: data.uops,
+          ratio: data.ratio,
+          isSynced: !syncWarning,
+        }
+      : undefined,
   }
 }
 
@@ -77,6 +105,9 @@ function getEthereumEntry(
   data: ActivityProjectTableData,
   tab: CommonScalingEntry['tab'],
 ): ScalingActivityEntry {
+  const notSyncedStatus = data
+    ? getActivitySyncWarning(data.syncedUntil)
+    : undefined
   return {
     id: ProjectId.ETHEREUM,
     name: 'Ethereum',
@@ -88,7 +119,12 @@ function getEthereumEntry(
     stageOrder: 3,
     filterable: undefined,
     dataSource: 'Blockchain RPC',
-    data,
+    data: {
+      tps: data.tps,
+      uops: data.uops,
+      ratio: data.ratio,
+      isSynced: !notSyncedStatus,
+    },
     statuses: undefined,
   }
 }

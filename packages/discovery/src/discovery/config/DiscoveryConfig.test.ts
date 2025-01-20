@@ -1,9 +1,11 @@
 import { hashJson } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
 import { DiscoveryConfig } from './DiscoveryConfig'
-import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import {
+  DiscoveryContract,
+  type RawDiscoveryConfig,
+} from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 const ADDRESS_A = EthereumAddress.random()
@@ -30,8 +32,8 @@ const CONFIG = new DiscoveryConfig(
       [ADDRESS_B.toString()]: 'B',
     },
     overrides: {
-      A: OVERRIDE_A,
-      [ADDRESS_B.toString()]: OVERRIDE_B,
+      A: DiscoveryContract.parse(OVERRIDE_A),
+      [ADDRESS_B.toString()]: DiscoveryContract.parse(OVERRIDE_B),
     },
   },
   {
@@ -45,19 +47,22 @@ const CONFIG = new DiscoveryConfig(
 describe(DiscoveryConfig.name, () => {
   describe('overrides', () => {
     it('gets override for given address, ignoring common name since it is already named', () => {
-      const result = CONFIG.overrides.get(ADDRESS_B)
-      expect(result).toEqual({ ...OVERRIDE_B, address: ADDRESS_B, name: 'B' })
+      const result = CONFIG.for(ADDRESS_B)
+      expect(result.name).toEqual('B')
+      expect(result.address).toEqual(ADDRESS_B)
     })
     it('gets name from commonAddressNames if exists and not already named', () => {
-      const result = CONFIG.overrides.get(ADDRESS_C)
-      expect(result).toEqual({ address: ADDRESS_C, name: 'C Common Name' })
+      const result = CONFIG.for(ADDRESS_C)
+      expect(result.name).toEqual('C Common Name')
+      expect(result.address).toEqual(ADDRESS_C)
     })
     it('gets override for given name', () => {
-      const result = CONFIG.overrides.get('A')
-      expect(result).toEqual({ ...OVERRIDE_A, address: ADDRESS_A, name: 'A' })
+      const result = CONFIG.for('A')
+      expect(result.name).toEqual('A')
+      expect(result.address).toEqual(ADDRESS_A)
     })
     it('throws if override is not found', () => {
-      expect(() => CONFIG.overrides.get('C')).toThrow()
+      expect(() => CONFIG.for('C')).toThrow()
     })
   })
 

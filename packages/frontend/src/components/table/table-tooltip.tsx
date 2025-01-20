@@ -12,8 +12,8 @@ interface Props {
 export function TableTooltip({ children }: Props) {
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <InfoIcon className="mb-px size-3 fill-current" />
+      <TooltipTrigger className="mb-px">
+        <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
       <TooltipContent>{children}</TooltipContent>
     </Tooltip>

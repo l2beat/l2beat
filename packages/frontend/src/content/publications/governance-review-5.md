@@ -60,7 +60,7 @@ Before voting on-chain, we’ll be reviewing the proposed changes to the code an
 
 Dan Peng of Vela [published a post](https://forum.arbitrum.foundation/t/arbitrum-and-the-future-of-web3-gaming/21270) that aims to function as an educational hub for the Arbitrum DAO, focused on highlighting the potential impacts of web3 gaming on the Arbitrum ecosystem and its stakeholders. The post helps readers understand why the gaming industry is a massive opportunity for Arbitrum, provides some background on how discussions around gaming started in Arbitrum DAO, gives an overview of the current landscape of gaming on Arbitrum, and provides some recommendations on the type and size of grants gaming studios should receive.
 
-The post also incluses a link to the [Telegram of the gaming working group](https://t.me/+spktzHCOL4MwZGU5) that has been organised, as well as an open draft of the Gaming Catalyst Program which is a model to rapidly accelerate Arbitrum’s support for game builders and also strategically allocate funding and resources towards vetted experts to help accelerate the onboarding and go-to-market of the best builders in the gaming industry.
+The post also includes a link to the [Telegram of the gaming working group](https://t.me/+spktzHCOL4MwZGU5) that has been organised, as well as an open draft of the Gaming Catalyst Program which is a model to rapidly accelerate Arbitrum’s support for game builders and also strategically allocate funding and resources towards vetted experts to help accelerate the onboarding and go-to-market of the best builders in the gaming industry.
 
 ### **[RFC] Arbitrum Day 2024: Gas Free**
 
