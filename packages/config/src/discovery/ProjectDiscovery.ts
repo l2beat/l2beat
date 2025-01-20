@@ -779,10 +779,32 @@ export class ProjectDiscovery {
         `Conflicting descriptions found ${descriptions}`,
       )
 
+      const finalDescription = [
+        descriptions[0] ?? roleDescriptions[role].description,
+      ]
+
+      for (const c of matching) {
+        const initialConditions = (c.receivedPermissions ?? [])
+          .filter((p) => p.permission === role)
+          .map((v) => v.condition)
+          .filter(notUndefined)
+        const pathConditions = (c.receivedPermissions ?? [])
+          .filter((p) => p.permission === role)
+          .flatMap((p) => p.via?.map((v) => this.formatViaPath(v, true)))
+          .filter((v) => v !== '')
+        const conditions = uniq([...initialConditions, ...pathConditions])
+
+        if (conditions.length > 0) {
+          finalDescription.push(
+            `* ${c.name} receives the role only ${conditions.join(', ')}`,
+          )
+        }
+      }
+
       const accounts = addresses.map((a) => this.formatPermissionedAccount(a))
       result.push({
         ...roleDescriptions[role],
-        description: descriptions[0] ?? roleDescriptions[role].description,
+        description: finalDescription.join('\n'),
         accounts,
         fromRole: true,
       })
@@ -790,16 +812,22 @@ export class ProjectDiscovery {
     return result
   }
 
-  formatViaPath(path: ResolvedPermissionPath): string {
+  formatViaPath(
+    path: ResolvedPermissionPath,
+    skipName: boolean = false,
+  ): string {
     const name =
       this.getContractByAddress(path.address)?.name ?? path.address.toString()
 
-    let result = name
+    const result = skipName ? [] : [name]
     if (path.delay) {
-      result += ` with ${formatSeconds(path.delay)} delay`
+      result.push(formatPermissionDelay(path.delay))
+    }
+    if (path.condition) {
+      result.push(formatPermissionCondition(path.condition))
     }
 
-    return result
+    return result.join(' ')
   }
 
   describeUltimatelyReceivedPermissions(
@@ -821,7 +849,7 @@ export class ProjectDiscovery {
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
-      ` (acting via ${via.map((p) => this.formatViaPath(p)).join(', ')})`
+      ` - acting via ${via.map((p) => this.formatViaPath(p)).join(', ')}`
 
     return Object.entries(
       groupBy(
@@ -831,13 +859,15 @@ export class ProjectDiscovery {
             value.permission,
             value.via !== undefined ? formatVia(value.via) : '',
             value.description ?? '',
-          ].join(':')
+            value.condition ?? '',
+          ].join('►')
         },
       ),
     ).map(([key, entries]) => {
-      const permission = key.split(':')[0] as PermissionType
-      const via = key.split(':')[1] ?? ''
-      const description = key.split(':', 3)[2] ?? ''
+      const permission = key.split('►')[0] as PermissionType
+      const via = key.split('►')[1] ?? ''
+      const description = key.split('►')[2] ?? ''
+      const condition = key.split('►')[3] ?? ''
       const prefix = ultimatePermissionToPrefix[permission]
       if (prefix === undefined) {
         return ''
@@ -850,11 +880,12 @@ export class ProjectDiscovery {
             .join(', ')
         : ''
 
-      const detailsString =
-        addressesString + via + formatPermissionDescription(description)
       return `${[
         ultimatePermissionToPrefix[permission as PermissionType],
-        detailsString,
+        addressesString,
+        formatPermissionDescription(description),
+        formatPermissionDescription(condition),
+        via,
       ]
         .join(' ')
         .trim()}.`
@@ -883,11 +914,16 @@ export class ProjectDiscovery {
       groupBy(
         contractOrEoa.directlyReceivedPermissions ?? [],
         (value: ReceivedPermission) =>
-          value.permission + ':' + (value.description ?? ''),
+          [
+            value.permission,
+            value.description ?? '',
+            value.condition ?? '',
+          ].join('►'),
       ),
     ).map(([key, entries]) => {
-      const permission = key.split(':')[0] as PermissionType
-      const description = key.split(':', 2)[1] ?? ''
+      const permission = key.split('►')[0] as PermissionType
+      const description = key.split('►')[1] ?? ''
+      const condition = key.split('►')[2] ?? ''
       const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
       const addressesString = showTargets
         ? entries
@@ -899,6 +935,7 @@ export class ProjectDiscovery {
         directPermissionToPrefix[permission],
         addressesString,
         formatPermissionDescription(description),
+        formatPermissionCondition(condition),
       ]
         .join(' ')
         .trim()}.`
@@ -1146,6 +1183,14 @@ export function trimTrailingDots(s: string): string {
 
 function formatPermissionDescription(description: string): string {
   return description !== '' ? ` - ${trimTrailingDots(description)}` : ''
+}
+
+function formatPermissionCondition(condition: string): string {
+  return condition !== '' ? `if ${trimTrailingDots(condition)}` : ''
+}
+
+function formatPermissionDelay(delay: number): string {
+  return ` with ${formatSeconds(delay)} delay`
 }
 
 function isMultisigLike(contract: ContractParameters | undefined): boolean {
