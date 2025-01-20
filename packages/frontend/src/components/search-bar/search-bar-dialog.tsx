@@ -3,6 +3,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import { groupBy } from 'lodash'
+import { usePlausible } from 'next-plausible'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type Entries } from 'type-fest'
@@ -35,6 +36,7 @@ interface Props {
 
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const plausible = usePlausible()
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
   const router = useRouterWithProgressBar()
@@ -93,6 +95,17 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     setOpen(false)
   }
 
+  function onItemSelect(item: SearchBarProject | AnySearchBarEntry) {
+    setOpen(false)
+    setValue('')
+    router.push(item.href)
+    plausible('search-bar-project-selected', {
+      props: {
+        project: item.name,
+      },
+    })
+  }
+
   // Hide virtual keyboard on touch start
   useOnClickOutside(inputRef, () => inputRef.current?.blur(), 'touchstart')
 
@@ -124,11 +137,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                 return (
                   <SearchBarItem
                     key={project.id}
-                    onSelect={() => {
-                      setOpen(false)
-                      setValue('')
-                      router.push(project.href)
-                    }}
+                    onSelect={() => onItemSelect(project)}
                     label={entryToLabel(project)}
                   >
                     <Image
@@ -155,11 +164,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                   return (
                     <SearchBarItem
                       key={item.href}
-                      onSelect={() => {
-                        setOpen(false)
-                        setValue('')
-                        router.push(item.href)
-                      }}
+                      onSelect={() => onItemSelect(item)}
                       label={entryToLabel(item)}
                       value={
                         // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
