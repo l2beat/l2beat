@@ -7,11 +7,11 @@ import {
   DaLayerRisks,
   DaUpgradeabilityRisk,
   DacDaLayer,
-  DacTransactionDataType,
   IntegratedDacBridge,
 } from '../types'
 import { DaLinks } from '../types/DaLinks'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 type TemplateSpecific = {
   /** DAC display settings */

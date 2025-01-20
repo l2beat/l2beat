@@ -3,10 +3,10 @@ import {
   DaBridge,
   DaUpgradeabilityRisk,
   DacDaLayer,
-  DacTransactionDataType,
   IntegratedDacBridge,
 } from '../types'
 import { DaTechnology } from '../types/DaTechnology'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { DAC, DacTemplateVars } from './dac-template'
 
 type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {

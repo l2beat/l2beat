@@ -4,6 +4,7 @@ import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { AnytrustDAC } from '../other/da-beat/templates/anytrust-template'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
@@ -76,4 +77,10 @@ export const educhain: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1737096804),
+    },
+    discovery,
+  }),
 })

@@ -398,10 +398,7 @@ function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: mergeBadges(
-      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.additionalBadges ?? [],
-    ),
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
   }
 }
