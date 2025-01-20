@@ -9,7 +9,7 @@ type MyEvents = {
   uopsExplorerSelected: never
 }
 
-export function useCustomEvent() {
+export function useTracking() {
   const plausible = usePlausible<MyEvents>()
-  return plausible
+  return { track: plausible }
 }

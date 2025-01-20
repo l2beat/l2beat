@@ -2,7 +2,7 @@
 
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import * as React from 'react'
-import { useCustomEvent } from '~/hooks/use-custom-event'
+import { useTracking } from '~/hooks/use-custom-event'
 import { cn } from '~/utils/cn'
 
 const RadioGroup = ({
@@ -18,7 +18,7 @@ const RadioGroup = ({
   variant?: 'highlighted'
   enableTracking?: boolean
 }) => {
-  const customEvent = useCustomEvent()
+  const { track } = useTracking()
   return (
     <RadioGroupPrimitive.Root
       name={name}
@@ -31,7 +31,7 @@ const RadioGroup = ({
       onValueChange={(val) => {
         onValueChange?.(val)
         if (enableTracking) {
-          customEvent('radioGroupChanged', {
+          track('radioGroupChanged', {
             props: {
               name: name,
               value: val,

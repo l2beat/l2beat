@@ -3,7 +3,7 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import * as React from 'react'
 import { useId } from 'react'
-import { useCustomEvent } from '~/hooks/use-custom-event'
+import { useTracking } from '~/hooks/use-custom-event'
 import { CheckIcon } from '~/icons/check'
 import { cn } from '~/utils/cn'
 
@@ -19,7 +19,7 @@ const Checkbox = ({
   enableTracking?: boolean
 }) => {
   const id = useId()
-  const customEvent = useCustomEvent()
+  const { track } = useTracking()
   return (
     <label
       htmlFor={id}
@@ -42,7 +42,7 @@ const Checkbox = ({
         onCheckedChange={(checked) => {
           props.onCheckedChange?.(checked)
           if (enableTracking) {
-            customEvent('checkboxChanged', {
+            track('checkboxChanged', {
               props: {
                 name,
                 value: checked.valueOf().toString(),

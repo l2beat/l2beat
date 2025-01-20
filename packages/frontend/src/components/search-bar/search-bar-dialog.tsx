@@ -16,7 +16,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/command'
-import { useCustomEvent } from '~/hooks/use-custom-event'
+import { useTracking } from '~/hooks/use-custom-event'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import {
@@ -36,7 +36,7 @@ interface Props {
 
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const customEvent = useCustomEvent()
+  const { track } = useTracking()
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
   const router = useRouterWithProgressBar()
@@ -99,7 +99,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     setOpen(false)
     setValue('')
     router.push(item.href)
-    customEvent('searchBarProjectSelected', {
+    track('searchBarProjectSelected', {
       props: {
         name: item.name,
       },
