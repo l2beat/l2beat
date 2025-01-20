@@ -1,11 +1,14 @@
 import {
   type BlockchainDaLayer,
+  type DaChallengeMechanism,
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
+  type DaRelayerFailureRisk,
   type DaServiceDaLayer,
   type DaUpgradeabilityRisk,
   type DataAvailabilityLayer,
+  type UsedInProject,
   daLayers,
   ethereumDaLayer,
   isDaBridgeVerified,
@@ -13,9 +16,6 @@ import {
   layer3s,
   toUsedInProject,
 } from '@l2beat/config'
-import { type DaChallengeMechanism } from '@l2beat/config/build/src/projects/other/da-beat/types/DaChallengeMechanism'
-import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import { ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { type CommonProjectEntry } from '../../utils/get-common-project-entry'

@@ -2,12 +2,12 @@ import {
   type Project,
   type ProjectDataAvailability,
   ProjectService,
+  type ReasonForBeingInOther,
   type ScalingProjectCategory,
   type ScalingProjectStack,
   type StageConfig,
   type WarningWithSentiment,
 } from '@l2beat/config'
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'

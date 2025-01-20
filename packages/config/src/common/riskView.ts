@@ -363,7 +363,7 @@ export function SEQUENCER_SELF_SEQUENCE(
     delay !== undefined
       ? delay === 0
         ? ' There is no delay on this operation.'
-        : ` There is a ${formatSeconds(delay)} delay on this operation.`
+        : ` There can be up to a ${formatSeconds(delay)} delay on this operation.`
       : ''
   return {
     value: 'Self sequence',

@@ -1,5 +1,8 @@
-import { daLayers, ethereumDaLayer } from '@l2beat/config'
-import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
+import {
+  daEconomicSecurityMeta,
+  daLayers,
+  ethereumDaLayer,
+} from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { compact, keyBy, round } from 'lodash'
 import { env } from '~/env'

@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone, type ScalingProjectCategory } from '@l2beat/config'
+import type { Milestone, ScalingProjectCategory } from '@l2beat/config'
 import { useState } from 'react'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'

@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 130664390,
-  "configHash": "0x7c3f4a2962ba6c5930dac17eb17ac327c703e3c3444eab4ffe83fcd02d7d2912",
+  "blockNumber": 130896600,
+  "configHash": "0x937c5d37cdfd0e94395e2d8d1ac4bb118fc0407a19e9c6f812c33884998afca1",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -13,6 +13,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+          "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1650712171,
       "values": {
@@ -43,6 +50,7 @@
         "0x40a3a457f0e922425ed48d80603e24e652453f57be197487f62795991cff2c2b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -58,7 +66,8 @@
         "$upgradeCount": 0,
         "owner": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "DeployerWhitelist"
     },
     {
       "name": "L2CrossDomainMessenger",
@@ -68,6 +77,7 @@
         "0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -84,7 +94,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643207",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643380",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -105,6 +115,7 @@
         "0x6d0f92051952bf3dcccae9e0ff5cf654e3b386df386bc0609b0c7234a2a108bb"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Provides the current gas price for L2 transactions.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -132,14 +143,14 @@
         "$upgradeCount": 2,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 165388840,
+        "blobBaseFee": 59721762216,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 2729924942,
+        "l1BaseFee": 37531625291,
         "version": "1.3.0"
       },
       "derivedName": "GasPriceOracle"
@@ -152,6 +163,7 @@
         "0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -181,6 +193,7 @@
         "0xf13800f6674424ad602d8daac646acfc10794f492253796903ac26b7fdb3eabf"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -209,6 +222,7 @@
         "0x33cbc2e27551e9c304842740517adbe533ed12516557dc9a8b7c63f7d599998b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -224,7 +238,8 @@
         "$upgradeCount": 0,
         "BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "L1BlockNumber",
@@ -234,6 +249,7 @@
         "0x0ac40be66f726a1d64904e03831f746ee3fd847922d5e54ba4ad0e509602ccf8"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Simple contract that returns the latest L1 block number.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -259,6 +275,7 @@
         "0x5e60fa0150197ecbd302b46ad0cc0b6f3f024342d97f052ed2f9a8c2a6ed3846"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -283,7 +300,8 @@
         "OTHER_BRIDGE": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "otherBridge": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "L2ERC721Bridge"
     },
     {
       "name": "L1Block",
@@ -293,6 +311,7 @@
         "0xbdd7533735ef92fffadfbee431b476e72f2f048487c921c5570443e3cba5cb30"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -320,18 +339,18 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 2729924942,
+        "basefee": 37531625291,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 165388840,
+        "blobBaseFee": 59721762216,
         "blobBaseFeeScalar": 1014213,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0xc97d32f85d939c80d6de9babda4aabd207ada16634c1d8eb98c48509f5bd65e7",
+        "hash": "0x03281dda970d4c4e4e2977974b07a06e31a2518eb81084652b4d8757714ea9a5",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 21628505,
-        "sequenceNumber": 4,
-        "timestamp": 1736927471,
+        "number": 21667013,
+        "sequenceNumber": 5,
+        "timestamp": 1737391895,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -344,6 +363,7 @@
         "0x362ef15b4c72a78e42b10222a63ec31da455fc051e5fc3e6bade09de4d19bdd9"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -370,6 +390,7 @@
         "0x8dc81ca02eba8fc262038825d8c633ed5542af30e92e629f65787cf7161c0b69"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -386,7 +407,8 @@
         "BRIDGE": "0x4200000000000000000000000000000000000014",
         "REMOTE_CHAIN_ID": 1,
         "version": "1.2.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC721Factory"
     },
     {
       "name": "L2ProxyAdmin",
@@ -491,6 +513,7 @@
         "0x0c18a8a786c9a78d1ea6a3f71ee3369ae8acc817629b8bf4934b05f8a38a41a2"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -518,6 +541,7 @@
         "0xa5448c99f954f5f48195d1e118c0513d52fe9a6357928d1d29f617258ca935ff"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -545,6 +569,7 @@
         "0x612d21c1676a505153f40dceb55f1251798affb5ed211cfc9c00efa2a51fcbfd"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS).",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -565,7 +590,8 @@
         ],
         "$upgradeCount": 1,
         "version": "1.0.1"
-      }
+      },
+      "derivedName": "SchemaRegistry"
     },
     {
       "name": "EAS",
@@ -575,6 +601,7 @@
         "0x662edc082d445c579bb50a631e8c4137c8d9d9016da29683e3f1ccf24b835092"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS).",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -600,7 +627,8 @@
         "getRevokeTypeHash": "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650",
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
         "version": "1.0.1"
-      }
+      },
+      "derivedName": "EAS"
     },
     {
       "name": "OPToken",
@@ -608,6 +636,7 @@
       "sourceHashes": [
         "0xbaac8c2c26ae66ca5f26a277a6fc9ad2cac1d8e638fae5ab2589b8fec8262316"
       ],
+      "description": "The OP token contract. The minting policy is controlled by the 0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1650979836,
       "values": {
@@ -627,6 +656,15 @@
       "sourceHashes": [
         "0x132b4ddf43264613a6251435ddd7443efbd8ed51129af51edb5c6ab298471b3d"
       ],
+      "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
+          "description": "change the OP token owner to a different MintManager and therefore change the inflation policy.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1665174739,
       "values": {
         "$immutable": true,
@@ -636,7 +674,8 @@
         "MINT_PERIOD": 31536000,
         "mintPermittedAfter": 0,
         "owner": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
-      }
+      },
+      "derivedName": "MintManager"
     }
   ],
   "eoas": [
@@ -645,6 +684,7 @@
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     {
+      "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "receivedPermissions": [
         {

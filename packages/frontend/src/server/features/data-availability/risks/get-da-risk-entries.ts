@@ -3,6 +3,7 @@ import {
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
+  type DaRelayerFailureRisk,
   type DaServiceDaLayer,
   type DaUpgradeabilityRisk,
   daLayers,
@@ -10,7 +11,6 @@ import {
   layer2s,
   layer3s,
 } from '@l2beat/config'
-import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
 import { ProjectId } from '@l2beat/shared-pure'
 import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'

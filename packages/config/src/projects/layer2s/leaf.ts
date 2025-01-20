@@ -10,7 +10,7 @@ export const leaf: Layer2 = upcomingL2({
     slug: 'leaf',
     description:
       'Leaf is an upcoming OP Stack L2 focused on DeFi and MEV protection.',
-    purposes: [],
+    purposes: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {

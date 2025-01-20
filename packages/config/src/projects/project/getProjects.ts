@@ -1,10 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
-import { isVerified } from '../../verification'
+import { isVerified } from '../../verification/isVerified'
 import { Bridge, bridges } from '../bridges'
+import { DaLayer, daLayers } from '../da-beat'
 import { Layer2, ProjectLivenessInfo, layer2s } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
-import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
 import {
   BaseProject,

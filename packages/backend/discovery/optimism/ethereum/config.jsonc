@@ -24,6 +24,7 @@
     "0xdfe97868233d1aa22e815a266982f2cf17685a27": "L2OutputOracle",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
+    "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L1DAIEscrow",
     "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortal",
     "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": "SystemConfig",
     "0x76943C0D61395d8F2edF9060e1533529cAe05dE6": "wstETHEscrow",
@@ -45,7 +46,16 @@
     "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
   },
   "overrides": {
+    "L1DAIEscrow": {
+      "description": "Stores DAI deposited from the attached L1DAITokenBridge."
+    },
     "SecurityCouncilMultisig": {
+      "references": [
+        {
+          "text": "Security Council members - Optimism Collective Governance Forum",
+          "href": "https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"
+        }
+      ],
       "fields": {
         "isL2beatStillAnOwner": {
           "handler": {
@@ -57,6 +67,7 @@
       }
     },
     "LivenessGuard": {
+      "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
       "fields": {
         "timeSinceLastL2beatInteraction": {
@@ -70,6 +81,7 @@
       }
     },
     "SynthetixBridgeEscrow": {
+      "description": "Custom escrow for SNX bridged via canonical messaging.",
       "ignoreRelatives": ["owner"]
     },
     "DelayedWETH_PermissionedGames": {
@@ -123,6 +135,7 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "L1DAITokenBridge": {
+      "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
       "ignoreRelatives": [
         "l1Token",
         "l2DAITokenBridge",
@@ -205,6 +218,7 @@
       "ignoreInWatchMode": ["scalar"]
     },
     "FeesCollector": {
+      "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"]
     },
     "DisputeGameFactory": {

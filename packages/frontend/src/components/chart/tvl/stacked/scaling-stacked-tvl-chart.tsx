@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import {
