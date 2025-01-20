@@ -16,6 +16,7 @@ export function ActivityMetricControls<T extends string>({
 }: Props<T>) {
   return (
     <RadioGroup
+      name="activityMetric"
       value={value}
       onValueChange={onValueChange}
       variant="highlighted"

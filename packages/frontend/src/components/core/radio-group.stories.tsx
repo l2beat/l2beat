@@ -18,7 +18,7 @@ type Story = StoryObj<typeof RadioGroup>
 
 export const Default: Story = {
   render: () => (
-    <RadioGroup defaultValue="option1">
+    <RadioGroup name="radioGroup" defaultValue="option1">
       <RadioGroupItem value="option1">Option 1</RadioGroupItem>
       <RadioGroupItem value="option2">Option 2</RadioGroupItem>
       <RadioGroupItem value="option3">Option 3</RadioGroupItem>
@@ -32,7 +32,11 @@ export const Default: Story = {
 
 export const WithHighlightedVariant: Story = {
   render: () => (
-    <RadioGroup defaultValue="highlighted1" variant="highlighted">
+    <RadioGroup
+      name="radioGroup"
+      defaultValue="highlighted1"
+      variant="highlighted"
+    >
       <RadioGroupItem value="highlighted1">Highlighted 1</RadioGroupItem>
       <RadioGroupItem value="highlighted2">Highlighted 2</RadioGroupItem>
       <RadioGroupItem value="highlighted3">Highlighted 3</RadioGroupItem>
@@ -42,7 +46,7 @@ export const WithHighlightedVariant: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <RadioGroup defaultValue="option1">
+    <RadioGroup name="radioGroup" defaultValue="option1">
       <RadioGroupItem value="option1">Enabled</RadioGroupItem>
       <RadioGroupItem value="option2" disabled>
         Disabled

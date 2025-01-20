@@ -109,6 +109,7 @@ export function ProjectActivityChart({
               projectChart
             />
             <Checkbox
+              name="showMainnetActivity"
               checked={showMainnet}
               onCheckedChange={(state) => setShowMainnet(!!state)}
             >
@@ -120,6 +121,7 @@ export function ProjectActivityChart({
             </Checkbox>
           </div>
           <RadioGroup
+            name="activityChartScale"
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >

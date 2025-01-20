@@ -18,10 +18,10 @@ describe(mapConfig.name, () => {
 
     const backendProject = layer2ToBackendProject(arbitrum)
 
-    const result = mapConfig(backendProject, arbitrum.chainConfig.name)
+    const result = mapConfig(backendProject, arbitrum.chainConfig)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
-    expect(result.tokens.length).toBeGreaterThanOrEqual(403)
+    expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
     expect(result.tokens[0]).toEqual({
       id: 'ethereum-native',
@@ -45,7 +45,11 @@ describe(mapConfig.name, () => {
       isAssociated: false,
     })
 
-    expect(result.tokens.find((t) => t.ticker === 'ARB')).toEqual({
+    expect(
+      result.tokens.find(
+        (t) => t.id === 'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
+      ),
+    ).toEqual({
       id: 'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
       ticker: 'ARB',
       amount: {
@@ -63,6 +67,44 @@ describe(mapConfig.name, () => {
       category: 'other',
       source: 'canonical',
       isAssociated: true,
+    })
+
+    expect(
+      result.tokens.find(
+        (t) => t.id === 'arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548',
+      ),
+    ).toEqual({
+      id: 'arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548',
+      ticker: 'ARB',
+      amount: {
+        type: 'circulatingSupply',
+        ticker: 'ARB',
+      },
+      sinceTimestamp: new UnixTime(1679529600),
+      untilTimestamp: undefined,
+      category: 'other',
+      source: 'native',
+      isAssociated: true,
+    })
+
+    expect(
+      result.tokens.find(
+        (t) => t.id === 'arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+      ),
+    ).toEqual({
+      id: 'arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+      ticker: 'stAethir',
+      amount: {
+        type: 'totalSupply',
+        address: EthereumAddress('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
+        chain: 'arbitrum',
+        decimals: 18,
+      },
+      sinceTimestamp: new UnixTime(1718150400),
+      untilTimestamp: undefined,
+      category: 'other',
+      source: 'external',
+      isAssociated: false,
     })
   })
 })
