@@ -2,7 +2,10 @@ import { hashJson } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import {
+  DiscoveryContract,
+  type RawDiscoveryConfig,
+} from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 const ADDRESS_A = EthereumAddress.random()
@@ -29,8 +32,8 @@ const CONFIG = new DiscoveryConfig(
       [ADDRESS_B.toString()]: 'B',
     },
     overrides: {
-      A: OVERRIDE_A,
-      [ADDRESS_B.toString()]: OVERRIDE_B,
+      A: DiscoveryContract.parse(OVERRIDE_A),
+      [ADDRESS_B.toString()]: DiscoveryContract.parse(OVERRIDE_B),
     },
   },
   {
