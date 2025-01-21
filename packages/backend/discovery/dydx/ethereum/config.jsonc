@@ -156,9 +156,10 @@
         },
         "BORROWERS_LIST": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event ScheduledBorrowerAllocationChange(address indexed borrower,uint256 oldAllocation,uint256 newAllocation,uint256 epochNumber)",
-            "valueKey": "borrower"
+            "type": "event",
+            "events": "ScheduledBorrowerAllocationChange",
+            "select": "borrower",
+            "distinct": "borrower"
           }
         }
       },

@@ -134,9 +134,9 @@
       "fields": {
         "verifierVersions": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateVerifier",
-            "valueKey": "version"
+            "type": "event",
+            "events": "UpdateVerifier",
+            "select": "version"
           }
         },
         "latestVerifier": {

@@ -101,9 +101,10 @@
       "fields": {
         "programHashHistory": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ProgramHashChanged",
-            "valueKey": "oldProgramHash"
+            "type": "event",
+            "events": "ProgramHashChanged",
+            "select": "oldProgramHash",
+            "distinct": "oldProgramHash"
           }
         },
         "verifier": {

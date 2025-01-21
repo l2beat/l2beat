@@ -103,16 +103,16 @@
         },
         "validatorsAdded": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator"
+            "type": "event",
+            "events": "ValidatorAdded",
+            "select": "_addedValidator"
           }
         },
         "validatorsRemoved": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator"
+            "type": "event",
+            "events": "ValidatorRemoved",
+            "select": "_removedValidator"
           }
         }
       }
