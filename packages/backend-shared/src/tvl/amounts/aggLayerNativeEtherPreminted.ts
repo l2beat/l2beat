@@ -1,11 +1,11 @@
-import { ChainConfig } from '@l2beat/config'
+import type { ChainConfig } from '@l2beat/config'
 import {
   assert,
-  AggLayerNativeEtherPreminted,
+  type AggLayerNativeEtherPreminted,
   AssetId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '../aggLayer'
 
 export function getAggLayerNativeEtherPremintedEntry(

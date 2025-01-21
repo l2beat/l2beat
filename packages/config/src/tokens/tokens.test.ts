@@ -5,7 +5,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  Token,
+  type Token,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'

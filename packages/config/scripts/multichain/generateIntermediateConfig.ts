@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { chainIdNames } from './chainIdNames'
-import { MultichainConfig } from './types'
+import type { MultichainConfig } from './types'
 
 interface GroupedEscrow {
   address: EthereumAddress

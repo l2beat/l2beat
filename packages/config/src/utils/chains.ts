@@ -1,4 +1,4 @@
-import { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
+import type { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
 
 /**
  * This function is used by checkVerifiedContracts.ts script to know on which

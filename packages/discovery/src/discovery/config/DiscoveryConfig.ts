@@ -1,14 +1,14 @@
 import { hashJson } from '@l2beat/shared'
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { merge } from 'lodash'
 import { ConfigReader } from './ConfigReader'
-import { ContractConfig, createContractConfig } from './ContractConfig'
+import { type ContractConfig, createContractConfig } from './ContractConfig'
 import {
   DiscoveryContract,
-  DiscoveryCustomType,
-  RawDiscoveryConfig,
+  type DiscoveryCustomType,
+  type RawDiscoveryConfig,
 } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 

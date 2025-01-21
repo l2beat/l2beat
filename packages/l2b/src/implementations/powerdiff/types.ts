@@ -1,4 +1,4 @@
-import { DisplayMode } from '../powerdiff'
+import type { DisplayMode } from '../powerdiff'
 
 export interface Configuration {
   path1: string

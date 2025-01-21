@@ -1,5 +1,5 @@
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DacDaLayer } from '../types/DaLayer'
+import type { DacDaLayer } from '../types/DaLayer'
 import { fraxtalDABridge } from './bridges/fraxtalDABridge'
 
 export const fraxtalDA: DacDaLayer = {

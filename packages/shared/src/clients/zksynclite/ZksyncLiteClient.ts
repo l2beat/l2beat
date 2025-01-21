@@ -1,8 +1,13 @@
-import { assert, Block, UnixTime, json } from '@l2beat/shared-pure'
+import {
+  assert,
+  type Block,
+  type UnixTime,
+  type json,
+} from '@l2beat/shared-pure'
 
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
-import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { BlockClient } from '../types'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { BlockClient } from '../types'
 import {
   ZksyncLiteBlocksResult,
   ZksyncLiteError,

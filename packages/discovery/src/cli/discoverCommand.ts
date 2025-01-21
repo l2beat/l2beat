@@ -12,7 +12,10 @@ import {
   string,
 } from 'cmd-ts'
 import { getChainConfig, getChainConfigs } from '../config/config.discovery'
-import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
+import type {
+  DiscoveryChainConfig,
+  DiscoveryModuleConfig,
+} from '../config/types'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { ChainValue } from './types'

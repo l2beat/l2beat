@@ -1,7 +1,7 @@
-import { Database } from '@l2beat/database'
-import { DiscoveryDiff, diffDiscovery } from '@l2beat/discovery'
+import type { Database } from '@l2beat/database'
+import { type DiscoveryDiff, diffDiscovery } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainId } from '@l2beat/shared-pure'
+import type { ChainId } from '@l2beat/shared-pure'
 
 export async function getDiff(
   db: Database,

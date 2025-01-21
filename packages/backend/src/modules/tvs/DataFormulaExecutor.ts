@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { DataStorage } from './DataStorage'
-import { AmountConfig, PriceConfig } from './types'
+import type { UnixTime } from '@l2beat/shared-pure'
+import type { DataStorage } from './DataStorage'
+import type { AmountConfig, PriceConfig } from './types'
 
 export class DataFormulaExecutor {
   constructor(private storage: DataStorage) {}

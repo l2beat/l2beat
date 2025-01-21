@@ -1,27 +1,27 @@
 import {
-  ContractValue,
-  FieldMeta,
+  type ContractValue,
+  type FieldMeta,
   get$PastUpgrades,
 } from '@l2beat/discovery-types'
-import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
-import { ContractConfig } from '../config/ContractConfig'
-import {
+import type { ContractConfig } from '../config/ContractConfig'
+import type {
   DiscoveryCustomType,
   ExternalReference,
 } from '../config/RawDiscoveryConfig'
-import { HandlerResult } from '../handlers/Handler'
-import { HandlerExecutor } from '../handlers/HandlerExecutor'
-import { IProvider } from '../provider/IProvider'
-import { ProxyDetector } from '../proxies/ProxyDetector'
-import {
+import type { HandlerResult } from '../handlers/Handler'
+import type { HandlerExecutor } from '../handlers/HandlerExecutor'
+import type { IProvider } from '../provider/IProvider'
+import type { ProxyDetector } from '../proxies/ProxyDetector'
+import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import { TemplateService } from './TemplateService'
+import type { TemplateService } from './TemplateService'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
-import { ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
+import { type ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 

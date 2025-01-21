@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
 export interface DataStorage {
   writePrice(id: string, timestamp: UnixTime, price: number): Promise<void>

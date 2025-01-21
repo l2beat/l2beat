@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
-import { json } from '@l2beat/shared-pure'
+import type { json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { ClientCore } from './ClientCore'
-import { HttpClient } from './http/HttpClient'
+import type { HttpClient } from './http/HttpClient'
 
 describe(ClientCore.name, () => {
   describe(ClientCore.prototype.fetch.name, () => {

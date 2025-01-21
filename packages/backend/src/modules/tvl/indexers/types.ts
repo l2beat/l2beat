@@ -1,5 +1,5 @@
-import { Database } from '@l2beat/database'
-import {
+import type { Database } from '@l2beat/database'
+import type {
   AggLayerL2Token,
   AggLayerNativeEtherPreminted,
   AggLayerNativeEtherWrapped,
@@ -15,16 +15,16 @@ import {
   ProjectId,
   TotalSupplyEntry,
 } from '@l2beat/shared-pure'
-import { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
-import { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
-import { AggLayerService } from '../services/AggLayerService'
-import { AmountService } from '../services/AmountService'
-import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
-import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
-import { ElasticChainService } from '../services/ElasticChainService'
-import { PriceService } from '../services/PriceService'
-import { ValueService } from '../services/ValueService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
+import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
+import type { AggLayerService } from '../services/AggLayerService'
+import type { AmountService } from '../services/AmountService'
+import type { BlockTimestampProvider } from '../services/BlockTimestampProvider'
+import type { CirculatingSupplyService } from '../services/CirculatingSupplyService'
+import type { ElasticChainService } from '../services/ElasticChainService'
+import type { PriceService } from '../services/PriceService'
+import type { ValueService } from '../services/ValueService'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface BlockTimestampIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

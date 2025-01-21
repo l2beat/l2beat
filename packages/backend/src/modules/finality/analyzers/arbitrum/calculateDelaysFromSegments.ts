@@ -1,6 +1,6 @@
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 
-import { RlpSerializable } from '../../utils/rlpDecode'
+import type { RlpSerializable } from '../../utils/rlpDecode'
 import type { L2Block } from '../types/BaseAnalyzer'
 import { byteArrToNumber } from './utils'
 

@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { underReviewL2 } from './templates/underReview'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const funki: Layer2 = underReviewL2({
   id: 'funki',

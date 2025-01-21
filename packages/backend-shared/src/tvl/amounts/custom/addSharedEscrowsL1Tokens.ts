@@ -1,6 +1,6 @@
 import { chains } from '@l2beat/config'
-import { assert, AmountConfigEntry, ChainId } from '@l2beat/shared-pure'
-import { BackendProject } from '../../../BackendProject'
+import { assert, type AmountConfigEntry, ChainId } from '@l2beat/shared-pure'
+import type { BackendProject } from '../../../BackendProject'
 import { getEscrowEntry } from '../escrow'
 
 export function addSharedEscrowsL1Tokens(

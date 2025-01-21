@@ -1,24 +1,24 @@
 import { ConfigReader } from '@l2beat/discovery'
 import {
-  ContractValue,
-  DiscoveryOutput,
+  type ContractValue,
+  type DiscoveryOutput,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import { hashJson } from '@l2beat/shared'
 import {
   assert,
   EthereumAddress,
-  Hash256,
-  ProjectId,
+  type Hash256,
+  type ProjectId,
 } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
-  Bridge,
-  DaLayer,
-  Layer2,
-  Layer3,
-  ScalingProjectContract,
-  ScalingProjectPermission,
+  type Bridge,
+  type DaLayer,
+  type Layer2,
+  type Layer3,
+  type ScalingProjectContract,
+  type ScalingProjectPermission,
   bridges,
   layer2s,
   layer3s,

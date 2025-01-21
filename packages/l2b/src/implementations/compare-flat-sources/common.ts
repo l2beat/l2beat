@@ -1,12 +1,12 @@
 import path, { resolve } from 'path'
 import {
   ConfigReader,
-  HashedFileContent,
+  type HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
   format,
 } from '@l2beat/discovery'
-import { CliLogger } from '@l2beat/shared'
+import type { CliLogger } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { readFile, readdir } from 'fs/promises'

@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
-import { RawDiscoveryConfig } from '@l2beat/discovery'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import type { RawDiscoveryConfig } from '@l2beat/discovery'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { readConfig } from '../config/readConfig'
 
 export function initDiscovery(

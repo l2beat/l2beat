@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { EnshrinedBridge } from '../../../types/DaBridge'
+import type { EnshrinedBridge } from '../../../types/DaBridge'
 import { EthereumDaBridgeRisks } from '../../../types/EthereumDaRisks'
 import { linkByDA } from '../../../utils/link-by-da'
 

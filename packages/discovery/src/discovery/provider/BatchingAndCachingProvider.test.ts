@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
-import { LowLevelProvider } from './LowLevelProvider'
-import { ReorgAwareCache } from './ReorgAwareCache'
-import { MulticallClient } from './multicall/MulticallClient'
+import type { LowLevelProvider } from './LowLevelProvider'
+import type { ReorgAwareCache } from './ReorgAwareCache'
+import type { MulticallClient } from './multicall/MulticallClient'
 
 describe(BatchingAndCachingProvider.name, () => {
   describe(BatchingAndCachingProvider.prototype.getLogs.name, () => {

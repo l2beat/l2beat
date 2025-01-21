@@ -1,18 +1,18 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import {
+import type {
   Database,
   IndexerConfigurationRecord,
   LivenessRecord,
 } from '@l2beat/database'
-import { RpcClient, createTrackedTxId } from '@l2beat/shared'
+import { type RpcClient, createTrackedTxId } from '@l2beat/shared'
 import { mean } from 'lodash'
 import {
   BaseAnalyzer,
-  Batch,
-  L2Block,
-  Transaction,
+  type Batch,
+  type L2Block,
+  type Transaction,
   batchesToStateUpdateDelays,
 } from './BaseAnalyzer'
 

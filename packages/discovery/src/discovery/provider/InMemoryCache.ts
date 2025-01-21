@@ -1,5 +1,5 @@
 import { LRUMap } from 'lru_map'
-import { DiscoveryCache } from './DiscoveryCache'
+import type { DiscoveryCache } from './DiscoveryCache'
 
 export class InMemoryCache implements DiscoveryCache {
   private readonly lru: LRUMap<string, string>

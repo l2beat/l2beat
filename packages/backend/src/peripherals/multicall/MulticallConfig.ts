@@ -1,8 +1,8 @@
-import { MulticallContractConfig } from '@l2beat/config'
+import type { MulticallContractConfig } from '@l2beat/config'
 import { Bytes } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import {
+import type {
   MulticallConfigEntry,
   MulticallRequest,
   MulticallResponse,

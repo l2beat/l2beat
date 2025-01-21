@@ -2,9 +2,12 @@ import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
-import { HttpClient } from '../../clients'
+import type { HttpClient } from '../../clients'
 import { CoingeckoClient } from './CoingeckoClient'
-import { CoinMarketChartRangeData, CoinMarketChartRangeResult } from './types'
+import type {
+  CoinMarketChartRangeData,
+  CoinMarketChartRangeResult,
+} from './types'
 
 describe(CoingeckoClient.name, () => {
   const logger = Logger.SILENT

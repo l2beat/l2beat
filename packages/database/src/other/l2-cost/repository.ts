@@ -1,7 +1,7 @@
-import { TrackedTxId } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxId } from '@l2beat/shared'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { L2CostRecord, toRecord, toRow } from './entity'
+import { type L2CostRecord, toRecord, toRow } from './entity'
 import { selectL2Cost } from './select'
 
 export class L2CostRepository extends BaseRepository {

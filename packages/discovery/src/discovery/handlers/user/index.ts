@@ -1,6 +1,6 @@
 import * as z from 'zod'
 
-import { Handler } from '../Handler'
+import type { Handler } from '../Handler'
 import {
   AccessControlHandler,
   AccessControlHandlerDefinition,

@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import { DaRiskViewOptions } from './DaRiskView'
+import type { DaRiskViewOptions } from './DaRiskView'
 
 export type DaRelayerFailureRisk =
   | typeof SelfPropose

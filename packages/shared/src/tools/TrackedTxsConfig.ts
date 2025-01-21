@@ -1,10 +1,10 @@
 import {
   EthereumAddress,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+  type UnixTime,
 } from '@l2beat/shared-pure'
-import { TrackedTxId } from './createTrackedTxConfigId'
+import type { TrackedTxId } from './createTrackedTxConfigId'
 
 export const SHARP_SUBMISSION_ADDRESS = EthereumAddress(
   '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',

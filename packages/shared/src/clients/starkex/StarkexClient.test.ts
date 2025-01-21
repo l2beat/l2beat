@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockObject } from 'earl'
-import { HttpClient } from '../http/HttpClient'
+import type { HttpClient } from '../http/HttpClient'
 import {
   STARKEX_BI_API_V2,
   STARKEX_BI_API_V3,

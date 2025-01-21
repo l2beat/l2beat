@@ -1,4 +1,4 @@
-import { L2Cost } from '../../kysely/generated/types'
+import type { L2Cost } from '../../kysely/generated/types'
 
 export const selectL2Cost = [
   'blobGasPrice',

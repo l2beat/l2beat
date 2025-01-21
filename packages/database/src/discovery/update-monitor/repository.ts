@@ -1,6 +1,6 @@
-import { ChainId } from '@l2beat/shared-pure'
+import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { UpdateMonitorRecord, toRecord, toRow } from './entity'
+import { type UpdateMonitorRecord, toRecord, toRow } from './entity'
 import { selectUpdateMonitor } from './select'
 
 export class UpdateMonitorRepository extends BaseRepository {

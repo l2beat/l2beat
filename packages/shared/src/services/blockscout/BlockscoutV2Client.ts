@@ -1,9 +1,9 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { HttpClient } from '../../clients'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { HttpClient } from '../../clients'
 import {
   BlockscoutGetInternalTransactionsResponse,
-  BlockscoutInternalTransaction,
+  type BlockscoutInternalTransaction,
 } from './model'
 
 export class BlockscoutV2Client {

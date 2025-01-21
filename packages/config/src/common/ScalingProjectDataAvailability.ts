@@ -1,4 +1,4 @@
-import { DA_BRIDGES, DA_LAYERS, DA_MODES } from './dataAvailability'
+import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './dataAvailability'
 
 export interface DataAvailabilityConfig {
   layers: DataAvailabilityLayer[]

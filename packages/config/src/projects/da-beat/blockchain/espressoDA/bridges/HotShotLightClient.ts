@@ -2,7 +2,7 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
-import { DaBridge } from '../../../types/DaBridge'
+import type { DaBridge } from '../../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 import { DacTransactionDataType } from '../../../types/DacTransactionDataType'

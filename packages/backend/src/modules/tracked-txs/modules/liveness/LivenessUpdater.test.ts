@@ -2,10 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { Database, LivenessRecord } from '@l2beat/database'
-import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
+import type { Database, LivenessRecord } from '@l2beat/database'
+import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { mockDatabase } from '../../../../test/database'
-import { TrackedTxResult } from '../../types/model'
+import type { TrackedTxResult } from '../../types/model'
 import { LivenessUpdater } from './LivenessUpdater'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))

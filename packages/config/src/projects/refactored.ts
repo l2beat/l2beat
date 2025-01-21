@@ -1,4 +1,4 @@
-import { BaseProject } from './project/BaseProject'
+import type { BaseProject } from './project/BaseProject'
 import { nebraupa } from './zk-catalog/nebraupa'
 import { payy } from './zk-catalog/payy'
 import { risczero } from './zk-catalog/risczero'

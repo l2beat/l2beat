@@ -1,7 +1,7 @@
 import {
   ConfigReader,
   DiscoverCommandArgs,
-  DiscoveryModuleConfig,
+  type DiscoveryModuleConfig,
   getChainConfig,
 } from '@l2beat/discovery'
 

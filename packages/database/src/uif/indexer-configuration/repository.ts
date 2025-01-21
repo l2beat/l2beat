@@ -1,6 +1,6 @@
 import { BaseRepository } from '../../BaseRepository'
 import {
-  IndexerConfigurationRecord,
+  type IndexerConfigurationRecord,
   toRecord,
   toRecordWithoutIndexerId,
   toRow,

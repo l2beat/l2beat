@@ -1,9 +1,13 @@
-import { CountedBlock, CountedOperation, CountedTransaction } from '@/types'
+import type {
+  CountedBlock,
+  CountedOperation,
+  CountedTransaction,
+} from '@/types'
 import { traverseOperationTree } from '@/utils/traverseOperationTree'
-import { RpcCodeClient } from '../clients/code/RpcCodeClient'
-import { ContractClient } from '../clients/contract/ContractClient'
-import { SignatureClient } from '../clients/signature/SignatureClient'
-import { DB } from '../db/db'
+import type { RpcCodeClient } from '../clients/code/RpcCodeClient'
+import type { ContractClient } from '../clients/contract/ContractClient'
+import type { SignatureClient } from '../clients/signature/SignatureClient'
+import type { DB } from '../db/db'
 
 export class NameService {
   constructor(

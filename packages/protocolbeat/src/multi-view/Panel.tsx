@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import { ComponentType, Fragment, ReactNode } from 'react'
+import { type ComponentType, Fragment, type ReactNode } from 'react'
 import { PanelHeader } from './PanelHeader'
-import { PanelId, useMultiViewStore } from './store'
+import { type PanelId, useMultiViewStore } from './store'
 
 export function Panel(props: {
   id: PanelId

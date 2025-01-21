@@ -1,6 +1,6 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import {
+import type {
   KnowledgeNugget,
   Milestone,
   ScalingProjectContracts,

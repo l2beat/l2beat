@@ -1,11 +1,11 @@
-import {
+import type {
   ContractParameters,
   DiscoveryOutput,
   EoaParameters,
 } from '@l2beat/discovery-types'
-import { Hash256 } from '@l2beat/shared-pure'
+import type { Hash256 } from '@l2beat/shared-pure'
 
-import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import type { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import {
   transformToIssued,

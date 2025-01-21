@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { fraxtal } from '../../../layer2s/fraxtal'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
-import { DaBridge } from '../../types/DaBridge'
+import type { DaBridge } from '../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 

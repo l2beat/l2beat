@@ -1,7 +1,11 @@
-import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  type EthereumAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { Layer2, Layer3, bridges, layer2s, layer3s } from '../'
+import { type Layer2, type Layer3, bridges, layer2s, layer3s } from '../'
 import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
 import { checkRisk } from './helpers'

@@ -1,4 +1,4 @@
-import { TendermintClient } from '../../../peripherals/tendermint/TendermintClient'
+import type { TendermintClient } from '../../../peripherals/tendermint/TendermintClient'
 import { AbstractStakeAnalyzer } from './AbstractStakeAnalyzer'
 
 export class CelestiaStakeAnalyzer extends AbstractStakeAnalyzer {

@@ -1,6 +1,9 @@
-import { LEVEL, LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
+import {
+  LEVEL,
+  type LogLevel,
+} from '@l2beat/backend-tools/dist/logger/LogLevel'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { Type, extendType, string } from 'cmd-ts'
+import { type Type, extendType, string } from 'cmd-ts'
 import { stat } from 'fs/promises'
 
 export const EthereumAddressValue: Type<string, EthereumAddress> = {

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { Layer2, Layer3 } from '../projects'
+import type { Layer2, Layer3 } from '../projects'
 
 export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 

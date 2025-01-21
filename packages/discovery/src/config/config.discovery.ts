@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 
 import { chains } from './chains'
-import { DiscoveryChainConfig } from './types'
+import type { DiscoveryChainConfig } from './types'
 
 export function getChainShortName(chain: string) {
   const chainConfig = chains.find((c) => c.name === chain)

@@ -1,4 +1,4 @@
-import { ApiAddressType } from '../../../api/types'
+import type { ApiAddressType } from '../../../api/types'
 import colors from '../../../colors.json'
 import { oklchColorToCSS } from './oklch'
 

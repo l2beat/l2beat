@@ -1,4 +1,4 @@
-import { FieldDiff } from '@l2beat/discovery'
+import type { FieldDiff } from '@l2beat/discovery'
 import { default as React } from 'react'
 
 interface DiffProps {

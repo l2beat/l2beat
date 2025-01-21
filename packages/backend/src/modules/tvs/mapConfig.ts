@@ -1,22 +1,25 @@
-import { createHash } from 'crypto'
-import { BackendProject, BackendProjectEscrow } from '@l2beat/backend-shared'
-import { ChainConfig, tokenList } from '@l2beat/config'
+import type {
+  BackendProject,
+  BackendProjectEscrow,
+} from '@l2beat/backend-shared'
+import { type ChainConfig, tokenList } from '@l2beat/config'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { Token as LegacyToken } from '@l2beat/shared-pure'
+import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import {
-  AmountConfig,
-  AmountFormula,
-  BalanceOfEscrowAmountFormula,
-  CalculationFormula,
-  CirculatingSupplyAmountFormula,
-  EscrowToken,
-  PriceConfig,
-  Token,
-  TotalSupplyAmountFormula,
-  TvsConfig,
-  ValueFormula,
+  type AmountConfig,
+  type AmountFormula,
+  type BalanceOfEscrowAmountFormula,
+  type CalculationFormula,
+  type CirculatingSupplyAmountFormula,
+  type EscrowToken,
+  type PriceConfig,
+  type Token,
+  type TotalSupplyAmountFormula,
+  type TvsConfig,
+  type ValueFormula,
   isEscrowToken,
 } from './types'
+import { createHash } from 'crypto'
 
 export function mapConfig(
   project: BackendProject,

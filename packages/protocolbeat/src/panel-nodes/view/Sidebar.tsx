@@ -1,4 +1,4 @@
-import { Node } from '../store/State'
+import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 
 export function Sidebar() {

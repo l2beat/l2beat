@@ -1,5 +1,5 @@
-import { Layer2, layer2s } from '../../layer2s'
-import { Layer3, layer3s } from '../../layer3s'
+import { type Layer2, layer2s } from '../../layer2s'
+import { type Layer3, layer3s } from '../../layer3s'
 import { toUsedInProject } from './to-used-in-project'
 
 /**

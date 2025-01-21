@@ -1,6 +1,6 @@
-import { Block, json } from '@l2beat/shared-pure'
-import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { BlockClient } from '../types'
+import type { Block, json } from '@l2beat/shared-pure'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { BlockClient } from '../types'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
   FuelBlockResponse,

@@ -1,5 +1,5 @@
-import { DiscoveryConfig } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { DiscoveryConfig } from '@l2beat/discovery'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export function getDescription(
   config: DiscoveryConfig,

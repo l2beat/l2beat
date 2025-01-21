@@ -1,5 +1,8 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import type {
+  ContractParameters,
+  DiscoveryOutput,
+} from '@l2beat/discovery-types'
 
 interface TemplateFieldRelation {
   sourceTemplate: string

@@ -1,7 +1,7 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
+import type { ProxyDetails } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { getModules } from '../../utils/getSafeModules'
 
 // TODO: (sz-piotr) Is this simply equivalent to 0x66 and 0x67?

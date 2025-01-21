@@ -1,9 +1,9 @@
 import { estimateSimilarity } from '@l2beat/discovery'
 import chalk from 'chalk'
 
-import { CliLogger } from '@l2beat/shared'
+import type { CliLogger } from '@l2beat/shared'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
-import { Project, removeCommonPath, transpose } from './common'
+import { type Project, removeCommonPath, transpose } from './common'
 
 export function formatHeader(title: string): string {
   return `= ${title} `.padEnd(36, '=')
