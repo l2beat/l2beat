@@ -1,5 +1,5 @@
 import { Client } from '@elastic/elasticsearch'
-import {
+import type {
   BulkOperationType,
   BulkResponseItem,
   ErrorCause,

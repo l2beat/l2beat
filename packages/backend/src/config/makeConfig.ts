@@ -2,11 +2,11 @@ import {
   bridgeToBackendProject,
   layer2ToBackendProject,
 } from '@l2beat/backend-shared'
-import { Env } from '@l2beat/backend-tools'
+import type { Env } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
-import { Config, DiscordConfig } from './Config'
+import type { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
 import {

@@ -1,9 +1,9 @@
 import { randomUUID } from 'crypto'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import type { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { resolveAnalysis } from './resolveAnalysis'
-import { PathElement } from './resolvePermissions'
+import type { PathElement } from './resolvePermissions'
 
 const BASE_CONTRACT: AnalyzedContract = {
   type: 'Contract',

@@ -1,12 +1,12 @@
 import {
-  AmountConfigEntry,
+  type AmountConfigEntry,
   AssetId,
   CoingeckoId,
-  CoingeckoPriceConfigEntry,
+  type CoingeckoPriceConfigEntry,
   EthereumAddress,
-  PriceConfigEntry,
+  type PriceConfigEntry,
   ProjectId,
-  TotalSupplyEntry,
+  type TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'

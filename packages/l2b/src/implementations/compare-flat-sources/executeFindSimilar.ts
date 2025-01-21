@@ -1,7 +1,7 @@
 import path from 'path'
 import { keyInYN } from 'readline-sync'
 
-import { CliLogger } from '@l2beat/shared'
+import type { CliLogger } from '@l2beat/shared'
 import { powerdiff } from '../powerdiff'
 import {
   computeComparisonBetweenProjects,

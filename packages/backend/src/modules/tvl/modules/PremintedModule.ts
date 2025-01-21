@@ -1,13 +1,13 @@
-import { ConfigMapping } from '@l2beat/backend-shared'
-import { assert, PremintedEntry, ProjectId } from '@l2beat/shared-pure'
-import { TvlConfig } from '../../../config/Config'
+import type { ConfigMapping } from '@l2beat/backend-shared'
+import { assert, type PremintedEntry, ProjectId } from '@l2beat/shared-pure'
+import type { TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PremintedIndexer } from '../indexers/PremintedIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountService } from '../services/AmountService'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface PremintedModule {
   start: () => Promise<void> | void

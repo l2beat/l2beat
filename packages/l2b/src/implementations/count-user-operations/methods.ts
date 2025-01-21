@@ -1,11 +1,11 @@
 import {
-  AbiFunction,
-  DecodeFunctionDataReturnType,
+  type AbiFunction,
+  type DecodeFunctionDataReturnType,
   decodeFunctionData,
   parseAbiItem,
   toFunctionSelector,
 } from 'viem'
-import { Method, Operation } from './types'
+import type { Method, Operation } from './types'
 
 export const methods: Method[] = [
   defineMethod(

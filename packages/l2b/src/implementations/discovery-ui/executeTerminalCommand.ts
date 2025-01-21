@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { Response } from 'express'
+import type { Response } from 'express'
 
 function sendSSE(res: Response, data: string) {
   const sanitizedData = data.replace(/\n/g, '\\n')

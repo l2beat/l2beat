@@ -1,11 +1,14 @@
 import { chains, tokenList } from '@l2beat/config'
 import {
   assert,
-  AmountConfigEntry,
+  type AmountConfigEntry,
   AssetId,
   ChainId,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../../BackendProject'
+import type {
+  BackendProject,
+  BackendProjectEscrow,
+} from '../../../BackendProject'
 import { getElasticChainEtherEntry } from '../elasticChainEther'
 import { getElasticChainL2TokenEntry } from '../elasticChainL2Tokens'
 

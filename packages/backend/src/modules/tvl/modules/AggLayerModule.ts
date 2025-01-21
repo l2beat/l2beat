@@ -1,25 +1,25 @@
 import {
   AGGLAYER_L2BRIDGE_ADDRESS,
-  ConfigMapping,
+  type ConfigMapping,
   createAmountId,
 } from '@l2beat/backend-shared'
 import {
   assert,
-  AggLayerL2Token,
-  AggLayerNativeEtherPreminted,
-  AggLayerNativeEtherWrapped,
+  type AggLayerL2Token,
+  type AggLayerNativeEtherPreminted,
+  type AggLayerNativeEtherWrapped,
   ProjectId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
+import type { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { AggLayerIndexer } from '../indexers/AggLayerIndexer'
-import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { AggLayerAmountConfig } from '../indexers/types'
+import type { AggLayerAmountConfig } from '../indexers/types'
 import { AggLayerService } from '../services/AggLayerService'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface AggLayerModule {
   start: () => Promise<void> | void

@@ -3,7 +3,7 @@ import { DA_LAYERS } from '../../../common'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaChallengeMechanism } from '../types/DaChallengeMechanism'
-import { DacDaLayer } from '../types/DaLayer'
+import type { DacDaLayer } from '../types/DaLayer'
 import { automataDABridge } from './bridges/automataDABridge'
 
 const discovery = new ProjectDiscovery('gmnetwork')

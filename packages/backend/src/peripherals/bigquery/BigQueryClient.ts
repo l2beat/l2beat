@@ -1,4 +1,4 @@
-import { BigQuery, Query } from '@google-cloud/bigquery'
+import { BigQuery, type Query } from '@google-cloud/bigquery'
 import { RateLimiter } from '@l2beat/backend-tools'
 
 const BYTES_IN_GB = 1024 * 1024 * 1024

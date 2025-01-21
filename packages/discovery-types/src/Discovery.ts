@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { EthereumAddress } from './EthereumAddress'
-import { Hash256 } from './Hash256'
+import type { EthereumAddress } from './EthereumAddress'
+import type { Hash256 } from './Hash256'
 
 export type StackCategory = z.infer<typeof StackCategory>
 export const StackCategory = z.enum([

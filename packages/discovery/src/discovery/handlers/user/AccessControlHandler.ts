@@ -1,10 +1,10 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
+import { type providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { ContractValue } from '@l2beat/discovery-types'
-import { IProvider } from '../../provider/IProvider'
-import { Handler, HandlerResult } from '../Handler'
+import type { ContractValue } from '@l2beat/discovery-types'
+import type { IProvider } from '../../provider/IProvider'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type AccessControlHandlerDefinition = z.infer<
   typeof AccessControlHandlerDefinition

@@ -1,7 +1,7 @@
-import { DiscoveryDiff } from '@l2beat/discovery'
+import type { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { UpdateNotifier } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { UpdateNotifier } from '../../kysely/generated/types'
 
 export interface UpdateNotifierRecord {
   id: number

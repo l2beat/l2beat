@@ -1,5 +1,5 @@
-import { ScalingProjectContract } from '../common'
-import { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
+import type { ScalingProjectContract } from '../common'
+import type { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
 
 export function getContractsVerificationStatuses(
   project: Layer2 | Layer3 | Bridge | DaLayer,

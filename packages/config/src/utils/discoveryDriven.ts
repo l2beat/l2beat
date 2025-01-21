@@ -1,4 +1,4 @@
-import { Layer2, Layer3 } from '../'
+import type { Layer2, Layer3 } from '../'
 
 export function arePermissionsDiscoveryDriven(
   project: Layer2 | Layer3,

@@ -1,10 +1,10 @@
 import {
   Kysely,
-  Transaction as KyselyTransaction,
+  type Transaction as KyselyTransaction,
   PostgresDialect,
 } from 'kysely'
-import { Pool, PoolConfig, defaults, types } from 'pg'
-import { DB as GeneratedDB } from './generated/types'
+import { Pool, type PoolConfig, defaults, types } from 'pg'
+import type { DB as GeneratedDB } from './generated/types'
 
 import { AsyncLocalStorage } from 'node:async_hooks'
 

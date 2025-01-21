@@ -6,7 +6,7 @@ import type {
 import { isArray, isObject } from 'lodash'
 
 import { getDiscoveryChild } from './getDiscoveryChild'
-import { DashboardContractField } from './getValues'
+import type { DashboardContractField } from './getValues'
 
 export function getUpgradeabilityParams(
   discovery: DiscoveryOutput,

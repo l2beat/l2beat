@@ -1,5 +1,5 @@
-import { ContractParameters } from '@l2beat/discovery-types'
-import { ApiAddressEntry } from './types'
+import type { ContractParameters } from '@l2beat/discovery-types'
+import type { ApiAddressEntry } from './types'
 
 export function getContractType(
   contract: ContractParameters,

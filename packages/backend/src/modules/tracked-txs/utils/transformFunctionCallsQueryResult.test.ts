@@ -2,17 +2,17 @@ import { readFileSync } from 'fs'
 import {
   EthereumAddress,
   ProjectId,
-  TrackedTxsConfigSubtype,
+  type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
-  TrackedTxConfigEntry,
-  TrackedTxFunctionCallConfig,
-  TrackedTxId,
-  TrackedTxSharedBridgeConfig,
-  TrackedTxSharpSubmissionConfig,
+  type TrackedTxConfigEntry,
+  type TrackedTxFunctionCallConfig,
+  type TrackedTxId,
+  type TrackedTxSharedBridgeConfig,
+  type TrackedTxSharpSubmissionConfig,
   createTrackedTxId,
 } from '@l2beat/shared'
 import {
@@ -21,8 +21,8 @@ import {
   sharedBridgeCommitBatchesSelector,
   sharedBridgeCommitBatchesSignature,
 } from '../../../test/sharedBridge'
-import { Configuration } from '../../../tools/uif/multi/types'
-import {
+import type { Configuration } from '../../../tools/uif/multi/types'
+import type {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'

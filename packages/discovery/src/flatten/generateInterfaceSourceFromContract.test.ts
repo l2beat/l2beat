@@ -1,5 +1,8 @@
 import { expect } from 'earl'
-import { ParsedFilesManager, TopLevelDeclaration } from './ParsedFilesManager'
+import {
+  ParsedFilesManager,
+  type TopLevelDeclaration,
+} from './ParsedFilesManager'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 
 describe(generateInterfaceSourceFromContract.name, () => {

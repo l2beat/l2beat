@@ -1,19 +1,19 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import {
-  DaEconomicSecurityType,
+  type DaEconomicSecurityType,
   daLayers,
   ethereumDaLayer,
 } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { DABeatConfig } from '../../config/Config'
-import { Peripherals } from '../../peripherals/Peripherals'
+import type { DABeatConfig } from '../../config/Config'
+import type { Peripherals } from '../../peripherals/Peripherals'
 import { QuickNodeClient } from '../../peripherals/quicknode/QuickNodeClient'
 import { TendermintClient } from '../../peripherals/tendermint/TendermintClient'
-import { Clock } from '../../tools/Clock'
+import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
+import type { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
 import { CelestiaStakeAnalyzer } from './stake-analyzers/CelestiaStakeAnalyzer'
 import { EthereumStakeAnalyzer } from './stake-analyzers/EthereumStakeAnalyzer'
 import { NearStakeAnalyzer } from './stake-analyzers/NearStakeAnalyzer'

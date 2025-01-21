@@ -1,9 +1,9 @@
 import { assertRoot } from '../helpers/assertRoot'
 import { assertStatus } from '../helpers/assertStatus'
-import { TickSucceededAction } from '../types/IndexerAction'
-import { IndexerEffect } from '../types/IndexerEffect'
-import { IndexerReducerResult } from '../types/IndexerReducerResult'
-import { IndexerState } from '../types/IndexerState'
+import type { TickSucceededAction } from '../types/IndexerAction'
+import type { IndexerEffect } from '../types/IndexerEffect'
+import type { IndexerReducerResult } from '../types/IndexerReducerResult'
+import type { IndexerState } from '../types/IndexerState'
 
 export function handleTickSucceeded(
   state: IndexerState,

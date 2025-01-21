@@ -1,11 +1,11 @@
 import { createAmountId } from '@l2beat/backend-shared'
-import { AmountRecord } from '@l2beat/database'
+import type { AmountRecord } from '@l2beat/database'
 import {
-  CirculatingSupplyProvider,
+  type CirculatingSupplyProvider,
   CoingeckoQueryService,
 } from '@l2beat/shared'
 import {
-  CirculatingSupplyEntry,
+  type CirculatingSupplyEntry,
   CoingeckoId,
   EthereumAddress,
   ProjectId,

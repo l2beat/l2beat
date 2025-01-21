@@ -1,7 +1,7 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   BlobClient,
-  BlockClient,
+  type BlockClient,
   BlockIndexerClient,
   CoingeckoClient,
   FuelClient,
@@ -13,7 +13,7 @@ import {
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import { Config } from '../config/Config'
+import type { Config } from '../config/Config'
 
 export interface Clients {
   block: BlockClient[]

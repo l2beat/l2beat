@@ -1,6 +1,6 @@
 import { ChainId, Hash256 } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { FlatSources } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { FlatSources } from '../../kysely/generated/types'
 
 export interface FlatSourcesRecord {
   projectName: string

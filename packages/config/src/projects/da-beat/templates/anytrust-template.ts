@@ -1,15 +1,15 @@
 import { DA_LAYERS } from '../../../common'
-import { Layer2 } from '../../layer2s'
-import { Layer3 } from '../../layer3s'
+import type { Layer2 } from '../../layer2s'
+import type { Layer3 } from '../../layer3s'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaUpgradeabilityRisk,
-  DacBridge,
-  DacDaLayer,
+  type DacBridge,
+  type DacDaLayer,
 } from '../types'
-import { DaLinks } from '../types/DaLinks'
+import type { DaLinks } from '../types/DaLinks'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { toUsedInProject } from '../utils/to-used-in-project'
 

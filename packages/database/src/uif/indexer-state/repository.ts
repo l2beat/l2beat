@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { IndexerStateRecord, toRecord, toRow } from './entity'
+import { type IndexerStateRecord, toRecord, toRow } from './entity'
 
 export class IndexerStateRepository extends BaseRepository {
   async upsert(record: IndexerStateRecord): Promise<void> {

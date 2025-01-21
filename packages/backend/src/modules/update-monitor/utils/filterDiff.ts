@@ -1,5 +1,5 @@
-import { DiscoveryDiff } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { DiscoveryDiff } from '@l2beat/discovery'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export function filterDiff(
   diff: DiscoveryDiff[],

@@ -2,7 +2,7 @@ import {
   AssetId,
   CoingeckoId,
   EthereumAddress,
-  PriceConfigEntry,
+  type PriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'

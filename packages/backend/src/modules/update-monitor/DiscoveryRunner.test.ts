@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  AllProviders,
+  type AllProviders,
   DiscoveryConfig,
-  DiscoveryEngine,
-  IProvider,
+  type DiscoveryEngine,
+  type IProvider,
 } from '@l2beat/discovery'
 import { expect, mockFn, mockObject } from 'earl'
 

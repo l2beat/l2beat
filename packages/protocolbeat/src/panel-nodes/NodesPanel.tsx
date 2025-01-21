@@ -2,10 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import { Field as ApiField, ApiProjectResponse, FieldValue } from '../api/types'
+import type {
+  Field as ApiField,
+  ApiProjectResponse,
+  FieldValue,
+} from '../api/types'
 import { usePanelStore } from '../store/store'
 import { NodesApp } from './NodesApp'
-import { Field, Node } from './store/State'
+import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
 

@@ -1,4 +1,4 @@
-import { LogLevel } from './LogLevel'
+import type { LogLevel } from './LogLevel'
 
 export interface Printer {
   print(

@@ -1,4 +1,4 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import { BigNumber } from 'ethers'
 
 export function toContractValue(value: unknown): ContractValue {

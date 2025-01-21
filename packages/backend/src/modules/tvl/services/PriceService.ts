@@ -1,17 +1,17 @@
-import { Logger } from '@l2beat/backend-tools'
-import { Database, PriceRecord } from '@l2beat/database'
+import type { Logger } from '@l2beat/backend-tools'
+import type { Database, PriceRecord } from '@l2beat/database'
 import {
   CoingeckoQueryService,
-  PriceProvider,
-  QueryResultPoint,
+  type PriceProvider,
+  type QueryResultPoint,
 } from '@l2beat/shared'
 import {
   assert,
-  CoingeckoId,
-  CoingeckoPriceConfigEntry,
+  type CoingeckoId,
+  type CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Configuration } from '../../../tools/uif/multi/types'
+import type { Configuration } from '../../../tools/uif/multi/types'
 
 export interface PriceServiceDependencies {
   readonly priceProvider: PriceProvider

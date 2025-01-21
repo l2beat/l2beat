@@ -1,8 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
-  FinalityRecord,
-  ProjectFinalityRecord,
+  type FinalityRecord,
+  type ProjectFinalityRecord,
   toProjectFinalityRecord,
   toRecord,
   toRow,
