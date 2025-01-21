@@ -1,4 +1,4 @@
-export function formatThroughput(
+export function formatThroughputMBPS(
   bytes: number,
   frequencySeconds: number,
 ): string {
