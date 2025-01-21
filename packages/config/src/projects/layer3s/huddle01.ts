@@ -1,10 +1,19 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { underReviewL2 } from './templates/underReview'
-import type { Layer2 } from './types'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Badge } from '../badges'
+import { underReviewL3 } from '../layer2s/templates/underReview'
+import type { Layer3 } from './types'
 
-export const huddle01: Layer2 = underReviewL2({
+export const huddle01: Layer3 = underReviewL3({
   id: 'huddle01',
   createdAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
+  hostChain: ProjectId('arbitrum'),
+  badges: [
+    Badge.RaaS.Caldera,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.DA.DAC,
+    Badge.Stack.Orbit,
+    Badge.VM.EVM,
+  ],
   display: {
     name: 'Huddle01',
     slug: 'huddle01',
