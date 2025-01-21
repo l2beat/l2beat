@@ -793,7 +793,7 @@ export class ProjectDiscovery {
           .filter((p) => p.permission === role)
           .flatMap((p) => p.via?.map((v) => this.formatViaPath(v, true)))
           .filter((v) => v !== '')
-        const conditions = uniq([...initialConditions, ...pathConditions])
+        const conditions = uniq([...initialConditions, ...pathConditions]).filter(notUndefined)
 
         if (conditions.length > 0) {
           finalDescription.push(
