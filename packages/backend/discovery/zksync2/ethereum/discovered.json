@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 21630311,
+  "blockNumber": 21671559,
   "configHash": "0xa9a2fd10684da54738fc8efb892d5997a0f54fc96db3fd32710bde71d1631b7b",
   "contracts": [
     {
@@ -60,7 +60,7 @@
         {
           "permission": "configure",
           "to": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. Usually proxied through a ValidatorTimelock contract.",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "via": []
         }
       ],
@@ -382,26 +382,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3267227,
+        "getFirstUnprocessedPriorityTx": 3267551,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 81,
+        "getPriorityQueueSize": 59,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 496110,
-        "getTotalBatchesExecuted": 496077,
-        "getTotalBatchesVerified": 496106,
-        "getTotalBlocksCommitted": 496110,
-        "getTotalBlocksExecuted": 496077,
-        "getTotalBlocksVerified": 496106,
-        "getTotalPriorityTxs": 3267308,
+        "getTotalBatchesCommitted": 496327,
+        "getTotalBatchesExecuted": 496284,
+        "getTotalBatchesVerified": 496325,
+        "getTotalBlocksCommitted": 496327,
+        "getTotalBlocksExecuted": 496284,
+        "getTotalBlocksVerified": 496325,
+        "getTotalPriorityTxs": 3267610,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -410,8 +410,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xb629d37a41d58b8c34aeebe8d4f253730014db5ce54f11e3036e942b38246918",
-          "expirationTimestamp": 1736871011,
+          "canonicalTxHash": "0xc959599946ca66ddb01a89833e19b0f8f219cccf21c62ae3f7f4ce0756bce9f2",
+          "expirationTimestamp": 1737363407,
           "layer2Tip": 0
         },
         "txFilterer": [],
@@ -427,7 +427,7 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change."
+          "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
           "severity": "LOW",
@@ -562,7 +562,7 @@
         {
           "permission": "configure",
           "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. Usually proxied through a ValidatorTimelock contract."
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
       ],
       "sinceTimestamp": 1709850611,
@@ -961,7 +961,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond": "0x6b2e205c6c816e6d2c11d9664cc320cdbcc89fbf9665f65cac1ce0047d85b34d",
+    "shared-zk-stack/Diamond": "0xc2521baad2fb4a4d35636dc70206ace92f4f4c5f1673e0d84d34b5048aa136e3",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }
 }

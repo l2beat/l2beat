@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21630370,
+  "blockNumber": 21671557,
   "configHash": "0x71ba57451e4cbcf6dc6be1276e95abbc38e2c7b59d6cf33eae6fed5bd0dc6a93",
   "contracts": [
     {
@@ -425,6 +425,18 @@
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
       "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.",
+      "issuedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+          "via": []
+        },
+        {
+          "permission": "validateZkStack",
+          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1717520615,
       "values": {
         "$immutable": true,
@@ -1196,7 +1208,15 @@
     { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
     { "address": "0x0b114d4675Cb79507e68F2616c93e124122c6ef0" },
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
-    { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
+    {
+      "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
     { "address": "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1" },
     { "address": "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F" },
@@ -1212,7 +1232,15 @@
     { "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc" },
     { "address": "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735" },
     { "address": "0x3133781381bC58564D5e9888c208ED0b7BD7721F" },
-    { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" },
+    {
+      "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
     { "address": "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f" },
     {
       "name": "ProtocolTimelockController(L2->L1)",
@@ -1836,6 +1864,6 @@
     "shared-zk-stack/ProtocolUpgradeHandler": "0x4ee79bfb718949b4b06361be9985aaaba225f1f3904c482e883596c9ae396a9d",
     "shared-zk-stack/SecurityCouncil": "0x08cccbae3b937ef2685aba95dde429460b4a8e19a6e953fc0885b48d6b3dcd69",
     "shared-zk-stack/StateTransitionManager": "0xccf595344724babb71eecb4a2564c2f529c8afb5e720c169685b39ee47fc66f0",
-    "shared-zk-stack/ValidatorTimelock": "0x50aee36a29a38ba7b7cc243ecc7bd151c61b5a6d95efa54cce158ad6a813ccfb"
+    "shared-zk-stack/ValidatorTimelock": "0xf61817ee1a269a8e715da0ecc8911bf31056c2a701822ed82e8a18c0843417d7"
   }
 }

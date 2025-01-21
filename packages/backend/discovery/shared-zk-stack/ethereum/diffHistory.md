@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8fe47c61e4503ea8e5b3c37502e62930624e40e1
+Generated with discovered.json: 0x9b2899a306a13c1fc14fb0e0896ea8c70c419cc4
 
-# Diff at Tue, 21 Jan 2025 07:39:21 GMT:
+# Diff at Tue, 21 Jan 2025 08:06:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3a16743af72fb4c941689b26d336a59661143f06 block: 21630370
-- current block number: 21630370
+- current block number: 21671557
 
 ## Description
 
@@ -52,6 +52,8 @@ discovery. Values are for block 21630370 (main branch discovery), not current.
 +        "shared-zk-stack/ValidatorTimelock"
       description:
 +        "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h."
+      issuedPermissions:
++        [{"permission":"validateZkStack","to":"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","via":[]},{"permission":"validateZkStack","to":"0x3527439923a63F8C13CF72b8Fe80a77f6e572092","via":[]}]
     }
 ```
 

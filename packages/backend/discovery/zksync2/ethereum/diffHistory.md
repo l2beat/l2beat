@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa265436a62a3b5503aae98b49be3468b95ac84e0
+Generated with discovered.json: 0x2267beb9bc163360706d5a85f2d6665bd1a265f4
 
-# Diff at Tue, 21 Jan 2025 07:39:21 GMT:
+# Diff at Tue, 21 Jan 2025 08:06:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3a16743af72fb4c941689b26d336a59661143f06 block: 21630311
-- current block number: 21630311
+- current block number: 21671559
 
 ## Description
 
@@ -43,7 +43,7 @@ discovery. Values are for block 21630311 (main branch discovery), not current.
     +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       fieldMeta.getProtocolVersion.description:
 -        "Protocol version, increments with each protocol change"
-+        "Protocol version, increments with each protocol change."
++        "Protocol version, increments with each protocol upgrade."
       fieldMeta.getVerifierParams.description:
 -        "Verifier parameters used for proving batches"
 +        "Verifier parameters used for proving batches."
@@ -52,7 +52,7 @@ discovery. Values are for block 21630311 (main branch discovery), not current.
       description:
 +        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
       issuedPermissions:
-+        [{"permission":"configure","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. Usually proxied through a ValidatorTimelock contract.","via":[]}]
++        [{"permission":"configure","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
     }
 ```
 
@@ -82,7 +82,7 @@ discovery. Values are for block 21630311 (main branch discovery), not current.
       issuedPermissions:
 +        [{"permission":"configure","to":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","description":"set addresses (validators) that can commit, prove, exeute, revert batches through this contract.","via":[]}]
       receivedPermissions:
-+        [{"permission":"configure","from":"0x32400084C286CF3E17e7B677ea9583e60a000324","description":"commit, prove, execute, revert batches directly in the main Diamond contract. Usually proxied through a ValidatorTimelock contract."}]
++        [{"permission":"configure","from":"0x32400084C286CF3E17e7B677ea9583e60a000324","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."}]
     }
 ```
 

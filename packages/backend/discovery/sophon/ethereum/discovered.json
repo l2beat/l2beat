@@ -1,12 +1,13 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 21429615,
+  "blockNumber": 21671559,
   "configHash": "0x433d106659755808cfb4c5b17959feaa7b2b6c1c4f51bb0ea3f8ba46a11a942d",
   "contracts": [
     {
       "name": "SophonZkEvm",
       "address": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+      "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
         "0x9ae32beaa5dc29055f75d3cd08fbec35ed3eee3e2ff35de263a78f7d63c610f9",
@@ -15,6 +16,7 @@
         "0xe521f6bd6250a2c92af323768ad8a2274cc334725b5ed8960d8421f063fc3285"
       ],
       "proxyType": "EIP2535 diamond proxy",
+      "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -24,6 +26,7 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
+        "getFirstUnprocessedPriorityTx",
         "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1729268843,
@@ -151,26 +154,26 @@
         "getBaseToken": "0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 25,
+        "getFirstUnprocessedPriorityTx": 2186,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
+        "getPriorityQueueSize": 12,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 245,
-        "getTotalBatchesExecuted": 151,
-        "getTotalBatchesVerified": 244,
-        "getTotalBlocksCommitted": 245,
-        "getTotalBlocksExecuted": 151,
-        "getTotalBlocksVerified": 244,
-        "getTotalPriorityTxs": 25,
+        "getTotalBatchesCommitted": 9684,
+        "getTotalBatchesExecuted": 9447,
+        "getTotalBatchesVerified": 9671,
+        "getTotalBlocksCommitted": 9684,
+        "getTotalBlocksExecuted": 9447,
+        "getTotalBlocksVerified": 9671,
+        "getTotalPriorityTxs": 2198,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -232,7 +235,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 48,
+        "nonce": 52,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -652,6 +655,8 @@
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
     "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42",
-    "shared-zk-stack/L1USDCBridge": "0x76f3122eede9ca9aa44a5309ed016ebdb226df16dffc395108138bc8a3fc74ab"
+    "shared-zk-stack/Diamond": "0xc2521baad2fb4a4d35636dc70206ace92f4f4c5f1673e0d84d34b5048aa136e3",
+    "shared-zk-stack/L1USDCBridge": "0x76f3122eede9ca9aa44a5309ed016ebdb226df16dffc395108138bc8a3fc74ab",
+    "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }
 }

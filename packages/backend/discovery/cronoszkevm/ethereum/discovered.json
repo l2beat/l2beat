@@ -1,7 +1,7 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 20876242,
+  "blockNumber": 21671561,
   "configHash": "0x2861e2302bf75f4253912622efc927cc5d9545c582c9dd54d5039423d5015b36",
   "contracts": [
     {
@@ -104,6 +104,7 @@
     {
       "name": "CronosZkEvm",
       "address": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+      "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
         "0x9ae32beaa5dc29055f75d3cd08fbec35ed3eee3e2ff35de263a78f7d63c610f9",
@@ -112,6 +113,7 @@
         "0xe521f6bd6250a2c92af323768ad8a2274cc334725b5ed8960d8421f063fc3285"
       ],
       "proxyType": "EIP2535 diamond proxy",
+      "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -259,26 +261,26 @@
         "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3935,
+        "getFirstUnprocessedPriorityTx": 3937,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 2,
+        "getPriorityQueueSize": 1,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 259,
-        "getTotalBatchesExecuted": 258,
-        "getTotalBatchesVerified": 259,
-        "getTotalBlocksCommitted": 259,
-        "getTotalBlocksExecuted": 258,
-        "getTotalBlocksVerified": 259,
-        "getTotalPriorityTxs": 3937,
+        "getTotalBatchesCommitted": 265,
+        "getTotalBatchesExecuted": 263,
+        "getTotalBatchesVerified": 264,
+        "getTotalBlocksCommitted": 265,
+        "getTotalBlocksExecuted": 263,
+        "getTotalBlocksVerified": 264,
+        "getTotalPriorityTxs": 3938,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -287,8 +289,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xa042750f1e08a542a70f0c60b13196a119ff0f153385f7ccd8c69525ffa889e3",
-          "expirationTimestamp": 1737183383,
+          "canonicalTxHash": "0x956348f4c955f211566aed07a697578b856170d54fefb64464ea783d9f3cfed8",
+          "expirationTimestamp": 1737418595,
           "layer2Tip": 0
         },
         "txFilterer": [
@@ -588,6 +590,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "shared-zk-stack/Diamond": "0xc2521baad2fb4a4d35636dc70206ace92f4f4c5f1673e0d84d34b5048aa136e3",
+    "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }
 }

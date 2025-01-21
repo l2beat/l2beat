@@ -37,13 +37,13 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "commit, prove, execute, revert batches directly in the main Diamond contract. Usually proxied through a ValidatorTimelock contract."
+            "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
           }
         ]
       }
     },
     "getProtocolVersion": {
-      "description": "Protocol version, increments with each protocol change.",
+      "description": "Protocol version, increments with each protocol upgrade.",
       "severity": "MEDIUM"
     },
     "getVerifierParams": {

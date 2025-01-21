@@ -18,6 +18,13 @@
         "valueKey": "_addedValidator",
         "arg": "_chainId",
         "argValue": "324"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "validateZkStack" // TEMPORARY because this affects all zk stack chains
+          }
+        ]
       }
     },
     "zksyncValidatorsRemoved": {
