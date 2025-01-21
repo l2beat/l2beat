@@ -16,8 +16,9 @@ export type CostsProjectsFilter = z.infer<typeof CostsProjectsFilter>
 
 export function getCostsProjects(
   filter: CostsProjectsFilter = { type: 'all' },
+  previewRecategorisation: boolean,
 ): Layer2[] {
-  const condition = filterToCondition(filter)
+  const condition = filterToCondition(filter, previewRecategorisation)
   return layer2s.filter(
     (p) =>
       condition(p) &&
@@ -30,6 +31,7 @@ export function getCostsProjects(
 
 function filterToCondition(
   filter: CostsProjectsFilter,
+  previewRecategorisation: boolean,
 ): (p: Layer2) => boolean {
   switch (filter.type) {
     case 'all':
@@ -38,9 +40,9 @@ function filterToCondition(
       return (p) =>
         (p.display.category === 'Optimistic Rollup' ||
           p.display.category === 'ZK Rollup') &&
-        !isProjectOther(p)
+        !isProjectOther(p, previewRecategorisation)
     case 'others':
-      return (p) => isProjectOther(p)
+      return (p) => isProjectOther(p, previewRecategorisation)
     case 'projects':
       return (p) => new Set(filter.projectIds).has(p.id)
     default:

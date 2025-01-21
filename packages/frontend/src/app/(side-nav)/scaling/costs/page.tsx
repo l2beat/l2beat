@@ -21,6 +21,7 @@ export default async function Page() {
     api.costs.chart.prefetch({
       range: '1y',
       filter: { type: 'rollups' },
+      previewRecategorisation: false,
     }),
     api.costs.table.prefetch({ range: '1y' }),
   ])
