@@ -34,7 +34,10 @@ export function ScalingUpcomingTables({
   }
 
   const recategorisedEntries = checked
-    ? getRecategorisedEntries(filteredEntries, (_, __) => 0)
+    ? getRecategorisedEntries(
+        filteredEntries,
+        (a, b) => b.initialOrder - a.initialOrder,
+      )
     : filteredEntries
 
   const initialSort = {
