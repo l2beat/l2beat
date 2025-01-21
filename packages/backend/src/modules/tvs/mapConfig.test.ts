@@ -6,8 +6,9 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
-import { mapConfig } from './mapConfig'
+import { expect, mockObject } from 'earl'
+import { extractPricesAndAmounts, mapConfig } from './mapConfig'
+import { Token, TvsConfig } from './types'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
@@ -105,6 +106,204 @@ describe(mapConfig.name, () => {
       category: 'other',
       source: 'external',
       isAssociated: false,
+    })
+  })
+})
+
+describe(extractPricesAndAmounts.name, () => {
+  it('should map amount formulas to sync configs', async () => {
+    const tvsConfig = mockObject<TvsConfig>({
+      tokens: [
+        mockObject<Token>({
+          ticker: 'ARB',
+          amount: {
+            type: 'balanceOfEscrow',
+            address: EthereumAddress(
+              '0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
+            ),
+            chain: 'arbitrum',
+            escrowAddresses: [
+              '0xcEe284F754E854890e311e3280b767F80797180d',
+              '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+            ],
+            decimals: 18,
+          },
+          valueForProject: undefined,
+          valueForTotal: undefined,
+        }),
+        mockObject<Token>({
+          ticker: 'ARB',
+          amount: {
+            type: 'circulatingSupply',
+            ticker: 'ARB',
+          },
+          valueForProject: undefined,
+          valueForTotal: undefined,
+        }),
+        mockObject<Token>({
+          ticker: 'stAethir',
+          amount: {
+            type: 'totalSupply',
+            address: EthereumAddress(
+              '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+            ),
+            chain: 'arbitrum',
+            decimals: 18,
+          },
+          valueForProject: undefined,
+          valueForTotal: undefined,
+        }),
+      ],
+    })
+
+    const result = extractPricesAndAmounts(tvsConfig)
+    expect(result).toEqual({
+      amounts: [
+        {
+          address: EthereumAddress(
+            '0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
+          ),
+          chain: 'arbitrum',
+          decimals: 18,
+          escrowAddresses: [
+            '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+            '0xcEe284F754E854890e311e3280b767F80797180d',
+          ],
+          id: '11466053d846',
+          type: 'balanceOfEscrow',
+        },
+        {
+          id: 'fa28ab16f857',
+          ticker: 'ARB',
+          type: 'circulatingSupply',
+        },
+        {
+          id: '9c352c5b1183',
+          address: EthereumAddress(
+            '0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+          ),
+          chain: 'arbitrum',
+          decimals: 18,
+          type: 'totalSupply',
+        },
+      ],
+      prices: [
+        {
+          id: 'c29d12840de6',
+          ticker: 'ARB',
+        },
+        {
+          id: 'd909709e003f',
+          ticker: 'stAethir',
+        },
+      ],
+    })
+  })
+
+  it('should map calculation formulas to sync config', async () => {
+    const wBTCContractAddress = EthereumAddress(
+      '0x10e4C3460310a2F4b56C8DB0b3806Be29B15c15E',
+    )
+    const solvBTCContractAddress = EthereumAddress(
+      '0x6E50888634562713c5F8f8AA650807cDc67Fc363',
+    )
+    const solvBTCEscrowAddress = EthereumAddress(
+      '0xA9cF190a5b7daE4CB1b3BD68fABf310cf1982185',
+    )
+
+    const tvsConfig = mockObject<TvsConfig>({
+      tokens: [
+        // WBTC with amount formula as totalSupply on L2
+        mockObject<Token>({
+          ticker: 'WBTC',
+          amount: {
+            type: 'totalSupply',
+            address: wBTCContractAddress,
+            chain: 'bob',
+            decimals: 18,
+          },
+          valueForProject: undefined,
+          valueForTotal: undefined,
+        }),
+        // solvBTC with
+        // - amount formula as totalSupply on L2
+        // - valueForProject formula as totalSupply of solveBTC on L2 - balance of WBTC locked in solvBTC escrow
+        mockObject<Token>({
+          ticker: 'solvBTC',
+          amount: {
+            type: 'totalSupply',
+            address: solvBTCContractAddress,
+            chain: 'bob',
+            decimals: 18,
+          },
+          valueForProject: {
+            type: 'calculation',
+            operator: 'diff',
+            arguments: [
+              {
+                type: 'value',
+                amount: {
+                  type: 'totalSupply',
+                  address: solvBTCContractAddress,
+                  chain: 'bob',
+                  decimals: 18,
+                },
+                ticker: 'solvBTC',
+              },
+              {
+                type: 'value',
+                amount: {
+                  type: 'balanceOfEscrow',
+                  address: wBTCContractAddress,
+                  chain: 'bob',
+                  decimals: 18,
+                  escrowAddresses: [solvBTCEscrowAddress],
+                },
+                ticker: 'WBTC',
+              },
+            ],
+          },
+          valueForTotal: undefined,
+        }),
+      ],
+    })
+
+    const result = extractPricesAndAmounts(tvsConfig)
+    expect(result).toEqual({
+      amounts: [
+        {
+          id: '16ab02a2d2c7',
+          type: 'totalSupply',
+          address: wBTCContractAddress,
+          chain: 'bob',
+          decimals: 18,
+        },
+        {
+          id: 'b1828c012ce3',
+          type: 'totalSupply',
+          address: solvBTCContractAddress,
+          chain: 'bob',
+          decimals: 18,
+        },
+        {
+          id: '87ab15cf98f5',
+          type: 'balanceOfEscrow',
+          address: wBTCContractAddress,
+          chain: 'bob',
+          decimals: 18,
+          escrowAddresses: [solvBTCEscrowAddress],
+        },
+      ],
+      prices: [
+        {
+          id: 'aa65c34f8046',
+          ticker: 'WBTC',
+        },
+        {
+          id: 'a3107e58f901',
+          ticker: 'solvBTC',
+        },
+      ],
     })
   })
 })

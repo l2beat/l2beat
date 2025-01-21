@@ -184,37 +184,40 @@ export function extractPricesAndAmounts(config: TvsConfig): {
   amounts: AmountConfig[]
   prices: PriceConfig[]
 } {
-  const amounts: AmountConfig[] = []
-  const prices: PriceConfig[] = []
+  const amounts = new Map<string, AmountConfig>()
+  const prices = new Map<string, PriceConfig>()
 
   for (const token of config.tokens) {
     const amount = createAmountConfig(token.amount)
-    amounts.push(amount)
+    amounts.set(amount.id, amount)
 
     const price = createPriceConfig({
       amount: token.amount,
       ticker: token.ticker,
     } as ValueFormula)
-    prices.push(price)
+    prices.set(price.id, price)
 
     if (token.valueForProject) {
       const { formulaAmounts, formulaPrices } = processFormula(
         token.valueForProject,
       )
-      amounts.push(...formulaAmounts)
-      prices.push(...formulaPrices)
+      formulaAmounts.forEach((a) => amounts.set(a.id, a))
+      formulaPrices.forEach((p) => prices.set(p.id, p))
     }
 
     if (token.valueForTotal) {
       const { formulaAmounts, formulaPrices } = processFormula(
         token.valueForTotal,
       )
-      amounts.push(...formulaAmounts)
-      prices.push(...formulaPrices)
+      formulaAmounts.forEach((a) => amounts.set(a.id, a))
+      formulaPrices.forEach((p) => prices.set(p.id, p))
     }
   }
 
-  return { amounts, prices }
+  return {
+    amounts: Array.from(amounts.values()),
+    prices: Array.from(prices.values()),
+  }
 }
 
 export function createAmountConfig(formula: AmountFormula): AmountConfig {
