@@ -1,5 +1,9 @@
+'use client'
+
 import { type ReactNode } from 'react'
+import { useRecategorisationPreviewContext } from '~/providers/recategorisation-preview-provider'
 import { cn } from '~/utils/cn'
+import { Switch } from './core/switch'
 import { SearchBarButton } from './search-bar/search-bar-button'
 
 interface Props {
@@ -9,6 +13,7 @@ interface Props {
 }
 
 export function MainPageHeader({ children, description, className }: Props) {
+  const { checked, setChecked } = useRecategorisationPreviewContext()
   return (
     <header
       className={cn(
@@ -29,7 +34,18 @@ export function MainPageHeader({ children, description, className }: Props) {
           <p className="mt-0.5 text-xs text-secondary">{description}</p>
         )}
       </div>
-      <SearchBarButton />
+      <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-semibold">
+            Preview Recategorisation
+          </span>
+          <Switch
+            checked={checked}
+            onCheckedChange={(checked) => setChecked(!!checked)}
+          />
+        </div>
+        <SearchBarButton />
+      </div>
     </header>
   )
 }
