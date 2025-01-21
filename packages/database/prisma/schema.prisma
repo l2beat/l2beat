@@ -73,6 +73,14 @@ model BlockTimestamp {
   @@id([chain, timestamp])
 }
 
+model DataAvailability {
+  projectId String   @db.VarChar(255)
+  timestamp DateTime @db.Timestamp(6)
+  totalSize Int
+
+  @@id([projectId, timestamp])
+}
+
 model DiscoveryCache {
   key   String @id
   value String
