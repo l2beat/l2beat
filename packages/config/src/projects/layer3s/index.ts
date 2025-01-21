@@ -46,6 +46,7 @@ import type { Layer3 } from './types'
 import { unite } from './unite'
 import { winr } from './winr'
 import { xai } from './xai'
+import { xrone } from './xrone'
 import { zklinknova } from './zklinknova'
 
 export * from './types'
@@ -99,4 +100,5 @@ export const layer3s: Layer3[] = [
   superposition,
   syndr,
   winr,
+  xrone,
 ]
