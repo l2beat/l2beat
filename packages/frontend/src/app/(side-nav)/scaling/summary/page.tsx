@@ -35,6 +35,7 @@ export default async function Page() {
     }),
     api.activity.chartStats.prefetch({
       filter: { type: 'all' },
+      previewRecategorisation: false,
     }),
   ])
 

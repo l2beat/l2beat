@@ -12,10 +12,15 @@ export const activityRouter = router({
       z.object({
         range: ActivityTimeRange,
         filter: ActivityProjectFilter,
+        previewRecategorisation: z.boolean().default(false),
       }),
     )
     .query(({ input }) => {
-      return getActivityChart(input.filter, input.range)
+      return getActivityChart(
+        input.filter,
+        input.range,
+        input.previewRecategorisation,
+      )
     }),
   recategorizedChart: procedure
     .input(
@@ -33,8 +38,13 @@ export const activityRouter = router({
       )
     }),
   chartStats: procedure
-    .input(z.object({ filter: ActivityProjectFilter }))
+    .input(
+      z.object({
+        filter: ActivityProjectFilter,
+        previewRecategorisation: z.boolean(),
+      }),
+    )
     .query(({ input }) => {
-      return getActivityChartStats(input.filter)
+      return getActivityChartStats(input.filter, input.previewRecategorisation)
     }),
 })

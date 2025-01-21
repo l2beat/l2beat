@@ -17,6 +17,7 @@ import { Skeleton } from '~/components/core/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
+import { useRecategorisationPreviewContext } from '~/providers/recategorisation-preview-provider'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { type ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
@@ -48,6 +49,7 @@ export function ActivityChart({
   hideScalingFactor,
   type,
 }: Props) {
+  const { checked } = useRecategorisationPreviewContext()
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
   const includeFilter = useScalingFilter()
@@ -73,10 +75,12 @@ export function ActivityChart({
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: chartFilter,
+    previewRecategorisation: checked,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: chartFilter,
+    previewRecategorisation: checked,
   })
 
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
