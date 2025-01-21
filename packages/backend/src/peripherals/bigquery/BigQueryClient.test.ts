@@ -1,7 +1,7 @@
-import { BigQuery } from '@google-cloud/bigquery'
+import type { BigQuery } from '@google-cloud/bigquery'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { BigQueryClient, BigQueryClientQuery } from './BigQueryClient'
+import { BigQueryClient, type BigQueryClientQuery } from './BigQueryClient'
 
 describe(BigQueryClient.name, () => {
   describe(BigQueryClient.prototype.query.name, () => {

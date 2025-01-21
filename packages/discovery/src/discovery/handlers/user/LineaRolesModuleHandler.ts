@@ -1,11 +1,11 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { BigNumber, providers, utils } from 'ethers'
+import { type BigNumber, type providers, utils } from 'ethers'
 import { isEmpty, zip } from 'lodash'
 import * as z from 'zod'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type LineaRolesModuleHandlerDefinition = z.infer<
   typeof LineaRolesModuleHandlerDefinition

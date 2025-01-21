@@ -1,8 +1,8 @@
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { HttpClient } from '@l2beat/shared'
-import { InstalledClock, install } from '@sinonjs/fake-timers'
+import type { HttpClient } from '@l2beat/shared'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { EtherscanClient } from './EtherscanClient'
 
 describe(EtherscanClient.name, () => {

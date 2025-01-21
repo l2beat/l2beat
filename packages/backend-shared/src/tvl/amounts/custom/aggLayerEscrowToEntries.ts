@@ -1,6 +1,9 @@
-import { ChainConfig, chains, tokenList } from '@l2beat/config'
-import { assert, AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../../BackendProject'
+import { type ChainConfig, chains, tokenList } from '@l2beat/config'
+import { assert, type AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
+import type {
+  BackendProject,
+  BackendProjectEscrow,
+} from '../../../BackendProject'
 import { getAggLayerL2TokenEntry } from '../aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from '../aggLayerNativeEtherPreminted'
 import { getAggLayerNativeEtherWrappedEntry } from '../aggLayerNativeEtherWrapped'

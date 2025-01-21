@@ -1,11 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 
-import { ChainConfig, OnchainVerifier } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import type { ChainConfig, OnchainVerifier } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import { BlockscoutV2Client } from '@l2beat/shared'
-import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
-import { Peripherals } from '../../peripherals/Peripherals'
-import { Clock } from '../../tools/Clock'
+import { assert, type ChainId, UnixTime } from '@l2beat/shared-pure'
+import type { Peripherals } from '../../peripherals/Peripherals'
+import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export type VerifiersStatusRefresherDeps = {

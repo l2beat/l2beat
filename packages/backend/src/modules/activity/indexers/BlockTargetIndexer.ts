@@ -1,8 +1,8 @@
-import { Logger } from '@l2beat/backend-tools'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import type { Logger } from '@l2beat/backend-tools'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
-import { Clock } from '../../../tools/Clock'
-import { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
+import type { Clock } from '../../../tools/Clock'
+import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 
 export class BlockTargetIndexer extends RootIndexer {
   // used only for runtime invalidation protection

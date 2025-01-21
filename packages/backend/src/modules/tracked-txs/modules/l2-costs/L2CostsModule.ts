@@ -1,8 +1,8 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 
-import { Config } from '../../../../config'
-import { Peripherals } from '../../../../peripherals/Peripherals'
-import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
+import type { Config } from '../../../../config'
+import type { Peripherals } from '../../../../peripherals/Peripherals'
+import type { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { L2CostsUpdater } from './L2CostsUpdater'
 
 export function createL2CostsModule(

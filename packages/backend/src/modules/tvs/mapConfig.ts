@@ -1,17 +1,20 @@
-import { BackendProject, BackendProjectEscrow } from '@l2beat/backend-shared'
-import { ChainConfig, tokenList } from '@l2beat/config'
+import type {
+  BackendProject,
+  BackendProjectEscrow,
+} from '@l2beat/backend-shared'
+import { type ChainConfig, tokenList } from '@l2beat/config'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { Token as LegacyToken } from '@l2beat/shared-pure'
+import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import {
-  AmountConfig,
-  AmountFormula,
-  BalanceOfEscrowAmountFormula,
-  CirculatingSupplyAmountFormula,
-  EscrowToken,
-  PriceConfig,
-  Token,
-  TotalSupplyAmountFormula,
-  TvsConfig,
+  type AmountConfig,
+  type AmountFormula,
+  type BalanceOfEscrowAmountFormula,
+  type CirculatingSupplyAmountFormula,
+  type EscrowToken,
+  type PriceConfig,
+  type Token,
+  type TotalSupplyAmountFormula,
+  type TvsConfig,
   isEscrowToken,
 } from './types'
 

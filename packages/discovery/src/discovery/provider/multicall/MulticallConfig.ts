@@ -1,7 +1,11 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { MulticallConfig, MulticallRequest, MulticallResponse } from './types'
+import type {
+  MulticallConfig,
+  MulticallRequest,
+  MulticallResponse,
+} from './types'
 
 export function getMulticall3Config(
   sinceBlock: number,

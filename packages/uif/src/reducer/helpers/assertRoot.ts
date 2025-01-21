@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import { IndexerState } from '../types/IndexerState'
+import type { IndexerState } from '../types/IndexerState'
 
 export function assertRoot(state: IndexerState): void {
   assert(

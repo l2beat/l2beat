@@ -5,7 +5,7 @@ import path from 'path'
 import Convert from 'ansi-to-html'
 import chalk from 'chalk'
 import { splitIntoSubfiles } from './powerdiff/splitIntoFiles'
-import { Configuration } from './powerdiff/types'
+import type { Configuration } from './powerdiff/types'
 
 export const DIFFING_MODES = ['together', 'split'] as const
 export type DiffingMode = (typeof DIFFING_MODES)[number]

@@ -1,11 +1,14 @@
-import { CoingeckoId, UnixTime, json } from '@l2beat/shared-pure'
-import { ClientCore, ClientCoreDependencies } from '../../clients/ClientCore'
+import type { CoingeckoId, UnixTime, json } from '@l2beat/shared-pure'
 import {
-  CoinListEntry,
-  CoinListPlatformEntry,
+  ClientCore,
+  type ClientCoreDependencies,
+} from '../../clients/ClientCore'
+import {
+  type CoinListEntry,
+  type CoinListPlatformEntry,
   CoinListPlatformResult,
   CoinListResult,
-  CoinMarketChartRangeData,
+  type CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
   CoinMetadata,
   CoingeckoError,

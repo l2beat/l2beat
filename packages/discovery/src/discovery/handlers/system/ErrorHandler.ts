@@ -1,5 +1,5 @@
 import { getErrorMessage } from '../../../utils/getErrorMessage'
-import { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler'
 
 export class ErrorHandler implements Handler {
   readonly dependencies = []

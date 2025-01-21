@@ -1,6 +1,6 @@
-import { CliLogger } from '@l2beat/shared'
+import type { CliLogger } from '@l2beat/shared'
 import { z } from 'zod'
-import { Column, FetchProjects, FetchResult } from './FetchInterface'
+import type { Column, FetchProjects, FetchResult } from './FetchInterface'
 
 const receiverMapping: Record<string, string> = {
   '0x06a9ab27c7e2255df1815e6cc0168d7755feb19a': 'taiko',

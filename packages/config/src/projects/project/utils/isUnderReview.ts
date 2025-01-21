@@ -1,7 +1,7 @@
-import { ScalingProjectRiskViewEntry } from '../../../common'
-import { Bridge } from '../../bridges'
-import { Layer2 } from '../../layer2s'
-import { Layer3 } from '../../layer3s'
+import type { ScalingProjectRiskViewEntry } from '../../../common'
+import type { Bridge } from '../../bridges'
+import type { Layer2 } from '../../layer2s'
+import type { Layer3 } from '../../layer3s'
 
 // this function should be updated when new sections that can be under review are added
 export function isUnderReview(project: Layer2 | Bridge | Layer3): boolean {

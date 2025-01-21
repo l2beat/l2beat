@@ -2,8 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Clock } from '../../../tools/Clock'
-import { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
+import type { Clock } from '../../../tools/Clock'
+import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 
 const LAST_HOUR = UnixTime.now().add(-1, 'hours')

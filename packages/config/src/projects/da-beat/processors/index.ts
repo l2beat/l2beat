@@ -1,4 +1,4 @@
-import { BlockchainDaLayer, DacDaLayer } from '../types'
+import type { BlockchainDaLayer, DacDaLayer } from '../types'
 import { committeeSecurityRisk } from './committee-security-risk'
 import { dacSignersWarning } from './dac-signers-warning'
 

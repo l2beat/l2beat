@@ -1,7 +1,12 @@
-import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  type EthereumAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { LogDescription } from 'ethers/lib/utils'
-import { IProvider } from '../provider/IProvider'
+import type { LogDescription } from 'ethers/lib/utils'
+import type { IProvider } from '../provider/IProvider'
 
 export type DateAddresses = [string, Hash256, EthereumAddress[]]
 

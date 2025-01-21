@@ -1,23 +1,23 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../test/database'
-import { IndexerService } from '../../tools/uif/IndexerService'
+import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import { actual, removal } from '../../tools/uif/multi/test/mockConfigurations'
-import {
+import type {
   Configuration,
   RemovalConfiguration,
 } from '../../tools/uif/multi/types'
-import { TrackedTxsClient } from './TrackedTxsClient'
+import type { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
-import { L2CostsUpdater } from './modules/l2-costs/L2CostsUpdater'
-import { LivenessUpdater } from './modules/liveness/LivenessUpdater'
-import { TxUpdaterInterface } from './types/TxUpdaterInterface'
-import { TrackedTxResult } from './types/model'
+import type { L2CostsUpdater } from './modules/l2-costs/L2CostsUpdater'
+import type { LivenessUpdater } from './modules/liveness/LivenessUpdater'
+import type { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import type { TrackedTxResult } from './types/model'
 
 describe(TrackedTxsIndexer.name, () => {
   beforeEach(() => {

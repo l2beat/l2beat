@@ -1,15 +1,15 @@
-import { DiscoveryConfig } from '@l2beat/discovery'
+import type { DiscoveryConfig } from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { ethers } from 'ethers'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ethers } from 'ethers'
 
 import { abiToArray } from './dashboardContracts/abiToArray'
 import { getDescription } from './dashboardContracts/getDescription'
 import {
-  DiscoveredByInfo,
+  type DiscoveredByInfo,
   getDiscoveredBy,
 } from './dashboardContracts/getDiscoveredBy'
 import { getIgnoreInWatchMode } from './dashboardContracts/getIgnoreInWatchMode'
@@ -17,7 +17,7 @@ import { getIgnoredMethods } from './dashboardContracts/getIgnoredMethods'
 import { getWatched } from './dashboardContracts/getWatched'
 import { getViewABI } from './utils/getFunctions'
 import { getUpgradeabilityParams } from './utils/getUpgradeabilityParams'
-import { DashboardContractField } from './utils/getValues'
+import type { DashboardContractField } from './utils/getValues'
 
 export interface DashboardContract {
   name: string

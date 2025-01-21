@@ -1,4 +1,4 @@
-import { DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
+import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 

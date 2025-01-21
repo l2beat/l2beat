@@ -1,4 +1,4 @@
-import {
+import type {
   DiscoveryContract,
   DiscoveryContractField,
 } from '../config/RawDiscoveryConfig'

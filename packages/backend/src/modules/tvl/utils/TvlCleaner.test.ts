@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
-import { Clock } from '../../../tools/Clock'
-import { SyncOptimizer } from './SyncOptimizer'
+import type { Clock } from '../../../tools/Clock'
+import type { SyncOptimizer } from './SyncOptimizer'
 import { TvlCleaner } from './TvlCleaner'
 
 describe(TvlCleaner.name, () => {

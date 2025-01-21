@@ -1,4 +1,4 @@
-import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import {
   assert,
   Bytes,
@@ -7,9 +7,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { providers, utils } from 'ethers'
-import { IProvider } from '../../provider/IProvider'
-import { DateAddresses } from '../pastUpgrades'
+import { type providers, utils } from 'ethers'
+import type { IProvider } from '../../provider/IProvider'
+import type { DateAddresses } from '../pastUpgrades'
 import { getAdmin, getImplementation } from './Eip1967Proxy'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)

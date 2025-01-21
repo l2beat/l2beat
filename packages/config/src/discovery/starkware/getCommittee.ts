@@ -1,4 +1,4 @@
-import { ProjectDiscovery } from '../ProjectDiscovery'
+import type { ProjectDiscovery } from '../ProjectDiscovery'
 
 export function getCommittee(
   discovery: ProjectDiscovery,

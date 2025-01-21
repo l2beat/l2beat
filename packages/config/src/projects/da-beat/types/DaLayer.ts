@@ -1,21 +1,21 @@
-import { ScalingProjectTechnologyChoice } from '../../../common'
-import { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../common'
-import {
+import type { ScalingProjectTechnologyChoice } from '../../../common'
+import type { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../common'
+import type {
   DacBridge,
   EnshrinedBridge,
   NoDaBridge,
   OnChainDaBridge,
 } from './DaBridge'
-import { DaChallengeMechanism } from './DaChallengeMechanism'
-import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
-import { DaEconomicSecurity } from './DaEconomicSecurity'
-import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
-import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
-import { DaLayerThroughput } from './DaLayerThroughput'
-import { DaLinks } from './DaLinks'
-import { DaTechnology } from './DaTechnology'
-import { DataAvailabilitySampling } from './DataAvailabilitySampling'
-import { EthereumDaLayerRisks } from './EthereumDaRisks'
+import type { DaChallengeMechanism } from './DaChallengeMechanism'
+import type { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
+import type { DaEconomicSecurity } from './DaEconomicSecurity'
+import type { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
+import type { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
+import type { DaLayerThroughput } from './DaLayerThroughput'
+import type { DaLinks } from './DaLinks'
+import type { DaTechnology } from './DaTechnology'
+import type { DataAvailabilitySampling } from './DataAvailabilitySampling'
+import type { EthereumDaLayerRisks } from './EthereumDaRisks'
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer | EthereumDaLayer
 

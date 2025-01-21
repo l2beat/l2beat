@@ -1,4 +1,4 @@
-import { BlobClient, BlobsInBlock } from '@l2beat/shared'
+import type { BlobClient, BlobsInBlock } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -7,12 +7,12 @@ import {
   Retries,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
+import type { providers } from 'ethers'
 import { z } from 'zod'
-import { IEtherscanClient } from '../../utils/IEtherscanClient'
-import { ContractSource } from '../../utils/IEtherscanClient'
+import type { IEtherscanClient } from '../../utils/IEtherscanClient'
+import type { ContractSource } from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { ContractDeployment, RawProviders } from './IProvider'
+import type { ContractDeployment, RawProviders } from './IProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
 
 const shouldRetry = Retries.exponentialBackOff({

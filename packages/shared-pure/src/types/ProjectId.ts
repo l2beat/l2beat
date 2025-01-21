@@ -1,4 +1,4 @@
-import { Branded } from './branded'
+import type { Branded } from './branded'
 
 export type ProjectId = Branded<string, 'ProjectId'>
 

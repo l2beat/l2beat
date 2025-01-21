@@ -11,7 +11,7 @@ import {
   ORACLES,
   RELAYERS,
 } from './lzOmnichain.contracts'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('lzomnichain')
 

@@ -1,11 +1,11 @@
 import {
-  DaBridgeContracts,
-  DaBridgeRisks,
+  type DaBridgeContracts,
+  type DaBridgeRisks,
   DaCommitteeSecurityRisk,
   DaUpgradeabilityRisk,
-  NoDaBridge,
+  type NoDaBridge,
 } from '../types'
-import { DaLinks } from '../types/DaLinks'
+import type { DaLinks } from '../types/DaLinks'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { linkByDA } from '../utils/link-by-da'
 

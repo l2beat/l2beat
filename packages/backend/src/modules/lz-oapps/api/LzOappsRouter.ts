@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { LzOAppsController } from './LzOappsController'
+import type { LzOAppsController } from './LzOappsController'
 
 export function createLzOAppsRouter(controller: LzOAppsController) {
   const router = new Router()

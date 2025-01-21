@@ -1,6 +1,6 @@
-import { providers, utils } from 'ethers'
+import { type providers, utils } from 'ethers'
 
-import { LogFilter, getAllLogs } from './getAllLogs'
+import { type LogFilter, getAllLogs } from './getAllLogs'
 
 const ULTRA_LIGHT_NODE_V2 = '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2'
 const INBOUND_PROOF_TOPIC =

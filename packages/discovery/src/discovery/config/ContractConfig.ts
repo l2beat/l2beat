@@ -1,5 +1,5 @@
-import { DiscoveryCustomType } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { DiscoveryCustomType } from '@l2beat/discovery-types'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import { DiscoveryContract } from './RawDiscoveryConfig'
 

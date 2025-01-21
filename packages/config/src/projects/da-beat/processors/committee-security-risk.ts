@@ -1,6 +1,6 @@
-import { DaBeatProjectProcessor } from '.'
-import { BlockchainDaLayer, DacDaLayer } from '../types'
-import { DacBridge } from '../types/DaBridge'
+import type { DaBeatProjectProcessor } from '.'
+import type { BlockchainDaLayer, DacDaLayer } from '../types'
+import type { DacBridge } from '../types/DaBridge'
 import { DaCommitteeSecurityRisk } from '../types/DaCommitteeSecurityRisk'
 
 export const committeeSecurityRisk: DaBeatProjectProcessor<

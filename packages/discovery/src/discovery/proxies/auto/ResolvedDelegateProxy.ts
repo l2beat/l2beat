@@ -8,12 +8,12 @@ Implementation address is resolved by calling the libAddressManager.getAddress(i
 It does not have an owner
 
 */
-import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { Indexed, LogDescription } from 'ethers/lib/utils'
-import { IProvider } from '../../provider/IProvider'
+import type { Indexed, LogDescription } from 'ethers/lib/utils'
+import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 
 async function getAddressManager(

@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -10,38 +10,38 @@ import {
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  ChainConfig,
+  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  type DataAvailabilityBridge,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ScalingProjectContract,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectStateDerivation,
+  type ScalingProjectStateValidation,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { Badge, BadgeId, badges } from '../../badges'
+import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 import {
   explorerContractSourceReference,
   explorerReferences,

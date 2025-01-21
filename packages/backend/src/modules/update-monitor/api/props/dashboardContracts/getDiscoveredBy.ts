@@ -1,4 +1,4 @@
-import { DiscoveryConfig } from '@l2beat/discovery'
+import type { DiscoveryConfig } from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,

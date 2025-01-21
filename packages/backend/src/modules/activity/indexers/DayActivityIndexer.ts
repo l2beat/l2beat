@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { DayActivityIndexerDeps } from './types'
+import type { DayActivityIndexerDeps } from './types'
 
 export class DayActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: DayActivityIndexerDeps) {

@@ -1,5 +1,10 @@
-import { DaBeatProjectProcessor } from '.'
-import { BlockchainDaLayer, DacBridge, DacDaLayer, NoDaBridge } from '../types'
+import type { DaBeatProjectProcessor } from '.'
+import type {
+  BlockchainDaLayer,
+  DacBridge,
+  DacDaLayer,
+  NoDaBridge,
+} from '../types'
 
 export const dacSignersWarning: DaBeatProjectProcessor<
   DacDaLayer | BlockchainDaLayer

@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
-import { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
+import type { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
 
 interface Dependencies {
   readonly indexerClients: BlockIndexerClient[]

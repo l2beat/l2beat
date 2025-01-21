@@ -1,18 +1,18 @@
 import { createAmountId } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { AmountRecord, Database } from '@l2beat/database'
+import type { AmountRecord, Database } from '@l2beat/database'
 import {
-  CirculatingSupplyEntry,
+  type CirculatingSupplyEntry,
   CoingeckoId,
   EthereumAddress,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { CirculatingSupplyService } from '../services/CirculatingSupplyService'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 import { CirculatingSupplyIndexer } from './CirculatingSupplyIndexer'
 
 describe(CirculatingSupplyIndexer.name, () => {

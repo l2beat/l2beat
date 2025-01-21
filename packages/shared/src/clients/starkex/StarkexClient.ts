@@ -1,6 +1,6 @@
-import { json } from '@l2beat/shared-pure'
+import type { json } from '@l2beat/shared-pure'
 
-import { ClientCore, ClientCoreDependencies } from '../ClientCore'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import { StarkexApiErrorResponse, StarkexApiSuccessResponse } from './types'
 
 interface Dependencies extends ClientCoreDependencies {

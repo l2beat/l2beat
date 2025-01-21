@@ -1,4 +1,4 @@
-import { TvlCleaner } from '../../kysely/generated/types'
+import type { TvlCleaner } from '../../kysely/generated/types'
 
 export const selectTvlCleaner = [
   'repositoryName',

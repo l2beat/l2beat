@@ -1,4 +1,4 @@
-import { IndexerConfiguration } from '../../kysely/generated/types'
+import type { IndexerConfiguration } from '../../kysely/generated/types'
 
 export const selectIndexerConfiguration = [
   'id',

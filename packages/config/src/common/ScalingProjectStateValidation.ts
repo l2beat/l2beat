@@ -1,6 +1,6 @@
-import { ProofVerification } from '../projects/types'
-import { ScalingProjectReference } from './ScalingProjectReference'
-import { ScalingProjectRisk } from './ScalingProjectRisk'
+import type { ProofVerification } from '../projects/types'
+import type { ScalingProjectReference } from './ScalingProjectReference'
+import type { ScalingProjectRisk } from './ScalingProjectRisk'
 
 type CategoryTitle =
   // ZK

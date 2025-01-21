@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getProjects } from './getProjects'
 

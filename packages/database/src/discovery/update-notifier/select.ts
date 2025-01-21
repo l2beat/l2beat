@@ -1,4 +1,4 @@
-import { UpdateNotifier } from '../../kysely/generated/types'
+import type { UpdateNotifier } from '../../kysely/generated/types'
 
 export const selectUpdateNotifier = [
   'id',

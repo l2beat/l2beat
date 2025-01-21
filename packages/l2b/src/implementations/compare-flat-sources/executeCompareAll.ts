@@ -1,4 +1,4 @@
-import { CliLogger } from '@l2beat/shared'
+import type { CliLogger } from '@l2beat/shared'
 import { computeStackSimilarity } from './common'
 import { generateAndOpenGraph } from './graph'
 import { colorMap } from './output'
