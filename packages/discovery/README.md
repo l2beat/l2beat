@@ -721,29 +721,6 @@ Assumes there is `event AddInboundProofLibraryForChain(uint16 chainId, address l
 },
 ```
 
-### State from event tuple handler
-
-Similar to the handler above but works on tuples are event arguments.
-Written specially for LayerZero v2 contracts, below is the logic of the handler:
-
-Example event:
-`event DefaultConfigsSet(tuple(uint32 eid, tuple(...) config)[] params)`
-
-Logic:
-
-1. Get all logs for the event
-2. Group logs by returnParam[0] (it is always eid with current approach)
-3. Expand tuple of values into named values dictionary if expandParam is provided
-4. Keep only the latest log for each group
-
-**Parameters:**
-
-- `type` - the literal: `"stateFromEventTuple"`
-- `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
-- `returnParams` - array of strings that represent event keys that we want to save
-- `expandParam` - (optional) name of the return parameter to expand into a dictionary
-- `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
-
 ### Constructor args handler
 
 Creates a new field in the result with the value provided.

@@ -175,8 +175,6 @@ export function getUserHandler(
       return new StarkWareGovernanceHandler(field, definition, abi)
     case 'stateFromEvent':
       return new StateFromEventHandler(field, definition, abi)
-    case 'stateFromEventTuple':
-      return new StateFromEventTupleHandler(field, definition, abi)
     case 'layerZeroMultisig':
       return new LayerZeroMultisigHandler(field, abi)
     case 'arbitrumActors':
