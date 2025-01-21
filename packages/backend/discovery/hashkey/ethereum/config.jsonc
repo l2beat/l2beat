@@ -2,7 +2,13 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "hashkey",
   "chain": "ethereum",
-  "initialAddresses": [
-    "0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3"
-  ]
+  "initialAddresses": ["0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3"],
+  "overrides": {
+    "0xb321dEC8b39b54a740bbD0fbbD14D48fa9CC8f65": {
+      "proxyType": "immutable"
+    },
+    "0x6319563FD2B6aC5DbD5c946E74f9DaD60d028F22": {
+      "proxyType": "immutable"
+    }
+  }
 }
