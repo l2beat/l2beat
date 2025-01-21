@@ -23,7 +23,7 @@ export const henez: Layer3 = underReviewL3({
       'Henez is an Orbit stack L3 with AnyTrust DA powering chain- and account-abstracted DeFi applications.',
     purposes: ['Universal'],
     links: {
-      websites: ['https://www.henez.fi/'],
+      websites: ['https://henez.fi/'],
       apps: ['https://henez.bridge.caldera.xyz/'],
       documentation: ['https://docs.henez.fi/'],
       explorers: ['https://henez.calderaexplorer.xyz/'],
