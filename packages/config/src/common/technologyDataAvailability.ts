@@ -1,5 +1,5 @@
-import { ScalingProjectRisk } from './ScalingProjectRisk'
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type { ScalingProjectRisk } from './ScalingProjectRisk'
+import type { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
 const ON_CHAIN_CALLDATA: ScalingProjectTechnologyChoice = {
   name: 'All data required for proofs is published onchain',

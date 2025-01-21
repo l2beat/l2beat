@@ -1,10 +1,10 @@
-import { ConfigReader, getChainShortName } from '@l2beat/discovery'
+import { type ConfigReader, getChainShortName } from '@l2beat/discovery'
 import {
-  ContractParameters,
-  DiscoveryOutput,
+  type ContractParameters,
+  type DiscoveryOutput,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { ContractConfig } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
+import type { ContractConfig } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
@@ -12,7 +12,7 @@ import { getContractType } from './getContractType'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
 import { toAddress } from './toAddress'
-import {
+import type {
   AddressFieldValue,
   ApiAbiEntry,
   ApiAddressEntry,

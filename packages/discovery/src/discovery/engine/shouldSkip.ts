@@ -1,5 +1,5 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 export function shouldSkip(
   address: EthereumAddress,

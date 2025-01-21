@@ -1,4 +1,4 @@
-import { CacheEntry, DiscoveryCache } from './DiscoveryCache'
+import type { CacheEntry, DiscoveryCache } from './DiscoveryCache'
 
 export interface BlockNumberProvider {
   getBlockNumber(): Promise<number>

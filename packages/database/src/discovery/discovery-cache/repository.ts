@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { DiscoveryCacheRecord, toRecord, toRow } from './entity'
+import { type DiscoveryCacheRecord, toRecord, toRow } from './entity'
 import { selectDiscoveryCache } from './select'
 
 export class DiscoveryCacheRepository extends BaseRepository {

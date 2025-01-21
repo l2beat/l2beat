@@ -1,7 +1,7 @@
 import { BigNumber, utils } from 'ethers/lib/ethers'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DacDaLayer } from '../types/DaLayer'
+import type { DacDaLayer } from '../types/DaLayer'
 import { mantleDABridge } from './bridges/mantleDABridge'
 
 const discovery = new ProjectDiscovery('mantle')

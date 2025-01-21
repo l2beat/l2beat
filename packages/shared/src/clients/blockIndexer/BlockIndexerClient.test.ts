@@ -1,7 +1,7 @@
 import { RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { HttpClient } from '../http/HttpClient'
+import type { HttpClient } from '../http/HttpClient'
 import { BlockIndexerClient } from './BlockIndexerClient'
 
 const API_URL = 'https://example.com/api'

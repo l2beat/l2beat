@@ -1,17 +1,17 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import {
-  AllProviders,
-  DiscoveryConfig,
-  DiscoveryEngine,
+  type AllProviders,
+  type DiscoveryConfig,
+  type DiscoveryEngine,
   DiscoveryLogger,
   flattenDiscoveredSources,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
-  AllProviderStats,
+  type AllProviderStats,
   ProviderMeasurement,
-  ProviderStats,
+  type ProviderStats,
 } from '@l2beat/discovery/dist/discovery/provider/Stats'
 import { assert } from '@l2beat/shared-pure'
 import { isError } from 'lodash'

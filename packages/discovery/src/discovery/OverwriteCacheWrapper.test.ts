@@ -1,6 +1,6 @@
-import { MockObject, expect, mockFn, mockObject } from 'earl'
+import { type MockObject, expect, mockFn, mockObject } from 'earl'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
-import { DiscoveryCache } from './provider/DiscoveryCache'
+import type { DiscoveryCache } from './provider/DiscoveryCache'
 
 describe('OverwriteCacheWrapper', () => {
   let cacheMock: MockObject<DiscoveryCache>

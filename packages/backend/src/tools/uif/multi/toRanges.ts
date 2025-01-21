@@ -1,4 +1,8 @@
-import { Configuration, ConfigurationRange, SavedConfiguration } from './types'
+import type {
+  Configuration,
+  ConfigurationRange,
+  SavedConfiguration,
+} from './types'
 
 export function toRanges<T>(
   configurations: SavedConfiguration<T>[],

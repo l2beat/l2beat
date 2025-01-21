@@ -4,7 +4,7 @@ import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import * as solidity from './solidity'
 import { theme } from './theme'
 
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
+import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 let initialized = false
 
 export class Editor {

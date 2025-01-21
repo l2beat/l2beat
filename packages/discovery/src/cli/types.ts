@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { Type } from 'cmd-ts'
+import type { Type } from 'cmd-ts'
 import { chains } from '../config/chains'
 
 export const EthereumAddressValue: Type<string, EthereumAddress> = {

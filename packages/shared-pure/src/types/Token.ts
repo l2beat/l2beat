@@ -1,8 +1,8 @@
-import { AssetId } from './AssetId'
-import { ChainId } from './ChainId'
-import { CoingeckoId } from './CoingeckoId'
-import { EthereumAddress } from './EthereumAddress'
-import { UnixTime } from './UnixTime'
+import type { AssetId } from './AssetId'
+import type { ChainId } from './ChainId'
+import type { CoingeckoId } from './CoingeckoId'
+import type { EthereumAddress } from './EthereumAddress'
+import type { UnixTime } from './UnixTime'
 
 export interface Token {
   id: AssetId

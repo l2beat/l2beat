@@ -1,4 +1,4 @@
-import { Liveness } from '../../kysely/generated/types'
+import type { Liveness } from '../../kysely/generated/types'
 
 export const selectLiveness = [
   'configurationId',

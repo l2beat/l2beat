@@ -1,9 +1,9 @@
-import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { serializeResult } from '../../handlers/user/ConstructorArgsHandler'
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { bytes32ToAddress } from '../../utils/address'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
 

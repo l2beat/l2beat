@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import Koa from 'koa'
 import compress from 'koa-compress'
 import conditional from 'koa-conditional-get'

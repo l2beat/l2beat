@@ -4,12 +4,12 @@ DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createAmountId" FUNCTION
 DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE getAmountsStatus FUNCTION
 */
 
-import { AssetId } from './AssetId'
-import { CoingeckoId } from './CoingeckoId'
-import { EthereumAddress } from './EthereumAddress'
-import { ProjectId } from './ProjectId'
-import { type Token } from './Token'
-import { UnixTime } from './UnixTime'
+import type { AssetId } from './AssetId'
+import type { CoingeckoId } from './CoingeckoId'
+import type { EthereumAddress } from './EthereumAddress'
+import type { ProjectId } from './ProjectId'
+import type { Token } from './Token'
+import type { UnixTime } from './UnixTime'
 
 export type AmountConfigEntry =
   | TotalSupplyEntry

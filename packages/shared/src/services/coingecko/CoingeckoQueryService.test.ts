@@ -5,7 +5,7 @@ import {
   getHourlyTimestamps,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { CoingeckoClient } from '../../clients'
+import type { CoingeckoClient } from '../../clients'
 import {
   CoingeckoQueryService,
   MAX_DAYS_FOR_HOURLY_PRECISION,

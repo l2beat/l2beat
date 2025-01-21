@@ -1,9 +1,13 @@
 import { Env } from '@l2beat/backend-tools'
-import { ScalingProjectTransactionApi, layer2s, layer3s } from '@l2beat/config'
+import {
+  type ScalingProjectTransactionApi,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
-import { BlockscoutChainConfig, EtherscanChainConfig } from '../Config'
+import type { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
+import type { BlockscoutChainConfig, EtherscanChainConfig } from '../Config'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 const DEFAULT_RESYNC_LAST_DAYS = 7

@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { mergeConfigurations } from './mergeConfigurations'
-import {
+import type {
   Configuration,
   RemovalConfiguration,
   SavedConfiguration,

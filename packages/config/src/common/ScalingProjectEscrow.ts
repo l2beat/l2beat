@@ -1,5 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { ScalingProjectContract } from './ScalingProjectContracts'
+import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { ScalingProjectContract } from './ScalingProjectContracts'
 
 export type ScalingProjectEscrow = OldProjectEscrow | NewProjectEscrow
 

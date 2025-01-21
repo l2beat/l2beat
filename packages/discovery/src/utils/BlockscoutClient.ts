@@ -4,12 +4,12 @@ import {
   EthereumAddress,
   Hash256,
   UnixTime,
-  json,
+  type json,
 } from '@l2beat/shared-pure'
 
-import { ContractSource } from './IEtherscanClient'
+import type { ContractSource } from './IEtherscanClient'
 
-import { HttpClient } from '@l2beat/shared'
+import type { HttpClient } from '@l2beat/shared'
 import {
   BlockscoutGetBlockNoByTime,
   ContractCreatorAndCreationTxHashResult,
@@ -19,7 +19,7 @@ import {
   UnverifiedContractSourceResult,
   parseBlockscoutResponse,
 } from './BlockscoutModels'
-import {
+import type {
   EtherscanUnsupportedMethods,
   IEtherscanClient,
 } from './IEtherscanClient'

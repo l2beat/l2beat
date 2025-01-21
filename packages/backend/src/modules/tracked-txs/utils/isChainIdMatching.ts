@@ -1,4 +1,4 @@
-import { TrackedTxSharedBridgeConfig } from '@l2beat/shared'
+import type { TrackedTxSharedBridgeConfig } from '@l2beat/shared'
 import { utils } from 'ethers'
 
 export function isChainIdMatching(

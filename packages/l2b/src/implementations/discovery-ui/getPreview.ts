@@ -1,12 +1,12 @@
 import {
   ProjectDiscovery,
-  ScalingProjectContract,
-  ScalingProjectPermission,
+  type ScalingProjectContract,
+  type ScalingProjectPermission,
 } from '@l2beat/config'
-import { ConfigReader } from '@l2beat/discovery'
-import { ContractsMeta, getMeta } from './getMeta'
+import type { ConfigReader } from '@l2beat/discovery'
+import { type ContractsMeta, getMeta } from './getMeta'
 import { toAddress } from './toAddress'
-import {
+import type {
   AddressFieldValue,
   ApiPreviewContract,
   ApiPreviewPermission,

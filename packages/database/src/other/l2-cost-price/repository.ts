@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { L2CostPriceRecord, toRecord, toRow } from './entity'
+import { type L2CostPriceRecord, toRecord, toRow } from './entity'
 import { selectL2CostPrice } from './select'
 
 export class L2CostPriceRepository extends BaseRepository {

@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { get4ByteSignatures } from './api/FourByte'
 import { SimpleValue } from './components/SimpleValue'
 import { ValueHeading } from './components/ValueHeading'
-import { Value } from './decode/DecodedResult'
+import type { Value } from './decode/DecodedResult'
 import { decode } from './decode/decode'
 
 interface DecodedProps {

@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { LoggerTransport } from '../logger/types'
+import type { LoggerTransport } from '../logger/types'
 import { formatDate } from '../logger/utils'
 import {
   ElasticSearchClient,
-  ElasticSearchClientOptions,
+  type ElasticSearchClientOptions,
 } from './ElasticSearchClient'
 
 export interface ElasticSearchTransportOptions

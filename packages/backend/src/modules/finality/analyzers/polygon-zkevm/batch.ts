@@ -4,7 +4,7 @@ import { assert } from '@l2beat/shared-pure'
 import { rlpDecode } from '../../utils/rlpDecode'
 import { constants } from './const'
 import { decodeUint32 } from './numerics'
-import { PolygonZkEvmTransaction, RawPolygonZkEvmBlock } from './types'
+import type { PolygonZkEvmTransaction, RawPolygonZkEvmBlock } from './types'
 
 export { decodeBatch }
 

@@ -1,17 +1,17 @@
-import { AmountRecord } from '@l2beat/database'
-import { RpcClient } from '@l2beat/shared'
+import type { AmountRecord } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
 import {
-  AggLayerL2Token,
-  AggLayerNativeEtherPreminted,
-  AggLayerNativeEtherWrapped,
+  type AggLayerL2Token,
+  type AggLayerNativeEtherPreminted,
+  type AggLayerNativeEtherWrapped,
   Bytes,
-  EthereumAddress,
-  UnixTime,
+  type EthereumAddress,
+  type UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { MulticallRequest } from '../../../peripherals/multicall/types'
+import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import type { MulticallRequest } from '../../../peripherals/multicall/types'
 
 export const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',

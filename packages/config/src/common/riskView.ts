@@ -1,14 +1,14 @@
 import {
   assert,
-  ProjectId,
-  Sentiment,
-  WarningValueWithSentiment,
+  type ProjectId,
+  type Sentiment,
+  type WarningValueWithSentiment,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
-import { ScalingProjectRiskView } from './ScalingProjectRiskView'
+import type { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
+import type { ScalingProjectRiskView } from './ScalingProjectRiskView'
 import { DATA_AVAILABILITY } from './dataAvailability'
 
 // State validation

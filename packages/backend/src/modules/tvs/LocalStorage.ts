@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
-import { UnixTime } from '@l2beat/shared-pure'
-import { DataStorage } from './DataStorage'
+import type { UnixTime } from '@l2beat/shared-pure'
+import type { DataStorage } from './DataStorage'
 
 interface LocalStorageJSON {
   prices: Record<string, number>

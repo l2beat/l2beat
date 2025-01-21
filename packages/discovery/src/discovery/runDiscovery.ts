@@ -1,20 +1,23 @@
-import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { HttpClient } from '@l2beat/shared'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
-import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
+import type {
+  DiscoveryChainConfig,
+  DiscoveryModuleConfig,
+} from '../config/types'
 import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
-import { Analysis } from './analysis/AddressAnalyzer'
-import { ConfigReader } from './config/ConfigReader'
-import { DiscoveryConfig } from './config/DiscoveryConfig'
+import type { Analysis } from './analysis/AddressAnalyzer'
+import type { ConfigReader } from './config/ConfigReader'
+import type { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { SQLiteCache } from './provider/SQLiteCache'
-import { AllProviderStats, printProviderStats } from './provider/Stats'
+import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
 export async function runDiscovery(
   http: HttpClient,

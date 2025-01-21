@@ -5,20 +5,20 @@ import { SortingArrowIcon } from './icons/SortingArrowIcon'
 import {
   AVAILABLE_COLUMNS,
   DEFAULT_COLUMN_IDS,
-  LupeColumn,
+  type LupeColumn,
   deserializeColumns,
   serializeColumns,
 } from './src/columns'
 import {
-  ColumnFilter,
+  type ColumnFilter,
   deserializeFilter,
   serializeFilter,
 } from './src/filtering'
 import { toMatrix, toVisibleRows } from './src/matrix'
-import { DiscoLupeProject } from './src/model'
+import type { DiscoLupeProject } from './src/model'
 import {
-  SortConfig,
-  SortDirection,
+  type SortConfig,
+  type SortDirection,
   deserializeSort,
   getSortDirection,
   serializeSort,
