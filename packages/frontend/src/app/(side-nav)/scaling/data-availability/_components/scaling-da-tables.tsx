@@ -14,22 +14,32 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { useRecategorisationPreviewContext } from '~/providers/recategorisation-preview-provider'
 import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
+import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingDaTable } from './table/scaling-da-table'
 
 type Props = TabbedScalingEntries<ScalingDaEntry>
 
 export function ScalingDaTables(props: Props) {
   const includeFilters = useScalingFilter()
+  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others.filter(includeFilters),
   }
+
+  const entries = checked
+    ? getRecategorisedEntries(
+        filteredEntries,
+        (a, b) => a.tvlOrder - b.tvlOrder,
+      )
+    : filteredEntries
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
@@ -50,9 +60,9 @@ export function ScalingDaTables(props: Props) {
     <>
       <ScalingFilters
         items={[
-          ...filteredEntries.rollups,
-          ...filteredEntries.validiumsAndOptimiums,
-          ...filteredEntries.others,
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
         ]}
         className="max-md:mt-4"
         showDALayerFilter
@@ -60,37 +70,35 @@ export function ScalingDaTables(props: Props) {
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
-            Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
+            Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
-            <CountBadge>
-              {filteredEntries.validiumsAndOptimiums.length}
-            </CountBadge>
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {entries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingDaTable entries={filteredEntries.rollups} rollups />
+            <ScalingDaTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <ScalingDaTable entries={filteredEntries.validiumsAndOptimiums} />
+            <ScalingDaTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
+        {entries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />
-              <ScalingDaTable entries={filteredEntries.others} />
+              <ScalingDaTable entries={entries.others} />
               <OtherMigrationTabNotice
                 projectsToBeMigrated={projectToBeMigratedToOthers}
                 className="mt-2"
