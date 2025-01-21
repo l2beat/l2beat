@@ -28,6 +28,7 @@ import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
 import { mxc } from './mxc'
+import { onchain } from './onchain'
 import { orb3 } from './orb3'
 import { oursong } from './oursong'
 import { playblock } from './playblock'
@@ -79,6 +80,7 @@ export const layer3s: Layer3[] = [
   zklinknova,
   teva,
   xai,
+  onchain,
   orb3,
   popapex,
   popboss,
