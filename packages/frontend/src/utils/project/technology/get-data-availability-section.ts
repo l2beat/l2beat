@@ -33,8 +33,8 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
     props: {
       id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: !!project.dataAvailabilitySolution.isUnderReview,
-      isVerified: false, // TODO: project.dataAvailabilitySolution.isVerified,
+      isUnderReview: undefined,
+      isVerified: undefined,
       grissiniValues: evaluatedGrissiniValues,
     },
   })
@@ -49,7 +49,6 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
         slug: project.display.slug,
       },
       content: project.dataAvailabilitySolution.technology.description.concat(
-        '\n\n',
         project.dataAvailabilitySolution.bridge.technology.description,
       ),
       mdClassName:
