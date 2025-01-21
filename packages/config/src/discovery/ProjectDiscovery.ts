@@ -862,7 +862,7 @@ export class ProjectDiscovery {
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
-      ` - acting via ${via.map((p) => this.formatViaPath(p)).join(', ')}`
+      `- acting via ${via.map((p) => this.formatViaPath(p)).join(', ')}`
 
     return Object.entries(
       groupBy(
@@ -903,6 +903,7 @@ export class ProjectDiscovery {
         delay === '' ? '' : formatPermissionDelay(Number(delay)),
         via,
       ]
+        .filter((s) => s !== '')
         .join(' ')
         .trim()}.`
     })
@@ -955,6 +956,7 @@ export class ProjectDiscovery {
         formatPermissionCondition(condition),
         delay === '' ? '' : formatPermissionDelay(Number(delay)),
       ]
+        .filter((s) => s !== '')
         .join(' ')
         .trim()}.`
     })
@@ -1200,7 +1202,7 @@ export function trimTrailingDots(s: string): string {
 }
 
 function formatPermissionDescription(description: string): string {
-  return description !== '' ? ` - ${trimTrailingDots(description)}` : ''
+  return description !== '' ? `- ${trimTrailingDots(description)}` : ''
 }
 
 function formatPermissionCondition(condition: string): string {
