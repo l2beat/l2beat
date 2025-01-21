@@ -7,6 +7,6 @@ export type ScalingProjectStack =
   | 'Loopring'
   | 'Polygon'
   | 'OVM'
-  | 'Starknet'
+  | 'SN Stack'
   | 'Taiko'
   | 'Cartesi Rollups'
