@@ -17,6 +17,7 @@ import { fiefdom } from './fiefdom'
 import { geist } from './geist'
 import { ham } from './ham'
 import { hook } from './hook'
+import { huddle01 } from './huddle01'
 import { hyperliquid } from './hyperliquid'
 import { inevm } from './inevm'
 import { l3x } from './l3x'
@@ -68,6 +69,7 @@ export const layer3s: Layer3[] = [
   geist,
   inevm,
   ham,
+  huddle01,
   hyperliquid,
   hook,
   rari,
