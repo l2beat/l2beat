@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6e016e519ce6298c1b82d6eabc6003e0e5318a9c
+Generated with discovered.json: 0xa5bc4f9ed1904a5319d87acd417badc0bc2c2b46
 
-# Diff at Mon, 20 Jan 2025 16:09:16 GMT:
+# Diff at Tue, 21 Jan 2025 11:19:17 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@3758933af671e5708e35655beccec803ef8ed561 block: 21628494
+- comparing to: main@0da84acc479f34212f2c8133869a3eef33d46ecc block: 21628494
 - current block number: 21628494
 
 ## Description
@@ -29,6 +29,8 @@ discovery. Values are for block 21628494 (main branch discovery), not current.
 ```diff
     contract OptimismPortal (0x1a0ad011913A150f69f6A19DF447A0CfD9551054) {
     +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1.via.0.condition:
++        "not revoked by the Security Council"
       issuedPermissions.0.to:
 -        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
 +        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
@@ -66,6 +68,8 @@ discovery. Values are for block 21628494 (main branch discovery), not current.
 ```diff
     contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1.via.0.condition:
++        "not revoked by the Security Council"
       issuedPermissions.0.to:
 -        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
 +        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
@@ -79,6 +83,18 @@ discovery. Values are for block 21628494 (main branch discovery), not current.
 +        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
       issuedPermissions.0.via.0.condition:
 +        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1.via.1.condition:
++        "not revoked by the Security Council"
+      receivedPermissions.0.via.1.condition:
++        "not revoked by the Security Council"
+      directlyReceivedPermissions.0.condition:
++        "not revoked by the Security Council"
     }
 ```
 
