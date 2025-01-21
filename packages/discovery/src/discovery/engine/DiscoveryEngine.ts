@@ -101,8 +101,7 @@ export class DiscoveryEngine {
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
-            config.overrides.get(address),
-            config.typesFor(address.toString()),
+            config.for(address),
             templates,
           )
           resolved[address.toString()] = analysis

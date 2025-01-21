@@ -1,48 +1,4 @@
-Generated with discovered.json: 0x5b58530f57cf0800ac99b7876bd2f261c6a5d88f
-
-# Diff at Mon, 20 Jan 2025 11:10:17 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@400cfe1ca700b8b710220906f278f002c698d3c8 block: 21643075
-- current block number: 21643075
-
-## Description
-
-discodrive zk stack.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21643075 (main branch discovery), not current.
-
-```diff
-    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
-    +++ description: Implements the ZK proof verification logic.
-      template:
-+        "shared-zk-stack/Verifier"
-      description:
-+        "Implements the ZK proof verification logic."
-    }
-```
-
-```diff
-    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
-    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      fieldMeta.getProtocolVersion.description:
--        "Protocol version, increments with each protocol change"
-+        "Protocol version, increments with each protocol change."
-      fieldMeta.getVerifierParams.description:
--        "Verifier parameters used for proving batches"
-+        "Verifier parameters used for proving batches."
-      template:
-+        "shared-zk-stack/Diamond"
-      description:
-+        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
-    }
-```
-
-Generated with discovered.json: 0xab166545a2588bbd76b93f28d22f506719790396
+Generated with discovered.json: 0x7ee4ce882273e19ba3b889a4e26b938cc0a6eec2
 
 # Diff at Fri, 17 Jan 2025 08:39:46 GMT:
 

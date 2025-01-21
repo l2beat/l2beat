@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x973a87a37aeec1a15a69a59ac6969d4e1b719a91
+
+# Diff at Mon, 20 Jan 2025 09:24:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21387141
+- current block number: 21387141
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387141 (main branch discovery), not current.
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      fieldMeta.rollupProviders.type:
++        "PERMISSION"
+      fieldMeta.verifier.type:
++        "PERMISSION"
+    }
+```
+
 Generated with discovered.json: 0x2f4ce62254dbbb7ee54f687f9e15eecb6bf7e23d
 
 # Diff at Tue, 10 Dec 2024 09:52:07 GMT:

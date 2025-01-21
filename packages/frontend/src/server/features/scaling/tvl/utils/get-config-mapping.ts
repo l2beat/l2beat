@@ -3,7 +3,7 @@ import {
   ConfigMapping,
   getTvlAmountsConfigForProject,
   getTvlPricesConfig,
-} from '@l2beat/config'
+} from '@l2beat/backend-shared'
 
 export function getConfigMapping(project: BackendProject) {
   const amountsConfigs = getTvlAmountsConfigForProject(project)

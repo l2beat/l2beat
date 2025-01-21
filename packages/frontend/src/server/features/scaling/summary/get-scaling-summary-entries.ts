@@ -2,12 +2,12 @@ import {
   type Project,
   type ProjectDataAvailability,
   ProjectService,
+  type ReasonForBeingInOther,
   type ScalingProjectCategory,
   type ScalingProjectStack,
   type StageConfig,
   type WarningWithSentiment,
 } from '@l2beat/config'
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'
@@ -35,7 +35,7 @@ import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 export async function getScalingSummaryEntries() {
   const projects = await ProjectService.STATIC.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks'],
-    optional: ['countdowns', 'tvlInfo', 'scalingDa', 'scalingStage'],
+    optional: ['tvlInfo', 'scalingDa', 'scalingStage'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -96,7 +96,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
 function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks',
-    'countdowns' | 'tvlInfo' | 'scalingDa' | 'scalingStage'
+    'tvlInfo' | 'scalingDa' | 'scalingStage'
   >,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,

@@ -1,4 +1,5 @@
-import { type ConfigMapping, safeGetTokenByAssetId } from '@l2beat/config'
+import { type ConfigMapping } from '@l2beat/backend-shared'
+import { safeGetTokenByAssetId } from '@l2beat/config'
 import {
   assert,
   type AmountConfigEntry,

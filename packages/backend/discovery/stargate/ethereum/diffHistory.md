@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x361675df7e736c4d467c948c7483b8e6bd05aa44
+Generated with discovered.json: 0x51b12117e1518aa6cbb6abf71b1d0e67c6c80ee9
+
+# Diff at Mon, 20 Jan 2025 11:10:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630186
+- current block number: 21630186
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630186 (main branch discovery), not current.
+
+```diff
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+      issuedPermissions.0.to:
++        "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
+    }
+```
+
+```diff
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+      issuedPermissions.0.to:
++        "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x5a54fe5234E811466D5366846283323c954310B2"
+      receivedPermissions.0.from:
++        "0x5a54fe5234E811466D5366846283323c954310B2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x902F09715B6303d4173037652FA7377e5b98089E"
+      receivedPermissions.0.from:
++        "0x902F09715B6303d4173037652FA7377e5b98089E"
+    }
+```
+
+Generated with discovered.json: 0x4eddcdb8889013943b42f7be52419ae9beebd801
 
 # Diff at Mon, 25 Nov 2024 10:52:49 GMT:
 

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xffd001c497169cbc3b1f43617a6cea5e2b9e02e1
+Generated with discovered.json: 0xdd0281d03c618ac9e56421d06a0e8e3bda3b30f7
 
 # Diff at Mon, 20 Jan 2025 11:10:10 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@400cfe1ca700b8b710220906f278f002c698d3c8 block: 21429615
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21429615
 - current block number: 21429615
 
 ## Description
 
-discodrive zk stack.
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
 
 ## Config/verification related changes
 
@@ -17,16 +17,26 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21429615 (main branch discovery), not current.
 
 ```diff
-    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604) {
-    +++ description: Implements the ZK proof verification logic.
-      template:
-+        "shared-zk-stack/Verifier"
-      description:
-+        "Implements the ZK proof verification logic."
+    contract SophonUSDCEscrowMultisig (0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
+      receivedPermissions.0.from:
++        "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
     }
 ```
 
-Generated with discovered.json: 0x01edddd129ce4880a2833eea307b2095e355ab11
+```diff
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD"
+      issuedPermissions.0.to:
++        "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD"
+    }
+```
+
+Generated with discovered.json: 0x486cccdd6491b8aa9b4ffc00ed2d7936446251fa
 
 # Diff at Wed, 18 Dec 2024 13:08:26 GMT:
 

@@ -6,5 +6,5 @@ export function getDescription(
   address: EthereumAddress,
   field: string,
 ): string | undefined {
-  return config.overrides.get(address).methods?.[field]
+  return config.for(address).methods[field]
 }

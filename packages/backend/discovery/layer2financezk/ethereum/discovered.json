@@ -2,7 +2,7 @@
   "name": "layer2financezk",
   "chain": "ethereum",
   "blockNumber": 19825376,
-  "configHash": "0x53c8f3f24907aa0433b0804552e5690bb007d92b67e91b923e4cb6d43b1c690a",
+  "configHash": "0x9c5ed3b67c63a23dc62b650b4a69f045ca7d17f6d80c33000c920d890a3008ce",
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -66,7 +66,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
           "via": []
         }
       ],
@@ -203,7 +203,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
         }
       ]
     },

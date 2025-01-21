@@ -58,6 +58,7 @@ export const kinto: Layer2 = orbitStackL2({
       },
     ],
   },
+  hasAtLeastFiveExternalChallengers: true,
   discoveryDrivenData: true,
   isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),

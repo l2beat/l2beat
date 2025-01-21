@@ -1,10 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
-import { isVerified } from '../../verification'
+import { isVerified } from '../../verification/isVerified'
 import { Bridge, bridges } from '../bridges'
+import { DaLayer, daLayers } from '../da-beat'
 import { Layer2, ProjectLivenessInfo, layer2s } from '../layer2s'
 import { Layer3, layer3s } from '../layer3s'
-import { DaLayer, daLayers } from '../other'
 import { refactored } from '../refactored'
 import {
   BaseProject,
@@ -38,6 +38,14 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       redWarning: p.display.redWarning,
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
+      // countdowns
+      otherMigration: otherMigrationContext
+        ? {
+            expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
+            pretendingToBe: p.display.category,
+            reasons: otherMigrationContext.reasonsForBeingOther,
+          }
+        : undefined,
     },
     scalingInfo: {
       layer: p.type,
@@ -73,15 +81,6 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     activityInfo: getActivityInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
-    countdowns: otherMigrationContext
-      ? {
-          otherMigration: {
-            expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
-            pretendingToBe: p.display.category,
-            reasons: otherMigrationContext.reasonsForBeingOther,
-          },
-        }
-      : undefined,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
@@ -152,6 +151,12 @@ function bridgeToProject(p: Bridge): BaseProject {
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
     },
+    bridgeInfo: {
+      category: p.display.category,
+      destination: p.technology.destination,
+      validatedBy: p.riskView.validatedBy.value,
+    },
+    bridgeRisks: p.riskView,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],

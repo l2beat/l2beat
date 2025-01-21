@@ -40,6 +40,7 @@ export interface DiscoveryCustomType {
 export interface FieldMeta {
   description?: string
   severity?: ContractFieldSeverity
+  type?: ContractValueType[] | ContractValueType
 }
 
 export type PermissionType =
@@ -58,14 +59,22 @@ export type PermissionType =
 export interface ResolvedPermissionPath {
   address: EthereumAddress
   delay?: number
+  condition?: string
 }
 
-export interface ResolvedPermission {
+export interface ResolvedPermissionDetails {
   permission: PermissionType
-  target: EthereumAddress
   delay?: number
   description?: string
+  condition?: string
   via?: ResolvedPermissionPath[]
+}
+
+export type IssuedPermission = ResolvedPermissionDetails & {
+  to: EthereumAddress
+}
+export type ReceivedPermission = ResolvedPermissionDetails & {
+  from: EthereumAddress
 }
 
 export type ExternalReference = {
@@ -74,9 +83,9 @@ export type ExternalReference = {
 }
 
 export interface Meta {
-  issuedPermissions?: ResolvedPermission[]
-  receivedPermissions?: ResolvedPermission[]
-  directlyReceivedPermissions?: ResolvedPermission[]
+  issuedPermissions?: IssuedPermission[]
+  receivedPermissions?: ReceivedPermission[]
+  directlyReceivedPermissions?: ReceivedPermission[]
   categories?: StackCategory[]
   types?: ContractValueType[]
   description?: string

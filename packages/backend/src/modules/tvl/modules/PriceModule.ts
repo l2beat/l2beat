@@ -1,4 +1,4 @@
-import { createPriceId } from '@l2beat/config'
+import { createPriceId } from '@l2beat/backend-shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { TvlConfig } from '../../../config/Config'

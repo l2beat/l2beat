@@ -1,5 +1,4 @@
 import { uniq } from 'lodash'
-import { Checkbox } from '~/components/core/checkbox'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { TableFilter } from '~/components/table/filters/table-filter'
 import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
@@ -8,7 +7,6 @@ import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
   items: FilterableScalingEntry[]
-  showRollupsFilter?: boolean
   showHostChainFilter?: boolean
   showDALayerFilter?: boolean
   className?: string
@@ -16,7 +14,6 @@ interface Props {
 
 export function ScalingFilters({
   items,
-  showRollupsFilter,
   showHostChainFilter,
   showDALayerFilter,
   className,
@@ -25,8 +22,6 @@ export function ScalingFilters({
   const filterables = items
     .map((x) => x.filterable)
     .filter((f) => f !== undefined)
-
-  const isRollupInItems = filterables.some((f) => f.isRollup)
 
   const types = uniq(filterables.map((f) => f.type)).sort()
   const stacks = uniq(filterables.map((f) => f.stack)).sort(
@@ -48,16 +43,6 @@ export function ScalingFilters({
       className={cn('pr-4', className)}
     >
       <div className="flex flex-row space-x-1">
-        {showRollupsFilter && (
-          <Checkbox
-            onCheckedChange={(checked) =>
-              filter.set({ rollupsOnly: !!checked })
-            }
-            disabled={!isRollupInItems}
-          >
-            Rollups only
-          </Checkbox>
-        )}
         <TableFilter
           title="Type"
           options={types}

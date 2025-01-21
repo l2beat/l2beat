@@ -2,7 +2,7 @@ import {
   AGGLAYER_L2BRIDGE_ADDRESS,
   ConfigMapping,
   createAmountId,
-} from '@l2beat/config'
+} from '@l2beat/backend-shared'
 import {
   assert,
   AggLayerL2Token,

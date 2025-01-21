@@ -1,5 +1,5 @@
+import { createAmountId } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { createAmountId } from '@l2beat/config'
 import { AmountRecord, Database } from '@l2beat/database'
 import {
   CoingeckoId,

@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21628462,
-  "configHash": "0x053abff33590a72ba8325cd454e20b4de2c557bf4f2050207cc3c1934538c2e9",
+  "configHash": "0x492a276fe0e24cc14a7c4ac3b6e1d6d3427721121e25610066ea3c8bd8498ded",
   "contracts": [
     {
       "name": "Verifier",
@@ -25,13 +25,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-          "via": [
-            {
-              "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3",
-              "delay": 0
-            }
-          ]
+          "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+          "via": [{ "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3" }]
         }
       ],
       "sinceTimestamp": 1718797871,
@@ -75,7 +70,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"
+          "from": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"
         }
       ],
       "sinceTimestamp": 1718797859,
@@ -154,14 +149,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
+          "from": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
           "via": [{ "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xada59D145126A746976F0F56477aafFEB3acc8e3"
+          "from": "0xada59D145126A746976F0F56477aafFEB3acc8e3"
         }
       ]
     }
@@ -342,6 +337,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

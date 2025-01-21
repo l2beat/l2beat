@@ -1,8 +1,8 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 21652720,
-  "configHash": "0x7a789bc124be6456459090c6b58224c6681e9c3839189815b3039ea531d50615",
+  "blockNumber": 20876242,
+  "configHash": "0x2861e2302bf75f4253912622efc927cc5d9545c582c9dd54d5039423d5015b36",
   "contracts": [
     {
       "name": "CronosChainAdminMultisig",
@@ -588,7 +588,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "shared-zk-stack/Verifier": "0x210138ef9d88c0db040ebeca12b4211d42de8834cbc585be5eb18440d9b62403"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

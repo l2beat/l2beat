@@ -14,7 +14,6 @@ import {
 import { merge } from 'lodash'
 import {
   Bridge,
-  CommonProject,
   DaLayer,
   Layer2,
   Layer3,
@@ -24,6 +23,8 @@ import {
   layer2s,
   layer3s,
 } from '..'
+
+type CommonProject = Layer2 | Layer3 | Bridge
 
 type Params =
   | {

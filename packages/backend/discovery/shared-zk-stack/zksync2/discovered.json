@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 54112338,
-  "configHash": "0x9baff20c2a9805a0975725a69e2cf9bbf9471c54d13426a475ea0f3121eb0df2",
+  "blockNumber": 54131125,
+  "configHash": "0xca6cf546c630f648adbbf422e467f0beb24279f0df191259625f45da7d852f7b",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -42,7 +42,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737355689,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -222,7 +222,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737355689,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -277,13 +277,8 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
-          "via": [
-            {
-              "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-              "delay": 0
-            }
-          ]
+          "to": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+          "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
         }
       ],
       "ignoreInWatchMode": ["clock", "totalSupply"],
@@ -345,7 +340,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1737355689,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -396,7 +391,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737355689,
+        "clock": 1737375234,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -491,7 +486,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
         }
       ],
       "sinceTimestamp": 1716317321,
@@ -514,14 +509,14 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+          "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
         }
       ]
     },
@@ -957,9 +952,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "shared-zk-stack/TimelockController": "0x05f9e5428914411383f7290056d11a74a1fbfa040345c6fd068a85d07af766a2",
-    "shared-zk-stack/ZkGovernor": "0xb693401be61369eb92404836cce46b56604bcea2ca8d97b17014babce20077e2",
-    "shared-zk-stack/ZkToken": "0xb197c055fc8b3ada2ad6b16f0bd98e598aad2847ddcc43e0bf986f2c0b06bba2"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "shared-zk-stack/ZkGovernor": "0xd80c94c3d28dfdb1063efbe5f5da6328d5508522a0674abd94eb28f8008a654d"
   }
 }

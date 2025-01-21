@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared'
 import {
   AssetId,
+  ChainConverter,
   ChainId,
   CoingeckoId,
   EthereumAddress,
@@ -14,7 +15,7 @@ import {
 import { providers } from 'ethers'
 
 import { isEqual } from 'lodash'
-import { chainConverter, chains } from '../../src'
+import { chains } from '../../src'
 import { ChainConfig } from '../../src/common'
 import { GeneratedToken, Output, SourceEntry } from '../../src/tokens/types'
 import { ScriptLogger } from './utils/ScriptLogger'
@@ -40,6 +41,10 @@ async function main() {
   const sourceToken = readTokensFile(logger)
   const output = readGeneratedFile(logger)
   const result: GeneratedToken[] = output.tokens
+
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
 
   function saveToken(token: GeneratedToken) {
     const index = result.findIndex(

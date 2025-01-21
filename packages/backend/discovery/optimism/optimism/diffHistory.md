@@ -1,4 +1,442 @@
-Generated with discovered.json: 0x7be928a6d0d1902aa60c5057b4207d8c28b3bbdb
+Generated with discovered.json: 0x48eaf294815bc4ae94be0058959d22666717f635
+
+# Diff at Mon, 20 Jan 2025 16:53:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dcd1272b687a01381d2cbcd98213070f430a92aa block: 130664390
+- current block number: 130896600
+
+## Description
+
+discodrive!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 130664390 (main branch discovery), not current.
+
+```diff
+    contract MintManagerOwner (0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x5C4e7Ba1E219E47948e6e3F55019A647bA501005","description":"change the OP token owner to a different MintManager and therefore change the inflation policy."}]
+    }
+```
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+      description:
++        "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      description:
++        "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function."
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      description:
++        "Provides the current gas price for L2 transactions."
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      description:
++        "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token."
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      description:
++        "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1."
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      description:
++        "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens."
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      description:
++        "Simple contract that returns the latest L1 block number."
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      description:
++        "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token."
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      description:
++        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      description:
++        "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface."
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      description:
++        "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens."
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      description:
++        "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1."
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      description:
++        "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1."
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      description:
++        "Contracts to register schemas for the Ethereum Attestation Service (EAS)."
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      description:
++        "Contract containing the main logic for the Ethereum Attestation Service (EAS)."
+    }
+```
+
+```diff
+    contract OPToken (0x4200000000000000000000000000000000000042) {
+    +++ description: The OP token contract. The minting policy is controlled by the 0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.
+      description:
++        "The OP token contract. The minting policy is controlled by the 0x5C4e7Ba1E219E47948e6e3F55019A647bA501005."
+    }
+```
+
+```diff
+    contract MintManager (0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      description:
++        "Controls the OP inflation rate, which is currently hardcoded to 2% annually."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26","description":"change the OP token owner to a different MintManager and therefore change the inflation policy.","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xb64fb12ad7c0ba866205db300934491b303764ef
+
+# Diff at Mon, 20 Jan 2025 11:10:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 130664390
+- current block number: 130664390
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 130664390 (main branch discovery), not current.
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      directlyReceivedPermissions.15.target:
+-        "0x4200000000000000000000000000000000000021"
+      directlyReceivedPermissions.15.from:
++        "0x4200000000000000000000000000000000000021"
+      directlyReceivedPermissions.14.target:
+-        "0x4200000000000000000000000000000000000020"
+      directlyReceivedPermissions.14.from:
++        "0x4200000000000000000000000000000000000020"
+      directlyReceivedPermissions.13.target:
+-        "0x420000000000000000000000000000000000001A"
+      directlyReceivedPermissions.13.from:
++        "0x420000000000000000000000000000000000001A"
+      directlyReceivedPermissions.12.target:
+-        "0x4200000000000000000000000000000000000019"
+      directlyReceivedPermissions.12.from:
++        "0x4200000000000000000000000000000000000019"
+      directlyReceivedPermissions.11.target:
+-        "0x4200000000000000000000000000000000000018"
+      directlyReceivedPermissions.11.from:
++        "0x4200000000000000000000000000000000000018"
+      directlyReceivedPermissions.10.target:
+-        "0x4200000000000000000000000000000000000017"
+      directlyReceivedPermissions.10.from:
++        "0x4200000000000000000000000000000000000017"
+      directlyReceivedPermissions.9.target:
+-        "0x4200000000000000000000000000000000000016"
+      directlyReceivedPermissions.9.from:
++        "0x4200000000000000000000000000000000000016"
+      directlyReceivedPermissions.8.target:
+-        "0x4200000000000000000000000000000000000015"
+      directlyReceivedPermissions.8.from:
++        "0x4200000000000000000000000000000000000015"
+      directlyReceivedPermissions.7.target:
+-        "0x4200000000000000000000000000000000000014"
+      directlyReceivedPermissions.7.from:
++        "0x4200000000000000000000000000000000000014"
+      directlyReceivedPermissions.6.target:
+-        "0x4200000000000000000000000000000000000013"
+      directlyReceivedPermissions.6.from:
++        "0x4200000000000000000000000000000000000013"
+      directlyReceivedPermissions.5.target:
+-        "0x4200000000000000000000000000000000000012"
+      directlyReceivedPermissions.5.from:
++        "0x4200000000000000000000000000000000000012"
+      directlyReceivedPermissions.4.target:
+-        "0x4200000000000000000000000000000000000011"
+      directlyReceivedPermissions.4.from:
++        "0x4200000000000000000000000000000000000011"
+      directlyReceivedPermissions.3.target:
+-        "0x4200000000000000000000000000000000000010"
+      directlyReceivedPermissions.3.from:
++        "0x4200000000000000000000000000000000000010"
+      directlyReceivedPermissions.2.target:
+-        "0x420000000000000000000000000000000000000F"
+      directlyReceivedPermissions.2.from:
++        "0x420000000000000000000000000000000000000F"
+      directlyReceivedPermissions.1.target:
+-        "0x4200000000000000000000000000000000000007"
+      directlyReceivedPermissions.1.from:
++        "0x4200000000000000000000000000000000000007"
+      directlyReceivedPermissions.0.target:
+-        "0x4200000000000000000000000000000000000002"
+      directlyReceivedPermissions.0.from:
++        "0x4200000000000000000000000000000000000002"
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+Generated with discovered.json: 0x739f5bcf6fd7385b048391104c685042326f2e9c
 
 # Diff at Wed, 15 Jan 2025 07:52:54 GMT:
 

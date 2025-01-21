@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xca301c42828a7251027b17fbe9c43b1806c48eb8
+Generated with discovered.json: 0xb7361fabb5c4f220896fcdfd4c4e95882f669b47
+
+# Diff at Mon, 20 Jan 2025 11:09:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21543439
+- current block number: 21543439
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543439 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
+      receivedPermissions.0.from:
++        "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
+    }
+```
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
+      issuedPermissions.0.to:
++        "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
+    }
+```
+
+Generated with discovered.json: 0x77908f6e1a3a728a0bf3d25092ad5f91724d4096
 
 # Diff at Fri, 03 Jan 2025 10:46:02 GMT:
 

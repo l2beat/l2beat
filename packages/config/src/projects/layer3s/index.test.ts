@@ -4,7 +4,7 @@ import { assert, ChainId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
-import { tokenList } from '../../tokens'
+import { tokenList } from '../../tokens/tokens'
 import { layer2s } from '../layer2s'
 import { layer3s } from './index'
 

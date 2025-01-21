@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "base",
+  "name": "donatuz",
+  "initialAddresses": [
+    "0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B" // L1StandardBridge
+  ]
+}

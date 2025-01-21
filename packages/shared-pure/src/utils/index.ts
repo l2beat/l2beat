@@ -1,6 +1,5 @@
 export * from './asNumber'
 export * from './clampToDayRange'
-export * from './factorialize'
 export * from './formatAsAsciiTable'
 export * from './formatAsciiBorder'
 export * from './formatLargeNumber'

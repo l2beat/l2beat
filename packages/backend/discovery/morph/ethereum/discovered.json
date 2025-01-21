@@ -1,8 +1,8 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 21465401,
-  "configHash": "0x9355907acedd9efc4a17134af5695b92b757a29c780569e5fa2acd817c4f675a",
+  "blockNumber": 21667783,
+  "configHash": "0x4e5901f3c4e42d961a6c108c50668aaf79105c895fa259a271896324b00dda1c",
   "contracts": [
     {
       "name": "L1Staking",
@@ -16,48 +16,50 @@
       "issuedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+          "to": "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
+          "to": "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
+          "to": "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
+          "to": "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
+          "to": "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
+          "to": "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
+          "to": "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
+          "description": "Actors allowed to commit transaction batches and propose state roots",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "sinceTimestamp": 1729307471,
@@ -119,13 +121,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "sinceTimestamp": 1729307603,
@@ -162,35 +159,35 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7"
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7"
         },
         {
           "permission": "upgrade",
-          "target": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"
+          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"
         },
         {
           "permission": "upgrade",
-          "target": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF"
+          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF"
         },
         {
           "permission": "upgrade",
-          "target": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
+          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
         },
         {
           "permission": "upgrade",
-          "target": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
+          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
         },
         {
           "permission": "upgrade",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         },
         {
           "permission": "upgrade",
-          "target": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7"
+          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7"
         },
         {
           "permission": "upgrade",
-          "target": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304"
+          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304"
         }
       ],
       "sinceTimestamp": 1729306655,
@@ -205,27 +202,22 @@
       "address": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xe43c8aca9b520edaff0a7339959cee77a47b241a07c6d0dd9836e466caf35e72"
+        "0x1719cdcf5cd2921747ddc6f0dea1d383d56e48c613a99782597914a32d40e4cd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
       "sinceTimestamp": 1729307207,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "0x828F68e2E05a34fA836416F124350E25021876ac",
+        "$implementation": "0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA",
         "$pastUpgrades": [
           [
             "2024-10-19T03:06:47.000Z",
@@ -236,16 +228,21 @@
             "2024-10-19T09:39:59.000Z",
             "0xae27c6c83cea4ce8b8a923fddfb122f66e63139e514ba0624a5373b1a1f2829c",
             ["0x828F68e2E05a34fA836416F124350E25021876ac"]
+          ],
+          [
+            "2025-01-13T08:11:59.000Z",
+            "0x60cc38cb058516da361ecd5f548fc9216fbcda9eb08255b529ebbf78dac44f7b",
+            ["0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "ENFORCED_TX_GATEWAAY": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 4440,
+        "nextCrossDomainMessageIndex": 6060,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 4277,
+        "pendingQueueIndex": 6043,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -263,13 +260,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "sinceTimestamp": 1729307651,
@@ -325,13 +317,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "sinceTimestamp": 1729307555,
@@ -364,180 +351,176 @@
       "address": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x2b50f40d48451dfa5ae761371d1c0b18c8c827b34d17c401f629bc743888721e"
+        "0xdbd7245a43b9bfda69e999525405cc2d3a44e2a5d60c8fcbc75bb2d4987837be"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.",
       "issuedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x0092bC49078f130D27e70dBeee441E227280B97D",
+          "to": "0x0092bC49078f130D27e70dBeee441E227280B97D",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
+          "to": "0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
+          "to": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
+          "to": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x323a78C1c910b282dE98a557d735628A02E00983",
+          "to": "0x323a78C1c910b282dE98a557d735628A02E00983",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
+          "to": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
+          "to": "0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
+          "to": "0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
+          "to": "0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
+          "to": "0x71C10870dC38E54d987C22e96aB32b46cc08564F",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
+          "to": "0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
+          "to": "0x77B29534738E3F0F297d36635d7884965C7c8cE1",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
+          "to": "0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
+          "to": "0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
+          "to": "0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
+          "to": "0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
+          "to": "0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
+          "to": "0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
+          "to": "0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
+          "to": "0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xC412B4e6399F694CfF21D038d225373Fd6596811",
+          "to": "0xC412B4e6399F694CfF21D038d225373Fd6596811",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xC4db900F76293042349448D1Ba30F71518325Bb3",
+          "to": "0xC4db900F76293042349448D1Ba30F71518325Bb3",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
+          "to": "0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
+          "to": "0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
+          "to": "0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
+          "to": "0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
+          "to": "0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xF2FF0509520fAf35B511074466A509e00d73C307",
+          "to": "0xF2FF0509520fAf35B511074466A509e00d73C307",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
+          "to": "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
           "via": []
         },
         {
           "permission": "challenge",
-          "target": "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
+          "to": "0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -549,7 +532,7 @@
       "values": {
         "__maxNumTxInChunk": 0,
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A",
+        "$implementation": "0x43190DfD1F572Cb56B1942B44482d1774151D77A",
         "$pastUpgrades": [
           [
             "2024-10-19T03:11:47.000Z",
@@ -570,9 +553,14 @@
             "2024-11-28T03:51:59.000Z",
             "0xa452e20183f6860f105cb398bccc9d75dd3758444b956061b3031d1f0a33c424",
             ["0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A"]
+          ],
+          [
+            "2025-01-13T07:31:59.000Z",
+            "0x809b1d9bba9fd8f61c038603ddf7a6f0a079db83a4a6d341cf23d2af5764a9be",
+            ["0x43190DfD1F572Cb56B1942B44482d1774151D77A"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "batchChallenged": 45,
         "challengers": [
           "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -610,8 +598,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 4769,
-        "lastFinalizedBatchIndex": 4590,
+        "lastCommittedBatchIndex": 8523,
+        "lastFinalizedBatchIndex": 8309,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -659,63 +647,63 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         },
         {
           "permission": "configure",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
         },
         {
           "permission": "configure",
-          "target": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "description": "can pause and unpause"
         },
         {
           "permission": "upgrade",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
+          "from": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -738,7 +726,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 23,
+        "nonce": 28,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -755,18 +743,14 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "description": "can pause and unpause",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "sinceTimestamp": 1729308143,
@@ -808,27 +792,22 @@
       "address": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1a0a7d2a0ed1f83c7043abd7a9f1f24c979e7e86e258c7968ed007894fbf2a4a"
+        "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-          "via": [
-            {
-              "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-              "delay": 0
-            }
-          ]
+          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1729307111,
       "values": {
         "$admin": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-        "$implementation": "0xB8F0871bc0832cb756f07fFC4bDdC8b6bf8577b5",
+        "$implementation": "0x0cC37d5239F9027A1269f53D83c73084D538f3a9",
         "$pastUpgrades": [
           [
             "2024-10-19T03:05:11.000Z",
@@ -839,13 +818,18 @@
             "2024-10-19T09:38:35.000Z",
             "0x63ce107f943635805762c4ccd98b13cf1977f8ed1e13bd98821ebb545b9ed38e",
             ["0xB8F0871bc0832cb756f07fFC4bDdC8b6bf8577b5"]
+          ],
+          [
+            "2025-01-13T08:10:23.000Z",
+            "0x908d9fce8cd9a787900543daabf45936a8873b543f593030f3edceeca35543f8",
+            ["0x0cC37d5239F9027A1269f53D83c73084D538f3a9"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 4440,
+        "messageNonce": 6060,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -877,7 +861,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -886,7 +870,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -897,7 +881,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -907,7 +891,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -916,7 +900,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -925,7 +909,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
@@ -936,7 +920,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -952,7 +936,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -961,7 +945,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -970,7 +954,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
@@ -980,7 +964,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
@@ -990,7 +974,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -999,7 +983,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1008,7 +992,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1017,7 +1001,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1026,7 +1010,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1035,7 +1019,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1044,7 +1028,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1053,7 +1037,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1062,7 +1046,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1071,7 +1055,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
@@ -1083,7 +1067,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1092,7 +1076,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
@@ -1102,7 +1086,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
@@ -1112,7 +1096,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1121,7 +1105,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1130,7 +1114,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1139,7 +1123,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1148,7 +1132,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1157,7 +1141,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1167,7 +1151,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1176,7 +1160,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1185,7 +1169,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1194,7 +1178,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1203,7 +1187,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1212,7 +1196,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         }
       ]
     },
@@ -1221,13 +1205,54 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots"
         }
       ]
     }
   ],
   "abis": {
+    "0x0cC37d5239F9027A1269f53D83c73084D538f3a9": [
+      "constructor()",
+      "error ErrZeroAddress()",
+      "event FailedRelayedMessage(bytes32 indexed messageHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RelayedMessage(bytes32 indexed messageHash)",
+      "event ReplayMessage(uint256 indexed oldNonce, address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
+      "event SentMessage(address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
+      "event Unpaused(address account)",
+      "event UpdateFeeVault(address indexed _oldFeeVault, address indexed _newFeeVault)",
+      "event UpdateMaxReplayTimes(uint256 oldMaxReplayTimes, uint256 newMaxReplayTimes)",
+      "event UpdateRollup(address oldRollup, address newRollup)",
+      "function __isL1MessageDropped(bytes32) view returns (bool)",
+      "function counterpart() view returns (address)",
+      "function feeVault() view returns (address)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function initialize(address _feeVault, address _rollup, address _messageQueue)",
+      "function maxReplayTimes() view returns (uint256)",
+      "function messageNonce() view returns (uint256)",
+      "function messageQueue() view returns (address)",
+      "function messageSendTimestamp(bytes32) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function prevReplayIndex(uint256) view returns (uint256)",
+      "function proveAndRelayMessage(address _from, address _to, uint256 _value, uint256 _nonce, bytes _message, bytes32[32] _withdrawalProof, bytes32 _withdrawalRoot)",
+      "function renounceOwnership()",
+      "function replayMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message, uint32 _newGasLimit, address _refundAddress) payable",
+      "function replayStates(bytes32) view returns (uint128 times, uint128 lastIndex)",
+      "function rollup() view returns (address)",
+      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit, address _refundAddress) payable",
+      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit) payable",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFeeVault(address _newFeeVault)",
+      "function updateMaxReplayTimes(uint256 _newMaxReplayTimes)",
+      "function updateRollup(address _newRollup)",
+      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint256 index, bytes32 root) pure returns (bool)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
     "0x0Dc417F8AF88388737c5053FF73f345f080543F7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1304,6 +1329,76 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x43190DfD1F572Cb56B1942B44482d1774151D77A": [
+      "constructor(uint64 _chainID)",
+      "error ErrZeroAddress()",
+      "error ErrorIncorrectBatchLength()",
+      "error ErrorNoBlockInBatch()",
+      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
+      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
+      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
+      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProveRemainingClaimed(address receiver, uint256 amount)",
+      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
+      "event Unpaused(address account)",
+      "event UpdateChallenger(address indexed account, bool status)",
+      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
+      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
+      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
+      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
+      "function LAYER_2_CHAIN_ID() view returns (uint64)",
+      "function __maxNumTxInChunk() view returns (uint256)",
+      "function addChallenger(address _account)",
+      "function batchChallengeReward(address owner) view returns (uint256 amount)",
+      "function batchChallenged() view returns (uint256)",
+      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
+      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
+      "function batchExist(uint256 batchIndex) view returns (bool)",
+      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
+      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
+      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
+      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
+      "function claimProveRemaining(address receiver)",
+      "function claimReward(address receiver)",
+      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, bytes blockContexts, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
+      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
+      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function finalizationPeriodSeconds() view returns (uint256)",
+      "function finalizeBatch(bytes _batchHeader)",
+      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
+      "function importGenesisBatch(bytes _batchHeader)",
+      "function inChallenge() view returns (bool)",
+      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
+      "function initialize2(bytes32 _prevStateRoot)",
+      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
+      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
+      "function l1StakingContract() view returns (address)",
+      "function lastCommittedBatchIndex() view returns (uint256)",
+      "function lastFinalizedBatchIndex() view returns (uint256)",
+      "function messageQueue() view returns (address)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function proofRewardPercent() view returns (uint256)",
+      "function proofWindow() view returns (uint256)",
+      "function proveRemaining() view returns (uint256)",
+      "function proveState(bytes _batchHeader, bytes _batchProof)",
+      "function removeChallenger(address _account)",
+      "function renounceOwnership()",
+      "function revertBatch(bytes _batchHeader, uint256 _count)",
+      "function revertReqIndex() view returns (uint256)",
+      "function setPause(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
+      "function updateProofWindow(uint256 _newWindow)",
+      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
+      "function updateVerifier(address _newVerifier)",
+      "function verifier() view returns (address)",
+      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
     ],
     "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1414,46 +1509,6 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x828F68e2E05a34fA836416F124350E25021876ac": [
-      "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
-      "error ErrZeroAddress()",
-      "event DequeueTransaction(uint256 startIndex, uint256 count, uint256 skippedBitmap)",
-      "event DropTransaction(uint256 index)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
-      "event UpdateEnforcedTxGateway(address indexed _oldGateway, address indexed _newGateway)",
-      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
-      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
-      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
-      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
-      "function ENFORCED_TX_GATEWAAY() view returns (address)",
-      "function MESSENGER() view returns (address)",
-      "function ROLLUP_CONTRACT() view returns (address)",
-      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
-      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
-      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
-      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
-      "function dropCrossDomainMessage(uint256 _index)",
-      "function estimateCrossDomainMessageFee(address _sender, uint256 _gasLimit) view returns (uint256)",
-      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
-      "function initialize(uint256 _maxGasLimit, address _whitelistChecker)",
-      "function isMessageDropped(uint256 _queueIndex) view returns (bool)",
-      "function isMessageSkipped(uint256 _queueIndex) view returns (bool)",
-      "function l2BaseFee() view returns (uint256)",
-      "function maxGasLimit() view returns (uint256)",
-      "function messageQueue(uint256) view returns (bytes32)",
-      "function nextCrossDomainMessageIndex() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingQueueIndex() view returns (uint256)",
-      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count, uint256 _skippedBitmap)",
-      "function renounceOwnership()",
-      "function setL2BaseFee(uint256 _newL2BaseFee)",
-      "function transferOwnership(address newOwner)",
-      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
-      "function updateWhitelistChecker(address _newWhitelistChecker)",
-      "function whitelistChecker() view returns (address)"
-    ],
     "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6": [
       "constructor(uint256[] _versions, address[] _verifiers)",
       "error ErrorStartBatchIndexFinalized()",
@@ -1473,121 +1528,44 @@
       "function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier)",
       "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view"
     ],
-    "0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A": [
-      "constructor(uint64 _chainID)",
+    "0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": [
+      "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
       "error ErrZeroAddress()",
-      "error ErrorIncorrectBatchLength()",
-      "error ErrorNoBlockInBatch()",
-      "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
-      "event ChallengeRewardClaim(address indexed receiver, uint256 amount)",
-      "event ChallengeState(uint64 indexed batchIndex, address indexed challenger, uint256 challengeDeposit)",
-      "event CommitBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event FinalizeBatch(uint256 indexed batchIndex, bytes32 indexed batchHash, bytes32 stateRoot, bytes32 withdrawRoot)",
+      "event DequeueTransaction(uint256 startIndex, uint256 count)",
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event ProveRemainingClaimed(address receiver, uint256 amount)",
-      "event RevertBatch(uint256 indexed batchIndex, bytes32 indexed batchHash)",
-      "event Unpaused(address account)",
-      "event UpdateChallenger(address indexed account, bool status)",
-      "event UpdateFinalizationPeriodSeconds(uint256 oldPeriod, uint256 newPeriod)",
-      "event UpdateProofRewardPercent(uint256 oldPercent, uint256 newPercent)",
-      "event UpdateProofWindow(uint256 oldWindow, uint256 newWindow)",
-      "event UpdateVerifier(address indexed oldVerifier, address indexed newVerifier)",
-      "function LAYER_2_CHAIN_ID() view returns (uint64)",
-      "function __maxNumTxInChunk() view returns (uint256)",
-      "function addChallenger(address _account)",
-      "function batchChallengeReward(address owner) view returns (uint256 amount)",
-      "function batchChallenged() view returns (uint256)",
-      "function batchChallengedSuccess(uint256 batchIndex) view returns (bool)",
-      "function batchDataStore(uint256 batchIndex) view returns (uint256 originTimestamp, uint256 finalizeTimestamp, uint256 blockNumber, uint256 signedSequencersBitmap)",
-      "function batchExist(uint256 batchIndex) view returns (bool)",
-      "function batchInChallenge(uint256 batchIndex) view returns (bool)",
-      "function batchInsideChallengeWindow(uint256 batchIndex) view returns (bool)",
-      "function challengeState(uint64 batchIndex, bytes32 _batchHash) payable",
-      "function challenges(uint256 batchIndex) view returns (uint64 batchIndex, address challenger, uint256 challengeDeposit, uint256 startTime, bool challengeSuccess, bool finished)",
-      "function claimProveRemaining(address receiver)",
-      "function claimReward(address receiver)",
-      "function commitBatch(tuple(uint8 version, bytes parentBatchHeader, bytes blockContexts, bytes skippedL1MessageBitmap, bytes32 prevStateRoot, bytes32 postStateRoot, bytes32 withdrawalRoot) batchDataInput, tuple(uint256 signedSequencersBitmap, bytes sequencerSets, bytes signature) batchSignatureInput) payable",
-      "function committedBatches(uint256 batchIndex) view returns (bytes32 batchHash)",
-      "function committedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function finalizationPeriodSeconds() view returns (uint256)",
-      "function finalizeBatch(bytes _batchHeader)",
-      "function finalizedStateRoots(uint256 batchIndex) view returns (bytes32 stateRoot)",
-      "function importGenesisBatch(bytes _batchHeader)",
-      "function inChallenge() view returns (bool)",
-      "function initialize(address _l1StakingContract, address _messageQueue, address _verifier, uint256 _finalizationPeriodSeconds, uint256 _proofWindow, uint256 _proofRewardPercent)",
-      "function initialize2(bytes32 _prevStateRoot)",
-      "function isBatchFinalized(uint256 _batchIndex) view returns (bool)",
-      "function isChallenger(address challengerAddress) view returns (bool isChallenger)",
-      "function l1StakingContract() view returns (address)",
-      "function lastCommittedBatchIndex() view returns (uint256)",
-      "function lastFinalizedBatchIndex() view returns (uint256)",
-      "function messageQueue() view returns (address)",
+      "event QueueTransaction(address indexed sender, address indexed target, uint256 value, uint64 queueIndex, uint256 gasLimit, bytes data)",
+      "event UpdateEnforcedTxGateway(address indexed _oldGateway, address indexed _newGateway)",
+      "event UpdateGasOracle(address indexed _oldGasOracle, address indexed _newGasOracle)",
+      "event UpdateL2BaseFee(uint256 oldL2BaseFee, uint256 newL2BaseFee)",
+      "event UpdateMaxGasLimit(uint256 _oldMaxGasLimit, uint256 _newMaxGasLimit)",
+      "event UpdateWhitelistChecker(address indexed _oldWhitelistChecker, address indexed _newWhitelistChecker)",
+      "function ENFORCED_TX_GATEWAAY() view returns (address)",
+      "function MESSENGER() view returns (address)",
+      "function ROLLUP_CONTRACT() view returns (address)",
+      "function appendCrossDomainMessage(address _target, uint256 _gasLimit, bytes _data)",
+      "function appendEnforcedTransaction(address _sender, address _target, uint256 _value, uint256 _gasLimit, bytes _data)",
+      "function calculateIntrinsicGasFee(bytes _calldata) pure returns (uint256)",
+      "function computeTransactionHash(address _sender, uint256 _queueIndex, uint256 _value, address _target, uint256 _gasLimit, bytes _data) pure returns (bytes32)",
+      "function estimateCrossDomainMessageFee(address _sender, uint256 _gasLimit) view returns (uint256)",
+      "function getCrossDomainMessage(uint256 _queueIndex) view returns (bytes32)",
+      "function initialize(uint256 _maxGasLimit, address _whitelistChecker)",
+      "function l2BaseFee() view returns (uint256)",
+      "function maxGasLimit() view returns (uint256)",
+      "function messageQueue(uint256) view returns (bytes32)",
+      "function nextCrossDomainMessageIndex() view returns (uint256)",
       "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function proofRewardPercent() view returns (uint256)",
-      "function proofWindow() view returns (uint256)",
-      "function proveRemaining() view returns (uint256)",
-      "function proveState(bytes _batchHeader, bytes _batchProof)",
-      "function removeChallenger(address _account)",
+      "function pendingQueueIndex() view returns (uint256)",
+      "function popCrossDomainMessage(uint256 _startIndex, uint256 _count)",
       "function renounceOwnership()",
-      "function revertBatch(bytes _batchHeader, uint256 _count)",
-      "function revertReqIndex() view returns (uint256)",
-      "function setPause(bool _status)",
+      "function setL2BaseFee(uint256 _newL2BaseFee)",
       "function transferOwnership(address newOwner)",
-      "function updateFinalizePeriodSeconds(uint256 _newPeriod)",
-      "function updateProofWindow(uint256 _newWindow)",
-      "function updateRewardPercentage(uint256 _newProofRewardPercent)",
-      "function updateVerifier(address _newVerifier)",
-      "function verifier() view returns (address)",
-      "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
+      "function updateMaxGasLimit(uint256 _newMaxGasLimit)",
+      "function updateWhitelistChecker(address _newWhitelistChecker)",
+      "function whitelistChecker() view returns (address)"
     ],
     "0xB822319ab7848b7cC4537c8409e50f85BFb04377": [
       "constructor(address _singleton)"
-    ],
-    "0xB8F0871bc0832cb756f07fFC4bDdC8b6bf8577b5": [
-      "constructor()",
-      "error ErrZeroAddress()",
-      "event DropMessage(uint256 indexed nonce)",
-      "event FailedRelayedMessage(bytes32 indexed messageHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RelayedMessage(bytes32 indexed messageHash)",
-      "event ReplayMessage(uint256 indexed oldNonce, address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
-      "event SentMessage(address indexed sender, address indexed target, uint256 value, uint256 messageNonce, uint256 gasLimit, bytes message)",
-      "event Unpaused(address account)",
-      "event UpdateFeeVault(address indexed _oldFeeVault, address indexed _newFeeVault)",
-      "event UpdateMaxReplayTimes(uint256 oldMaxReplayTimes, uint256 newMaxReplayTimes)",
-      "event UpdateRollup(address oldRollup, address newRollup)",
-      "function counterpart() view returns (address)",
-      "function dropMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message)",
-      "function feeVault() view returns (address)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function initialize(address _feeVault, address _rollup, address _messageQueue)",
-      "function isL1MessageDropped(bytes32) view returns (bool)",
-      "function maxReplayTimes() view returns (uint256)",
-      "function messageNonce() view returns (uint256)",
-      "function messageQueue() view returns (address)",
-      "function messageSendTimestamp(bytes32) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function prevReplayIndex(uint256) view returns (uint256)",
-      "function proveAndRelayMessage(address _from, address _to, uint256 _value, uint256 _nonce, bytes _message, bytes32[32] _withdrawalProof, bytes32 _withdrawalRoot)",
-      "function renounceOwnership()",
-      "function replayMessage(address _from, address _to, uint256 _value, uint256 _messageNonce, bytes _message, uint32 _newGasLimit, address _refundAddress) payable",
-      "function replayStates(bytes32) view returns (uint128 times, uint128 lastIndex)",
-      "function rollup() view returns (address)",
-      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit, address _refundAddress) payable",
-      "function sendMessage(address _to, uint256 _value, bytes _message, uint256 _gasLimit) payable",
-      "function setPause(bool _status)",
-      "function transferOwnership(address newOwner)",
-      "function updateFeeVault(address _newFeeVault)",
-      "function updateMaxReplayTimes(uint256 _newMaxReplayTimes)",
-      "function updateRollup(address _newRollup)",
-      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint256 index, bytes32 root) pure returns (bool)",
-      "function xDomainMessageSender() view returns (address)"
     ],
     "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1700,7 +1678,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }
