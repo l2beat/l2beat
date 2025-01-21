@@ -31,6 +31,7 @@ export default async function Page() {
     api.activity.recategorizedChart.prefetch({
       range: TIME_RANGE,
       filter: { type: 'all' },
+      previewRecategorisation: false,
     }),
     api.activity.chartStats.prefetch({
       filter: { type: 'all' },

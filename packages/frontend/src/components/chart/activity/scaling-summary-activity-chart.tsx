@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
+import { useRecategorisationPreviewContext } from '~/providers/recategorisation-preview-provider'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
@@ -20,12 +21,14 @@ interface Props {
 }
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
+  const { checked } = useRecategorisationPreviewContext()
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'all' },
   })
   const { data, isLoading } = api.activity.recategorizedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
+    previewRecategorisation: checked,
   })
 
   const { columns, valuesStyle, formatYAxisLabel } =

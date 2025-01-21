@@ -1,4 +1,6 @@
+import { type Layer2, type Layer3 } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { partition } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
@@ -33,27 +35,23 @@ export type RecategorizedActivityChartData = Awaited<
 >
 
 export const getCachedRecategorizedActivityChartData = cache(
-  async (filter: ActivityProjectFilter, range: ActivityTimeRange) => {
+  async (
+    filter: ActivityProjectFilter,
+    range: ActivityTimeRange,
+    previewRecategorisation: boolean,
+  ) => {
     const db = getDb()
     const projects = getActivityProjects().filter(
       createActivityProjectsFilter(filter),
     )
 
-    const rollups = projects
-      .filter(
-        ({ display: { category } }) =>
-          category === 'ZK Rollup' || category === 'Optimistic Rollup',
-      )
-      .map((p) => p.id)
-    const validiumsAndOptimiums = projects
-      .filter(
-        ({ display: { category } }) =>
-          category === 'Validium' || category === 'Optimium',
-      )
-      .map((p) => p.id)
-    const others = projects
-      .filter(({ display: { category } }) => category === 'Other')
-      .map((p) => p.id)
+    const { rollups, validiumsAndOptimiums, others } = getRecategorizedProjects(
+      projects,
+      previewRecategorisation,
+    )
+    const rollupsIds = rollups.map((r) => r.id)
+    const validiumsAndOptimiumsIds = validiumsAndOptimiums.map((r) => r.id)
+    const othersIds = others.map((r) => r.id)
 
     const adjustedRange = getFullySyncedActivityRange(range)
     const [
@@ -62,12 +60,12 @@ export const getCachedRecategorizedActivityChartData = cache(
       othersEntires,
       ethereumEntries,
     ] = await Promise.all([
-      await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
+      await db.activity.getByProjectsAndTimeRange(rollupsIds, adjustedRange),
       await db.activity.getByProjectsAndTimeRange(
-        validiumsAndOptimiums,
+        validiumsAndOptimiumsIds,
         adjustedRange,
       ),
-      await db.activity.getByProjectsAndTimeRange(others, adjustedRange),
+      await db.activity.getByProjectsAndTimeRange(othersIds, adjustedRange),
       await db.activity.getByProjectsAndTimeRange(
         [ProjectId.ETHEREUM],
         adjustedRange,
@@ -141,9 +139,49 @@ export const getCachedRecategorizedActivityChartData = cache(
   },
 )
 
+function getRecategorizedProjects(
+  projects: (Layer2 | Layer3)[],
+  previewRecategorisation: boolean,
+) {
+  const rollups = projects.filter(
+    ({ display: { category } }) =>
+      category === 'ZK Rollup' || category === 'Optimistic Rollup',
+  )
+  const validiumsAndOptimiums = projects.filter(
+    ({ display: { category } }) =>
+      category === 'Validium' || category === 'Optimium',
+  )
+  const others = projects.filter(
+    ({ display: { category } }) => category === 'Other',
+  )
+  if (previewRecategorisation) {
+    const [migratedRollups, nonMigratedRollups] = partition(
+      rollups,
+      (rollup) => !!rollup.display.reasonsForBeingOther,
+    )
+    const [migratedValidiumsAndOptimiums, nonMigratedValidiumsAndOptimiums] =
+      partition(
+        validiumsAndOptimiums,
+        (rollup) => !!rollup.display.reasonsForBeingOther,
+      )
+    return {
+      rollups: nonMigratedRollups,
+      validiumsAndOptimiums: nonMigratedValidiumsAndOptimiums,
+      others: [...others, ...migratedRollups, ...migratedValidiumsAndOptimiums],
+    }
+  }
+
+  return {
+    rollups,
+    validiumsAndOptimiums,
+    others,
+  }
+}
+
 function getMockRecategorizedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
+  __: boolean,
 ): RecategorizedActivityChartData {
   const [from, to] = getRangeWithMax(timeRange, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
