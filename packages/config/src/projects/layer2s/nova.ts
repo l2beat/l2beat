@@ -196,6 +196,10 @@ export const nova: Layer2 = orbitStackL2({
       'BatchPosterManagerMultisig',
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
     ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('UpgradeExecutor'),
+      'The UpgradeExecutor can change the Committee members by updating the valid keyset.',
+    ),
   ],
   nativePermissions: {
     nova: [
