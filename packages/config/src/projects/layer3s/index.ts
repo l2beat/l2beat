@@ -16,6 +16,7 @@ import { educhain } from './educhain'
 import { fiefdom } from './fiefdom'
 import { geist } from './geist'
 import { ham } from './ham'
+import { henez } from './henez'
 import { hook } from './hook'
 import { huddle01 } from './huddle01'
 import { hyperliquid } from './hyperliquid'
@@ -69,6 +70,7 @@ export const layer3s: Layer3[] = [
   geist,
   inevm,
   ham,
+  henez,
   huddle01,
   hyperliquid,
   hook,
