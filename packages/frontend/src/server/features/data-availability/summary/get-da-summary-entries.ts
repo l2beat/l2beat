@@ -157,7 +157,9 @@ function getEthereumEntry(
     nameSecondLine: kindToType(ethereumDaLayer.kind),
     href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
-    usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
+    usedIn: ethereumDaLayer.bridges
+      .flatMap((bridge) => bridge.usedIn)
+      .sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
     economicSecurity: economicSecurity[ethereumDaLayer.id],
     bridge: ethereumDaLayer.bridges[0].display.name,
     tvs: getTvs(
