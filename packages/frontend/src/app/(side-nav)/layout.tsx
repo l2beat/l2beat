@@ -1,7 +1,6 @@
 import { Banner } from '~/components/banner'
 import { Footer } from '~/components/footer'
 import { NavLayout } from '~/components/nav/nav-layout'
-import { RecategorisationPreviewContextProvider } from '~/providers/recategorisation-preview-provider'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,9 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       topChildren={<Banner className="lg:rounded-b-xl xl:rounded-br-none" />}
     >
       <div className="mx-auto min-h-screen max-w-screen-lg md:px-6 lg:pl-0 lg:pr-3">
-        <RecategorisationPreviewContextProvider>
-          {children}
-        </RecategorisationPreviewContextProvider>
+        {children}
       </div>
       <Footer
         className="md:px-12 md:pt-8 lg:pl-6 lg:pr-9"

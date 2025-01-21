@@ -1,5 +1,6 @@
 import compact from 'lodash/compact'
 import { type ReactNode } from 'react'
+import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
@@ -139,39 +140,43 @@ export async function NavLayout({
 
   return (
     <MobileNavProvider>
-      <div
-        className={cn(
-          'relative flex flex-col overflow-x-clip lg:flex-row',
-          topNavbar && 'lg:flex-col',
-          className,
-        )}
-      >
-        {!!topNavbar && (
-          <>
-            {topChildren}
-            <TopNavbar logoLink={logoLink} groups={groups} />
-          </>
-        )}
-        {!topNavbar && topChildren && (
-          <div className="block lg:hidden">{topChildren}</div>
-        )}
-        <MobileNavbar
-          groups={groups}
-          logoLink={logoLink}
-          className={cn(!topNavbar && 'md:mb-5')}
-        />
-        <NavSidebar
-          logoLink={logoLink}
-          groups={groups}
-          topNavbar={!!topNavbar}
-        />
-        <div className="min-w-0 flex-1">
-          {!topNavbar && topChildren && (
-            <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
+      <RecategorisationPreviewContextProvider>
+        <div
+          className={cn(
+            'relative flex flex-col overflow-x-clip lg:flex-row',
+            topNavbar && 'lg:flex-col',
+            className,
           )}
-          {children}
+        >
+          {!!topNavbar && (
+            <>
+              {topChildren}
+              <TopNavbar logoLink={logoLink} groups={groups} />
+            </>
+          )}
+          {!topNavbar && topChildren && (
+            <div className="block lg:hidden">{topChildren}</div>
+          )}
+          <MobileNavbar
+            groups={groups}
+            logoLink={logoLink}
+            className={cn(!topNavbar && 'md:mb-5')}
+          />
+          <NavSidebar
+            logoLink={logoLink}
+            groups={groups}
+            topNavbar={!!topNavbar}
+          />
+          <div className="min-w-0 flex-1">
+            {!topNavbar && topChildren && (
+              <div className="hidden lg:mr-3 lg:block xl:mr-0">
+                {topChildren}
+              </div>
+            )}
+            {children}
+          </div>
         </div>
-      </div>
+      </RecategorisationPreviewContextProvider>
     </MobileNavProvider>
   )
 }

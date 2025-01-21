@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { cn } from '~/utils/cn'
 import { Logo } from '../logo'
+import { RecategorisationPreviewSwitch } from '../recategorisation-preview/recategorisation-preview-switch'
 import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
@@ -29,6 +30,7 @@ export function MobileNavbar({
         </div>
         {/* Right side */}
         <div className="flex flex-row items-center gap-4">
+          <RecategorisationPreviewSwitch className="max-md:hidden lg:hidden" />
           <SmallSearchBarButton />
           <MobileNavTriggerOpen />
         </div>

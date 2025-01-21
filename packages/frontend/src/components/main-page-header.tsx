@@ -1,7 +1,7 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import { useRecategorisationPreviewContext } from '~/providers/recategorisation-preview-provider'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { cn } from '~/utils/cn'
 import { Switch } from './core/switch'
 import { SearchBarButton } from './search-bar/search-bar-button'
