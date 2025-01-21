@@ -10,7 +10,7 @@ import {
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaUpgradeabilityRisk,
-  DacDaLayer,
+  type DacDaLayer,
 } from '../da-beat/types'
 import { DaRelayerFailureRisk } from '../da-beat/types/DaRelayerFailureRisk'
 import { DacTransactionDataType } from '../da-beat/types/DacTransactionDataType'
