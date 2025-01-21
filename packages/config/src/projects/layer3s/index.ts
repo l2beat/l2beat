@@ -100,5 +100,5 @@ export const layer3s: Layer3[] = [
   superposition,
   syndr,
   winr,
-  xrone
+  xrone,
 ]
