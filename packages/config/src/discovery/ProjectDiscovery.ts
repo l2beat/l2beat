@@ -787,13 +787,25 @@ export class ProjectDiscovery {
       for (const c of matching) {
         const initialConditions = (c.receivedPermissions ?? [])
           .filter((p) => p.permission === role)
-          .map((v) => v.condition)
-          .filter(notUndefined)
+          .map((p) =>
+            this.formatViaPath(
+              {
+                address: c.address,
+                condition: p.condition,
+                delay: p.delay,
+              },
+              true,
+            ),
+          )
+          .filter((p) => p !== '')
         const pathConditions = (c.receivedPermissions ?? [])
           .filter((p) => p.permission === role)
           .flatMap((p) => p.via?.map((v) => this.formatViaPath(v, true)))
-          .filter((v) => v !== '')
-        const conditions = uniq([...initialConditions, ...pathConditions]).filter(notUndefined)
+          .filter((p) => p !== '')
+        const conditions = uniq([
+          ...initialConditions,
+          ...pathConditions,
+        ]).filter(notUndefined)
 
         if (conditions.length > 0) {
           finalDescription.push(
