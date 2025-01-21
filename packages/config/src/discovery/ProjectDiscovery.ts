@@ -809,7 +809,7 @@ export class ProjectDiscovery {
 
         if (conditions.length > 0) {
           finalDescription.push(
-            `* ${c.name} receives the role only ${conditions.join(', ')}`,
+            `* ${c.name} has the role ${conditions.join(', ')}`,
           )
         }
       }
@@ -873,6 +873,7 @@ export class ProjectDiscovery {
             value.via !== undefined ? formatVia(value.via) : '',
             value.description ?? '',
             value.condition ?? '',
+            value.delay?.toString() ?? '',
           ].join('►')
         },
       ),
@@ -881,6 +882,7 @@ export class ProjectDiscovery {
       const via = key.split('►')[1] ?? ''
       const description = key.split('►')[2] ?? ''
       const condition = key.split('►')[3] ?? ''
+      const delay = key.split('►')[4] ?? ''
       const prefix = ultimatePermissionToPrefix[permission]
       if (prefix === undefined) {
         return ''
@@ -897,7 +899,8 @@ export class ProjectDiscovery {
         ultimatePermissionToPrefix[permission as PermissionType],
         addressesString,
         formatPermissionDescription(description),
-        formatPermissionDescription(condition),
+        formatPermissionCondition(condition),
+        delay === '' ? '' : formatPermissionDelay(Number(delay)),
         via,
       ]
         .join(' ')
@@ -937,6 +940,7 @@ export class ProjectDiscovery {
       const permission = key.split('►')[0] as PermissionType
       const description = key.split('►')[1] ?? ''
       const condition = key.split('►')[2] ?? ''
+      const delay = key.split('►')[3] ?? ''
       const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
       const addressesString = showTargets
         ? entries
@@ -949,6 +953,7 @@ export class ProjectDiscovery {
         addressesString,
         formatPermissionDescription(description),
         formatPermissionCondition(condition),
+        delay === '' ? '' : formatPermissionDelay(Number(delay)),
       ]
         .join(' ')
         .trim()}.`
