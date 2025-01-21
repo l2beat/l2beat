@@ -21,19 +21,19 @@ import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upc
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
 
-export function ScalingUpcomingTables({
-  entries,
-}: { entries: TabbedScalingEntries<ScalingUpcomingEntry> }) {
+export function ScalingUpcomingTables(
+  props: TabbedScalingEntries<ScalingUpcomingEntry>,
+) {
   const includeFilters = useScalingFilter()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: entries.rollups.filter(includeFilters),
-    validiumsAndOptimiums: entries.validiumsAndOptimiums.filter(includeFilters),
-    others: entries.others.filter(includeFilters),
+    rollups: props.rollups.filter(includeFilters),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
+    others: props.others.filter(includeFilters),
   }
 
-  const recategorisedEntries = checked
+  const entries = checked
     ? getRecategorisedEntries(
         filteredEntries,
         (a, b) => b.initialOrder - a.initialOrder,
@@ -49,50 +49,44 @@ export function ScalingUpcomingTables({
     <>
       <ScalingUpcomingAndArchivedFilters
         items={[
-          ...recategorisedEntries.rollups,
-          ...recategorisedEntries.validiumsAndOptimiums,
-          ...recategorisedEntries.others,
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
         ]}
         className="max-md:ml-4 max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
-            Rollups{' '}
-            <CountBadge>{recategorisedEntries.rollups.length}</CountBadge>
+            Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
-            <CountBadge>
-              {recategorisedEntries.validiumsAndOptimiums.length}
-            </CountBadge>
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {recategorisedEntries.others.length > 0 && (
+          {entries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
-              Others{' '}
-              <CountBadge>{recategorisedEntries.others.length}</CountBadge>
+              Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
-            <ScalingUpcomingTable entries={recategorisedEntries.rollups} />
+            <ScalingUpcomingTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums">
             <ValidiumsAndOptimiumsInfo />
-            <ScalingUpcomingTable
-              entries={recategorisedEntries.validiumsAndOptimiums}
-            />
+            <ScalingUpcomingTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {recategorisedEntries.others.length > 0 && (
+        {entries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />
-              <ScalingUpcomingTable entries={recategorisedEntries.others} />
+              <ScalingUpcomingTable entries={entries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}
