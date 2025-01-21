@@ -1,3 +1,4 @@
+import { createHash } from 'crypto'
 import type {
   BackendProject,
   BackendProjectEscrow,
@@ -19,7 +20,6 @@ import {
   type ValueFormula,
   isEscrowToken,
 } from './types'
-import { createHash } from 'crypto'
 
 export function mapConfig(
   project: BackendProject,

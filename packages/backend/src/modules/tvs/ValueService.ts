@@ -1,5 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
+import { createAmountConfig, createPriceConfig } from './mapConfig'
 import type {
   AmountFormula,
   CalculationFormula,
@@ -7,10 +8,9 @@ import type {
   TvsConfig,
   ValueFormula,
 } from './types'
-import { createAmountConfig, createPriceConfig } from './mapConfig'
 
 export class ValueService {
-  constructor(private readonly storage: DataStorage) { }
+  constructor(private readonly storage: DataStorage) {}
 
   async calculate(
     config: TvsConfig,
