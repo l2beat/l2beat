@@ -1,5 +1,5 @@
-import { Database, IndexerStateRecord } from '@l2beat/database'
-import { Configuration, SavedConfiguration } from './multi/types'
+import type { Database, IndexerStateRecord } from '@l2beat/database'
+import type { Configuration, SavedConfiguration } from './multi/types'
 
 export class IndexerService {
   constructor(private readonly db: Database) {}

@@ -1,4 +1,4 @@
-import { UpdateMonitor } from '../../kysely/generated/types'
+import type { UpdateMonitor } from '../../kysely/generated/types'
 
 export const selectUpdateMonitor = [
   'projectName',

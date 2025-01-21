@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BaseProject } from '../project/BaseProject'
+import type { BaseProject } from '../project/BaseProject'
 import { PROOFS } from './common/proofSystems'
 
 export const sp1vector: BaseProject = {

@@ -1,4 +1,4 @@
-import {
+import type {
   AggLayerL2Token,
   AggLayerNativeEtherPreminted,
   AggLayerNativeEtherWrapped,

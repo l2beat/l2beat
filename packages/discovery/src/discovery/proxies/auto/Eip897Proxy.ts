@@ -1,8 +1,8 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { BigNumber } from 'ethers'
+import type { ProxyDetails } from '@l2beat/discovery-types'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { BigNumber } from 'ethers'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 
 async function getProxyType(
   provider: IProvider,

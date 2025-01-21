@@ -1,17 +1,17 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import {
+import type { UnixTime } from '@l2beat/shared-pure'
+import type {
   ScalingProjectPermission,
   ScalingProjectTechnologyChoice,
 } from '../../../common'
-import { DaBridgeContracts } from './DaBridgeContracts'
-import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
-import { DaLinks } from './DaLinks'
-import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
-import { DaTechnology } from './DaTechnology'
-import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
-import { DacTransactionDataType } from './DacTransactionDataType'
-import { EthereumDaBridgeRisks } from './EthereumDaRisks'
-import { UsedInProject } from './UsedInProject'
+import type { DaBridgeContracts } from './DaBridgeContracts'
+import type { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
+import type { DaLinks } from './DaLinks'
+import type { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
+import type { DaTechnology } from './DaTechnology'
+import type { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
+import type { DacTransactionDataType } from './DacTransactionDataType'
+import type { EthereumDaBridgeRisks } from './EthereumDaRisks'
+import type { UsedInProject } from './UsedInProject'
 
 export type DaBridge =
   | NoDaBridge

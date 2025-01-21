@@ -36,7 +36,7 @@ import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
 } from '../da-beat/types'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
 

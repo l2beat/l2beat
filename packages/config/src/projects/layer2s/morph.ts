@@ -23,7 +23,7 @@ import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -159,7 +159,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
+            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
           ],
         },
       ],
@@ -170,7 +170,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
+            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
           ],
         },
       ],
@@ -181,7 +181,7 @@ export const morph: Layer2 = {
         {
           contract: 'L1MessageQueueWithGasPriceOracle',
           references: [
-            'https://etherscan.io/address/0x828F68e2E05a34fA836416F124350E25021876ac#code',
+            'https://etherscan.io/address/0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA#code',
           ],
         },
         {
@@ -198,7 +198,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
+            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
           ],
         },
       ],
@@ -217,7 +217,7 @@ export const morph: Layer2 = {
       references: [
         {
           text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L219',
+          href: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A',
         },
       ],
       risks: [
@@ -257,12 +257,16 @@ export const morph: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code',
+          text: 'EnforcedTxGateway proxy - PAUSED - Etherscan source code',
+          href: 'https://etherscan.io/address//0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7#readProxyContract#F7',
+        },
+        {
+          text: 'EnforcedTxGateway.sol implementation - Etherscan source code',
           href: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
         },
         {
-          text: 'Rollup.sol - proposer can indicate which messages were skipped',
-          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L258',
+          text: 'Rollup.sol - Sequencer decides if / how many transactions to dequeue',
+          href: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code#F1#L534',
         },
       ],
     },

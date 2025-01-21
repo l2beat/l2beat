@@ -1,5 +1,5 @@
 import { createHash } from 'crypto'
-import { TrackedTxConfigEntry } from './TrackedTxsConfig'
+import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
 
 export type TrackedTxId = string
 

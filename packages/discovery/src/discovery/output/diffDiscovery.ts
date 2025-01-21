@@ -1,7 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { ContractParameters } from '@l2beat/discovery-types'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { FieldDiff, diffContracts } from './diffContracts'
+import { type FieldDiff, diffContracts } from './diffContracts'
 
 export interface DiscoveryDiff {
   name: string

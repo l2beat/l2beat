@@ -1,6 +1,6 @@
 import { expect, mockObject } from 'earl'
 
-import { ContractConfig } from '../config/ContractConfig'
+import type { ContractConfig } from '../config/ContractConfig'
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'

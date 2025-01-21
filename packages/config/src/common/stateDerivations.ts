@@ -1,4 +1,4 @@
-import { ScalingProjectStateDerivation } from './ScalingProjectStateDerivation'
+import type { ScalingProjectStateDerivation } from './ScalingProjectStateDerivation'
 
 type SupportedOPStackChains =
   | 'OP_MAINNET'

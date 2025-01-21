@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { providers, utils } from 'ethers'
+import { type providers, utils } from 'ethers'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { ArrayFromOneEventWithArgHandler } from './ArrayFromOneEventWithArgHandler'
 
 describe(ArrayFromOneEventWithArgHandler.name, () => {

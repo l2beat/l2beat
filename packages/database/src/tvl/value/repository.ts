@@ -1,13 +1,13 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { QueryCreator } from 'kysely'
+import type { ProjectId } from '@l2beat/shared-pure'
+import type { QueryCreator } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
-import { DB } from '../../kysely'
+import type { DB } from '../../kysely'
 import {
-  CleanDateRange,
+  type CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../../utils/deleteArchivedRecords'
-import { ValueRecord, toRecord, toRow } from './entity'
+import { type ValueRecord, toRecord, toRow } from './entity'
 import { selectValue, selectValueWithPrefix } from './select'
 
 export class ValueRepository extends BaseRepository {

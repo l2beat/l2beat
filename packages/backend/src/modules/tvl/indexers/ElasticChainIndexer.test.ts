@@ -1,22 +1,22 @@
 import { Logger } from '@l2beat/backend-tools'
-import { AmountRecord, Database } from '@l2beat/database'
+import type { AmountRecord, Database } from '@l2beat/database'
 import {
-  ElasticChainL2Token,
+  type ElasticChainL2Token,
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
-import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import {
+import type {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { ElasticChainService } from '../services/ElasticChainService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { ElasticChainService } from '../services/ElasticChainService'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 import { ElasticChainIndexer } from './ElasticChainIndexer'
-import { ElasticChainAmountConfig } from './types'
+import type { ElasticChainAmountConfig } from './types'
 
 describe(ElasticChainIndexer.name, () => {
   beforeEach(() => {

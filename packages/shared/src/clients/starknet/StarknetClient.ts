@@ -1,7 +1,7 @@
-import { Block, json } from '@l2beat/shared-pure'
+import type { Block, json } from '@l2beat/shared-pure'
 import { generateIntId } from '../../tools/generateId'
-import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { BlockClient } from '../types'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { BlockClient } from '../types'
 import {
   StarknetErrorResponse,
   StarknetGetBlockResponse,

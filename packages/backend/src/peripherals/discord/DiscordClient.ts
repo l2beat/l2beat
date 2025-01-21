@@ -3,11 +3,11 @@ To send messages you need to create a Discord Bot first and give it appropriate 
 https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
-import { HttpClient } from '@l2beat/shared'
-import { RequestInit } from 'node-fetch'
+import type { HttpClient } from '@l2beat/shared'
+import type { RequestInit } from 'node-fetch'
 
 import { RateLimiter } from '@l2beat/backend-tools'
-import { DiscordConfig } from '../../config/Config'
+import type { DiscordConfig } from '../../config/Config'
 
 export const MAX_MESSAGE_LENGTH = 2000
 

@@ -1,8 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import { uniqBy } from 'lodash'
 import { z } from 'zod'
-import {
+import type {
   Bridge,
   DaBridge,
   Layer2,

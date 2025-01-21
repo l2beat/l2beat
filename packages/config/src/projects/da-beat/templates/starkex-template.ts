@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 import { getCommittee } from '../../../discovery/starkware'
 import {
-  DaTechnology,
+  type DaTechnology,
   DaUpgradeabilityRisk,
-  DacDaLayer,
+  type DacDaLayer,
   DacTransactionDataType,
 } from '../types'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
-import { DAC, DacTemplateVarsWithDiscovery } from './dac-template'
+import { DAC, type DacTemplateVarsWithDiscovery } from './dac-template'
 
 export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
   const committee = template.discovery

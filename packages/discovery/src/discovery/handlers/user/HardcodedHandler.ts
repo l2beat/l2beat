@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type HardCodedDefinition = z.infer<typeof HardCodedDefinition>
 export const HardCodedDefinition = z.strictObject({

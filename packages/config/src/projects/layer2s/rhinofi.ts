@@ -33,7 +33,7 @@ import {
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('deversifi')
 const upgradeDelaySeconds = discovery.getContractValue<number>(

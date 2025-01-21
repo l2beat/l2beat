@@ -2,10 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { Database } from '@l2beat/database'
-import { RpcClient } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
 import { ScrollT2IAnalyzer } from './ScrollT2IAnalyzer'
-import { L2Block } from './types/BaseAnalyzer'
+import type { L2Block } from './types/BaseAnalyzer'
 
 describe(ScrollT2IAnalyzer.name, () => {
   describe(ScrollT2IAnalyzer.prototype.analyze.name, () => {

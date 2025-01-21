@@ -1,9 +1,9 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
-import { BadgeId } from '../../badges'
-import { type Layer3, type Layer3Display } from '../../layer3s'
-import { type Layer2, type Layer2Display } from '../types'
+import type { BadgeId } from '../../badges'
+import type { Layer3, Layer3Display } from '../../layer3s'
+import type { Layer2, Layer2Display } from '../types'
 
 export interface UpcomingConfigL2 {
   id: string

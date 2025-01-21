@@ -1,7 +1,7 @@
-import { UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { type UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
-import { QueryBuilder } from '../kysely'
-import { DB } from '../kysely/generated/types'
+import type { QueryBuilder } from '../kysely'
+import type { DB } from '../kysely/generated/types'
 
 export interface CleanDateRange {
   from: UnixTime | undefined

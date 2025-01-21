@@ -1,4 +1,4 @@
-import { ApiAddressType, FieldValue } from './types'
+import type { ApiAddressType, FieldValue } from './types'
 
 export function parseFieldValue(
   value: unknown,

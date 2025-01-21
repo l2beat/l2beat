@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaServiceDaLayer } from '../../types/DaLayer'
+import type { DaServiceDaLayer } from '../../types/DaLayer'
 import { HotShotLightClient } from './bridges/HotShotLightClient'
 
 export const espressoDA: DaServiceDaLayer = {

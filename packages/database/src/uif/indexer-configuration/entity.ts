@@ -1,5 +1,5 @@
-import { Insertable, Selectable } from 'kysely'
-import { IndexerConfiguration } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { IndexerConfiguration } from '../../kysely/generated/types'
 
 export interface IndexerConfigurationRecord {
   id: string

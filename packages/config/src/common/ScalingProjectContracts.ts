@@ -1,7 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ScalingProjectReference } from './ScalingProjectReference'
-import { ScalingProjectRisk } from './ScalingProjectRisk'
+import type { ScalingProjectReference } from './ScalingProjectReference'
+import type { ScalingProjectRisk } from './ScalingProjectRisk'
 
 export interface ScalingProjectContracts {
   /** List of the contracts on hosted chain */

@@ -15,7 +15,7 @@ import {
 import { DaRelayerFailureRisk } from '../da-beat/types/DaRelayerFailureRisk'
 import { DacTransactionDataType } from '../da-beat/types/DacTransactionDataType'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
 

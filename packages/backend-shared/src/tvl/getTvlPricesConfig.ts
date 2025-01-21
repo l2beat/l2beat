@@ -1,5 +1,5 @@
 import { chains, tokenList } from '@l2beat/config'
-import { assert, PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import { assert, type PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 
 export function getTvlPricesConfig(
   minTimestampOverride?: UnixTime,

@@ -1,4 +1,4 @@
-import { StackPermissionTemplate } from './StackTemplateTypes'
+import type { StackPermissionTemplate } from './StackTemplateTypes'
 
 export type OpStackContractName =
   | 'L2OutputOracle'

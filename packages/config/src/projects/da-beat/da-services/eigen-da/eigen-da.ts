@@ -5,7 +5,7 @@ import { donatuz } from '../../../layer3s/donatuz'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaServiceDaLayer } from '../../types/DaLayer'
+import type { DaServiceDaLayer } from '../../types/DaLayer'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 import { eigenDAbridge } from './eigen-da-bridge'
 

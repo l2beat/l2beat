@@ -14,7 +14,7 @@ import {
 } from '../da-beat/types'
 import { DaChallengeMechanism } from '../da-beat/types/DaChallengeMechanism'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('redstone')
 

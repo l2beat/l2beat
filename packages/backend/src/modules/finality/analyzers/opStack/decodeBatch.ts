@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { rlpDecode } from '../../utils/rlpDecode'
 
 const BATCH_VERSION_0 = 0

@@ -1,13 +1,13 @@
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import {
-  DaBridge,
+  type DaBridge,
   DaUpgradeabilityRisk,
-  DacDaLayer,
-  IntegratedDacBridge,
+  type DacDaLayer,
+  type IntegratedDacBridge,
 } from '../types'
-import { DaTechnology } from '../types/DaTechnology'
+import type { DaTechnology } from '../types/DaTechnology'
 import { DacTransactionDataType } from '../types/DacTransactionDataType'
-import { DAC, DacTemplateVars } from './dac-template'
+import { DAC, type DacTemplateVars } from './dac-template'
 
 type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
   bridge: {

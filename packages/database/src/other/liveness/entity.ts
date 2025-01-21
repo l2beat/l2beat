@@ -1,7 +1,7 @@
-import { TrackedTxId } from '@l2beat/shared'
+import type { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { Liveness } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { Liveness } from '../../kysely/generated/types'
 
 export interface LivenessRecord {
   timestamp: UnixTime

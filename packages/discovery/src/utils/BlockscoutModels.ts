@@ -2,7 +2,7 @@ import {
   EthereumAddress,
   Hash256,
   UnixTime,
-  json,
+  type json,
   stringAs,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'

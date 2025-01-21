@@ -17,7 +17,7 @@ import {
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { formatThroughput } from '~/utils/number-format/format-throughput'
+import { formatThroughputMBPS } from '~/utils/number-format/format-throughput-mbps'
 
 interface Props {
   stats: ProjectStat[]
@@ -163,10 +163,9 @@ export function getCommonDaProjectStats(
   if (project.header.throughput) {
     stats.push({
       title: 'Max throughput',
-      value: formatThroughput(
+      value: formatThroughputMBPS(
         project.header.throughput.size,
         project.header.throughput.frequency,
-        { fromUnit: 'KB' },
       ),
     })
   }

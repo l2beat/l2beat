@@ -1,6 +1,6 @@
-import { ApiAddressType } from '../../../api/types'
-import { Field, Node } from '../State'
-import { DiscoveryContract, DiscoveryOutput } from './parseDiscovery'
+import type { ApiAddressType } from '../../../api/types'
+import type { Field, Node } from '../State'
+import type { DiscoveryContract, DiscoveryOutput } from './parseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 

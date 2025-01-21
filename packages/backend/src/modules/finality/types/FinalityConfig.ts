@@ -1,7 +1,7 @@
-import { StateUpdateMode } from '@l2beat/config'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { StateUpdateMode } from '@l2beat/config'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { BaseAnalyzer } from '../analyzers/types/BaseAnalyzer'
+import type { BaseAnalyzer } from '../analyzers/types/BaseAnalyzer'
 
 export type FinalityConfig = {
   projectId: ProjectId

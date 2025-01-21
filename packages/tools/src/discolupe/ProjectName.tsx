@@ -1,4 +1,4 @@
-import { DiscoLupeProject } from './src/model'
+import type { DiscoLupeProject } from './src/model'
 
 export function ProjectName(project: DiscoLupeProject, str: string) {
   return (

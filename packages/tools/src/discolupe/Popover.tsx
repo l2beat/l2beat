@@ -1,5 +1,5 @@
 // src/Popover.tsx
-import React, { useState, useRef, useEffect, ReactNode } from 'react'
+import React, { useState, useRef, useEffect, type ReactNode } from 'react'
 
 interface PopoverProps {
   content: ReactNode

@@ -14,8 +14,8 @@ import {
   MULTICALLV3_methods,
   MULTICALL_V3,
   MULTICALL_V3_ZKSYNCERA,
-  Method,
-  Operation,
+  type Method,
+  type Operation,
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
@@ -24,7 +24,7 @@ import {
   isGnosisSafe,
   isMulticallv3,
 } from '@l2beat/shared'
-import { assert, Block, Transaction } from '@l2beat/shared-pure'
+import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'

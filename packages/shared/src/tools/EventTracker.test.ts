@@ -1,4 +1,4 @@
-import { InstalledClock, install } from '@sinonjs/fake-timers'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect } from 'earl'
 
 import { EventTracker } from './EventTracker'

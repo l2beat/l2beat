@@ -24,7 +24,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { DacTransactionDataType } from '../da-beat/types'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
 const upgradeDelay = discovery.getContractValue<number>(

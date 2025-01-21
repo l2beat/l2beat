@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const frame: Layer2 = upcomingL2({
   id: 'frame', // 'Frame team bought by Igloo Inc. in June 2024. Will contricute to Abstract network. Links no longer work'
