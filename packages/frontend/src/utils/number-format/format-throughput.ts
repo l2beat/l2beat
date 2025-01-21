@@ -1,29 +1,22 @@
-export type SizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB'
-
-interface SizeOptions {
-  fromUnit?: SizeUnit
-  exact?: boolean
-}
-
 export function formatThroughput(
-  size: number,
+  bytes: number,
   frequencySeconds: number,
-  options: SizeOptions = {},
 ): string {
-  const { fromUnit = 'B', exact = false } = options
-  const units: SizeUnit[] = ['B', 'KB', 'MB', 'GB', 'TB']
-  let unitIndex = units.indexOf(fromUnit)
-
-  if (unitIndex === -1) {
-    throw new Error(`Invalid unit: ${fromUnit}`)
+  if (bytes === 0) {
+    return '0 MB/s'
   }
 
-  while (size >= 1000 && unitIndex < units.length - 1) {
-    size /= 1000
-    unitIndex++
+  if (frequencySeconds === 0) {
+    throw new Error('Frequency cannot be zero.')
   }
 
-  const throughput = size / frequencySeconds
-  const formattedSize = exact ? throughput : Math.round(throughput * 100) / 100
-  return `${formattedSize} ${units[unitIndex]}/s`
+  const mb = bytes / 1_000
+  const throughput = mb / frequencySeconds
+
+  // Round to at most 4 digits
+  const numDigitsBeforeDecimal = Math.floor(Math.log10(throughput)) + 1
+  const decimalPlaces = Math.max(0, 3 - numDigitsBeforeDecimal)
+  const formattedThroughput = Number(throughput.toFixed(decimalPlaces))
+
+  return `${formattedThroughput} MB/s`
 }

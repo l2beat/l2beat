@@ -168,7 +168,6 @@ export function getCommonDaProjectStats(
       value: formatThroughput(
         project.header.throughput.size,
         project.header.throughput.frequency,
-        { fromUnit: 'KB' },
       ),
     })
   }
