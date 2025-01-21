@@ -9,18 +9,18 @@ import {
 import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
 import { BridgeDisplay, BridgeRiskView } from '../bridges'
 import {
+  DacBridge,
+  EnshrinedBridge,
+  NoDaBridge,
+  OnChainDaBridge,
+} from '../da-beat'
+import {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
   ProjectLivenessInfo,
   StageConfig,
   WarningWithSentiment,
 } from '../layer2s'
-import {
-  DacBridge,
-  EnshrinedBridge,
-  NoDaBridge,
-  OnChainDaBridge,
-} from '../other'
 import { ProofVerification } from '../types'
 
 export interface BaseProject {

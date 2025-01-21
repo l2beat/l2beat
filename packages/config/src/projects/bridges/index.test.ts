@@ -10,7 +10,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens'
+import { tokenList } from '../../tokens/tokens'
 import { getReferencedAddresses } from '../layer2s/index.test'
 import { BridgeTechnology, bridges } from './index'
 

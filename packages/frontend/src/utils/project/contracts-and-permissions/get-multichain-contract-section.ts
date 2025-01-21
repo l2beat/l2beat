@@ -2,8 +2,8 @@ import {
   CONTRACTS,
   type DaBridgeContracts,
   type ScalingProjectContract,
+  type UsedInProject,
 } from '@l2beat/config'
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import {
   type ContractsVerificationStatuses,
   type EthereumAddress,

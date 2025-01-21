@@ -1,4 +1,4 @@
-import { bridges } from '@l2beat/config/build/src/projects/bridges'
+import { bridges } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
