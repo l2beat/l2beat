@@ -7,6 +7,7 @@ import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
 import { ChevronIcon } from '~/icons/chevron'
+import { useRecategorisationPreviewContext } from '~/providers/recategorisation-preview-provider'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -20,10 +21,12 @@ export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
+  const { checked } = useRecategorisationPreviewContext()
   const { data, isLoading } = api.tvl.recategorizedChart.useQuery({
     range: timeRange,
     excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
+    previewRecategorisation: checked,
   })
 
   const { formatYAxisLabel, valuesStyle, columns, change, total } =

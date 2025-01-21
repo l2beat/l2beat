@@ -19,6 +19,7 @@ export const RecategorizedTvlChartDataParams = z.object({
   range: TvlChartRange,
   filter: TvlProjectFilter,
   excludeAssociatedTokens: z.boolean(),
+  previewRecategorisation: z.boolean(),
 })
 
 export type RecategorizedTvlChartDataParams = z.infer<
@@ -48,9 +49,10 @@ export const getCachedRecategorizedTvlChartData = cache(
     range,
     excludeAssociatedTokens,
     filter,
+    previewRecategorisation,
   }: RecategorizedTvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(filter)
-    const tvlProjects = getTvlProjects(projectsFilter)
+    const tvlProjects = getTvlProjects(projectsFilter, previewRecategorisation)
 
     const rollups = tvlProjects.filter(({ category }) => category === 'rollups')
     const validiumsAndOptimiums = tvlProjects.filter(
