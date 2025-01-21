@@ -1,4 +1,4 @@
-import {
+import type {
   ValueWithSentiment,
   WarningValueWithSentiment,
 } from '@l2beat/shared-pure'

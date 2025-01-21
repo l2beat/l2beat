@@ -1,8 +1,8 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace'
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumActorsHandler } from './ArbitrumActorsHandler'
 
 describe(ArbitrumActorsHandler.name, () => {

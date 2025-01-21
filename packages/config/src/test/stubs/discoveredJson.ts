@@ -1,4 +1,7 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import type {
+  ContractParameters,
+  DiscoveryOutput,
+} from '@l2beat/discovery-types'
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
 export const contractStub: ContractParameters = {

@@ -1,6 +1,6 @@
 import {
   ConfigReader,
-  InvertedAddresses,
+  type InvertedAddresses,
   RolePermissionEntries,
   calculateInversion,
 } from '@l2beat/discovery'
@@ -8,10 +8,10 @@ import {
   type ContractParameters,
   type ContractValue,
   type DiscoveryOutput,
-  EoaParameters,
-  PermissionType,
-  ReceivedPermission,
-  ResolvedPermissionPath,
+  type EoaParameters,
+  type PermissionType,
+  type ReceivedPermission,
+  type ResolvedPermissionPath,
   get$Admins,
   get$Implementations,
   toAddressArray,
@@ -19,7 +19,7 @@ import {
 import {
   assert,
   EthereumAddress,
-  TokenBridgedUsing,
+  type TokenBridgedUsing,
   UnixTime,
   formatSeconds,
   notUndefined,
@@ -28,31 +28,31 @@ import { utils } from 'ethers'
 import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 
 import { join } from 'path'
-import {
+import type {
   ScalingProjectContract,
   ScalingProjectUpgradeability,
 } from '../common/ScalingProjectContracts'
-import {
+import type {
   ScalingProjectEscrow,
   SharedEscrow,
 } from '../common/ScalingProjectEscrow'
-import {
+import type {
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
 } from '../common/ScalingProjectPermission'
-import { ScalingProjectReference } from '../common/ScalingProjectReference'
+import type { ScalingProjectReference } from '../common/ScalingProjectReference'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
-  OpStackContractName,
+  type OpStackContractName,
 } from './OpStackTypes'
 import {
   ORBIT_STACK_CONTRACT_DESCRIPTION,
   ORBIT_STACK_PERMISSION_TEMPLATES,
-  OrbitStackContractTemplate,
+  type OrbitStackContractTemplate,
 } from './OrbitStackTypes'
 import { PermissionedContract } from './PermissionedContract'
-import {
+import type {
   StackPermissionTemplate,
   StackPermissionsTag,
 } from './StackTemplateTypes'

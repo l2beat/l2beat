@@ -1,4 +1,4 @@
-import { DaRiskViewOptions } from './DaRiskView'
+import type { DaRiskViewOptions } from './DaRiskView'
 
 // Ethereum DA is a special case different from risks perspective
 export type EthereumDaLayerRisks = typeof SelfVerify

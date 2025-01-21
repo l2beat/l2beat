@@ -1,5 +1,5 @@
-import { DiscoveryConfig, TemplateService } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryConfig, TemplateService } from '@l2beat/discovery'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 // returns reason or undefined

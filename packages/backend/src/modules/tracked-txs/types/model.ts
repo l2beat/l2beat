@@ -1,9 +1,9 @@
-import { TrackedTxId } from '@l2beat/shared'
+import type { TrackedTxId } from '@l2beat/shared'
 import {
   EthereumAddress,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+  type TrackedTxsConfigType,
   UnixTime,
   branded,
 } from '@l2beat/shared-pure'

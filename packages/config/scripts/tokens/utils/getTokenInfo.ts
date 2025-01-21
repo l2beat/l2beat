@@ -1,14 +1,14 @@
-import { CoingeckoClient } from '@l2beat/shared'
+import type { CoingeckoClient } from '@l2beat/shared'
 import {
   assert,
-  CoingeckoId,
-  EthereumAddress,
+  type CoingeckoId,
+  type EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
+import { type providers, utils } from 'ethers'
 
 import { ethereum } from '../../../src/chains/ethereum'
-import { ScriptLogger } from './ScriptLogger'
+import type { ScriptLogger } from './ScriptLogger'
 import { getContractCreationTimestamp } from './getContractCreationTimestamp'
 
 export async function getTokenInfo(

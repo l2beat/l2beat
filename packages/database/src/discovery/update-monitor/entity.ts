@@ -1,7 +1,7 @@
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { UpdateMonitor } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { UpdateMonitor } from '../../kysely/generated/types'
 
 export interface UpdateMonitorRecord {
   projectName: string

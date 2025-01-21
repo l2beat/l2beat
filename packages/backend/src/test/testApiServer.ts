@@ -1,4 +1,4 @@
-import Router from '@koa/router'
+import type Router from '@koa/router'
 import { Logger } from '@l2beat/backend-tools'
 import { agent } from 'supertest'
 

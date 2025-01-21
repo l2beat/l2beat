@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { ContractValue } from './Discovery'
+import type { ContractValue } from './Discovery'
 
 export interface ProxyDetails {
   type: string

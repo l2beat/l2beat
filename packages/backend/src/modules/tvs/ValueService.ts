@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { DataStorage } from './DataStorage'
-import {
+import type { UnixTime } from '@l2beat/shared-pure'
+import type { DataStorage } from './DataStorage'
+import type {
   AmountFormula,
   Formula,
   TokenValue,

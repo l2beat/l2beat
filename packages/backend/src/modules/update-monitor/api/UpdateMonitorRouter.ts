@@ -2,7 +2,7 @@ import Router from '@koa/router'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
-import { UpdateMonitorController } from './UpdateMonitorController'
+import type { UpdateMonitorController } from './UpdateMonitorController'
 
 export function createUpdateMonitorRouter(
   updateMonitorController: UpdateMonitorController,

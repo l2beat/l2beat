@@ -1,4 +1,4 @@
-import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
+import type { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
 
 export interface ScalingProjectRiskView {
   stateValidation: ScalingProjectRiskViewEntry

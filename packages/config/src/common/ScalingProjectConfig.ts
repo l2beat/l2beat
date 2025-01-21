@@ -1,6 +1,6 @@
-import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
+import type { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { ScalingProjectEscrow } from './ScalingProjectEscrow'
+import type { ScalingProjectEscrow } from './ScalingProjectEscrow'
 
 export interface ScalingProjectConfig {
   /** Associated tokens are marked on TVL breakdown -- "associated token accounts for X% of TVL" */

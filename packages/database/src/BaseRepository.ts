@@ -1,4 +1,4 @@
-import { DatabaseClient, QueryBuilder } from './kysely'
+import type { DatabaseClient, QueryBuilder } from './kysely'
 
 export class BaseRepository {
   protected transaction: DatabaseClient['transaction']

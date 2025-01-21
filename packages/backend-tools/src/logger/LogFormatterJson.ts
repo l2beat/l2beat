@@ -1,4 +1,4 @@
-import { LogEntry, LogFormatter } from './types'
+import type { LogEntry, LogFormatter } from './types'
 import { toJSON } from './utils'
 
 export class LogFormatterJson implements LogFormatter {

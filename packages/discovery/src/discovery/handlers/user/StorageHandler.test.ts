@@ -1,9 +1,9 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { IProvider } from '../../provider/IProvider'
-import { HandlerResult } from '../Handler'
-import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
+import type { IProvider } from '../../provider/IProvider'
+import type { HandlerResult } from '../Handler'
+import { StorageHandler, type StorageHandlerDefinition } from './StorageHandler'
 
 describe(StorageHandler.name, () => {
   describe('return types', () => {

@@ -1,11 +1,11 @@
-import { AmountId, PriceId } from '@l2beat/backend-shared'
-import { Database } from '@l2beat/database'
+import type { AmountId, PriceId } from '@l2beat/backend-shared'
+import type { Database } from '@l2beat/database'
 import {
-  AmountConfigEntry,
+  type AmountConfigEntry,
   AssetId,
   EthereumAddress,
   ProjectId,
-  TotalSupplyEntry,
+  type TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'

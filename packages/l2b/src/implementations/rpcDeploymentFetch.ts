@@ -1,5 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
+import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { providers } from 'ethers'
 
 export async function getContractCreationTimestamp(
   provider: providers.JsonRpcProvider,

@@ -1,6 +1,6 @@
-import { Database, LivenessRecord } from '@l2beat/database'
-import { TrackedTxLivenessConfig } from '@l2beat/shared'
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import type { Database, LivenessRecord } from '@l2beat/database'
+import type { TrackedTxLivenessConfig } from '@l2beat/shared'
+import type { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 
 export type LivenessConfig = Pick<TrackedTxLivenessConfig, 'id' | 'subtype'>
 

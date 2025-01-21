@@ -1,5 +1,5 @@
-import { ScalingProjectRisk } from '../../../common'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { ScalingProjectRisk } from '../../../common'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 
 export function generateDiscoveryDrivenSections(
   discovery: ProjectDiscovery,

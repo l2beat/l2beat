@@ -2,7 +2,7 @@ import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { UpdateMonitorRecord } from './entity'
+import type { UpdateMonitorRecord } from './entity'
 import { UpdateMonitorRepository } from './repository'
 
 const CONFIG_HASH = Hash256.random()

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
 /**
  * Determines how the state update should be handled.

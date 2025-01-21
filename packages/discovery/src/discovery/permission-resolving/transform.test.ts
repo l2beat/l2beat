@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { PermissionConfiguration } from '../config/RawDiscoveryConfig'
-import { ResolvedPermission } from './resolvePermissions'
+import type { PermissionConfiguration } from '../config/RawDiscoveryConfig'
+import type { ResolvedPermission } from './resolvePermissions'
 import { transformToReceived } from './transform'
 
 describe(transformToReceived.name, () => {

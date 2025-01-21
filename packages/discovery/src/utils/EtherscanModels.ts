@@ -1,4 +1,9 @@
-import { EthereumAddress, Hash256, json, stringAs } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  Hash256,
+  type json,
+  stringAs,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>

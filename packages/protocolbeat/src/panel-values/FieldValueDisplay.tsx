@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
-import { FieldValue } from '../api/types'
+import type { ReactNode } from 'react'
+import type { FieldValue } from '../api/types'
 import { AddressDisplay } from './AddressDisplay'
 
 export interface FieldValueDisplayProps {

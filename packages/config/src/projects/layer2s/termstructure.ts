@@ -16,7 +16,7 @@ import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailab
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('termstructure')
 

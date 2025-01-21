@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const lumia: Layer2 = upcomingL2({
   id: 'lumia',

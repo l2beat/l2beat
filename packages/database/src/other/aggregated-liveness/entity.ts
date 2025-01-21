@@ -1,6 +1,6 @@
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { AggregatedLiveness } from '../../kysely/generated/types'
+import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import type { Insertable, Selectable } from 'kysely'
+import type { AggregatedLiveness } from '../../kysely/generated/types'
 
 export type AggregatedLivenessRange = '30D' | '90D' | 'MAX'
 

@@ -1,7 +1,7 @@
-import { LupeColumn } from './columns'
-import { ColumnFilter } from './filtering'
-import { DiscoLupeProject } from './model'
-import { SortConfig } from './sort'
+import type { LupeColumn } from './columns'
+import type { ColumnFilter } from './filtering'
+import type { DiscoLupeProject } from './model'
+import type { SortConfig } from './sort'
 
 interface Matrix {
   rowCount: number

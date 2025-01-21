@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
 
 import { hashJson } from '@l2beat/shared'
-import { EthereumAddress, Hash256, json } from '@l2beat/shared-pure'
+import { EthereumAddress, type Hash256, type json } from '@l2beat/shared-pure'
 import {
   flattenFirstSource,
   formatIntoHashable,
@@ -10,7 +10,7 @@ import {
 } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
-import { ContractSources } from '../source/SourceCodeService'
+import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')

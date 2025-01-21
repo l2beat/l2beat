@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
+import type { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 
 export function printSharedModuleInfo(backrefConfigs: DiscoveryConfig[]) {
   if (backrefConfigs.length > 0) {

@@ -1,4 +1,4 @@
-import { EthereumAddress } from './EthereumAddress'
+import type { EthereumAddress } from './EthereumAddress'
 
 export type AssetId = string & {
   _AssetIdBrand: string

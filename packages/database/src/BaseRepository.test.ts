@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import { BaseRepository } from './BaseRepository'
-import { Database } from './database'
+import type { Database } from './database'
 import { describeDatabase } from './test/database'
 
 let nonce = 0

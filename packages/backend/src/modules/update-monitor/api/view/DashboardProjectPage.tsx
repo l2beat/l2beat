@@ -1,11 +1,11 @@
 import {
-  DiscoveryConfig,
-  DiscoveryDiff,
+  type DiscoveryConfig,
+  type DiscoveryDiff,
   sortBySeverity,
 } from '@l2beat/discovery'
 import { default as React } from 'react'
 
-import { DashboardContract } from '../props/getDashboardContracts'
+import type { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'
 import { Diff } from './components/Diff'
 import { Page } from './components/Page'

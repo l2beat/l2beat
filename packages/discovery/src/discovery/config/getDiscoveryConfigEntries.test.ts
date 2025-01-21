@@ -3,7 +3,7 @@ import { expect } from 'earl'
 
 import {
   DiscoveryContract,
-  RawDiscoveryConfig,
+  type RawDiscoveryConfig,
 } from '../config/RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 

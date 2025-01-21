@@ -1,9 +1,9 @@
 import { expect } from 'earl'
-import { Permission } from '../config/RawDiscoveryConfig'
+import type { Permission } from '../config/RawDiscoveryConfig'
 import {
-  Edge,
-  Node,
-  PathElement,
+  type Edge,
+  type Node,
+  type PathElement,
   resolvePermissions,
 } from './resolvePermissions'
 

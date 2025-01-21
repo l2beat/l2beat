@@ -1,14 +1,14 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
-import { Database, FinalityRecord } from '@l2beat/database'
+import type { Database, FinalityRecord } from '@l2beat/database'
 import {
   batchToTimeToInclusionDelays,
   batchesToStateUpdateDelays,
 } from './analyzers/types/BaseAnalyzer'
-import { FinalityConfig } from './types/FinalityConfig'
+import type { FinalityConfig } from './types/FinalityConfig'
 
 const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
   maxAttempts: 10,

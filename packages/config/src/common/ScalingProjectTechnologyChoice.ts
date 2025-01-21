@@ -1,5 +1,5 @@
-import { ScalingProjectReference } from './ScalingProjectReference'
-import { ScalingProjectRisk } from './ScalingProjectRisk'
+import type { ScalingProjectReference } from './ScalingProjectReference'
+import type { ScalingProjectRisk } from './ScalingProjectRisk'
 
 export interface ScalingProjectTechnologyChoice {
   /** Name of the specific technology choice */

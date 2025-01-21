@@ -1,5 +1,5 @@
-import { DasErasureCodingProof } from './DasErasureCodingProof'
-import { DasErasureCodingScheme } from './DasErasureCodingScheme'
+import type { DasErasureCodingProof } from './DasErasureCodingProof'
+import type { DasErasureCodingScheme } from './DasErasureCodingScheme'
 
 export type DataAvailabilitySampling = {
   /** The erasure coding scheme used by the data availability layer. */

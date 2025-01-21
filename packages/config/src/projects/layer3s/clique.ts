@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { subtractOne } from '../../common/assessCount'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 export const clique: Layer3 = underReviewL3({
   id: 'clique',

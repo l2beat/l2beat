@@ -1,6 +1,6 @@
 import {
   ManagedChildIndexer,
-  ManagedChildIndexerOptions,
+  type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 
 export interface DescendantIndexerDeps

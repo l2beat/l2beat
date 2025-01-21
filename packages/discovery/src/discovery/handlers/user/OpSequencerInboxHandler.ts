@@ -1,9 +1,9 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
-import { Transaction } from '../../../utils/IEtherscanClient'
-import { IProvider } from '../../provider/IProvider'
-import { Handler, HandlerResult } from '../Handler'
+import type { Transaction } from '../../../utils/IEtherscanClient'
+import type { IProvider } from '../../provider/IProvider'
+import type { Handler, HandlerResult } from '../Handler'
 import {
   generateReferenceInput,
   getReferencedName,

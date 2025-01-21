@@ -1,6 +1,6 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { ConfigReader } from '../config/ConfigReader'
+import type { ConfigReader } from '../config/ConfigReader'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import { shouldSkip } from './shouldSkip'

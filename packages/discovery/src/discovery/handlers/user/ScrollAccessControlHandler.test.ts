@@ -1,8 +1,8 @@
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { providers, utils } from 'ethers'
+import { type providers, utils } from 'ethers'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { ScrollAccessControlHandler } from './ScrollAccessControlHandler'
 
 describe(ScrollAccessControlHandler.name, () => {

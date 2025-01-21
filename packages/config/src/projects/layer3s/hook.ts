@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 // inbox on arbitrum: https://arbiscan.io/address/0xb0a00d053160e297324b7689b5e3f3af9a6fa4fb
 export const hook: Layer3 = underReviewL3({

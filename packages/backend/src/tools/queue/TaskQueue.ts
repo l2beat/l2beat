@@ -1,12 +1,12 @@
-import { Logger } from '@l2beat/backend-tools'
-import { EventTracker } from '@l2beat/shared'
+import type { Logger } from '@l2beat/backend-tools'
+import type { EventTracker } from '@l2beat/shared'
 import {
   assert,
   Retries,
-  ShouldRetry,
+  type ShouldRetry,
   getErrorMessage,
   getErrorStackTrace,
-  json,
+  type json,
 } from '@l2beat/shared-pure'
 import { setTimeout as wait } from 'timers/promises'
 

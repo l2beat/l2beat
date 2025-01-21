@@ -1,12 +1,12 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 
 import { getErrorMessage } from '@l2beat/shared-pure'
-import {
+import type {
   DiscoveryContract,
   DiscoveryCustomType,
 } from '../config/RawDiscoveryConfig'
 import { TypeApplier } from '../type-casters/TypeApplier'
-import { HandlerResult } from './Handler'
+import type { HandlerResult } from './Handler'
 
 export function decodeHandlerResults(
   results: HandlerResult[],

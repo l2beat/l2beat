@@ -1,8 +1,8 @@
 import { continueOperations } from '../helpers/continueOperations'
 import { finishInitialization } from '../helpers/finishInitialization'
-import { ParentUpdatedAction } from '../types/IndexerAction'
-import { IndexerReducerResult } from '../types/IndexerReducerResult'
-import { IndexerState } from '../types/IndexerState'
+import type { ParentUpdatedAction } from '../types/IndexerAction'
+import type { IndexerReducerResult } from '../types/IndexerReducerResult'
+import type { IndexerState } from '../types/IndexerState'
 
 export function handleParentUpdated(
   state: IndexerState,

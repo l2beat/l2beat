@@ -1,27 +1,27 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
   ProjectDataAvailability,
   ScalingProjectCategory,
   ScalingProjectDisplay,
   ScalingProjectRiskView,
   ScalingProjectStack,
 } from '../../common'
-import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
-import { BridgeDisplay, BridgeRiskView } from '../bridges'
-import {
+import type { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+import type { BridgeDisplay, BridgeRiskView } from '../bridges'
+import type {
   DacBridge,
   EnshrinedBridge,
   NoDaBridge,
   OnChainDaBridge,
 } from '../da-beat'
-import {
+import type {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
   ProjectLivenessInfo,
   StageConfig,
   WarningWithSentiment,
 } from '../layer2s'
-import { ProofVerification } from '../types'
+import type { ProofVerification } from '../types'
 
 export interface BaseProject {
   id: ProjectId

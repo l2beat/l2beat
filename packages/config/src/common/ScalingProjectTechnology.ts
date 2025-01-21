@@ -1,4 +1,4 @@
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
 export interface ScalingProjectTechnology {
   /** What state correctness mechanism is used in the project */

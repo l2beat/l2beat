@@ -1,6 +1,6 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 
-import { Indexer, IndexerOptions } from '../Indexer'
+import { Indexer, type IndexerOptions } from '../Indexer'
 
 export abstract class RootIndexer extends Indexer {
   constructor(logger: Logger, opts?: IndexerOptions) {

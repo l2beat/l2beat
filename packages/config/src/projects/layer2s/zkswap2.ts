@@ -10,7 +10,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 import { zkswap } from './zkswap'
 
 const discovery = new ProjectDiscovery('zkswap2')
