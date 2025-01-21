@@ -171,11 +171,13 @@ export const hashkey: Layer2 = {
     finality: { finalizationPeriod: maxClockDuration },
   },
   config: {
+    associatedTokens: ['HSK'],
+    gasTokens: ['HSK'],
     escrows: [
       discovery.getEscrowDetails({
         // OptimismPortal
         address: EthereumAddress('0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3'),
-        tokens: ['ETH'],
+        tokens: ['HSK'],
       }),
       discovery.getEscrowDetails({
         // L1StandardBridge

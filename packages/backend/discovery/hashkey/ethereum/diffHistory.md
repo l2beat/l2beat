@@ -9,6 +9,8 @@ Generated with discovered.json: 0x1fb15fafb156221ff51ca0173af2e483166ab8ed
 
 Initial discovery. Uses OptiPortal2 (post OPFP) and system contract beta versions to allow for custom gasTokens. No other significant changes to the current Optimism contracts.
 
+Respected Game type is permissioned, no SecurityCouncil, no Superchain gov.
+
 ## Initial discovery
 
 ```diff
