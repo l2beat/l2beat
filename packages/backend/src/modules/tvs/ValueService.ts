@@ -1,8 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DataStorage } from './DataStorage'
+import { createAmountConfig, createPriceConfig } from './mapConfig'
 import {
   AmountFormula,
-  Formula,
+  CalculationFormula,
   TokenValue,
   TvsConfig,
   ValueFormula,
@@ -55,11 +56,11 @@ export class ValueService {
   }
 
   async executeAmountFormula(
-    _formula: AmountFormula,
+    formula: AmountFormula,
     timestamp: UnixTime,
   ): Promise<bigint> {
-    //TODO: replace with function that generates configId from formula
-    const amount = this.storage.getAmount('configId', timestamp)
+    const config = createAmountConfig(formula)
+    const amount = this.storage.getAmount(config.id, timestamp)
     return await Promise.resolve(amount)
   }
 
@@ -67,18 +68,23 @@ export class ValueService {
     formula: ValueFormula,
     timestamp: UnixTime,
   ): Promise<number> {
-    //TODO: replace with function that generates configId from ticker
-    const price = await this.storage.getPrice('ticker', timestamp)
+    const priceConfig = createPriceConfig(formula)
+    const price = await this.storage.getPrice(priceConfig.id, timestamp)
+
     const amount = await this.executeAmountFormula(formula.amount, timestamp)
     const value = Number(amount * BigInt(price))
     return value
   }
 
   async executeFormula(
-    _formula: Formula,
-    _timestamp: UnixTime,
+    formula: CalculationFormula | ValueFormula,
+    timestamp: UnixTime,
   ): Promise<number> {
-    // TODO implement
+    if (formula.type === 'value') {
+      return await this.executeValueFormula(formula, timestamp)
+    }
+
+    // TODO implement for calculation formulas
     return await Promise.resolve(0)
   }
 }

@@ -1,3 +1,4 @@
+import { createHash } from 'crypto'
 import { BackendProject, BackendProjectEscrow } from '@l2beat/backend-shared'
 import { ChainConfig, tokenList } from '@l2beat/config'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
@@ -6,12 +7,14 @@ import {
   AmountConfig,
   AmountFormula,
   BalanceOfEscrowAmountFormula,
+  CalculationFormula,
   CirculatingSupplyAmountFormula,
   EscrowToken,
   PriceConfig,
   Token,
   TotalSupplyAmountFormula,
   TvsConfig,
+  ValueFormula,
   isEscrowToken,
 } from './types'
 
@@ -177,11 +180,112 @@ function createToken(
   }
 }
 
-export function extractPricesAndAmounts(_config: TvsConfig): {
-  prices: PriceConfig[]
+export function extractPricesAndAmounts(config: TvsConfig): {
   amounts: AmountConfig[]
+  prices: PriceConfig[]
 } {
-  throw new Error('Not implemented')
+  const amounts: AmountConfig[] = []
+  const prices: PriceConfig[] = []
+
+  for (const token of config.tokens) {
+    const amount = createAmountConfig(token.amount)
+    amounts.push(amount)
+
+    const price = createPriceConfig({
+      amount: token.amount,
+      ticker: token.ticker,
+    } as ValueFormula)
+    prices.push(price)
+
+    if (token.valueForProject) {
+      const { formulaAmounts, formulaPrices } = processFormula(
+        token.valueForProject,
+      )
+      amounts.push(...formulaAmounts)
+      prices.push(...formulaPrices)
+    }
+
+    if (token.valueForTotal) {
+      const { formulaAmounts, formulaPrices } = processFormula(
+        token.valueForTotal,
+      )
+      amounts.push(...formulaAmounts)
+      prices.push(...formulaPrices)
+    }
+  }
+
+  return { amounts, prices }
+}
+
+export function createAmountConfig(formula: AmountFormula): AmountConfig {
+  switch (formula.type) {
+    case 'balanceOfEscrow':
+      return {
+        id: hash([
+          formula.type,
+          formula.address,
+          formula.chain,
+          formula.decimals.toString(),
+          ...formula.escrowAddresses.sort(),
+        ]),
+        ...formula,
+      }
+    case 'totalSupply':
+      return {
+        id: hash([
+          formula.type,
+          formula.address,
+          formula.chain,
+          formula.decimals.toString(),
+        ]),
+        ...formula,
+      }
+    case 'circulatingSupply':
+      return {
+        id: hash([formula.type, formula.ticker]),
+        ...formula,
+      }
+  }
+}
+
+export function createPriceConfig(formula: ValueFormula): PriceConfig {
+  return {
+    id: hash([formula.ticker]),
+    ticker: formula.ticker,
+  }
+}
+
+function processFormula(formula: CalculationFormula | ValueFormula): {
+  formulaAmounts: AmountConfig[]
+  formulaPrices: PriceConfig[]
+} {
+  const formulaAmounts: AmountConfig[] = []
+  const formulaPrices: PriceConfig[] = []
+
+  const processFormulaRecursive = (f: CalculationFormula | ValueFormula) => {
+    if (f.type === 'value') {
+      const amount = createAmountConfig(f.amount)
+      formulaAmounts.push(amount)
+
+      const price = createPriceConfig(f)
+      formulaPrices.push(price)
+
+      return
+    }
+
+    for (const arg of f.arguments) {
+      processFormulaRecursive(arg)
+    }
+  }
+
+  processFormulaRecursive(formula)
+
+  return { formulaAmounts, formulaPrices }
+}
+
+export function hash(input: string[]): string {
+  const hash = createHash('sha1').update(input.join('')).digest('hex')
+  return hash.slice(0, 12)
 }
 
 export function mapCoingeckoIdToTicker(coingeckoId: string): string {
