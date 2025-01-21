@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 54131125,
-  "configHash": "0xca6cf546c630f648adbbf422e467f0beb24279f0df191259625f45da7d852f7b",
+  "configHash": "0xe854591192b328a108c288786d3d7f4b78201956fc30da906f91d6c2581e35a1",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -15,19 +15,21 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+          "to": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+          "to": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "via": []
         }
       ],
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "propose transactions."
         }
       ],
@@ -87,7 +89,8 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "description": "propose transactions.",
           "via": []
         }
       ],
@@ -140,14 +143,15 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "description": "propose transactions.",
           "via": []
         }
       ],
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."
         }
       ],
@@ -200,14 +204,15 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+          "to": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "via": []
         }
       ],
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "propose transactions."
         }
       ],
@@ -267,12 +272,14 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "to": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+          "to": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
           "via": []
         },
         {
@@ -376,7 +383,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "propose transactions."
         }
       ],
@@ -433,7 +440,8 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "description": "propose transactions.",
           "via": []
         }
       ],
@@ -504,7 +512,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "control all roles in the ZkToken access control, including the minter roles."
         },
         {
@@ -526,7 +534,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "from": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
         }
       ]
@@ -537,12 +545,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "from": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
         },
         {
           "permission": "configure",
-          "target": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "from": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
         }
       ]
@@ -953,6 +961,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "shared-zk-stack/ZkGovernor": "0xd80c94c3d28dfdb1063efbe5f5da6328d5508522a0674abd94eb28f8008a654d"
+    "shared-zk-stack/TimelockController": "0xd6ff9b243c3dad668503509205492add43ffb5864a1103af0325f614c0f60c70",
+    "shared-zk-stack/ZkGovernor": "0x5ee2a860061a926f971766161f91f72966530aff59dd15dc6f83bf23b163137d",
+    "shared-zk-stack/ZkToken": "0xaa46dbafa3e45e838e6a94305e96f1ede699f8195ad6b7626091d38c3b9e7083"
   }
 }
