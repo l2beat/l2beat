@@ -16,7 +16,7 @@ export type CostsProjectsFilter = z.infer<typeof CostsProjectsFilter>
 
 export function getCostsProjects(
   filter: CostsProjectsFilter = { type: 'all' },
-  previewRecategorisation: boolean,
+  previewRecategorisation = false,
 ): Layer2[] {
   const condition = filterToCondition(filter, previewRecategorisation)
   return layer2s.filter(

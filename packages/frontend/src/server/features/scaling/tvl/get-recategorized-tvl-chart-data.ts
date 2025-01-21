@@ -19,7 +19,7 @@ export const RecategorizedTvlChartDataParams = z.object({
   range: TvlChartRange,
   filter: TvlProjectFilter,
   excludeAssociatedTokens: z.boolean(),
-  previewRecategorisation: z.boolean(),
+  previewRecategorisation: z.boolean().default(false),
 })
 
 export type RecategorizedTvlChartDataParams = z.infer<
