@@ -15,7 +15,11 @@ export type ArrayFromOneEventHandlerDefinition = z.infer<
 export const ArrayFromOneEventHandlerDefinition = z.strictObject({
   type: z.literal('arrayFromOneEvent'),
   event: z.string(),
+
+  // Select
   valueKey: z.string(),
+
+  // Filter
   flagKey: z.optional(z.string()),
   flagTrueValues: z.optional(
     z.array(z.union([z.string(), z.number(), z.boolean()])),
@@ -24,8 +28,9 @@ export const ArrayFromOneEventHandlerDefinition = z.strictObject({
     z.array(z.union([z.string(), z.number(), z.boolean()])),
   ),
   invert: z.optional(z.boolean()),
-  ignoreRelative: z.optional(z.boolean()),
   topics: z.optional(z.array(z.union([z.string(), z.null()]))),
+
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 export class ArrayFromOneEventHandler implements Handler {

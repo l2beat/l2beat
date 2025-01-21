@@ -13,10 +13,13 @@ export type ArrayFromTwoEventsHandlerDefinition = z.infer<
 >
 export const ArrayFromTwoEventsHandlerDefinition = z.strictObject({
   type: z.literal('arrayFromTwoEvents'),
+
+  // Select & Negative event
   addEvent: z.string(),
   addKey: z.string(),
   removeEvent: z.string(),
   removeKey: z.string(),
+
   ignoreRelative: z.optional(z.boolean()),
 })
 

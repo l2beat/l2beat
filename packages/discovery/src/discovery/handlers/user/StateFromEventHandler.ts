@@ -14,9 +14,17 @@ export type StateFromEventDefinition = z.infer<typeof StateFromEventDefinition>
 export const StateFromEventDefinition = z.strictObject({
   type: z.literal('stateFromEvent'),
   event: z.string(),
-  topics: z.optional(z.array(z.union([z.string(), z.null()]))),
+
+  // Select
   returnParams: z.array(z.string()),
+
+  // Filter
+  topics: z.optional(z.array(z.union([z.string(), z.null()]))),
+
+  // Group by
   groupBy: z.optional(z.string()),
+
+  // Misc
   onlyValue: z.optional(z.boolean()),
   multipleInGroup: z.optional(z.boolean()),
   ignoreRelative: z.optional(z.boolean()),

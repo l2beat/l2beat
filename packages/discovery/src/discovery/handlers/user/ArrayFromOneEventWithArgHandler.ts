@@ -15,12 +15,17 @@ export type ArrayFromOneEventWithArgHandlerDefinition = z.infer<
 export const ArrayFromOneEventWithArgHandlerDefinition = z.strictObject({
   type: z.literal('arrayFromOneEventWithArg'),
   event: z.string(),
+
+  // Select
   valueKey: z.string(),
+
+  // Filter
   flagKey: z.optional(z.string()),
   invert: z.optional(z.boolean()),
-  ignoreRelative: z.optional(z.boolean()),
   arg: z.string(),
   argValue: z.string(),
+
+  ignoreRelative: z.optional(z.boolean()),
 })
 
 export class ArrayFromOneEventWithArgHandler implements Handler {

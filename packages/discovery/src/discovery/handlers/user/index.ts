@@ -89,10 +89,6 @@ import {
   StateFromEventDefinition,
   StateFromEventHandler,
 } from './StateFromEventHandler'
-import {
-  StateFromEventTupleDefinition,
-  StateFromEventTupleHandler,
-} from './StateFromEventTupleHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 import {
   ZKsyncEraScheduledTransactionHandler,
@@ -102,6 +98,7 @@ import {
   ZKsyncEraValidatorsHandler,
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
+import { EventHandler, EventHandlerDefinition } from './EventHandler'
 
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = z.union([
@@ -110,6 +107,7 @@ export const UserHandlerDefinition = z.union([
   DynamicArrayHandlerDefinition,
   ArrayHandlerDefinition,
   CallHandlerDefinition,
+  EventHandlerDefinition,
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
   ScrollAccessControlHandlerDefinition,
@@ -120,7 +118,6 @@ export const UserHandlerDefinition = z.union([
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
   StateFromEventDefinition,
-  StateFromEventTupleDefinition,
   HardCodedDefinition,
   StarkWareGovernanceHandlerDefinition,
   LayerZeroMultisigHandlerDefinition,
@@ -151,6 +148,8 @@ export function getUserHandler(
       return new ArrayHandler(field, definition, abi)
     case 'call':
       return new CallHandler(field, definition, abi)
+    case 'event':
+      return new EventHandler(field, definition, abi)
     case 'starkWareNamedStorage':
       return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
