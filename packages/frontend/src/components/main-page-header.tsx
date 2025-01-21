@@ -10,9 +10,15 @@ interface Props {
   children: ReactNode
   description?: string
   className?: string
+  showPreviewRecategorisation?: boolean
 }
 
-export function MainPageHeader({ children, description, className }: Props) {
+export function MainPageHeader({
+  children,
+  description,
+  className,
+  showPreviewRecategorisation,
+}: Props) {
   const { checked, setChecked } = useRecategorisationPreviewContext()
   return (
     <header
@@ -35,15 +41,17 @@ export function MainPageHeader({ children, description, className }: Props) {
         )}
       </div>
       <div className="flex items-center gap-5">
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-semibold">
-            Preview Recategorisation
-          </span>
-          <Switch
-            checked={checked}
-            onCheckedChange={(checked) => setChecked(!!checked)}
-          />
-        </div>
+        {showPreviewRecategorisation && (
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-semibold">
+              Preview Recategorisation
+            </span>
+            <Switch
+              checked={checked}
+              onCheckedChange={(checked) => setChecked(!!checked)}
+            />
+          </div>
+        )}
         <SearchBarButton />
       </div>
     </header>

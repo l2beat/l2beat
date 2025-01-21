@@ -31,7 +31,9 @@ export default async function Page() {
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
-              <MainPageHeader>Onchain costs</MainPageHeader>
+              <MainPageHeader showPreviewRecategorisation>
+                Onchain costs
+              </MainPageHeader>
               <ScalingCostsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>

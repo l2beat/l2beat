@@ -14,7 +14,7 @@ export default async function Page() {
   const entries = await getScalingArchivedEntries()
   return (
     <>
-      <MainPageHeader>Archived</MainPageHeader>
+      <MainPageHeader showPreviewRecategorisation>Archived</MainPageHeader>
       <ScalingFilterContextProvider>
         <ScalingArchivedTables {...entries} />
       </ScalingFilterContextProvider>
