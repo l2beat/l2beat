@@ -5,6 +5,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/other-migration-tooltip'
 import { Markdown } from '~/components/markdown/markdown'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { featureFlags } from '~/consts/feature-flags'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
@@ -20,6 +21,7 @@ export interface ProjectCellProps {
 }
 
 export function ProjectNameCell({ project, className }: ProjectCellProps) {
+  const { checked } = useRecategorisationPreviewContext()
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
@@ -69,7 +71,8 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         {project.statuses?.syncWarning && (
           <NotSyncedIcon content={project.statuses.syncWarning} />
         )}
-        {project.statuses?.countdowns?.otherMigration &&
+        {!checked &&
+          project.statuses?.countdowns?.otherMigration &&
           !featureFlags.othersMigrated() && (
             <OtherMigrationTooltip
               {...project.statuses.countdowns.otherMigration}
