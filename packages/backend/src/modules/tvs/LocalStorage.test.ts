@@ -1,3 +1,4 @@
+import { existsSync, unlinkSync } from 'fs'
 import path from 'path'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -6,6 +7,12 @@ import { LocalStorage } from './LocalStorage'
 const TEST_FILE_PATH = path.join(__dirname, 'local-data-test.json')
 
 describe(LocalStorage.name, () => {
+  afterEach(() => {
+    if (existsSync(TEST_FILE_PATH)) {
+      unlinkSync(TEST_FILE_PATH)
+    }
+  })
+
   describe('amounts', () => {
     it('can write and read amount', async () => {
       const storage = new LocalStorage(TEST_FILE_PATH)
