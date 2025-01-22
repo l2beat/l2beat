@@ -461,7 +461,7 @@ export const ink: Layer2 = {
     {
       name: 'Ink becomes Stage 1',
       link: 'https://app.blocksec.com/explorer/tx/eth/0x20fdc1a418ba706e35ade3a2bf1e4c9198c3c62e79d1b688fd951b900d065c27',
-      date: '2024-01-22T00:00:00Z',
+      date: '2025-01-22T00:00:00Z',
       type: 'general',
     },
   ],
