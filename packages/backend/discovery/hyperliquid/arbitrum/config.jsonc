@@ -22,13 +22,9 @@
         },
         "validatorSetUpdates": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "FinalizedValidatorSetUpdate",
-            "returnParams": [
-              "epoch",
-              "hotValidatorSetHash",
-              "coldValidatorSetHash"
-            ]
+            "type": "event",
+            "events": "FinalizedValidatorSetUpdate",
+            "select": ["epoch", "hotValidatorSetHash", "coldValidatorSetHash"]
           }
         },
         "lockers": {

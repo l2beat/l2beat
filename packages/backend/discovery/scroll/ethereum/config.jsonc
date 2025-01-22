@@ -121,9 +121,9 @@
         },
         "revertedBatches": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RevertBatch",
-            "returnParams": ["batchIndex"]
+            "type": "event",
+            "events": "RevertBatch",
+            "select": "batchIndex"
           }
         }
       }

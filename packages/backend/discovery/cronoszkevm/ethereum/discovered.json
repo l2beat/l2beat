@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 20876242,
-  "configHash": "0x2861e2302bf75f4253912622efc927cc5d9545c582c9dd54d5039423d5015b36",
+  "configHash": "0xc22f751a38aeb7a0e54e0c5205b4159a19bccb789047ef8e6bb400e4f5fb70e7",
   "contracts": [
     {
       "name": "CronosChainAdminMultisig",

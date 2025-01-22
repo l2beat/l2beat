@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 21585285,
-  "configHash": "0x8c2a432be42d9bc504a059dddf13595bd05747810b54a9ea5d91077fff5968f2",
+  "configHash": "0xbff11ebcc4f6558b5c64173d1774e207597ecce5c661025185e84574676dbb7b",
   "contracts": [
     {
       "name": "TreasureChainAdminMultisig",
@@ -466,6 +466,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42"
+    "shared-zk-stack/ChainAdmin": "0xb5e5a3c292bd0ea76e928d41a3725bd8cbecbe836d6f500b51572b1b078e4eb3"
   }
 }

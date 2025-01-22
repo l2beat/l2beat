@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 9010064,
-  "configHash": "0xe34cd9ffb4941048ea0d1e9488d6c16020d550a888771ed3b587db3adbcd4e25",
+  "configHash": "0x7195de2dfd6805f429f6568bbafdb2986da5ca466d4f03054679473cd311fda3",
   "contracts": [
     {
       "name": "LineaOwner",

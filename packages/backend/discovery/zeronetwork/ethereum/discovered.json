@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "ethereum",
   "blockNumber": 21643075,
-  "configHash": "0x89e57d25d60033255a7ad7961812b1efc5a7c55da969ffea231a283569d5773d",
+  "configHash": "0x33888725d8d896df414ce776e8bf81e381daf3ad482d59b8397fe5373933f274",
   "contracts": [
     {
       "name": "Verifier",
@@ -555,6 +555,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42"
+    "shared-zk-stack/ChainAdmin": "0xb5e5a3c292bd0ea76e928d41a3725bd8cbecbe836d6f500b51572b1b078e4eb3"
   }
 }

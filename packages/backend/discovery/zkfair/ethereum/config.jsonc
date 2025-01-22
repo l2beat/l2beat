@@ -42,9 +42,9 @@
         },
         "nondeterminsiticPendingState": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "ProveNonDeterministicPendingState",
-            "returnParams": ["storedStateRoot", "provedStateRoot"]
+            "type": "event",
+            "events": "ProveNonDeterministicPendingState",
+            "select": ["storedStateRoot", "provedStateRoot"]
           }
         }
       }

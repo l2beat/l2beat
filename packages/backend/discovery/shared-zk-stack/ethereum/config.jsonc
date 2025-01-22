@@ -98,13 +98,9 @@
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "NewChain",
-            "returnParams": [
-              "chainId",
-              "stateTransitionManager",
-              "chainGovernance"
-            ],
+            "type": "event",
+            "events": "NewChain",
+            "select": ["chainId", "stateTransitionManager", "chainGovernance"],
             "ignoreRelative": true
           }
         },
@@ -287,9 +283,9 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "BlocksRevert",
-            "returnParams": [
+            "type": "event",
+            "events": "BlocksRevert",
+            "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
               "totalBlocksExecuted"

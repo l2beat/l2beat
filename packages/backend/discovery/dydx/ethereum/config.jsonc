@@ -138,9 +138,9 @@
         },
         "slashings": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "Slashed",
-            "returnParams": ["amount", "recipient", "newExchangeRate"]
+            "type": "event",
+            "events": "Slashed",
+            "select": ["amount", "recipient", "newExchangeRate"]
           }
         }
       }

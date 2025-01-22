@@ -35,9 +35,9 @@
         },
         "shutdownTriggered": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "Shutdown",
-            "returnParams": ["timestamp"]
+            "type": "event",
+            "events": "Shutdown",
+            "select": "timestamp"
           }
         }
       }

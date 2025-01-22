@@ -853,7 +853,7 @@
     "opstack/BalanceClaimer": "0x3bd1a0ea8aaf6710750ecf795e6a2432031244c80ffa756d1be1e2707faa2dd5",
     "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
     "opstack/L1StandardBridge_PGN_withdraw": "0xe78c681145e381549b8349d4536c866167108bfb2dc4c904cf4a0b5ab73cb9af",
-    "opstack/L2OutputOracle": "0x691da8dacc65ccf4a86c0912d7d29cc900873c84fa82867e830699155c114f95",
+    "opstack/L2OutputOracle": "0xf1a446574e13944d998274bad7c8df777ae49d3306f31115ec0c5d6e3df3ec6a",
     "opstack/OptimismPortal_PGN_withdraw": "0xaf023c7d1d73efebf5ff0d6a506071db0dfed492ff7ce22116b364ae607dc16b",
     "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30"
   }

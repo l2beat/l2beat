@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 21629172,
-  "configHash": "0xf8252995b12414a318c199b3e896c95755ffa0f84ee5e18574c9cb6486ded3dd",
+  "configHash": "0xd1afda19d143811a3606a118af72bd28c66c40496b66d7f20d0e607efbc94c55",
   "contracts": [
     {
       "name": "GrvtChainAdminMultisig",
@@ -687,6 +687,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42"
+    "shared-zk-stack/ChainAdmin": "0xb5e5a3c292bd0ea76e928d41a3725bd8cbecbe836d6f500b51572b1b078e4eb3"
   }
 }

@@ -109,9 +109,9 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "BlocksRevert",
-            "returnParams": ["totalBlocksCommitted", "totalBlocksVerified"]
+            "type": "event",
+            "events": "BlocksRevert",
+            "select": ["totalBlocksCommitted", "totalBlocksVerified"]
           }
         }
       },

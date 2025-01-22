@@ -963,7 +963,7 @@
     "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
     "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
     "opstack/L1StandardBridge_soon": "0xbcc1dfd0bc27c8bca431dee56013c21b809d19ee73f7f72892ca7aaa790a7352",
-    "opstack/L2OutputOracle": "0x691da8dacc65ccf4a86c0912d7d29cc900873c84fa82867e830699155c114f95",
+    "opstack/L2OutputOracle": "0xf1a446574e13944d998274bad7c8df777ae49d3306f31115ec0c5d6e3df3ec6a",
     "opstack/OptimismPortal_soon": "0x0466abdee1bc81cb9c1e4c88b2dd3ef73ee4f36cb90c8aa1b9981ccbe4639cec",
     "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9"
   }
