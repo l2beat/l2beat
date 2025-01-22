@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { ErrorState } from '../common/error-state'
+import { LoadingState } from '../common/loading-state'
 import type { LogoGeneratorProject } from './data/LogoGeneratorProject'
 import { useLogoGeneratorProjects } from './data/useLogoGeneratorProjects'
 
@@ -12,13 +14,11 @@ export function LogoGenerator() {
   const [types, setTypes] = useState<string[]>(['layer2'])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <LoadingState />
   }
 
   if (isError) {
-    return (
-      <div>An unexpected error occurred. Please report to developer team.</div>
-    )
+    return <ErrorState />
   }
 
   const secondGroupSlugs = secondGroupValue
