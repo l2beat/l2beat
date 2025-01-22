@@ -7,12 +7,14 @@ import type {
 
 export type Operator = 'sum' | 'diff'
 
-export interface Formula {
+export interface CalculationFormula {
+  type: 'calculation'
   operator: Operator
-  arguments: ValueFormula[]
+  arguments: (CalculationFormula | ValueFormula)[]
 }
 
 export type ValueFormula = {
+  type: 'value'
   amount: AmountFormula
   // token ticker
   ticker: string
@@ -75,9 +77,9 @@ export interface Token {
   ticker: string
   amount: AmountFormula
   // we need this formula to handle relations between tokens on the same chain
-  valueForProject?: Formula
+  valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)
-  valueForTotal?: Formula
+  valueForTotal?: CalculationFormula | ValueFormula
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
   category: 'ether' | 'stablecoin' | 'other'

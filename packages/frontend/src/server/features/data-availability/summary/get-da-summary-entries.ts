@@ -100,14 +100,12 @@ function getDaSummaryEntry(
         risks: getDaBridgeRisks(daBridge),
         usedIn: daBridge.usedIn.sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
         dacInfo:
-          daBridge.type === 'DAC'
+          daBridge.type === 'DAC' && !daBridge.hideMembers
             ? {
                 memberCount: daBridge.membersCount,
                 requiredMemebers: daBridge.requiredMembers,
                 membersArePublic:
-                  !!daBridge.knownMembers &&
-                  daBridge.knownMembers.length > 0 &&
-                  !daBridge.hideMembers,
+                  !!daBridge.knownMembers && daBridge.knownMembers.length > 0,
               }
             : undefined,
       }
@@ -157,7 +155,9 @@ function getEthereumEntry(
     nameSecondLine: kindToType(ethereumDaLayer.kind),
     href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
-    usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
+    usedIn: ethereumDaLayer.bridges
+      .flatMap((bridge) => bridge.usedIn)
+      .sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
     economicSecurity: economicSecurity[ethereumDaLayer.id],
     bridge: ethereumDaLayer.bridges[0].display.name,
     tvs: getTvs(
