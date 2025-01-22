@@ -9,6 +9,7 @@ import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
 import { orderLogs } from '../../provider/BatchingAndCachingProvider'
+import { groupBy } from 'lodash'
 
 interface LogRow {
   log: utils.LogDescription
@@ -101,12 +102,33 @@ export class EventHandler implements Handler {
   ): Promise<HandlerResult> {
     const logs = await fetchLogs(provider, address, this.topic0s)
 
-    let logRows: LogRow[] = []
+    const logRows: LogRow[] = []
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)
       logRows.push(getResultObject(parsed, this.keys))
     }
 
+    let values: ContractValue
+    if (this.definition.groupBy !== undefined) {
+      const groupByKey = this.definition.groupBy
+      const grouped = groupBy(logRows, (e) => extractKeys(e, [groupByKey])[groupByKey])
+      values = {}
+      for(const key in grouped) {
+          // biome-ignore lint/style/noNonNullAssertion: we know it's there
+          values[key] = this.evaluateLogs(grouped[key]!)
+      }
+    } else {
+      values = this.evaluateLogs(logRows)
+    }
+
+    return {
+      field: this.field,
+      value: values,
+      ignoreRelative: this.definition.ignoreRelative,
+    }
+  }
+
+  evaluateLogs(logRows: LogRow[]): ContractValue {
     if (this.definition.where !== undefined) {
       logRows = evaluateWhere(logRows, this.definition.where)
     }
@@ -148,11 +170,7 @@ export class EventHandler implements Handler {
       values = values.map((o) => Object.values(o)[0]!)
     }
 
-    return {
-      field: this.field,
-      value: values,
-      ignoreRelative: this.definition.ignoreRelative,
-    }
+    return values
   }
 }
 
