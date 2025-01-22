@@ -7,7 +7,6 @@ export function ErrorState() {
         ))}
       </div>
       <div className="text-2xl">Error ☠️</div>
-      <div>Please report to the developer team.</div>
     </div>
   )
 }
