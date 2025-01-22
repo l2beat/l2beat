@@ -59,11 +59,16 @@ export function useRecategorizedTvlChartRenderParams({
     }
   }, [columns])
 
-  const firstValue = useMemo(() => columns[0]?.values[0]?.value, [columns])
-  const lastValue = useMemo(
-    () => columns[columns.length - 1]?.values[0]!.value ?? 0,
-    [columns],
-  )
+  const firstValue = useMemo(() => {
+    const firstColumn = columns.at(0)
+    const sum = firstColumn?.values.reduce((acc, curr) => acc + curr.value, 0)
+    return sum
+  }, [columns])
+  const lastValue = useMemo(() => {
+    const lastColumn = columns.at(-1)
+    const sum = lastColumn?.values.reduce((acc, curr) => acc + curr.value, 0)
+    return sum
+  }, [columns])
   const change = useMemo(
     () => (lastValue && firstValue ? lastValue / firstValue - 1 : 0),
     [firstValue, lastValue],
