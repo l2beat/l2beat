@@ -36,6 +36,9 @@ export function MobileNavbar({
         </div>
       </div>
       <MobileNavTabs groups={groups} />
+      <div className="border-b border-divider bg-header-primary px-4 py-1 md:hidden">
+        <RecategorisationPreviewSwitch className="justify-between font-medium" />
+      </div>
     </div>
   )
 }

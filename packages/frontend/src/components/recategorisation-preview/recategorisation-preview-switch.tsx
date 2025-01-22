@@ -11,8 +11,8 @@ export function RecategorisationPreviewSwitch({
 }) {
   const { checked, setChecked } = useRecategorisationPreviewContext()
   return (
-    <div className={cn('flex items-center gap-3', className)}>
-      <span className="text-sm font-semibold">Preview Recategorisation</span>
+    <div className={cn('flex items-center gap-3 font-semibold', className)}>
+      <span className="text-sm">Preview Recategorisation</span>
       <Switch
         checked={checked}
         onCheckedChange={(checked) => setChecked(!!checked)}
