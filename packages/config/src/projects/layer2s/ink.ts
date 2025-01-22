@@ -84,7 +84,7 @@ assert(
 const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
   'DisputeGameFactory',
   'initBonds',
-)[0] // 0 is for perissionless games!
+)[0] // 0 is for permissionless games!
 
 const permissionlessGameClockExtension = discovery.getContractValue<number>(
   'PermissionedDisputeGame',
