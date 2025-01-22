@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 25112167,
-  "configHash": "0x7aa56a120f649ca7d05da099d1d2d9ed783599b3395221e693af1dac7ab9e455",
+  "configHash": "0xe61cc7bb9531fa6a1774f1627bae47278a6b1f9d8ae17a4c97e7eb8ff5e13ba8",
   "contracts": [
     {
       "name": "SuccinctFeeVault",

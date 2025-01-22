@@ -2,7 +2,7 @@
   "name": "degate3",
   "chain": "ethereum",
   "blockNumber": 21394291,
-  "configHash": "0x48e221a1ea80def59f37db2b266238f6684097c296d9b2ce4eeeeb225fe3bfc7",
+  "configHash": "0x26e8d7e0ce422ab5fcc0c5b50dec52d6a45871a33e4fc6b9f853ca4f39f1e2f5",
   "contracts": [
     {
       "name": "TimeLock1",

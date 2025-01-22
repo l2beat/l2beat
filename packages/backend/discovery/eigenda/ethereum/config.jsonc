@@ -63,41 +63,37 @@
         "firstQuorumStrategies": {
           "description": "The strategies for the first quorum (ETH).",
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "0"
+            "type": "event",
+            "events": "StrategyAddedToQuorum",
+            "select": "strategy",
+            "where": { "eq": { "column": "quorumNumber", "value": 0 } }
           }
         },
         "secondQuorumStrategies": {
           "description": "The strategies for the second quorum (EIGEN).",
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "1"
+            "type": "event",
+            "events": "StrategyAddedToQuorum",
+            "select": "strategy",
+            "where": { "eq": { "column": "quorumNumber", "value": 1 } }
           }
         },
         "thirdQuorumStrategies": {
           "description": "The strategies for the third quorum.",
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "2"
+            "type": "event",
+            "events": "StrategyAddedToQuorum",
+            "select": "strategy",
+            "where": { "eq": { "column": "quorumNumber", "value": 2 } }
           }
         },
         "fourthQuorumStrategies": {
           "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.",
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "3"
+            "type": "event",
+            "events": "StrategyAddedToQuorum",
+            "select": "strategy",
+            "where": { "eq": { "column": "quorumNumber", "value": 3 } }
           }
         }
       }

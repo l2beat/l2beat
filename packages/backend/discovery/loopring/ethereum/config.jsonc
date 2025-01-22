@@ -64,12 +64,11 @@
       "fields": {
         "blockSubmitters": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "PermissionUpdate",
-            "valueKey": "user",
-            "flagKey": "allowed",
-            "arg": "selector",
-            "argValue": "0x53228430"
+            "type": "event",
+            "events": "PermissionUpdate",
+            "select": "user",
+            "latch": { "truthy": { "column": "allowed" } },
+            "where": { "eq": { "column": "selector", "value": "0x53228430" } }
           }
         }
       }
