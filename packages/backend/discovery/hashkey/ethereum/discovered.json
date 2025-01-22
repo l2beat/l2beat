@@ -1,7 +1,7 @@
 {
   "name": "hashkey",
   "chain": "ethereum",
-  "blockNumber": 21679985,
+  "blockNumber": 21680579,
   "configHash": "0x810dacb12fd203e073487f7ccfa112bcdcd094150c8531c2d0895dac8b07b577",
   "contracts": [
     {

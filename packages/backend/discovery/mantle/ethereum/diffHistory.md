@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3ae720b42f77bb1334a4d95022157b1cf2f232c3
+
+# Diff at Wed, 22 Jan 2025 14:17:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21628468
+- current block number: 21680574
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.5:
+-        "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
++        "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
+    }
+```
+
 Generated with discovered.json: 0x856e8d101462721c93e61079414df593a1e69ba4
 
 # Diff at Mon, 20 Jan 2025 11:09:44 GMT:
