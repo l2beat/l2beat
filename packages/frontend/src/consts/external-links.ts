@@ -11,7 +11,7 @@ export const externalLinks = {
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
   articles: {
     recategorisation:
-      'https://medium.com/l2beat/framework-update-l2-projects-recategorization-5d43b0d1fe50',
+      'https://medium.com/l2beat/framework-update-l2-projects-recategorisation-5d43b0d1fe50',
     stages:
       'https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe',
     finality:

@@ -9,7 +9,7 @@ interface Props {
   others: number
 }
 
-export function RecategorizedTvlChartHover(props: Props) {
+export function RecategorisedTvlChartHover(props: Props) {
   const total = formatCurrency(
     (props.rollups + props.validiumsAndOptimiums + props.others) / 100,
     'usd',

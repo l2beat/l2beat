@@ -12,6 +12,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import {
   OthersInfo,
   RollupsInfo,
@@ -22,6 +23,7 @@ import { type ScalingActivityEntry } from '~/server/features/scaling/activity/ge
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
+import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
 type Props = TabbedScalingEntries<ScalingActivityEntry> & {
@@ -35,6 +37,7 @@ export function ScalingActivityTabs({
   milestones,
 }: Props) {
   const includeFilters = useScalingFilter()
+  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
     rollups: rollups.filter(includeFilters),
@@ -42,15 +45,26 @@ export function ScalingActivityTabs({
     others: others.filter(includeFilters),
   }
 
+  const entries = checked
+    ? // No need to sort because it is done later by TPS/UOPS switch
+      getRecategorisedEntries(filteredEntries, undefined)
+    : filteredEntries
+
   const projectToBeMigratedToOthers = useMemo(
     () =>
-      [...rollups, ...validiumsAndOptimiums, ...others]
-        .filter((project) => project.statuses?.countdowns?.otherMigration)
-        .map((project) => ({
-          slug: project.slug,
-          name: project.name,
-        })),
-    [others, rollups, validiumsAndOptimiums],
+      checked
+        ? []
+        : [
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ]
+            .filter((project) => project.statuses?.countdowns?.otherMigration)
+            .map((project) => ({
+              slug: project.slug,
+              name: project.name,
+            })),
+    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
   )
 
   const initialSort = {
@@ -66,27 +80,24 @@ export function ScalingActivityTabs({
     <>
       <ScalingActivityFilters
         items={[
-          ...filteredEntries.rollups,
-          ...filteredEntries.validiumsAndOptimiums,
-          ...filteredEntries.others,
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
         ]}
         className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
-            Rollups{' '}
-            <CountBadge>{filteredEntries.rollups.length - 1}</CountBadge>
+            Rollups <CountBadge>{entries.rollups.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
-            <CountBadge>
-              {filteredEntries.validiumsAndOptimiums.length - 1}
-            </CountBadge>
+            <CountBadge>{entries.validiumsAndOptimiums.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
           {showOthers && (
             <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
@@ -99,7 +110,7 @@ export function ScalingActivityTabs({
             />
             <HorizontalSeparator className="mb-3 mt-5" />
             <RollupsInfo />
-            <ScalingActivityTable entries={filteredEntries.rollups} rollups />
+            <ScalingActivityTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -112,9 +123,7 @@ export function ScalingActivityTabs({
             />
             <HorizontalSeparator className="mb-3 mt-5" />
             <ValidiumsAndOptimiumsInfo />
-            <ScalingActivityTable
-              entries={filteredEntries.validiumsAndOptimiums}
-            />
+            <ScalingActivityTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {showOthers && (
@@ -128,7 +137,7 @@ export function ScalingActivityTabs({
               />
               <HorizontalSeparator className="mb-3 mt-5" />
               <OthersInfo />
-              <ScalingActivityTable entries={filteredEntries.others} />
+              <ScalingActivityTable entries={entries.others} />
               <OtherMigrationTabNotice
                 projectsToBeMigrated={projectToBeMigratedToOthers}
                 className="mt-2"

@@ -11,6 +11,7 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import {
   OthersInfo,
   RollupsInfo,
@@ -21,6 +22,7 @@ import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-
 import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
+import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingTvlTable } from './table/scaling-tvl-table'
 
 type Props = TabbedScalingEntries<ScalingTvlEntry> & {
@@ -29,21 +31,36 @@ type Props = TabbedScalingEntries<ScalingTvlEntry> & {
 
 export function ScalingTvlTabs(props: Props) {
   const includeFilters = useScalingFilter()
+  const { checked } = useRecategorisationPreviewContext()
+
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
     others: props.others.filter(includeFilters),
   }
 
+  const entries = checked
+    ? getRecategorisedEntries(
+        filteredEntries,
+        (a, b) => b.tvlOrder - a.tvlOrder,
+      )
+    : filteredEntries
+
   const projectToBeMigratedToOthers = useMemo(
     () =>
-      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
-        .filter((project) => project.statuses?.countdowns?.otherMigration)
-        .map((project) => ({
-          slug: project.slug,
-          name: project.name,
-        })),
-    [props.others, props.rollups, props.validiumsAndOptimiums],
+      checked
+        ? []
+        : [
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ]
+            .filter((project) => project.statuses?.countdowns?.otherMigration)
+            .map((project) => ({
+              slug: project.slug,
+              name: project.name,
+            })),
+    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
   )
 
   const initialSort = {
@@ -55,9 +72,9 @@ export function ScalingTvlTabs(props: Props) {
     <>
       <ScalingFilters
         items={[
-          ...filteredEntries.rollups,
-          ...filteredEntries.validiumsAndOptimiums,
-          ...filteredEntries.others,
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
         ]}
         showHostChainFilter
         className="max-md:mt-4"
@@ -65,17 +82,15 @@ export function ScalingTvlTabs(props: Props) {
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
-            Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
+            Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
-            <CountBadge>
-              {filteredEntries.validiumsAndOptimiums.length}
-            </CountBadge>
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {entries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
@@ -88,7 +103,7 @@ export function ScalingTvlTabs(props: Props) {
             />
             <HorizontalSeparator className="my-5" />
             <RollupsInfo />
-            <ScalingTvlTable entries={filteredEntries.rollups} rollups />
+            <ScalingTvlTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -100,7 +115,7 @@ export function ScalingTvlTabs(props: Props) {
             />
             <HorizontalSeparator className="my-5" />
             <ValidiumsAndOptimiumsInfo />
-            <ScalingTvlTable entries={filteredEntries.validiumsAndOptimiums} />
+            <ScalingTvlTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
@@ -112,7 +127,7 @@ export function ScalingTvlTabs(props: Props) {
             />
             <HorizontalSeparator className="my-5" />
             <OthersInfo />
-            <ScalingTvlTable entries={filteredEntries.others} />
+            <ScalingTvlTable entries={entries.others} />
             <OtherMigrationTabNotice
               projectsToBeMigrated={projectToBeMigratedToOthers}
               className="mt-2"
