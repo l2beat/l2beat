@@ -6,6 +6,7 @@ export function LoadingState() {
           <div
             key={index}
             style={{
+              // @ts-expect-error
               '--pixel-index': index.toString(),
             }}
             className="pixel-animate h-full w-full bg-gray-600"

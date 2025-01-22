@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ErrorState } from '../common/error-state'
-import { LoadingState } from '../common/loading-state'
+import { ErrorState } from '../common/ErrorState'
+import { LoadingState } from '../common/LoadingState'
 import type { LogoGeneratorProject } from './data/LogoGeneratorProject'
 import { useLogoGeneratorProjects } from './data/useLogoGeneratorProjects'
 
