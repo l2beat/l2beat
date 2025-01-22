@@ -1,8 +1,9 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 import { IProvider } from '../../provider/IProvider'
 import { EventHandler } from './EventHandler'
+import { isDeepStrictEqual } from 'util'
 
 describe.only(EventHandler.name, () => {
   const stringAbi = [
@@ -32,6 +33,207 @@ describe.only(EventHandler.name, () => {
 
   const ADDRESS = EthereumAddress.random()
 
+  const redistritubeEvents = (
+    topics: (string | string[] | null)[],
+    events: providers.Log[],
+  ): providers.Log[] => {
+    const topic0 = typeof topics[0] === 'string' ? topics[0] : topics[0]?.[0]
+    assert(!!topic0)
+    return events.filter((e) => e.topics[0] === topic0)
+  }
+
+  const getLogsStub = (events: providers.Log[]) => {
+    return (
+      _: EthereumAddress,
+      topics: (string | string[] | null)[],
+    ): Promise<providers.Log[]> => {
+      return new Promise((resolve, _) =>
+        resolve(redistritubeEvents(topics, events)),
+      )
+    }
+  }
+
+  it('filter eq on address', async () => {
+    const filteredAddress = EthereumAddress.random()
+    const values = [
+      { account: filteredAddress, status: true, id: 0 },
+      { account: EthereumAddress.random(), status: false, id: 1 },
+      { account: filteredAddress, status: false, id: 2 },
+      { account: filteredAddress, status: true, id: 0 },
+      { account: EthereumAddress.random(), status: true, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+    ]
+
+    const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
+    const events = values.map((v, i) =>
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
+    )
+
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
+
+    const handler = new EventHandler(
+      'field',
+      {
+        type: 'event',
+        events: ['OwnerChanged', 'OwnerFlipped', 'OwnerFlopped'],
+        where: { eq: { column: 'account', value: filteredAddress } },
+      },
+      stringAbi,
+    )
+    const result = await handler.execute(provider, ADDRESS)
+
+    const expected = values.filter((v) => v.account === filteredAddress)
+    expect(result.value).toEqual(expected)
+  })
+
+  it('filter eq on boolean', async () => {
+    const values = [
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: false, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: true, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+    ]
+
+    const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
+    const events = values.map((v, i) =>
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
+    )
+
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
+
+    const handler = new EventHandler(
+      'field',
+      {
+        type: 'event',
+        events: ['OwnerChanged', 'OwnerFlipped', 'OwnerFlopped'],
+        where: { eq: { column: 'status', value: false } },
+      },
+      stringAbi,
+    )
+    const result = await handler.execute(provider, ADDRESS)
+
+    const expected = values.filter((v) => v.status === false)
+    expect(result.value).toEqual(expected)
+  })
+
+  it('filter eq on number', async () => {
+    const values = [
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: false, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: true, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+    ]
+
+    const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
+    const events = values.map((v, i) =>
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
+    )
+
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
+
+    const handler = new EventHandler(
+      'field',
+      {
+        type: 'event',
+        events: ['OwnerChanged', 'OwnerFlipped', 'OwnerFlopped'],
+        where: { eq: { column: 'id', value: 1 } },
+      },
+      stringAbi,
+    )
+    const result = await handler.execute(provider, ADDRESS)
+
+    const expected = values.filter((v) => v.id === 1)
+    expect(result.value).toEqual(expected)
+  })
+
+  it('filter truthy on number', async () => {
+    const values = [
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: false, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: true, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+    ]
+
+    const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
+    const events = values.map((v, i) =>
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
+    )
+
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
+
+    const handler = new EventHandler(
+      'field',
+      {
+        type: 'event',
+        events: ['OwnerChanged', 'OwnerFlipped', 'OwnerFlopped'],
+        where: { truthy: { column: 'id' } },
+      },
+      stringAbi,
+    )
+    const result = await handler.execute(provider, ADDRESS)
+
+    const expected = values.filter((v) => v.id)
+    expect(result.value).toEqual(expected)
+  })
+
+  it('filter truthy on boolean', async () => {
+    const values = [
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: false, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+      { account: EthereumAddress.random(), status: true, id: 0 },
+      { account: EthereumAddress.random(), status: true, id: 1 },
+      { account: EthereumAddress.random(), status: false, id: 2 },
+    ]
+
+    const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
+    const events = values.map((v, i) =>
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
+    )
+
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
+
+    const handler = new EventHandler(
+      'field',
+      {
+        type: 'event',
+        events: ['OwnerChanged', 'OwnerFlipped', 'OwnerFlopped'],
+        where: { truthy: { column: 'status' } },
+      },
+      stringAbi,
+    )
+    const result = await handler.execute(provider, ADDRESS)
+
+    const expected = values.filter((v) => v.status)
+    expect(result.value).toEqual(expected)
+  })
+
   it('distinct on a multiple keys and select', async () => {
     const values = [
       { account: EthereumAddress.random(), status: true, id: 0 },
@@ -44,12 +246,14 @@ describe.only(EventHandler.name, () => {
 
     const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
     const events = values.map((v, i) =>
-      encoders[i % encoders.length]!(v.account, v.status, v.id),
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
     )
 
-    const provider = mockObject<IProvider>({
-      getLogs: mockFn().returnsOnce(events),
-    })
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
 
     const handler = new EventHandler(
       'field',
@@ -64,7 +268,9 @@ describe.only(EventHandler.name, () => {
     const result = await handler.execute(provider, ADDRESS)
 
     const expected = [...values.slice(0, 3), values[4]!]
-    expect(result.value).toEqual(expected.map((v) => ({ account: v.account, status: v.status })))
+    expect(result.value).toEqual(
+      expected.map((v) => ({ account: v.account, status: v.status })),
+    )
   })
 
   it('distinct on a multiple keys', async () => {
@@ -79,12 +285,14 @@ describe.only(EventHandler.name, () => {
 
     const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
     const events = values.map((v, i) =>
-      encoders[i % encoders.length]!(v.account, v.status, v.id),
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
     )
 
-    const provider = mockObject<IProvider>({
-      getLogs: mockFn().returnsOnce(events),
-    })
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
 
     const handler = new EventHandler(
       'field',
@@ -112,12 +320,14 @@ describe.only(EventHandler.name, () => {
 
     const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
     const events = values.map((v, i) =>
-      encoders[i % encoders.length]!(v.account, v.status, v.id),
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
     )
 
-    const provider = mockObject<IProvider>({
-      getLogs: mockFn().returnsOnce(events),
-    })
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
 
     const handler = new EventHandler(
       'field',
@@ -145,12 +355,14 @@ describe.only(EventHandler.name, () => {
 
     const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
     const events = values.map((v, i) =>
-      encoders[i % encoders.length]!(v.account, v.status, v.id),
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
     )
 
-    const provider = mockObject<IProvider>({
-      getLogs: mockFn().returnsOnce(events),
-    })
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
 
     const handler = new EventHandler(
       'field',
@@ -180,12 +392,14 @@ describe.only(EventHandler.name, () => {
 
     const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
     const events = values.map((v, i) =>
-      encoders[i % encoders.length]!(v.account, v.status, v.id),
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
     )
 
-    const provider = mockObject<IProvider>({
-      getLogs: mockFn().returnsOnce(events),
-    })
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
 
     const handler = new EventHandler(
       'field',
@@ -203,28 +417,26 @@ describe.only(EventHandler.name, () => {
 
   it('entire event multiple instances compatibility', async () => {
     const values = [
-      { account: EthereumAddress.random(), id: 42, foo: false },
       { account: EthereumAddress.random(), id: 69 },
+      { account: EthereumAddress.random(), id: 1984 },
+      { account: EthereumAddress.random(), id: 42, foo: false },
       { account: EthereumAddress.random(), id: 420, foo: true },
       { account: EthereumAddress.random(), id: 1337, bar: false, foo: 0 },
       { account: EthereumAddress.random(), id: 1970, bar: false, foo: 1 },
-      { account: EthereumAddress.random(), id: 1984 },
       { account: EthereumAddress.random(), id: 9001, bar: false, foo: 2 },
     ] as const
 
     const events = [
-      Event3(values[0].account, values[0].id, values[0].foo),
+      Event2(values[0].account, values[0].id),
       Event2(values[1].account, values[1].id),
       Event3(values[2].account, values[2].id, values[2].foo),
-      Event4(values[3].account, values[3].id, values[3].bar, values[3].foo),
+      Event3(values[3].account, values[3].id, values[3].foo),
       Event4(values[4].account, values[4].id, values[4].bar, values[4].foo),
-      Event2(values[5].account, values[5].id),
+      Event4(values[5].account, values[5].id, values[5].bar, values[5].foo),
       Event4(values[6].account, values[6].id, values[6].bar, values[6].foo),
     ]
 
-    const provider = mockObject<IProvider>({
-      getLogs: mockFn().returnsOnce(events),
-    })
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
 
     const handler = new EventHandler(
       'field',
@@ -343,12 +555,14 @@ describe.only(EventHandler.name, () => {
 
     const encoders = [OwnerChanged, OwnerFlipped, OwnerFlopped]
     const events = values.map((v, i) =>
-      encoders[i % encoders.length]!(v.account, v.status, v.id),
+      encoders[Math.floor((i + 1) / encoders.length)]!(
+        v.account,
+        v.status,
+        v.id,
+      ),
     )
 
-    const provider = mockObject<IProvider>({
-      getLogs: mockFn().returnsOnce(events),
-    })
+    const provider = mockObject<IProvider>({ getLogs: getLogsStub(events) })
 
     const handler = new EventHandler(
       'field',

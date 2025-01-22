@@ -556,7 +556,7 @@ export class BatchingAndCachingProvider {
   }
 }
 
-function orderLogs(a: providers.Log, b: providers.Log) {
+export function orderLogs(a: providers.Log, b: providers.Log) {
   const blocks = a.blockNumber - b.blockNumber
   if (blocks !== 0) {
     return blocks
