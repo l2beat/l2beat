@@ -13,7 +13,7 @@ interface Props {
   syncedUntil?: number
 }
 
-export function RecategorizedActivityChartHover(props: Props) {
+export function RecategorisedActivityChartHover(props: Props) {
   const values = [
     {
       title: 'Rollups',

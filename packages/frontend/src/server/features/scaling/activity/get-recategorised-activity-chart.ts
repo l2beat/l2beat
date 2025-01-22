@@ -20,20 +20,20 @@ import { type ActivityTimeRange } from './utils/range'
  * A function that computes values for chart data of the activity over time.
  * @returns [timestamp, rollupsCount, validiumAndOptimiumsCount, othersCount, ethereumCount][] - all numbers
  */
-export function getRecategorizedActivityChart(
-  ...parameters: Parameters<typeof getCachedRecategorizedActivityChartData>
+export function getRecategorisedActivityChart(
+  ...parameters: Parameters<typeof getCachedRecategorisedActivityChartData>
 ) {
   if (env.MOCK) {
-    return getMockRecategorizedActivityChart(...parameters)
+    return getMockRecategorisedActivityChart(...parameters)
   }
-  return getCachedRecategorizedActivityChartData(...parameters)
+  return getCachedRecategorisedActivityChartData(...parameters)
 }
 
-export type RecategorizedActivityChartData = Awaited<
-  ReturnType<typeof getCachedRecategorizedActivityChartData>
+export type RecategorisedActivityChartData = Awaited<
+  ReturnType<typeof getCachedRecategorisedActivityChartData>
 >
 
-export const getCachedRecategorizedActivityChartData = cache(
+export const getCachedRecategorisedActivityChartData = cache(
   async (
     filter: ActivityProjectFilter,
     range: ActivityTimeRange,
@@ -144,17 +144,17 @@ export const getCachedRecategorizedActivityChartData = cache(
       syncedUntil: syncedUntil.toNumber(),
     }
   },
-  ['recategorized-activity-chart-data'],
+  ['recategorised-activity-chart-data'],
   {
     tags: ['activity'],
   },
 )
 
-function getMockRecategorizedActivityChart(
+function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
   __: boolean,
-): RecategorizedActivityChartData {
+): RecategorisedActivityChartData {
   const [from, to] = getRangeWithMax(timeRange, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? MIN_TIMESTAMPS.activity,

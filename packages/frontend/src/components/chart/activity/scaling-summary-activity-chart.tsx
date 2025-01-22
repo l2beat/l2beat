@@ -13,8 +13,8 @@ import { formatActivityCount } from '~/utils/number-format/format-activity-count
 import { Chart } from '../core/chart'
 import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
-import { RecategorizedActivityChartHover } from './recategorized-activity-chart-hover'
-import { useRecategorizedActivityChartRenderParams } from './use-recategorized-activity-chart-render-params'
+import { RecategorisedActivityChartHover } from './recategorised-activity-chart-hover'
+import { useRecategorisedActivityChartRenderParams } from './use-recategorised-activity-chart-render-params'
 
 interface Props {
   timeRange: ActivityTimeRange
@@ -26,14 +26,14 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
     filter: { type: 'all' },
     previewRecategorisation: checked,
   })
-  const { data, isLoading } = api.activity.recategorizedChart.useQuery({
+  const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
     previewRecategorisation: checked,
   })
 
   const { columns, valuesStyle, formatYAxisLabel } =
-    useRecategorizedActivityChartRenderParams({
+    useRecategorisedActivityChartRenderParams({
       chart: data,
       milestones: [],
     })
@@ -46,7 +46,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <RecategorizedActivityChartHover {...data} />
+        <RecategorisedActivityChartHover {...data} />
       )}
     >
       <section className="flex flex-col gap-4">

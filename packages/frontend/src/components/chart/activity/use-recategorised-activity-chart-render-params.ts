@@ -1,6 +1,6 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
-import { type RecategorizedActivityChartData } from '~/server/features/scaling/activity/get-recategorized-activity-chart'
+import { type RecategorisedActivityChartData } from '~/server/features/scaling/activity/get-recategorised-activity-chart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
@@ -10,10 +10,10 @@ import { mapMilestones } from '../core/utils/map-milestones'
 
 interface Params {
   milestones: Milestone[]
-  chart: RecategorizedActivityChartData | undefined
+  chart: RecategorisedActivityChartData | undefined
 }
 
-export function useRecategorizedActivityChartRenderParams({
+export function useRecategorisedActivityChartRenderParams({
   milestones,
   chart,
 }: Params) {

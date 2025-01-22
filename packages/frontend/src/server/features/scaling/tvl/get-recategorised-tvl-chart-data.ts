@@ -15,15 +15,15 @@ import {
 import { TvlChartRange, getRangeConfig } from './utils/range'
 import { sumValuesPerSource } from './utils/sum-values-per-source'
 
-export const RecategorizedTvlChartDataParams = z.object({
+export const RecategorisedTvlChartDataParams = z.object({
   range: TvlChartRange,
   filter: TvlProjectFilter,
   excludeAssociatedTokens: z.boolean(),
   previewRecategorisation: z.boolean().default(false),
 })
 
-export type RecategorizedTvlChartDataParams = z.infer<
-  typeof RecategorizedTvlChartDataParams
+export type RecategorisedTvlChartDataParams = z.infer<
+  typeof RecategorisedTvlChartDataParams
 >
 
 /**
@@ -32,25 +32,25 @@ export type RecategorizedTvlChartDataParams = z.infer<
  *  [timestamp, rollups, validiumsAndOptimiums, others][] - all numbers
  * }
  */
-export async function getRecategorizedTvlChart(
-  ...args: Parameters<typeof getCachedRecategorizedTvlChartData>
+export async function getRecategorisedTvlChart(
+  ...args: Parameters<typeof getCachedRecategorisedTvlChartData>
 ) {
   if (env.MOCK) {
     return getMockTvlChartData(...args)
   }
-  return getCachedRecategorizedTvlChartData(...args)
+  return getCachedRecategorisedTvlChartData(...args)
 }
 
-export type RecategorizedTvlChartData = Awaited<
-  ReturnType<typeof getCachedRecategorizedTvlChartData>
+export type RecategorisedTvlChartData = Awaited<
+  ReturnType<typeof getCachedRecategorisedTvlChartData>
 >
-export const getCachedRecategorizedTvlChartData = cache(
+export const getCachedRecategorisedTvlChartData = cache(
   async ({
     range,
     excludeAssociatedTokens,
     filter,
     previewRecategorisation,
-  }: RecategorizedTvlChartDataParams) => {
+  }: RecategorisedTvlChartDataParams) => {
     const projectsFilter = createTvlProjectsFilter(
       filter,
       previewRecategorisation,
@@ -84,7 +84,7 @@ export const getCachedRecategorizedTvlChartData = cache(
       },
     )
   },
-  ['recategorized-tvl-chart-data'],
+  ['recategorised-tvl-chart-data'],
   {
     tags: ['tvl'],
   },
@@ -136,7 +136,7 @@ function getChartData(
 
 function getMockTvlChartData({
   range,
-}: RecategorizedTvlChartDataParams): RecategorizedTvlChartData {
+}: RecategorisedTvlChartDataParams): RecategorisedTvlChartData {
   const { days, resolution } = getRangeConfig(range)
   const target = getTvlTargetTimestamp().toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',

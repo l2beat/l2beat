@@ -14,7 +14,7 @@ interface Params {
   unit: ChartUnit
 }
 
-export function useRecategorizedTvlChartRenderParams({
+export function useRecategorisedTvlChartRenderParams({
   data,
   milestones,
   unit,

@@ -14,15 +14,15 @@ import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartLegend } from '../core/chart-legend'
 import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
-import { RecategorizedTvlChartHover } from './recategorized-tvl-chart-hover'
-import { useRecategorizedTvlChartRenderParams } from './use-recategorized-tvl-chart-render-params'
+import { RecategorisedTvlChartHover } from './recategorised-tvl-chart-hover'
+import { useRecategorisedTvlChartRenderParams } from './use-recategorised-tvl-chart-render-params'
 
 export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
   const { checked } = useRecategorisationPreviewContext()
-  const { data, isLoading } = api.tvl.recategorizedChart.useQuery({
+  const { data, isLoading } = api.tvl.recategorisedChart.useQuery({
     range: timeRange,
     excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
@@ -30,7 +30,7 @@ export function ScalingSummaryTvlChart({
   })
 
   const { formatYAxisLabel, valuesStyle, columns, change, total } =
-    useRecategorizedTvlChartRenderParams({ data, unit, milestones: [] })
+    useRecategorisedTvlChartRenderParams({ data, unit, milestones: [] })
 
   return (
     <ChartProvider
@@ -39,7 +39,7 @@ export function ScalingSummaryTvlChart({
       formatYAxisLabel={formatYAxisLabel}
       range={timeRange}
       isLoading={isLoading}
-      renderHoverContents={(data) => <RecategorizedTvlChartHover {...data} />}
+      renderHoverContents={(data) => <RecategorisedTvlChartHover {...data} />}
     >
       <section className="flex flex-col gap-4">
         <Header
