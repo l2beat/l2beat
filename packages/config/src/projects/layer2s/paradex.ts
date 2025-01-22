@@ -73,13 +73,13 @@ export const paradex: Layer2 = {
   badges: [
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,
-    Badge.Fork.StarknetFork,
+    Badge.Stack.SNStack,
     Badge.Infra.SHARP,
   ],
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    provider: 'Starknet',
+    provider: 'SN Stack',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],

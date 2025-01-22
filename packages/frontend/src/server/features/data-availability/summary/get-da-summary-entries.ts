@@ -100,14 +100,12 @@ function getDaSummaryEntry(
         risks: getDaBridgeRisks(daBridge),
         usedIn: daBridge.usedIn.sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
         dacInfo:
-          daBridge.type === 'DAC'
+          daBridge.type === 'DAC' && !daBridge.hideMembers
             ? {
                 memberCount: daBridge.membersCount,
                 requiredMemebers: daBridge.requiredMembers,
                 membersArePublic:
-                  !!daBridge.knownMembers &&
-                  daBridge.knownMembers.length > 0 &&
-                  !daBridge.hideMembers,
+                  !!daBridge.knownMembers && daBridge.knownMembers.length > 0,
               }
             : undefined,
       }
