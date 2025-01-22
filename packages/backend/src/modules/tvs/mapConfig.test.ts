@@ -26,7 +26,7 @@ describe(mapConfig.name, () => {
 
     expect(result.tokens[0]).toEqual({
       id: 'ethereum-native',
-      ticker: 'ETH',
+      priceId: 'Ether',
       amount: {
         type: 'balanceOfEscrow',
         address: EthereumAddress.ZERO,
@@ -52,7 +52,7 @@ describe(mapConfig.name, () => {
       ),
     ).toEqual({
       id: 'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
-      ticker: 'ARB',
+      priceId: 'Arbitrum',
       amount: {
         type: 'balanceOfEscrow',
         address: EthereumAddress('0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1'),
@@ -76,10 +76,10 @@ describe(mapConfig.name, () => {
       ),
     ).toEqual({
       id: 'arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548',
-      ticker: 'ARB',
+      priceId: 'Arbitrum',
       amount: {
         type: 'circulatingSupply',
-        ticker: 'ARB',
+        priceId: 'Arbitrum',
       },
       sinceTimestamp: new UnixTime(1679529600),
       untilTimestamp: undefined,
@@ -94,7 +94,7 @@ describe(mapConfig.name, () => {
       ),
     ).toEqual({
       id: 'arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-      ticker: 'stAethir',
+      priceId: 'Aethir Token',
       amount: {
         type: 'totalSupply',
         address: EthereumAddress('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
@@ -115,7 +115,7 @@ describe(extractPricesAndAmounts.name, () => {
     const tvsConfig = mockObject<TvsConfig>({
       tokens: [
         mockObject<Token>({
-          ticker: 'ARB',
+          priceId: 'Arbitrum',
           amount: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(
@@ -132,16 +132,16 @@ describe(extractPricesAndAmounts.name, () => {
           valueForTotal: undefined,
         }),
         mockObject<Token>({
-          ticker: 'ARB',
+          priceId: 'Arbitrum',
           amount: {
             type: 'circulatingSupply',
-            ticker: 'ARB',
+            priceId: 'Arbitrum',
           },
           valueForProject: undefined,
           valueForTotal: undefined,
         }),
         mockObject<Token>({
-          ticker: 'stAethir',
+          priceId: 'Aethir Token',
           amount: {
             type: 'totalSupply',
             address: EthereumAddress(
@@ -160,6 +160,7 @@ describe(extractPricesAndAmounts.name, () => {
     expect(result).toEqual({
       amounts: [
         {
+          id: '11466053d846',
           address: EthereumAddress(
             '0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
           ),
@@ -169,12 +170,11 @@ describe(extractPricesAndAmounts.name, () => {
             '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             '0xcEe284F754E854890e311e3280b767F80797180d',
           ],
-          id: '11466053d846',
           type: 'balanceOfEscrow',
         },
         {
-          id: 'fa28ab16f857',
-          ticker: 'ARB',
+          id: '9acbb525de9c',
+          priceId: 'Arbitrum',
           type: 'circulatingSupply',
         },
         {
@@ -189,12 +189,12 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: 'c29d12840de6',
-          ticker: 'ARB',
+          id: '00f0901ff35c',
+          priceId: 'Arbitrum',
         },
         {
-          id: 'd909709e003f',
-          ticker: 'stAethir',
+          id: '47c9fd74028d',
+          priceId: 'Aethir Token',
         },
       ],
     })
@@ -215,7 +215,7 @@ describe(extractPricesAndAmounts.name, () => {
       tokens: [
         // WBTC with amount formula as totalSupply on L2
         mockObject<Token>({
-          ticker: 'WBTC',
+          priceId: 'Wrapped BTC',
           amount: {
             type: 'totalSupply',
             address: wBTCContractAddress,
@@ -229,7 +229,7 @@ describe(extractPricesAndAmounts.name, () => {
         // - amount formula as totalSupply on L2
         // - valueForProject formula as totalSupply of solveBTC on L2 - balance of WBTC locked in solvBTC escrow
         mockObject<Token>({
-          ticker: 'solvBTC',
+          priceId: 'Solv BTC',
           amount: {
             type: 'totalSupply',
             address: solvBTCContractAddress,
@@ -248,7 +248,7 @@ describe(extractPricesAndAmounts.name, () => {
                   chain: 'bob',
                   decimals: 18,
                 },
-                ticker: 'solvBTC',
+                priceId: 'Solv BTC',
               },
               {
                 type: 'value',
@@ -259,7 +259,7 @@ describe(extractPricesAndAmounts.name, () => {
                   decimals: 18,
                   escrowAddresses: [solvBTCEscrowAddress],
                 },
-                ticker: 'WBTC',
+                priceId: 'Wrapped BTC',
               },
             ],
           },
@@ -296,12 +296,12 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: 'aa65c34f8046',
-          ticker: 'WBTC',
+          id: '5b34e0e2157f',
+          priceId: 'Wrapped BTC',
         },
         {
-          id: 'a3107e58f901',
-          ticker: 'solvBTC',
+          id: 'caf6c5564a47',
+          priceId: 'Solv BTC',
         },
       ],
     })

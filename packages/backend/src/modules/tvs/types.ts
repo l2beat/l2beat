@@ -16,8 +16,7 @@ export interface CalculationFormula {
 export type ValueFormula = {
   type: 'value'
   amount: AmountFormula
-  // token ticker
-  ticker: string
+  priceId: string
 }
 
 export type AmountFormula =
@@ -49,8 +48,8 @@ export interface TotalSupplyAmountFormula {
 
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
-  // token ticker
-  ticker: string
+  // TODO: rethink this model
+  priceId: string
 }
 
 export interface AmountConfigBase {
@@ -74,7 +73,7 @@ export type AmountConfig =
 // token deployed to single chain
 export interface Token {
   id: string
-  ticker: string
+  priceId: string
   amount: AmountFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
@@ -114,7 +113,7 @@ export type TvsConfig = {
 
 export type PriceConfig = {
   id: string
-  ticker: string
+  priceId: string
 }
 
 export interface TokenValue {

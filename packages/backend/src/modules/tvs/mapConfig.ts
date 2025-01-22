@@ -157,7 +157,7 @@ function createToken(
 
       amountFormula = {
         type: 'circulatingSupply',
-        ticker: legacyToken.symbol,
+        priceId: legacyToken.name,
       } as CirculatingSupplyAmountFormula
 
       sinceTimestamp = UnixTime.max(
@@ -172,7 +172,8 @@ function createToken(
 
   return {
     id: legacyToken.id,
-    ticker: mapCoingeckoIdToTicker(legacyToken.coingeckoId),
+    // This is a temporary solution
+    priceId: legacyToken.name,
     amount: amountFormula,
     sinceTimestamp,
     untilTimestamp,
@@ -196,7 +197,7 @@ export function extractPricesAndAmounts(config: TvsConfig): {
 
     const price = createPriceConfig({
       amount: token.amount,
-      ticker: token.ticker,
+      priceId: token.priceId,
     } as ValueFormula)
     prices.set(price.id, price)
 
@@ -248,7 +249,7 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
       }
     case 'circulatingSupply':
       return {
-        id: hash([formula.type, formula.ticker]),
+        id: hash([formula.type, formula.priceId]),
         ...formula,
       }
   }
@@ -256,8 +257,8 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
 
 export function createPriceConfig(formula: ValueFormula): PriceConfig {
   return {
-    id: hash([formula.ticker]),
-    ticker: formula.ticker,
+    id: hash([formula.priceId]),
+    priceId: formula.priceId,
   }
 }
 
@@ -292,12 +293,4 @@ function processFormula(formula: CalculationFormula | ValueFormula): {
 export function hash(input: string[]): string {
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
-}
-
-export function mapCoingeckoIdToTicker(coingeckoId: string): string {
-  const token = tokenList.find((t) => t.coingeckoId === coingeckoId)
-
-  assert(token, `Token not found for coingeckoId ${coingeckoId}`)
-
-  return token.symbol
 }
