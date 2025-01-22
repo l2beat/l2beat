@@ -1,8 +1,8 @@
 {
   "name": "hashkey",
   "chain": "ethereum",
-  "blockNumber": 21672069,
-  "configHash": "0x3a2f42ef004871fe649c29a4608916455f5cde9df77b349fb539ad7340e757c1",
+  "blockNumber": 21679985,
+  "configHash": "0x810dacb12fd203e073487f7ccfa112bcdcd094150c8531c2d0895dac8b07b577",
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
@@ -55,7 +55,7 @@
           "via": [{ "address": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C" }]
         }
       ],
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1734346871,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
@@ -68,7 +68,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 104,
+        "gameCount": 106,
         "gameImpls": [
           "0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
           "0x3fEF4F3e99936E89A8bBdD9E08D83c471D5E152D",
@@ -78,7 +78,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
-        "permissionedGamesTotal": 104,
+        "permissionedGamesTotal": 106,
         "version": "1.0.1-beta.1"
       }
     },
@@ -892,7 +892,7 @@
           "via": [{ "address": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C" }]
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1734346799,
       "values": {
         "$admin": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C",
@@ -905,15 +905,15 @@
           ]
         ],
         "$upgradeCount": 1,
-        "balance": "2208419905782998794146805",
+        "balance": "2209146297669088194025780",
         "disputeGameFactory": "0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "0xC7fCbE26c1Db751d63869F72F782a56710f6be5A",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 21671829
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 21678119
         },
         "paused": false,
         "proofMaturityDelaySeconds": 302400,
@@ -1793,7 +1793,7 @@
     "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
     "opstack/MIPS": "0xf864ac3fea78514d3b30e3049c38c5a3f76399f6e436bf16a2258cd0bbc8e523",
     "opstack/OptimismMintableERC20Factory": "0x64cb1472d54c0965d50a3c62611a8f94c2d2e391d563c34811ec883332ea32bc",
-    "opstack/OptimismPortal2": "0x9fe0f63bd7654e2cf92eaa5a9f2d7f8b1279889a4089fbd6074d2bf5149fe736",
+    "opstack/OptimismPortal2": "0xed5050da4c9a6cb7b21374a009fb0e56013844de684666e965970fc6b15dd0b6",
     "opstack/PermissionedDisputeGame": "0x36a741a0ca843da26fc3abda9752ca8c7959bfb49243bf2d486505307ceb0eee",
     "opstack/PreimageOracle": "0x2ae202df56f28d71967553e58704d1791626575b9429822ff6aed98a1623e84d",
     "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9",

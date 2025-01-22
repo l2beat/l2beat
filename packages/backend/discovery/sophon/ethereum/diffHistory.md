@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x95d8da8298a95350fb4696e305c95f31015e0399
+Generated with discovered.json: 0x76767e39a8b67c1328d3b78f09c0e30879d1903c
 
-# Diff at Wed, 22 Jan 2025 12:10:45 GMT:
+# Diff at Wed, 22 Jan 2025 12:22:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21429615
@@ -14,7 +14,7 @@ L1USDCBridge to add a new owner.
 
 ```diff
 -   Status: DELETED
-    contract SophonUSDCEscrowMultisig (0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD)
+    contract GnosisSafe (0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD)
     +++ description: None
 ```
 
@@ -49,10 +49,25 @@ L1USDCBridge to add a new owner.
 ## Source code changes
 
 ```diff
-.../L1USDCBridge/L1USDCBridge.sol                  |   8 +
- .../GnosisSafe.sol => /dev/null                    | 953 ---------------------
- .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ .../L1USDCBridge/L1USDCBridge.sol                  |   8 +
  3 files changed, 8 insertions(+), 988 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429615 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD) {
+    +++ description: None
+      name:
+-        "SophonUSDCEscrowMultisig"
++        "GnosisSafe"
+    }
 ```
 
 Generated with discovered.json: 0xdd0281d03c618ac9e56421d06a0e8e3bda3b30f7

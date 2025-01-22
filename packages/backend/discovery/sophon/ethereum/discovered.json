@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 21679920,
-  "configHash": "0x433d106659755808cfb4c5b17959feaa7b2b6c1c4f51bb0ea3f8ba46a11a942d",
+  "configHash": "0xb497ec11d110e33c41f4718e1869b0ef3f518da640282770e3d9ee4110341396",
   "contracts": [
     {
       "name": "SophonZkEvm",
