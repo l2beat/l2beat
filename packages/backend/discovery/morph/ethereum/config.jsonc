@@ -148,10 +148,10 @@
       "fields": {
         "challengers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateChallenger",
-            "valueKey": "account",
-            "flagKey": "status"
+            "type": "event",
+            "events": "UpdateChallenger",
+            "select": "account",
+            "latch": { "truthy": { "column": "status" } }
           },
           "target": {
             "permissions": [{ "type": "challenge" }]

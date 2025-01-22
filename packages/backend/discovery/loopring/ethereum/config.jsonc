@@ -51,10 +51,10 @@
       "fields": {
         "agents": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "AgentRegistered",
-            "valueKey": "agent",
-            "flagKey": "registered",
+            "type": "event",
+            "events": "AgentRegistered",
+            "select": "agent",
+            "latch": { "truthy": { "column": "registered" } },
             "ignoreRelative": true
           }
         }

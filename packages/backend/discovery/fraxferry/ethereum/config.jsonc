@@ -151,10 +151,10 @@
       "fields": {
         "crewmembers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event SetCrewmember(address indexed crewmember,bool set)",
-            "valueKey": "crewmember",
-            "flagKey": "set"
+            "type": "event",
+            "events": "event SetCrewmember(address indexed crewmember,bool set)",
+            "select": "crewmember",
+            "latch": { "truthy": { "column": "set" } }
           }
         }
       },

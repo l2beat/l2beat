@@ -130,10 +130,10 @@
         // network governor can pause tokens and add validators
         "validators": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorStatusUpdate",
-            "valueKey": "validatorAddress",
-            "flagKey": "isActive"
+            "type": "event",
+            "events": "ValidatorStatusUpdate",
+            "select": "validatorAddress",
+            "latch": { "truthy": { "column": "isActive" } }
           }
         }
       },
@@ -144,10 +144,10 @@
       "fields": {
         "tokenListers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "TokenListerUpdate",
-            "valueKey": "tokenLister",
-            "flagKey": "isActive"
+            "type": "event",
+            "events": "TokenListerUpdate",
+            "select": "tokenLister",
+            "latch": { "truthy": { "column": "isActive" } }
           }
         }
       }

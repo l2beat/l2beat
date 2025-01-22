@@ -33,18 +33,18 @@
         },
         "lockers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ModifiedLocker",
-            "valueKey": "locker",
-            "flagKey": "isLocker"
+            "type": "event",
+            "events": "ModifiedLocker",
+            "select": "locker",
+            "latch": { "truthy": { "column": "isLocker" } }
           }
         },
         "finalizers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ModifiedFinalizer",
-            "valueKey": "finalizer",
-            "flagKey": "isFinalizer"
+            "type": "event",
+            "events": "ModifiedFinalizer",
+            "select": "finalizer",
+            "latch": { "truthy": { "column": "isFinalizer" } }
           }
         }
       }

@@ -38,10 +38,10 @@
       "fields": {
         "validators": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorStatusUpdate",
-            "valueKey": "validatorAddress",
-            "flagKey": "isActive"
+            "type": "event",
+            "events": "ValidatorStatusUpdate",
+            "select": "validatorAddress",
+            "latch": { "truthy": { "column": "isActive" } }
           }
         }
       }

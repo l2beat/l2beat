@@ -57,10 +57,10 @@
       "fields": {
         "watchers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "WatcherPermissionSet",
-            "valueKey": "watcher",
-            "flagKey": "access"
+            "type": "event",
+            "events": "WatcherPermissionSet",
+            "select": "watcher",
+            "latch": { "truthy": { "column": "access" } }
           }
         }
       }

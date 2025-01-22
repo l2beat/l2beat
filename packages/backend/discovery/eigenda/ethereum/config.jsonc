@@ -50,10 +50,10 @@
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER",
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "BatchConfirmerStatusChanged",
-            "valueKey": "batchConfirmer",
-            "flagKey": "status"
+            "type": "event",
+            "events": "BatchConfirmerStatusChanged",
+            "select": "batchConfirmer",
+            "latch": { "truthy": { "column": "status" } }
           }
         }
       }

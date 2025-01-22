@@ -68,10 +68,10 @@
       "fields": {
         "proposers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ProposerModified",
-            "valueKey": "proposer",
-            "flagKey": "enabled"
+            "type": "event",
+            "events": "ProposerModified",
+            "select": "proposer",
+            "latch": { "truthy": { "column": "enabled" } }
           }
         }
       }

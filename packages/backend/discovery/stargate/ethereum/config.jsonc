@@ -62,20 +62,40 @@
       "fields": {
         "stargateOracles": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "AppConfigUpdated",
-            // stargate bridge address, CONFIG_TYPE_ORACLE
-            "topics": ["0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97", "0x6"],
-            "valueKey": "newConfig"
+            "type": "event",
+            "events": "AppConfigUpdated",
+            "select": "newConfig",
+            "distinct": "newConfig",
+            "where": {
+              "and": {
+                "lhs": {
+                  "eq": {
+                    "column": "userApplication",
+                    "value": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                  }
+                },
+                "rhs": { "eq": { "column": "configType", "value": 6 } } // CONFIG_TYPE_ORACLE
+              }
+            }
           }
         },
         "stargateRelayers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "AppConfigUpdated",
-            // stargate bridge address, CONFIG_TYPE_RELAYER
-            "topics": ["0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97", "0x3"],
-            "valueKey": "newConfig"
+            "type": "event",
+            "events": "AppConfigUpdated",
+            "select": "newConfig",
+            "distinct": "newConfig",
+            "where": {
+              "and": {
+                "lhs": {
+                  "eq": {
+                    "column": "userApplication",
+                    "value": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                  }
+                },
+                "rhs": { "eq": { "column": "configType", "value": 3 } } // CONFIG_TYPE_RELAYER
+              }
+            }
           }
         },
         "stargateScrollConfig": {

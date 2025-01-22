@@ -105,18 +105,18 @@
       "fields": {
         "sequencers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateSequencer",
-            "valueKey": "account",
-            "flagKey": "status"
+            "type": "event",
+            "events": "UpdateSequencer",
+            "select": "account",
+            "latch": { "truthy": { "column": "status" } }
           }
         },
         "provers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateProver",
-            "valueKey": "account",
-            "flagKey": "status"
+            "type": "event",
+            "events": "UpdateProver",
+            "select": "account",
+            "latch": { "truthy": { "column": "status" } }
           }
         },
         "revertedBatches": {
@@ -223,10 +223,10 @@
       "fields": {
         "whitelisted": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "WhitelistStatusChanged",
-            "valueKey": "_account",
-            "flagKey": "_status"
+            "type": "event",
+            "events": "WhitelistStatusChanged",
+            "select": "_account",
+            "latch": { "truthy": { "column": "_status" } }
           }
         }
       }

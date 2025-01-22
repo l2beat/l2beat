@@ -2,7 +2,7 @@
   "name": "hyperliquid",
   "chain": "arbitrum",
   "blockNumber": 287788820,
-  "configHash": "0xc5100dff874cb36967aecd68adedf030a7aa4bfb42f9a8e55d82fc9d5284d9ad",
+  "configHash": "0x2d308758cd460a385ba2c94123d1e0bd1a04420b0b8385d6085de38091012c6c",
   "contracts": [
     {
       "name": "HyperliquidBridge",

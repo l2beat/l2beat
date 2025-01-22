@@ -77,30 +77,26 @@
       "fields": {
         "governors": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event GovernorUpdated(address account, bool added)",
-            "valueKey": "account",
-            "flagKey": "added"
+            "type": "event",
+            "events": "event GovernorUpdated(address account, bool added)",
+            "select": "account",
+            "latch": { "truthy": { "column": "added" } }
           }
         },
         "pausersPauseOnly": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event PauserUpdated(address account, uint8 role)",
-            "valueKey": "account",
-            "flagKey": "role",
-            "flagTrueValues": ["1"],
-            "flagFalseValues": ["0", "2"]
+            "type": "event",
+            "events": "event PauserUpdated(address account, uint8 role)",
+            "select": "account",
+            "latch": { "eq": { "column": "role", "value": 1 } }
           }
         },
         "pausersFull": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event PauserUpdated(address account, uint8 role)",
-            "valueKey": "account",
-            "flagKey": "role",
-            "flagTrueValues": ["2"],
-            "flagFalseValues": ["0", "1"]
+            "type": "event",
+            "events": "event PauserUpdated(address account, uint8 role)",
+            "select": "account",
+            "latch": { "eq": { "column": "role", "value": 2 } }
           }
         },
         "numRelaxedGuards": {

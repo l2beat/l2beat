@@ -108,10 +108,10 @@
       "fields": {
         "Minters": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "IsMinterModified",
-            "valueKey": "minterAddress",
-            "flagKey": "newStatus"
+            "type": "event",
+            "events": "IsMinterModified",
+            "select": "minterAddress",
+            "latch": { "truthy": { "column": "newStatus" } }
           }
         },
         "transferRestrictionsDisabledAfter": {
@@ -157,10 +157,10 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "PauserStatusChanged",
-            "valueKey": "pauser",
-            "flagKey": "canPause"
+            "type": "event",
+            "events": "PauserStatusChanged",
+            "select": "pauser",
+            "latch": { "truthy": { "column": "canPause" } }
           }
         }
       }

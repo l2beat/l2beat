@@ -44,10 +44,10 @@
         },
         "rollupProviders": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "RollupProviderUpdated",
-            "valueKey": "providerAddress",
-            "flagKey": "valid"
+            "type": "event",
+            "events": "RollupProviderUpdated",
+            "select": "providerAddress",
+            "latch": { "truthy": { "column": "valid" } }
           }
         },
         "accessControl": {

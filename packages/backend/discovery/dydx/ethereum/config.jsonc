@@ -201,10 +201,10 @@
       "fields": {
         "PRIORITY_CONTROLLERS": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
-            "valueKey": "account",
-            "flagKey": "isPriorityController"
+            "type": "event",
+            "events": "event PriorityControllerUpdated(address account, bool isPriorityController)",
+            "select": "account",
+            "latch": { "truthy": { "column": "isPriorityController" } }
           }
         }
       }
