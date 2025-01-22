@@ -66,6 +66,7 @@ const cmd = command({
       (c) => c.subtype === 'batchSubmissions',
     )
 
+    console.log('Getting data from db...')
     const costsByConfig = await db.l2Cost.getGasSumByTimeRangeAndConfigId(
       [...proofConfigs, ...batchConfigs].map((c) => c.id),
       startDate,
@@ -85,6 +86,7 @@ const cmd = command({
       return acc + (cost ? cost.totalEthCost : 0)
     }, 0)
 
+    console.log('Fetching data from starkware api...')
     const data = await fetchStarkwareApi(args.project, startDate, endDate)
 
     const actualProofMultiplier = data.proof_cost_eth / totalProofCost
@@ -97,7 +99,7 @@ const cmd = command({
     }
     console.log('Actual batch submissions multiplier:', actualBatchMultiplier)
     for (const c of batchConfigs) {
-      console.log('Proof config:', c.id, 'Multiplier:', c.costMultiplier)
+      console.log('Batch config:', c.id, 'Multiplier:', c.costMultiplier)
     }
   },
 })
