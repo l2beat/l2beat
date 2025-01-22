@@ -18,7 +18,7 @@ export default async function Page() {
   return (
     <>
       <LivenessTimeRangeContextProvider>
-        <MainPageHeader showPreviewRecategorisation>Liveness</MainPageHeader>
+        <MainPageHeader>Liveness</MainPageHeader>
         <LivenessWarning />
         <ScalingFilterContextProvider>
           <ScalingLivenessTables {...entries} />

@@ -41,7 +41,7 @@ export default async function Page() {
 
   return (
     <HydrateClient>
-      <MainPageHeader showPreviewRecategorisation>Summary</MainPageHeader>
+      <MainPageHeader>Summary</MainPageHeader>
       <div className="grid grid-cols-2 gap-4 max-lg:hidden">
         <PrimaryCard>
           <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />

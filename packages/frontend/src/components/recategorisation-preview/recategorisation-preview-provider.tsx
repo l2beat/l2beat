@@ -1,10 +1,12 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { createContext, useContext, useState } from 'react'
 
 type RecategorisationPreviewContextValue = {
   checked: boolean
   setChecked: (checked: boolean) => void
+  isScalingMainPage: boolean
 }
 
 const RecategorisationPreviewContext =
@@ -15,12 +17,18 @@ interface Props {
 }
 
 export function RecategorisationPreviewContextProvider({ children }: Props) {
+  const pathname = usePathname()
   const [checked, setChecked] = useState<boolean>(false)
+  const isScalingMainPage =
+    checked &&
+    pathname.startsWith('/scaling') &&
+    !pathname.startsWith('/scaling/projects')
   return (
     <RecategorisationPreviewContext.Provider
       value={{
         checked,
         setChecked,
+        isScalingMainPage,
       }}
     >
       {children}

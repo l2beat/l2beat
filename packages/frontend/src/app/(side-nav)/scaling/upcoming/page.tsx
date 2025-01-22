@@ -14,7 +14,7 @@ export default async function Page() {
   const entries = await getScalingUpcomingEntries()
   return (
     <>
-      <MainPageHeader showPreviewRecategorisation>Upcoming</MainPageHeader>
+      <MainPageHeader>Upcoming</MainPageHeader>
       <ScalingFilterContextProvider>
         <ScalingUpcomingTables {...entries} />
       </ScalingFilterContextProvider>

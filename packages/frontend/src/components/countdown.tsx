@@ -106,7 +106,7 @@ function TimePart({
   )
 }
 
-export function getTimeParts(timeLeft: number) {
+function getTimeParts(timeLeft: number) {
   const days = Math.floor(timeLeft / (60 * 60 * 24))
   const hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60))
   const minutes = Math.floor((timeLeft % (60 * 60)) / 60)

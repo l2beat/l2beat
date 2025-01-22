@@ -15,9 +15,7 @@ export default async function Page() {
 
   return (
     <>
-      <MainPageHeader showPreviewRecategorisation>
-        Data Availability
-      </MainPageHeader>
+      <MainPageHeader>Data Availability</MainPageHeader>
       <ScalingFilterContextProvider>
         <ScalingDaTables {...entries} />
       </ScalingFilterContextProvider>

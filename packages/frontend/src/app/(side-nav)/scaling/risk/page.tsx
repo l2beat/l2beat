@@ -16,7 +16,7 @@ export default async function Page() {
 
   return (
     <>
-      <MainPageHeader showPreviewRecategorisation>Risk Analysis</MainPageHeader>
+      <MainPageHeader>Risk Analysis</MainPageHeader>
       <ScalingFilterContextProvider>
         <ScalingRiskTables {...entries} />
       </ScalingFilterContextProvider>

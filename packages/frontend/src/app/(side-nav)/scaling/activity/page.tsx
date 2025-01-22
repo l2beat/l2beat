@@ -33,9 +33,7 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ActivityTimeRangeContextProvider>
           <ActivityMetricContextProvider>
-            <MainPageHeader showPreviewRecategorisation>
-              Activity
-            </MainPageHeader>
+            <MainPageHeader>Activity</MainPageHeader>
             <ScalingActivityTabs
               {...entries}
               milestones={HOMEPAGE_MILESTONES}

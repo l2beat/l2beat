@@ -9,16 +9,15 @@ import { useRecategorisationPreviewContext } from './recategorisation-preview-pr
 export function RecategorisationPreviewBanner({
   className,
 }: { className?: string }) {
-  const { checked } = useRecategorisationPreviewContext()
-
-  if (!checked) {
+  const { checked, isScalingMainPage } = useRecategorisationPreviewContext()
+  if (!checked || !isScalingMainPage) {
     return null
   }
 
   return (
     <div
       className={cn(
-        'relative flex w-full flex-col items-center justify-center gap-1 bg-brand px-4 py-1.5 md:flex-row md:gap-3 text-primary-invert',
+        'relative flex w-full flex-col items-center justify-center gap-1 bg-brand px-4 py-1.5 text-primary-invert md:flex-row md:gap-3',
         className,
       )}
     >

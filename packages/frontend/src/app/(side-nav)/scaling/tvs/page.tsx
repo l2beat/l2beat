@@ -29,9 +29,7 @@ export default async function Page() {
     <HydrateClient>
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
-          <MainPageHeader showPreviewRecategorisation>
-            Value Secured
-          </MainPageHeader>
+          <MainPageHeader>Value Secured</MainPageHeader>
           <ScalingTvlTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
