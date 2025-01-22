@@ -1,33 +1,4 @@
-import { tokenList } from '@l2beat/config'
-import { CoingeckoQueryService } from '@l2beat/shared'
-import { assert, type Token, UnixTime } from '@l2beat/shared-pure'
-
-export class PriceProvider {
-  constructor(private readonly client: CoingeckoQueryService) {}
-
-  async getPrice(priceId: string, timestamp: UnixTime): Promise<number> {
-    const coingeckoId = priceIdToCoingeckoId(priceId, tokenList)
-
-    const prices = await this.client.getUsdPriceHistoryHourly(
-      coingeckoId,
-      timestamp,
-      timestamp,
-    )
-    assert(
-      prices.length === 1,
-      `${priceId}: Too many prices fetched ${JSON.stringify(prices)}`,
-    )
-
-    return prices[0].value
-  }
-
-  getAdjustedTo(from: number, to: number): UnixTime {
-    return CoingeckoQueryService.calculateAdjustedTo(
-      new UnixTime(from),
-      new UnixTime(to),
-    )
-  }
-}
+import { assert, type Token } from '@l2beat/shared-pure'
 
 export function priceIdToCoingeckoId(priceId: string, legacyTokens: Token[]) {
   switch (priceId) {
