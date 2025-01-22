@@ -17,6 +17,11 @@ const discovery = new ProjectDiscovery('gpt')
 
 const shared = new ProjectDiscovery('shared-polygon-cdk')
 const bridge = shared.getContract('Bridge')
+const operatorIsLive =
+  discovery.getContractValue<number[]>(
+    'PolygonRollupManager',
+    'gptLastVerifiedBatch',
+  )[0] !== 7288
 
 const membersCountDAC = discovery.getContractValue<number>(
   'GptProtocolDAC',
@@ -47,6 +52,9 @@ export const gpt: Layer2 = polygonCDKStack({
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'GPT Protocol',
     slug: 'gpt',
+    headerWarning: operatorIsLive
+      ? undefined
+      : 'The operator has not posted any batches since Oct-14-2024 11:03:11 AM UTC.',
     description:
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
     links: {

@@ -131,6 +131,16 @@
             "pickFields": ["lastVerifiedBatch"]
           },
           "returnType": "(IsGreaterThanOne[][])"
+        },
+        "gptLastVerifiedBatch": {
+          "description": "GPT protocol operator has not posted batches for a long time, if this returning >7288, is is active again.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "rollupIDToRollupData",
+            "args": [5], // gpt rollup id
+            "pickFields": ["lastVerifiedBatch"]
+          }
         }
       }
     },

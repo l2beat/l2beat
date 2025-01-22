@@ -1,7 +1,7 @@
 {
   "name": "gpt",
   "chain": "ethereum",
-  "blockNumber": 21628462,
+  "blockNumber": 21681175,
   "configHash": "0x492a276fe0e24cc14a7c4ac3b6e1d6d3427721121e25610066ea3c8bd8498ded",
   "contracts": [
     {
