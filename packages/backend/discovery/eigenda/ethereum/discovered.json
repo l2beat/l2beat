@@ -2021,7 +2021,7 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/EjectionManager": "0x8ceb5dda8b87f1f70640cb025eae396a7320f2ab6e2de45c469be35e31d4ae45",
+    "eigenlayer/EjectionManager": "0x7252092ae879b37bb4a0a7ee783a94671289b48c5d440f93e9538045289b29ac",
     "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"

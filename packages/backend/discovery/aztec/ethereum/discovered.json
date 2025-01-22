@@ -323,7 +323,7 @@
   },
   "usedTemplates": {
     "aztecv1/AztecFeeDistributor": "0x665ad46ab3a80550bd30e674e25a6dad4614c65e2533d80813ffcbadc5e97c7d",
-    "aztecv1/RollupProcessor": "0xde2ef8c4455f865fc998f88ac88d2125be0a4015368ab65270fcdcbbd68ad4af",
+    "aztecv1/RollupProcessor": "0xb67fee6d0f8c821903607beb3ff4660a91b54137eff8f67c835249a347e925ba",
     "aztecv1/TurboVerifier": "0xd2e0334db1e4d807266fd35ca09d3061271f1d3b4931090aac72541599f7f5b5",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }

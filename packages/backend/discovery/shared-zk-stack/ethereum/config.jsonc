@@ -204,112 +204,76 @@
         "getCommittedBatchTimestamp"
       ],
       "fields": {
-        "zksyncValidatorsAdded": {
+        "zksyncValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "324"
+            "type": "event",
+            "events": [
+              "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
+            ],
+            "select": "validator",
+            "where": { "eq": { "column": "chainId", "value": 324 } },
+            "latch": { "event": { "value": "ValidatorAdded" } }
           }
         },
-        "zksyncValidatorsRemoved": {
+        "cronosValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "324"
+            "type": "event",
+            "events": [
+              "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
+            ],
+            "select": "validator",
+            "where": { "eq": { "column": "chainId", "value": 388 } },
+            "latch": { "event": { "value": "ValidatorAdded" } }
           }
         },
-        "cronosValidatorsAdded": {
+        "zeronetworkValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "388"
+            "type": "event",
+            "events": [
+              "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
+            ],
+            "select": "validator",
+            "where": { "eq": { "column": "chainId", "value": 543210 } },
+            "latch": { "event": { "value": "ValidatorAdded" } }
           }
         },
-        "cronosValidatorsRemoved": {
+        "sophonValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "388"
+            "type": "event",
+            "events": [
+              "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
+            ],
+            "select": "validator",
+            "where": { "eq": { "column": "chainId", "value": 50104 } },
+            "latch": { "event": { "value": "ValidatorAdded" } }
           }
         },
-        "zeronetworkValidatorsAdded": {
+        "treasureValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "543210"
+            "type": "event",
+            "events": [
+              "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
+            ],
+            "select": "validator",
+            "where": { "eq": { "column": "chainId", "value": 61166 } },
+            "latch": { "event": { "value": "ValidatorAdded" } }
           }
         },
-        "zeronetworkValidatorsRemoved": {
+        "grvtValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "543210"
-          }
-        },
-        "sophonValidatorsAdded": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "50104"
-          }
-        },
-        "sophonValidatorsRemoved": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "50104"
-          }
-        },
-        "treasureValidatorsAdded": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "61166"
-          }
-        },
-        "treasureValidatorsRemoved": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "61166"
-          }
-        },
-        "grvtValidatorsAdded": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "325"
-          }
-        },
-        "grvtValidatorsRemoved": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "325"
+            "type": "event",
+            "events": [
+              "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
+            ],
+            "select": "validator",
+            "where": { "eq": { "column": "chainId", "value": 325 } },
+            "latch": { "event": { "value": "ValidatorAdded" } }
           }
         },
         "abstractThirdBatchTS": {

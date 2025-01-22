@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 21630370,
-  "configHash": "0x78c9490b84036e218aa335e7b740c13465b5b686f9856931cea0c019536d359f",
+  "configHash": "0x797260969fb56ab0a0fda5c2844da772ac6d7c8eda7e17a0f20c71a8aa559c1e",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -435,47 +435,36 @@
       "values": {
         "$immutable": true,
         "abstractThirdBatchTS": 1730348459,
-        "cronosValidatorsAdded": [
-          "0xACBD581D1BedB2F71d2F5F01f881586e0623d591",
-          "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14",
+        "cronosValidators": [
           "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122",
           "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"
         ],
-        "cronosValidatorsRemoved": [
-          "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14",
-          "0xACBD581D1BedB2F71d2F5F01f881586e0623d591"
-        ],
         "executionDelay": 75600,
         "getName": "ValidatorTimelock",
-        "grvtValidatorsAdded": [
+        "grvtValidators": [
           "0x58D14960E0a2be353eDdE61ad719196A2b816522",
           "0x0b114d4675Cb79507e68F2616c93e124122c6ef0"
         ],
-        "grvtValidatorsRemoved": [],
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
-        "sophonValidatorsAdded": [
+        "sophonValidators": [
           "0x4cc87B0A504047967CeD9A955431B3229237e7de",
           "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
         ],
-        "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "treasureValidatorsAdded": [
+        "treasureValidators": [
           "0x2572835e02b59078711aa0800490e80975e4169d",
           "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
         ],
-        "treasureValidatorsRemoved": [],
-        "zeronetworkValidatorsAdded": [
+        "zeronetworkValidators": [
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
         ],
-        "zeronetworkValidatorsRemoved": [],
-        "zksyncValidatorsAdded": [
+        "zksyncValidators": [
           "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
           "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
-        ],
-        "zksyncValidatorsRemoved": []
+        ]
       },
       "fieldMeta": {
         "abstractThirdBatchTS": {
@@ -1148,7 +1137,6 @@
     { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xa5D0084A766203b463b3164DFc49D91509C12daB" },
     { "address": "0xaaAdAa000867fb883089B7e528d7eA96937b777f" },
-    { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
     { "address": "0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c" },
     { "address": "0xB1072fD3a5EA72B42e063e5A61963d00eeF655DF" },
     { "address": "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c" },
@@ -1169,7 +1157,6 @@
     { "address": "0xdF28907A6A272fa06333a197d7F0379A0f8f00aa" },
     { "address": "0xDFbD13B78010BF2110a168FA59b682c8a6D96564" },
     { "address": "0xDfe6610c2357a0BfECF788e52697554aF5F35174" },
-    { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
     { "address": "0xe968FB773e54f77350A427B057FDB44e6592E338" },
     { "address": "0xEE8fAC9051243379dAAA02c24e07D29F22d73b4E" },
     { "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f" },

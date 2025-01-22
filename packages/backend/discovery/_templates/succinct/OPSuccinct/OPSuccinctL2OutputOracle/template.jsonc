@@ -4,10 +4,10 @@
   "fields": {
     "additionalProposers": {
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "ProposerUpdated",
-        "valueKey": "proposer",
-        "flagKey": "added"
+        "type": "event",
+        "events": "ProposerUpdated",
+        "select": "proposer",
+        "latch": { "truthy": { "column": "added" } }
       }
     },
     "owner": {

@@ -4,26 +4,28 @@
   "fields": {
     "ejectors": {
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "EjectorUpdated",
-        "valueKey": "ejector",
-        "flagKey": "status"
+        "type": "event",
+        "events": "EjectorUpdated",
+        "select": "ejector",
+        "latch": { "truthy": { "column": "status" } }
       }
     },
     "ejectionRateLimitWindow": {
       "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "QuorumEjectionParams",
-        "valueKey": "rateLimitWindow"
+        "type": "event",
+        "events": "QuorumEjectionParams",
+        "select": "rateLimitWindow",
+        "distinct": "rateLimitWindow"
       }
     },
     "ejectableStakePercent": {
       "description": "Max stake to be ejectable per time delta.",
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "QuorumEjectionParams",
-        "valueKey": "ejectableStakePercent"
+        "type": "event",
+        "events": "QuorumEjectionParams",
+        "select": "ejectableStakePercent",
+        "distinct": "ejectableStakePercent"
       }
     }
   }

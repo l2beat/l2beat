@@ -28,19 +28,18 @@
       "severity": "LOW",
       "type": "PERMISSION",
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "RollupProviderUpdated",
-        "valueKey": "providerAddress",
-        "flagKey": "valid"
+        "type": "event",
+        "events": "RollupProviderUpdated",
+        "select": "providerAddress",
+        "latch": { "truthy": { "column": "valid" } }
       }
     },
     "removedRollupProviders": {
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "RollupProviderUpdated",
-        "valueKey": "providerAddress",
-        "flagKey": "valid",
-        "invert": true
+        "type": "event",
+        "events": "RollupProviderUpdated",
+        "select": "providerAddress",
+        "latch": { "not": { "truthy": { "column": "valid" } } }
       }
     },
     "verifier": {
