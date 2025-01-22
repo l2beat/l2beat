@@ -43,20 +43,24 @@
       "fields": {
         "GOVERNORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
-            "addKey": "acceptedGovernor",
-            "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
-            "removeKey": "removedGovernor"
+            "type": "event",
+            "events": [
+              "event LogNewGovernorAccepted(address governor)",
+              "event LogRemovedGovernor(address governor)"
+            ],
+            "select": "acceptedGovernor",
+            "latch": { "event": { "value": "LogNewGovernorAccepted" } }
           }
         },
         "OPERATORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "events": [
+              "event LogOperatorAdded(address operator)",
+              "event LogOperatorRemoved(address operator)"
+            ],
+            "select": "operator",
+            "latch": { "event": { "value": "LogOperatorAdded" } }
           }
         }
       }

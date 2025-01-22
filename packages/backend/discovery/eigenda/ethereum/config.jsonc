@@ -137,11 +137,10 @@
         "registeredOperators": {
           "description": "List of all registered operators ids",
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event OperatorRegistered(address indexed operator, bytes32 indexed operatorId)",
-            "addKey": "operatorId",
-            "removeEvent": "event OperatorDeregistered(address indexed operator, bytes32 indexed operatorId)",
-            "removeKey": "operatorId"
+            "type": "event",
+            "events": ["OperatorRegistered", "OperatorDeregistered"],
+            "select": "operatorId",
+            "latch": { "event": { "value": "OperatorRegistered" } }
           }
         },
         "ejectionCooldown": {

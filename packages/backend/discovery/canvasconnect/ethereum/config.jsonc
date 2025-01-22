@@ -36,11 +36,13 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "events": [
+              "event LogOperatorAdded(address operator)",
+              "event LogOperatorRemoved(address operator)"
+            ],
+            "select": "operator",
+            "latch": { "event": { "value": "LogOperatorAdded" } }
           }
         }
       }

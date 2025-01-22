@@ -44,11 +44,10 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "events": ["LogOperatorAdded", "LogOperatorRemoved"],
+            "select": "operator",
+            "latch": { "event": { "value": "LogOperatorAdded" } }
           }
         },
         "escapeVerifier": {
@@ -105,11 +104,10 @@
       "fields": {
         "EXECUTORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event ExecutorAuthorized(address executor)",
-            "addKey": "executor",
-            "removeEvent": "event ExecutorUnauthorized(address executor)",
-            "removeKey": "executor"
+            "type": "event",
+            "events": ["ExecutorAuthorized", "ExecutorUnauthorized"],
+            "select": "executor",
+            "latch": { "event": { "value": "ExecutorAuthorized" } }
           }
         },
         "accessControl": {

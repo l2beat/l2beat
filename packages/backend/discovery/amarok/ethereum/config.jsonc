@@ -60,30 +60,27 @@
       "fields": {
         "SEQUENCERS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event SequencerAdded(address sequencer, address caller)",
-            "addKey": "sequencer",
-            "removeEvent": "event SequencerRemoved(address sequencer, address caller)",
-            "removeKey": "sequencer"
+            "type": "event",
+            "events": ["SequencerAdded", "SequencerRemoved"],
+            "select": "sequencer",
+            "latch": { "event": { "value": "SequencerAdded" } }
           }
         },
         "RELAYERS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event RelayerAdded(address relayer, address caller)",
-            "addKey": "relayer",
-            "removeEvent": "event RelayerRemoved(address relayer, address caller)",
-            "removeKey": "relayer"
+            "type": "event",
+            "events": ["RelayerAdded", "RelayerRemoved"],
+            "select": "relayer",
+            "latch": { "event": { "value": "RelayerAdded" } }
           }
         },
         "ROUTERS": {
           "description": "Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination.",
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event RouterAdded(address indexed router, address caller)",
-            "addKey": "router",
-            "removeEvent": "event RouterRemoved(address indexed router, address caller)",
-            "removeKey": "router"
+            "type": "event",
+            "events": ["RouterAdded", "RouterRemoved"],
+            "select": "router",
+            "latch": { "event": { "value": "RouterAdded" } }
           }
         },
         "relayerFeeVault": {
@@ -117,11 +114,10 @@
           "severity": "LOW",
           "type": "PERMISSION",
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event WatcherAdded(address watcher)",
-            "addKey": "watcher",
-            "removeEvent": "event WatcherRemoved(address watcher)",
-            "removeKey": "watcher"
+            "type": "event",
+            "events": ["WatcherAdded", "WatcherRemoved"],
+            "select": "watcher",
+            "latch": { "event": { "value": "WatcherAdded" } }
           }
         }
       },

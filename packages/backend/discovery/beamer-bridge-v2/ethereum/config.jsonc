@@ -45,11 +45,10 @@
       "fields": {
         "liquidityProviders": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "LpAdded",
-            "addKey": "lp",
-            "removeEvent": "LpRemoved",
-            "removeKey": "lp"
+            "type": "event",
+            "events": ["LpAdded", "LpRemoved"],
+            "select": "lp",
+            "latch": { "event": { "value": "LpAdded" } }
           }
         }
       }

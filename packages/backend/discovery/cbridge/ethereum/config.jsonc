@@ -23,20 +23,18 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "PauserAdded",
-            "addKey": "account",
-            "removeEvent": "PauserRemoved",
-            "removeKey": "account"
+            "type": "event",
+            "events": ["PauserAdded", "PauserRemoved"],
+            "select": "account",
+            "latch": { "event": { "value": "PauserAdded" } }
           }
         },
         "governors": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "GovernorAdded",
-            "addKey": "account",
-            "removeEvent": "GovernorRemoved",
-            "removeKey": "account"
+            "type": "event",
+            "events": ["GovernorAdded", "GovernorRemoved"],
+            "select": "account",
+            "latch": { "event": { "value": "GovernorAdded" } }
           }
         }
       },
@@ -46,20 +44,18 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "PauserAdded",
-            "addKey": "account",
-            "removeEvent": "PauserRemoved",
-            "removeKey": "account"
+            "type": "event",
+            "events": ["PauserAdded", "PauserRemoved"],
+            "select": "account",
+            "latch": { "event": { "value": "PauserAdded" } }
           }
         },
         "governors": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "GovernorAdded",
-            "addKey": "account",
-            "removeEvent": "GovernorRemoved",
-            "removeKey": "account"
+            "type": "event",
+            "events": ["GovernorAdded", "GovernorRemoved"],
+            "select": "account",
+            "latch": { "event": { "value": "GovernorAdded" } }
           }
         }
       }

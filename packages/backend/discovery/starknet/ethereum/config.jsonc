@@ -124,11 +124,10 @@
         // Responsible for updating the state
         "operators": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "events": ["LogOperatorAdded", "LogOperatorRemoved"],
+            "select": "operator",
+            "latch": { "event": { "value": "LogOperatorAdded" } }
           }
         },
         "governors": {

@@ -2,7 +2,7 @@
   "name": "canvasconnect",
   "chain": "ethereum",
   "blockNumber": 19825363,
-  "configHash": "0x36841961afdeea04b2d7eec07d5fac47c61917d0411392a3ee03cf5d422193fe",
+  "configHash": "0xb52c0808093712beb274f136e64ddfb2a3477ca0448182d65b6504227bbfdce4",
   "contracts": [
     {
       "name": "GpsFactRegistryAdapter",
