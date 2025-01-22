@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa7a77095a4da58db3b16bcac8d567a3115f4d01c
+Generated with discovered.json: 0x7ea03cfe34733cd3a7eaf81a796df0d02c66ffab
 
-# Diff at Wed, 22 Jan 2025 16:40:31 GMT:
+# Diff at Wed, 22 Jan 2025 16:43:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@0706e36dbb666cfa8f8fd6c700e273a057edb949 block: 21665502
@@ -33,12 +33,12 @@ discovery. Values are for block 21665502 (main branch discovery), not current.
 ```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
-+++ description: GPT protocol operator has not posted batches for a long time, if this returning >7288, is is active again.
++++ description: GPT protocol operator has not posted batches for a long time. If this returns a discomon diff and is >7288, it is active again.
 +++ severity: MEDIUM
       values.gptLastVerifiedBatch:
 +        [7288]
       fieldMeta.gptLastVerifiedBatch:
-+        {"severity":"MEDIUM","description":"GPT protocol operator has not posted batches for a long time, if this returning >7288, is is active again."}
++        {"severity":"MEDIUM","description":"GPT protocol operator has not posted batches for a long time. If this returns a discomon diff and is >7288, it is active again."}
     }
 ```
 
