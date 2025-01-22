@@ -34,7 +34,7 @@ export function ScalingFinalityTables(props: Props) {
   const entries = checked
     ? getRecategorisedEntries(
         filteredEntries,
-        (a, b) => a.tvlOrder - b.tvlOrder,
+        (a, b) => b.tvlOrder - a.tvlOrder,
       )
     : filteredEntries
 
