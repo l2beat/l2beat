@@ -95,11 +95,23 @@ const cmd = command({
 
     console.log('Actual proof multiplier:', actualProofMultiplier)
     for (const c of proofConfigs) {
-      console.log('Proof config:', c.id, 'Multiplier:', c.costMultiplier)
+      console.log(
+        `Proof config: ${c.id} |`,
+        `Since: ${c.sinceTimestamp.toDate().toISOString()}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp.toDate().toISOString() : '-'} |`,
+        'Multiplier:',
+        c.costMultiplier,
+      )
     }
     console.log('Actual batch submissions multiplier:', actualBatchMultiplier)
     for (const c of batchConfigs) {
-      console.log('Batch config:', c.id, 'Multiplier:', c.costMultiplier)
+      console.log(
+        `Batch config: ${c.id} |`,
+        `Since: ${c.sinceTimestamp.toDate().toISOString()}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp.toDate().toISOString() : '-'} |`,
+        'Multiplier:',
+        c.costMultiplier,
+      )
     }
   },
 })
@@ -134,12 +146,18 @@ function getDates(startDate: string | undefined, endDate: string | undefined) {
     console.log('No end date provided, using default value (today)')
   }
   const start = startDate
-    ? UnixTime.fromDate(new Date(startDate))
+    ? UnixTime.fromDate(getDateFromString(startDate))
     : UnixTime.now().toStartOf('day').add(-1, 'days')
   const end = endDate
-    ? UnixTime.fromDate(new Date(endDate))
+    ? UnixTime.fromDate(getDateFromString(endDate))
     : UnixTime.now().toStartOf('day')
   return [start, end]
+}
+
+function getDateFromString(date: string) {
+  const [day, month, year] = date.split('-')
+  const utcDate = Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day))
+  return new Date(utcDate)
 }
 
 function weiToEth(wei: bigint): number {
