@@ -247,7 +247,7 @@ export const starknet: Layer2 = {
   display: {
     name: 'Starknet',
     slug: 'starknet',
-    provider: 'Starknet',
+    provider: 'SN Stack',
     description:
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
@@ -1172,6 +1172,7 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
   badges: [
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,
+    Badge.Stack.SNStack,
     Badge.Infra.SHARP,
     Badge.Other.Governance,
   ],
