@@ -52,13 +52,19 @@ export function ScalingActivityTabs({
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
-      [...rollups, ...validiumsAndOptimiums, ...others]
-        .filter((project) => project.statuses?.countdowns?.otherMigration)
-        .map((project) => ({
-          slug: project.slug,
-          name: project.name,
-        })),
-    [others, rollups, validiumsAndOptimiums],
+      checked
+        ? []
+        : [
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ]
+            .filter((project) => project.statuses?.countdowns?.otherMigration)
+            .map((project) => ({
+              slug: project.slug,
+              name: project.name,
+            })),
+    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
   )
 
   const initialSort = {

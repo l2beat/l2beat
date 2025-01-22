@@ -44,13 +44,19 @@ export function ScalingCostsTabs(props: Props) {
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
-      [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
-        .filter((project) => project.statuses?.countdowns?.otherMigration)
-        .map((project) => ({
-          slug: project.slug,
-          name: project.name,
-        })),
-    [props.others, props.rollups, props.validiumsAndOptimiums],
+      checked
+        ? []
+        : [
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ]
+            .filter((project) => project.statuses?.countdowns?.otherMigration)
+            .map((project) => ({
+              slug: project.slug,
+              name: project.name,
+            })),
+    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
   )
 
   const initialSort = {
