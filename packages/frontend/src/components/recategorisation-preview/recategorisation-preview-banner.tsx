@@ -1,7 +1,6 @@
 'use client'
 import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/src/common/projectCountdowns'
 import { externalLinks } from '~/consts/external-links'
-import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 import { TextCountdown } from '../countdown'
 import { CustomLink } from '../link/custom-link'
@@ -10,11 +9,9 @@ import { useRecategorisationPreviewContext } from './recategorisation-preview-pr
 export function RecategorisationPreviewBanner({
   className,
 }: { className?: string }) {
-  const isClient = useIsClient()
-
   const { checked } = useRecategorisationPreviewContext()
 
-  if (!isClient || !checked) {
+  if (!checked) {
     return null
   }
 
