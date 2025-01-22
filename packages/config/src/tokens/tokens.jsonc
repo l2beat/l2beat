@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "HSK",
+      "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a"
+    },
+    {
       "symbol": "XCHNG",
       "address": "0xb712d62fe84258292d1961b5150a19bc4ab49026"
     },

@@ -3,6 +3,7 @@ import {
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
+  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -14,7 +15,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DERIVATION,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -23,8 +23,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
-import { ESCROW } from '../../common/escrow'
-import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
+import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -32,7 +31,7 @@ import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('base')
+const discovery = new ProjectDiscovery('hashkey')
 
 function safeGetImplementation(contract: ContractParameters): string {
   const implementation = get$Implementations(contract.values)[0]
@@ -42,24 +41,9 @@ function safeGetImplementation(contract: ContractParameters): string {
   return implementation.toString()
 }
 
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'OptimismPortal',
-  'proofMaturityDelaySeconds',
-)
-
 const maxClockDuration = discovery.getContractValue<number>(
-  'FaultDisputeGame',
+  'PermissionedDisputeGame',
   'maxClockDuration',
-)
-
-const disputeGameFinalityDelaySeconds = discovery.getContractValue<number>(
-  'OptimismPortal',
-  'disputeGameFinalityDelaySeconds',
-)
-
-const proofMaturityDelaySeconds = discovery.getContractValue<number>(
-  'OptimismPortal',
-  'proofMaturityDelaySeconds',
 )
 
 const sequencerAddress = EthereumAddress(
@@ -70,41 +54,63 @@ const sequencerInbox = EthereumAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
+const genesisTimestamp = new UnixTime(1734347135)
+
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
+const permissionedDisputeGame = discovery.getContract('PermissionedDisputeGame')
 
-const genesisTimestamp = new UnixTime(1686074603)
-const portal = discovery.getContract('OptimismPortal')
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'proofMaturityDelaySeconds',
+)
 
-const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
+const disputeGameFinalityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'disputeGameFinalityDelaySeconds',
+)
+
+const proofMaturityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'proofMaturityDelaySeconds',
+)
+
+const portal = discovery.getContract('OptimismPortal2')
+
+// >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
+assert(
+  discovery.getContractValue<number>('OptimismPortal2', 'respectedGameType') ===
+    1,
+)
+
+const permissionedDisputeGameBonds = discovery.getContractValue<number[]>(
   'DisputeGameFactory',
   'initBonds',
-)[0]
+)[1] // 1 is for permissioned games!
 
-const permissionlessGameClockExtension = discovery.getContractValue<number>(
-  'FaultDisputeGame',
+const permissionedGameClockExtension = discovery.getContractValue<number>(
+  'PermissionedDisputeGame',
   'clockExtension',
 )
 
 const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
 
-const permissionlessGameMaxDepth = discovery.getContractValue<number>(
-  'FaultDisputeGame',
+const permissionedGameMaxDepth = discovery.getContractValue<number>(
+  'PermissionedDisputeGame',
   'maxGameDepth',
 )
 
-const permissionlessGameSplitDepth = discovery.getContractValue<number>(
-  'FaultDisputeGame',
+const permissionedGameSplitDepth = discovery.getContractValue<number>(
+  'PermissionedDisputeGame',
   'splitDepth',
 )
 
-const permissionlessGameFullCost = (() => {
+const permissionedGameFullCost = (() => {
   let cost = 0
   const scaleFactor = 100000
-  for (let i = 0; i <= permissionlessGameMaxDepth; i++) {
+  for (let i = 0; i <= permissionedGameMaxDepth; i++) {
     cost =
       cost +
-      (permissionlessDisputeGameBonds / scaleFactor) *
-        exponentialBondsFactor ** i
+      (permissionedDisputeGameBonds / scaleFactor) * exponentialBondsFactor ** i
   }
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
@@ -114,49 +120,42 @@ const oracleChallengePeriod = discovery.getContractValue<number>(
   'challengePeriod',
 )
 
-const permissionlessGameMaxClockExtension =
-  permissionlessGameClockExtension * 2 + // at SPLIT_DEPTH - 1
+const permissionedGameMaxClockExtension =
+  permissionedGameClockExtension * 2 + // at SPLIT_DEPTH - 1
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
-  permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
+  permissionedGameClockExtension * (permissionedGameMaxDepth - 3) // the rest, excluding also the last depth
 
-export const base: Layer2 = {
+export const hashkey: Layer2 = {
   type: 'layer2',
-  id: ProjectId('base'),
-  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  id: ProjectId('hashkey'),
+  createdAt: new UnixTime(1736518370), // 2025-01-10T17:09:00Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
-    Badge.Other.L3HostChain,
   ],
   display: {
-    name: 'Base',
-    slug: 'base',
-    stateValidationImage: 'opfp',
-    category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    name: 'HashKey Chain',
+    slug: 'hashkey',
+    purposes: ['Exchange'],
     description:
-      'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
-    purposes: ['Universal'],
+      "HashKey Chain is a regulatory-compliant, institutional-grade OP stack Layer 2 solution bridging traditional finance and Web3. It is powered by Hong Kong's premier virtual asset ecosystem.",
+    category: 'Optimistic Rollup',
     links: {
-      websites: ['https://base.org/'],
-      apps: ['https://bridge.base.org/'],
-      documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
+      websites: ['https://hsk.xyz/'],
+      apps: ['https://bridge.hsk.xyz/'],
+      documentation: ['https://docs.hsk.xyz/'],
       explorers: [
-        'https://basescan.org/',
-        'https://base.superscan.network',
-        'https://base.blockscout.com/',
-        'https://base.l2scan.co/',
+        'https://explorer.hsk.xyz/',
+        'https://hashkey.blockscout.com',
       ],
-      repositories: ['https://github.com/base-org'],
+      repositories: ['https://github.com/HashKeyChain'],
       socialMedia: [
-        'https://twitter.com/BuildOnBase',
-        'https://discord.gg/buildonbase',
-        'https://base.mirror.xyz/',
-        'https://warpcast.com/base',
+        'https://x.com/HashKeyHSK',
+        'https://t.me/hashkeyhsk',
+        'https://discord.com/invite/ujaF7aKAEk',
       ],
-      rollupCodes: 'https://rollup.codes/base',
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {
@@ -172,43 +171,31 @@ export const base: Layer2 = {
     finality: { finalizationPeriod: maxClockDuration },
   },
   config: {
+    associatedTokens: ['HSK'],
+    gasTokens: ['HSK'],
     escrows: [
       discovery.getEscrowDetails({
         // OptimismPortal
-        address: EthereumAddress('0x49048044D57e1C92A77f79988d21Fa8fAF74E97e'),
-        tokens: ['ETH'],
+        address: EthereumAddress('0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3'),
+        tokens: ['HSK'],
       }),
       discovery.getEscrowDetails({
         // L1StandardBridge
-        address: EthereumAddress('0x3154Cf16ccdb4C6d922629664174b904d80F2C35'),
+        address: EthereumAddress('0x2171E6d3B7964fA9654Ce41dA8a8fFAff2Cc70be'),
         tokens: '*',
-        excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
-        tokens: ['wstETH'],
-        ...ESCROW.CANONICAL_EXTERNAL,
-        description:
-          'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3'),
-        tokens: ['USDS', 'sUSDS'],
-        ...ESCROW.CANONICAL_EXTERNAL,
-        description:
-          'Maker-controlled vault for USDS ans sUSDS bridged with canonical messaging.',
       }),
     ],
     transactionApi: {
       type: 'rpc',
-      defaultUrl: 'https://developer-access-mainnet.base.org',
+      defaultUrl: 'https://mainnet.hsk.xyz',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
       type: 'OPStack',
-      minTimestamp: new UnixTime(1710375515),
-      genesisTimestamp: new UnixTime(1686789347),
+      minTimestamp: new UnixTime(1734347135),
+      genesisTimestamp: new UnixTime(1734347135),
       l2BlockTimeSeconds: 2,
       lag: 0,
       stateUpdate: 'disabled',
@@ -233,53 +220,14 @@ export const base: Layer2 = {
         ],
         query: {
           formula: 'functionCall',
-          address: EthereumAddress(
-            '0x56315b90c40730925ec5485cf004d835058518A0',
-          ),
-          selector: '0x9aaab648',
-          functionSignature:
-            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1686793895),
-          untilTimestamp: new UnixTime(1730303471), // before proofs
-        },
-      },
-      {
-        uses: [
-          { type: 'liveness', subtype: 'stateUpdates' },
-          { type: 'l2costs', subtype: 'stateUpdates' },
-        ],
-        query: {
-          formula: 'functionCall',
           address: disputeGameFactory.address,
           selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-          sinceTimestamp: new UnixTime(1730303471), // after proofs
+          sinceTimestamp: genesisTimestamp,
         },
       },
     ],
-  },
-  chainConfig: {
-    name: 'base',
-    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
-    chainId: 8453,
-    explorerUrl: 'https://basescan.org',
-    explorerApi: {
-      url: 'https://api.basescan.org/api',
-      type: 'etherscan',
-    },
-    // ~ Timestamp of block number 0 on Base
-    // https://basescan.org/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
-    multicallContracts: [
-      {
-        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-        batchSize: 150,
-        sinceBlock: 5022,
-        version: '3',
-      },
-    ],
-    coingeckoPlatform: 'base',
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
@@ -287,33 +235,44 @@ export const base: Layer2 = {
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT,
-      sources: [
-        {
-          contract: 'DisputeGameFactory',
-          references: [
-            'https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code',
-          ],
-        },
-      ],
-      secondLine: formatChallengePeriod(maxClockDuration),
-    },
+    stateValidation: (() => {
+      assert(
+        discovery.getContractValue<number>(
+          'OptimismPortal2',
+          'respectedGameType',
+        ) === 1,
+      )
+      return {
+        ...RISK_VIEW.STATE_FP_INT,
+        description:
+          RISK_VIEW.STATE_FP_INT.description +
+          ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
+        sentiment: 'bad',
+      }
+    })(),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS), // different than op mainnet!
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
     },
-    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
+    proposerFailure: (() => {
+      assert(
+        discovery.getContractValue<number>(
+          'OptimismPortal2',
+          'respectedGameType',
+        ) === 1,
+      )
+      return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+    })(),
   },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
       description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, actors can submit a fraud proof that shows that the state was incorrect.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -323,11 +282,13 @@ export const base: Layer2 = {
       references: [
         {
           text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: 'https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code',
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            disputeGameFactory,
+          )}#code`,
         },
         {
-          text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e#code',
+          text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
+          href: `https://etherscan.io/address/${permissionedDisputeGame.address}#code`,
         },
       ],
     },
@@ -417,15 +378,15 @@ export const base: Layer2 = {
       },
     ],
   },
-  stateDerivation: DERIVATION.OPSTACK('BASE'),
   stateValidation: {
+    // NOTE THAT DESCRIPTIONS ARE SLIGHTLY MODIFIED BECAUSE PERMISSIONED
     description:
-      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+      'Currently, updates to the system state can only be proposed and challenged by the same entity as the proof system is permissioned. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
     categories: [
       {
         title: 'State root proposals',
         description: `Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the \`create\` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to ${formatEther(
-          permissionlessDisputeGameBonds,
+          permissionedDisputeGameBonds,
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
         references: [
           {
@@ -436,22 +397,22 @@ export const base: Layer2 = {
       },
       {
         title: 'Challenges',
-        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
-          formatEther(permissionlessGameFullCost),
+        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionedGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
+          formatEther(permissionedGameFullCost),
         ).toFixed(
           2,
         )} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with ${formatSeconds(
           maxClockDuration,
         )}. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than ${formatSeconds(
-          permissionlessGameClockExtension,
+          permissionedGameClockExtension,
         )}, it generally gets extended by ${formatSeconds(
-          permissionlessGameClockExtension,
+          permissionedGameClockExtension,
         )} with the exception of ${formatSeconds(
-          permissionlessGameClockExtension * 2,
-        )} right before depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
+          permissionedGameClockExtension * 2,
+        )} right before depth ${permissionedGameSplitDepth}, and ${formatSeconds(
           oracleChallengePeriod,
         )} right before the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
-          permissionlessGameMaxClockExtension,
+          permissionedGameMaxClockExtension,
         )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
         references: [
           {
@@ -462,69 +423,34 @@ export const base: Layer2 = {
       },
     ],
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: false,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: false,
-      },
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeSourceAvailable: 'UnderReview',
     },
-    {
-      rollupNodeLink: 'https://github.com/base-org/node',
+    stage1: {
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: false,
+      usersHave7DaysToExit: false,
+      usersCanExitWithoutCooperation: false,
+      securityCouncilProperlySetUp: false,
     },
-  ),
-  milestones: [
-    {
-      name: 'Fault proofs!',
-      link: 'https://base.mirror.xyz/eOsedW4tm8MU5OhdGK107A9wsn-aU7MAb8f3edgX5Tk',
-      date: '2024-10-30T00:00:00Z',
-      description: 'Base upgrades to OP stack fault proofs for state proving.',
-      type: 'general',
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: false,
+      delayWith30DExitWindow: false,
     },
-    {
-      name: 'Chain stall',
-      link: 'https://status.base.org/incidents/n3q0q4z24b7h',
-      date: '2023-09-05T00:00:00Z',
-      description:
-        'Due to an RPC issue, the sequencer stops producing blocks for ~30 minutes.',
-      type: 'incident',
-    },
-    {
-      name: 'Base starts using blobs',
-      link: 'https://twitter.com/Optimism/status/1768235284494450922',
-      date: '2024-03-14T00:00:00Z',
-      description: 'Base starts publishing data to blobs.',
-      type: 'general',
-    },
-    {
-      name: 'Base Mainnet Launch',
-      link: 'https://base.mirror.xyz/hwNwqXHVoLlO8s4DZppog4DfGvM34tigaDjOWuEJQfY',
-      date: '2023-07-13T00:00:00.00Z',
-      description: 'Base is live on mainnet.',
-      type: 'general',
-    },
-  ],
+  }),
+  milestones: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `a contract receives a malicious code upgrade. Upgrades must be approved by both the BaseMultisig1 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
+        text: 'a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.',
       },
     ],
   },
