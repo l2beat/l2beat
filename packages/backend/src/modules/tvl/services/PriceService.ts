@@ -20,7 +20,11 @@ export interface PriceServiceDependencies {
 }
 
 export class PriceService {
-  constructor(private readonly $: PriceServiceDependencies) {}
+  logger: Logger
+
+  constructor(private readonly $: PriceServiceDependencies) {
+    this.logger = this.$.logger.for(this)
+  }
 
   async getPrices(
     from: UnixTime,
@@ -96,8 +100,8 @@ export class PriceService {
       `Latest price not found for ${coingeckoId} @ ${latestHour.toNumber()}`,
     )
 
-    this.$.logger.error(
-      'DB fallback triggered: failed to fetch price from Coingecko',
+    this.logger.error(
+      `${coingeckoId}: DB fallback triggered: failed to fetch price from Coingecko`,
       {
         coingeckoId,
         latestHour: latestHour.toNumber(),
