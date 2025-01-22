@@ -34,17 +34,21 @@ const timelockSlowDelay = discovery.getContractValue<number>(
   'TimelockSlow',
   'getMinDelay',
 )
-const timelockMidDelay = discovery.getContractValue<number>(
-  'TimelockMid',
-  'getMinDelay',
-)
 const timelockFastDelay = discovery.getContractValue<number>(
   'TimelockFast',
   'getMinDelay',
 )
+const timelockSCDelay = discovery.getContractValue<number>(
+  'TimelockSC',
+  'getMinDelay',
+)
+const timelockEmergencyDelay = discovery.getContractValue<number>(
+  'TimelockEmergency',
+  'getMinDelay',
+)
 
-const upgradesScrollMultisig = {
-  upgradableBy: ['ScrollMultisig'],
+const upgradesSC = {
+  upgradableBy: ['SecurityCouncil'],
   upgradeDelay: 'No delay',
 }
 
@@ -163,30 +167,30 @@ export const scroll: Layer2 = {
         address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),
         tokens: '*',
         excludedTokens: ['rsETH'],
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367'),
         tokens: ['ETH'],
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'), // custom gateway
         tokens: '*',
         ...ESCROW.CANONICAL_EXTERNAL,
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
         tokens: ['DAI'],
         ...ESCROW.CANONICAL_EXTERNAL,
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
@@ -604,12 +608,12 @@ export const scroll: Layer2 = {
       discovery.getContractDetails('ScrollChain', {
         description:
           'The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist. L1 -> L2 message processing on L2 is not enforced.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1ScrollMessenger', {
         description:
           'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1MessageQueue', {
         description:
@@ -626,17 +630,22 @@ export const scroll: Layer2 = {
       discovery.getContractDetails('TimelockSlow', {
         description: `${formatSeconds(
           timelockSlowDelay,
-        )} timelock. Admin of the ScrollOwner contract, meaning it can assign and revoke roles. The ScrollMultisig can propose and cancel transactions, and the ExecutorMultisig can execute them.`,
-      }),
-      discovery.getContractDetails('TimelockMid', {
-        description: `${formatSeconds(
-          timelockMidDelay,
-        )} timelock. Can manage the USDC gateway bridge. The ScrollMultisig can propose and cancel transactions, and the ExecutorMultisig can execute them.`,
+        )} timelock. Admin of the ScrollOwner contract, meaning it can assign and revoke roles. The SecurityCouncil can propose, cancel and execute transactions, and the ExecutorMultisig can execute them.`,
       }),
       discovery.getContractDetails('TimelockFast', {
         description: `${formatSeconds(
           timelockFastDelay,
-        )} timelock. Can add new sequencers and provers, update the gas oracle and permissions to update its values, the max gas limit, and gateways token mappings. The ScrollMultisig can propose and cancel transactions, and the ExecutorMultisig can execute them.`,
+        )} timelock. Can add new sequencers and provers, update the gas oracle and permissions to update its values, the max gas limit, and gateways token mappings. The ScrollOpsMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them. Currently also has the Admin role in the ScrollOwner contract and can thus manage all roles including the ones that can upgrade all system contracts.`,
+      }),
+      discovery.getContractDetails('TimelockSC', {
+        description: `${formatSeconds(
+          timelockSCDelay,
+        )} timelock. Can upgrade all core system contracts via the ProxyAdmin. The SecurityCouncil can propose, cancel and execute transactions, and the ScrollExecutorMultisig can execute them.`,
+      }),
+      discovery.getContractDetails('TimelockEmergency', {
+        description: `${formatSeconds(
+          timelockEmergencyDelay,
+        )} timelock. Can pause system contracts, revert batches and remove sequencers. The ScrollEmergencyMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them.`,
       }),
       discovery.getContractDetails('MultipleVersionRollupVerifier', {
         description:
@@ -682,52 +691,52 @@ export const scroll: Layer2 = {
       }),
       discovery.getContractDetails('L1ETHGateway', {
         description: 'Deprecated: Contract used to bridge ETH from L1 to L2.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1WETHGateway', {
         description: 'Contract used to bridge WETH from L1 to L2.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1BatchBridgeGateway', {
         description:
           'Contract used to efficiently bridge ETH (in batches) from L1 to L2.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1StandardERC20Gateway', {
         description:
           'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1CustomERC20Gateway', {
         description:
           'Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1USDCGateway', {
         description: 'Contract used to bridge USDC tokens from L1 to L2.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1ERC721Gateway', {
         description: 'Contract used to bridge ERC721 tokens from L1 to L2.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1ERC1155Gateway', {
         description: 'Contract used to bridge ERC1155 tokens from L1 to L2.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
       discovery.getContractDetails('L1GatewayRouter', {
         description:
           'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
-      discovery.getContractDetails('FeeVaultMultisig', {
+      discovery.getContractDetails('ScrollFeeVaultMultisig', {
         description:
           'Multisig used to store fees collected from gateways to pay for L1 -> L2 message execution.',
       }),
       discovery.getContractDetails('EnforcedTxGateway', {
         description:
           'Contracts to force L1 -> L2 messages with the proper sender.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
         pausable: {
           paused: isEnforcedTxGatewayPaused,
           pausableBy: ['ScrollOwner'],
@@ -736,23 +745,27 @@ export const scroll: Layer2 = {
       discovery.getContractDetails('OLD_L2GasPriceOracle', {
         description:
           'Deprecated: the functionality of this contract has been moved to the L1MessageQueue contract. It was used to relay the L2 basefee on L1 in a trusted way using a whitelist. It was also used to store and update values related to intrinsic gas cost calculations.',
-        ...upgradesScrollMultisig,
+        ...upgradesSC,
       }),
     ],
     risks: [],
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'ScrollMultisig',
-      'Currently also designated as the Security Council. Can upgrade proxies and the verifier without delay and propose transactions within Timelocks. It can also revert non finalized batches, remove sequencers and provers and pause contracts.',
+      'ScrollOpsMultisig',
+      'Can propose transactions via the TimelockFast, which currently can manage all roles in the ScrollOwner and thus get access to full upgrade and system functions. The ScrollExecutorMultisig needs to execute these proposals once ready.',
     ),
     ...discovery.getMultisigPermission(
-      'ExecutorMultisig',
-      'Can execute timelock transactions.',
+      'SecurityCouncil',
+      'Can upgrade all system contracts via the TimelockSC and the ProxyAdmin and manage all critical roles in the ScrollOwner via the TimelockSlow. The ScrollExecutorMultisig can execute these proposals, but the SC is also permissioned to execute them.',
     ),
     ...discovery.getMultisigPermission(
-      'EmergencyMultisig',
-      'Can revert batches, remove sequencers and provers, and pause contracts.',
+      'ScrollExecutorMultisig',
+      'Can execute timelock transactions in all four timelocks.',
+    ),
+    ...discovery.getMultisigPermission(
+      'ScrollEmergencyMultisig',
+      'Can revert batches, remove sequencers and provers, and pause contracts via the TimelockEmergency. The ScrollExecutorMultisig needs to execute these proposals.',
     ),
     {
       name: 'Sequencers',

@@ -1,8 +1,8 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 21667783,
-  "configHash": "0x4e5901f3c4e42d961a6c108c50668aaf79105c895fa259a271896324b00dda1c",
+  "blockNumber": 21678881,
+  "configHash": "0x5938662167b6e89ad7046446d8adbe7ab472c0853622df5d07e64b7bd0105a19",
   "contracts": [
     {
       "name": "L1Staking",
@@ -58,7 +58,7 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -121,7 +121,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -192,7 +192,7 @@
       "sinceTimestamp": 1729306655,
       "values": {
         "$immutable": true,
-        "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
+        "owner": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
       },
       "derivedName": "ProxyAdmin"
     },
@@ -208,7 +208,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -239,9 +239,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 6060,
+        "nextCrossDomainMessageIndex": 6090,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 6043,
+        "pendingQueueIndex": 6055,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -259,7 +259,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -290,19 +290,27 @@
       "derivedName": "L1StandardERC20Gateway"
     },
     {
-      "name": "ZkEvmVerifierV1",
-      "address": "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e",
+      "name": "MultipleVersionRollupVerifier",
+      "address": "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
       "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
+        "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7"
       ],
-      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.",
-      "sinceTimestamp": 1729328267,
+      "description": "Used to update the verifier and keep track of current and old versions.",
+      "sinceTimestamp": 1737359447,
       "values": {
         "$immutable": true,
-        "programVkey": "0x00bc91a65e39100f3b075c9edf1a60fd1cb025b9413ea19c34c62d455e512685",
-        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
+        "latestVerifier": [
+          {
+            "startBatchIndex": 0,
+            "verifier": "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154"
+          }
+        ],
+        "legacyVerifiersLength": [0],
+        "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+        "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+        "verifierVersions": [1]
       },
-      "derivedName": "ZkEvmVerifierV1"
+      "derivedName": "MultipleVersionRollupVerifier"
     },
     {
       "name": "L1GatewayRouter",
@@ -316,7 +324,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -518,7 +526,7 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -597,8 +605,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 8523,
-        "lastFinalizedBatchIndex": 8309,
+        "lastCommittedBatchIndex": 8679,
+        "lastFinalizedBatchIndex": 8467,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -607,35 +615,12 @@
         "proofWindow": 259200,
         "proveRemaining": 3000000000000000,
         "revertReqIndex": 0,
-        "verifier": "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6"
+        "verifier": "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
       "derivedName": "Rollup"
     },
     {
-      "name": "MultipleVersionRollupVerifier",
-      "address": "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6",
-      "sourceHashes": [
-        "0x8377ac9418b966ddd7add6e4920fe9d710f8c00cb480c6dbced62b363b6639de"
-      ],
-      "description": "Used to update the verifier and keep track of current and old versions.",
-      "sinceTimestamp": 1729330883,
-      "values": {
-        "$immutable": true,
-        "latestVerifier": [
-          {
-            "startBatchIndex": 0,
-            "verifier": "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e"
-          }
-        ],
-        "legacyVerifiersLength": [0],
-        "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "rollup": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-        "verifierVersions": [0]
-      },
-      "derivedName": "MultipleVersionRollupVerifier"
-    },
-    {
-      "name": "MorphAdminMSig",
+      "name": "MorphOpsMultisig",
       "address": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -657,52 +642,6 @@
           "permission": "configure",
           "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "description": "can pause and unpause"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -725,7 +664,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 28,
+        "nonce": 30,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -748,7 +687,7 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -798,7 +737,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+          "to": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
@@ -828,7 +767,7 @@
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 6060,
+        "messageNonce": 6090,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -836,6 +775,103 @@
         "xDomainMessageSender": "0x000000000000000000000000000000000000dEaD"
       },
       "derivedName": "L1CrossDomainMessenger"
+    },
+    {
+      "name": "ZkEvmVerifierV1",
+      "address": "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154",
+      "sourceHashes": [
+        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
+      ],
+      "description": "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.",
+      "sinceTimestamp": 1736755163,
+      "values": {
+        "$immutable": true,
+        "programVkey": "0x001bdbe2a0f4839f3e7ca3b42ab1ca9d012e23249d17564c953d3557aede919c",
+        "VERIFIER_HASH": "0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67"
+      },
+      "derivedName": "ZkEvmVerifierV1"
+    },
+    {
+      "name": "MorphUpgradeMultisig",
+      "address": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1730976923,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x0659dF9D53A987e3aDaa9019407431413A101eF3",
+          "0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5",
+          "0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6",
+          "0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0",
+          "0x35B98995048b320f2DaFFAD5BaD5884F16e488A9",
+          "0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb",
+          "0x0B3d220254e407a780EA7498d51b6d4fef807Bd0",
+          "0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0x1fcc53749474cc8908a9631bf2bd115aaccfba0cc497d219304591a2780bec5d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "Whitelist",
@@ -875,6 +911,7 @@
     },
     { "address": "0x05e1d4694041aF987Af6F8402D902686018E2136" },
     { "address": "0x0659dF9D53A987e3aDaa9019407431413A101eF3" },
+    { "address": "0x0B3d220254e407a780EA7498d51b6d4fef807Bd0" },
     {
       "address": "0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
       "receivedPermissions": [
@@ -885,6 +922,7 @@
       ]
     },
     { "address": "0x19C0CebaEC6EDb61c00178Cf8c6112BAD5Ef68E6" },
+    { "address": "0x1DeBbDae435295eC72b904Cc8B476BA81a63BAdb" },
     {
       "address": "0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
       "receivedPermissions": [
@@ -913,6 +951,7 @@
         }
       ]
     },
+    { "address": "0x35B98995048b320f2DaFFAD5BaD5884F16e488A9" },
     { "address": "0x429087D7cb89cD816b80804bCE9c7b1A1FFE229F" },
     {
       "address": "0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
@@ -1181,6 +1220,7 @@
         }
       ]
     },
+    { "address": "0xf39D8310a7DFEc320bD17bddE32A53d47e340B2e" },
     {
       "address": "0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
       "receivedPermissions": [
@@ -1405,6 +1445,26 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": [
+      "constructor(uint256[] _versions, address[] _verifiers)",
+      "error ErrorStartBatchIndexFinalized()",
+      "error ErrorStartBatchIndexTooSmall()",
+      "error ErrorVerifierNotFound()",
+      "error ErrorZeroAddress()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateVerifier(uint256 version, uint256 startBatchIndex, address verifier)",
+      "function getVerifier(uint256 _version, uint256 _batchIndex) view returns (address)",
+      "function initialize(address _rollup)",
+      "function latestVerifier(uint256 version) view returns (uint64 startBatchIndex, address verifier)",
+      "function legacyVerifiers(uint256 version, uint256) view returns (uint64 startBatchIndex, address verifier)",
+      "function legacyVerifiersLength(uint256 _version) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function rollup() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier)",
+      "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view"
+    ],
     "0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c": [
       "constructor()",
       "event DepositETH(address indexed from, address indexed to, uint256 amount, bytes data, uint256 nonce)",
@@ -1461,18 +1521,6 @@
       "function setETHGateway(address _newEthGateway)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e": [
-      "constructor(bytes32 _programVkey)",
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function programVkey() view returns (bytes32)",
-      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
-      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1507,25 +1555,6 @@
       "function renounceOwnership()",
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
-    ],
-    "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6": [
-      "constructor(uint256[] _versions, address[] _verifiers)",
-      "error ErrorStartBatchIndexFinalized()",
-      "error ErrorStartBatchIndexTooSmall()",
-      "error ErrorZeroAddress()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event UpdateVerifier(uint256 version, uint256 startBatchIndex, address verifier)",
-      "function getVerifier(uint256 _version, uint256 _batchIndex) view returns (address)",
-      "function initialize(address _rollup)",
-      "function latestVerifier(uint256 version) view returns (uint64 startBatchIndex, address verifier)",
-      "function legacyVerifiers(uint256 version, uint256) view returns (uint64 startBatchIndex, address verifier)",
-      "function legacyVerifiersLength(uint256 _version) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function rollup() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier)",
-      "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view"
     ],
     "0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": [
       "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
@@ -1664,6 +1693,21 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": [
+      "constructor(bytes32 _programVkey)",
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function programVkey() view returns (bytes32)",
+      "function verifyBatch(bytes proof, bytes32 publicInputHash) view",
+      "function verifyPlonk(bytes proof, bytes publicInputHash) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
+      "constructor(address _singleton)"
     ],
     "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": [
       "constructor(address _owner)",

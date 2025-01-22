@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xa149660de399054af22cadc6506034896e05bb72
+
+# Diff at Wed, 22 Jan 2025 12:02:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21630802
+- current block number: 21679901
+
+## Description
+
+RewardsCoordinator upgrade with some accounting logic changes and batch claims processing.
+
+## Watched changes
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      sourceHashes.1:
+-        "0xe548a802866b09c90c208e0f77018c9cdafa34ab07c071eac1e68c0a46d384b9"
++        "0xee70d5b56b152b7eac8c1b57b3e8f6c501adb6b0c780ff4b0b89b28fb38273fa"
+      values.$implementation:
+-        "0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"
++        "0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"
+      values.$pastUpgrades.2:
++        ["2025-01-21T20:49:35.000Z","0xef2204dcbb42fffa76f11d266a475be5f14a0f377acfa83cbfb9042db77d93e7",["0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.CALCULATION_INTERVAL_SECONDS:
+-        604800
++        86400
+      values.globalOperatorCommissionBips:
+-        1000
+      values.defaultOperatorSplitBips:
++        1000
+    }
+```
+
+## Source code changes
+
+```diff
+.../RewardsCoordinator/RewardsCoordinator.sol      | 704 +++++++++++++++------
+ 1 file changed, 503 insertions(+), 201 deletions(-)
+```
+
 Generated with discovered.json: 0x3c7ec59ae737010538346a41761c1ba592615aac
 
 # Diff at Mon, 20 Jan 2025 11:10:02 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 21667402,
+  "blockNumber": 21680644,
   "configHash": "0x2b8562e8d74a94d41917fc393ba136cf2b1489333880ed325f00958ea779cdda",
   "contracts": [
     {
@@ -355,10 +355,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 74632346,
-        "latestOutputIndex": 7477,
-        "nextBlockNumber": 74634146,
-        "nextOutputIndex": 7478,
+        "latestBlockNumber": 74711546,
+        "latestOutputIndex": 7521,
+        "nextBlockNumber": 74713346,
+        "nextOutputIndex": 7522,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -667,7 +667,7 @@
           "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC",
           "0x207E804758e28F2b3fD6E4219671B327100b82f8",
           "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
-          "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317",
+          "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
           "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
           "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
           "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
@@ -681,7 +681,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 13 (46%)",
-        "nonce": 50,
+        "nonce": 51,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -786,15 +786,15 @@
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
         "dataStoresForDuration": {
-          "one_duration": 49977,
+          "one_duration": 50141,
           "two_duration": 0,
           "three_duration": 0,
           "four_duration": 0,
           "five_duration": 0,
           "six_duration": 0,
           "seven_duration": 0,
-          "dataStoreId": 49978,
-          "latestTime": 1737399683
+          "dataStoreId": 50142,
+          "latestTime": 1737559067
         },
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
@@ -852,7 +852,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637669",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637704",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1145,7 +1145,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 593078,
-          "prevBlockNum": 21666592
+          "prevBlockNum": 21680630
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1411,6 +1411,7 @@
     { "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb" },
     { "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8" },
     { "address": "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC" },
+    { "address": "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1" },
     {
       "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
       "receivedPermissions": [
