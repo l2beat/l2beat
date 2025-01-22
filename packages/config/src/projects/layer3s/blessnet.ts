@@ -32,7 +32,6 @@ export const blessnet: Layer3 = orbitStackL3({
       repositories: ['https://github.com/bless-net'],
       socialMedia: ['https://x.com/blessdotnet'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // nonTemplateEscrows: [ // not deployed
   //   discovery.getEscrowDetails({

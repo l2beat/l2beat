@@ -38,7 +38,6 @@ export const world: Layer2 = opStackL2({
         'https://youtube.com/@worldcoinofficial',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   discovery,
   genesisTimestamp: new UnixTime(1719432935), // OptiPortal deployed

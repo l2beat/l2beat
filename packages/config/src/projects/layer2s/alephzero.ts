@@ -29,7 +29,6 @@ export const alephzero: Layer2 = orbitStackL2({
       repositories: ['https://github.com/Cardinal-Cryptography'],
       socialMedia: ['https://x.com/Aleph__Zero'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['AZERO'],
   gasTokens: ['AZERO'],

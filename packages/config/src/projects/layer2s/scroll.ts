@@ -97,7 +97,6 @@ export const scroll: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/scroll',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         batchSubmissions:

@@ -72,7 +72,6 @@ export const fraxtal: Layer2 = opStackL2({
         'https://t.me/fraxfinance',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.frax.com',
   genesisTimestamp: new UnixTime(1706811599),

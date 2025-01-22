@@ -159,7 +159,6 @@ export const ink: Layer2 = {
         'https://t.me/inkonchain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

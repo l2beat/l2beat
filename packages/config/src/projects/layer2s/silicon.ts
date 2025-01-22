@@ -53,7 +53,6 @@ export const silicon: Layer2 = polygonCDKStack({
       repositories: [],
       socialMedia: ['https://x.com/0xSilicon'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.silicon.network',
   rollupModuleContract: discovery.getContract('SiliconValidium'),

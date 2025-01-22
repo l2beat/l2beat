@@ -32,7 +32,6 @@ export const everclear: Layer2 = orbitStackL2({
         'https://blog.everclear.org/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['NEXT'],
   rpcUrl: 'https://rpc.everclear.raas.gelato.cloud',

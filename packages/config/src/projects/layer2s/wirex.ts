@@ -59,7 +59,6 @@ export const wirex: Layer2 = polygonCDKStack({
         'https://wirexpaychain.com/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'wirex',

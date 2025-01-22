@@ -36,7 +36,6 @@ export const corn: Layer2 = orbitStackL2({
         'https://blog.usecorn.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.corn-rpc.com',
   nonTemplateEscrows: [

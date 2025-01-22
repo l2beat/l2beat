@@ -31,7 +31,6 @@ export const xchain: Layer2 = orbitStackL2({
         'https://t.me/IDEXChat',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'xchain',

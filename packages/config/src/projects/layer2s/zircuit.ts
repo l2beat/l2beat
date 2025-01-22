@@ -61,7 +61,6 @@ export const zircuit: Layer2 = opStackL2({
         'https://t.me/zircuitl2_bot',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     architectureImage: 'zircuit',
     warning:
       'Proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',

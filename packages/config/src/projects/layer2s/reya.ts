@@ -36,7 +36,6 @@ export const reya: Layer2 = orbitStackL2({
         'https://medium.com/@reyalabs123',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'reya',

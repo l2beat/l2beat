@@ -158,7 +158,6 @@ export const base: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

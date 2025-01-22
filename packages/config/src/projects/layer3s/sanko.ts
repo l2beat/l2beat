@@ -43,7 +43,6 @@ export const sanko: Layer3 = orbitStackL3({
         'https://t.me/sankogamecorp',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'sanko',

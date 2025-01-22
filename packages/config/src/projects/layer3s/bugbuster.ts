@@ -57,7 +57,6 @@ export const bugbuster: Layer3 = {
         'https://optimism.cartesiscan.io/applications/0x3ff5c7383f614256053c3f6b86a47ba974937299',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [

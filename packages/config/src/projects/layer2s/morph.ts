@@ -74,7 +74,6 @@ export const morph: Layer2 = {
         'https://youtube.com/@morphofficiall2',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   stage: getStage({
     stage0: {

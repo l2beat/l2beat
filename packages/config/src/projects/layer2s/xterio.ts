@@ -49,7 +49,6 @@ export const xterio: Layer2 = opStackL2({
         'https://medium.com/@XterioGames',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
   daProvider: DACHALLENGES_DA_PROVIDER(

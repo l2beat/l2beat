@@ -32,7 +32,6 @@ export const hychain: Layer2 = orbitStackL2({
         'https://hychain.substack.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   discovery,
   gasTokens: ['TOPIA'],

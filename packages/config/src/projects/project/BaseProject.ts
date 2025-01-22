@@ -2,7 +2,6 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   ProjectDataAvailability,
   ScalingProjectCategory,
-  ScalingProjectDisplay,
   ScalingProjectRiskView,
   ScalingProjectStack,
 } from '../../common'
@@ -44,9 +43,6 @@ export interface BaseProject {
   /** Display information for the costs feature. If present costs is enabled for this project. */
   costsInfo?: ProjectCostsInfo
   // trackedTxsConfig
-  /** Display information for the activity feature. If present activity is enabled for this project. */
-  activityInfo?: ProjectActivityInfo
-  // activityConfig
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
@@ -120,8 +116,4 @@ export interface ProjectTvlInfo {
 
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
-}
-
-export interface ProjectActivityInfo {
-  dataSource?: ScalingProjectDisplay['activityDataSource']
 }

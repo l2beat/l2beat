@@ -32,7 +32,6 @@ export const edgeless: Layer2 = orbitStackL2({
         'https://t.me/+f8yhoOg-4cNhYWEx',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.edgeless.network/http',
   additionalBadges: [Badge.DA.CustomDA, Badge.RaaS.Caldera],

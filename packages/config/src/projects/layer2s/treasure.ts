@@ -47,7 +47,6 @@ export const treasure: Layer2 = zkStackL2({
         'https://t.me/playontreasure',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['MAGIC'],
   rpcUrl: 'https://rpc.treasure.lol',

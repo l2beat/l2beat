@@ -42,7 +42,6 @@ export const molten: Layer3 = orbitStackL3({
         'https://t.me/unidexfinance',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   gasTokens: ['MOLTEN'],
   associatedTokens: ['MOLTEN'],

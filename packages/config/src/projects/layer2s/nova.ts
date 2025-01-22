@@ -134,7 +134,6 @@ export const nova: Layer2 = orbitStackL2({
         'https://discord.gg/Arbitrum',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'nova',

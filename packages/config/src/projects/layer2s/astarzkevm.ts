@@ -98,7 +98,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
         'https://t.me/PlasmOfficial',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'astarzkevm',

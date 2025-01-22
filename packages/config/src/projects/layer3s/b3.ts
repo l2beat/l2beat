@@ -44,7 +44,6 @@ export const b3: Layer3 = opStackL3({
         'https://warpcast.com/b3dotfun',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'b3',

@@ -6,11 +6,7 @@ import { type DaLayer, daLayers } from '../da-beat'
 import { type Layer2, type ProjectLivenessInfo, layer2s } from '../layer2s'
 import { type Layer3, layer3s } from '../layer3s'
 import { refactored } from '../refactored'
-import type {
-  BaseProject,
-  ProjectActivityInfo,
-  ProjectCostsInfo,
-} from './BaseProject'
+import type { BaseProject, ProjectCostsInfo } from './BaseProject'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -78,7 +74,6 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     },
     livenessInfo: getLivenessInfo(p),
     costsInfo: getCostsInfo(p),
-    activityInfo: getActivityInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
     // tags
@@ -110,12 +105,6 @@ function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
     return {
       warning: p.display.costsWarning,
     }
-  }
-}
-
-function getActivityInfo(p: Layer2 | Layer3): ProjectActivityInfo | undefined {
-  if (p.config.transactionApi) {
-    return { dataSource: p.display.activityDataSource }
   }
 }
 

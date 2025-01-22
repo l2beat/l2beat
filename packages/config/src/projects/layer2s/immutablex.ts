@@ -88,7 +88,6 @@ export const immutablex: Layer2 = {
         'https://twitter.com/Immutable',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',

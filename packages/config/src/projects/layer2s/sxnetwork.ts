@@ -37,7 +37,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
         'https://discord.com/invite/sxnetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('ERC20Bridge'),

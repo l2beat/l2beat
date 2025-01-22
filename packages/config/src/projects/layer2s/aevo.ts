@@ -38,7 +38,6 @@ export const aevo: Layer2 = opStackL2({
         'https://t.me/aevoupdates',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'aevo',

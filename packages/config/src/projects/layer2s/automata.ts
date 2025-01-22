@@ -51,7 +51,6 @@ export const automata: Layer2 = opStackL2({
         'https://ata.ws/telegram',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['ATA'],
   nonTemplateOptimismPortalEscrowTokens: ['ATA'],

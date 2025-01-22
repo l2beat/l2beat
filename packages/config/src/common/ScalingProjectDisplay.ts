@@ -46,8 +46,6 @@ export type ScalingProjectDisplay = {
   purposes: ScalingProjectPurpose[]
   /** List of links */
   links: ScalingProjectLinks
-  /** Where does the activity data come from? */
-  activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
   /** Name of the architecture image to show in the contract section if present, otherwise use slug */
   architectureImage?: string
   /** Name of the state validation image to show in the state validation section if present, otherwise use slug */

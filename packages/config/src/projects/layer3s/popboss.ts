@@ -47,7 +47,6 @@ export const popboss: Layer3 = orbitStackL3({
         'https://piratenation.medium.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   transactionApi: {
     type: 'rpc',

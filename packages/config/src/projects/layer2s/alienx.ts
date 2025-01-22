@@ -33,7 +33,6 @@ export const alienx: Layer2 = orbitStackL2({
         'https://t.me/alienx_ainode',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

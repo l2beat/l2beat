@@ -26,7 +26,6 @@ export const blast: Layer2 = opStackL2({
       repositories: ['https://github.com/blast-io'],
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
-    activityDataSource: 'Blockchain RPC',
     tvlWarning: {
       content: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
