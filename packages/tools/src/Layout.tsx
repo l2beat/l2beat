@@ -40,10 +40,7 @@ export function Layout() {
             </NavLink>
           </li>
           <li>
-            <Link
-              className="font-mono underline"
-              to="https://fe-staging.l2beat.com/tools/logo-generator"
-            >
+            <Link className="font-mono underline" to="/logo-generator">
               /logo-generator
             </Link>
           </li>
