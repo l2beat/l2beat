@@ -1,14 +1,27 @@
-Generated with discovered.json: 0x105582f3d3425b1f3ba9a7994306a49c745ec9ca
+Generated with discovered.json: 0x69900d75b4626ceab1aff3d4b730ef346975432c
 
-# Diff at Mon, 20 Jan 2025 18:10:11 GMT:
+# Diff at Wed, 22 Jan 2025 14:31:53 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@0627cbad036b5034c9dc22d0c9a6a58d5852955f block: 21628468
-- current block number: 21667402
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21628468
+- current block number: 21680644
 
 ## Description
 
 Refined mantle DA permissions.
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.5:
+-        "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
++        "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
+    }
+```
 
 ## Config/verification related changes
 
