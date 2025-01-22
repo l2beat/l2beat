@@ -34,7 +34,7 @@ export function ScalingRiskTables(props: Props) {
     others: props.others.filter(includeFilters),
   }
   const entries = checked
-    ? getRecategorisedEntries(props, (a, b) => a.tvlOrder - b.tvlOrder)
+    ? getRecategorisedEntries(props, (a, b) => b.tvlOrder - a.tvlOrder)
     : filteredEntries
 
   const projectToBeMigratedToOthers = useMemo(
