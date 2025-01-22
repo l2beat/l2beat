@@ -120,7 +120,7 @@ export type PriceConfig = {
 export interface TokenValue {
   tokenId: string
   projectId: ProjectId
-  amount: bigint
+  amount: number
   value: number
   valueForProject?: number
   valueForTotal?: number

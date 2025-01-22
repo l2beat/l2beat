@@ -1,0 +1,135 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
+import type { DataStorage } from './DataStorage'
+import { ValueService } from './ValueService'
+import { createAmountConfig, createPriceConfig } from './mapConfig'
+import type {
+  BalanceOfEscrowAmountFormula,
+  Token,
+  TotalSupplyAmountFormula,
+  TvsConfig,
+  ValueFormula,
+} from './types'
+
+describe(ValueService.name, () => {
+  describe(ValueService.prototype.calculate.name, () => {
+    // biome-ignore lint/suspicious/noFocusedTests: <explanation>
+    it.only('should calculate TVS - wrapped token', async () => {
+      const wBTCContractAddress = EthereumAddress(
+        '0x10e4C3460310a2F4b56C8DB0b3806Be29B15c15E',
+      )
+      const solvBTCContractAddress = EthereumAddress(
+        '0x6E50888634562713c5F8f8AA650807cDc67Fc363',
+      )
+      const solvBTCEscrowAddress = EthereumAddress(
+        '0xA9cF190a5b7daE4CB1b3BD68fABf310cf1982185',
+      )
+
+      const wBTCAmountFormula = {
+        type: 'totalSupply',
+        address: wBTCContractAddress,
+        chain: 'bob',
+        decimals: 18,
+      } as TotalSupplyAmountFormula
+
+      const wBTCAmountConfigId = createAmountConfig(wBTCAmountFormula).id
+
+      const solvBTCAmountFormula = {
+        type: 'totalSupply',
+        address: solvBTCContractAddress,
+        chain: 'bob',
+        decimals: 18,
+      } as TotalSupplyAmountFormula
+
+      const solvBTCAmountConfigId = createAmountConfig(solvBTCAmountFormula).id
+
+      const wBTCBalanceOfEscrowFormula = {
+        type: 'balanceOfEscrow',
+        address: wBTCContractAddress,
+        chain: 'bob',
+        decimals: 18,
+        escrowAddresses: [solvBTCEscrowAddress],
+      } as BalanceOfEscrowAmountFormula
+
+      const wBTCBalanceOfEscrowConfigId = createAmountConfig(
+        wBTCBalanceOfEscrowFormula,
+      ).id
+
+      const tvsConfig = mockObject<TvsConfig>({
+        tokens: [
+          // WBTC with amount formula as totalSupply on L2
+          mockObject<Token>({
+            ticker: 'WBTC',
+            amount: wBTCAmountFormula,
+            valueForProject: undefined,
+            valueForTotal: undefined,
+          }),
+          // solvBTC with
+          // - amount formula as totalSupply on L2
+          // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
+          mockObject<Token>({
+            ticker: 'solvBTC',
+            amount: solvBTCAmountFormula,
+            valueForProject: {
+              type: 'calculation',
+              operator: 'diff',
+              arguments: [
+                {
+                  type: 'value',
+                  amount: solvBTCAmountFormula,
+                  ticker: 'solvBTC',
+                },
+                {
+                  type: 'value',
+                  amount: wBTCBalanceOfEscrowFormula,
+                  ticker: 'WBTC',
+                },
+              ],
+            },
+            valueForTotal: undefined,
+          }),
+        ],
+      })
+
+      const wBTCPriceConfigId = createPriceConfig(
+        mockObject<ValueFormula>({
+          ticker: 'WBTC',
+        }),
+      ).id
+
+      const solvBTCPriceConfigId = createPriceConfig(
+        mockObject<ValueFormula>({
+          ticker: 'solvBTC',
+        }),
+      ).id
+
+      const mockTimestamp = UnixTime.now()
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          // totalSupply of WBTC
+          .given(wBTCAmountConfigId, mockTimestamp)
+          .resolvesToOnce(10000)
+          // totalSupply of solvBTC
+          .given(solvBTCAmountConfigId, mockTimestamp)
+          .resolvesToOnce(5000)
+          // balanceOfEscrow of WBTC in solvBTC escrow
+          .given(wBTCBalanceOfEscrowConfigId, mockTimestamp)
+          .resolvesToOnce(5000),
+        getPrice: mockFn()
+          // price of WBTC
+          .given(wBTCPriceConfigId, mockTimestamp)
+          .resolvesToOnce(200)
+          // price of solvBTC
+          .given(solvBTCPriceConfigId, mockTimestamp)
+          .resolvesToOnce(100),
+      })
+
+      const valueService = new ValueService(mockDataStorage)
+
+      const result = await valueService.calculate(tvsConfig, [mockTimestamp])
+
+      expect(result).toEqual({})
+    })
+  })
+})
