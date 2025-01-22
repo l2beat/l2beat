@@ -48,6 +48,10 @@ export const Event2HandlerDefinition = z.strictObject({
   type: z.literal('event2'),
   select: z.union([z.string(), z.array(z.string())]).optional(),
   set: z.union([Event2HandlerAction, z.array(Event2HandlerAction)]).optional(),
+  add: z.union([Event2HandlerAction, z.array(Event2HandlerAction)]).optional(),
+  remove: z
+    .union([Event2HandlerAction, z.array(Event2HandlerAction)])
+    .optional(),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -63,11 +67,15 @@ export class Event2Handler implements Handler {
     stringAbi: string[],
   ) {
     const events: string[] = []
-    if (definition.set !== undefined) {
-      events.push(
-        ...ensureArray(definition.set).flatMap((a) => ensureArray(a.event)),
-      )
+    const actions = [definition.set, definition.add, definition.remove]
+    for (const action of actions) {
+      if (action === undefined) {
+        continue
+      }
+
+      events.push(...ensureArray(action).flatMap((a) => ensureArray(a.event)))
     }
+
     const fragments = events.map((e) =>
       getEventFragment(e, stringAbi, () => true),
     )
@@ -95,23 +103,36 @@ export class Event2Handler implements Handler {
 
     this.keys = smallest.map((e, i) => e.name ?? i.toString())
     this.abi = new utils.Interface(fragments)
-    this.topic0s = fragments.map((f) => this.abi.getEventTopic(f))
+    this.topic0s = [...new Set(fragments.map((f) => this.abi.getEventTopic(f)))]
   }
 
   async execute(
     provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
-    assert(this.definition.set !== undefined)
-
+    const logs = await fetchLogs(provider, address, this.topic0s)
     const select = ensureArray(this.definition.select ?? [])
-    const setActions = ensureArray(this.definition.set)
-    const logRows: LogRow[] = await this.executeSets(
-      provider,
-      address,
-      setActions,
-      select,
-    )
+
+    let logRows: LogRow[] = []
+    for (const log of logs) {
+      const parsed = this.abi.parseLog(log)
+      logRows.push(getResultObject(parsed, this.keys))
+    }
+
+    if (this.definition.set !== undefined) {
+      const setActions = ensureArray(this.definition.set)
+      logRows = await this.executeSets(logRows, setActions, select)
+    } else if (this.definition.add !== undefined) {
+      const addActions = ensureArray(this.definition.add)
+      const removeActions = ensureArray(this.definition.remove ?? [])
+
+      logRows = await this.executeAddRemove(
+        logRows,
+        addActions,
+        removeActions,
+        select,
+      )
+    }
 
     let values = logRows.map((r) => r.value)
     if (select.length > 0) {
@@ -132,34 +153,47 @@ export class Event2Handler implements Handler {
   }
 
   async executeSets(
-    provider: IProvider,
-    address: EthereumAddress,
+    logs: LogRow[],
     setActions: Event2HandlerAction[],
     select: string[],
   ): Promise<LogRow[]> {
     const result: Map<string, LogRow> = new Map()
 
-    for (const action of setActions) {
-      const topic0s = ensureArray(action.event).map((e) =>
-        this.abi.getEventTopic(getEventName(e)),
-      )
-      const logs = await fetchLogs(provider, address, topic0s)
-
-      const logRows: LogRow[] = []
-      for (const log of logs) {
-        const parsed = this.abi.parseLog(log)
-        logRows.push(getResultObject(parsed, this.keys))
+    for (const entry of logs) {
+      const keep = setActions.some((action) => evaluateAction(entry, action))
+      if (!keep) {
+        continue
       }
 
-      for (const entry of logRows) {
-        const keep = evaluateFilter(entry, action.where)
-        if (!keep) {
-          continue
-        }
+      const value = select.length > 0 ? extractKeys(entry, select) : entry
+      const string = JSON.stringify(value)
+      result.set(string, entry)
+    }
 
-        const value = select.length > 0 ? extractKeys(entry, select) : entry
-        const string = JSON.stringify(value)
+    return [...result.values()]
+  }
+
+  async executeAddRemove(
+    logs: LogRow[],
+    addActions: Event2HandlerAction[],
+    removeActions: Event2HandlerAction[],
+    select: string[],
+  ): Promise<LogRow[]> {
+    const result: Map<string, LogRow> = new Map()
+
+    for (const entry of logs) {
+      const add = addActions.some((action) => evaluateAction(entry, action))
+      const remove = removeActions.some((action) =>
+        evaluateAction(entry, action),
+      )
+      assert(!(add && remove), 'Both add and remove are true')
+      const value = select.length > 0 ? extractKeys(entry, select) : entry
+      const string = JSON.stringify(value)
+
+      if (add) {
         result.set(string, entry)
+      } else if (remove) {
+        result.delete(string)
       }
     }
 
@@ -179,14 +213,28 @@ async function fetchLogs(
   return logs.flat().sort(orderLogs)
 }
 
+function evaluateAction(log: LogRow, action: Event2HandlerAction) {
+  const eventMatch = ensureArray(action.event).some(
+    (e) => getEventName(e) === log.log.name,
+  )
+
+  return eventMatch && evaluateFilter(log, action.where)
+}
+
 function evaluateFilter(
   e: LogRow,
   filter?: FilterType | undefined,
-): PrimitiveType {
+): ContractValue {
   if (filter === undefined) {
     return true
   }
   if (!Array.isArray(filter)) {
+    if (typeof filter === 'string' && filter.startsWith('#')) {
+      const key = filter.slice(1) // remove leading #
+      // biome-ignore lint/style/noNonNullAssertion: We know it's there
+      return extractKeys(e, [key])[key]!
+    }
+
     return filter
   }
 
