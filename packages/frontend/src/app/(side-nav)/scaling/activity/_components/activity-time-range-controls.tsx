@@ -16,6 +16,7 @@ export function ActivityTimeRangeControls({
 }: Props) {
   return (
     <ChartTimeRangeControls
+      name="activityTimeRange"
       value={timeRange}
       setValue={setTimeRange}
       options={[

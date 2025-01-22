@@ -1,6 +1,6 @@
-import { TvlConfig } from '../../../config/Config'
+import type { TvlConfig } from '../../../config/Config'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface BlockTimestampModule {
   start: () => Promise<void> | void

@@ -1,8 +1,8 @@
-import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
-import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
-import { IndexerService } from '../IndexerService'
-import { IndexerTags } from '../types'
+import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
+import type { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
+import type { IndexerService } from '../IndexerService'
+import type { IndexerTags } from '../types'
 
 export interface Configuration<T> {
   id: string

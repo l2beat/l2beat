@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useState } from 'react'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
@@ -86,7 +86,7 @@ function UnitControls({
       {loading ? (
         <Skeleton className="h-8 w-[156px]" />
       ) : (
-        <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroup name="costsChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
           <RadioGroupItem value="eth">ETH</RadioGroupItem>
           <RadioGroupItem value="gas">GAS</RadioGroupItem>

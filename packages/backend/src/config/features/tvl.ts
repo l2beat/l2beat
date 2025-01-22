@@ -1,22 +1,17 @@
-import { Env } from '@l2beat/backend-tools'
 import {
   bridgeToBackendProject,
-  bridges,
   chainConverter,
-  chains,
   getTvlAmountsConfig,
   getTvlPricesConfig,
   layer2ToBackendProject,
-  layer2s,
   layer3ToBackendProject,
-  layer3s,
-  tokenList,
-} from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
-
+} from '@l2beat/backend-shared'
+import type { Env } from '@l2beat/backend-tools'
+import { bridges, chains, layer2s, layer3s, tokenList } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { TvlConfig } from '../Config'
-import { FeatureFlags } from '../FeatureFlags'
+import type { TvlConfig } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
 export function getTvlConfig(

@@ -1,4 +1,4 @@
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { createTrackedTxId } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'

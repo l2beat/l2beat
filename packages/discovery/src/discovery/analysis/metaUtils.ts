@@ -1,16 +1,16 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
-  ContractFieldSeverity,
-  ContractValue,
-  ContractValueType,
-  StackCategory,
+  type ContractFieldSeverity,
+  type ContractValue,
+  type ContractValueType,
+  type StackCategory,
   get$Admins,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import { uniqBy } from 'lodash'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
-import {
+import type { ContractConfig } from '../config/ContractConfig'
+import type {
   DiscoveryContractField,
   ExternalReference,
   PermissionConfiguration,
@@ -18,7 +18,7 @@ import {
 } from '../config/RawDiscoveryConfig'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
-import { AnalyzedContract } from './AddressAnalyzer'
+import type { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
 
@@ -74,7 +74,7 @@ export function mergePermissions(
   return result.length === 0 ? undefined : result
 }
 
-export function interpolateDescription(
+export function interpolateString(
   description: string,
   analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): string {
@@ -82,7 +82,7 @@ export function interpolateDescription(
     const value = key === '$.address' ? analysis.address : analysis.values[key]
     if (value === undefined) {
       throw new Error(
-        `Value for variable "{{ ${key} }}" in contract description not found in contract analysis`,
+        `Value for variable "{{ ${key} }}" in contract field not found in contract analysis`,
       )
     }
     return String(value)
@@ -90,38 +90,33 @@ export function interpolateDescription(
 }
 
 export function getSelfMeta(
-  overrides: ContractOverrides | undefined,
+  config: ContractConfig,
   analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   let description: string | undefined = undefined
-  if (overrides?.description !== undefined) {
-    description = interpolateDescription(overrides?.description, analysis)
+  if (config.description !== undefined) {
+    description = interpolateString(config.description, analysis)
   }
 
   let references: ExternalReference[] | undefined
-  if (overrides?.manualSourcePaths !== undefined) {
-    const addresses = [
-      analysis.address,
-      ...get$Implementations(analysis.values),
-    ]
+  const addresses = [analysis.address, ...get$Implementations(analysis.values)]
 
-    for (const address of addresses) {
-      const manualSourcePath = overrides.manualSourcePaths[address.toString()]
-      if (manualSourcePath === undefined) {
-        continue
-      }
-
-      references ??= []
-      references.push({
-        text: 'Source Code',
-        href: manualSourcePath,
-      })
+  for (const address of addresses) {
+    const manualSourcePath = config.manualSourcePaths[address.toString()]
+    if (manualSourcePath === undefined) {
+      continue
     }
+
+    references ??= []
+    references.push({
+      text: 'Source Code',
+      href: manualSourcePath,
+    })
   }
 
   const result = {
-    canActIndependently: overrides?.canActIndependently,
-    displayName: overrides?.displayName,
+    canActIndependently: config.canActIndependently,
+    displayName: config.displayName,
     description,
     references,
     permissions: undefined,
@@ -218,7 +213,10 @@ function linkPermission(
     type: rawPermission.type,
     delay,
     description: rawPermission.description
-      ? interpolateDescription(rawPermission.description, analysis)
+      ? interpolateString(rawPermission.description, analysis)
+      : undefined,
+    condition: rawPermission.condition
+      ? interpolateString(rawPermission.condition, analysis)
       : undefined,
     target: self,
   }

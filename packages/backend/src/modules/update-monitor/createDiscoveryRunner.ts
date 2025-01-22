@@ -1,24 +1,22 @@
 import {
-  ConfigReader,
-  DiscoveryChainConfig,
-  DiscoveryLogger,
-  DiscoveryCache as IDiscoveryCache,
+  type DiscoveryChainConfig,
+  type DiscoveryLogger,
+  type DiscoveryCache as IDiscoveryCache,
   InMemoryCache,
   LeveledCache,
   RedisCache,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
-import { Database } from '@l2beat/database'
-import { HttpClient } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { Peripherals } from '../../peripherals/Peripherals'
+import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 export function createDiscoveryRunner(
   http: HttpClient,
-  configReader: ConfigReader,
   peripherals: Peripherals,
   discoveryLogger: DiscoveryLogger,
   chainConfigs: DiscoveryChainConfig[],
@@ -45,7 +43,7 @@ export function createDiscoveryRunner(
     chain,
   )
 
-  return new DiscoveryRunner(allProviders, discoveryEngine, configReader, chain)
+  return new DiscoveryRunner(allProviders, discoveryEngine, chain)
 }
 
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {

@@ -2,7 +2,7 @@
   "name": "brine",
   "chain": "ethereum",
   "blockNumber": 19825361,
-  "configHash": "0xe5c5527c32f8e0ff915cc45e850bec0f059b6ae23a19a29818429a6a864dd994",
+  "configHash": "0xdd9edb8afda455d036e2cf7fa46b416e7a03c93f3bdbc560a54d4843a080d6aa",
   "contracts": [
     {
       "name": "StarkExchange",
@@ -21,7 +21,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x303775491494a08b07365938787274F742a81F63",
+          "to": "0x303775491494a08b07365938787274F742a81F63",
           "via": []
         }
       ],
@@ -175,7 +175,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1390f521A79BaBE99b69B37154D63D431da27A07"
+          "from": "0x1390f521A79BaBE99b69B37154D63D431da27A07"
         }
       ]
     },

@@ -1,4 +1,4 @@
-import { Field } from '../api/types'
+import type { Field } from '../api/types'
 import { FieldValueDisplay } from './FieldValueDisplay'
 
 export interface FieldDisplayProps {

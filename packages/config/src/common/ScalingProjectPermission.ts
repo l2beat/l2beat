@@ -1,6 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ScalingProjectReference } from './ScalingProjectReference'
+import type { ScalingProjectReference } from './ScalingProjectReference'
 
 export interface ScalingProjectPermission {
   /** List of the accounts */

@@ -1,14 +1,14 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
-import { Config } from '../config'
+import type { Config } from '../config'
 import { BlobProviders } from './BlobProviders'
 import { BlockProviders } from './BlockProviders'
 import {
-  CirculatingSupplyProviders,
+  type CirculatingSupplyProviders,
   initCirculatingSupplyProviders,
 } from './CirculatingSupplyProviders'
-import { Clients, initClients } from './Clients'
-import { PriceProviders, initPriceProviders } from './PriceProviders'
+import { type Clients, initClients } from './Clients'
+import { type PriceProviders, initPriceProviders } from './PriceProviders'
 
 export class Providers {
   block: BlockProviders

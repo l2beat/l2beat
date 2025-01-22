@@ -1,6 +1,6 @@
 import { createHash } from 'crypto'
 import { providers } from 'ethers'
-import { Chain } from '../../../chains'
+import type { Chain } from '../../../chains'
 
 export class RpcCodeClient {
   private readonly provider: providers.Provider

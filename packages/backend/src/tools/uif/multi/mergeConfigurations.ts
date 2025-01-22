@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import {
+import type {
   Configuration,
   RemovalConfiguration,
   SavedConfiguration,

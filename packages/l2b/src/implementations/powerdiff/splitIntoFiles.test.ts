@@ -2,9 +2,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
-import { LeftRightPair } from '../powerdiff'
+import type { LeftRightPair } from '../powerdiff'
 import { splitIntoSubfiles } from './splitIntoFiles'
-import { Configuration } from './types'
+import type { Configuration } from './types'
 
 describe('splitIntoSubfiles', () => {
   const testDir = path.join(__dirname, 'fixtures', 'splitIntoSubfiles')

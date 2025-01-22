@@ -1,5 +1,5 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
@@ -29,7 +29,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('soneium')
 
@@ -269,6 +269,25 @@ export const soneium: Layer2 = {
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     })(),
   },
+  chainConfig: {
+    name: 'soneium',
+    chainId: 1868,
+    blockscoutV2ApiUrl: 'https://soneium.blockscout.com/api/v2',
+    explorerUrl: 'https://soneium.blockscout.com/',
+    explorerApi: {
+      url: 'https://soneium.blockscout.com/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1733134751),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1,
+        version: '3',
+      },
+    ],
+  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
@@ -455,11 +474,11 @@ export const soneium: Layer2 = {
   },
   milestones: [
     {
-      name: 'Soneium censors copyright-infringing tokens',
+      name: 'Soneium RPC providers censor IP-infringing tokens',
       link: 'https://x.com/donnoh_eth/status/1879210463952818472',
       date: '2025-01-14T00:00:00Z',
       description:
-        'Sequencer bans copyright-infringing tokens - can still be used by forcing txs directly from the L1.',
+        'RPC providers blacklist certain tokens - can still be used by self-hosting or forcing txs from L1.',
       type: 'incident',
     },
     {

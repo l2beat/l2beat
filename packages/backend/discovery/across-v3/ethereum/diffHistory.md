@@ -1,4 +1,52 @@
-Generated with discovered.json: 0x781c2f720cc4ded21607077f0393ed0da0e76472
+Generated with discovered.json: 0x237c81cffbb2e1143a8a11ff314fa0363e17b36e
+
+# Diff at Mon, 20 Jan 2025 11:09:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21628877
+- current block number: 21628877
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628877 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      issuedPermissions.0.to:
++        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
+      directlyReceivedPermissions.0.from:
++        "0xB524735356985D2f267FA010D681f061DfF03715"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      receivedPermissions.0.from:
++        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+    }
+```
+
+Generated with discovered.json: 0x0f35b730661bd82dbea92413045a93d136735522
 
 # Diff at Wed, 15 Jan 2025 09:06:12 GMT:
 

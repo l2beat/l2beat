@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AddressFieldValue } from '../api/types'
+import type { AddressFieldValue } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
 import { IconCopy } from '../icons/IconCopy'

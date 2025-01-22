@@ -1,15 +1,15 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { DiscoveryLogger } from '../DiscoveryLogger'
-import {
+import type { DiscoveryLogger } from '../DiscoveryLogger'
+import type {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
   AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
 import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { IProvider } from '../provider/IProvider'
+import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
@@ -101,8 +101,7 @@ export class DiscoveryEngine {
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
-            config.overrides.get(address),
-            config.typesFor(address.toString()),
+            config.for(address),
             templates,
           )
           resolved[address.toString()] = analysis

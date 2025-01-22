@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff } from '@l2beat/discovery'
+import type { DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,
@@ -9,13 +9,13 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import {
-  DiscordClient,
+  type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import {
-  DailyReminderChainEntry,
+  type DailyReminderChainEntry,
   UpdateNotifier,
   generateTemplatizedStatus,
 } from './UpdateNotifier'

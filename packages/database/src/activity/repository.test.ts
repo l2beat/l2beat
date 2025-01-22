@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { omit } from 'lodash'
 import { describeDatabase } from '../test/database'
-import { ActivityRecord } from './entity'
+import type { ActivityRecord } from './entity'
 import { ActivityRepository } from './repository'
 
 describeDatabase(ActivityRepository.name, (db) => {

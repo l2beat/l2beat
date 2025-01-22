@@ -1,8 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
-import { HandlerResult } from '../handlers/Handler'
-import { AddressesWithTemplates } from './AddressAnalyzer'
+import type { DiscoveryContractField } from '../config/RawDiscoveryConfig'
+import type { HandlerResult } from '../handlers/Handler'
+import type { AddressesWithTemplates } from './AddressAnalyzer'
 import { getAddresses } from './metaUtils'
 
 export function getRelativesWithSuggestedTemplates(

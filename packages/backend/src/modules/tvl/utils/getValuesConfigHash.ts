@@ -1,9 +1,9 @@
 import { createHash } from 'crypto'
-import { createAmountId } from '@l2beat/config'
+import { createAmountId } from '@l2beat/backend-shared'
 import {
   assert,
-  AmountConfigEntry,
-  CoingeckoPriceConfigEntry,
+  type AmountConfigEntry,
+  type CoingeckoPriceConfigEntry,
 } from '@l2beat/shared-pure'
 import { createValueId } from './createValueId'
 

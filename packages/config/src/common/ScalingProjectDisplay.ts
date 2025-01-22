@@ -1,9 +1,9 @@
-import { StringWithAutocomplete } from '@l2beat/shared-pure'
-import { WarningWithSentiment } from '../projects'
-import { ReasonForBeingInOther } from './ReasonForBeingInOther'
-import { ScalingProjectCategory } from './ScalingProjectCategory'
-import { ScalingProjectLinks } from './ScalingProjectLinks'
-import { ScalingProjectPurpose } from './ScalingProjectPurpose'
+import type { StringWithAutocomplete } from '@l2beat/shared-pure'
+import type { WarningWithSentiment } from '../projects'
+import type { ReasonForBeingInOther } from './ReasonForBeingInOther'
+import type { ScalingProjectCategory } from './ScalingProjectCategory'
+import type { ScalingProjectLinks } from './ScalingProjectLinks'
+import type { ScalingProjectPurpose } from './ScalingProjectPurpose'
 
 export type ScalingProjectDisplay = {
   /** Name of the scaling project, will be used as a display name on the website */

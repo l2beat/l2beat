@@ -2,14 +2,14 @@ import { mkdirSync } from 'fs'
 import path from 'path'
 import {
   AllProviders,
-  DiscoveryCache,
-  DiscoveryChainConfig,
-  IProvider,
+  type DiscoveryCache,
+  type DiscoveryChainConfig,
+  type IProvider,
   NoCache,
   SQLiteCache,
   getMulticall3Config,
 } from '@l2beat/discovery'
-import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
 import { readConfig } from '../../config/readConfig'
 

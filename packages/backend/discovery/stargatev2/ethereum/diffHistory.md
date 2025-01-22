@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xda672a0914120d6b8788c13e90ab8801ffe0087c
+Generated with discovered.json: 0xa1e0402cf375332155040f08ecbba275d26a4ed8
+
+# Diff at Mon, 20 Jan 2025 11:10:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630210
+- current block number: 21630210
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630210 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+      issuedPermissions.0.to:
++        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+    }
+```
+
+```diff
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      receivedPermissions.0.from:
++        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+      receivedPermissions.0.from:
++        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+    }
+```
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5"
+      issuedPermissions.0.to:
++        "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5"
+    }
+```
+
+Generated with discovered.json: 0x4373ee5870d10cf8513a86e72d2f437908a1d41b
 
 # Diff at Wed, 15 Jan 2025 13:35:11 GMT:
 

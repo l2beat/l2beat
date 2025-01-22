@@ -1,6 +1,4 @@
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
-import { FieldDiff } from '../output/diffContracts'
-import { normalizeDiffPath } from './normalizeDiffPath'
+import type { FieldDiff } from '../output/diffContracts'
 
 const severityAsNumber = {
   HIGH: 3,
@@ -9,16 +7,9 @@ const severityAsNumber = {
   NONE: 0,
 }
 
-export function sortBySeverity(
-  diffs: FieldDiff[] | undefined,
-  contract: DiscoveryContract | undefined,
-): FieldDiff[] {
+export function sortBySeverity(diffs: FieldDiff[] | undefined): FieldDiff[] {
   if (diffs === undefined) {
     return []
-  }
-
-  if (contract === undefined) {
-    return diffs
   }
 
   const result = diffs.sort((a, b) => {
@@ -26,9 +17,8 @@ export function sortBySeverity(
       return 0
     }
 
-    const fields = contract.fields ?? {}
-    const aKey = fields[normalizeDiffPath(a.key)]?.severity ?? 'NONE'
-    const bKey = fields[normalizeDiffPath(b.key)]?.severity ?? 'NONE'
+    const aKey = a.severity ?? 'NONE'
+    const bKey = b.severity ?? 'NONE'
     return severityAsNumber[bKey] - severityAsNumber[aKey]
   })
 

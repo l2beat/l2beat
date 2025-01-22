@@ -1,6 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 
-import { Database, createDatabase } from '../database'
+import { type Database, createDatabase } from '../database'
 
 export function describeDatabase(name: string, suite: (db: Database) => void) {
   const database = getTestDatabase()

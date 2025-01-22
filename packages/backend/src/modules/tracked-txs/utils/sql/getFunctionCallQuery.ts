@@ -1,7 +1,7 @@
-import { QueryParamTypes } from '@google-cloud/bigquery/build/src/bigquery'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { QueryParamTypes } from '@google-cloud/bigquery/build/src/bigquery'
+import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
+import type { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
 
 export function getFunctionCallQuery(
   configs: {

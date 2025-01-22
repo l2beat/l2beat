@@ -1,11 +1,11 @@
-import { MockObject, expect, mockFn, mockObject } from 'earl'
+import { type MockObject, expect, mockFn, mockObject } from 'earl'
 
 import { formatDate } from '../logger/utils'
-import { ElasticSearchClient } from './ElasticSearchClient'
+import type { ElasticSearchClient } from './ElasticSearchClient'
 import {
   ElasticSearchTransport,
-  ElasticSearchTransportOptions,
-  UuidProvider,
+  type ElasticSearchTransportOptions,
+  type UuidProvider,
 } from './ElasticSearchTransport'
 
 const flushInterval = 10

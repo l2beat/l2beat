@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { HttpClient } from '../http/HttpClient'
+import type { HttpClient } from '../http/HttpClient'
 import { ZksyncLiteClient } from './ZksyncLiteClient'
 
 describe(ZksyncLiteClient.name, () => {

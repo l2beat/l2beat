@@ -20,7 +20,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -75,7 +75,7 @@ const zksync2Upgradability = {
 }
 
 const ethereumUpgradability = {
-  upgradableBy: ['zkLinkOwner'],
+  upgradableBy: ['EthereumOwner'],
   upgradeDelay: 'No delay',
 }
 

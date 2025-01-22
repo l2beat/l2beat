@@ -1,5 +1,5 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { Permission } from '../config/RawDiscoveryConfig'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import type { Permission } from '../config/RawDiscoveryConfig'
 
 // NOTE(radomski): The entire permission network is modeled as a graph. The
 // graph contains nodes and edges. Nodes are contracts and edges are "actions"
@@ -35,18 +35,20 @@ export interface Node<T = EthereumAddress> {
 export interface Edge<T = EthereumAddress> {
   permission: Permission
   delay: number
+  condition?: string
   description?: string
   toNode: T
 }
 
 export interface PathElement<T = EthereumAddress> {
   address: T
+  gives: Permission | undefined
   delay: number
   description?: string
+  condition?: string
 }
 
 export interface ResolvedPermission<T = EthereumAddress> {
-  permission: Permission
   path: PathElement<T>[]
 }
 
@@ -61,17 +63,20 @@ export function resolvePermissions<T>(
     for (const edge of seedingEdges) {
       const toNode = getNode(edge.toNode, graph)
       const resolved: ResolvedPermission<T> = {
-        permission: edge.permission,
         path: [
           {
             address: node.address,
             delay: edge.delay + node.delay,
-            description: undefined,
+            description: edge.description,
+            condition: edge.condition,
+            gives: edge.permission,
           },
           {
             address: toNode.address,
-            delay: toNode.delay,
-            description: edge.description,
+            delay: 0,
+            gives: undefined,
+            description: undefined,
+            condition: undefined,
           },
         ],
       }
@@ -126,14 +131,20 @@ function followThrough<T>(
 
       const toNode = getNode(edge.toNode, graph)
       const clone = structuredClone(resolved)
-      const last = clone.path[clone.path.length - 1]
-      if (last !== undefined) {
-        last.delay += edge.delay
-      }
+      clone.path.pop()
+      clone.path.push({
+        address: node.address,
+        gives: edge.permission,
+        delay: edge.delay + node.delay,
+        description: edge.description,
+        condition: edge.condition,
+      })
       clone.path.push({
         address: toNode.address,
-        delay: toNode.delay,
-        description: edge.description,
+        gives: undefined,
+        delay: 0,
+        description: undefined,
+        condition: undefined,
       })
       result.push(
         ...followThrough(toNode.address, graph, [...visited, address], clone),

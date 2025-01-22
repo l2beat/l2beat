@@ -1,8 +1,8 @@
 import { inspect } from 'util'
 import chalk from 'chalk'
 
-import { LogLevel } from './LogLevel'
-import { LogEntry, LogFormatter } from './types'
+import type { LogLevel } from './LogLevel'
+import type { LogEntry, LogFormatter } from './types'
 import { toJSON } from './utils'
 
 const STYLES = {

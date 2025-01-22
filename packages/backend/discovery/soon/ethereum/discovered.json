@@ -1,8 +1,8 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21637371,
-  "configHash": "0x8adcc031afb1607213a3ed4fb5edd14bfd10bbbc19cd687df660f711dfeaf25f",
+  "blockNumber": 21665575,
+  "configHash": "0x6e05a560d3ae8814afedc0ad545b1b9435544f9301dc4bf88e5f8495b2ce9c6a",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -17,23 +17,18 @@
       "issuedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
+          "to": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
           "via": []
         },
         {
           "permission": "propose",
-          "target": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
+          "to": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [
-            {
-              "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0
-            }
-          ]
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -61,10 +56,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 100000,
-        "latestOutputIndex": 19,
-        "nextBlockNumber": 105000,
-        "nextOutputIndex": 20,
+        "latestBlockNumber": 130000,
+        "latestOutputIndex": 25,
+        "nextBlockNumber": 135000,
+        "nextOutputIndex": 26,
         "proposer": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "PROPOSER": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "startingBlockNumber": 0,
@@ -91,23 +86,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1",
+          "to": "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0x3fc806bAa8C15Ec8c3C9FA0c85a2B8d643053F95",
+          "to": "0x3fc806bAa8C15Ec8c3C9FA0c85a2B8d643053F95",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [
-            {
-              "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0
-            }
-          ]
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
@@ -194,18 +185,13 @@
       "issuedPermissions": [
         {
           "permission": "guard",
-          "target": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [
-            {
-              "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0
-            }
-          ]
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
       "ignoreInWatchMode": ["params"],
@@ -228,7 +214,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 328258,
-          "prevBlockNum": 21636449
+          "prevBlockNum": 21664877
         },
         "paused": false,
         "superchainConfig": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
@@ -251,13 +237,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [
-            {
-              "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0
-            }
-          ]
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
       "sinceTimestamp": 1735877363,
@@ -291,32 +272,32 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
+          "from": "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
           "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
-          "target": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
         },
         {
           "permission": "upgrade",
-          "target": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
+          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
         },
         {
           "permission": "upgrade",
-          "target": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
+          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
         },
         {
           "permission": "upgrade",
-          "target": "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2"
+          "from": "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2"
         },
         {
           "permission": "upgrade",
-          "target": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
+          "from": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
         },
         {
           "permission": "upgrade",
-          "target": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
+          "from": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         }
       ],
@@ -339,14 +320,9 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [
-            {
-              "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0,
-              "description": "set and change address mappings."
-            }
-          ]
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
       "sinceTimestamp": 1735877171,
@@ -380,7 +356,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621905",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621934",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -414,18 +390,13 @@
       "issuedPermissions": [
         {
           "permission": "guard",
-          "target": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [
-            {
-              "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0
-            }
-          ]
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
       "sinceTimestamp": 1735877231,
@@ -459,38 +430,38 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
+          "from": "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
+          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2",
+          "from": "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
+          "from": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
+          "from": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
@@ -498,7 +469,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"
+          "from": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -517,7 +488,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 20,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -528,30 +499,25 @@
       "template": "opstack/L1StandardBridge_soon",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0xe2afd35e21cefc5b6eda770f7082c3916b8353d50c158a857cfc2ada89027f5b"
+        "0x31171ab8eadf4234ec9b516f45a99b4ba57e9270edb7dd669d39db328abe95eb"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-          "via": [
-            {
-              "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-              "delay": 0,
-              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
-            }
-          ]
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
       ],
       "sinceTimestamp": 1735877327,
       "values": {
         "$admin": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "0x3d20b96e5635CfCFF58c9CE66017F2240313B47C",
+        "$implementation": "0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "ERC20SharedDecimals": 12,
+        "ERC20SharedDecimals": 9,
         "l2TokenBridge": "0x02c806312cb859f1bc25448e39f87aa09857d83ccb4a837df55648e000000000",
         "messenger": "0xbB138cE37870443d5b2B02a36619D3478738E0f6",
         "MESSENGER": "0xbB138cE37870443d5b2B02a36619D3478738E0f6",
@@ -570,7 +536,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
+          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
         }
       ]
     },
@@ -581,11 +547,11 @@
       "receivedPermissions": [
         {
           "permission": "guard",
-          "target": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
+          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
         },
         {
           "permission": "guard",
-          "target": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
+          "from": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
         }
       ]
     },
@@ -594,7 +560,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
         }
       ]
     },
@@ -604,7 +570,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
+          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
       ]
@@ -615,7 +581,7 @@
       "receivedPermissions": [
         {
           "permission": "propose",
-          "target": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
         }
       ]
     },
@@ -670,42 +636,6 @@
       "function startingBlockNumber() view returns (uint256)",
       "function startingTimestamp() view returns (uint256)",
       "function submissionInterval() view returns (uint256)",
-      "function version() view returns (string)"
-    ],
-    "0x3d20b96e5635CfCFF58c9CE66017F2240313B47C": [
-      "constructor()",
-      "event ERC20BridgeFinalized(address indexed localToken, bytes32 indexed remoteToken, bytes32 indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, bytes32 indexed remoteToken, address indexed from, bytes32 to, uint256 amount, bytes extraData)",
-      "event ERC20DepositInitiated(address indexed l1Token, bytes32 indexed l2Token, address indexed from, bytes32 to, uint256 amount, bytes extraData)",
-      "event ERC20WithdrawalFinalized(address indexed l1Token, bytes32 indexed l2Token, bytes32 indexed from, address to, uint256 amount, bytes extraData)",
-      "event ETHBridgeFinalized(bytes32 indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, bytes32 indexed to, uint256 amount, bytes extraData)",
-      "event ETHDepositInitiated(address indexed from, bytes32 indexed to, uint256 amount, bytes extraData)",
-      "event ETHWithdrawalFinalized(bytes32 indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event Initialized(uint8 version)",
-      "function ERC20SharedDecimals() pure returns (uint8)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (bytes32)",
-      "function bridgeERC20(address, address, uint256, uint32, bytes)",
-      "function bridgeERC20To(address _localToken, bytes32 _remoteToken, bytes32 _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint32, bytes) payable",
-      "function bridgeETHTo(bytes32 _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function depositERC20(address, bytes32, uint256, uint32, bytes)",
-      "function depositERC20To(address _l1Token, bytes32 _l2Token, bytes32 _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositETH(uint32, bytes) payable",
-      "function depositETHTo(bytes32 _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, bytes32) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, bytes32 _remoteToken, bytes32 _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(bytes32 _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function finalizeERC20Withdrawal(address _l1Token, bytes32 _l2Token, bytes32 _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeETHWithdrawal(bytes32 _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function initialize(address _messenger, address _superchainConfig, address _systemConfig)",
-      "function l2TokenBridge() view returns (bytes32)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (bytes32)",
-      "function paused() view returns (bool)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
       "function version() view returns (string)"
     ],
     "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07": [
@@ -982,6 +912,42 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A": [
+      "constructor()",
+      "event ERC20BridgeFinalized(address indexed localToken, bytes32 indexed remoteToken, bytes32 indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, bytes32 indexed remoteToken, address indexed from, bytes32 to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, bytes32 indexed l2Token, address indexed from, bytes32 to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, bytes32 indexed l2Token, bytes32 indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(bytes32 indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, bytes32 indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, bytes32 indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(bytes32 indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "function ERC20SharedDecimals() pure returns (uint8)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (bytes32)",
+      "function bridgeERC20(address, address, uint256, uint32, bytes)",
+      "function bridgeERC20To(address _localToken, bytes32 _remoteToken, bytes32 _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32, bytes) payable",
+      "function bridgeETHTo(bytes32 _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address, bytes32, uint256, uint32, bytes)",
+      "function depositERC20To(address _l1Token, bytes32 _l2Token, bytes32 _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32, bytes) payable",
+      "function depositETHTo(bytes32 _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, bytes32) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, bytes32 _remoteToken, bytes32 _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(bytes32 _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, bytes32 _l2Token, bytes32 _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(bytes32 _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function initialize(address _messenger, address _superchainConfig, address _systemConfig)",
+      "function l2TokenBridge() view returns (bytes32)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (bytes32)",
+      "function paused() view returns (bool)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() view returns (string)"
+    ],
     "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -992,13 +958,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
-    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
-    "opstack/L1StandardBridge_soon": "0xf16929c059e4cd1c96c60912d102a1f009983c7055ab3cb5d54c3dd5ec9d3412",
-    "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
-    "opstack/OptimismPortal_soon": "0xaf8cbf870d9361ccf783c20cbf6d00b28d0fff712e5ed73f41ea5f602b4eb993",
-    "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
+    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
+    "opstack/L1StandardBridge_soon": "0xbcc1dfd0bc27c8bca431dee56013c21b809d19ee73f7f72892ca7aaa790a7352",
+    "opstack/L2OutputOracle": "0x691da8dacc65ccf4a86c0912d7d29cc900873c84fa82867e830699155c114f95",
+    "opstack/OptimismPortal_soon": "0x0466abdee1bc81cb9c1e4c88b2dd3ef73ee4f36cb90c8aa1b9981ccbe4639cec",
+    "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9"
   }
 }

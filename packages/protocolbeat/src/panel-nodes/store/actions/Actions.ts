@@ -1,4 +1,4 @@
-import { Node } from '../State'
+import type { Node } from '../State'
 import type { NodeLocations } from '../utils/storage'
 
 export interface Actions {

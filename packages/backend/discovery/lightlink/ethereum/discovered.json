@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 21635772,
-  "configHash": "0x38a7fc2261ca62b93b6f0cd0663daef03cc30671baca05a66610860f6ef3312a",
+  "configHash": "0x80b880519801c358adadf031e6d3f3c4aaf426e406b3b88941a4a4ba9d78b194",
   "contracts": [
     {
       "name": "Challenge",
@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
           "via": []
         }
       ],
@@ -70,7 +70,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
           "via": []
         }
       ],
@@ -104,15 +104,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3ca373F5ecB92ac762f9876f6e773082A4589995"
+          "from": "0x3ca373F5ecB92ac762f9876f6e773082A4589995"
         },
         {
           "permission": "upgrade",
-          "target": "0x624631881655a310adcF0d1336658Cc977609b72"
+          "from": "0x624631881655a310adcF0d1336658Cc977609b72"
         },
         {
           "permission": "upgrade",
-          "target": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
+          "from": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
         }
       ],
       "sinceTimestamp": 1692154319,
@@ -142,7 +142,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
           "via": []
         }
       ],
@@ -177,7 +177,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
           "via": []
         }
       ],
@@ -220,7 +220,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
           "via": []
         }
       ],
@@ -255,7 +255,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+          "to": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
           "via": []
         }
       ],
@@ -342,15 +342,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
+          "from": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
         },
         {
           "permission": "upgrade",
-          "target": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04"
+          "from": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04"
         },
         {
           "permission": "upgrade",
-          "target": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
+          "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
         }
       ]
     },

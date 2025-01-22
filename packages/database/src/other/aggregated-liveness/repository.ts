@@ -1,6 +1,6 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { AggregatedLivenessRecord, toRecord, toRow } from './entity'
+import { type AggregatedLivenessRecord, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness } from './select'
 
 export class AggregatedLivenessRepository extends BaseRepository {

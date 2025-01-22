@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "base",
   "blockNumber": 21444261,
-  "configHash": "0x489ee895d4bd7a38439afd393b89ea7e8a7d6a413f919925b9c3a2cf0a79bfcc",
+  "configHash": "0x3ade522f1b8183033a8ae89bafbcbd44814a7fa8cd9bb73e5ad06c2dd01d05ad",
   "contracts": [
     {
       "name": "LayerZero Multisig",
@@ -1243,7 +1243,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+          "to": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
           "via": []
         }
       ],
@@ -1307,7 +1307,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          "from": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
         }
       ],
       "sinceTimestamp": 1689301191,
@@ -1620,6 +1620,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

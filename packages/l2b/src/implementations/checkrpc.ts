@@ -1,4 +1,4 @@
-import { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
+import type { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
 import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 

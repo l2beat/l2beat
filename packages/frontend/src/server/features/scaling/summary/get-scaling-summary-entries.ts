@@ -2,12 +2,12 @@ import {
   type Project,
   type ProjectDataAvailability,
   ProjectService,
+  type ReasonForBeingInOther,
   type ScalingProjectCategory,
   type ScalingProjectStack,
   type StageConfig,
   type WarningWithSentiment,
 } from '@l2beat/config'
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/components/rosette/types'
@@ -20,6 +20,7 @@ import {
   type ActivityLatestUopsData,
   getActivityLatestUops,
 } from '../activity/get-activity-latest-tps'
+import { getActivitySyncWarning } from '../activity/utils/is-activity-synced'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
@@ -34,7 +35,7 @@ import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 export async function getScalingSummaryEntries() {
   const projects = await ProjectService.STATIC.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks'],
-    optional: ['countdowns', 'tvlInfo', 'scalingDa', 'scalingStage'],
+    optional: ['tvlInfo', 'scalingDa', 'scalingStage'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -84,6 +85,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
     | {
         pastDayUops: number
         change: number
+        isSynced: boolean
       }
     | undefined
   tvlOrder: number
@@ -94,7 +96,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
 function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks',
-    'countdowns' | 'tvlInfo' | 'scalingDa' | 'scalingStage'
+    'tvlInfo' | 'scalingDa' | 'scalingStage'
   >,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
@@ -110,9 +112,16 @@ function getScalingSummaryEntry(
         })
       : undefined
   const associatedTokensExcludedWarnings = compact(project.tvlInfo?.warnings)
+  const activitySyncWarning = activity
+    ? getActivitySyncWarning(activity.syncedUntil)
+    : undefined
 
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncWarning: activitySyncWarning,
+    }),
     stage:
       project.scalingInfo.isOther || !project.scalingStage
         ? { stage: 'NotApplicable' as const }
@@ -120,7 +129,7 @@ function getScalingSummaryEntry(
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
     dataAvailability: project.scalingDa,
-    reasonsForBeingOther: project.countdowns?.otherMigration?.reasons,
+    reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvl: {
       breakdown: latestTvl?.breakdown,
       change: latestTvl?.change,
@@ -135,6 +144,7 @@ function getScalingSummaryEntry(
     activity: activity && {
       pastDayUops: activity.pastDayUops,
       change: activity.change,
+      isSynced: !activitySyncWarning,
     },
     tvlOrder: latestTvl?.breakdown.total ?? -1,
     risks: getL2Risks(

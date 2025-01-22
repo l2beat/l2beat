@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "ethereum",
   "blockNumber": 20922333,
-  "configHash": "0x37a08290de2c4e6e8031d03bb030ac4f326a7c43f5d5cac74fe334afab1e6771",
+  "configHash": "0x4c05aefb9d5e7a95f738b2d41bbe30647abc1267ee7a591da8ea7c7ab2b7a6f7",
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -110,7 +110,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
+          "to": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
           "via": []
         }
       ],
@@ -178,7 +178,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
+          "from": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
         }
       ]
     },

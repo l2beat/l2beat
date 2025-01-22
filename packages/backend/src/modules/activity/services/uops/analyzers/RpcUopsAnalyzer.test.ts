@@ -3,11 +3,15 @@ import {
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   MULTICALL_V3,
-  Method,
+  type Method,
   SAFE_EXEC_TRANSACTION_SELECTOR,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
 } from '@l2beat/shared'
-import { Block, EthereumAddress, Transaction } from '@l2beat/shared-pure'
+import {
+  type Block,
+  EthereumAddress,
+  type Transaction,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 

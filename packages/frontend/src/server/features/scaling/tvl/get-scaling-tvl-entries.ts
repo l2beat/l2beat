@@ -24,7 +24,6 @@ export async function getScalingTvlEntries() {
     get7dTvlBreakdown(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'tvlInfo'],
-      optional: ['countdowns'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -54,12 +53,12 @@ export interface ScalingTvlEntry extends CommonScalingEntry {
 }
 
 function getScalingTvlEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'tvlInfo', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'tvlInfo'>,
   changes: ProjectChanges,
   data: ProjectSevenDayTvlBreakdown | undefined,
 ): ScalingTvlEntry | undefined {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes }),
     href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvl: {
       data,

@@ -21,7 +21,6 @@ export async function getScalingRiskEntries() {
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks'],
-      optional: ['countdowns'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -46,12 +45,12 @@ export interface ScalingRiskEntry extends CommonScalingEntry {
 }
 
 function getScalingRiskEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingRiskEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
     tvlOrder: tvl ?? -1,
   }

@@ -1,20 +1,20 @@
-import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff } from '@l2beat/discovery'
+import type { Logger } from '@l2beat/backend-tools'
+import type { DiscoveryDiff } from '@l2beat/discovery'
 import {
   assert,
-  ChainConverter,
-  ChainId,
-  EthereumAddress,
+  type ChainConverter,
+  type ChainId,
+  type EthereumAddress,
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
 import { isDiscoveryDriven, layer2s, layer3s } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import {
-  Channel,
-  DiscordClient,
+  type Channel,
+  type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { fieldThrottleDiff } from './fieldThrottleDiff'

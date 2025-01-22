@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
 const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
@@ -58,6 +58,7 @@ export const kinto: Layer2 = orbitStackL2({
       },
     ],
   },
+  hasAtLeastFiveExternalChallengers: true,
   discoveryDrivenData: true,
   isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),

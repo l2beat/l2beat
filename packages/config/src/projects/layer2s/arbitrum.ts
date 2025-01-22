@@ -17,7 +17,7 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
@@ -100,6 +100,7 @@ export const arbitrum: Layer2 = orbitStackL2({
     Badge.Other.L3HostChain,
   ],
   discovery,
+  hasAtLeastFiveExternalChallengers: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

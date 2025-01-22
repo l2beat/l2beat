@@ -1,7 +1,4 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -10,41 +7,47 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  ChainConfig,
+  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  type DataAvailabilityBridge,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ScalingProjectContract,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectStateDerivation,
+  type ScalingProjectStateValidation,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { Badge, BadgeId, badges } from '../../badges'
+import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
-import { mergeBadges } from './utils'
+import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import {
+  explorerContractSourceReference,
+  explorerReferences,
+  mergeBadges,
+  safeGetImplementation,
+} from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
@@ -82,6 +85,7 @@ export interface PolygonCDKStackConfig {
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
+  const explorerUrl = ethereum.explorerUrl
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
   const rollupManagerContract = shared.getContract('PolygonRollupManager')
@@ -335,16 +339,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         secondLine: formatExecutionDelay(finalizationPeriod),
-        sources: [
-          {
-            contract: rollupManagerContract.name,
-            references: [
-              `https://etherscan.io/address/${safeGetImplementation(
-                rollupManagerContract,
-              )}`,
-            ],
-          },
-        ],
+        sources: explorerContractSourceReference(
+          explorerUrl,
+          rollupManagerContract,
+        ),
       },
       dataAvailability: {
         ...riskViewDA(daProvider),
@@ -372,19 +370,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
           ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
         secondLine: formatDelay(trustedAggregatorTimeout + pendingStateTimeout),
-        sources: [
-          {
-            contract: rollupManagerContract.name,
-            references: [
-              `https://etherscan.io/address/${safeGetImplementation(
-                rollupManagerContract,
-              )}`,
-              `https://etherscan.io/address/${safeGetImplementation(
-                rollupManagerContract,
-              )}`,
-            ],
-          },
-        ],
+        sources: explorerContractSourceReference(
+          explorerUrl,
+          rollupManagerContract,
+        ),
       },
     },
     stage:
@@ -423,14 +412,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
         ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-        references: [
+        references: explorerReferences(explorerUrl, [
           {
-            text: 'PolygonRollupManager.sol - Etherscan source code, _verifyAndRewardBatches function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              rollupManagerContract,
-            )}`,
+            text: 'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
+            address: safeGetImplementation(rollupManagerContract),
           },
-        ],
+        ]),
       },
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
@@ -447,40 +434,34 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             isCritical: true,
           },
         ],
-        references: [
+        references: explorerReferences(explorerUrl, [
           {
-            text: `${templateVars.rollupModuleContract.name}.sol - Etherscan source code, onlyTrustedSequencer modifier`,
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.rollupModuleContract,
-            )}`,
+            text: `${templateVars.rollupModuleContract.name}.sol - source code, onlyTrustedSequencer modifier`,
+            address: safeGetImplementation(templateVars.rollupModuleContract),
           },
-        ],
+        ]),
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
         ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
         description:
           'The mechanism for allowing users to submit their own transactions is currently disabled.',
-        references: [
+        references: explorerReferences(explorerUrl, [
           {
-            text: `${templateVars.rollupModuleContract.name}.sol - Etherscan source code, forceBatchAddress address`,
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.rollupModuleContract,
-            )}`,
+            text: `${templateVars.rollupModuleContract.name}.sol - source code, forceBatchAddress address`,
+            address: safeGetImplementation(templateVars.rollupModuleContract),
           },
-        ],
+        ]),
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
           ...EXITS.REGULAR('zk', 'merkle proof'),
-          references: [
+          references: explorerReferences(explorerUrl, [
             {
-              text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
-              href: `https://etherscan.io/address/${safeGetImplementation(
-                bridge,
-              )}`,
+              text: 'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
+              address: safeGetImplementation(bridge),
             },
-          ],
+          ]),
         },
       ],
     },
@@ -591,14 +572,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           })(),
         ),
       ],
-      references: [
+      references: explorerReferences(explorerUrl, [
         {
           text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-          href: `https://etherscan.io/address/${safeGetImplementation(
-            rollupManagerContract,
-          )}`,
+          address: safeGetImplementation(rollupManagerContract),
         },
-      ],
+      ]),
       risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
@@ -635,12 +614,4 @@ function technologyDA(
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
-}
-
-function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = get$Implementations(contract.values)[0]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
 }

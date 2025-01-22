@@ -1,18 +1,18 @@
 import {
   type BlockchainDaLayer,
+  type DaChallengeMechanism,
   type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
+  type DaRelayerFailureRisk,
   type DaUpgradeabilityRisk,
   type DacDaLayer,
   type DataAvailabilityLayer,
+  type UsedInProject,
   daLayers,
   ethereumDaLayer,
   isDaBridgeVerified,
 } from '@l2beat/config'
-import { type DaChallengeMechanism } from '@l2beat/config/build/src/projects/other/da-beat/types/DaChallengeMechanism'
-import { type DaRelayerFailureRisk } from '@l2beat/config/build/src/projects/other/da-beat/types/DaRelayerFailureRisk'
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import { ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
@@ -157,7 +157,9 @@ function getEthereumEntry(
     nameSecondLine: kindToType(ethereumDaLayer.kind),
     href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
-    usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
+    usedIn: ethereumDaLayer.bridges
+      .flatMap((bridge) => bridge.usedIn)
+      .sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
     economicSecurity: economicSecurity[ethereumDaLayer.id],
     bridge: ethereumDaLayer.bridges[0].display.name,
     tvs: getTvs(

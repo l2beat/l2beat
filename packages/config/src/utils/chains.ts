@@ -1,6 +1,4 @@
-import { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
-
-export type CommonProject = Layer2 | Layer3 | Bridge
+import type { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
 
 /**
  * This function is used by checkVerifiedContracts.ts script to know on which
@@ -9,13 +7,15 @@ export type CommonProject = Layer2 | Layer3 | Bridge
  * @param projects
  * @returns chain names of all the contracts and escrows in the provided projects.
  */
-export function getChainNames(...projects: CommonProject[]): string[] {
+export function getChainNames(
+  ...projects: (Layer2 | Layer3 | Bridge)[]
+): string[] {
   return projects
     .flatMap(getProjectDevIds)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-export function getProjectDevIds(project: CommonProject): string[] {
+function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
   const escrowContracts = project.config.escrows.flatMap((escrow) => {
     if (!escrow.newVersion) {
       return []
@@ -46,7 +46,7 @@ export function getChainNamesForDA(...daLayers: DaLayer[]): string[] {
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
+function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
   const bridges = daLayer.bridges.filter(
     (b) => b.type === 'OnChainBridge' || b.type === 'DAC',
   )

@@ -21,7 +21,7 @@ import type { ScalingProjectRiskView } from '../../../common/ScalingProjectRiskV
 import type { ScalingProjectStateDerivation } from '../../../common/ScalingProjectStateDerivation'
 import type { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import type { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
-import { type BadgeId } from '../../badges'
+import type { BadgeId } from '../../badges'
 import type { StageConfig } from '../common/stages/types'
 import type { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import type { Layer2LivenessConfig } from './Layer2LivenessConfig'

@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../BaseRepository'
-import { ActivityRecord, toRecord, toRow } from './entity'
+import { type ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
 
 export class ActivityRepository extends BaseRepository {

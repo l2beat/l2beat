@@ -1,3 +1,105 @@
+Generated with discovered.json: 0xe2d1d68cc760157d9da2710a3ea1520096eff046
+
+# Diff at Mon, 20 Jan 2025 11:09:49 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21579380
+- current block number: 21579380
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579380 (main branch discovery), not current.
+
+```diff
+    contract OmniBridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.2.from:
++        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.1.target:
+-        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.1.from:
++        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.0.target:
+-        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+      receivedPermissions.0.from:
++        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+```diff
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
+      issuedPermissions.0.to:
++        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+Generated with discovered.json: 0x3cf15bbf09c942810f45bdc12b41ad94c8b309bb
+
+# Diff at Mon, 20 Jan 2025 09:25:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21579380
+- current block number: 21579380
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579380 (main branch discovery), not current.
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      fieldMeta.validatorList.type:
++        "PERMISSION"
+    }
+```
+
 Generated with discovered.json: 0xb29db7782b209f4c6705d03393b3d8139a13f482
 
 # Diff at Wed, 08 Jan 2025 11:13:15 GMT:

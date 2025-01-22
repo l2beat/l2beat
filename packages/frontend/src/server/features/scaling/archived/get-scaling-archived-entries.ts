@@ -27,7 +27,6 @@ export async function getScalingArchivedEntries() {
     get7dTokenBreakdown({ type: 'layer2' }),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks'],
-      optional: ['countdowns'],
       where: ['isScaling', 'isArchived'],
     }),
   ])
@@ -53,12 +52,12 @@ export interface ScalingArchivedEntry extends CommonScalingEntry {
 }
 
 function getScalingArchivedEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
   changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
 ): ScalingArchivedEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     provider: project.scalingInfo.stack,

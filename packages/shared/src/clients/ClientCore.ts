@@ -1,8 +1,8 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { json } from '@l2beat/shared-pure'
-import { RequestInit } from 'node-fetch'
-import { RetryHandler, RetryHandlerVariant } from '../tools'
-import { HttpClient } from './http/HttpClient'
+import { type Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { json } from '@l2beat/shared-pure'
+import type { RequestInit } from 'node-fetch'
+import { RetryHandler, type RetryHandlerVariant } from '../tools'
+import type { HttpClient } from './http/HttpClient'
 
 export interface ClientCoreDependencies {
   http: HttpClient

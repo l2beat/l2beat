@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import {
   useScalingFilter,
@@ -148,7 +148,7 @@ function UnitControls({
       {loading ? (
         <Skeleton className="h-8 w-[156px]" />
       ) : (
-        <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroup name="costsChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
           <RadioGroupItem value="eth">ETH</RadioGroupItem>
           <RadioGroupItem value="gas">GAS</RadioGroupItem>

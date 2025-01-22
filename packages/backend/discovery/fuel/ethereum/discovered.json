@@ -2,7 +2,7 @@
   "name": "fuel",
   "chain": "ethereum",
   "blockNumber": 21630407,
-  "configHash": "0x27f59892160590243c2b4b7ab0cf96a9e4b163e5ecec20ae04cf96ee48b0a1f5",
+  "configHash": "0xa6893c97dbd2d381e8a73c865c4480cddac0234bc6d13d51ec21bdb7631c37d8",
   "contracts": [
     {
       "name": "FuelSecurityCouncil",
@@ -287,15 +287,15 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
+          "from": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
         },
         {
           "permission": "upgrade",
-          "target": "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
+          "from": "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
         },
         {
           "permission": "upgrade",
-          "target": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
+          "from": "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
         }
       ]
     },
@@ -634,6 +634,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

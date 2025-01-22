@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 21629172,
-  "configHash": "0xd99051d49ae8b65ddbbdc353f73cf34ba8bb6f4a5ecbfce9fb4baf9f81b7b150",
+  "configHash": "0xf8252995b12414a318c199b3e896c95755ffa0f84ee5e18574c9cb6486ded3dd",
   "contracts": [
     {
       "name": "GrvtChainAdminMultisig",
@@ -16,11 +16,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+          "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
         },
         {
           "permission": "upgrade",
-          "target": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+          "from": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -54,7 +54,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+          "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
           "via": []
         }
       ],
@@ -141,7 +141,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+          "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
           "via": []
         }
       ],
@@ -686,7 +686,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "shared-zk-stack/ChainAdmin": "0xa36468d83d1747402043ad56e8297c53596d5ea03f59d8d8a73c19d08db830ce"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42"
   }
 }

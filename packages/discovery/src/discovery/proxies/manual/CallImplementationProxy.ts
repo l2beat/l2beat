@@ -1,7 +1,7 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { ProxyDetails } from '@l2beat/discovery-types'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 
 export async function getCallImplementationProxy(
   provider: IProvider,

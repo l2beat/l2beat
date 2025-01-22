@@ -1,4 +1,4 @@
-import { Block } from '@l2beat/shared-pure'
+import type { Block } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { StarknetUopsAnalyzer } from './StarknetUopsAnalyzer'
 

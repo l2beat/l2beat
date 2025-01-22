@@ -1,6 +1,7 @@
-import {
+import type {
   ContractFieldSeverity,
   ContractParameters,
+  ContractValueType,
 } from '@l2beat/discovery-types'
 import { diff } from 'deep-diff'
 import { normalizeDiffPath } from '../utils/normalizeDiffPath'
@@ -11,6 +12,7 @@ export interface FieldDiff {
   after?: string
   severity?: ContractFieldSeverity
   description?: string
+  type?: ContractValueType[] | ContractValueType
 }
 
 export function diffContracts(
@@ -76,5 +78,6 @@ export function diffContracts(
     ...entry,
     severity: after.fieldMeta?.[normalizeDiffPath(entry.key)]?.severity,
     description: after.fieldMeta?.[normalizeDiffPath(entry.key)]?.description,
+    type: after.fieldMeta?.[normalizeDiffPath(entry.key)]?.type,
   }))
 }

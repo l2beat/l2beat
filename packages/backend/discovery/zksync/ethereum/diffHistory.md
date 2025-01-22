@@ -1,4 +1,70 @@
-Generated with discovered.json: 0xa79991c1e7d996e0744e3d0d36c824e911c9d9df
+Generated with discovered.json: 0xd8b5b71ffcbf9c2f94fd005768ad7a52434db357
+
+# Diff at Mon, 20 Jan 2025 11:10:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21365608
+- current block number: 21365608
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21365608 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      issuedPermissions.0.to:
++        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      receivedPermissions.2.from:
++        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      receivedPermissions.1.target:
+-        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      receivedPermissions.1.from:
++        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      receivedPermissions.0.target:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+      receivedPermissions.0.from:
++        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      issuedPermissions.0.to:
++        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      issuedPermissions.0.to:
++        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+    }
+```
+
+Generated with discovered.json: 0x508e143b6c1eb25e0a450918be3b5846d8765cce
 
 # Diff at Mon, 09 Dec 2024 14:41:31 GMT:
 

@@ -1,6 +1,6 @@
-import { ValueWithSentiment } from '@l2beat/shared-pure'
+import type { ValueWithSentiment } from '@l2beat/shared-pure'
 
-import {
+import type {
   DataAvailabilityBridge,
   DataAvailabilityConfig,
   DataAvailabilityLayer,

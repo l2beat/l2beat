@@ -6,6 +6,7 @@ export const DiscoLupeProject = z.object({
     name: z.string(),
     slug: z.string(),
     provider: z.string().optional(),
+    category: z.string(),
   }),
   tvl: z.number(),
   type: z.string(),

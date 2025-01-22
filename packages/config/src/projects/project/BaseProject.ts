@@ -1,26 +1,27 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
   ProjectDataAvailability,
   ScalingProjectCategory,
   ScalingProjectDisplay,
   ScalingProjectRiskView,
   ScalingProjectStack,
 } from '../../common'
-import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
-import {
+import type { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+import type { BridgeDisplay, BridgeRiskView } from '../bridges'
+import type {
+  DacBridge,
+  EnshrinedBridge,
+  NoDaBridge,
+  OnChainDaBridge,
+} from '../da-beat'
+import type {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
   ProjectLivenessInfo,
   StageConfig,
   WarningWithSentiment,
 } from '../layer2s'
-import {
-  DacBridge,
-  EnshrinedBridge,
-  NoDaBridge,
-  OnChainDaBridge,
-} from '../other'
-import { ProofVerification } from '../types'
+import type { ProofVerification } from '../types'
 
 export interface BaseProject {
   id: ProjectId
@@ -30,6 +31,8 @@ export interface BaseProject {
   addedAt: UnixTime
   // data
   statuses?: ProjectStatuses
+  bridgeInfo?: ProjectBridgeInfo
+  bridgeRisks?: BridgeRiskView
   scalingInfo?: ProjectScalingInfo
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
@@ -50,7 +53,6 @@ export interface BaseProject {
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
   daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
-  countdowns?: ProjectCountdowns
   // tags
   isBridge?: true
   isScaling?: true
@@ -65,6 +67,18 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
+  // countdowns
+  otherMigration?: {
+    expiresAt: number
+    pretendingToBe: ScalingProjectCategory
+    reasons: ReasonForBeingInOther[]
+  }
+}
+
+export interface ProjectBridgeInfo {
+  category: BridgeDisplay['category']
+  destination: string[]
+  validatedBy: string
 }
 
 export interface ProjectScalingInfo {
@@ -72,6 +86,7 @@ export interface ProjectScalingInfo {
   type: ScalingProjectCategory
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
+  reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   hostChain: {
     id: ProjectId
     slug: string
@@ -109,12 +124,4 @@ export interface ProjectCostsInfo {
 
 export interface ProjectActivityInfo {
   dataSource?: ScalingProjectDisplay['activityDataSource']
-}
-
-export interface ProjectCountdowns {
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ScalingProjectCategory
-    reasons: ReasonForBeingInOther[]
-  }
 }

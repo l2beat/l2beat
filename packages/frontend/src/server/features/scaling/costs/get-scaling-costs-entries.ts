@@ -21,7 +21,6 @@ export async function getScalingCostsEntries() {
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'costsInfo'],
-      optional: ['countdowns'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -45,12 +44,12 @@ export interface ScalingCostsEntry extends CommonScalingEntry {
 }
 
 function getScalingCostEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'costsInfo', 'countdowns'>,
+  project: Project<'statuses' | 'scalingInfo' | 'costsInfo'>,
   changes: ProjectChanges,
   tvl: number | undefined,
 ): ScalingCostsEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes }),
     href: `/scaling/projects/${project.slug}#onchain-costs`,
     costsWarning: project.costsInfo.warning,
     tvlOrder: tvl ?? -1,

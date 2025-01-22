@@ -1,4 +1,4 @@
-import { Context, Middleware, Next } from 'koa'
+import type { Context, Middleware, Next } from 'koa'
 import { Histogram } from 'prom-client'
 
 const labels = ['path', 'method', 'status_code']

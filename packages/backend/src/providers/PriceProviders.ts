@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  CoingeckoClient,
+  type CoingeckoClient,
   CoingeckoQueryService,
   PriceProvider,
 } from '@l2beat/shared'

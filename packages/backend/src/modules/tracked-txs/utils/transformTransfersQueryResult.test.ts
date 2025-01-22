@@ -1,18 +1,21 @@
 import {
   EthereumAddress,
   ProjectId,
-  TrackedTxsConfigSubtype,
+  type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import {
+import type {
   TrackedTxConfigEntry,
   TrackedTxId,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { Configuration } from '../../../tools/uif/multi/types'
-import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
+import type { Configuration } from '../../../tools/uif/multi/types'
+import type {
+  BigQueryTransferResult,
+  TrackedTxTransferResult,
+} from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()

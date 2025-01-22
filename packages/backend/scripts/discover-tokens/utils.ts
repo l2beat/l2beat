@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
-import { DiscoveredTokens, ProcessedEscrows } from './types'
+import type { DiscoveredTokens, ProcessedEscrows } from './types'
 
 export const OUTPUT_PATH = path.resolve(__dirname, './discovered.json')
 export const PROCESSED_ESCROWS_PATH = path.resolve(

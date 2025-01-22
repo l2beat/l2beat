@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 20878317,
-  "configHash": "0xda5627a7a26b2bd3daadc346358c11b604170f849c8f3fcd60171eb3ccf3d756",
+  "configHash": "0xaeca2f5d3eea414b038dbcad14d3d07b576b8e12d491ac616a81e4c447c1b703",
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",
@@ -26,7 +26,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],
@@ -116,19 +116,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785"
+          "from": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785"
         },
         {
           "permission": "upgrade",
-          "target": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892"
+          "from": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892"
         },
         {
           "permission": "upgrade",
-          "target": "0xa73a3a74C7044B5411bD61E1990618A1400DA379"
+          "from": "0xa73a3a74C7044B5411bD61E1990618A1400DA379"
         },
         {
           "permission": "upgrade",
-          "target": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+          "from": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
         }
       ],
       "sinceTimestamp": 1637960876,
@@ -149,7 +149,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],
@@ -225,7 +225,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],
@@ -294,7 +294,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4F50a7081792063693F46A6402390b9647562457",
+          "to": "0x4F50a7081792063693F46A6402390b9647562457",
           "via": []
         }
       ],
@@ -590,6 +590,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

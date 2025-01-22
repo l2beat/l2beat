@@ -1,10 +1,10 @@
-import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
+import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { type providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { base64 } from 'ethers/lib/utils'
-import { IProvider } from '../../provider/IProvider'
-import { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumDACKeysetHandlerDefinition = z.infer<
   typeof ArbitrumDACKeysetHandlerDefinition

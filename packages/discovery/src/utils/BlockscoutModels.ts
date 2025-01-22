@@ -2,7 +2,7 @@ import {
   EthereumAddress,
   Hash256,
   UnixTime,
-  json,
+  type json,
   stringAs,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
@@ -175,6 +175,4 @@ export const TransactionListEntry = z.object({
 })
 
 export const OneTransactionListResult = z.array(TransactionListEntry).length(1)
-export const TwentyTransactionListResult = z
-  .array(TransactionListEntry)
-  .length(20)
+export const TransactionListResult = z.array(TransactionListEntry)

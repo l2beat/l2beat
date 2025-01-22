@@ -1,4 +1,4 @@
-import { QuickNodeClient } from '../../../peripherals/quicknode/QuickNodeClient'
+import type { QuickNodeClient } from '../../../peripherals/quicknode/QuickNodeClient'
 import { AbstractStakeAnalyzer } from './AbstractStakeAnalyzer'
 
 export class EthereumStakeAnalyzer extends AbstractStakeAnalyzer {

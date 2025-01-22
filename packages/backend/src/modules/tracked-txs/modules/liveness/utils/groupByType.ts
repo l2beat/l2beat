@@ -1,5 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
+import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 
 export function groupByType(
   records: LivenessRecordWithConfig[],

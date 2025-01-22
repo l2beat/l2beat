@@ -1,5 +1,5 @@
-import { CountedBlock } from '@/types'
-import { Block, UnixTime } from '@l2beat/shared-pure'
+import type { CountedBlock } from '@/types'
+import { type Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { StarknetCounter } from './StarknetCounter'
 

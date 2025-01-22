@@ -7,7 +7,6 @@ import { countPerSecond } from './utils/count-per-second'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
 import { getLastDayRatio } from './utils/get-last-day-ratio'
-import { getSyncStatus } from './utils/get-sync-status'
 import {
   getTpsWeeklyChange,
   getUopsWeeklyChange,
@@ -71,7 +70,7 @@ async function getActivityTableData(projects: Project[]) {
             },
           },
           ratio: getLastDayRatio(records),
-          syncStatus: getSyncStatus(lastRecord.timestamp),
+          syncedUntil: lastRecord.timestamp,
         },
       ]
     }),
@@ -110,7 +109,7 @@ function getMockActivityTableData(): ActivityTableData {
           },
         },
         ratio: 1.1,
-        syncStatus: getSyncStatus(UnixTime.now()),
+        syncedUntil: UnixTime.now(),
       },
     ]),
   )

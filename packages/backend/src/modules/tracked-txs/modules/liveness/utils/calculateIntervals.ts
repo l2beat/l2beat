@@ -1,4 +1,4 @@
-import { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
+import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 
 export type Interval = {
   record: LivenessRecordWithConfig

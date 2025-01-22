@@ -1,4 +1,6 @@
+'use client'
 import Link from 'next/link'
+import { useTracking } from '~/hooks/use-custom-event'
 import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
 import { ScalingFilters } from './scaling-filters'
@@ -22,6 +24,7 @@ export function ScalingActivityFilters({ items, className }: Props) {
 }
 
 function ExplorerButton() {
+  const { track } = useTracking()
   return (
     <Link
       href="https://uops.l2beat.com/"
@@ -30,6 +33,9 @@ function ExplorerButton() {
         'flex w-fit items-center gap-1 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-semibold text-white max-md:ml-4',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
       )}
+      onClick={() => {
+        track('uopsExplorerSelected')
+      }}
     >
       <span>🔍</span>
       <span>UOPS Explorer</span>

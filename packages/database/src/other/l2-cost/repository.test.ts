@@ -4,7 +4,7 @@ import { describe } from 'mocha'
 
 import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../test/database'
-import { L2CostRecord } from './entity'
+import type { L2CostRecord } from './entity'
 import { L2CostRepository } from './repository'
 
 describeDatabase(L2CostRepository.name, (db) => {

@@ -1,5 +1,5 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 export function shouldSkip(
   address: EthereumAddress,
@@ -7,7 +7,7 @@ export function shouldSkip(
   depth: number,
   counter: number,
 ): string | undefined {
-  if (config.overrides.get(address).ignoreDiscovery) {
+  if (config.for(address).ignoreDiscovery) {
     return 'ignored'
   }
 

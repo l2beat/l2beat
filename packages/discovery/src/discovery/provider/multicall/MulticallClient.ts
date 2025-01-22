@@ -1,6 +1,10 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { MulticallConfig, MulticallRequest, MulticallResponse } from './types'
+import type {
+  MulticallConfig,
+  MulticallRequest,
+  MulticallResponse,
+} from './types'
 
 export interface CallProvider {
   call(

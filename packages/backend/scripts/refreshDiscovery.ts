@@ -1,6 +1,6 @@
 import {
   ConfigReader,
-  DiscoveryConfig,
+  type DiscoveryConfig,
   TemplateService,
   getChainConfig,
 } from '@l2beat/discovery'

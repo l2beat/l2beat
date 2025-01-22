@@ -1,10 +1,13 @@
-import { createPriceId } from '@l2beat/config'
-import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
+import { createPriceId } from '@l2beat/backend-shared'
+import {
+  CoingeckoId,
+  type CoingeckoPriceConfigEntry,
+} from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { TvlConfig } from '../../../config/Config'
+import type { TvlConfig } from '../../../config/Config'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface PriceModule {
   start: () => Promise<void> | void

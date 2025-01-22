@@ -1,5 +1,5 @@
 'use client'
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'

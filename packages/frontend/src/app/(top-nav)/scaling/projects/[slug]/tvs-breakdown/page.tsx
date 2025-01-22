@@ -69,15 +69,21 @@ export default async function Page(props: Props) {
         tvlBreakdownTimestamp={dataTimestamp}
       />
       <div className="md:mt-6 md:space-y-6">
-        <PrimaryCard>
-          <NativelyMintedTable tokens={native} />
-        </PrimaryCard>
-        <PrimaryCard>
-          <ExternallyBridgedTable tokens={external} />
-        </PrimaryCard>
-        <PrimaryCard>
-          <CanonicallyBridgedTable tokens={canonical} />
-        </PrimaryCard>
+        {native.length > 0 && (
+          <PrimaryCard>
+            <NativelyMintedTable tokens={native} />
+          </PrimaryCard>
+        )}
+        {external.length > 0 && (
+          <PrimaryCard>
+            <ExternallyBridgedTable tokens={external} />
+          </PrimaryCard>
+        )}
+        {canonical.length > 0 && (
+          <PrimaryCard>
+            <CanonicallyBridgedTable tokens={canonical} />
+          </PrimaryCard>
+        )}
       </div>
 
       <RequestTokenBox />
