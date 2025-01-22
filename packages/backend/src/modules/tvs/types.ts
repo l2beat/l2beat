@@ -16,7 +16,7 @@ export interface CalculationFormula {
 export type ValueFormula = {
   type: 'value'
   amount: AmountFormula
-  priceId: string
+  ticker: string
 }
 
 export type AmountFormula =
@@ -49,7 +49,7 @@ export interface TotalSupplyAmountFormula {
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
   // TODO: rethink this model
-  priceId: string
+  ticker: string
 }
 
 export interface AmountConfigBase {
@@ -72,8 +72,8 @@ export type AmountConfig =
 
 // token deployed to single chain
 export interface Token {
-  id: string
-  priceId: string
+  id: string // chain:address
+  ticker: string // arbitrary set by us, there are symbol duplicates e.g. GAME
   amount: AmountFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
@@ -113,7 +113,7 @@ export type TvsConfig = {
 
 export type PriceConfig = {
   id: string
-  priceId: string
+  ticker: string
 }
 
 export interface TokenValue {

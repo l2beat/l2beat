@@ -157,7 +157,7 @@ function createToken(
 
       amountFormula = {
         type: 'circulatingSupply',
-        priceId: legacyToken.name,
+        ticker: legacyToken.name,
       } as CirculatingSupplyAmountFormula
 
       sinceTimestamp = UnixTime.max(
@@ -173,7 +173,7 @@ function createToken(
   return {
     id: legacyToken.id,
     // This is a temporary solution
-    priceId: legacyToken.name,
+    ticker: legacyToken.name,
     amount: amountFormula,
     sinceTimestamp,
     untilTimestamp,
@@ -197,7 +197,7 @@ export function extractPricesAndAmounts(config: TvsConfig): {
 
     const price = createPriceConfig({
       amount: token.amount,
-      priceId: token.priceId,
+      ticker: token.ticker,
     } as ValueFormula)
     prices.set(price.id, price)
 
@@ -249,7 +249,7 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
       }
     case 'circulatingSupply':
       return {
-        id: hash([formula.type, formula.priceId]),
+        id: hash([formula.type, formula.ticker]),
         ...formula,
       }
   }
@@ -257,8 +257,8 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
 
 export function createPriceConfig(formula: ValueFormula): PriceConfig {
   return {
-    id: hash([formula.priceId]),
-    priceId: formula.priceId,
+    id: hash([formula.ticker]),
+    ticker: formula.ticker,
   }
 }
 
