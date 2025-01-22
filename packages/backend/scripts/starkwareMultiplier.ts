@@ -1,6 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { createDatabase } from '@l2beat/database'
-import type { TrackedTxCostsConfig } from '@l2beat/shared'
+import { HttpClient, type TrackedTxCostsConfig } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { makeConfig } from '../src/config/makeConfig'
@@ -112,14 +112,18 @@ async function fetchStarkwareApi(
   endDate: UnixTime,
 ) {
   const customerId = customerIds[projectId as keyof typeof customerIds]
-  const res = await fetch(
+  const http = new HttpClient()
+
+  const data = await http.fetch(
     `http://sharp-bi.provingservice.io/sharp_bi/aggregations/cost?day_start=${startDate.toYYYYMMDD()}&day_end=${endDate.toYYYYMMDD()}&customer_id=${customerId}`,
+    {
+      timeout: 10000,
+    },
   )
-  const data = (await res.json()) as {
+  return data as {
     proof_cost_eth: number
     onchain_data_cost_eth: number
   }
-  return data
 }
 
 function getDates(startDate: string | undefined, endDate: string | undefined) {
