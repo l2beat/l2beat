@@ -92,6 +92,7 @@ export class ValueService {
         async (
           acc: Promise<number>,
           current: CalculationFormula | ValueFormula,
+          index: number,
         ) => {
           const valueAcc = await acc
           const value = await executeFormulaRecursive(current, timestamp)
@@ -99,7 +100,7 @@ export class ValueService {
           if (formula.operator === 'sum') {
             return Promise.resolve(valueAcc + value)
           } else {
-            return Promise.resolve(valueAcc - value)
+            return Promise.resolve(index === 0 ? value : valueAcc - value)
           }
         },
         Promise.resolve(0),

@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DataStorage } from './DataStorage'
 import { ValueService } from './ValueService'
@@ -6,6 +6,7 @@ import { createAmountConfig, createPriceConfig } from './mapConfig'
 import type {
   BalanceOfEscrowAmountFormula,
   Token,
+  TokenValue,
   TotalSupplyAmountFormula,
   TvsConfig,
   ValueFormula,
@@ -13,8 +14,7 @@ import type {
 
 describe(ValueService.name, () => {
   describe(ValueService.prototype.calculate.name, () => {
-    // biome-ignore lint/suspicious/noFocusedTests: <explanation>
-    it.only('should calculate TVS - wrapped token', async () => {
+    it('should calculate TVS - wrapped token', async () => {
       const wBTCContractAddress = EthereumAddress(
         '0x10e4C3460310a2F4b56C8DB0b3806Be29B15c15E',
       )
@@ -56,9 +56,11 @@ describe(ValueService.name, () => {
       ).id
 
       const tvsConfig = mockObject<TvsConfig>({
+        projectId: ProjectId('bob'),
         tokens: [
           // WBTC with amount formula as totalSupply on L2
           mockObject<Token>({
+            id: 'WBTC',
             ticker: 'WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
@@ -68,6 +70,7 @@ describe(ValueService.name, () => {
           // - amount formula as totalSupply on L2
           // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
           mockObject<Token>({
+            id: 'solvBTC',
             ticker: 'solvBTC',
             amount: solvBTCAmountFormula,
             valueForProject: {
@@ -110,9 +113,12 @@ describe(ValueService.name, () => {
           // totalSupply of WBTC
           .given(wBTCAmountConfigId, mockTimestamp)
           .resolvesToOnce(10000)
+          .resolvesToOnce(10000)
           // totalSupply of solvBTC
           .given(solvBTCAmountConfigId, mockTimestamp)
-          .resolvesToOnce(5000)
+          .resolvesToOnce(8000)
+          .resolvesToOnce(8000)
+          .resolvesToOnce(8000)
           // balanceOfEscrow of WBTC in solvBTC escrow
           .given(wBTCBalanceOfEscrowConfigId, mockTimestamp)
           .resolvesToOnce(5000),
@@ -120,16 +126,42 @@ describe(ValueService.name, () => {
           // price of WBTC
           .given(wBTCPriceConfigId, mockTimestamp)
           .resolvesToOnce(200)
+          .resolvesToOnce(200)
           // price of solvBTC
           .given(solvBTCPriceConfigId, mockTimestamp)
-          .resolvesToOnce(100),
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
       })
 
       const valueService = new ValueService(mockDataStorage)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual({})
+      expect(result).toEqual(
+        new Map<number, TokenValue[]>([
+          [
+            mockTimestamp.toNumber(),
+            [
+              {
+                amount: 10000,
+                projectId: ProjectId('bob'),
+                tokenId: 'WBTC',
+                value: 2000000,
+                valueForProject: undefined,
+                valueForTotal: undefined,
+              },
+              {
+                amount: 8000,
+                projectId: ProjectId('bob'),
+                tokenId: 'solvBTC',
+                value: 1600000,
+                valueForProject: 600000,
+                valueForTotal: undefined,
+              },
+            ],
+          ],
+        ]),
+      )
     })
   })
 })
