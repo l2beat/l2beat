@@ -42,9 +42,9 @@
           "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
           "severity": "HIGH",
           "handler": {
-            "type": "event",
-            "events": "NewTransactionFilterer",
-            "select": ["oldTransactionFilterer", "newTransactionFilterer"]
+            "type": "event2",
+            "select": ["oldTransactionFilterer", "newTransactionFilterer"],
+            "set": { "event": "NewTransactionFilterer" }
           }
         },
         "validators": {
@@ -83,13 +83,13 @@
       "fields": {
         "revertedBlocks": {
           "handler": {
-            "type": "event",
-            "events": "BlocksRevert",
+            "type": "event2",
             "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
               "totalBlocksExecuted"
-            ]
+            ],
+            "set": { "event": "BlocksRevert" }
           }
         },
         // the 3 following allow us to get an array of validators without creating a new handler
@@ -103,16 +103,16 @@
         },
         "validatorsAdded": {
           "handler": {
-            "type": "event",
-            "events": "ValidatorAdded",
-            "select": "_addedValidator"
+            "type": "event2",
+            "select": "_addedValidator",
+            "set": { "event": "ValidatorAdded" }
           }
         },
         "validatorsRemoved": {
           "handler": {
-            "type": "event",
-            "events": "ValidatorRemoved",
-            "select": "_removedValidator"
+            "type": "event2",
+            "select": "_removedValidator",
+            "set": {"event": "ValidatorRemoved"}
           }
         }
       }

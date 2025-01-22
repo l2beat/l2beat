@@ -143,10 +143,9 @@
       "fields": {
         "avs": {
           "handler": {
-            "type": "event",
-            "events": "OperatorAVSRegistrationStatusUpdated",
+            "type": "event2",
             "select": "avs",
-            "distinct": "avs"
+            "set": { "event": "OperatorAVSRegistrationStatusUpdated" }
           }
         }
       },

@@ -151,10 +151,9 @@
           "description": "State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.",
           "severity": "MEDIUM",
           "handler": {
-            "type": "event",
-            "events": "ChallengeCreated",
+            "type": "event2",
             "select": "outputIndex",
-            "distinct": "outputIndex",
+            "set": { "event": "ChallengeCreated" },
             "ignoreRelative": true
           }
         },

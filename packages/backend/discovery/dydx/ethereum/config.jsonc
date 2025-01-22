@@ -138,9 +138,9 @@
         },
         "slashings": {
           "handler": {
-            "type": "event",
-            "events": "Slashed",
-            "select": ["amount", "recipient", "newExchangeRate"]
+            "type": "event2",
+            "select": ["amount", "recipient", "newExchangeRate"],
+            "set": { "event": "Slashed" }
           }
         }
       }
@@ -154,10 +154,9 @@
         },
         "BORROWERS_LIST": {
           "handler": {
-            "type": "event",
-            "events": "ScheduledBorrowerAllocationChange",
+            "type": "event2",
             "select": "borrower",
-            "distinct": "borrower"
+            "set": { "event": "ScheduledBorrowerAllocationChange" }
           }
         }
       },
@@ -199,10 +198,12 @@
       "fields": {
         "PRIORITY_CONTROLLERS": {
           "handler": {
-            "type": "event",
-            "events": "event PriorityControllerUpdated(address account, bool isPriorityController)",
+            "type": "event2",
             "select": "account",
-            "latch": { "truthy": { "column": "isPriorityController" } }
+            "set": {
+              "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
+              "where": ["!!", "isPriorityController"]
+            }
           }
         }
       }

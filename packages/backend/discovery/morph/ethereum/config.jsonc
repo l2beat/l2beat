@@ -76,9 +76,9 @@
       "fields": {
         "gateways": {
           "handler": {
-            "type": "event",
-            "events": "SetETHGateway",
-            "select": "newEthGateway"
+            "type": "event2",
+            "select": "newEthGateway",
+            "set": { "event": "SetETHGateway" }
           }
         }
       }
@@ -89,9 +89,9 @@
       "fields": {
         "verifierVersions": {
           "handler": {
-            "type": "event",
-            "events": "UpdateVerifier",
-            "select": "version"
+            "type": "event2",
+            "select": "version",
+            "set": { "event": "UpdateVerifier" }
           }
         },
         "latestVerifier": {

@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 21579385,
-  "configHash": "0x4a994b6336ad239914ccef0924653e2ff5b54f54ec2a220513a5707511f99bc6",
+  "configHash": "0x57eab93c660fe2e533ff068fad3e54a83658d527fa129e38cfed9637055ee6e4",
   "contracts": [
     {
       "name": "PlonkVerifierV1-1",

@@ -28,9 +28,11 @@
       "fields": {
         "additionalBatchSizes": {
           "handler": {
-            "type": "event",
-            "events": "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
-            "select": "batchSize"
+            "type": "event2",
+            "select": "batchSize",
+            "set": {
+              "event": "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)"
+            }
           }
         },
         "initialVerifiers": {
@@ -53,9 +55,11 @@
       "fields": {
         "additionalBatchSizes": {
           "handler": {
-            "type": "event",
-            "events": "event VerifierDeleted(uint256 indexed batchSize, address indexed verifierAddress)",
-            "select": "batchSize"
+            "type": "event2",
+            "select": "batchSize",
+            "set": {
+              "event": "event VerifierDeleted(uint256 indexed batchSize, address indexed verifierAddress)"
+            }
           }
         },
         "initialVerifiers": {

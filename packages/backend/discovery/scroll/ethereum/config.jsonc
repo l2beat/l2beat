@@ -121,9 +121,9 @@
         },
         "revertedBatches": {
           "handler": {
-            "type": "event",
-            "events": "RevertBatch",
-            "select": "batchIndex"
+            "type": "event2",
+            "select": "batchIndex",
+            "set": { "event": "RevertBatch" }
           }
         }
       }
@@ -134,9 +134,9 @@
       "fields": {
         "verifierVersions": {
           "handler": {
-            "type": "event",
-            "events": "UpdateVerifier",
-            "select": "version"
+            "type": "event2",
+            "select": "version",
+            "set": { "event": "UpdateVerifier" }
           }
         },
         "latestVerifier": {

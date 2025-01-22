@@ -41,9 +41,9 @@
       "fields": {
         "PREDICATES": {
           "handler": {
-            "type": "event",
-            "events": "PredicateRegistered",
-            "select": "predicateAddress"
+            "type": "event2",
+            "select": "predicateAddress",
+            "set": { "event": "PredicateRegistered" }
           },
           "target": { "template": "polygonposbridge/predicate" } // adds accesscontrol discovery
         }
@@ -65,10 +65,9 @@
       "fields": {
         "REGISTRATIONS": {
           "handler": {
-            "type": "event",
-            "events": "RegistrationUpdated",
+            "type": "event2",
             "select": "sender",
-            "distinct": "sender"
+            "set": { "event": "RegistrationUpdated" }
           }
         }
       },
