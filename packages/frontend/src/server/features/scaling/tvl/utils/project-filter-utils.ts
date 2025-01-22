@@ -22,6 +22,7 @@ export type TvlProjectFilter = z.infer<typeof TvlProjectFilter>
 
 export function createTvlProjectsFilter(
   filter: TvlProjectFilter,
+  previewRecategorisation?: boolean,
 ): (project: Layer2 | Layer3 | Bridge) => boolean {
   switch (filter.type) {
     case 'layer2':
@@ -31,17 +32,17 @@ export function createTvlProjectsFilter(
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'rollups':
       return (project) =>
-        !isProjectOther(project) &&
+        !isProjectOther(project, previewRecategorisation) &&
         (project.display.category === 'Optimistic Rollup' ||
           project.display.category === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
-        !isProjectOther(project) &&
+        !isProjectOther(project, previewRecategorisation) &&
         (project.display.category === 'Validium' ||
           project.display.category === 'Optimium' ||
           project.display.category === 'Plasma')
     case 'others':
-      return (project) => isProjectOther(project)
+      return (project) => isProjectOther(project, previewRecategorisation)
     default:
       assertUnreachable(filter)
   }

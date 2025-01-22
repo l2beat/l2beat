@@ -1,23 +1,146 @@
-Generated with discovered.json: 0x3ae720b42f77bb1334a4d95022157b1cf2f232c3
+Generated with discovered.json: 0x105582f3d3425b1f3ba9a7994306a49c745ec9ca
 
-# Diff at Wed, 22 Jan 2025 14:17:55 GMT:
+# Diff at Mon, 20 Jan 2025 18:10:11 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21628468
-- current block number: 21680574
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@0627cbad036b5034c9dc22d0c9a6a58d5852955f block: 21628468
+- current block number: 21667402
 
 ## Description
 
-MS member change.
+Refined mantle DA permissions.
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628468 (main branch discovery), not current.
 
 ```diff
-    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    contract PauserRegistry (0x075a48633dc6845f92339741E9c96b88f1b2A86f) {
     +++ description: None
-      values.$members.5:
--        "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
-+        "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
+      receivedPermissions:
++        [{"permission":"configure","from":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd","description":"defines addresses that can pause or unpause ability to invest into strategies."},{"permission":"configure","from":"0xA937660031787C4408587D2c6A67Ec4B260630F5","description":"defines addresses that can pause or unpause ability to deposit tokens into strategies."},{"permission":"configure","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1","description":"defines addresses that can pause or unpause ability to deposit tokens into strategies."}]
+    }
+```
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      issuedPermissions.10:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      issuedPermissions.9:
++        {"permission":"configure","to":"0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.8:
++        {"permission":"configure","to":"0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.7:
++        {"permission":"configure","to":"0xB61298691FE0df10634A67dd83b2253E74cbF7fb","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.6:
++        {"permission":"configure","to":"0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.5:
++        {"permission":"configure","to":"0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.4:
++        {"permission":"configure","to":"0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.3:
++        {"permission":"configure","to":"0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.2:
++        {"permission":"configure","to":"0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","to":"0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}
+      issuedPermissions.0.description:
++        "sign data commitments for the DA bridge."
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "defines addresses that can pause or unpause ability to invest into strategies."
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","description":"can post data commitments to the DA bridge."}]
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.2:
++        {"permission":"configure","to":"0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A","description":"can post data commitments to the DA bridge.","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","to":"0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749","description":"can post data commitments to the DA bridge.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "can register or change status of DA node operators."
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "defines addresses that can pause or unpause ability to deposit tokens into strategies."
     }
 ```
 
