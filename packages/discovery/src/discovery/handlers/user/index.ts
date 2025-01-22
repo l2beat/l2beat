@@ -21,18 +21,6 @@ import {
   ArbitrumSequencerVersionDefinition,
   ArbitrumSequencerVersionHandler,
 } from './ArbitrumSequencerVersionHandler'
-import {
-  ArrayFromOneEventHandler,
-  ArrayFromOneEventHandlerDefinition,
-} from './ArrayFromOneEventHandler'
-import {
-  ArrayFromOneEventWithArgHandler,
-  ArrayFromOneEventWithArgHandlerDefinition,
-} from './ArrayFromOneEventWithArgHandler'
-import {
-  ArrayFromTwoEventsHandler,
-  ArrayFromTwoEventsHandlerDefinition,
-} from './ArrayFromTwoEventsHandler'
 import { ArrayHandler, ArrayHandlerDefinition } from './ArrayHandler'
 import { CallHandler, CallHandlerDefinition } from './CallHandler'
 import {
@@ -112,9 +100,6 @@ export const UserHandlerDefinition = z.union([
   AccessControlHandlerDefinition,
   ScrollAccessControlHandlerDefinition,
   LineaRolesModuleHandlerDefinition,
-  ArrayFromOneEventHandlerDefinition,
-  ArrayFromOneEventWithArgHandlerDefinition,
-  ArrayFromTwoEventsHandlerDefinition,
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
   StateFromEventDefinition,
@@ -158,12 +143,6 @@ export function getUserHandler(
       return new ScrollAccessControlHandler(field, definition, abi)
     case 'lineaRolesModule':
       return new LineaRolesModuleHandler(field, definition, abi)
-    case 'arrayFromOneEvent':
-      return new ArrayFromOneEventHandler(field, definition, abi)
-    case 'arrayFromOneEventWithArg':
-      return new ArrayFromOneEventWithArgHandler(field, definition, abi)
-    case 'arrayFromTwoEvents':
-      return new ArrayFromTwoEventsHandler(field, definition, abi)
     case 'constructorArgs':
       return new ConstructorArgsHandler(field, definition, abi)
     case 'eventCount':
