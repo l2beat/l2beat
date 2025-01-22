@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -25,6 +26,7 @@ export function ScalingArchivedTables(
   props: TabbedScalingEntries<ScalingArchivedEntry>,
 ) {
   const includeFilters = useScalingFilter()
+  const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
@@ -45,6 +47,12 @@ export function ScalingArchivedTables(
     desc: true,
   }
 
+  useEffect(() => {
+    if (!checked && tab === 'others' && entries.others.length === 0) {
+      setTab('rollups')
+    }
+  }, [checked, entries.others, tab])
+
   return (
     <>
       <ScalingUpcomingAndArchivedFilters
@@ -55,7 +63,7 @@ export function ScalingArchivedTables(
         ]}
         className="max-md:ml-4 max-md:mt-4"
       />
-      <DirectoryTabs defaultValue="rollups">
+      <DirectoryTabs value={tab} onValueChange={setTab}>
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>

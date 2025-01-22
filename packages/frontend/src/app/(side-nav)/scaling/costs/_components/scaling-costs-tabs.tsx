@@ -1,6 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
 import {
@@ -27,6 +27,7 @@ type Props = TabbedScalingEntries<ScalingCostsEntry> & {
 
 export function ScalingCostsTabs(props: Props) {
   const includeFilters = useScalingFilter()
+  const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
@@ -57,6 +58,12 @@ export function ScalingCostsTabs(props: Props) {
     desc: false,
   }
 
+  useEffect(() => {
+    if (!checked && tab === 'others' && entries.others.length === 0) {
+      setTab('rollups')
+    }
+  }, [checked, entries.others, tab])
+
   return (
     <>
       <ScalingFilters
@@ -67,7 +74,7 @@ export function ScalingCostsTabs(props: Props) {
         ]}
         className="max-md:mt-4"
       />
-      <DirectoryTabs defaultValue="rollups">
+      <DirectoryTabs value={tab} onValueChange={setTab}>
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
