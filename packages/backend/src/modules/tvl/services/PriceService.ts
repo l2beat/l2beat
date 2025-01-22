@@ -100,7 +100,7 @@ export class PriceService {
       `Latest price not found for ${coingeckoId} @ ${latestHour.toNumber()}`,
     )
 
-    this.logger.error(
+    this.logger.warn(
       `${coingeckoId}: DB fallback triggered: failed to fetch price from Coingecko`,
       {
         coingeckoId,
