@@ -51,7 +51,10 @@ export const getCachedRecategorizedTvlChartData = cache(
     filter,
     previewRecategorisation,
   }: RecategorizedTvlChartDataParams) => {
-    const projectsFilter = createTvlProjectsFilter(filter)
+    const projectsFilter = createTvlProjectsFilter(
+      filter,
+      previewRecategorisation,
+    )
     const tvlProjects = getTvlProjects(projectsFilter, previewRecategorisation)
 
     const rollups = tvlProjects.filter(({ category }) => category === 'rollups')

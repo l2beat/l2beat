@@ -53,9 +53,11 @@ export const getCachedTvlChartData = cache(
     filter,
     previewRecategorisation,
   }: TvlChartDataParams) => {
-    const projectsFilter = createTvlProjectsFilter(filter)
+    const projectsFilter = createTvlProjectsFilter(
+      filter,
+      previewRecategorisation,
+    )
     const tvlProjects = getTvlProjects(projectsFilter, previewRecategorisation)
-
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
       getTvlValuesForProjects(tvlProjects, range),
