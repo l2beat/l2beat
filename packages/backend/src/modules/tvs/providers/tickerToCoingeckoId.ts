@@ -1,7 +1,7 @@
 import { assert, type Token } from '@l2beat/shared-pure'
 
-export function priceIdToCoingeckoId(priceId: string, legacyTokens: Token[]) {
-  switch (priceId) {
+export function tickerToCoingeckoId(ticker: string, legacyTokens: Token[]) {
+  switch (ticker) {
     case 'Ether':
       return 'ethereum'
     case 'mETH':
@@ -23,15 +23,15 @@ export function priceIdToCoingeckoId(priceId: string, legacyTokens: Token[]) {
   }
 
   const coingeckoIds = legacyTokens
-    .filter((t) => t.name === priceId)
+    .filter((t) => t.name === ticker)
     .map((t) => t.coingeckoId)
 
-  assert(coingeckoIds.length > 0, `${priceId}: No tokens with this name found`)
+  assert(coingeckoIds.length > 0, `${ticker}: No tokens with this name found`)
 
   const coingeckoId = coingeckoIds[0]
   assert(
     coingeckoIds.every((id) => id === coingeckoId),
-    `${priceId}: CoingeckoIds mismatch ${coingeckoIds}`,
+    `${ticker}: CoingeckoIds mismatch ${coingeckoIds}`,
   )
   return coingeckoId
 }
