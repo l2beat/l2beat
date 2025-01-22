@@ -59,8 +59,8 @@ export type BlockscoutInternalTransaction = z.infer<
 >
 
 export const BlockscoutInternalTransaction = z.object({
-  block: z.number(),
   block_index: z.number(),
+  block_number: z.number(),
   created_contract: z.unknown().nullable(),
   error: z.unknown().nullable(),
   from: BlockscoutAddressParam,

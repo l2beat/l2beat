@@ -9,7 +9,7 @@ const NOW = UnixTime.now()
 const responseMock = {
   items: [
     {
-      block: 19917670,
+      block_number: 19917670,
       block_index: 260,
       created_contract: null,
       error: null,

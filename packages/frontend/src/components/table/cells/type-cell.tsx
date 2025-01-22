@@ -85,7 +85,7 @@ export const providerMap: Record<
     Icon: PolygonIcon,
     text: "This project is based on Polygon's code base.",
   },
-  Starknet: {
+  'SN Stack': {
     Icon: StarknetIcon,
     text: "This project is based on Starknet's code base.",
   },

@@ -7,7 +7,7 @@ interface Props {
 }
 
 export function DacMembersCell({ dacInfo }: Props) {
-  if (!dacInfo?.membersArePublic) {
+  if (!dacInfo) {
     return <NaBadge />
   }
   return (

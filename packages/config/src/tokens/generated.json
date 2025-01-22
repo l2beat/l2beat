@@ -2537,6 +2537,20 @@
       "supply": "zero"
     },
     {
+      "name": "HashKey Platform Token",
+      "coingeckoId": "hashkey-ecopoints",
+      "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a",
+      "symbol": "HSK",
+      "decimals": 18,
+      "deploymentTimestamp": 1719663791,
+      "coingeckoListingTimestamp": 1732579200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29779/large/HSKlogo.jpg?1719445510",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Hegic",
       "coingeckoId": "hegic",
       "address": "0x584bC13c7D411c00c01A62e8019472dE68768430",

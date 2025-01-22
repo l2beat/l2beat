@@ -75,7 +75,7 @@ const zksync2Upgradability = {
 }
 
 const ethereumUpgradability = {
-  upgradableBy: ['zkLinkOwner'],
+  upgradableBy: ['EthereumOwner'],
   upgradeDelay: 'No delay',
 }
 

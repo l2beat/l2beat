@@ -18,8 +18,8 @@ import {
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
-import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
+import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import type { EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
@@ -104,7 +104,15 @@ function getDaSummaryEntry(
         tvs: getTvs(daBridge.usedIn.map((project) => project.id)),
         risks: getDaBridgeRisks(daBridge),
         usedIn: daBridge.usedIn.sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
-        dacInfo: undefined,
+        dacInfo:
+          daBridge.type === 'StandaloneDacBridge' && !daBridge.hideMembers
+            ? {
+                memberCount: daBridge.membersCount,
+                requiredMembers: daBridge.requiredMembers,
+                membersArePublic:
+                  !!daBridge.knownMembers && daBridge.knownMembers.length > 0,
+              }
+            : undefined,
       }
     })
     .sort((a, b) => b.tvs - a.tvs)
@@ -149,14 +157,14 @@ function getDacEntries(
     const usedIn = toUsedInProject([parentProject])
     const tvs = getTvs([parentProject.id])
     const dacInfo =
-      daLayer.bridge.type === 'IntegratedDacBridge'
+      daLayer.bridge.type === 'IntegratedDacBridge' &&
+      !daLayer.bridge.hideMembers
         ? {
             memberCount: daLayer.bridge.membersCount,
             requiredMembers: daLayer.bridge.requiredMembers,
             membersArePublic:
               !!daLayer.bridge.knownMembers &&
-              daLayer.bridge.knownMembers.length > 0 &&
-              !daLayer.bridge.hideMembers,
+              daLayer.bridge.knownMembers.length > 0,
           }
         : undefined
 
@@ -208,7 +216,9 @@ function getEthereumEntry(
     nameSecondLine: kindToType(ethereumDaLayer.kind),
     href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
-    usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
+    usedIn: ethereumDaLayer.bridges
+      .flatMap((bridge) => bridge.usedIn)
+      .sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
     economicSecurity: economicSecurity[ethereumDaLayer.id],
     bridge: ethereumDaLayer.bridges[0].display.name,
     tvs: getTvs(
