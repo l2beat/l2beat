@@ -3,6 +3,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
+import { DaEconomicSecurityRisk } from '../da-beat/types'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import type { Layer3 } from './types'
 
@@ -102,4 +104,45 @@ export const xai: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      knownMembers: [
+        {
+          external: false,
+          name: 'Xai',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Ex Populus',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Rug Radio',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'LayerZero',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Team Secret',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Offchain Labs',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+      ],
+    },
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    },
+    discovery,
+  }),
 })

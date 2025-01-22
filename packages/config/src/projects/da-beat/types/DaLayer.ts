@@ -1,10 +1,12 @@
 import type { ScalingProjectTechnologyChoice } from '../../../common'
 import type { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../common'
 import type {
-  DacBridge,
   EnshrinedBridge,
+  IntegratedDacBridge,
   NoDaBridge,
+  NoDacBridge,
   OnChainDaBridge,
+  StandaloneDacBridge,
 } from './DaBridge'
 import type { DaChallengeMechanism } from './DaChallengeMechanism'
 import type { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
@@ -17,7 +19,7 @@ import type { DaTechnology } from './DaTechnology'
 import type { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import type { EthereumDaLayerRisks } from './EthereumDaRisks'
 
-export type DaLayer = BlockchainDaLayer | DacDaLayer | EthereumDaLayer
+export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'PublicBlockchain'
@@ -51,9 +53,27 @@ export type EthereumDaLayer = CommonDaLayer & {
   economicSecurity?: DaEconomicSecurity
 }
 
-export type DacDaLayer = CommonDaLayer & {
-  kind: 'DAC' | 'DA Service' | 'No DAC'
-  bridges: (DacBridge | NoDaBridge)[]
+export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
+  display?: {
+    // Rest will be linked dynamically from scaling
+    description?: string
+    name?: string
+  }
+  kind: 'DAC' | 'No DAC'
+  bridge: IntegratedDacBridge | NoDacBridge
+  /** Risks associated with the data availability layer. */
+  risks: DaLayerRisks
+  /** Fallback */
+  fallback?: ScalingDaLayerOption
+  /** Supported challenge mechanism in place */
+  challengeMechanism?: DaChallengeMechanism
+  /** Number of operators in the data availability layer. */
+  numberOfOperators?: number
+}
+
+export type DaServiceDaLayer = CommonDaLayer & {
+  kind: 'DA Service'
+  bridges: (StandaloneDacBridge | NoDaBridge)[]
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
 }
@@ -64,12 +84,6 @@ export type CommonDaLayer = {
   id: string
   /** Classification layers will be split based on */
   systemCategory: 'public' | 'custom'
-  /** Supported challenge mechanism in place */
-  challengeMechanism?: DaChallengeMechanism
-  /** Fallback */
-  fallback?: ScalingDaLayerOption
-  /** Number of operators in the data availability layer. */
-  numberOfOperators?: number
   /** Display information for the data availability layer. */
   display: DaLayerDisplay
   /** Is the DA layer upcoming? */
@@ -90,10 +104,10 @@ export type DaLayerRisks = {
 interface DaLayerDisplay {
   /** The name of the data availability layer. */
   name: string
-  /** Slug of the data availability bridge. */
+  /** Slug of the data availability layer. */
   slug: string
   /** A short description of the data availability layer. */
   description: string
   /** Links related to the data availability layer. */
-  links: DaLinks
+  links?: DaLinks
 }

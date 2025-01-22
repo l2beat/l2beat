@@ -1,11 +1,11 @@
 import {
   type BlockchainDaLayer,
-  type DacBridge,
-  type DacDaLayer,
+  type DaServiceDaLayer,
   type EnshrinedBridge,
   type EthereumDaLayer,
   type NoDaBridge,
   type OnChainDaBridge,
+  type StandaloneDacBridge,
 } from '@l2beat/config'
 import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -19,8 +19,8 @@ import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-se
 import { getPermissionedEntities } from './get-permissioned-entities'
 
 type RegularDetailsParams = {
-  daLayer: BlockchainDaLayer | DacDaLayer
-  daBridge: OnChainDaBridge | DacBridge | NoDaBridge
+  daLayer: BlockchainDaLayer | DaServiceDaLayer
+  daBridge: OnChainDaBridge | StandaloneDacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
@@ -37,34 +37,33 @@ export function getRegularDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
-  const relatedScalingProject =
-    daBridge.type === 'DAC' && daBridge.usedIn.length === 1
-      ? daBridge.usedIn[0]
-      : undefined
+  const permissionsSection =
+    daBridge.type === 'NoBridge'
+      ? undefined
+      : getMultichainPermissionsSection(
+          {
+            id: daLayer.id,
+            bridge: daBridge,
+            isUnderReview: !!daLayer.isUnderReview,
+            permissions: daBridge.permissions,
+          },
+          contractsVerificationStatuses,
+        )
 
-  const permissionsSection = getMultichainPermissionsSection(
-    {
-      id: daLayer.id,
-      bridge: daBridge,
-      isUnderReview: !!daLayer.isUnderReview,
-      permissions: daBridge.permissions,
-      dacUsedIn: relatedScalingProject,
-    },
-    contractsVerificationStatuses,
-  )
-
-  const contractsSection = getMultiChainContractsSection(
-    {
-      id: daBridge.id,
-      isVerified,
-      slug: daBridge.display.slug,
-      contracts: daBridge.contracts,
-      isUnderReview: daLayer.isUnderReview,
-      dacUsedIn: relatedScalingProject,
-    },
-    contractsVerificationStatuses,
-    projectsChangeReport,
-  )
+  const contractsSection =
+    daBridge.type === 'NoBridge'
+      ? undefined
+      : getMultiChainContractsSection(
+          {
+            id: daBridge.id,
+            isVerified,
+            slug: daBridge.display.slug,
+            contracts: daBridge.contracts,
+            isUnderReview: daLayer.isUnderReview,
+          },
+          contractsVerificationStatuses,
+          projectsChangeReport,
+        )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,

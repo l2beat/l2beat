@@ -46,6 +46,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { Badge, type BadgeId, badges } from '../../badges'
+import type { DacDaLayer } from '../../da-beat/types/DaLayer'
 import type { Layer3, Layer3Display } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -104,6 +105,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
+  dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
@@ -397,6 +399,7 @@ function opStackCommon(
       },
     ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
+    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
   }
 }
 

@@ -2,10 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import type { DacDaLayer } from '../../types/DaLayer'
+import type { DaServiceDaLayer } from '../../types/DaLayer'
 import { HotShotLightClient } from './bridges/HotShotLightClient'
 
-export const espressoDA: DacDaLayer = {
+export const espressoDA: DaServiceDaLayer = {
   id: 'espressoDA',
   type: 'DaLayer',
   kind: 'DA Service',
@@ -74,8 +74,6 @@ export const espressoDA: DacDaLayer = {
     Users can retrieve data by querying any of Espresso DA's layers, though the VID layer is slower due to the reconstruction of erasure-coded shares. L2s can also use a verifyInclusion function on an L1 light client smart contract to confirm a blob's inclusion in the Espresso DA HotShot chain.
     
  `,
-    references: [],
-    risks: [],
   },
   bridges: [
     NO_BRIDGE({

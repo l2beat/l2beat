@@ -1,14 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { aevo } from '../../layer2s/aevo'
-import { soon } from '../../layer2s/soon'
-import { donatuz } from '../../layer3s/donatuz'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
-import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import type { DacDaLayer } from '../types/DaLayer'
-import { toUsedInProject } from '../utils/to-used-in-project'
-import { eigenDAbridge } from './bridges/eigenDABridge'
+import { aevo } from '../../../layer2s/aevo'
+import { soon } from '../../../layer2s/soon'
+import { donatuz } from '../../../layer3s/donatuz'
+import { NO_BRIDGE } from '../../templates/no-bridge-template'
+import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
+import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
+import type { DaServiceDaLayer } from '../../types/DaLayer'
+import { toUsedInProject } from '../../utils/to-used-in-project'
+import { eigenDAbridge } from './eigen-da-bridge'
 
-export const eigenDA: DacDaLayer = {
+export const eigenDA: DaServiceDaLayer = {
   id: 'eigen-da',
   type: 'DaLayer',
   kind: 'DA Service',
@@ -94,7 +95,7 @@ export const eigenDA: DacDaLayer = {
       technology: {
         description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
       },
-      usedIn: [...toUsedInProject([donatuz, aevo, soon])],
+      usedIn: toUsedInProject([donatuz, aevo, soon]),
     }),
     eigenDAbridge,
   ],
