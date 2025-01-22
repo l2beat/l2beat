@@ -20,9 +20,7 @@ export function RecategorisationPreviewContextProvider({ children }: Props) {
   const pathname = usePathname()
   const [checked, setChecked] = useState<boolean>(false)
   const isScalingMainPage =
-    checked &&
-    pathname.startsWith('/scaling') &&
-    !pathname.startsWith('/scaling/projects')
+    pathname.startsWith('/scaling') && !pathname.startsWith('/scaling/projects')
   return (
     <RecategorisationPreviewContext.Provider
       value={{
