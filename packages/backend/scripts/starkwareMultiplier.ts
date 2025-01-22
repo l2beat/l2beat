@@ -1,6 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { createDatabase } from '@l2beat/database'
-import { TrackedTxCostsConfig } from '@l2beat/shared'
+import type { TrackedTxCostsConfig } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { makeConfig } from '../src/config/makeConfig'
