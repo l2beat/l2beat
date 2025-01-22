@@ -40,9 +40,14 @@ export function Layout() {
             </NavLink>
           </li>
           <li>
-            <Link className="font-mono underline" to="/logo-generator">
+            <NavLink
+              className={({ isActive }) =>
+                clsx('font-mono underline', isActive && 'text-orange-500')
+              }
+              to="/logo-generator"
+            >
               /logo-generator
-            </Link>
+            </NavLink>
           </li>
           <li>
             <Link
