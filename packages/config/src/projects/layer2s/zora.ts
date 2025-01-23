@@ -35,7 +35,6 @@ export const zora: Layer2 = opStackL2({
         'https://zora.community',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zora.energy',
   finality: {

@@ -33,7 +33,6 @@ export const karak: Layer2 = opStackL2({
         'https://t.me/Karak_Network',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.karak.network/',
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction

@@ -35,7 +35,6 @@ export const swan: Layer2 = opStackL2({
         'https://swanchain.medium.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1718640220),
   // failing, needs different analyzer?

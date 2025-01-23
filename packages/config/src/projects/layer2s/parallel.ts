@@ -37,7 +37,6 @@ export const parallel: Layer2 = orbitStackL2({
         'https://t.me/parallelfi_community',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   trackedTxs: [
     {

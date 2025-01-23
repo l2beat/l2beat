@@ -157,7 +157,6 @@ export const hashkey: Layer2 = {
         'https://discord.com/invite/ujaF7aKAEk',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

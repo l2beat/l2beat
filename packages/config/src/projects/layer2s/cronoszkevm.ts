@@ -40,7 +40,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
         'https://discord.com/invite/cronos',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['zkCRO'],
   rpcUrl: 'https://mainnet.zkevm.cronos.org',

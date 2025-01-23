@@ -28,6 +28,5 @@ export const dodochain: Layer3 = underReviewL3({
         'https://discord.com/invite/tyKReUK',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
 })

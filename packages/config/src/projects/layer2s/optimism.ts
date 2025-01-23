@@ -164,7 +164,6 @@ export const optimism: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/optimism',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

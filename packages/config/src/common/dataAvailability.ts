@@ -5,7 +5,7 @@ import type {
   DataAvailabilityConfig,
   DataAvailabilityLayer,
   DataAvailabilityMode,
-} from './ScalingProjectDataAvailability'
+} from './ScalingProject'
 
 export interface ProjectDataAvailability {
   layer: ValueWithSentiment<string> & { secondLine?: string }

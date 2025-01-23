@@ -33,7 +33,6 @@ export const hook: Layer3 = underReviewL3({
         'https://warpcast.com/hookprotocol',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // rpcUrl: 'https://hook.calderachain.xyz/http',
   transactionApi: {

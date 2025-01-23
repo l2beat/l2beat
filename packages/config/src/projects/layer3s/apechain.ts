@@ -37,7 +37,6 @@ export const apechain: Layer3 = orbitStackL3({
         'https://t.me/apechainofficial',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   discovery,
   bridge: discovery.getContract('ERC20Bridge'),

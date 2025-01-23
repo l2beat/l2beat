@@ -46,7 +46,6 @@ export const orderly: Layer2 = opStackL2({
         'https://t.me/OrderlyNetworkAnnouncements',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     {

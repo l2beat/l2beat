@@ -1,3 +1,4 @@
+import { join } from 'path'
 import {
   ConfigReader,
   type InvertedAddresses,
@@ -26,21 +27,15 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { groupBy, isArray, isString, sum, uniq } from 'lodash'
-
-import { join } from 'path'
 import type {
   ScalingProjectContract,
-  ScalingProjectUpgradeability,
-} from '../common/ScalingProjectContracts'
-import type {
   ScalingProjectEscrow,
-  SharedEscrow,
-} from '../common/ScalingProjectEscrow'
-import type {
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
-} from '../common/ScalingProjectPermission'
-import type { ScalingProjectReference } from '../common/ScalingProjectReference'
+  ScalingProjectReference,
+  ScalingProjectUpgradeability,
+  SharedEscrow,
+} from '../common'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,

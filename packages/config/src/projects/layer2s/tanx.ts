@@ -89,7 +89,6 @@ export const tanx: Layer2 = {
         'https://linkedin.com/company/tanx-fi',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',

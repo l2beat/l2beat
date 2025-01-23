@@ -37,7 +37,6 @@ export const lisk: Layer2 = opStackL2({
         'https://youtube.com/channel/UCuqpGfg_bOQ8Ja4pj811PWg',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   l1StandardBridgePremintedTokens: ['LSK'],
   nonTemplateExcludedTokens: ['USDC'],

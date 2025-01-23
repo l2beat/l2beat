@@ -96,7 +96,6 @@ export const rhinofi: Layer2 = {
         'https://discord.com/invite/26sXx2KAhy',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',

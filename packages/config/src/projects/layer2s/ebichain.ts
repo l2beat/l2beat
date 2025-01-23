@@ -36,7 +36,6 @@ export const ebichain: Layer2 = orbitStackL2({
         'https://discord.com/invite/ebixyz',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.ebi.xyz',
   bridge: discovery.getContract('Bridge'),

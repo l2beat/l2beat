@@ -29,7 +29,6 @@ export const superlumio: Layer2 = opStackL2({
         'https://discord.com/invite/44QgPFHYqs',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.lumio.io',
   genesisTimestamp: new UnixTime(1708984633),

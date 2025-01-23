@@ -70,7 +70,6 @@ export const polygonpos: Layer2 = {
         'https://instagram.com/0xpolygon/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     description:
       'Polygon PoS is an EVM-compatible, proof of stake sidechain for Ethereum, planning to become a Validium with a state validating bridge. The bridge is currently validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
   },

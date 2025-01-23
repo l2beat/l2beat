@@ -58,7 +58,6 @@ export const redstone: Layer2 = opStackL2({
         'https://discord.com/invite/latticexyz',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,

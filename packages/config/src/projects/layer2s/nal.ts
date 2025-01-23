@@ -22,7 +22,6 @@ export const nal: Layer2 = underReviewL2({
       repositories: [],
       socialMedia: ['https://x.com/nal_network'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.nal.network/',
   transactionApi: {
