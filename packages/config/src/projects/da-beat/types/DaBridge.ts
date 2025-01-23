@@ -6,11 +6,11 @@ import type {
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
 } from '../../../common'
+import type { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+import type { EthereumDaBridgeRisks } from '../common/EthereumDaRisks'
 import type { DaLinks } from './DaLinks'
-import type { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 import type { DaRisk } from './DaRisk'
 import type { DaTechnology } from './DaTechnology'
-import type { EthereumDaBridgeRisks } from './EthereumDaRisks'
 import type { UsedInProject } from './UsedInProject'
 
 export type DaBridge =

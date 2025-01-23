@@ -1,5 +1,5 @@
 import type { Sentiment } from '@l2beat/shared-pure'
-import type { DaRisk } from './DaRisk'
+import type { DaRisk } from '../types/DaRisk'
 
 function RobustAndDiverseCommittee(value?: string): DaRisk {
   return {

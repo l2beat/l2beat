@@ -1,5 +1,5 @@
+import { EthereumDaLayerRisks } from '../common'
 import type { EthereumDaLayer } from '../types/DaLayer'
-import { EthereumDaLayerRisks } from '../types/EthereumDaRisks'
 import { enshrinedBridge } from './enshrinedBridge'
 
 export const ethereum = {

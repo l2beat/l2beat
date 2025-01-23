@@ -1,10 +1,6 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import {
-  type DaBridge,
-  DaUpgradeabilityRisk,
-  type DacDaLayer,
-  type IntegratedDacBridge,
-} from '../types'
+import { DaUpgradeabilityRisk } from '../common'
+import type { DaBridge, DacDaLayer, IntegratedDacBridge } from '../types'
 import type { DaTechnology } from '../types/DaTechnology'
 import { DAC, type DacTemplateVars } from './dac-template'
 

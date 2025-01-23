@@ -7,6 +7,7 @@ import { memo } from './memo/memo'
 import { near } from './near/near'
 
 export * from './types'
+export * from './common'
 export * from './utils/to-used-in-project'
 
 export const ethereumDaLayer = ethereum

@@ -1,5 +1,11 @@
 import type { ScalingProjectTechnologyChoice } from '../../../common'
 import type { DataAvailabilityLayer as ScalingDaLayerOption } from '../../../common'
+import type { DaEconomicSecurity } from '../common/DaEconomicSecurity'
+import type { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
+import type { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
+import type { DasErasureCodingProof } from '../common/DasErasureCodingProof'
+import type { DasErasureCodingScheme } from '../common/DasErasureCodingScheme'
+import type { EthereumDaLayerRisks } from '../common/EthereumDaRisks'
 import type {
   EnshrinedBridge,
   IntegratedDacBridge,
@@ -8,16 +14,10 @@ import type {
   OnChainDaBridge,
   StandaloneDacBridge,
 } from './DaBridge'
-import type { DaEconomicSecurity } from './DaEconomicSecurity'
-import type { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
-import type { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import type { DaLayerThroughput } from './DaLayerThroughput'
 import type { DaLinks } from './DaLinks'
 import type { DaRiskWithSentiment } from './DaRiskView'
 import type { DaTechnology } from './DaTechnology'
-import type { DasErasureCodingProof } from './DasErasureCodingProof'
-import type { DasErasureCodingScheme } from './DasErasureCodingScheme'
-import type { EthereumDaLayerRisks } from './EthereumDaRisks'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 

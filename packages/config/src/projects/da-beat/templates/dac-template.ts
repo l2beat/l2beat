@@ -1,18 +1,20 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import {
-  type DaBridgeRisks,
-  type DaChallengeMechanism,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
-  type DaLayerRisks,
   DaUpgradeabilityRisk,
-  type DacDaLayer,
-  type DacTransactionDataType,
-  type IntegratedDacBridge,
+} from '../common'
+import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+import type {
+  DaBridgeRisks,
+  DaChallengeMechanism,
+  DaLayerRisks,
+  DacDaLayer,
+  DacTransactionDataType,
+  IntegratedDacBridge,
 } from '../types'
 import type { DaLinks } from '../types/DaLinks'
-import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 
 type TemplateSpecific = {
   /** DAC display settings */

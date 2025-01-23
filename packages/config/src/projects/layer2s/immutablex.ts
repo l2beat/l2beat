@@ -31,11 +31,11 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
-} from '../da-beat/types'
+} from '../da-beat/common'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')

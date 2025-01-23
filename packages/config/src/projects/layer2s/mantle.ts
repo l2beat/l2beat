@@ -10,9 +10,9 @@ import {
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaUpgradeabilityRisk,
-  type DacDaLayer,
-} from '../da-beat/types'
-import { DaRelayerFailureRisk } from '../da-beat/types/DaRelayerFailureRisk'
+} from '../da-beat/common'
+import { DaRelayerFailureRisk } from '../da-beat/common/DaRelayerFailureRisk'
+import type { DacDaLayer } from '../da-beat/types'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
