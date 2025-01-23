@@ -23,8 +23,10 @@ export function getDaSolution(project: ScalingProject) {
     return
   }
 
-  const { permissions: allDaBridgePermissions } = daSolution.bridge
-  const { contracts: allDaBridgeContracts } = daSolution.bridge
+  const {
+    permissions: allDaBridgePermissions,
+    contracts: allDaBridgeContracts,
+  } = daSolution.bridge
 
   const daBridgePermissions =
     allDaBridgePermissions !== 'UnderReview'
