@@ -6,6 +6,7 @@ import type {
 import { type ChainConfig, tokenList } from '@l2beat/config'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { tokenToTicker } from './providers/tickerToCoingeckoId'
 import {
   type AmountConfig,
   type AmountFormula,
@@ -157,7 +158,7 @@ function createToken(
 
       amountFormula = {
         type: 'circulatingSupply',
-        ticker: legacyToken.name,
+        ticker: tokenToTicker(legacyToken),
       } as CirculatingSupplyAmountFormula
 
       sinceTimestamp = UnixTime.max(
@@ -173,7 +174,7 @@ function createToken(
   return {
     id: legacyToken.id,
     // This is a temporary solution
-    ticker: legacyToken.name,
+    ticker: tokenToTicker(legacyToken),
     amount: amountFormula,
     sinceTimestamp,
     untilTimestamp,
