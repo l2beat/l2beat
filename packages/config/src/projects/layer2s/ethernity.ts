@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ethernity')
 
@@ -38,7 +38,6 @@ export const ethernity: Layer2 = opStackL2({
         'https://discord.com/invite/EthernityChain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['ERN'],
   discoveryDrivenData: true,

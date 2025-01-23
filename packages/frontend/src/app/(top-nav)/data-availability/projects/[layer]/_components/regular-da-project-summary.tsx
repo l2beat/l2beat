@@ -22,15 +22,6 @@ export function RegularDaProjectSummary({ project }: Props) {
   const hasMultipleBridges = project.bridges.length > 1
   const stats: ProjectStat[] = [
     ...getCommonDaProjectStats(project),
-    ...(project.header.numberOfOperators
-      ? [
-          {
-            title: 'Number of operators',
-            value: project.header.numberOfOperators,
-          },
-        ]
-      : []),
-
     {
       title: 'Used by',
       value: (

@@ -1,4 +1,4 @@
-import { Stake } from '../../kysely/generated/types'
+import type { Stake } from '../../kysely/generated/types'
 
 export const selectStake = [
   'id',

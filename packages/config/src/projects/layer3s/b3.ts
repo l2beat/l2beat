@@ -7,7 +7,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER } from '../layer2s/templates/opStack'
 import { opStackL3 } from '../layer2s/templates/opStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('b3', 'base')
 
@@ -44,7 +44,6 @@ export const b3: Layer3 = opStackL3({
         'https://warpcast.com/b3dotfun',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'b3',

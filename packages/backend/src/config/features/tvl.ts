@@ -6,12 +6,12 @@ import {
   layer2ToBackendProject,
   layer3ToBackendProject,
 } from '@l2beat/backend-shared'
-import { Env } from '@l2beat/backend-tools'
+import type { Env } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, layer3s, tokenList } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { TvlConfig } from '../Config'
-import { FeatureFlags } from '../FeatureFlags'
+import type { TvlConfig } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
 export function getTvlConfig(

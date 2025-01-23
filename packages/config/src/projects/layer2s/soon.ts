@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('soon')
 
@@ -21,7 +21,7 @@ export const soon: Layer2 = opStackL2({
     shortName: 'Soon',
     slug: 'soon',
     description:
-      'SOON is a Layer 2 chain built on top of the SOON Stack, which itself is based on the OP Stack, but introduces the Decoupled Solana Virtual Machine (SVM).',
+      "SOON is a Layer 2 chain built on top of the SOON Stack. It innovates with a Decoupled SVM that separates Solana's execution (needed for the SOON SVM) from its consensus (not needed since SOON settles on Ethereum), yielding performance and flexibility improvements.",
     links: {
       websites: ['https://soo.network/'],
       apps: ['https://bridge.mainnet.soo.network/home'],
@@ -34,7 +34,6 @@ export const soon: Layer2 = opStackL2({
         'https://medium.com/@soon_SVM',
       ],
     },
-    // no activityDataSource due to SVM
   },
   usingAltVm: true,
   nonTemplateTechnology: {

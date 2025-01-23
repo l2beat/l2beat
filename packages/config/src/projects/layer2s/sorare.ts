@@ -32,7 +32,8 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sorare')
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -88,7 +89,6 @@ export const sorare: Layer2 = {
         'https://instagram.com/sorare_official/',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -199,4 +199,10 @@ export const sorare: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 }

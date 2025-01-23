@@ -1,4 +1,4 @@
-import { BlockProvider } from '@l2beat/shared'
+import type { BlockProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'

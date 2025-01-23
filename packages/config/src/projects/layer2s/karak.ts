@@ -5,7 +5,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('karak')
 
@@ -33,7 +33,6 @@ export const karak: Layer2 = opStackL2({
         'https://t.me/Karak_Network',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.karak.network/',
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction

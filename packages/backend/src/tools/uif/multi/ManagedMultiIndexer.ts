@@ -2,9 +2,12 @@ import { createIndexerId } from '@l2beat/backend-shared'
 import { assert } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { assertUniqueConfigId, assertUniqueIndexerId } from '../ids'
-import { ConfigurationsDiff, mergeConfigurations } from './mergeConfigurations'
-import { toRanges } from './toRanges'
 import {
+  type ConfigurationsDiff,
+  mergeConfigurations,
+} from './mergeConfigurations'
+import { toRanges } from './toRanges'
+import type {
   Configuration,
   ConfigurationRange,
   ManagedMultiIndexerOptions,

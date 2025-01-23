@@ -3,7 +3,7 @@ import {
   encodeAbiParameters,
   parseAbiParameters,
 } from 'viem'
-import { DecodedResult } from './DecodedResult'
+import type { DecodedResult } from './DecodedResult'
 import { mix } from './mix'
 
 export function decodeParameters(

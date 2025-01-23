@@ -1,5 +1,5 @@
-import { AssessCount } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { AssessCount } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 
 interface SimpleActivityTransactionConfig<T extends string> {
   type: T

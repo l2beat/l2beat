@@ -1,5 +1,5 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { Permission } from '../config/RawDiscoveryConfig'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import type { Permission } from '../config/RawDiscoveryConfig'
 
 // NOTE(radomski): The entire permission network is modeled as a graph. The
 // graph contains nodes and edges. Nodes are contracts and edges are "actions"

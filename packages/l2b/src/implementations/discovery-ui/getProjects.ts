@@ -1,5 +1,5 @@
-import { ConfigReader } from '@l2beat/discovery'
-import { ApiProjectsResponse } from './types'
+import type { ConfigReader } from '@l2beat/discovery'
+import type { ApiProjectsResponse } from './types'
 
 export function getProjects(configReader: ConfigReader) {
   const chains = configReader.readAllChains()

@@ -1,16 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
 import { isVerified } from '../../verification/isVerified'
-import { Bridge, bridges } from '../bridges'
-import { DaLayer, daLayers } from '../da-beat'
-import { Layer2, ProjectLivenessInfo, layer2s } from '../layer2s'
-import { Layer3, layer3s } from '../layer3s'
+import { type Bridge, bridges } from '../bridges'
+import { type DaLayer, daLayers } from '../da-beat'
+import { type Layer2, type ProjectLivenessInfo, layer2s } from '../layer2s'
+import { type Layer3, layer3s } from '../layer3s'
 import { refactored } from '../refactored'
-import {
-  BaseProject,
-  ProjectActivityInfo,
-  ProjectCostsInfo,
-} from './BaseProject'
+import type { BaseProject, ProjectCostsInfo } from './BaseProject'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -78,7 +74,6 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     },
     livenessInfo: getLivenessInfo(p),
     costsInfo: getCostsInfo(p),
-    activityInfo: getActivityInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
     // tags
@@ -86,6 +81,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     isArchived: p.isArchived ? true : undefined,
     isUpcoming: p.isUpcoming ? true : undefined,
+    hasActivity: p.config.transactionApi ? true : undefined,
   }
 }
 
@@ -110,12 +106,6 @@ function getCostsInfo(p: Layer2 | Layer3): ProjectCostsInfo | undefined {
     return {
       warning: p.display.costsWarning,
     }
-  }
-}
-
-function getActivityInfo(p: Layer2 | Layer3): ProjectActivityInfo | undefined {
-  if (p.config.transactionApi) {
-    return { dataSource: p.display.activityDataSource }
   }
 }
 

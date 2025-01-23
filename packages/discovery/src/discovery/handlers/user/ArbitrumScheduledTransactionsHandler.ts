@@ -1,10 +1,10 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { ethers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { IProvider } from '../../provider/IProvider'
-import { Handler, HandlerResult } from '../Handler'
+import type { IProvider } from '../../provider/IProvider'
+import type { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type ArbitrumScheduledTransactionsHandlerDefinition = z.infer<

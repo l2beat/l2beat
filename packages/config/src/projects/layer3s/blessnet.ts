@@ -2,8 +2,9 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 
@@ -32,7 +33,6 @@ export const blessnet: Layer3 = orbitStackL3({
       repositories: ['https://github.com/bless-net'],
       socialMedia: ['https://x.com/blessdotnet'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // nonTemplateEscrows: [ // not deployed
   //   discovery.getEscrowDetails({
@@ -61,4 +61,10 @@ export const blessnet: Layer3 = orbitStackL3({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

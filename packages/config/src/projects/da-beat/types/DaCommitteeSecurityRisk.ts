@@ -1,5 +1,5 @@
-import { Sentiment } from '@l2beat/shared-pure'
-import { DaRiskViewOptions } from './DaRiskView'
+import type { Sentiment } from '@l2beat/shared-pure'
+import type { DaRiskViewOptions } from './DaRiskView'
 
 export type DaCommitteeSecurityRisk =
   | ReturnType<typeof RobustAndDiverseCommittee>

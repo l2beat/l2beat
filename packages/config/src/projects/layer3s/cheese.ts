@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import { Layer3 } from '../layer3s'
+import type { Layer3 } from '../layer3s'
 
 export const cheese: Layer3 = underReviewL3({
   hostChain: ProjectId('arbitrum'),

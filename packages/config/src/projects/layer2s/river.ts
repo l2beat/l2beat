@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('river')
 
@@ -25,7 +25,6 @@ export const river: Layer2 = opStackL2({
       repositories: [],
       socialMedia: ['https://x.com/buildonriver'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.rpc.river.build',

@@ -9,8 +9,7 @@
   "names": {
     "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3": "SophonZkEvm",
     "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": "SophonZkEvmAdmin",
-    "0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig",
-    "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD": "SophonUSDCEscrowMultisig"
+    "0xe4644b6d106A18062344c0A853666bc0B8f052d1": "SophonChainAdminMultisig"
   },
   "sharedModules": {
     "BridgeHub": "shared-zk-stack"

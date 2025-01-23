@@ -1,15 +1,15 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import { uniqBy } from 'lodash'
 import { z } from 'zod'
-import {
+import type {
   Bridge,
   DaBridge,
-  DacBridge,
   Layer2,
   Layer3,
   OnChainDaBridge,
   ScalingProjectContract,
+  StandaloneDacBridge,
 } from '../../src'
 
 export type Project = Layer2 | Layer3 | Bridge
@@ -111,8 +111,8 @@ function getDaBridgeContractsForChain(
 ): AddressOnChain[] {
   const contracts = [bridge]
     .filter(
-      (b): b is OnChainDaBridge | DacBridge =>
-        b.type === 'OnChainBridge' || b.type === 'DAC',
+      (b): b is OnChainDaBridge | StandaloneDacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
     )
     .flatMap((b) => Object.values(b.contracts.addresses))
   const addresses = getUniqueContractsFromList(contracts.flat())
@@ -125,8 +125,8 @@ function getDaBridgePermissionsForChain(
 ): AddressOnChain[] {
   const permissions: AddressOnChain[] = [bridge]
     .filter(
-      (b): b is OnChainDaBridge | DacBridge =>
-        b.type === 'OnChainBridge' || b.type === 'DAC',
+      (b): b is OnChainDaBridge | StandaloneDacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
     )
     .flatMap((b) => {
       if (b.permissions === 'UnderReview') {
@@ -135,10 +135,15 @@ function getDaBridgePermissionsForChain(
 
       return Object.values(b.permissions).flatMap((perChain) => {
         return perChain.flatMap((p) =>
-          p.accounts.map((a) => ({
-            chain: (p.chain ?? b.chain).toString(),
-            address: a.address,
-          })),
+          p.accounts.flatMap((a) => {
+            if (!p.chain) {
+              return []
+            }
+            return {
+              chain: p.chain.toString(),
+              address: a.address,
+            }
+          }),
         )
       })
     })

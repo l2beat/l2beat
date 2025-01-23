@@ -1,11 +1,11 @@
-import {
+import type {
   ContractValue,
   ManualProxyType,
   ProxyDetails,
 } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { IProvider } from '../provider/IProvider'
+import type { IProvider } from '../provider/IProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectAxelarProxy as getAxelarProxy } from './auto/AxelarProxy'
 import { detectBeaconProxy } from './auto/BeaconProxy'

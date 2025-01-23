@@ -1,4 +1,4 @@
-import { Database, L2CostPriceRecord } from '@l2beat/database'
+import type { Database, L2CostPriceRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import {

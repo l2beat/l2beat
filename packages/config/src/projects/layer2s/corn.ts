@@ -2,8 +2,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('corn')
 
@@ -36,7 +37,6 @@ export const corn: Layer2 = orbitStackL2({
         'https://blog.usecorn.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.corn-rpc.com',
   nonTemplateEscrows: [
@@ -107,4 +107,10 @@ export const corn: Layer2 = orbitStackL2({
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1737096804),
+    },
+    discovery,
+  }),
 })

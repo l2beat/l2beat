@@ -1,4 +1,4 @@
-import { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
+import type { BlockIndexerClient, BlockProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BlockTimestampProvider } from './BlockTimestampProvider'

@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('race')
 
@@ -35,7 +35,6 @@ export const race: Layer2 = opStackL2({
         'https://linkedin.com/company/raceecosystem',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://racemainnet.io',
   isNodeAvailable: true,

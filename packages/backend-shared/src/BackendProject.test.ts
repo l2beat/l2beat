@@ -1,5 +1,5 @@
-import { ScalingProjectEscrow, layer2s } from '@l2beat/config'
-import {
+import { type ScalingProjectEscrow, layer2s } from '@l2beat/config'
+import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxTransferConfig,
@@ -10,7 +10,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  Token,
+  type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'

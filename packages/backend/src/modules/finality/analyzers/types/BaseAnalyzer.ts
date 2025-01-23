@@ -1,16 +1,16 @@
 import {
   assert,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  UnixTime,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+  type UnixTime,
   slidingWindow,
 } from '@l2beat/shared-pure'
 import { chunk } from 'lodash'
 
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 
-import { RpcClient } from '@l2beat/shared'
+import type { RpcClient } from '@l2beat/shared'
 export type Transaction = {
   txHash: string
   timestamp: UnixTime

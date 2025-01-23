@@ -1,38 +1,32 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
-import {
+import type { UnixTime } from '@l2beat/shared-pure'
+import type {
   ScalingProjectPermission,
   ScalingProjectTechnologyChoice,
 } from '../../../common'
-import { DaBridgeContracts } from './DaBridgeContracts'
-import { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
-import { DaLinks } from './DaLinks'
-import { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
-import { DaTechnology } from './DaTechnology'
-import { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
-import { DacTransactionDataType } from './DacTransactionDataType'
-import { EthereumDaBridgeRisks } from './EthereumDaRisks'
-import { UsedInProject } from './UsedInProject'
+import type { DaBridgeContracts } from './DaBridgeContracts'
+import type { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
+import type { DaLinks } from './DaLinks'
+import type { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
+import type { DaTechnology } from './DaTechnology'
+import type { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
+import type { DacTransactionDataType } from './DacTransactionDataType'
+import type { EthereumDaBridgeRisks } from './EthereumDaRisks'
+import type { UsedInProject } from './UsedInProject'
 
 export type DaBridge =
   | NoDaBridge
   | OnChainDaBridge
-  | DacBridge
+  | StandaloneDacBridge
   | EnshrinedBridge
 
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
-  /**
-   * Data about related permissions - preferably from discovery.
-   * It makes less sense to have permissions for NoBridge, but it's here in case we need to
-   * add some complementary information.
-   */
-  permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
-  /**
-   * Data about the contracts used in the bridge - preferably from discovery.
-   * It makes less sense to have contracts for NoBridge, but it's here in case we need to
-   * add some complementary information.
-   */
-  contracts: DaBridgeContracts
+  /** Risks related to given data availability bridge. */
+  risks: DaBridgeRisks
+}
+
+export type NoDacBridge = Omit<CommonDaBridge, 'id' | 'display' | 'usedIn'> & {
+  type: 'NoDacBridge'
   /** Risks related to given data availability bridge. */
   risks: DaBridgeRisks
 }
@@ -45,8 +39,6 @@ export type EnshrinedBridge = CommonDaBridge & {
 
 export type OnChainDaBridge = CommonDaBridge & {
   type: 'OnChainBridge'
-  /** The chain name the data availability bridge lives on. */
-  chain: string
   /** Data about related permissions - preferably from discovery. */
   permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Data about the validation type of the bridge */
@@ -59,10 +51,7 @@ export type OnChainDaBridge = CommonDaBridge & {
   risks: DaBridgeRisks
 }
 
-export type DacBridge = CommonDaBridge & {
-  type: 'DAC'
-  /** The chain the DAC attests data on. */
-  chain: ChainId
+type CommonDacBridge = {
   /**  Total members count.  */
   membersCount: number
   /** Data about the DAC members. */
@@ -78,13 +67,36 @@ export type DacBridge = CommonDaBridge & {
   hideMembers?: boolean
   /** The type of data. */
   transactionDataType: DacTransactionDataType
-  /** Data about related permissions - preferably from discovery. */
-  permissions: Record<string, ScalingProjectPermission[]>
-  /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts: DaBridgeContracts
   /** Risks related to given data availability bridge. */
   risks: DaBridgeRisks
 }
+
+// Used in DacDaLayers integrated into projects
+export type IntegratedDacBridge = Omit<
+  CommonDaBridge,
+  'id' | 'display' | 'usedIn'
+> &
+  CommonDacBridge & {
+    type: 'IntegratedDacBridge'
+  }
+
+// Used in DaServices
+export type StandaloneDacBridge = CommonDaBridge &
+  CommonDacBridge & {
+    type: 'StandaloneDacBridge'
+    /**
+     * Data about related permissions - preferably from discovery.
+     * It makes less sense to have permissions for NoBridge, but it's here in case we need to
+     * add some complementary information.
+     */
+    permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+    /**
+     * Data about the contracts used in the bridge - preferably from discovery.
+     * It makes less sense to have contracts for NoBridge, but it's here in case we need to
+     * add some complementary information.
+     */
+    contracts: DaBridgeContracts
+  }
 
 type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */

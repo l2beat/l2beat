@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x7a36e6d5d5f232b9a210ec340cdc53833f64658d
+
+# Diff at Wed, 22 Jan 2025 22:51:41 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@af6bc3140c90ba5793649c2811c2989f199e73e5 block: 21629240
+- current block number: 21683128
+
+## Description
+
+Ink is now Stage 1.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (0x5d66C1782664115999C47c9fA5cd031f495D3e4F) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        "FaultDisputeGame"
+      values.respectedGameType:
+-        1
++        0
+      values.respectedGameTypeUpdatedAt:
+-        1733498411
++        1737576635
+    }
+```
+
+Generated with discovered.json: 0x7fbbe7990799ca381049246d6e54e8f8710ac1b3
+
+# Diff at Tue, 21 Jan 2025 11:19:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@0da84acc479f34212f2c8133869a3eef33d46ecc block: 21629240
+- current block number: 21629240
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629240 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]}]
+      issuedPermissions:
++        [{"permission":"configure","to":"0x24424336F04440b1c28685a38303aC33C9D14a25","description":"can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.","via":[]}]
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","description":"can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d."}]
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","description":"takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","condition":"the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1.via.0.condition:
++        "not revoked by the Security Council"
+      issuedPermissions.0.to:
+-        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+      issuedPermissions.0.via.2:
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}
+      issuedPermissions.0.via.1.address:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+      issuedPermissions.0.via.0.address:
+-        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+      issuedPermissions.0.via.0.condition:
++        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.0.via.1.condition:
++        "not revoked by the Security Council"
+      directlyReceivedPermissions.0.condition:
++        "not revoked by the Security Council"
+    }
+```
+
 Generated with discovered.json: 0x2b04f0a4a4f2e710fd4cd572392f71de21eb7221
 
 # Diff at Mon, 20 Jan 2025 11:09:37 GMT:

@@ -1,6 +1,6 @@
-import { Block, json } from '@l2beat/shared-pure'
-import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { BlockClient } from '../types'
+import type { Block, json } from '@l2beat/shared-pure'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { BlockClient } from '../types'
 import { DegateBlock, DegateError, LoopringBlock, LoopringError } from './types'
 
 interface Dependencies extends ClientCoreDependencies {

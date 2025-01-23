@@ -1,4 +1,7 @@
-import { ScalingProjectReference, ScalingProjectRisk } from '../../../common'
+import type {
+  ScalingProjectReference,
+  ScalingProjectRisk,
+} from '../../../common'
 
 export interface DaTechnology {
   /** Description of technology used by the data availability layer. [MARKDOWN] */

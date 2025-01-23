@@ -1,8 +1,8 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
-import { DaBridge } from '../../../types/DaBridge'
+import type { DaBridge } from '../../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 import { DacTransactionDataType } from '../../../types/DacTransactionDataType'
@@ -13,8 +13,7 @@ const updateInterval = 12 // hours
 export const HotShotLightClient = {
   id: 'HotShotLightClient',
   createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
-  type: 'DAC',
-  chain: ChainId.ETHEREUM,
+  type: 'StandaloneDacBridge',
   display: {
     name: 'HotShot Light Client',
     slug: 'hotshot',

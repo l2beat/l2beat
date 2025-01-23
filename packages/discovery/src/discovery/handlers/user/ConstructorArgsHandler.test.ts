@@ -1,8 +1,8 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { BigNumber, ethers, providers } from 'ethers'
+import { BigNumber, ethers, type providers } from 'ethers'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import {
   ConstructorArgsHandler,
   decodeConstructorArgs,

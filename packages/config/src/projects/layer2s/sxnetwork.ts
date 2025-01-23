@@ -3,8 +3,9 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
 
@@ -37,7 +38,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
         'https://discord.com/invite/sxnetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('ERC20Bridge'),
@@ -69,4 +69,10 @@ export const sxnetwork: Layer2 = orbitStackL2({
         "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -6,53 +6,55 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  type DataAvailabilityBridge,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectStateDerivation,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ScalingProjectCategory,
+  type ScalingProjectContract,
+  type ScalingProjectDisplay,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRiskView,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectStateDerivation,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
-import { ChainConfig } from '../../../common/ChainConfig'
+import type { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
 import {
   formatChallengePeriod,
   formatDelay,
 } from '../../../common/formatDelays'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
-import { Badge, BadgeId, badges } from '../../badges'
-import { type Layer3, type Layer3Display } from '../../layer3s/types'
+import { Badge, type BadgeId, badges } from '../../badges'
+import type { DacDaLayer } from '../../da-beat/types/DaLayer'
+import type { Layer3 } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { StageConfig } from '../common/stages/types'
-import {
-  type Layer2,
-  type Layer2Display,
+import type { StageConfig } from '../common/stages/types'
+import type {
+  Layer2,
+  Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
@@ -104,6 +106,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
+  dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
@@ -156,8 +159,8 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer3Display['category']
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectCategory
   }
   stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
@@ -397,6 +400,7 @@ function opStackCommon(
       },
     ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
+    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
   }
 }
 

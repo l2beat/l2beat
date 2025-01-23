@@ -16,7 +16,7 @@ export default async function Page() {
     <>
       <MainPageHeader>Archived</MainPageHeader>
       <ScalingFilterContextProvider>
-        <ScalingArchivedTables entries={entries} />
+        <ScalingArchivedTables {...entries} />
       </ScalingFilterContextProvider>
     </>
   )

@@ -16,7 +16,9 @@ import { educhain } from './educhain'
 import { fiefdom } from './fiefdom'
 import { geist } from './geist'
 import { ham } from './ham'
+import { henez } from './henez'
 import { hook } from './hook'
+import { huddle01 } from './huddle01'
 import { hyperliquid } from './hyperliquid'
 import { inevm } from './inevm'
 import { l3x } from './l3x'
@@ -26,6 +28,7 @@ import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
 import { mxc } from './mxc'
+import { onchain } from './onchain'
 import { orb3 } from './orb3'
 import { oursong } from './oursong'
 import { playblock } from './playblock'
@@ -40,10 +43,11 @@ import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
 import { teva } from './teva'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 import { unite } from './unite'
 import { winr } from './winr'
 import { xai } from './xai'
+import { xrone } from './xrone'
 import { zklinknova } from './zklinknova'
 
 export * from './types'
@@ -68,12 +72,15 @@ export const layer3s: Layer3[] = [
   geist,
   inevm,
   ham,
+  henez,
+  huddle01,
   hyperliquid,
   hook,
   rari,
   zklinknova,
   teva,
   xai,
+  onchain,
   orb3,
   popapex,
   popboss,
@@ -95,4 +102,5 @@ export const layer3s: Layer3[] = [
   superposition,
   syndr,
   winr,
+  xrone,
 ]

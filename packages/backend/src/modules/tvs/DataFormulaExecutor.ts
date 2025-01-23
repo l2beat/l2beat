@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { DataStorage } from './DataStorage'
-import { AmountConfig, PriceConfig } from './types'
+import type { UnixTime } from '@l2beat/shared-pure'
+import type { DataStorage } from './DataStorage'
+import type { AmountConfig, PriceConfig } from './types'
 
 export class DataFormulaExecutor {
   constructor(private storage: DataStorage) {}
@@ -18,14 +18,13 @@ export class DataFormulaExecutor {
       }
 
       for (const price of prices) {
-        // TODO: PriceProvider which operates on tickers
         const v = await this.fetchPrice(price, timestamp)
         await this.storage.writePrice(price.id, timestamp, v)
       }
     }
   }
 
-  fetchAmount(_config: AmountConfig, _timestamp: UnixTime): Promise<bigint> {
+  fetchAmount(_config: AmountConfig, _timestamp: UnixTime): Promise<number> {
     throw new Error('Not implemented')
   }
   fetchPrice(_config: PriceConfig, _timestamp: UnixTime): Promise<number> {

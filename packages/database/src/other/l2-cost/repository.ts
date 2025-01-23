@@ -1,7 +1,8 @@
-import { TrackedTxId } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxId } from '@l2beat/shared'
+import type { UnixTime } from '@l2beat/shared-pure'
+import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
-import { L2CostRecord, toRecord, toRow } from './entity'
+import { type L2CostRecord, toRecord, toRow } from './entity'
 import { selectL2Cost } from './select'
 
 export class L2CostRepository extends BaseRepository {
@@ -34,6 +35,29 @@ export class L2CostRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getGasSumByTimeRangeAndConfigId(
+    configIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
+    const query = await this.db
+      .selectFrom('L2Cost')
+      .select((eb) => [
+        'L2Cost.configurationId',
+        eb.fn.sum(sql`"gasUsed" * "gasPrice"`).as('totalCostInWei'),
+      ])
+      .where('configurationId', 'in', configIds)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .groupBy('configurationId')
+      .execute()
+
+    return query.map((r) => ({
+      ...r,
+      totalCostInWei: BigInt(r.totalCostInWei),
+    }))
   }
 
   async deleteFromById(

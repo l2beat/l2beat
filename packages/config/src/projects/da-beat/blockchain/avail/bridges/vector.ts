@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../../../types'
-import { DaBridge } from '../../../types/DaBridge'
+import type { DaBridge } from '../../../types/DaBridge'
 import { DaRelayerFailureRisk } from '../../../types/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../../../types/DaUpgradeabilityRisk'
 
@@ -20,7 +20,6 @@ export const vector = {
   id: 'vector',
   createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
   type: 'OnChainBridge',
-  chain: 'Ethereum',
   display: {
     name: 'Vector',
     slug: 'vector',

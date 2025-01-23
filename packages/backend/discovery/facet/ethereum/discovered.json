@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 21543602,
+  "blockNumber": 21678827,
   "configHash": "0xc703eb652c97d832f8b8ea743952dbb4027ec025f2273d3792291e842f34807c",
   "contracts": [
     {
@@ -10,7 +10,7 @@
       "template": "facet/FacetEtherBridge",
       "sourceHashes": [
         "0x60cd8a11d99e2d3ed98fa2bbd47ef1096acb4bc535c5520343ae45cea6436e7b",
-        "0xc6fc9d901cf59527db2a86ff96ebd61f6a469b56100f1a94498e2f068a91f50b"
+        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "FacetEtherBridge",
@@ -44,7 +44,7 @@
       "sinceTimestamp": 1734701579,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x100524b68fe88035623F1309Bb3Db9b64e924724",
+        "$implementation": "0x68c56f4D88846A4Cdce966d92D92a0636baf40FE",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "eip712Domain": {
@@ -462,7 +462,7 @@
           "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 287,
+        "nonce": 297,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -665,10 +665,10 @@
         "finalizationPeriodSeconds": 12,
         "L2_BLOCK_TIME": 12,
         "l2BlockTime": 12,
-        "latestBlockNumber": 166445,
-        "latestOutputIndex": 22,
-        "nextBlockNumber": 173645,
-        "nextOutputIndex": 23,
+        "latestBlockNumber": 303245,
+        "latestOutputIndex": 41,
+        "nextBlockNumber": 310445,
+        "nextOutputIndex": 42,
         "proposer": "0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3",
         "PROPOSER": "0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3",
         "startingBlockNumber": 845,
@@ -984,30 +984,6 @@
       "function systemConfig() view returns (address)",
       "function version() pure returns (string)"
     ],
-    "0x100524b68fe88035623F1309Bb3Db9b64e924724": [
-      "constructor()",
-      "error FeatureDisabled()",
-      "error InvalidAmount()",
-      "error InvalidInitialization()",
-      "error NotFactory()",
-      "error NotInitializing()",
-      "error ZeroAdminAddress()",
-      "event Initialized(uint64 version)",
-      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
-      "function adminWithdraw(address recipient, uint256 amount)",
-      "function adminWithdrawFCT(address recipient, uint256 amount)",
-      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64 gasLimit) payable",
-      "function deposit() payable",
-      "function donateETH() payable",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getAdmin() view returns (address)",
-      "function getDumbContract() pure returns (address)",
-      "function getSigner() view returns (address)",
-      "function initialize()",
-      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
-      "function setAdmin(address admin)",
-      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
-    ],
     "0x12df0dfDb02cf4FB18d13eA133Ad9C0F9284f267": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
@@ -1083,6 +1059,30 @@
       "function transferOwnership(address newOwner)",
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() pure returns (string)"
+    ],
+    "0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": [
+      "constructor()",
+      "error FeatureDisabled()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error NotFactory()",
+      "error NotInitializing()",
+      "error ZeroAdminAddress()",
+      "event Initialized(uint64 version)",
+      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function adminWithdrawFCT(address recipient, uint256 amount)",
+      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function deposit() payable",
+      "function donateETH() payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getAdmin() view returns (address)",
+      "function getDumbContract() pure returns (address)",
+      "function getSigner() view returns (address)",
+      "function initialize()",
+      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
+      "function setAdmin(address admin)",
+      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
     ],
     "0x77764Bdf2B52C4B2635A73927945541B65DF74E9": [
       "constructor()",

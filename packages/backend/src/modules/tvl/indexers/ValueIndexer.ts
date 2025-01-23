@@ -1,10 +1,10 @@
 import {
-  AmountId,
-  PriceId,
+  type AmountId,
+  type PriceId,
   createAmountId,
   createPriceId,
 } from '@l2beat/backend-shared'
-import {
+import type {
   AmountConfigEntry,
   AssetId,
   PriceConfigEntry,
@@ -12,7 +12,7 @@ import {
 } from '@l2beat/shared-pure'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { getValuesConfigHash } from '../utils/getValuesConfigHash'
-import { ValueIndexerDeps } from './types'
+import type { ValueIndexerDeps } from './types'
 
 export class ValueIndexer extends ManagedChildIndexer {
   private readonly amountConfigs: Map<AmountId, AmountConfigEntry>

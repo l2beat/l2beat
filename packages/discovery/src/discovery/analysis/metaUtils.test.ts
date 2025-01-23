@@ -1,14 +1,14 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
+import type {
   DiscoveryContractField,
   PermissionConfiguration,
 } from '../config/RawDiscoveryConfig'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
-import { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
+import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
-  ContractMeta,
+  type ContractMeta,
   findHighestSeverity,
   getMetaFromUpgradeability,
   getTargetsMeta,

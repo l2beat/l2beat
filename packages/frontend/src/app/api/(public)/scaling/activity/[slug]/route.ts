@@ -45,7 +45,7 @@ const getCachedResponse = cache(
       ? { type: 'all' }
       : { type: 'projects', projectIds: [project.id] }
 
-    const { data } = await getActivityChart(filter, range)
+    const { data } = await getActivityChart(filter, range, false)
 
     const oldestProjectData = data.at(0)
     const latestProjectData = data.at(-1)

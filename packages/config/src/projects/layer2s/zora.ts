@@ -5,7 +5,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
 
@@ -35,7 +35,6 @@ export const zora: Layer2 = opStackL2({
         'https://zora.community',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zora.energy',
   finality: {

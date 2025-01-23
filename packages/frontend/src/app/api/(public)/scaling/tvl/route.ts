@@ -18,6 +18,7 @@ const getCachedResponse = cache(
       range,
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
+      previewRecategorisation: false,
     })
 
     const latestTvlData = data.at(-1)

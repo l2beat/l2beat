@@ -1,4 +1,4 @@
-import { DaRiskViewOptions } from './DaRiskView'
+import type { DaRiskViewOptions } from './DaRiskView'
 
 export type DaFraudDetectionRisk =
   | typeof NoFraudDetection

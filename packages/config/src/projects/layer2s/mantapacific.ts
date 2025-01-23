@@ -7,7 +7,7 @@ import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantapacific')
 
@@ -39,7 +39,6 @@ export const mantapacific: Layer2 = opStackL2({
         'https://medium.com/@mantanetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://pacific-rpc.manta.network/http',
   transactionApi: {

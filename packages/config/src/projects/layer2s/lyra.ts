@@ -6,7 +6,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lyra')
 
@@ -42,7 +42,6 @@ export const lyra: Layer2 = opStackL2({
         'https://discord.gg/Derive',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),

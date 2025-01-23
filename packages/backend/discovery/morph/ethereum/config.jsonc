@@ -10,16 +10,17 @@
     "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": "MorphRollup",
     "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": "L1MessageQueueWithGasPriceOracle",
     "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304": "L1CrossDomainMessenger",
-    "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6": "MultipleVersionRollupVerifier",
     "0x0Dc417F8AF88388737c5053FF73f345f080543F7": "L1Staking",
-    "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "MorphAdminMSig",
+    "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "MorphOpsMultisig",
+    "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "MorphUpgradeMultisig",
     "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "L1GatewayRouter",
     "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin",
     "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": "EnforcedTxGateway",
     "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist",
     "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": "L1StandardERC20Gateway",
     "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": "L1ETHGateway",
-    "0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e": "ZkEvmVerifierV1"
+    "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": "MultipleVersionRollupVerifier",
+    "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": "ZkEvmVerifierV1"
   },
   "overrides": {
     "Whitelist": {

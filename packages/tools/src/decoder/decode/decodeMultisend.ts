@@ -1,5 +1,5 @@
 import { BinaryReader } from './BinaryReader'
-import { DecodedResult, Value } from './DecodedResult'
+import type { DecodedResult, Value } from './DecodedResult'
 
 export function decodeMultisend(data: `0x${string}`): DecodedResult {
   const reader = new BinaryReader(data)

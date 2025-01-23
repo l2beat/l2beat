@@ -1,10 +1,10 @@
 import path from 'path'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import { LocalStorage } from './LocalStorage'
 import { ValueService } from './ValueService'
 import { extractPricesAndAmounts } from './mapConfig'
-import { TokenValue, TvsConfig } from './types'
+import type { TokenValue, TvsConfig } from './types'
 
 export class LocalExecutor {
   private readonly dataFormulaExecutor: DataFormulaExecutor

@@ -1,7 +1,7 @@
 {
   "name": "soneium",
   "chain": "ethereum",
-  "blockNumber": 21637001,
+  "blockNumber": 21679918,
   "configHash": "0x1cd09cce644863134bc914a161bfb4483f4b7055e8755c206fafac96b2181c9a",
   "contracts": [
     {
@@ -12,14 +12,12 @@
         "0x998654cb64c7fc216505bdb3322b20e7d7c95704005228ad1f878bc631c4af8d"
       ],
       "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
-      "receivedPermissions": [
+      "issuedPermissions": [
         {
-          "permission": "guard",
-          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
-          "via": [
-            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" }
-          ]
+          "permission": "configure",
+          "to": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+          "via": []
         }
       ],
       "directlyReceivedPermissions": [
@@ -92,6 +90,13 @@
       "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
       "sourceHashes": [
         "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d."
+        }
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -234,18 +239,18 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C",
-          "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917",
-          "0x83cC8195856b0463dEd5f052021009b7985FDa2C",
-          "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb",
-          "0x48FF760E582c3740336656349684b4FD4c6ED88F"
+          "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E",
+          "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B",
+          "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452",
+          "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a",
+          "0xba1a565d2bF6D27F451a459308f423219478c5cB"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0xfec9c20e9a1f1dc2de8e49ee266be73bafbca115021f1de122ef95419b35297d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 2,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -280,7 +285,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 350,
+        "gameCount": 491,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x42D15f045159Ce4adE9EDC7da5704eF36056c936",
@@ -290,7 +295,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 350,
+        "permissionedGamesTotal": 491,
         "version": "1.0.0"
       }
     },
@@ -595,6 +600,28 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
+            {
+              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "description": "takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+          "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
       "values": {
@@ -614,7 +641,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -637,7 +664,7 @@
           "via": [{ "address": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a" }]
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1733134751,
       "values": {
         "$admin": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
@@ -657,7 +684,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21636982
+          "prevBlockNum": 21679881
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -750,8 +777,12 @@
       "issuedPermissions": [
         {
           "permission": "guard",
-          "to": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
           "via": [
+            {
+              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            },
             { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
             { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
           ]
@@ -760,7 +791,10 @@
           "permission": "guard",
           "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
           "via": [
-            { "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B" },
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "not revoked by the Security Council"
+            },
             { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
           ]
         },
@@ -859,14 +893,18 @@
           "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "via": [
             { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
-            { "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B" }
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "not revoked by the Security Council"
+            }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+          "from": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+          "condition": "not revoked by the Security Council"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -941,7 +979,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292627761",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629415",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1057,7 +1095,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1192,13 +1230,11 @@
     { "address": "0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e" },
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
     { "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8" },
-    { "address": "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
-    { "address": "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x400c164C4a8cA84385B70EEd6eB03ea847c8E1b8" },
+    { "address": "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B" },
     { "address": "0x4665374939642965EfD8357D4568D2A77f677429" },
-    { "address": "0x48FF760E582c3740336656349684b4FD4c6ED88F" },
     { "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     { "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa" },
@@ -1217,16 +1253,18 @@
     { "address": "0x7c2Bd59ee2a2C7391c9A240132f26071e9546262" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
-    { "address": "0x83cC8195856b0463dEd5f052021009b7985FDa2C" },
     { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },
+    { "address": "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5" },
+    { "address": "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452" },
+    { "address": "0xba1a565d2bF6D27F451a459308f423219478c5cB" },
     { "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8" },
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
+    { "address": "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a" },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
-    { "address": "0xE895076cD050F1f042d1040E47b5929bE989E514" },
-    { "address": "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917" }
+    { "address": "0xE895076cD050F1f042d1040E47b5929bE989E514" }
   ],
   "abis": {
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
@@ -2092,8 +2130,8 @@
     "circle/L1OpUSDCBridgeAdapter": "0xecc0be82fd86c444583a1243274c3c493d9b735e34ce73719d9d0ca8f656454b",
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "gnosisSafeModules/DeputyGuardianModule": "0x7cc9a662c9f3517c8d9db95c9e4713c4abedb0463958168f4cf859d17a75bfb8",
-    "gnosisSafeModules/LivenessModule": "0x91a59048925774d9772acb71278d4dd0cfc6dece27e0275369500b16d7e67839",
+    "gnosisSafeModules/DeputyGuardianModule": "0x7ce78296046de0d94cbda05ffa1f3311f9c435f7a18e18d37cd3b7d74dd524cf",
+    "gnosisSafeModules/LivenessModule": "0xb959673ecf0e7d14b47985f2b9bf13d0c0da48abb41a72ae313bdad79e2c7adc",
     "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
     "opstack/AnchorStateRegistry": "0xc49d0781313cac8ad221802fc1b8ac9224bef9757dc96c036f450e192b61b06f",
     "opstack/DelayedWETH": "0xe73611b895c409ce46b367e3e18f887e7e5978a01f6f4bbb6e43ec21e3eaf7e4",
@@ -2103,7 +2141,7 @@
     "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
     "opstack/MIPS": "0xf864ac3fea78514d3b30e3049c38c5a3f76399f6e436bf16a2258cd0bbc8e523",
     "opstack/OptimismMintableERC20Factory": "0x64cb1472d54c0965d50a3c62611a8f94c2d2e391d563c34811ec883332ea32bc",
-    "opstack/OptimismPortal2": "0x9fe0f63bd7654e2cf92eaa5a9f2d7f8b1279889a4089fbd6074d2bf5149fe736",
+    "opstack/OptimismPortal2": "0xed5050da4c9a6cb7b21374a009fb0e56013844de684666e965970fc6b15dd0b6",
     "opstack/PermissionedDisputeGame": "0x36a741a0ca843da26fc3abda9752ca8c7959bfb49243bf2d486505307ceb0eee",
     "opstack/PreimageOracle": "0x2ae202df56f28d71967553e58704d1791626575b9429822ff6aed98a1623e84d",
     "opstack/SuperchainConfig": "0xcd0f87f8e22f1ec91a0e265660ba0f14e8d1f03cc58cf6b5c3a4f522406b6b05",

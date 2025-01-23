@@ -1,4 +1,4 @@
-import {
+import type {
   CoingeckoId,
   EthereumAddress,
   ProjectId,
@@ -7,14 +7,15 @@ import {
 
 export type Operator = 'sum' | 'diff'
 
-export interface Formula {
+export interface CalculationFormula {
+  type: 'calculation'
   operator: Operator
-  arguments: ValueFormula[]
+  arguments: (CalculationFormula | ValueFormula)[]
 }
 
 export type ValueFormula = {
+  type: 'value'
   amount: AmountFormula
-  // token ticker
   ticker: string
 }
 
@@ -47,7 +48,6 @@ export interface TotalSupplyAmountFormula {
 
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
-  // token ticker
   ticker: string
 }
 
@@ -71,13 +71,13 @@ export type AmountConfig =
 
 // token deployed to single chain
 export interface Token {
-  id: string
-  ticker: string
+  id: string // chain:address, will be used to index token value in the table
+  ticker: string // arbitrary set by us, there are symbol duplicates e.g. GAME
   amount: AmountFormula
   // we need this formula to handle relations between tokens on the same chain
-  valueForProject?: Formula
+  valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)
-  valueForTotal?: Formula
+  valueForTotal?: CalculationFormula | ValueFormula
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
   category: 'ether' | 'stablecoin' | 'other'
@@ -118,8 +118,8 @@ export type PriceConfig = {
 export interface TokenValue {
   tokenId: string
   projectId: ProjectId
-  amount: bigint
+  amount: number
   value: number
-  valueForProject?: number
-  valueForTotal?: number
+  valueForProject: number
+  valueForTotal: number
 }

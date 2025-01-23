@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 export const superposition: Layer3 = underReviewL3({
   id: 'superposition',
@@ -24,7 +24,6 @@ export const superposition: Layer3 = underReviewL3({
       repositories: [],
       socialMedia: ['https://x.com/Superpositionso'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.superposition.so',
   escrows: [

@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('superlumio')
 
@@ -29,7 +29,6 @@ export const superlumio: Layer2 = opStackL2({
         'https://discord.com/invite/44QgPFHYqs',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.lumio.io',
   genesisTimestamp: new UnixTime(1708984633),

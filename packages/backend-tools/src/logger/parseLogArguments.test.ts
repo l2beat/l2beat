@@ -1,6 +1,6 @@
 import { expect, formatCompact } from 'earl'
 
-import { ParsedLogArguments, parseLogArguments } from './parseLogArguments'
+import { type ParsedLogArguments, parseLogArguments } from './parseLogArguments'
 
 describe(parseLogArguments.name, () => {
   const patterns: [unknown[], ParsedLogArguments][] = [

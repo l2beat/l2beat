@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { DiscoveryDiff } from './diffDiscovery'
+import type { DiscoveryDiff } from './diffDiscovery'
 import {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,

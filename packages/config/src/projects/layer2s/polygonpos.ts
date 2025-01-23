@@ -15,7 +15,7 @@ import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -70,7 +70,6 @@ export const polygonpos: Layer2 = {
         'https://instagram.com/0xpolygon/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     description:
       'Polygon PoS is an EVM-compatible, proof of stake sidechain for Ethereum, planning to become a Validium with a state validating bridge. The bridge is currently validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
   },

@@ -1,4 +1,9 @@
-import { assert, Bytes, EthereumAddress, HEX_REGEX } from '@l2beat/shared-pure'
+import {
+  assert,
+  type Bytes,
+  type EthereumAddress,
+  HEX_REGEX,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export const Quantity = {

@@ -1,4 +1,4 @@
-import { BlockTimestamp } from '../../kysely/generated/types'
+import type { BlockTimestamp } from '../../kysely/generated/types'
 
 export const selectBlockTimestamp = [
   'blockNumber',

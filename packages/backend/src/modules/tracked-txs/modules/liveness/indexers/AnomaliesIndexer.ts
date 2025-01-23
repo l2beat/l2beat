@@ -1,23 +1,23 @@
-import { BackendProject } from '@l2beat/backend-shared'
-import { AnomalyRecord, Database } from '@l2beat/database'
+import type { BackendProject } from '@l2beat/backend-shared'
+import type { AnomalyRecord, Database } from '@l2beat/database'
 import {
   assert,
-  ProjectId,
-  TrackedTxsConfigSubtype,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
   UnixTime,
   clampRangeToDay,
   notUndefined,
 } from '@l2beat/shared-pure'
 import {
   ManagedChildIndexer,
-  ManagedChildIndexerOptions,
+  type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
 import {
-  LivenessRecordWithConfig,
+  type LivenessRecordWithConfig,
   LivenessWithConfigService,
 } from '../services/LivenessWithConfigService'
 import { RunningStatistics } from '../utils/RollingVariance'
-import { Interval, calculateIntervals } from '../utils/calculateIntervals'
+import { type Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 

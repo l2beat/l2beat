@@ -1,7 +1,7 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 25080463,
+  "blockNumber": 25417259,
   "configHash": "0xa4213ae890a466f99e197399b4667db20d364d2b861a883b4c34710211258f5c",
   "contracts": [
     {
@@ -167,7 +167,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 32757,
+        "batchCount": 32953,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xc98A32DdD1b30B3788670C9992f3B18EF83Da491"],
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -199,7 +199,7 @@
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 148373,
+        "totalDelayedMessagesRead": 148395,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -396,7 +396,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -550,12 +550,12 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2356,
+        "firstUnresolvedNode": 2541,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "lastStakeBlock": 23492774,
-        "latestConfirmed": 2355,
-        "latestNodeCreated": 2488,
+        "latestConfirmed": 2540,
+        "latestNodeCreated": 2673,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -766,12 +766,12 @@
           "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
           "0xDb8E759859058952c34953c8469f464109826e52"
         ],
-        "delayedMessageCount": 148373,
+        "delayedMessageCount": 148395,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 32757,
-        "sequencerReportedSubMessageCount": 25244361
+        "sequencerMessageCount": 32953,
+        "sequencerReportedSubMessageCount": 25307572
       }
     },
     {

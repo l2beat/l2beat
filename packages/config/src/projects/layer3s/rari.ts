@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
@@ -34,7 +34,6 @@ export const rari: Layer3 = orbitStackL3({
       repositories: ['https://github.com/OffchainLabs/nitro'],
       socialMedia: ['https://twitter.com/RariChain'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
   nonTemplateContracts: [

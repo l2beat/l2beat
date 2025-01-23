@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { FileContent } from './ParsedFilesManager'
+import type { FileContent } from './ParsedFilesManager'
 import { flattenStartingFrom } from './flatten'
 
 describe('flatten', () => {

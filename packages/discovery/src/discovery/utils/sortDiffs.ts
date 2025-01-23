@@ -1,4 +1,4 @@
-import { FieldDiff } from '../output/diffContracts'
+import type { FieldDiff } from '../output/diffContracts'
 
 const severityAsNumber = {
   HIGH: 3,

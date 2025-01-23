@@ -4,7 +4,7 @@ import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import config from './multichain-config.json'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('multichain')
 

@@ -3,8 +3,8 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -90,7 +90,6 @@ export const zksyncera: Layer2 = zkStackL2({
       ],
       rollupCodes: 'https://rollup.codes/zksync-era',
     },
-    activityDataSource: 'Blockchain RPC',
   },
   diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {

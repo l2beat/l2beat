@@ -2,8 +2,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from '../layer3s'
+import type { Layer3 } from '../layer3s'
 
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
@@ -34,7 +35,6 @@ export const winr: Layer3 = orbitStackL3({
       repositories: [],
       socialMedia: ['https://x.com/WINRProtocol'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.winr.games',
   associatedTokens: ['WINR'],
@@ -164,4 +164,10 @@ export const winr: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   discoveryDrivenData: true,
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

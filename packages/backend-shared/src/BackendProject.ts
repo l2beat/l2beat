@@ -1,22 +1,22 @@
 import {
-  Bridge,
-  Layer2,
-  Layer2FinalityConfig,
-  Layer2LivenessConfig,
-  Layer2TxConfig,
-  Layer3,
-  ScalingProjectEscrow,
-  ScalingProjectTransactionApi,
-  SharedEscrow,
+  type Bridge,
+  type Layer2,
+  type Layer2FinalityConfig,
+  type Layer2LivenessConfig,
+  type Layer2TxConfig,
+  type Layer3,
+  type ScalingProjectEscrow,
+  type ScalingProjectTransactionApi,
+  type SharedEscrow,
   tokenList,
 } from '@l2beat/config'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  TrackedTxConfigEntry,
+  type TrackedTxConfigEntry,
   createTrackedTxId,
 } from '@l2beat/shared'
-import {
+import type {
   EthereumAddress,
   ProjectId,
   Token,

@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('optopia')
 
@@ -28,7 +28,6 @@ export const optopia: Layer2 = opStackL2({
         'https://mirror.xyz/0x384F32e132501C9C3361C0495841715585164d33',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['OPAI'],
   genesisTimestamp: new UnixTime(1715333977),

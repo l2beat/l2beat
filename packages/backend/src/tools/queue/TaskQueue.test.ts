@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EventTracker } from '@l2beat/shared'
+import type { EventTracker } from '@l2beat/shared'
 import { Retries } from '@l2beat/shared-pure'
-import { InstalledClock, install } from '@sinonjs/fake-timers'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { TaskQueue } from './TaskQueue'

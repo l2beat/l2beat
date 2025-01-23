@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { toRanges } from './toRanges'
-import { Configuration, SavedConfiguration } from './types'
+import type { Configuration, SavedConfiguration } from './types'
 
 describe(toRanges.name, () => {
   it('empty', () => {

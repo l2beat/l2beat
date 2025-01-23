@@ -9,8 +9,8 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sophon')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -47,7 +47,6 @@ export const sophon: Layer2 = zkStackL2({
         'https://discord.gg/sophonhub',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['SOPH'],
   rpcUrl: 'https://rpc.sophon.xyz/',
@@ -149,10 +148,6 @@ export const sophon: Layer2 = zkStackL2({
       ],
       description: 'Can set the conversion factor for SOPH deposits to Sophon.',
     },
-    ...discovery.getMultisigPermission(
-      'SophonUSDCEscrowMultisig',
-      'Can upgrade the implementation of the external USDC escrow and potentially steal all funds locked therein.',
-    ),
   ],
   milestones: [
     {

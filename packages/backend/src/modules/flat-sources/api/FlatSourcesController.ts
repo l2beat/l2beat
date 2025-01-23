@@ -1,5 +1,8 @@
-import { Database } from '@l2beat/database'
-import { ChainConverter, FlatSourcesApiResponse } from '@l2beat/shared-pure'
+import type { Database } from '@l2beat/database'
+import type {
+  ChainConverter,
+  FlatSourcesApiResponse,
+} from '@l2beat/shared-pure'
 
 export class FlatSourcesController {
   constructor(

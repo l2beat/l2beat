@@ -1,4 +1,4 @@
-import { EthereumDaLayer } from '../../types/DaLayer'
+import type { EthereumDaLayer } from '../../types/DaLayer'
 import { EthereumDaLayerRisks } from '../../types/EthereumDaRisks'
 import { enshrinedBridge } from './bridges/enshrinedBridge'
 
@@ -110,6 +110,10 @@ export const ethereum = {
     blockTime: 12, // seconds per slot
     consensusFinality: 768, // seconds, two epochs of 32 slots each
     unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
+  },
+  throughput: {
+    size: 750, // 0.75 MB
+    frequency: 12, // 12 seconds
   },
   pruningWindow: 86400 * 18, // 18 days in seconds
   risks: EthereumDaLayerRisks.SelfVerify,

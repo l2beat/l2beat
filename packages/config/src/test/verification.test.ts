@@ -1,5 +1,8 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import type {
+  ContractParameters,
+  DiscoveryOutput,
+} from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { bridges, daLayers, layer2s, layer3s } from '../projects'

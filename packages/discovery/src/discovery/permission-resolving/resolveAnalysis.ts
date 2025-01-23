@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { Analysis } from '../analysis/AddressAnalyzer'
+import type { Analysis } from '../analysis/AddressAnalyzer'
 import {
-  Node,
-  ResolvedPermission,
+  type Node,
+  type ResolvedPermission,
   resolvePermissions,
 } from './resolvePermissions'
 

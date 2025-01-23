@@ -2,7 +2,7 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { assert } from '@l2beat/shared-pure'
 import { hexStrFromByteArr } from '../../utils/byteArrFromHexStr'
-import { L2Block } from '../types/BaseAnalyzer'
+import type { L2Block } from '../types/BaseAnalyzer'
 import { decompress } from './lzss'
 import { unpack } from './utils'
 

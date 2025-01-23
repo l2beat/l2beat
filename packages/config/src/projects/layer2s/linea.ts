@@ -20,7 +20,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  ScalingProjectPermissionedAccount,
+  type ScalingProjectPermissionedAccount,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
@@ -30,7 +30,7 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('linea')
 
@@ -131,7 +131,6 @@ export const linea: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/linea',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',

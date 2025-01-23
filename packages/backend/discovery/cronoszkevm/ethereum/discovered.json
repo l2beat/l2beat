@@ -5,6 +5,18 @@
   "configHash": "0xb9707df3aa255e90f3b4acd84a9ff8dffae09607c1c86bb89b01cbf7488a377b",
   "contracts": [
     {
+      "name": "Verifier",
+      "address": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+      "sourceHashes": [
+        "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
+      ],
+      "sinceTimestamp": 1730327279,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
+      }
+    },
+    {
       "name": "CronosChainAdminMultisig",
       "address": "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
       "template": "GnosisSafe",
@@ -88,26 +100,14 @@
       "derivedName": "CronosZkEVMAdmin"
     },
     {
-      "name": "Verifier",
-      "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
-      "sourceHashes": [
-        "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235"
-      ],
-      "sinceTimestamp": 1717507391,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
-      }
-    },
-    {
       "name": "CronosZkEvm",
       "address": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
-        "0x9ae32beaa5dc29055f75d3cd08fbec35ed3eee3e2ff35de263a78f7d63c610f9",
-        "0xd272def5b4e3f0a68e3019d7d40675ca6d3e3fc35500e9aafe864bce8c697de2",
-        "0x419cee160f60572fc9189007ec7c1e3c13e54d80bf1e78f837bc8fa001519685",
-        "0xe521f6bd6250a2c92af323768ad8a2274cc334725b5ed8960d8421f063fc3285"
+        "0x081a1805983e86cd6a80ed48c012c26bf9a39473c0f1e69b357afff240f027a0",
+        "0x981d4f2ae5949ab33c6ba83f6446595d3b853bf6f7157884304445d70b185374",
+        "0x91db58e4059dfed7357e56dac17d2963c6f9cfb540f527988ed25172251a2584",
+        "0xdf47c6cd4fcffcfa4a670e1544e2391acc365cd7fd9b8e7583d58b28dff50c40"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
@@ -126,10 +126,10 @@
       "values": {
         "$immutable": false,
         "$implementation": [
-          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+          "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a",
+          "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9",
+          "0x5575218cECd370E1d630d1AdB03c254B0B376821",
+          "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
         ],
         "$pastUpgrades": [
           [
@@ -161,20 +161,30 @@
               "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
               "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
             ]
+          ],
+          [
+            "2025-01-22T06:36:23.000Z",
+            "0x2784286656e572cfe0abf2117628fdc5a6cd12e5c060de171c54063b273bc216",
+            [
+              "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a",
+              "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9",
+              "0x5575218cECd370E1d630d1AdB03c254B0B376821",
+              "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
+            ]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 25000,
         "daMode": 1,
         "facetAddresses": [
-          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+          "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a",
+          "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9",
+          "0x5575218cECd370E1d630d1AdB03c254B0B376821",
+          "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
         ],
         "facets": {
-          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a": [
+          "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a": [
             "acceptAdmin()",
             "changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))",
             "executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))",
@@ -189,7 +199,7 @@
             "unfreezeDiamond()",
             "upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))"
           ],
-          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89": [
+          "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9": [
             "baseTokenGasPriceMultiplierDenominator()",
             "baseTokenGasPriceMultiplierNominator()",
             "facetAddress(bytes4)",
@@ -232,7 +242,7 @@
             "storedBatchHash(uint256)",
             "storedBlockHash(uint256)"
           ],
-          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C": [
+          "0x5575218cECd370E1d630d1AdB03c254B0B376821": [
             "bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))",
             "finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])",
             "l2TransactionBaseCost(uint256,uint256,uint256)",
@@ -242,7 +252,7 @@
             "requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)",
             "transferEthToSharedBridge()"
           ],
-          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075": [
+          "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712": [
             "commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])",
             "commitBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])",
             "executeBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])",
@@ -257,27 +267,27 @@
         "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 2853,
-        "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
-        "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
+        "getFirstUnprocessedPriorityTx": 3942,
+        "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
+        "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 9,
+        "getPriorityQueueSize": 4,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 103079215106,
+        "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 1,
-        "getSemverProtocolVersion": [0, 24, 2],
+        "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 94,
-        "getTotalBatchesExecuted": 92,
-        "getTotalBatchesVerified": 93,
-        "getTotalBlocksCommitted": 94,
-        "getTotalBlocksExecuted": 92,
-        "getTotalBlocksVerified": 93,
-        "getTotalPriorityTxs": 2862,
-        "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
+        "getTotalBatchesCommitted": 269,
+        "getTotalBatchesExecuted": 268,
+        "getTotalBatchesVerified": 268,
+        "getTotalBlocksCommitted": 269,
+        "getTotalBlocksExecuted": 268,
+        "getTotalBlocksVerified": 268,
+        "getTotalPriorityTxs": 3946,
+        "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
           "recursionLeafLevelVkHash": "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6",
@@ -285,8 +295,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xec9e78cb47b1fc5fbce2c356ab2464844c2913f0da9bbe983498c4815b424dca",
-          "expirationTimestamp": 1727732699,
+          "canonicalTxHash": "0xa1e6af61a92c713ea2cb40c090112e9fe6d57ad3ad2a92d35155cac09d9c45a2",
+          "expirationTimestamp": 1737542435,
           "layer2Tip": 0
         },
         "txFilterer": [
@@ -352,7 +362,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 8,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -368,8 +378,45 @@
     { "address": "0xfD7a03Cdb68E6488F950108A4d24f15519b87339" }
   ],
   "abis": {
+    "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
+    ],
     "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": [
       "constructor(address _singleton)"
+    ],
+    "0x5575218cECd370E1d630d1AdB03c254B0B376821": [
+      "constructor(uint256 _eraChainId)",
+      "error BaseTokenGasPriceDenominatorNotSet()",
+      "error BatchNotExecuted(uint256 batchNumber)",
+      "error GasPerPubdataMismatch()",
+      "error HashedLogIsDefault()",
+      "error LengthIsNotDivisibleBy32(uint256 length)",
+      "error MalformedBytecode(uint8)",
+      "error MerkleIndexOutOfBounds()",
+      "error MerklePathEmpty()",
+      "error MerklePathOutOfBounds()",
+      "error MsgValueTooLow(uint256 required, uint256 provided)",
+      "error NotInitializedReentrancyGuard()",
+      "error OnlyEraSupported()",
+      "error PubdataGreaterThanLimit(uint256 limit, uint256 length)",
+      "error Reentrancy()",
+      "error TooManyFactoryDeps()",
+      "error TooMuchGas()",
+      "error TransactionNotAllowed()",
+      "error TxnBodyGasLimitNotEnoughGas()",
+      "error Unauthorized(address caller)",
+      "error ValidateTxnNotEnoughGas()",
+      "event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)",
+      "function bridgehubRequestL2Transaction(tuple(address sender, address contractL2, uint256 mintValue, uint256 l2Value, bytes l2Calldata, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, bytes[] factoryDeps, address refundRecipient) _request) returns (bytes32 canonicalTxHash)",
+      "function finalizeEthWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function getName() view returns (string)",
+      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
+      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
+      "function proveL2LogInclusion(uint256 _batchNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBatch, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
+      "function proveL2MessageInclusion(uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
+      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
+      "function transferEthToSharedBridge()"
     ],
     "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4": [
       "constructor(address _adminFacet, address _admin)",
@@ -411,13 +458,105 @@
       "function unfreezeDiamond()",
       "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
-    "0x70F3FBf8a427155185Ec90BED8a3434203de9604": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
-    ],
     "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
+    ],
+    "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9": [
+      "error InvalidSelector(bytes4 func)",
+      "error QueueIsEmpty()",
+      "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
+      "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
+      "function facetAddress(bytes4 _selector) view returns (address)",
+      "function facetAddresses() view returns (address[])",
+      "function facetFunctionSelectors(address _facet) view returns (bytes4[])",
+      "function facets() view returns (tuple(address addr, bytes4[] selectors)[] result)",
+      "function getAdmin() view returns (address)",
+      "function getBaseToken() view returns (address)",
+      "function getBaseTokenBridge() view returns (address)",
+      "function getBridgehub() view returns (address)",
+      "function getFirstUnprocessedPriorityTx() view returns (uint256)",
+      "function getL2BootloaderBytecodeHash() view returns (bytes32)",
+      "function getL2DefaultAccountBytecodeHash() view returns (bytes32)",
+      "function getL2SystemContractsUpgradeBatchNumber() view returns (uint256)",
+      "function getL2SystemContractsUpgradeBlockNumber() view returns (uint256)",
+      "function getL2SystemContractsUpgradeTxHash() view returns (bytes32)",
+      "function getName() view returns (string)",
+      "function getPendingAdmin() view returns (address)",
+      "function getPriorityQueueSize() view returns (uint256)",
+      "function getPriorityTxMaxGasLimit() view returns (uint256)",
+      "function getProtocolVersion() view returns (uint256)",
+      "function getPubdataPricingMode() view returns (uint8)",
+      "function getSemverProtocolVersion() view returns (uint32, uint32, uint32)",
+      "function getStateTransitionManager() view returns (address)",
+      "function getTotalBatchesCommitted() view returns (uint256)",
+      "function getTotalBatchesExecuted() view returns (uint256)",
+      "function getTotalBatchesVerified() view returns (uint256)",
+      "function getTotalBlocksCommitted() view returns (uint256)",
+      "function getTotalBlocksExecuted() view returns (uint256)",
+      "function getTotalBlocksVerified() view returns (uint256)",
+      "function getTotalPriorityTxs() view returns (uint256)",
+      "function getVerifier() view returns (address)",
+      "function getVerifierParams() view returns (tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash))",
+      "function isDiamondStorageFrozen() view returns (bool)",
+      "function isEthWithdrawalFinalized(uint256 _l2BatchNumber, uint256 _l2MessageIndex) view returns (bool)",
+      "function isFacetFreezable(address _facet) view returns (bool isFreezable)",
+      "function isFunctionFreezable(bytes4 _selector) view returns (bool)",
+      "function isValidator(address _address) view returns (bool)",
+      "function l2LogsRootHash(uint256 _batchNumber) view returns (bytes32)",
+      "function priorityQueueFrontOperation() view returns (tuple(bytes32 canonicalTxHash, uint64 expirationTimestamp, uint192 layer2Tip))",
+      "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
+      "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
+    ],
+    "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a": [
+      "error AddressHasNoCode(address)",
+      "error ChainAlreadyLive()",
+      "error DelegateCallFailed(bytes returnData)",
+      "error DenominatorIsZero()",
+      "error DiamondAlreadyFrozen()",
+      "error DiamondNotFrozen()",
+      "error FacetExists(bytes4 selector, address)",
+      "error HashMismatch(bytes32 expected, bytes32 actual)",
+      "error InvalidPubdataPricingMode()",
+      "error NoFunctionsForDiamondCut()",
+      "error NonEmptyCalldata()",
+      "error PriorityTxPubdataExceedsMaxPubDataPerBatch()",
+      "error ProtocolIdMismatch(uint256 expectedProtocolVersion, uint256 providedProtocolId)",
+      "error ProtocolIdNotGreater()",
+      "error RemoveFunctionFacetAddressNotZero(address facet)",
+      "error RemoveFunctionFacetAddressZero()",
+      "error ReplaceFunctionFacetAddressZero()",
+      "error SelectorsMustAllHaveSameFreezability()",
+      "error TooMuchGas()",
+      "error Unauthorized(address caller)",
+      "error UndefinedDiamondCutAction()",
+      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)",
+      "event ExecuteUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut)",
+      "event Freeze()",
+      "event IsPorterAvailableStatusUpdate(bool isPorterAvailable)",
+      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
+      "event NewBaseTokenMultiplier(uint128 oldNominator, uint128 oldDenominator, uint128 newNominator, uint128 newDenominator)",
+      "event NewFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) oldFeeParams, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) newFeeParams)",
+      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
+      "event NewPriorityTxMaxGasLimit(uint256 oldPriorityTxMaxGasLimit, uint256 newPriorityTxMaxGasLimit)",
+      "event NewTransactionFilterer(address oldTransactionFilterer, address newTransactionFilterer)",
+      "event Unfreeze()",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event ValidiumModeStatusUpdate(uint8 validiumMode)",
+      "function acceptAdmin()",
+      "function changeFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
+      "function executeUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "function freezeDiamond()",
+      "function getName() view returns (string)",
+      "function setPendingAdmin(address _newPendingAdmin)",
+      "function setPorterAvailability(bool _zkPorterIsAvailable)",
+      "function setPriorityTxMaxGasLimit(uint256 _newPriorityTxMaxGasLimit)",
+      "function setPubdataPricingMode(uint8 _pricingMode)",
+      "function setTokenMultiplier(uint128 _nominator, uint128 _denominator)",
+      "function setTransactionFilterer(address _transactionFilterer)",
+      "function setValidator(address _validator, bool _active)",
+      "function unfreezeDiamond()",
+      "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
     "0xA8998F231a660Eca365B382943c71ad9b7619139": [
       "constructor(address _owner, address[] list)",
@@ -431,7 +570,49 @@
       "function transferOwnership(address newOwner)",
       "function updateDenyList(address[] _list, bool _add)"
     ],
-    "0xaD193aDe635576d8e9f7ada71Af2137b16c64075": [
+    "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712": [
+      "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
+      "error BatchNumberMismatch(uint256 expectedBatchNumber, uint256 providedBatchNumber)",
+      "error BlobHashCommitmentError(uint256 index, bool blobHashEmpty, bool blobCommitmentEmpty)",
+      "error CalldataLengthTooBig()",
+      "error CanOnlyProcessOneBatch()",
+      "error CantExecuteUnprovenBatches()",
+      "error CantRevertExecutedBatch()",
+      "error EmptyBlobVersionHash(uint256 index)",
+      "error HashMismatch(bytes32 expected, bytes32 actual)",
+      "error InvalidLogSender(address sender, uint256 logKey)",
+      "error InvalidNumberOfBlobs(uint256 expected, uint256 numCommitments, uint256 numHashes)",
+      "error InvalidProof()",
+      "error InvalidProtocolVersion()",
+      "error InvalidPubdataCommitmentsSize()",
+      "error InvalidPubdataHash(bytes32 expectedHash, bytes32 provided)",
+      "error InvalidPubdataLength()",
+      "error InvalidPubdataMode()",
+      "error L2TimestampTooBig()",
+      "error LogAlreadyProcessed(uint8)",
+      "error MissingSystemLogs(uint256 expected, uint256 actual)",
+      "error NonEmptyBlobVersionHash(uint256 index)",
+      "error NonIncreasingTimestamp()",
+      "error NonSequentialBatch()",
+      "error NotInitializedReentrancyGuard()",
+      "error PointEvalCallFailed(bytes)",
+      "error PointEvalFailed(bytes)",
+      "error PriorityOperationsRollingHashMismatch()",
+      "error PubdataCommitmentsEmpty()",
+      "error PubdataCommitmentsTooBig()",
+      "error QueueIsEmpty()",
+      "error Reentrancy()",
+      "error RevertedBatchNotAfterNewLastBatch()",
+      "error SystemLogsSizeTooBig()",
+      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
+      "error TimestampError()",
+      "error TooManyBlobs()",
+      "error TxHashMismatch()",
+      "error Unauthorized(address caller)",
+      "error UnexpectedSystemLog(uint256 logKey)",
+      "error UpgradeBatchNumberIsNotZero()",
+      "error ValueMismatch(uint256 expected, uint256 actual)",
+      "error VerifiedBatchesExceedsCommittedBatches()",
       "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
       "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
       "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
@@ -448,19 +629,6 @@
     ],
     "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": [
       "constructor(address _singleton)"
-    ],
-    "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C": [
-      "constructor(uint256 _eraChainId)",
-      "event NewPriorityRequest(uint256 txId, bytes32 txHash, uint64 expirationTimestamp, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) transaction, bytes[] factoryDeps)",
-      "function bridgehubRequestL2Transaction(tuple(address sender, address contractL2, uint256 mintValue, uint256 l2Value, bytes l2Calldata, uint256 l2GasLimit, uint256 l2GasPerPubdataByteLimit, bytes[] factoryDeps, address refundRecipient) _request) returns (bytes32 canonicalTxHash)",
-      "function finalizeEthWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function getName() view returns (string)",
-      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
-      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
-      "function proveL2LogInclusion(uint256 _batchNumber, uint256 _index, tuple(uint8 l2ShardId, bool isService, uint16 txNumberInBatch, address sender, bytes32 key, bytes32 value) _log, bytes32[] _proof) view returns (bool)",
-      "function proveL2MessageInclusion(uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
-      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
-      "function transferEthToSharedBridge()"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -510,79 +678,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0xE60E94fCCb18a81D501a38959E532C0A85A1be89": [
-      "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
-      "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
-      "function facetAddress(bytes4 _selector) view returns (address)",
-      "function facetAddresses() view returns (address[])",
-      "function facetFunctionSelectors(address _facet) view returns (bytes4[])",
-      "function facets() view returns (tuple(address addr, bytes4[] selectors)[] result)",
-      "function getAdmin() view returns (address)",
-      "function getBaseToken() view returns (address)",
-      "function getBaseTokenBridge() view returns (address)",
-      "function getBridgehub() view returns (address)",
-      "function getFirstUnprocessedPriorityTx() view returns (uint256)",
-      "function getL2BootloaderBytecodeHash() view returns (bytes32)",
-      "function getL2DefaultAccountBytecodeHash() view returns (bytes32)",
-      "function getL2SystemContractsUpgradeBatchNumber() view returns (uint256)",
-      "function getL2SystemContractsUpgradeBlockNumber() view returns (uint256)",
-      "function getL2SystemContractsUpgradeTxHash() view returns (bytes32)",
-      "function getName() view returns (string)",
-      "function getPendingAdmin() view returns (address)",
-      "function getPriorityQueueSize() view returns (uint256)",
-      "function getPriorityTxMaxGasLimit() view returns (uint256)",
-      "function getProtocolVersion() view returns (uint256)",
-      "function getPubdataPricingMode() view returns (uint8)",
-      "function getSemverProtocolVersion() view returns (uint32, uint32, uint32)",
-      "function getStateTransitionManager() view returns (address)",
-      "function getTotalBatchesCommitted() view returns (uint256)",
-      "function getTotalBatchesExecuted() view returns (uint256)",
-      "function getTotalBatchesVerified() view returns (uint256)",
-      "function getTotalBlocksCommitted() view returns (uint256)",
-      "function getTotalBlocksExecuted() view returns (uint256)",
-      "function getTotalBlocksVerified() view returns (uint256)",
-      "function getTotalPriorityTxs() view returns (uint256)",
-      "function getVerifier() view returns (address)",
-      "function getVerifierParams() view returns (tuple(bytes32 recursionNodeLevelVkHash, bytes32 recursionLeafLevelVkHash, bytes32 recursionCircuitsSetVksHash))",
-      "function isDiamondStorageFrozen() view returns (bool)",
-      "function isEthWithdrawalFinalized(uint256 _l2BatchNumber, uint256 _l2MessageIndex) view returns (bool)",
-      "function isFacetFreezable(address _facet) view returns (bool isFreezable)",
-      "function isFunctionFreezable(bytes4 _selector) view returns (bool)",
-      "function isValidator(address _address) view returns (bool)",
-      "function l2LogsRootHash(uint256 _batchNumber) view returns (bytes32)",
-      "function priorityQueueFrontOperation() view returns (tuple(bytes32 canonicalTxHash, uint64 expirationTimestamp, uint192 layer2Tip))",
-      "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
-      "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
-    ],
-    "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a": [
-      "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)",
-      "event ExecuteUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut)",
-      "event Freeze()",
-      "event IsPorterAvailableStatusUpdate(bool isPorterAvailable)",
-      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
-      "event NewBaseTokenMultiplier(uint128 oldNominator, uint128 oldDenominator, uint128 newNominator, uint128 newDenominator)",
-      "event NewFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) oldFeeParams, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) newFeeParams)",
-      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
-      "event NewPriorityTxMaxGasLimit(uint256 oldPriorityTxMaxGasLimit, uint256 newPriorityTxMaxGasLimit)",
-      "event NewTransactionFilterer(address oldTransactionFilterer, address newTransactionFilterer)",
-      "event Unfreeze()",
-      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
-      "event ValidiumModeStatusUpdate(uint8 validiumMode)",
-      "function acceptAdmin()",
-      "function changeFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
-      "function executeUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
-      "function freezeDiamond()",
-      "function getName() view returns (string)",
-      "function setPendingAdmin(address _newPendingAdmin)",
-      "function setPorterAvailability(bool _zkPorterIsAvailable)",
-      "function setPriorityTxMaxGasLimit(uint256 _newPriorityTxMaxGasLimit)",
-      "function setPubdataPricingMode(uint8 _pricingMode)",
-      "function setTokenMultiplier(uint128 _nominator, uint128 _denominator)",
-      "function setTransactionFilterer(address _transactionFilterer)",
-      "function setValidator(address _validator, bool _active)",
-      "function unfreezeDiamond()",
-      "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ]
   },
   "usedTemplates": {

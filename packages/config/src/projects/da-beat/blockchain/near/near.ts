@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { BlockchainDaLayer } from '../../types/DaLayer'
+import type { BlockchainDaLayer } from '../../types/DaLayer'
 
 export const near: BlockchainDaLayer = {
   id: 'near',
@@ -140,6 +140,10 @@ export const near: BlockchainDaLayer = {
     }),
   ],
   pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
+  throughput: {
+    size: 16000, // 16 MB , 4MB per 4 shard
+    frequency: 1, // 16 MB/s
+  },
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

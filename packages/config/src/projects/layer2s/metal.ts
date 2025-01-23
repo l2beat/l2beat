@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metal')
 
@@ -37,7 +37,6 @@ export const metal: Layer2 = opStackL2({
         'https://linkedin.com/company/metallicus',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.metall2.com',
   genesisTimestamp: new UnixTime(1711567115),

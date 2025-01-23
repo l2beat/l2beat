@@ -21,7 +21,7 @@ import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fuel')
 const depositLimitGlobal = formatEther(
@@ -74,7 +74,6 @@ export const fuel: Layer2 = {
         'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',

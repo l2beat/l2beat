@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { Meta } from '@l2beat/discovery-types'
-import { AnalyzedContract } from '../analysis/AddressAnalyzer'
+import type { Meta } from '@l2beat/discovery-types'
+import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { neuterErrors } from './errors'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'

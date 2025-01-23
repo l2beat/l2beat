@@ -5,7 +5,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ancient')
 
@@ -45,7 +45,6 @@ export const ancient: Layer2 = opStackL2({
         'https://linkedin.com/company/ancient8',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
   rpcUrl: 'https://rpc.ancient8.gg/',

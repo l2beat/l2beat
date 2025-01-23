@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs'
-import { ParseError, parse } from 'jsonc-parser'
+import { type ParseError, parse } from 'jsonc-parser'
 
 export function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')

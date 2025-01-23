@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dbk')
 
@@ -27,7 +27,6 @@ export const dbk: Layer2 = opStackL2({
         'https://debank.com/official/117425',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.mainnet.dbkchain.io/',
   genesisTimestamp: new UnixTime(1717461337),

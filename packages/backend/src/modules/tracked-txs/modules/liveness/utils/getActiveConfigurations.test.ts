@@ -1,10 +1,10 @@
-import { BackendProject } from '@l2beat/backend-shared'
+import type { BackendProject } from '@l2beat/backend-shared'
 import {
-  TrackedTxConfigEntry,
-  TrackedTxLivenessConfig,
+  type TrackedTxConfigEntry,
+  type TrackedTxLivenessConfig,
   createTrackedTxId,
 } from '@l2beat/shared'
-import { SavedConfiguration, UnixTime } from '@l2beat/shared-pure'
+import { type SavedConfiguration, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { getActiveConfigurations } from './getActiveConfigurations'
 

@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { BlockchainDaLayer } from '../../types/DaLayer'
+import type { BlockchainDaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { vector } from './bridges/vector'
@@ -120,6 +120,10 @@ export const avail: BlockchainDaLayer = {
     blockTime: 20, // seconds
     consensusFinality: 60, //seconds
     unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
+  },
+  throughput: {
+    size: 2000, // 2 MB
+    frequency: 20, // 20 seconds
   },
   dataAvailabilitySampling: {
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,

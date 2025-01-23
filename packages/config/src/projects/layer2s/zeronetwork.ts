@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zeronetwork')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -44,7 +44,6 @@ export const zeronetwork: Layer2 = zkStackL2({
         'https://youtube.com/@ZERO-Network-L2',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zerion.io/v1/zero',
   chainConfig: {

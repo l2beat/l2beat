@@ -1,7 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { DynamicArrayHandler } from './DynamicArrayHandler'
 
 describe(DynamicArrayHandler.name, () => {

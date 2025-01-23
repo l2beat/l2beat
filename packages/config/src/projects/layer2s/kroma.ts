@@ -28,7 +28,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kroma')
 
@@ -115,7 +115,6 @@ export const kroma: Layer2 = {
         'https://medium.com/@kroma-network',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

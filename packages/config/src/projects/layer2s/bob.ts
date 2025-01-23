@@ -5,7 +5,7 @@ import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bob')
 
@@ -33,7 +33,6 @@ export const bob: Layer2 = opStackL2({
       repositories: ['https://github.com/bob-collective'],
       socialMedia: ['https://twitter.com/build_on_bob'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

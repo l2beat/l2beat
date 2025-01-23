@@ -25,7 +25,6 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 )
 
 export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
-  chain: 'arbitrum',
   createdAt: new UnixTime(1719930680), // 2024-07-02T14:31:20Z
   display: {
     links: {

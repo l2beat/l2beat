@@ -1,8 +1,8 @@
 import { assertStatus } from '../helpers/assertStatus'
 import { continueOperations } from '../helpers/continueOperations'
-import { UpdateFailedAction } from '../types/IndexerAction'
-import { IndexerReducerResult } from '../types/IndexerReducerResult'
-import { IndexerState } from '../types/IndexerState'
+import type { UpdateFailedAction } from '../types/IndexerAction'
+import type { IndexerReducerResult } from '../types/IndexerReducerResult'
+import type { IndexerState } from '../types/IndexerState'
 
 export function handleUpdateFailed(
   state: IndexerState,

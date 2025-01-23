@@ -62,6 +62,7 @@ import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { gwyneth } from './gwyneth'
 import { happychain } from './happychain'
+import { hashkey } from './hashkey'
 import { haust } from './haust'
 import { hemi } from './hemi'
 import { hermez } from './hermez'
@@ -170,7 +171,7 @@ import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 import { unichain } from './unichain'
 import { wirex } from './wirex'
 import { witness } from './witness'
@@ -259,6 +260,7 @@ export const layer2s: Layer2[] = [
   hemi,
   happychain,
   haust,
+  hashkey,
   hermez,
   hybrid,
   hychain,
