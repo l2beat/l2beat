@@ -101,7 +101,7 @@
       "fields": {
         "programHashHistory": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "oldProgramHash",
             "add": { "event": "ProgramHashChanged" }
           }
@@ -123,7 +123,7 @@
         // Responsible for updating the state
         "operators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operator",
             "add": { "event": "LogOperatorAdded" },
             "remove": { "event": "LogOperatorRemoved" }

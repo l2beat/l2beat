@@ -41,7 +41,7 @@
       "fields": {
         "deletedOutputs": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": ["prevNextOutputIndex", "newNextOutputIndex"],
             "add": { "event": "OutputsDeleted" }
           }

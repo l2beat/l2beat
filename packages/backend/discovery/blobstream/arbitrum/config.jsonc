@@ -44,7 +44,7 @@
           "severity": "LOW",
           "type": "PERMISSION",
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "prover",
             "add": {
               "event": "ProverUpdated",
@@ -87,7 +87,7 @@
           "severity": "LOW",
           "type": "PERMISSION",
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "prover",
             "add": {
               "event": "ProverUpdated",

@@ -76,7 +76,7 @@
       "fields": {
         "gateways": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "newEthGateway",
             "add": { "event": "SetETHGateway" }
           }
@@ -89,7 +89,7 @@
       "fields": {
         "verifierVersions": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "version",
             "add": { "event": "UpdateVerifier" }
           }
@@ -148,7 +148,7 @@
       "fields": {
         "challengers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": {
               "event": "UpdateChallenger",

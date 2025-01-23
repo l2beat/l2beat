@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 21630370,
-  "configHash": "0x7fc68de61dec5026b94e37cf0eeb07fee79babde8f8343b62881aee0a49330ac",
+  "configHash": "0x7b0ca33542b8f0cbef85403b9496a8a02e38e7633df20f112e75cc17fa1fe0ca",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -1706,6 +1706,6 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0x73f5cb48e71ef006b83408dfab59d4fc9838a964bf8da5cc5c2616980c2315cb"
+    "shared-zk-stack/ChainAdmin": "0xe6614b7403c8cc85697cb20734a4ccf07b7d844086e1ac5cd931c671594f7ec1"
   }
 }

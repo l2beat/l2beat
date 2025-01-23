@@ -1343,7 +1343,7 @@
     "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
     "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
     "opstack/L1StandardBridge_facet": "0xdda9663db6ae5d838e3a9ed97ab627657d1f0fea5b56b441bbc6d727a47835ca",
-    "opstack/L2OutputOracle": "0x96295922d8f401284cb39fa0d76a7717078beaf3add46a26cc33184d998085a3",
+    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
     "opstack/OptimismPortal": "0x5b6ac4a1df6dfc8cbaf2c6fb761942c6e7acf219455ec64523721dadbd88ac72",
     "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9",
     "opstack/SystemConfig_facet": "0x431083489272d99861681a9158be96941614628a21d3bb737ac875bde3021993"

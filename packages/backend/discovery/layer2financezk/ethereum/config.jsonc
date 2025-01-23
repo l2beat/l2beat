@@ -43,7 +43,7 @@
       "fields": {
         "GOVERNORS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "acceptedGovernor",
             "add": {
               "event": "event LogNewGovernorAccepted(address governor)"
@@ -55,7 +55,7 @@
         },
         "OPERATORS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operator",
             "add": {
               "event": "event LogOperatorAdded(address operator)"

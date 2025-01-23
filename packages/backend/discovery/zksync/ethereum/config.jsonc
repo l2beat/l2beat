@@ -109,7 +109,7 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": ["totalBlocksCommitted", "totalBlocksVerified"],
             "add": { "event": "BlocksRevert" }
           }
@@ -130,7 +130,7 @@
         // network governor can pause tokens and add validators
         "validators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validatorAddress",
             "add": {
               "event": "ValidatorStatusUpdate",
@@ -150,7 +150,7 @@
       "fields": {
         "tokenListers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "tokenLister",
             "add": {
               "event": "TokenListerUpdate",

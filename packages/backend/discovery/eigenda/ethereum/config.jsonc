@@ -50,7 +50,7 @@
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER",
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "batchConfirmer",
             "add": {
               "event": "BatchConfirmerStatusChanged",
@@ -69,7 +69,7 @@
         "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH).",
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "strategy",
             "groupBy": "quorumNumber",
             "add": { "event": "StrategyAddedToQuorum" }
@@ -116,7 +116,7 @@
         "registeredOperators": {
           "description": "List of all registered operators ids",
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operatorId",
             "add": { "event": "OperatorRegistered" },
             "remove": { "event": "OperatorDeregistered" }

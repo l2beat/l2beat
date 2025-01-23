@@ -38,7 +38,7 @@
       "fields": {
         "validators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validatorAddress",
             "add": {
               "event": "ValidatorStatusUpdate",
@@ -60,7 +60,7 @@
       "fields": {
         "revertedBlocks": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",

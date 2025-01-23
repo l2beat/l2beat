@@ -22,14 +22,14 @@
         },
         "validatorSetUpdates": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": ["epoch", "hotValidatorSetHash", "coldValidatorSetHash"],
             "add": { "event": "FinalizedValidatorSetUpdate" }
           }
         },
         "lockers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "locker",
             "add": {
               "event": "ModifiedLocker",
@@ -43,7 +43,7 @@
         },
         "finalizers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "finalizer",
             "add": {
               "event": "ModifiedFinalizer",

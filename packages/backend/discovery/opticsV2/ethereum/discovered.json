@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 20878317,
-  "configHash": "0x07d7231a8d506bd956f73693d7c2f4b977611e03d6e4b176e88916f7bc80fe03",
+  "configHash": "0x559dbfd59bde62a9da90b6a0eb1b9f9c1ffdec824175673702c0a6f3187bafa6",
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",

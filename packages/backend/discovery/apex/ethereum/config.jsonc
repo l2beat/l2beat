@@ -55,7 +55,7 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operator",
             "add": {
               "event": "event LogOperatorAdded(address operator)"
@@ -100,7 +100,7 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operator",
             "add": {
               "event": "event LogOperatorAdded(address operator)"

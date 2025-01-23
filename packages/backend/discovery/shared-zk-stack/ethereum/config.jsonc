@@ -98,7 +98,7 @@
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.",
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": ["chainId", "stateTransitionManager", "chainGovernance"],
             "add": { "event": "NewChain" },
             "ignoreRelative": true
@@ -202,7 +202,7 @@
       "fields": {
         "zksyncValidators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validator",
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
@@ -216,7 +216,7 @@
         },
         "cronosValidators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validator",
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
@@ -230,7 +230,7 @@
         },
         "zeronetworkValidators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validator",
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
@@ -244,7 +244,7 @@
         },
         "sophonValidators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validator",
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
@@ -258,7 +258,7 @@
         },
         "treasureValidators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validator",
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
@@ -272,7 +272,7 @@
         },
         "grvtValidators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validator",
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
@@ -295,7 +295,7 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",

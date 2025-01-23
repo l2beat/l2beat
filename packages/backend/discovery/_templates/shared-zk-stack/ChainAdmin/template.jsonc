@@ -5,7 +5,7 @@
     "upgradeTimestamps": {
       "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": ["_protocolVersion", "_upgradeTimestamp"],
         "add": { "event": "UpdateUpgradeTimestamp" }
       }

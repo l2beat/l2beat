@@ -1323,7 +1323,7 @@
     "opstack/OptimismPortal": "0x5b6ac4a1df6dfc8cbaf2c6fb761942c6e7acf219455ec64523721dadbd88ac72",
     "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9",
     "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30",
-    "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x667d1c46875666021a4930460328659cdcdc5b9389f0f1445ed5fa2cc0dad531",
+    "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x142c954713b35203aaaaafa16f5113bd6dea4d5535c6e4a3ec7b7e28bdc78296",
     "succinct/SP1SuccinctGateway": "0xdffa954da9f9e5a14a8da6adcdac47a00ceca0950311adc899da5a6983719276"
   }
 }

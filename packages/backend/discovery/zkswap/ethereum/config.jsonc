@@ -24,7 +24,7 @@
       "fields": {
         "validators": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "validatorAddress",
             "add": {
               "event": "ValidatorStatusUpdate",

@@ -44,7 +44,7 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operator",
             "add": { "event": "LogOperatorAdded" },
             "remove": { "event": "LogOperatorRemoved" }
@@ -104,7 +104,7 @@
       "fields": {
         "EXECUTORS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "executor",
             "add": { "event": "ExecutorAuthorized" },
             "remove": { "event": "ExecutorUnauthorized" }
@@ -138,7 +138,7 @@
         },
         "slashings": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": ["amount", "recipient", "newExchangeRate"],
             "add": { "event": "Slashed" }
           }
@@ -154,7 +154,7 @@
         },
         "BORROWERS_LIST": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "borrower",
             "add": { "event": "ScheduledBorrowerAllocationChange" }
           }
@@ -198,7 +198,7 @@
       "fields": {
         "PRIORITY_CONTROLLERS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": {
               "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",

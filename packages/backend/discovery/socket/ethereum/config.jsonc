@@ -173,7 +173,7 @@
           "severity": "LOW",
           "type": "CODE_CHANGE",
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "plug",
             "add": { "event": "PlugConnected" },
             "ignoreRelative": true
@@ -181,14 +181,14 @@
         },
         "inboundSwitchboards": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "inboundSwitchboard",
             "add": { "event": "PlugConnected" }
           }
         },
         "outboundSwitchboards": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "outboundSwitchboard",
             "add": { "event": "PlugConnected" }
           }

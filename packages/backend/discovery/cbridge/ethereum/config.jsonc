@@ -23,7 +23,7 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": { "event": "PauserAdded" },
             "remove": { "event": "PauserRemoved" }
@@ -31,7 +31,7 @@
         },
         "governors": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": { "event": "GovernorAdded" },
             "remove": { "event": "GovernorRemoved" }
@@ -44,7 +44,7 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": { "event": "PauserAdded" },
             "remove": { "event": "PauserRemoved" }
@@ -52,7 +52,7 @@
         },
         "governors": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": { "event": "GovernorAdded" },
             "remove": { "event": "GovernorRemoved" }
@@ -73,7 +73,7 @@
       "fields": {
         "governors": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": {
               "event": "event GovernorUpdated(address account, bool added)",
@@ -87,7 +87,7 @@
         },
         "pausersPauseOnly": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": {
               "event": "event PauserUpdated(address account, uint8 role)",
@@ -101,7 +101,7 @@
         },
         "pausersFull": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": {
               "event": "event PauserUpdated(address account, uint8 role)",

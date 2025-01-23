@@ -31,7 +31,7 @@
         },
         "shutdownTriggered": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "timestamp",
             "add": { "event": "Shutdown" }
           }
@@ -52,7 +52,7 @@
       "fields": {
         "blockSubmitters": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "user",
             "add": {
               "event": "PermissionUpdate",

@@ -2,7 +2,7 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0xe84120bc80ebebe021bb581d244ea2264623a780b322fb1559ef48eea6e02eef",
+  "configHash": "0xedefa50350861473d0f8beecfdb3b1721e37b21f96045359e632684b7543dc0b",
   "contracts": [
     {
       "name": "EthereumL1Messenger",

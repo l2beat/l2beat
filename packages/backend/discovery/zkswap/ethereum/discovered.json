@@ -2,7 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 20311131,
-  "configHash": "0x75f96c3b8c2ece61a92f3d18c777ad68d791b647bd58e53a46f03c49884a8664",
+  "configHash": "0xc2f86782099ae004864fc47efe0090cbf610a2c2874e0ebedec351f4d48fdd41",
   "contracts": [
     {
       "name": "Governance",

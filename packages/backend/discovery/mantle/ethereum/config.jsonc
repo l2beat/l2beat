@@ -146,7 +146,7 @@
       "fields": {
         "dataStorePermission": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "pusher",
             "add": { "event": "AddDataStoreRollupPermission" },
             "remove": { "event": "ChangeDataStoreRollupPermission" }
@@ -154,7 +154,7 @@
         },
         "registerOperatorPermission": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operator",
             "add": { "event": "AddOperatorRegisterPermission" },
             "remove": { "event": "ChangeOperatorRegisterPermission" }
@@ -162,7 +162,7 @@
         },
         "deregisterOperatorPermission": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "operator",
             "add": { "event": "AddOperatorDeregisterPermission" },
             "remove": { "event": "ChangeOperatorDeregisterPermission" }

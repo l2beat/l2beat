@@ -3,7 +3,7 @@
   "fields": {
     "onRamps": {
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": "onRamp",
         "groupBy": "destChainSelector",
         "set": { "event": "OnRampSet" }

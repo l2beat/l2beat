@@ -62,7 +62,7 @@
       "fields": {
         "stargateOracles": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "newConfig",
             "add": {
               "event": "AppConfigUpdated",
@@ -80,7 +80,7 @@
         },
         "stargateRelayers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "newConfig",
             "add": {
               "event": "AppConfigUpdated",

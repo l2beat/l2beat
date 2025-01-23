@@ -44,7 +44,7 @@
         },
         "rollupProviders": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "providerAddress",
             "add": {
               "event": "RollupProviderUpdated",

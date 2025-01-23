@@ -151,7 +151,7 @@
       "fields": {
         "crewmembers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "crewmember",
             "add": {
               "event": "event SetCrewmember(address indexed crewmember,bool set)",

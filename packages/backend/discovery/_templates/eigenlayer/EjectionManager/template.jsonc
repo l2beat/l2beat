@@ -4,7 +4,7 @@
   "fields": {
     "ejectors": {
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": "ejector",
         "add": {
           "event": "EjectorUpdated",
@@ -19,7 +19,7 @@
     "ejectionRateLimitWindow": {
       "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": "rateLimitWindow",
         "add": { "event": "QuorumEjectionParamsSet" }
       }
@@ -27,7 +27,7 @@
     "ejectableStakePercent": {
       "description": "Max stake to be ejectable per time delta.",
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": "ejectableStakePercent",
         "add": { "event": "QuorumEjectionParamsSet" }
       }

@@ -108,7 +108,7 @@
       "fields": {
         "Minters": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "minterAddress",
             "add": {
               "event": "IsMinterModified",
@@ -149,7 +149,7 @@
       "fields": {
         "avs": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "avs",
             "add": { "event": "OperatorAVSRegistrationStatusUpdated" }
           }
@@ -162,7 +162,7 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "pauser",
             "add": {
               "event": "PauserStatusChanged",

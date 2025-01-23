@@ -28,7 +28,7 @@
       "fields": {
         "additionalBatchSizes": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "batchSize",
             "add": {
               "event": "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)"
@@ -55,7 +55,7 @@
       "fields": {
         "additionalBatchSizes": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "batchSize",
             "add": {
               "event": "event VerifierDeleted(uint256 indexed batchSize, address indexed verifierAddress)"

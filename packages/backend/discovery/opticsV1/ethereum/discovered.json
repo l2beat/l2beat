@@ -2,7 +2,7 @@
   "name": "opticsV1",
   "chain": "ethereum",
   "blockNumber": 19532023,
-  "configHash": "0xd8a5c9add4a4e300416ad1bd6532a08d621b60767a656b64f3b2cb4d8ba744fd",
+  "configHash": "0x873e883ebb49c0d61274dbec660504569949651d41a1c5679086b51d26306b1e",
   "contracts": [
     {
       "name": "ReplicaUpgradeBeacon",

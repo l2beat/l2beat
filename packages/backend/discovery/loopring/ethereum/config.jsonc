@@ -40,7 +40,7 @@
         },
         "shutdownTriggered": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "timestamp",
             "add": { "event": "Shutdown" }
           }
@@ -51,7 +51,7 @@
       "fields": {
         "agents": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "agent",
             "add": {
               "event": "AgentRegistered",
@@ -70,7 +70,7 @@
       "fields": {
         "blockSubmitters": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "user",
             "add": {
               "event": "PermissionUpdate",

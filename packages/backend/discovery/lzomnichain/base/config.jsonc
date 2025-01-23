@@ -43,7 +43,7 @@
       "fields": {
         "chainAddressSizeMap": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "size",
             "groupBy": "chainId",
             "set": { "event": "SetChainAddressSize" }
@@ -51,7 +51,7 @@
         },
         "ulnLookup": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "uln",
             "groupBy": "chainId",
             "set": { "event": "SetRemoteUln" }
@@ -59,7 +59,7 @@
         },
         "defaultAppConfig": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": [
               "inboundProofLib",
               "inboundBlockConfirm",
@@ -74,7 +74,7 @@
         },
         "defaultAdapterParams": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": ["proofType", "adapterParams"],
             "groupBy": "chainId",
             "set": { "event": "SetDefaultAdapterParamsForChainId" }
@@ -82,7 +82,7 @@
         },
         "inboundProofLibrary": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "lib",
             "groupBy": "chainId",
             "add": { "event": "AddInboundProofLibraryForChain" }
@@ -90,7 +90,7 @@
         },
         "supportedOutboundProof": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "proofType",
             "groupBy": "chainId",
             "add": { "event": "EnableSupportedOutboundProof" }

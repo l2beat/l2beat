@@ -51,7 +51,7 @@
       "fields": {
         "watchers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "watcher",
             "add": {
               "event": "WatcherPermissionSet",

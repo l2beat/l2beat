@@ -77,7 +77,7 @@
     "challenges": {
       "description": "Emitted on createChallenge() in RollupUserLogic.",
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": [
           "challengeIndex",
           "asserter",

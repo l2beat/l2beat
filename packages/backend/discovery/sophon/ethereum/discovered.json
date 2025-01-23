@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 21429615,
-  "configHash": "0x3dcec0d1f3f2d5634bc05cd2e19fb24b19efcce749650041374f642fffa27077",
+  "configHash": "0x9b67594769a6d16fc665b4013618825833526b9dc1c17c2a5addd0414466fb0b",
   "contracts": [
     {
       "name": "SophonZkEvm",
@@ -649,7 +649,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0x73f5cb48e71ef006b83408dfab59d4fc9838a964bf8da5cc5c2616980c2315cb",
+    "shared-zk-stack/ChainAdmin": "0xe6614b7403c8cc85697cb20734a4ccf07b7d844086e1ac5cd931c671594f7ec1",
     "shared-zk-stack/L1USDCBridge": "0x76f3122eede9ca9aa44a5309ed016ebdb226df16dffc395108138bc8a3fc74ab"
   }
 }

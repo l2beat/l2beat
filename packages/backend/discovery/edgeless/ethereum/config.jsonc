@@ -24,7 +24,7 @@
       "fields": {
         "strategies": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "strategy",
             "add": { "event": "AddStrategy" },
             "remove": { "event": "RemoveStrategy" }
@@ -32,7 +32,7 @@
         },
         "activeStrategiesIndex": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "index",
             "set": { "event": "SetActiveStrategy" },
             "groupBy": "asset"

@@ -41,7 +41,7 @@
       "fields": {
         "PREDICATES": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "predicateAddress",
             "add": { "event": "PredicateRegistered" }
           },
@@ -65,7 +65,7 @@
       "fields": {
         "REGISTRATIONS": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "sender",
             "add": { "event": "RegistrationUpdated" }
           }

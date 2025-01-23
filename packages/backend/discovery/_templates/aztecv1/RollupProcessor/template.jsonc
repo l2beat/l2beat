@@ -28,7 +28,7 @@
       "severity": "LOW",
       "type": "PERMISSION",
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": "providerAddress",
         "add": {
           "event": "RollupProviderUpdated",
@@ -38,7 +38,7 @@
     },
     "removedRollupProviders": {
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": "providerAddress",
         "add": {
           "event": "RollupProviderUpdated",

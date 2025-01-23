@@ -22,7 +22,7 @@
   "fields": {
     "tokenPools": {
       "handler": {
-        "type": "event2",
+        "type": "event",
         "select": "pool",
         "add": { "event": "PoolAdded" },
         "remove": { "event": "PoolRemoved" }

@@ -105,7 +105,7 @@
       "fields": {
         "sequencers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": {
               "event": "UpdateSequencer",
@@ -119,7 +119,7 @@
         },
         "provers": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "account",
             "add": {
               "event": "UpdateProver",
@@ -133,7 +133,7 @@
         },
         "revertedBatches": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "batchIndex",
             "add": { "event": "RevertBatch" }
           }
@@ -146,7 +146,7 @@
       "fields": {
         "verifierVersions": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "version",
             "add": { "event": "UpdateVerifier" }
           }
@@ -235,7 +235,7 @@
       "fields": {
         "whitelisted": {
           "handler": {
-            "type": "event2",
+            "type": "event",
             "select": "_account",
             "add": {
               "event": "WhitelistStatusChanged",
