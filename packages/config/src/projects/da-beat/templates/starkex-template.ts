@@ -1,154 +1,61 @@
-import type { Layer2 } from '../../layer2s'
-import type { Layer3 } from '../../layer3s'
+import { assert } from '@l2beat/shared-pure'
+import { getCommittee } from '../../../discovery/starkware'
 import {
-  DaCommitteeSecurityRisk,
-  DaEconomicSecurityRisk,
-  DaFraudDetectionRisk,
+  type DaTechnology,
   DaUpgradeabilityRisk,
-  type DacBridge,
   type DacDaLayer,
+  DacTransactionDataType,
 } from '../types'
-import type { DaLinks } from '../types/DaLinks'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
-import { toUsedInProject } from '../utils/to-used-in-project'
+import { DAC, type DacTemplateVarsWithDiscovery } from './dac-template'
 
-type TemplateSpecific = {
-  /** Project DAC is associated with */
-  project: Layer2 | Layer3
-}
+export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
+  const committee = template.discovery
+    ? getCommittee(template.discovery)
+    : undefined
 
-type Optionals = {
-  /** Overwrite some of the risks, check defaults below */
-  risks?: Partial<DacDaLayer['risks'] & DacBridge['risks']>
-  /** Links for given DAC, defaults to Project's main links */
-  links?: Partial<DaLinks>
-  /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
-  layer?: {
-    technology?: DacDaLayer['technology']
-    description?: DacDaLayer['display']['description']
-    otherConsiderations?: DacDaLayer['otherConsiderations']
-  }
-  /**
-   * Optional layer description and technology, defaults to generic ones
-   */
-  bridge: {
-    technology?: DacBridge['technology']
-    description?: DacBridge['display']['description']
-  } & Pick<
-    DacBridge,
-    | 'createdAt'
-    | 'chain'
-    | 'membersCount'
-    | 'knownMembers'
-    | 'requiredMembers'
-    | 'permissions'
-    | 'contracts'
-    | 'transactionDataType'
-    | 'isUnderReview'
-    | 'otherConsiderations'
-  >
-  /** Optional warning, defaults to undefined */
-  warning?: DacBridge['display']['warning']
-  /** Optional red warning, defaults to undefined */
-  redWarning?: DacBridge['display']['redWarning']
-  /** Optional challenge mechanism, defaults to undefined */
-  challengeMechanism?: DacDaLayer['challengeMechanism']
-  /** Optional fallback, defaults to undefined */
-  fallback?: DacDaLayer['fallback']
-}
+  const membersCount =
+    committee?.accounts.length ?? template.bridge.membersCount
+  const requiredMembers =
+    committee?.minSigners ?? template.bridge.requiredMembers
 
-type TemplateVars = Optionals & TemplateSpecific
+  assert(
+    membersCount,
+    'Members count is required, provide either discovery or bridge.membersCount',
+  )
+  assert(
+    requiredMembers,
+    'Required members is required, provide either discovery or bridge.requiredMembers',
+  )
 
-/**
- * Template function for DA-BEAT DACs.
- * Coverts basic information into expected by DA-BEAT shape
- * creating DA-LAYER and DA-BRIDGE without the need to manually
- * duplicate code and files.
- */
-export function StarkexDAC(template: TemplateVars): DacDaLayer {
-  // Common
-  const name = `${template.project.display.name} DAC`
-  const usedIn = toUsedInProject([template.project])
-
-  // "Bridge" backfill for DAC
-  const bridgeDescription =
-    template.bridge?.description ??
-    `${template.project.display.name} DAC on Ethereum.`
-
-  const bridgeTechnology =
-    template.bridge.technology?.description ??
-    (template.bridge.chain === 1
-      ? `
+  const bridgeTechnology: DaTechnology = {
+    description: `
     ## DA Bridge Architecture
     ![starkex bridge architecture](/images/da-bridge-technology/starkex/architectureL2.png#center)
-      The DA commitments are posted to the L1 chain, using the Committee Verifier contract as a DA bridge.
+      The DA commitments are posted to the destination chain, using the Committee Verifier contract as a DA bridge.
       The DA commitment consists of a data hash of the transaction batch the Committee has signed off on and a concatenation of ec-signatures by signatories.
       The Committee Verifier contract verifies the signatures and the data hash and if the required threshold of Committee members has signed off on the data, the hash is stored as a registeredFact in the StarkEx contract.
       In a separate transaction, the operator calls the updateState() function on the StarkEx contract to update the state.
       Before the state update is accepted, the StarkEx contract verifies the transaction public inputs by calling the isValid() function, which verifies the hash derived from state update inputs matches the hash stored by the Committee Verifier contract.
-    `
-      : `
-    ## DA Bridge Architecture
-    ![starkex bridge architecture](/images/da-bridge-technology/starkex/architectureL3.png#center)
-
-    The DA commitments are posted to the L2 chain, using the Committee Verifier contract as a DA bridge.
-    The DA commitment consists of a data hash of the transaction batch the Committee has signed off on and a concatenation of ec-signatures by signatories.
-    The Committee Verifier contract verifies the signatures and the data hash and if the required threshold of Committee members has signed off on the data, the hash is stored as a registeredFact in the StarkEx contract.
-    In a separate transaction, the operator calls the updateState() function on the StarkEx contract to update the state.
-    Before the state update is accepted, the StarkEx contract verifies the transaction public inputs by calling the isValid() function, which verifies the hash derived from state update inputs matches the hash stored by the Committee Verifier contract.
-    `)
-  const bridgeDisplay: DacBridge['display'] = {
-    name: 'DA Bridge',
-    slug: 'dac',
-    description: bridgeDescription,
-    warning: template.warning,
-    redWarning: template.redWarning,
-    links: {
-      apps: template.links?.apps ?? [],
-      documentation: template.links?.documentation ?? [],
-      explorers: template.links?.explorers ?? [],
-      repositories: template.links?.repositories ?? [],
-      socialMedia: template.links?.socialMedia ?? [],
-      websites: template.links?.websites ?? [],
-    },
+    `,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
+      },
+    ],
   }
 
-  const dacBridge: DacBridge = {
-    id: `${template.project.display.slug}-dac-bridge`,
-    type: 'DAC',
-    usedIn,
-    ...template.bridge,
-    display: bridgeDisplay,
-    technology: {
-      description: bridgeTechnology,
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
-        },
-      ],
-    },
-    risks: {
-      committeeSecurity:
-        template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
-      // TODO: make it required and remove the default
-      upgradeability:
-        template.risks?.upgradeability ??
-        DaUpgradeabilityRisk.ImmutableNoSecurity,
-      relayerFailure:
-        template.risks?.relayerFailure ?? DaRelayerFailureRisk.SelfPropose,
-    },
-    otherConsiderations: template.bridge.otherConsiderations,
+  const bridgeRisks = {
+    upgradeability:
+      template.risks?.upgradeability ??
+      DaUpgradeabilityRisk.ImmutableNoSecurity,
+    relayerFailure:
+      template.risks?.relayerFailure ?? DaRelayerFailureRisk.SelfPropose,
   }
 
-  // DAC "DA-Layer"
-  const layerDescription =
-    template.layer?.description ??
-    'Set of parties responsible for signing and attesting to the availability of data.'
-
-  const layerTechnology =
-    template.layer?.technology?.description ??
-    `
+  const layerTechnology: DaTechnology = {
+    description: `
     ## Architecture
     ![starkex architecture](/images/da-layer-technology/starkex/architecture${template.bridge.membersCount}.png#center)
 
@@ -166,43 +73,32 @@ export function StarkexDAC(template: TemplateVars): DacDaLayer {
     
     Committee members are expected to maintain a database that stores the data associated with each batch, making use of storage solutions with a replication factor of at least 2.
   
-    `
-
-  const layerDisplay: DacDaLayer['display'] = {
-    name,
-    slug: template.project.display.slug,
-    description: layerDescription,
-    links: template.project.display.links,
+    `,
+    references: [
+      {
+        text: 'StarkEx Committee Service - Source Code',
+        href: 'https://github.com/starkware-libs/starkex-data-availability-committee',
+      },
+    ],
   }
 
-  const dacLayer: DacDaLayer = {
-    id: `${template.project.display.slug}-dac-layer`,
-    kind: 'DAC',
-    type: 'DaLayer',
-    systemCategory: 'custom',
-    fallback: template.fallback, // Currently none?
-    // https://github.com/starkware-libs/starkex-data-availability-committee?tab=readme-ov-file#publishing-committee-members-data
-    challengeMechanism: template.challengeMechanism,
-    display: layerDisplay,
-    technology: {
-      description: layerTechnology,
-      risks: template.layer?.technology?.risks,
-      references: [
-        {
-          text: 'StarkEx Committee Service - Source Code',
-          href: 'https://github.com/starkware-libs/starkex-data-availability-committee',
-        },
-      ],
+  return DAC({
+    ...template,
+    layer: {
+      technology: layerTechnology,
     },
-    bridges: [dacBridge],
+    bridge: {
+      ...template.bridge,
+      membersCount: membersCount,
+      requiredMembers: requiredMembers,
+      transactionDataType:
+        template.bridge.transactionDataType ??
+        DacTransactionDataType.StateDiffs,
+      technology: bridgeTechnology,
+    },
     risks: {
-      economicSecurity:
-        template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,
-      fraudDetection:
-        template.risks?.fraudDetection ?? DaFraudDetectionRisk.NoFraudDetection,
+      ...template.risks,
+      ...bridgeRisks,
     },
-    otherConsiderations: template.layer?.otherConsiderations,
-  }
-
-  return dacLayer
+  })
 }

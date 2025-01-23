@@ -3,21 +3,32 @@ import {
   type TechnologyContract,
   technologyContractKey,
 } from '../contract-entry'
+import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import { type ProjectSectionProps } from '../types'
 
 export interface PermissionsSectionProps extends ProjectSectionProps {
   permissions: TechnologyContract[]
   nativePermissions: Record<string, TechnologyContract[]>
+  permissionedEntities?: { name: string; href: string; key?: string }[]
 }
 
 export function PermissionsSection({
   permissions,
   nativePermissions,
+  permissionedEntities,
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
     <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
+      {permissionedEntities && (
+        <h3 className="mt-4 font-bold">
+          The committee has the following members:
+        </h3>
+      )}
+      {permissionedEntities?.map((entity, i) => (
+        <PermissionedEntityEntry key={i} entity={entity} className="my-2" />
+      ))}
       <h3 className="mt-4 font-bold">
         The system uses the following set of permissioned addresses:
       </h3>

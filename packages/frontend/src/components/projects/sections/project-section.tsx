@@ -1,9 +1,9 @@
 'use client'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
-import { type ProjectSectionId } from './types'
+import type { ProjectSectionId } from './types'
 
 export interface ExtendedProjectSectionProps {
   title: string
@@ -24,7 +24,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       id={props.id}
       className={cn(
         'bg-surface-primary p-4 primary-card md:mt-10 md:rounded-lg md:p-8',
-        props.nested && 'mt-10 md:p-0',
+        props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
     >

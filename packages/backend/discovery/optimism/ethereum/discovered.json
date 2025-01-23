@@ -318,7 +318,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "3d 19h",
+        "timeSinceLastL2beatInteraction": "4d 20h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -1341,7 +1341,7 @@
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1685377379,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -2561,7 +2561,7 @@
     "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
     "opstack/MIPS": "0xf864ac3fea78514d3b30e3049c38c5a3f76399f6e436bf16a2258cd0bbc8e523",
     "opstack/OptimismMintableERC20Factory": "0x64cb1472d54c0965d50a3c62611a8f94c2d2e391d563c34811ec883332ea32bc",
-    "opstack/OptimismPortal2": "0x9fe0f63bd7654e2cf92eaa5a9f2d7f8b1279889a4089fbd6074d2bf5149fe736",
+    "opstack/OptimismPortal2": "0xed5050da4c9a6cb7b21374a009fb0e56013844de684666e965970fc6b15dd0b6",
     "opstack/PermissionedDisputeGame": "0x36a741a0ca843da26fc3abda9752ca8c7959bfb49243bf2d486505307ceb0eee",
     "opstack/PreimageOracle": "0x2ae202df56f28d71967553e58704d1791626575b9429822ff6aed98a1623e84d",
     "opstack/SuperchainConfig": "0xcd0f87f8e22f1ec91a0e265660ba0f14e8d1f03cc58cf6b5c3a4f522406b6b05",

@@ -33,10 +33,14 @@ export type ActivityChartData = Awaited<
 >
 
 export const getCachedActivityChartData = cache(
-  async (filter: ActivityProjectFilter, range: ActivityTimeRange) => {
+  async (
+    filter: ActivityProjectFilter,
+    range: ActivityTimeRange,
+    previewRecategorisation: boolean,
+  ) => {
     const db = getDb()
     const projects = getActivityProjects()
-      .filter(createActivityProjectsFilter(filter))
+      .filter(createActivityProjectsFilter(filter, previewRecategorisation))
       .map((p) => p.id)
       .concat(ProjectId.ETHEREUM)
     const isSingleProject = projects.length === 2 // Ethereum + 1 other project
@@ -105,6 +109,7 @@ export const getCachedActivityChartData = cache(
 function getMockActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
+  __: boolean,
 ): ActivityChartData {
   const [from, to] = getRangeWithMax(timeRange, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [

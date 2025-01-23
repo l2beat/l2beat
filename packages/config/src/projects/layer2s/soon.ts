@@ -21,7 +21,7 @@ export const soon: Layer2 = opStackL2({
     shortName: 'Soon',
     slug: 'soon',
     description:
-      'SOON is a Layer 2 chain built on top of the SOON Stack, which itself is based on the OP Stack, but introduces the Decoupled Solana Virtual Machine (SVM).',
+      "SOON is a Layer 2 chain built on top of the SOON Stack. It innovates with a Decoupled SVM that separates Solana's execution (needed for the SOON SVM) from its consensus (not needed since SOON settles on Ethereum), yielding performance and flexibility improvements.",
     links: {
       websites: ['https://soo.network/'],
       apps: ['https://bridge.mainnet.soo.network/home'],

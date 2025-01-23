@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x818bd228bc2817c29bbb8d81706ebb267b3985ae
+
+# Diff at Wed, 22 Jan 2025 08:28:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21543602
+- current block number: 21678827
+
+## Description
+
+One line FacetEtherBridgeV6 upgrade: The gas limit for `bridgeAndCall()` transactions is now hardcoded to 50M.
+
+## Watched changes
+
+```diff
+    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: Official Facet implementation of the Ether Bridge.
+      sourceHashes.1:
+-        "0xc6fc9d901cf59527db2a86ff96ebd61f6a469b56100f1a94498e2f068a91f50b"
++        "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
+      values.$implementation:
+-        "0x100524b68fe88035623F1309Bb3Db9b64e924724"
++        "0x68c56f4D88846A4Cdce966d92D92a0636baf40FE"
+    }
+```
+
+## Source code changes
+
+```diff
+.../FacetEtherBridgeV6/FacetEtherBridgeV6.sol                         | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x732c7bdb83433619e72a9fa0358b5253b3484ac0
 
 # Diff at Mon, 20 Jan 2025 11:09:30 GMT:

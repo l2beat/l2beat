@@ -14,7 +14,6 @@ const arbitrumUpdateInterval = 1 // hours
 const baseUpdateInterval = 1 // hours
 
 export const SP1Blobstream = CELESTIA_BLOBSTREAM({
-  chain: 'ethereum',
   createdAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
   usedIn: [
     {

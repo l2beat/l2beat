@@ -23,7 +23,7 @@ describe('DA-BEAT', () => {
       const getFlatLinks = (links: Record<string, string[]>) =>
         Object.values(links).flatMap((link) => link)
 
-      const links = getFlatLinks(layer.display.links)
+      const links = getFlatLinks(layer.display?.links ?? {})
       const uniqueLinks = new Set(links)
 
       for (const bridge of layer.bridges) {
@@ -55,6 +55,10 @@ describe('DA-BEAT', () => {
         .filter(
           // It makes no sense to list them on the DA-BEAT
           (scaling) => scaling.dataAvailability?.layer.value !== 'None',
+        )
+        .filter(
+          // If project has custom DA described in the project, it will be listed on the DA-BEAT automatically
+          (project) => !project.dataAvailabilitySolution,
         )
 
       const daBeatProjectIds = daLayers.flatMap((daLayer) =>

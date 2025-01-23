@@ -25,7 +25,7 @@ export function MultichainPermissionsSection({
     <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
       {permissionedEntities && (
         <h3 className="mt-4 font-bold">
-          The Committee has the following members:
+          The committee has the following members:
         </h3>
       )}
       {permissionedEntities?.map((entity, i) => (

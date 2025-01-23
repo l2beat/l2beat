@@ -148,10 +148,6 @@ export const sophon: Layer2 = zkStackL2({
       ],
       description: 'Can set the conversion factor for SOPH deposits to Sophon.',
     },
-    ...discovery.getMultisigPermission(
-      'SophonUSDCEscrowMultisig',
-      'Can upgrade the implementation of the external USDC escrow and potentially steal all funds locked therein.',
-    ),
   ],
   milestones: [
     {

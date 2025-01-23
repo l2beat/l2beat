@@ -1,7 +1,7 @@
 {
   "name": "educhain",
   "chain": "arbitrum",
-  "blockNumber": 297394465,
+  "blockNumber": 298084261,
   "configHash": "0x41948154eaf05c3987dfe8e0b0c95a402e43845a73d24ea5ae7f392001f2f2ef",
   "contracts": [
     {
@@ -92,12 +92,12 @@
           "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
         ],
         "allowedOutboxList": ["0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
-        "delayedMessageCount": 363,
+        "delayedMessageCount": 586,
         "nativeToken": "0xf8173a39c56a554837C4C7f104153A005D284D11",
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 1784,
-        "sequencerReportedSubMessageCount": 452607
+        "sequencerMessageCount": 1943,
+        "sequencerReportedSubMessageCount": 650594
       }
     },
     {
@@ -421,7 +421,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1784,
+        "batchCount": 1943,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x0816e1EeE08C701001e5a846f5ae2ee93FABb608"],
         "bridge": "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -452,7 +452,7 @@
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 359,
+        "totalDelayedMessagesRead": 585,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -482,7 +482,31 @@
         },
         {
           "permission": "fastconfirm",
+          "to": "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "fastconfirm",
+          "to": "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "fastconfirm",
+          "to": "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "fastconfirm",
           "to": "0xbdA6d4ecbb176e12314361DF779bdB428f368163",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "fastconfirm",
+          "to": "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
         },
@@ -499,7 +523,25 @@
         },
         {
           "permission": "validate",
+          "to": "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "validate",
           "to": "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": []
+        },
+        {
+          "permission": "validate",
+          "to": "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "validate",
+          "to": "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
@@ -507,7 +549,7 @@
           "permission": "validate",
           "to": "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "via": []
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
         },
         {
           "permission": "validate",
@@ -526,6 +568,12 @@
           "to": "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "to": "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -569,12 +617,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1611,
+        "firstUnresolvedNode": 1659,
         "inbox": "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "lastStakeBlock": 20410965,
-        "latestConfirmed": 1610,
-        "latestNodeCreated": 1610,
+        "latestConfirmed": 1658,
+        "latestNodeCreated": 1658,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -959,13 +1007,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": ["0xbdA6d4ecbb176e12314361DF779bdB428f368163"],
+        "$members": [
+          "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
+          "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
+          "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
+          "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
+          "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
+        ],
         "$threshold": 1,
         "domainSeparator": "0xc5da9fa24d887e1f086e04427708cc783117ce5edc0ea93fe7409944680f8c43",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1585,
+        "multisigThreshold": "1 of 5 (20%)",
+        "nonce": 1634,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1013,6 +1067,18 @@
       "address": "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
       "receivedPermissions": [
         {
+          "permission": "fastconfirm",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
           "permission": "validate",
           "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
@@ -1023,6 +1089,18 @@
     {
       "address": "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
       "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
         {
           "permission": "validate",
           "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
@@ -1035,6 +1113,18 @@
     {
       "address": "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
       "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
         {
           "permission": "validate",
           "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
@@ -1069,6 +1159,18 @@
     {
       "address": "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
       "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }]
+        },
         {
           "permission": "validate",
           "from": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",

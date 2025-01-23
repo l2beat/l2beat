@@ -3,6 +3,7 @@ import { CONTRACTS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import type { Layer3 } from './types'
 
@@ -87,4 +88,10 @@ export const sanko: Layer3 = orbitStackL3({
     },
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

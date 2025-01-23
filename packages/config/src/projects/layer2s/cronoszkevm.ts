@@ -60,7 +60,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
         {
           contract: 'ExecutorFacet',
           references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+            'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L58',
           ],
         },
       ],
@@ -79,7 +79,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
       references: [
         {
           text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          href: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L58',
         },
       ],
     },

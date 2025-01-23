@@ -16,7 +16,7 @@ export default async function Page() {
     <>
       <MainPageHeader>Upcoming</MainPageHeader>
       <ScalingFilterContextProvider>
-        <ScalingUpcomingTables entries={entries} />
+        <ScalingUpcomingTables {...entries} />
       </ScalingFilterContextProvider>
     </>
   )

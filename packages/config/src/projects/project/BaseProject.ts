@@ -1,5 +1,6 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
+  ProjectCountdowns,
   ProjectDataAvailability,
   ScalingProjectCategory,
   ScalingProjectRiskView,
@@ -8,10 +9,10 @@ import type {
 import type { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
 import type { BridgeDisplay, BridgeRiskView } from '../bridges'
 import type {
-  DacBridge,
   EnshrinedBridge,
   NoDaBridge,
   OnChainDaBridge,
+  StandaloneDacBridge,
 } from '../da-beat'
 import type {
   Layer2FinalityConfig,
@@ -48,7 +49,13 @@ export interface BaseProject {
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
-  daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
+  daBridges?: (
+    | OnChainDaBridge
+    | EnshrinedBridge
+    | NoDaBridge
+    | StandaloneDacBridge
+  )[]
+  countdowns?: ProjectCountdowns
   // tags
   isBridge?: true
   isScaling?: true

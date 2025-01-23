@@ -32,6 +32,7 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('deversifi')
@@ -243,4 +244,10 @@ export const rhinofi: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 }

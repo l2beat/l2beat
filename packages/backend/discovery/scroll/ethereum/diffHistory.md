@@ -1,3 +1,293 @@
+Generated with discovered.json: 0x31eadc495ede66dd3cd8d8a251ac8367c850b8d9
+
+# Diff at Wed, 22 Jan 2025 11:44:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21579385
+- current block number: 21679349
+
+## Description
+
+Gov update: Security Council added.
+
+The ScrollOwner can be accessed by 4 Timelocks (see `l2b ui` and new contracts section):
+- SC path (upgrade, ProxyAdmin owner): no delay, SecurityCouncil
+- Slow path (ScrollOwner Admin -> manage all roles): 3d delay, SecurityCouncil
+- Fast path (ops, configs): 1d delay, ScrollOpsMultisig + ScrollExecutorMultisig (!CURRENTLY ALSO ADDITIONAL SCROLLOWNER ADMIN!)
+- Emergency Path (pause, revert batches, remove sequencers): no delay, ScrollEmergencyMultisig + ScrollExecutorMultisig
+
+In summary: Current upgrades are either instant (SC) or 1d delay (ScrollOpsMultisig + ScrollExecutorMultisig). Pausing is instant (ScrollEmergencyMultisig + ScrollExecutorMultisig), ops are 1d delay (ScrollOpsMultisig + ScrollExecutorMultisig).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract TimelockController (0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C)
+    +++ description: None
+```
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.1:
+-        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
++        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
+      values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C"
++        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
+      values.accessControl.roles.SECURITY_COUNCIL_NO_DELAY_ROLE.members.0:
+-        "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
++        "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"
+      values.accessControl.roles.SCROLL_MULTISIG_NO_DELAY_ROLE.members.0:
+-        "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"
+      values.accessControl.roles.EMERGENCY_MULTISIG_NO_DELAY_ROLE.members.0:
+-        "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc"
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_TOLE.members.0:
+-        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
+      values.accessControl.roles.TIMELOCK_7DAY_DELAY_ROLE.members.0:
+-        "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b"
+      values.accessControl.roles.emergency-nodelay:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x826714adD4dDA2b8750794A467C892c0Cd49216b"]}
+      values.accessControl.roles.ops-fast:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x0e58939204eEDa84F796FBc86840A50af10eC4F4"]}
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.0x10d44583:
+-        ["SCROLL_MULTISIG_NO_DELAY_ROLE","EMERGENCY_MULTISIG_NO_DELAY_ROLE"]
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeSequencer(address).1:
+-        "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeSequencer(address).0:
+-        "SCROLL_MULTISIG_NO_DELAY_ROLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeProver(address).1:
+-        "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.removeProver(address).0:
+-        "SCROLL_MULTISIG_NO_DELAY_ROLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).1:
+-        "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0:
+-        "SCROLL_MULTISIG_NO_DELAY_ROLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.addSequencer(address).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.addProver(address).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.updateMaxNumTxInChunk(uint256).0:
+-        "TIMELOCK_7DAY_DELAY_ROLE"
++        "ops-fast"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes).1:
+-        "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
+      values.accessControl.targets.0xa13BAF47339d63B743e7Da8741db5456DAc1E556.revertBatch(bytes,bytes).0:
+-        "SCROLL_MULTISIG_NO_DELAY_ROLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B.updateGasOracle(address):
+-        ["TIMELOCK_1DAY_DELAY_TOLE"]
+      values.accessControl.targets.0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B.updateMaxGasLimit(uint256).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).1:
+-        "EMERGENCY_MULTISIG_NO_DELAY_ROLE"
+      values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0:
+-        "SCROLL_MULTISIG_NO_DELAY_ROLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateMaxReplayTimes(uint256).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateFeeVault(address):
++        ["ops-fast"]
+      values.accessControl.targets.0x987e300fDfb06093859358522a79098848C33852:
+-        {"setIntrinsicParams(uint64,uint64,uint64,uint64)":["SCROLL_MULTISIG_NO_DELAY_ROLE","EMERGENCY_MULTISIG_NO_DELAY_ROLE"]}
+      values.accessControl.targets.0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37.updateWhitelistStatus(address[],bool).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0:
+-        {"updateVerifier(uint64,address)":["SECURITY_COUNCIL_NO_DELAY_ROLE","TIMELOCK_7DAY_DELAY_ROLE"]}
+      values.accessControl.targets.0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6.setERC20Gateway(address[],address[]).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0xb2b10a289A229415a124EFDeF310C10cb004B6ff.updateTokenMapping(address,address).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B.updateTokenMapping(address,address).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6.updateTokenMapping(address,address).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B.updateCircleCaller(address).0:
+-        "TIMELOCK_7DAY_DELAY_ROLE"
++        "ops-fast"
+      values.accessControl.targets.0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B.pauseDeposit(bool).0:
+-        "TIMELOCK_7DAY_DELAY_ROLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B.pauseWithdraw(bool).0:
+-        "TIMELOCK_7DAY_DELAY_ROLE"
++        "emergency-nodelay"
+      values.accessControl.targets.0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d:
+-        {"setPause(bool)":["SCROLL_MULTISIG_NO_DELAY_ROLE","EMERGENCY_MULTISIG_NO_DELAY_ROLE"]}
+      values.accessControl.targets.0x1Ea29d57dAC237152d878758bAe4BeB2668998f6:
+-        {"updateVerifier(uint256,uint64,address)":["TIMELOCK_7DAY_DELAY_ROLE","SECURITY_COUNCIL_NO_DELAY_ROLE"]}
+      values.accessControl.targets.0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B:
+-        {"updateVerifier(uint256,uint64,address)":["TIMELOCK_7DAY_DELAY_ROLE"]}
+      values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4.setBatchConfig(address,(uint96,uint96,uint16,uint24,uint24)).0:
+-        "TIMELOCK_1DAY_DELAY_TOLE"
++        "ops-fast"
+      values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4.grantRole(bytes32,address):
++        ["ops-fast"]
+      values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4.revokeRole(bytes32,address):
++        ["ops-fast"]
+      values.accessControl.targets.0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F.updateVerifier(uint256,uint64,address).0:
+-        "TIMELOCK_7DAY_DELAY_ROLE"
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockController (0xDC1d1189Da69Ae2016E4976A43De20972D349B1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockSC (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockSlow (0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x69C2eD64171bF5737c2B78bdF722e68a032B2825)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x9479ABfebefEea3c846163012a472b44F305b3d7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xC3eA7C657884BB380B66D79C36aDCb5658b01896)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GnosisSafeL2/GnosisSafeL2.sol   | 1032 +++++++++++++++++
+ .../.flat/GnosisSafeL2/GnosisSafeProxy.p.sol       |   35 +
+ .../Safe.sol                                       | 1088 +++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 +++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 +++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 +++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../scroll/ethereum/.flat/SecurityCouncil/Safe.sol | 1088 +++++++++++++++++
+ .../ethereum/.flat/SecurityCouncil/SafeProxy.p.sol |   37 +
+ .../TimelockEmergency.sol}                         |    2 +-
+ .../TimelockSC.sol}                                |    2 +-
+ .../scroll/ethereum/.flat/TimelockSlow.sol         | 1223 ++++++++++++++++++++
+ 15 files changed, 7917 insertions(+), 2 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579385 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C) {
+    +++ description: None
+      name:
+-        "TimelockSlow"
++        "TimelockController"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C","0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]}}
+    }
+```
+
+```diff
+    contract ScrollExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      name:
+-        "ExecutorMultisig"
++        "ScrollExecutorMultisig"
+    }
+```
+
+```diff
+    contract ScrollFeeVaultMultisig (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      name:
+-        "FeeVaultMultisig"
++        "ScrollFeeVaultMultisig"
+    }
+```
+
+```diff
+    contract ScrollEmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      name:
+-        "EmergencyMultisig"
++        "ScrollEmergencyMultisig"
+    }
+```
+
+```diff
+    contract TimelockController (0xDC1d1189Da69Ae2016E4976A43De20972D349B1b) {
+    +++ description: None
+      name:
+-        "TimelockMid"
++        "TimelockController"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xDC1d1189Da69Ae2016E4976A43De20972D349B1b","0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe"]}}
+    }
+```
+
+```diff
+    contract ScrollOpsMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      name:
+-        "ScrollMultisig"
++        "ScrollOpsMultisig"
+    }
+```
+
 Generated with discovered.json: 0xa59dbabba9ddd32f5a344a5e98932b5d437a2dfd
 
 # Diff at Mon, 20 Jan 2025 11:10:01 GMT:

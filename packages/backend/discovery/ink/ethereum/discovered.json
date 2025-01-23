@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ethereum",
-  "blockNumber": 21629240,
+  "blockNumber": 21683128,
   "configHash": "0xb77db0540406069bab9d3e4b5fcf3fbc7747215e8a2ff50ec80cd9cdbeb79811",
   "contracts": [
     {
@@ -185,7 +185,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 160,
+        "gameCount": 191,
         "gameImpls": [
           "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD",
           "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963",
@@ -195,7 +195,7 @@
         ],
         "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 159,
+        "permissionedGamesTotal": 189,
         "version": "1.0.0"
       }
     },
@@ -235,7 +235,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "560000000000000000",
+        "totalSupply": "2960000000000000000",
         "version": "1.1.0"
       }
     },
@@ -310,7 +310,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "263502800000000000",
+        "totalSupply": "431096800000000000",
         "version": "1.1.0"
       }
     },
@@ -482,7 +482,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "OptimismPortal",
-      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -490,7 +490,7 @@
           "via": [{ "address": "0xd56045E68956FCe2576E680c95a4750cf8241f79" }]
         }
       ],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1733498411,
       "values": {
         "$admin": "0xd56045E68956FCe2576E680c95a4750cf8241f79",
@@ -509,14 +509,14 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 21629233
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 21683119
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
-        "RespectedGameString": "PermissionedDisputeGame",
-        "respectedGameType": 1,
-        "respectedGameTypeUpdatedAt": 1733498411,
+        "RespectedGameString": "FaultDisputeGame",
+        "respectedGameType": 0,
+        "respectedGameTypeUpdatedAt": 1737576635,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "systemConfig": "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
         "version": "3.10.0"
@@ -691,7 +691,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624994",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625254",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -843,7 +843,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1029,7 +1029,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 98,
+        "nonce": 99,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1128,7 +1128,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 20,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1174,7 +1174,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2218,7 +2218,7 @@
     "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
     "opstack/MIPS": "0xf864ac3fea78514d3b30e3049c38c5a3f76399f6e436bf16a2258cd0bbc8e523",
     "opstack/OptimismMintableERC20Factory": "0x64cb1472d54c0965d50a3c62611a8f94c2d2e391d563c34811ec883332ea32bc",
-    "opstack/OptimismPortal2": "0x9fe0f63bd7654e2cf92eaa5a9f2d7f8b1279889a4089fbd6074d2bf5149fe736",
+    "opstack/OptimismPortal2": "0xed5050da4c9a6cb7b21374a009fb0e56013844de684666e965970fc6b15dd0b6",
     "opstack/PermissionedDisputeGame": "0x36a741a0ca843da26fc3abda9752ca8c7959bfb49243bf2d486505307ceb0eee",
     "opstack/PreimageOracle": "0x2ae202df56f28d71967553e58704d1791626575b9429822ff6aed98a1623e84d",
     "opstack/SuperchainConfig": "0xcd0f87f8e22f1ec91a0e265660ba0f14e8d1f03cc58cf6b5c3a4f522406b6b05",

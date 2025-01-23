@@ -4,7 +4,6 @@ import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 export class PriceProvider {
   constructor(private readonly client: CoingeckoQueryService) {}
 
-  // TODO: operate on ticker
   async getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,
