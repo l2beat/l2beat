@@ -1,8 +1,16 @@
 import { layer2ToBackendProject } from '@l2beat/backend-shared'
+import { Logger } from '@l2beat/backend-tools'
 import { layer2s } from '@l2beat/config'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+} from '@l2beat/shared'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './LocalExecutor'
 import { mapConfig } from './mapConfig'
+import { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
+import { PriceProvider } from './providers/PriceProvider'
 
 main().catch(() => {
   process.exit(1)
@@ -17,7 +25,26 @@ async function main() {
 
   const config = mapConfig(backendProject, arbitrum.chainConfig)
 
-  const localExecutor = new LocalExecutor()
+  const http = new HttpClient()
+  const coingeckoApiKey = undefined
+
+  const coingeckoClient = new CoingeckoClient({
+    apiKey: coingeckoApiKey,
+    retryStrategy: 'RELIABLE',
+    logger: Logger.SILENT,
+    callsPerMinute: coingeckoApiKey ? 400 : 10,
+    http,
+    sourceName: 'coingecko',
+  })
+  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  const priceProvider = new PriceProvider(coingeckoQueryService)
+  const circulatingSupplyProvider = new CirculatingSupplyProvider(
+    coingeckoQueryService,
+  )
+  const localExecutor = new LocalExecutor(
+    priceProvider,
+    circulatingSupplyProvider,
+  )
   const tvs = await localExecutor.run(config, [UnixTime.now()])
 
   console.log(tvs)

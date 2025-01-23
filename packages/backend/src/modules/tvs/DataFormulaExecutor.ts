@@ -1,9 +1,15 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
+import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
+import type { PriceProvider } from './providers/PriceProvider'
 import type { AmountConfig, PriceConfig } from './types'
 
 export class DataFormulaExecutor {
-  constructor(private storage: DataStorage) {}
+  constructor(
+    private storage: DataStorage,
+    private priceProvider: PriceProvider,
+    private circulatingSupplyProvider: CirculatingSupplyProvider,
+  ) {}
 
   /** Fetches data from APIs. Writes result to LocalStorage */
   async execute(
@@ -24,10 +30,22 @@ export class DataFormulaExecutor {
     }
   }
 
-  fetchAmount(_config: AmountConfig, _timestamp: UnixTime): Promise<number> {
+  async fetchAmount(
+    config: AmountConfig,
+    timestamp: UnixTime,
+  ): Promise<number> {
+    switch (config.type) {
+      case 'circulatingSupply':
+        return await this.circulatingSupplyProvider.getCirculatingSupply(
+          config.ticker,
+          timestamp,
+        )
+    }
+
     throw new Error('Not implemented')
   }
-  fetchPrice(_config: PriceConfig, _timestamp: UnixTime): Promise<number> {
-    throw new Error('Not implemented')
+
+  async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
+    return await this.priceProvider.getPrice(config.ticker, timestamp)
   }
 }
