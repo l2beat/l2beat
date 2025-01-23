@@ -37,7 +37,6 @@ export const metal: Layer2 = opStackL2({
         'https://linkedin.com/company/metallicus',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.metall2.com',
   genesisTimestamp: new UnixTime(1711567115),

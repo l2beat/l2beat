@@ -38,7 +38,6 @@ export const ethernity: Layer2 = opStackL2({
         'https://discord.com/invite/EthernityChain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['ERN'],
   discoveryDrivenData: true,

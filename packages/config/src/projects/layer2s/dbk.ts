@@ -27,7 +27,6 @@ export const dbk: Layer2 = opStackL2({
         'https://debank.com/official/117425',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.mainnet.dbkchain.io/',
   genesisTimestamp: new UnixTime(1717461337),

@@ -83,7 +83,6 @@ export const rss3: Layer2 = opStackL2({
         'https://t.me/rss3_en',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {

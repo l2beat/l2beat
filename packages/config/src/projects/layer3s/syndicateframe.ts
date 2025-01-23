@@ -37,7 +37,6 @@ export const syndicateframe: Layer3 = opStackL3({
         'https://x.com/syndicateio',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc-frame.syndicate.io',
   genesisTimestamp: new UnixTime(1707371473),

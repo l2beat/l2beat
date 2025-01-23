@@ -155,7 +155,6 @@ export const soneium: Layer2 = {
         'https://discord.gg/rWWPBHug9w',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

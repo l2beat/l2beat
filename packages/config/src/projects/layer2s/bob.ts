@@ -33,7 +33,6 @@ export const bob: Layer2 = opStackL2({
       repositories: ['https://github.com/bob-collective'],
       socialMedia: ['https://twitter.com/build_on_bob'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

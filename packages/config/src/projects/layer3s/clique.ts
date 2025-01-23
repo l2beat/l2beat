@@ -32,7 +32,6 @@ export const clique: Layer3 = underReviewL3({
       repositories: ['https://github.com/STPDevteam/'],
       socialMedia: ['https://x.com/STP_Network', 'https://t.me/STPofficial'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.myclique.io/',
   transactionApi: {

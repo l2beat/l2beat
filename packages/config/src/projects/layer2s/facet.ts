@@ -34,7 +34,6 @@ export const facet: Layer2 = opStackL2({
         'https://discord.com/invite/facet',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

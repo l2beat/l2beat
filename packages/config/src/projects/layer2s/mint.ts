@@ -32,7 +32,6 @@ export const mint: Layer2 = opStackL2({
         'https://community.mintchain.io',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'mint',

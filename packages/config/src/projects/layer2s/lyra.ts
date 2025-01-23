@@ -42,7 +42,6 @@ export const lyra: Layer2 = opStackL2({
         'https://discord.gg/Derive',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),

@@ -37,7 +37,6 @@ export const xrone: Layer3 = underReviewL3({
         'https://t.me/xrfoundation',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://xr-one.calderachain.xyz/http',
   escrows: [

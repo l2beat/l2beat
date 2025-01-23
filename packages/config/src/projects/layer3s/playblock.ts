@@ -33,7 +33,6 @@ export const playblock: Layer3 = orbitStackL3({
       repositories: ['https://github.com/playnance-games/PlayBlock'],
       socialMedia: ['https://twitter.com/Playnancetech'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // not on coingecko
   // gasTokens: ['PBG'],

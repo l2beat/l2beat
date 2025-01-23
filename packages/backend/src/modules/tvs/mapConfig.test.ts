@@ -94,7 +94,7 @@ describe(mapConfig.name, () => {
       ),
     ).toEqual({
       id: 'arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
-      ticker: 'stAethir',
+      ticker: 'ATH',
       amount: {
         type: 'totalSupply',
         address: EthereumAddress('0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
@@ -141,7 +141,7 @@ describe(extractPricesAndAmounts.name, () => {
           valueForTotal: undefined,
         }),
         mockObject<Token>({
-          ticker: 'stAethir',
+          ticker: 'ATH',
           amount: {
             type: 'totalSupply',
             address: EthereumAddress(
@@ -160,6 +160,7 @@ describe(extractPricesAndAmounts.name, () => {
     expect(result).toEqual({
       amounts: [
         {
+          id: '11466053d846',
           address: EthereumAddress(
             '0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
           ),
@@ -169,7 +170,6 @@ describe(extractPricesAndAmounts.name, () => {
             '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             '0xcEe284F754E854890e311e3280b767F80797180d',
           ],
-          id: '11466053d846',
           type: 'balanceOfEscrow',
         },
         {
@@ -193,8 +193,8 @@ describe(extractPricesAndAmounts.name, () => {
           ticker: 'ARB',
         },
         {
-          id: 'd909709e003f',
-          ticker: 'stAethir',
+          id: '7aac1877cd8b',
+          ticker: 'ATH',
         },
       ],
     })
@@ -229,7 +229,7 @@ describe(extractPricesAndAmounts.name, () => {
         // - amount formula as totalSupply on L2
         // - valueForProject formula as totalSupply of solveBTC on L2 - balance of WBTC locked in solvBTC escrow
         mockObject<Token>({
-          ticker: 'solvBTC',
+          ticker: 'SolvBTC',
           amount: {
             type: 'totalSupply',
             address: solvBTCContractAddress,
@@ -248,7 +248,7 @@ describe(extractPricesAndAmounts.name, () => {
                   chain: 'bob',
                   decimals: 18,
                 },
-                ticker: 'solvBTC',
+                ticker: 'SolvBTC',
               },
               {
                 type: 'value',
@@ -300,8 +300,8 @@ describe(extractPricesAndAmounts.name, () => {
           ticker: 'WBTC',
         },
         {
-          id: 'a3107e58f901',
-          ticker: 'solvBTC',
+          id: '3eb7e84f0423',
+          ticker: 'SolvBTC',
         },
       ],
     })

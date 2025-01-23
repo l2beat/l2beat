@@ -33,7 +33,6 @@ export const thebinaryholdings: Layer2 = opStackL2({
         'https://discord.gg/wCXJmTBGr2',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zero.thebinaryholdings.com',
   genesisTimestamp: new UnixTime(1719397465),

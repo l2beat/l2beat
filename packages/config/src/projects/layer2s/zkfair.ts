@@ -129,7 +129,6 @@ export const zkfair: Layer2 = {
       repositories: ['https://github.com/ZKFair'],
       socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [

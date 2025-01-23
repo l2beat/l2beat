@@ -80,7 +80,6 @@ export const loopring: Layer2 = {
         'https://loopring.substack.com/',
       ],
     },
-    activityDataSource: 'Explorer API',
     liveness: {
       explanation:
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',

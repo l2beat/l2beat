@@ -115,7 +115,6 @@ export const kroma: Layer2 = {
         'https://medium.com/@kroma-network',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

@@ -67,7 +67,6 @@ export const cyber: Layer2 = opStackL2({
         'https://cyber.co/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,

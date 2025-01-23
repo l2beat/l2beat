@@ -33,7 +33,6 @@ export const mode: Layer2 = opStackL2({
         'https://t.me/ModeNetworkOfficial',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['MODE'],
   rpcUrl: 'https://mainnet.mode.network/',

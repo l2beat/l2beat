@@ -18,7 +18,6 @@ export class DataFormulaExecutor {
       }
 
       for (const price of prices) {
-        // TODO: PriceProvider which operates on tickers
         const v = await this.fetchPrice(price, timestamp)
         await this.storage.writePrice(price.id, timestamp, v)
       }
