@@ -16,11 +16,12 @@ import { getTvlProjectStats } from '../tvl/get-tvl-project-stats'
 import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
+import { getDaSolution } from './get-scaling-project-da-solution'
 import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
 
-type ScalingProject = Layer2 | Layer3
+export type ScalingProject = Layer2 | Layer3
 
 export type ScalingProjectEntry = Awaited<
   ReturnType<typeof getScalingProjectEntry>
@@ -50,6 +51,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     reasonsForBeingOther: project.display.reasonsForBeingOther,
     countdowns: getCountdowns(project),
   }
+  const daSolution = getDaSolution(project)
 
   const rosetteValues = getScalingRosetteValues(project.riskView)
   const isProjectVerified = isVerified(project)
@@ -61,6 +63,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
       contractsVerificationStatuses,
       projectsChangeReport,
       rosetteValues,
+      daSolution,
     })
 
     return {
@@ -91,6 +94,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     project,
     hostChain,
     isVerified: isProjectVerified,
+    daSolution,
     rosetteValues,
     isHostChainVerified,
     projectsChangeReport,

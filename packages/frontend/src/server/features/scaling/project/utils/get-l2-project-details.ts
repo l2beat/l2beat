@@ -1,9 +1,9 @@
-import { type Layer2 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { Layer2 } from '@l2beat/config'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type RosetteValue } from '~/components/rosette/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { RosetteValue } from '~/components/rosette/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
   isTvlChartDataEmpty,
@@ -19,6 +19,7 @@ import { getOtherConsiderationsSection } from '~/utils/project/technology/get-ot
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
+import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
   project: Layer2
@@ -26,6 +27,7 @@ interface Params {
   contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
+  daSolution?: DaSolution
 }
 
 export async function getL2ProjectDetails({
@@ -34,6 +36,7 @@ export async function getL2ProjectDetails({
   contractsVerificationStatuses,
   projectsChangeReport,
   rosetteValues,
+  daSolution,
 }: Params) {
   const permissionsSection = project.permissions
     ? getPermissionsSection(
@@ -43,6 +46,7 @@ export async function getL2ProjectDetails({
           isUnderReview: !!project.isUnderReview,
           permissions: project.permissions,
           nativePermissions: project.nativePermissions,
+          daSolution,
         },
         contractsVerificationStatuses,
       )
@@ -58,6 +62,7 @@ export async function getL2ProjectDetails({
       isUnderReview: project.isUnderReview,
       escrows: project.config.escrows,
       architectureImage: project.display.architectureImage,
+      daSolution,
     },
     contractsVerificationStatuses,
     projectsChangeReport,

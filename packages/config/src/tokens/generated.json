@@ -11725,6 +11725,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1716417748,
       "coingeckoListingTimestamp": 1720483200,
+      "untilTimestamp": 1736409600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38625/large/image_%281%29.png?1718168417",
       "chainId": 111188,
