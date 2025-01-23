@@ -24,7 +24,7 @@ export class DataFormulaExecutor {
     }
   }
 
-  fetchAmount(_config: AmountConfig, _timestamp: UnixTime): Promise<bigint> {
+  fetchAmount(_config: AmountConfig, _timestamp: UnixTime): Promise<number> {
     throw new Error('Not implemented')
   }
   fetchPrice(_config: PriceConfig, _timestamp: UnixTime): Promise<number> {
