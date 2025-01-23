@@ -46,7 +46,7 @@ export function LogoGenerator() {
   )
 
   return (
-    <div className="pr-4">
+    <div className="p-4">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col">
           <label htmlFor="type">Type</label>
@@ -58,7 +58,7 @@ export function LogoGenerator() {
             onChange={(e) =>
               setTypes(Array.from(e.target.selectedOptions).map((o) => o.value))
             }
-            className="bg-gray-600"
+            className="text-black"
           >
             <option value="layer2">Layer 2s</option>
             <option value="layer3">Layer 3s</option>
@@ -109,7 +109,7 @@ export function LogoGenerator() {
         <div className="flex flex-col">
           <span>Group 2 (Comma separated list of slugs)</span>
           <textarea
-            className="bg-gray-600"
+            className="text-black"
             value={secondGroupValue}
             onChange={(e) => setSecondGroupValue(e.target.value)}
           />
