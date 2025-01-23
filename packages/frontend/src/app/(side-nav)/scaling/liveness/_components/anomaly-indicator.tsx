@@ -1,4 +1,4 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 import {
@@ -7,20 +7,16 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { type LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import {
-  type AnomalyEntry,
-  type AnomalyIndicatorEntry,
-} from '~/server/features/scaling/liveness/utils/get-anomaly-entries'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { LivenessDurationCell } from './liveness-duration-cell'
 
 interface Props {
-  anomalyEntries: AnomalyIndicatorEntry[]
+  anomalies: LivenessAnomaly[]
   showComingSoon?: boolean
 }
 
-export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
+export function AnomalyIndicator({ anomalies, showComingSoon }: Props) {
   if (showComingSoon) {
     return (
       <div
@@ -39,7 +35,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
     )
   }
 
-  if (anomalyEntries.length === 0) {
+  if (anomalies.length === 0) {
     return (
       <div
         className="w-min select-none text-center"
@@ -54,8 +50,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
       </div>
     )
   }
-
-  const data = anomalyEntries.filter((anomaly) => anomaly.isAnomaly)
+  const indicators = toAnomalyIndicatorEntries(anomalies)
 
   return (
     <Tooltip>
@@ -64,28 +59,26 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
           className="flex h-6 w-min gap-x-0.5"
           title="Anomalies in the last 30 days"
         >
-          {anomalyEntries.map((anomaly, i) => (
+          {indicators.map((indicator, i) => (
             <div
               key={i}
               className={cn(
                 'w-0.5 rounded-full',
-                anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
+                indicator ? 'bg-orange-400' : 'bg-blue-500',
               )}
             />
           ))}
         </div>
       </TooltipTrigger>
       <TooltipContent fitContent>
-        <AnomalyTooltipContent anomalyEntries={data} />
+        <AnomalyTooltipContent anomalies={anomalies} />
       </TooltipContent>
     </Tooltip>
   )
 }
 
-function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
-  const anomalies = props.anomalyEntries
-    .flatMap((anomalyEntry) => anomalyEntry.anomalies)
-    .reverse()
+function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
+  const anomalies = props.anomalies.reverse()
 
   if (anomalies.length === 0) {
     return <div>No anomalies detected in the last 30 days</div>
@@ -94,29 +87,62 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   return (
     <>
       <span>Anomalies from last 30 days:</span>
-      <ul className="ml-4 mt-2.5 list-disc space-y-4 text-gray-500 dark:text-gray-50">
-        {anomalies.slice(0, 4).map((anomaly) => (
-          <li key={anomaly.timestamp}>
-            <span>
-              {formatTimestamp(anomaly.timestamp, {
-                mode: 'datetime',
-                longMonthName: true,
-              })}
-            </span>
-            <div className="mt-2 text-primary">
-              <AnomalyTypeBadge type={anomaly.type} />
-              <span className="ml-2.5 inline-flex gap-1">
+      <div className="-mx-4 mt-2 list-disc">
+        {anomalies.slice(0, 4).map((anomaly) => {
+          const endDate = anomaly.timestamp + anomaly.durationInSeconds
+          const endDateUnixTime = new UnixTime(endDate)
+          const isLive = UnixTime.now().add(-4, 'hours').lte(endDateUnixTime)
+          return (
+            <div
+              className="space-y-0.5 border-t border-divider px-4 py-2 text-sm"
+              key={anomaly.timestamp}
+            >
+              {isLive && (
+                <div className="mb-1 flex items-center justify-center gap-2 rounded bg-red-500/10 text-red-500">
+                  <span className="relative flex size-2">
+                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex size-2 rounded-full bg-red-500"></span>
+                  </span>
+                  <span className="font-medium">Live</span>
+                </div>
+              )}
+              <div className="flex justify-between gap-2">
+                Start:
+                <span>
+                  {formatTimestamp(anomaly.timestamp, {
+                    mode: 'datetime',
+                    longMonthName: true,
+                  })}
+                </span>
+              </div>
+              {!isLive && (
+                <div className="flex justify-between gap-2">
+                  End:
+                  <span>
+                    {formatTimestamp(endDate, {
+                      mode: 'datetime',
+                      longMonthName: true,
+                    })}
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between gap-2">
                 Duration:
                 <LivenessDurationCell
                   durationInSeconds={anomaly.durationInSeconds}
                 />
-              </span>
+              </div>
+              <div className="flex justify-between gap-2">
+                Type: <AnomalyTypeBadge type={anomaly.type} />
+              </div>
             </div>
-          </li>
-        ))}
-      </ul>
+          )
+        })}
+      </div>
       {anomalies.length > 4 && (
-        <div className="mt-2.5">And {anomalies.length - 4} more</div>
+        <div className="-mx-4 border-t border-divider px-4 pt-2">
+          And {anomalies.length - 4} more
+        </div>
       )}
     </>
   )
@@ -126,7 +152,7 @@ function AnomalyTypeBadge(props: {
   type: LivenessAnomaly['type']
 }) {
   return (
-    <span className="w-max rounded bg-orange-400 px-1.5 py-0.5 text-black">
+    <span className="w-max rounded bg-orange-400 px-1.5 text-black">
       {typeToLabel(props.type)}
     </span>
   )
@@ -143,4 +169,31 @@ function typeToLabel(type: LivenessAnomaly['type']) {
     default:
       assertUnreachable(type)
   }
+}
+
+function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {
+  const now = UnixTime.now()
+  // We want to show last 30 days with today included so we start 29 days ago
+  const thirtyDaysAgo = now.add(-29, 'days')
+  let dayInLoop = thirtyDaysAgo
+  const result: boolean[] = []
+
+  while (dayInLoop.lte(now)) {
+    const anomaliesInGivenDay = anomalies.filter((a) => {
+      const unixTimestamp = new UnixTime(a.timestamp)
+      return dayInLoop.inInclusiveRange(
+        unixTimestamp.toStartOf('day'),
+        unixTimestamp.add(a.durationInSeconds, 'seconds').toEndOf('day'),
+      )
+    })
+
+    if (anomaliesInGivenDay.length === 0) {
+      result.push(false)
+    } else {
+      result.push(true)
+    }
+
+    dayInLoop = dayInLoop.add(1, 'days')
+  }
+  return result
 }

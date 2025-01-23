@@ -25,7 +25,10 @@ export function toAnomalyIndicatorEntries(
   while (dayInLoop.lte(now)) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
       const unixTimestamp = new UnixTime(a.timestamp)
-      return unixTimestamp.toYYYYMMDD() === dayInLoop.toYYYYMMDD()
+      return dayInLoop.inInclusiveRange(
+        unixTimestamp,
+        unixTimestamp.add(a.durationInSeconds, 'seconds'),
+      )
     })
 
     if (anomaliesInGivenDay.length === 0) {

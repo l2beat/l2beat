@@ -125,6 +125,10 @@ export class UnixTime {
     return this.gt(from) && this.lt(to)
   }
 
+  inInclusiveRange(from: UnixTime, to: UnixTime) {
+    return this.gte(from) && this.lte(to)
+  }
+
   toNumber() {
     return this.timestamp
   }
