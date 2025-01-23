@@ -1,15 +1,18 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const projects = [...layer2s, ...layer3s, ...bridges]
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['isBridge', 'isScaling'],
+    optional: ['isUpcoming', 'isArchived', 'scalingInfo'],
+  })
 
-  const data = projects.map((l2) => ({
-    name: l2.display.name,
-    type: l2.type,
-    slug: l2.display.slug,
-    isUpcoming: l2.isUpcoming,
-    isArchived: l2.isArchived,
+  const data = projects.map((project) => ({
+    name: project.name,
+    type: project.scalingInfo?.layer ?? 'bridge',
+    slug: project.slug,
+    isUpcoming: project.isUpcoming,
+    isArchived: project.isArchived,
   }))
 
   return NextResponse.json(data, {
