@@ -6,7 +6,6 @@ import type {
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
 } from '../../../common'
-import type { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import type { DaLinks } from './DaLinks'
 import type { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 import type { DaRisk } from './DaRisk'
@@ -133,7 +132,7 @@ interface DaBridgeDisplay {
 
 export type DaBridgeRisks = {
   /** Attestation - TBD. */
-  committeeSecurity: DaCommitteeSecurityRisk
+  committeeSecurity: DaRisk
   /** Upgradeability - TBD. @unit seconds. */
   upgradeability: DaRisk
   /** Relayer failure - TBD. */

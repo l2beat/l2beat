@@ -12,7 +12,6 @@ import {
   DaUpgradeabilityRisk,
   DacTransactionDataType,
 } from '../da-beat/types'
-import { DaChallengeMechanism } from '../da-beat/types/DaChallengeMechanism'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -79,7 +78,7 @@ export const redstone: Layer2 = opStackL2({
     },
     systemCategory: 'custom',
     fallback: DA_LAYERS.ETH_CALLDATA,
-    challengeMechanism: DaChallengeMechanism.DaChallenges,
+    challengeMechanism: 'DA Challenges',
     technology: {
       description: `
       ## Architecture

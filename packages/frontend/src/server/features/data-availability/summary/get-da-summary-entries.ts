@@ -1,12 +1,11 @@
 import {
   type BlockchainDaLayer,
   type DaChallengeMechanism,
-  type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
   type DaRelayerFailureRisk,
+  type DaRisk,
   type DaServiceDaLayer,
-  type DaUpgradeabilityRisk,
   type DataAvailabilityLayer,
   type UsedInProject,
   daLayers,
@@ -66,8 +65,8 @@ export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
   risks: {
     isNoBridge: boolean
     relayerFailure: DaRelayerFailureRisk
-    upgradeability: DaUpgradeabilityRisk
-    committeeSecurity: DaCommitteeSecurityRisk
+    upgradeability: DaRisk
+    committeeSecurity: DaRisk
   }
   usedIn: UsedInProject[]
   dacInfo:

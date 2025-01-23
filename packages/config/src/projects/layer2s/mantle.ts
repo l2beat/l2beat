@@ -51,6 +51,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   systemCategory: 'custom',
+  challengeMechanism: 'None',
   technology: {
     description: `
       ## Architecture

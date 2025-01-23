@@ -8,7 +8,6 @@ import type {
   OnChainDaBridge,
   StandaloneDacBridge,
 } from './DaBridge'
-import type { DaChallengeMechanism } from './DaChallengeMechanism'
 import type { DaEconomicSecurity } from './DaEconomicSecurity'
 import type { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import type { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
@@ -67,10 +66,12 @@ export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
   /** Fallback */
   fallback?: ScalingDaLayerOption
   /** Supported challenge mechanism in place */
-  challengeMechanism?: DaChallengeMechanism
+  challengeMechanism: DaChallengeMechanism
   /** Number of operators in the data availability layer. */
   numberOfOperators?: number
 }
+
+export type DaChallengeMechanism = 'DA Challenges' | 'None'
 
 export type DaServiceDaLayer = CommonDaLayer & {
   kind: 'DA Service'

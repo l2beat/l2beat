@@ -4,6 +4,7 @@ import {
   DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaLayerRisks,
+  type DaRisk,
   type DaServiceDaLayer,
   type DacDaLayer,
   type IntegratedDacBridge,
@@ -94,7 +95,7 @@ function adjustSentiment(totalValueSecured: number, slashableFunds: number) {
 }
 
 // Should be a parte of the config
-function getCommitteeSecurity(bridge: Bridge): DaCommitteeSecurityRisk {
+function getCommitteeSecurity(bridge: Bridge): DaRisk {
   if (
     bridge.type !== 'IntegratedDacBridge' ||
     bridge.risks.committeeSecurity.type !== 'Auto'

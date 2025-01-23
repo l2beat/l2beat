@@ -1,11 +1,10 @@
 import {
   type BlockchainDaLayer,
-  type DaCommitteeSecurityRisk,
   type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
   type DaRelayerFailureRisk,
+  type DaRisk,
   type DaServiceDaLayer,
-  type DaUpgradeabilityRisk,
   daLayers,
   isDaBridgeVerified,
   layer2s,
@@ -48,8 +47,8 @@ export interface DaRiskEntry extends CommonProjectEntry {
 export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
   risks: {
     relayerFailure: DaRelayerFailureRisk
-    upgradeability: DaUpgradeabilityRisk
-    committeeSecurity: DaCommitteeSecurityRisk
+    upgradeability: DaRisk
+    committeeSecurity: DaRisk
   }
   tvs: number
 }

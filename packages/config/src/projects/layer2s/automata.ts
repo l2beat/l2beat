@@ -4,7 +4,6 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
-  DaChallengeMechanism,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
@@ -84,7 +83,7 @@ export const automata: Layer2 = opStackL2({
     },
     systemCategory: 'custom',
     fallback: DA_LAYERS.ETH_CALLDATA,
-    challengeMechanism: DaChallengeMechanism.DaChallenges,
+    challengeMechanism: 'DA Challenges',
     technology: {
       description: `
       ## Architecture

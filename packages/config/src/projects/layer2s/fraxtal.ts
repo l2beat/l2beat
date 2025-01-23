@@ -107,6 +107,7 @@ export const fraxtal: Layer2 = opStackL2({
         'FraxtalDA is a custom data availability solution built by the Fraxtal team.',
     },
     systemCategory: 'custom',
+    challengeMechanism: 'None',
     technology: {
       description: `
       ## Architecture

@@ -1,6 +1,7 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import {
   type DaBridgeRisks,
+  type DaChallengeMechanism,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
@@ -46,7 +47,7 @@ type Optionals = {
     | 'otherConsiderations'
   >
   /** Optional challenge mechanism, defaults to undefined */
-  challengeMechanism?: DacDaLayer['challengeMechanism']
+  challengeMechanism?: DaChallengeMechanism
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -119,7 +120,7 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
     type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback,
-    challengeMechanism: template.challengeMechanism,
+    challengeMechanism: template.challengeMechanism ?? 'None',
     technology: {
       ...template.layer?.technology,
       description: layerTechnology,
