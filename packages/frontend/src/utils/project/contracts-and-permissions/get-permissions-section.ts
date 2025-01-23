@@ -108,7 +108,7 @@ export function getPermissionsSection(
       ? {
           layerName: projectParams.daSolution.layerName,
           bridgeName: projectParams.daSolution.bridgeName,
-          hostChainName: slugToDisplayName(projectParams.daSolution.hostChain),
+          hostChain: slugToDisplayName(projectParams.daSolution.hostChain),
           permissions:
             projectParams.daSolution.permissions?.flatMap((permission) =>
               toTechnologyContract(

@@ -1,6 +1,7 @@
 'use client'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
+import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import {
   ContractEntry,
@@ -23,12 +24,9 @@ export interface ContractsSectionProps {
   chainName: string
   contracts: TechnologyContract[]
   nativeContracts: Record<string, TechnologyContract[]>
-  daSolution?: {
-    layerName: string
-    bridgeName: string
-    hostChainName: string
+  daSolution?: DaSolutionWith<{
     contracts: TechnologyContract[]
-  }
+  }>
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   references: Reference[]
@@ -158,7 +156,7 @@ export function ContractsSection(props: ContractsSectionProps) {
           <h3 className="font-bold">
             The project uses {props.daSolution.layerName} with the{' '}
             {props.daSolution.bridgeName} DA Bridge that consist of the
-            following contracts on the {props.daSolution.hostChainName}:
+            following contracts on the {props.daSolution.hostChain}:
           </h3>
           <div className="my-4">
             {props.daSolution.contracts.map((contract) => (

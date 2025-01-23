@@ -114,7 +114,7 @@ export function getContractsSection(
       ? {
           layerName: projectParams.daSolution?.layerName,
           bridgeName: projectParams.daSolution?.bridgeName,
-          hostChainName: slugToDisplayName(projectParams.daSolution?.hostChain),
+          hostChain: slugToDisplayName(projectParams.daSolution?.hostChain),
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
             const isUnverified = isContractUnverified(
               contract,

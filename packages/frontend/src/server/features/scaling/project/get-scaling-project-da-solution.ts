@@ -1,9 +1,24 @@
-import { daLayers } from '@l2beat/config'
+import {
+  type ScalingProjectContract,
+  type ScalingProjectPermission,
+  daLayers,
+} from '@l2beat/config'
 import type { ScalingProject } from './get-scaling-project-entry'
 
-export type DaSolution = ReturnType<typeof getDaSolution>
+type Common = {
+  layerName: string
+  bridgeName: string
+  hostChain: string
+}
 
-export function getDaSolution(project: ScalingProject) {
+export type DaSolution = Common & {
+  permissions: ScalingProjectPermission[] | undefined
+  contracts: ScalingProjectContract[] | undefined
+}
+
+export type DaSolutionWith<T> = Common & T
+
+export function getDaSolution(project: ScalingProject): DaSolution | undefined {
   const layerBridgePairs = daLayers.flatMap((layer) =>
     layer.bridges.flatMap((bridge) => ({ layer, bridge })),
   )
