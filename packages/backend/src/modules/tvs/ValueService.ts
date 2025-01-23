@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import { createAmountConfig, createPriceConfig } from './mapConfig'
 import type {
@@ -60,7 +60,8 @@ export class ValueService {
     timestamp: UnixTime,
   ): Promise<number> {
     const config = createAmountConfig(formula)
-    const amount = this.storage.getAmount(config.id, timestamp)
+    const amount = await this.storage.getAmount(config.id, timestamp)
+    assert(amount)
     return await Promise.resolve(amount)
   }
 
@@ -70,6 +71,7 @@ export class ValueService {
   ): Promise<number> {
     const priceConfig = createPriceConfig(formula)
     const price = await this.storage.getPrice(priceConfig.id, timestamp)
+    assert(price)
 
     const amount = await this.executeAmountFormula(formula.amount, timestamp)
     const value = amount * price

@@ -33,9 +33,13 @@ export class DataFormulaExecutor {
   ) {
     for (const timestamp of timestamps) {
       /** Optimization to fetch block for timestamp only once per chain */
+      // TODO: save it in storage
       const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
 
       for (const amount of amounts) {
+        const cachedValue = await this.storage.getAmount(amount.id, timestamp)
+        if (cachedValue) continue
+
         switch (amount.type) {
           case 'circulatingSupply': {
             const v = await this.fetchCirculatingSupply(amount, timestamp)
@@ -60,6 +64,8 @@ export class DataFormulaExecutor {
       }
 
       for (const price of prices) {
+        const cachedValue = await this.storage.getPrice(price.id, timestamp)
+        if (cachedValue) continue
         const v = await this.fetchPrice(price, timestamp)
         await this.storage.writePrice(price.id, timestamp, v)
       }

@@ -27,12 +27,8 @@ export class LocalStorage implements DataStorage {
     return await Promise.resolve()
   }
 
-  async getPrice(id: string, timestamp: UnixTime): Promise<number> {
+  async getPrice(id: string, timestamp: UnixTime): Promise<number | undefined> {
     const price = this.prices.get(key(id, timestamp))
-
-    if (!price) {
-      throw new Error(`Price with id ${id} not found`)
-    }
 
     return await Promise.resolve(price)
   }
@@ -47,12 +43,11 @@ export class LocalStorage implements DataStorage {
     return await Promise.resolve()
   }
 
-  async getAmount(id: string, timestamp: UnixTime): Promise<number> {
+  async getAmount(
+    id: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined> {
     const amount = this.amounts.get(key(id, timestamp))
-
-    if (!amount) {
-      throw new Error(`Amount with id ${key(id, timestamp)} not found`)
-    }
 
     return await Promise.resolve(amount)
   }
