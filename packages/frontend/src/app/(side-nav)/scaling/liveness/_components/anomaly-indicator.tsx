@@ -111,17 +111,24 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
                 <span>
                   {formatTimestamp(anomaly.timestamp, {
                     mode: 'datetime',
-                    longMonthName: true,
                   })}
                 </span>
               </div>
-              {!isLive && (
+              {isLive ? (
+                <div className="flex justify-between gap-2">
+                  Last seen:
+                  <span>
+                    {formatTimestamp(endDate, {
+                      mode: 'datetime',
+                    })}
+                  </span>
+                </div>
+              ) : (
                 <div className="flex justify-between gap-2">
                   End:
                   <span>
                     {formatTimestamp(endDate, {
                       mode: 'datetime',
-                      longMonthName: true,
                     })}
                   </span>
                 </div>
