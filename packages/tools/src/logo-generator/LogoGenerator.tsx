@@ -123,6 +123,7 @@ export function LogoGenerator() {
             alt={project.name}
             width={128}
             height={128}
+            title={project.name}
             className="cursor-pointer"
             style={{ borderRadius, width: size, height: size }}
             onClick={() =>
@@ -140,6 +141,7 @@ export function LogoGenerator() {
               alt={project.name}
               width={128}
               height={128}
+              title={project.name}
               className="cursor-pointer"
               style={{
                 borderRadius,
