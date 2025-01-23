@@ -2,12 +2,14 @@
 
 import * as SwitchPrimitives from '@radix-ui/react-switch'
 import * as React from 'react'
+import { useTracking } from '~/hooks/use-custom-event'
 import { cn } from '~/utils/cn'
 
 function Switch({
   className,
   ...props
-}: React.ComponentProps<typeof SwitchPrimitives.Root>) {
+}: React.ComponentProps<typeof SwitchPrimitives.Root> & { name: string }) {
+  const { track } = useTracking()
   return (
     <SwitchPrimitives.Root
       className={cn(
@@ -15,6 +17,15 @@ function Switch({
         className,
       )}
       {...props}
+      onCheckedChange={(checked) => {
+        props.onCheckedChange?.(checked)
+        track('switchChanged', {
+          props: {
+            name: props.name,
+            value: checked.toString(),
+          },
+        })
+      }}
     >
       <SwitchPrimitives.Thumb
         className={cn(

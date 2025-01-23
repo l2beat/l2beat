@@ -46,23 +46,23 @@ export default async function RootLayout({
             storageKey="l2beat-theme"
             disableTransitionOnChange
           >
-            <PlausibleProvider>
-              <TooltipProvider delayDuration={300} disableHoverableContent>
-                <GlossaryContextProvider
-                  terms={terms.map((term) => ({
-                    id: term.id,
-                    matches: [term.data.term, ...(term.data.match ?? [])],
-                  }))}
-                >
-                  <SearchBarContextProvider projects={searchBarProjects}>
-                    <RecategorisationPreviewContextProvider>
+            <RecategorisationPreviewContextProvider>
+              <PlausibleProvider>
+                <TooltipProvider delayDuration={300} disableHoverableContent>
+                  <GlossaryContextProvider
+                    terms={terms.map((term) => ({
+                      id: term.id,
+                      matches: [term.data.term, ...(term.data.match ?? [])],
+                    }))}
+                  >
+                    <SearchBarContextProvider projects={searchBarProjects}>
                       {children}
-                    </RecategorisationPreviewContextProvider>
-                  </SearchBarContextProvider>
-                  <ProgressBar />
-                </GlossaryContextProvider>
-              </TooltipProvider>
-            </PlausibleProvider>
+                    </SearchBarContextProvider>
+                    <ProgressBar />
+                  </GlossaryContextProvider>
+                </TooltipProvider>
+              </PlausibleProvider>
+            </RecategorisationPreviewContextProvider>
           </ThemeProvider>
         </TRPCReactProvider>
       </body>
