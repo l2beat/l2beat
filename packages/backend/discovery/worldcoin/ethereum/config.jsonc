@@ -30,7 +30,7 @@
           "handler": {
             "type": "event2",
             "select": "batchSize",
-            "set": {
+            "add": {
               "event": "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)"
             }
           }
@@ -57,7 +57,7 @@
           "handler": {
             "type": "event2",
             "select": "batchSize",
-            "set": {
+            "add": {
               "event": "event VerifierDeleted(uint256 indexed batchSize, address indexed verifierAddress)"
             }
           }

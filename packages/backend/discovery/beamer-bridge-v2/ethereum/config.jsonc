@@ -27,14 +27,9 @@
       "fields": {
         "chains": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "ChainUpdated",
-            "returnParams": [
-              "chainId",
-              "finalityPeriod",
-              "transferCost",
-              "targetWeightPPM"
-            ],
+            "type": "event2",
+            "select": ["finalityPeriod", "transferCost", "targetWeightPPM"],
+            "set": { "event": "ChainUpdated" },
             "groupBy": "chainId"
           }
         }

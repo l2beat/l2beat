@@ -43,7 +43,7 @@
           "handler": {
             "type": "event2",
             "select": "predicateAddress",
-            "set": { "event": "PredicateRegistered" }
+            "add": { "event": "PredicateRegistered" }
           },
           "target": { "template": "polygonposbridge/predicate" } // adds accesscontrol discovery
         }
@@ -67,7 +67,7 @@
           "handler": {
             "type": "event2",
             "select": "sender",
-            "set": { "event": "RegistrationUpdated" }
+            "add": { "event": "RegistrationUpdated" }
           }
         }
       },

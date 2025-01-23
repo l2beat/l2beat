@@ -44,7 +44,7 @@
           "handler": {
             "type": "event2",
             "select": ["oldTransactionFilterer", "newTransactionFilterer"],
-            "set": { "event": "NewTransactionFilterer" }
+            "add": { "event": "NewTransactionFilterer" }
           }
         },
         "validators": {
@@ -89,7 +89,7 @@
               "totalBlocksVerified",
               "totalBlocksExecuted"
             ],
-            "set": { "event": "BlocksRevert" }
+            "add": { "event": "BlocksRevert" }
           }
         },
         // the 3 following allow us to get an array of validators without creating a new handler
@@ -105,14 +105,14 @@
           "handler": {
             "type": "event2",
             "select": "_addedValidator",
-            "set": { "event": "ValidatorAdded" }
+            "add": { "event": "ValidatorAdded" }
           }
         },
         "validatorsRemoved": {
           "handler": {
             "type": "event2",
             "select": "_removedValidator",
-            "set": {"event": "ValidatorRemoved"}
+            "add": {"event": "ValidatorRemoved"}
           }
         }
       }

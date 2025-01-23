@@ -3,11 +3,10 @@
   "fields": {
     "onRamps": {
       "handler": {
-        "type": "stateFromEvent",
-        "event": "OnRampSet",
-        "returnParams": ["destChainSelector", "onRamp"],
+        "type": "event2",
+        "select": "onRamp",
         "groupBy": "destChainSelector",
-        "onlyValue": true
+        "set": { "event": "OnRampSet" }
       }
     },
     "offRamps": {

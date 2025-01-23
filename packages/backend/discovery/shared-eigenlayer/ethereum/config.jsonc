@@ -151,7 +151,7 @@
           "handler": {
             "type": "event2",
             "select": "avs",
-            "set": { "event": "OperatorAVSRegistrationStatusUpdated" }
+            "add": { "event": "OperatorAVSRegistrationStatusUpdated" }
           }
         }
       },

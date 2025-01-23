@@ -103,7 +103,7 @@
           "handler": {
             "type": "event2",
             "select": "oldProgramHash",
-            "set": { "event": "ProgramHashChanged" }
+            "add": { "event": "ProgramHashChanged" }
           }
         },
         "verifier": {

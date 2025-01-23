@@ -18267,7 +18267,7 @@
     "transporter/OnRampV1": "0x816fde0290e7f6cc15ffcb942bccfe7e42600eb76bd2fef4527404987b6b0c47",
     "transporter/OnRampV3": "0xfd8cbbce285a809bc03f61c85f68f96e106e49e91c8ef707db094ff4c91d346d",
     "transporter/PriceRegistry": "0x42b2926eb09081653c52800110295b54f7b6b6bfe461d77fe470cd93d30fbb2e",
-    "transporter/RouterV1_0_0": "0xd90e0b5b67dff0d50d4b1a608202a317285ae6e59250de98a37037098b135b03",
-    "transporter/RouterV1_2_0": "0x11457be698cc2441f1465434085e37533e5a89407340ea3ecc0c93c9bbae1194"
+    "transporter/RouterV1_0_0": "0x7e88bc625a34ae24e1489d40231e92d25ed5982fd479916e635b71695e5b06a5",
+    "transporter/RouterV1_2_0": "0xb06c0cb15210d18dd2da7d7f7ec3824b73a96d3bec6139e1a10f976e1866a7c9"
   }
 }

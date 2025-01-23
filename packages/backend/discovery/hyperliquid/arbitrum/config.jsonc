@@ -24,7 +24,7 @@
           "handler": {
             "type": "event2",
             "select": ["epoch", "hotValidatorSetHash", "coldValidatorSetHash"],
-            "set": { "event": "FinalizedValidatorSetUpdate" }
+            "add": { "event": "FinalizedValidatorSetUpdate" }
           }
         },
         "lockers": {

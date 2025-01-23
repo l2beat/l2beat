@@ -175,7 +175,7 @@
           "handler": {
             "type": "event2",
             "select": "plug",
-            "set": { "event": "PlugConnected" },
+            "add": { "event": "PlugConnected" },
             "ignoreRelative": true
           }
         },
@@ -183,14 +183,14 @@
           "handler": {
             "type": "event2",
             "select": "inboundSwitchboard",
-            "set": { "event": "PlugConnected" }
+            "add": { "event": "PlugConnected" }
           }
         },
         "outboundSwitchboards": {
           "handler": {
             "type": "event2",
             "select": "outboundSwitchboard",
-            "set": { "event": "PlugConnected" }
+            "add": { "event": "PlugConnected" }
           }
         }
       }

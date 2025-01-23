@@ -78,7 +78,7 @@
           "handler": {
             "type": "event2",
             "select": "newEthGateway",
-            "set": { "event": "SetETHGateway" }
+            "add": { "event": "SetETHGateway" }
           }
         }
       }
@@ -91,7 +91,7 @@
           "handler": {
             "type": "event2",
             "select": "version",
-            "set": { "event": "UpdateVerifier" }
+            "add": { "event": "UpdateVerifier" }
           }
         },
         "latestVerifier": {

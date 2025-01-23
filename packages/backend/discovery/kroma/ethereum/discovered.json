@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21141582,
-  "configHash": "0x0d2daf4041d6e8cca07c3b3d704c6672a48e6651f828a9a6655c923236a4f0a1",
+  "configHash": "0xada62734b31772c5c768aa3fe0c61ce79cc3910d5a5fbcc6e76b9c16ab0ed6ea",
   "contracts": [
     {
       "name": "L2OutputOracle",

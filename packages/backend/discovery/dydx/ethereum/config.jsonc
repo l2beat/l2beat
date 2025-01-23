@@ -140,7 +140,7 @@
           "handler": {
             "type": "event2",
             "select": ["amount", "recipient", "newExchangeRate"],
-            "set": { "event": "Slashed" }
+            "add": { "event": "Slashed" }
           }
         }
       }
@@ -156,7 +156,7 @@
           "handler": {
             "type": "event2",
             "select": "borrower",
-            "set": { "event": "ScheduledBorrowerAllocationChange" }
+            "add": { "event": "ScheduledBorrowerAllocationChange" }
           }
         }
       },
@@ -200,7 +200,7 @@
           "handler": {
             "type": "event2",
             "select": "account",
-            "set": {
+            "add": {
               "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
               "where": ["!!", "isPriorityController"]
             }

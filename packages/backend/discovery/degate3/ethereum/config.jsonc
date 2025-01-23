@@ -37,7 +37,7 @@
           "handler": {
             "type": "event2",
             "select": "timestamp",
-            "set": { "event": "Shutdown" }
+            "add": { "event": "Shutdown" }
           }
         }
       }

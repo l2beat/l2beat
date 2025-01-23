@@ -135,7 +135,7 @@
           "handler": {
             "type": "event2",
             "select": "batchIndex",
-            "set": { "event": "RevertBatch" }
+            "add": { "event": "RevertBatch" }
           }
         }
       }
@@ -148,7 +148,7 @@
           "handler": {
             "type": "event2",
             "select": "version",
-            "set": { "event": "UpdateVerifier" }
+            "add": { "event": "UpdateVerifier" }
           }
         },
         "latestVerifier": {

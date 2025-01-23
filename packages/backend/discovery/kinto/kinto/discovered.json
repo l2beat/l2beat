@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 696015,
-  "configHash": "0xe47f246b22c6823e0ba279518aba4dd673ed67266427b3bfb366b409efc6ddac",
+  "configHash": "0x5d82285303b4fe547a5b6d75b1d51ef5058574de0da7818659faf7c9e54030a7",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -1527,30 +1527,23 @@
         "PUBLIC_ROLE": "18446744073709551615",
         "RoleAdminChanged": {},
         "RoleGrantDelayChanged": {
-          "8663528507529876195": {
-            "roleId": "8663528507529876195",
-            "delay": 604800,
-            "since": 1733613166
-          }
+          "8663528507529876195": { "delay": 604800, "since": 1733613166 }
         },
         "RoleGuardianChanged": {},
         "RolesGranted": {
           "0": {
-            "roleId": 0,
             "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
             "delay": 0,
             "since": 1729791296,
             "newMember": true
           },
           "1635978423191113331": {
-            "roleId": "1635978423191113331",
             "account": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
             "delay": 259200,
             "since": 1729806574,
             "newMember": true
           },
           "8663528507529876195": {
-            "roleId": "8663528507529876195",
             "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
             "delay": 604800,
             "since": 1733181166,
@@ -1559,24 +1552,20 @@
         },
         "TargetAdminDelayUpdated": {
           "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
-            "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
             "delay": 604800,
             "since": 1733613166
           }
         },
         "TargetFunctionRoleUpdated": {
           "0x793500709506652Fcc61F0d2D0fDa605638D4293": {
-            "target": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
             "selector": "0x9089e8ae",
             "roleId": "1635978423191113331"
           },
           "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
-            "target": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
             "selector": "0x3659cfe6",
             "roleId": "8663528507529876195"
           },
           "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
-            "target": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
             "selector": "0x3659cfe6",
             "roleId": "8663528507529876195"
           }

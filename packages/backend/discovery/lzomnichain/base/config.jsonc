@@ -43,28 +43,24 @@
       "fields": {
         "chainAddressSizeMap": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "SetChainAddressSize",
-            "returnParams": ["chainId", "size"],
+            "type": "event2",
+            "select": "size",
             "groupBy": "chainId",
-            "onlyValue": true
+            "set": { "event": "SetChainAddressSize" }
           }
         },
         "ulnLookup": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "SetRemoteUln",
-            "returnParams": ["chainId", "uln"],
+            "type": "event2",
+            "select": "uln",
             "groupBy": "chainId",
-            "onlyValue": true
+            "set": { "event": "SetRemoteUln" }
           }
         },
         "defaultAppConfig": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "SetDefaultConfigForChainId",
-            "returnParams": [
-              "chainId",
+            "type": "event2",
+            "select": [
               "inboundProofLib",
               "inboundBlockConfirm",
               "outboundProofType",
@@ -73,36 +69,31 @@
               "relayer"
             ],
             "groupBy": "chainId",
-            "onlyValue": true
+            "set": { "event": "SetDefaultConfigForChainId" }
           }
         },
         "defaultAdapterParams": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "SetDefaultAdapterParamsForChainId",
-            "returnParams": ["chainId", "proofType", "adapterParams"],
+            "type": "event2",
+            "select": ["proofType", "adapterParams"],
             "groupBy": "chainId",
-            "onlyValue": true
+            "set": { "event": "SetDefaultAdapterParamsForChainId" }
           }
         },
         "inboundProofLibrary": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "AddInboundProofLibraryForChain",
-            "returnParams": ["chainId", "lib"],
+            "type": "event2",
+            "select": "lib",
             "groupBy": "chainId",
-            "onlyValue": true,
-            "multipleInGroup": true
+            "add": { "event": "AddInboundProofLibraryForChain" }
           }
         },
         "supportedOutboundProof": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "EnableSupportedOutboundProof",
-            "returnParams": ["chainId", "proofType"],
+            "type": "event2",
+            "select": "proofType",
             "groupBy": "chainId",
-            "onlyValue": true,
-            "multipleInGroup": true
+            "add": { "event": "EnableSupportedOutboundProof" }
           }
         }
       }

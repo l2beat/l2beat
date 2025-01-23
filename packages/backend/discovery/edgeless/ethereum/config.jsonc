@@ -32,11 +32,10 @@
         },
         "activeStrategiesIndex": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "SetActiveStrategy",
-            "returnParams": ["asset", "index"],
-            "groupBy": "asset",
-            "onlyValue": true
+            "type": "event2",
+            "select": "index",
+            "set": { "event": "SetActiveStrategy" },
+            "groupBy": "asset"
           }
         }
       }
