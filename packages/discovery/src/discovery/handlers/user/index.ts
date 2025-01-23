@@ -83,7 +83,6 @@ import {
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
 import { EventHandler, EventHandlerDefinition } from './EventHandler'
-import { Event2Handler, Event2HandlerDefinition } from './Event2Handler'
 
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = z.union([
@@ -93,7 +92,6 @@ export const UserHandlerDefinition = z.union([
   ArrayHandlerDefinition,
   CallHandlerDefinition,
   EventHandlerDefinition,
-  Event2HandlerDefinition,
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
   ScrollAccessControlHandlerDefinition,
@@ -132,8 +130,6 @@ export function getUserHandler(
       return new CallHandler(field, definition, abi)
     case 'event':
       return new EventHandler(field, definition, abi)
-    case 'event2':
-      return new Event2Handler(field, definition, abi)
     case 'starkWareNamedStorage':
       return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
