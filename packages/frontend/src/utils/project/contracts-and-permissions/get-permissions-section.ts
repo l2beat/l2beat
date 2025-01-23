@@ -45,11 +45,11 @@ export function getPermissionsSection(
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): PermissionSection | undefined {
   if (
-    (projectParams.permissions.length === 0 &&
-      (!projectParams.nativePermissions ||
-        projectParams.nativePermissions.length === 0)) ||
-    !projectParams.daSolution?.permissions ||
-    projectParams.daSolution?.permissions.length === 0
+    projectParams.permissions.length === 0 &&
+    (!projectParams.nativePermissions ||
+      projectParams.nativePermissions.length === 0) &&
+    (!projectParams.daSolution?.permissions ||
+      projectParams.daSolution?.permissions.length === 0)
   ) {
     return undefined
   }
@@ -104,19 +104,21 @@ export function getPermissionsSection(
         },
       ),
     ),
-    daSolution: {
-      layerName: projectParams.daSolution?.layerName,
-      bridgeName: projectParams.daSolution?.bridgeName,
-      hostChainName: slugToDisplayName(projectParams.daSolution?.hostChain),
-      permissions: projectParams.daSolution?.permissions?.flatMap(
-        (permission) =>
-          toTechnologyContract(
-            projectParams,
-            permission,
-            contractsVerificationStatuses,
-          ),
-      ),
-    },
+    daSolution: projectParams.daSolution
+      ? {
+          layerName: projectParams.daSolution.layerName,
+          bridgeName: projectParams.daSolution.bridgeName,
+          hostChainName: slugToDisplayName(projectParams.daSolution.hostChain),
+          permissions:
+            projectParams.daSolution.permissions?.flatMap((permission) =>
+              toTechnologyContract(
+                projectParams,
+                permission,
+                contractsVerificationStatuses,
+              ),
+            ) ?? [],
+        }
+      : undefined,
   }
 }
 
