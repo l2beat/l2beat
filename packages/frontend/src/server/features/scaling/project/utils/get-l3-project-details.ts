@@ -61,8 +61,6 @@ export async function getL3ProjectDetails({
       )
     : undefined
 
-  console.dir(daSolution, { depth: null })
-
   const contractsSection = getContractsSection(
     {
       id: project.id,
