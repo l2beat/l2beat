@@ -1,8 +1,8 @@
 import type { StageConfig } from '../../layer2s'
 import type { ScalingProjectStage } from '../BaseProject'
 
-export function getStage(config: StageConfig | undefined): ScalingProjectStage {
-  if (!config || config.stage === 'NotApplicable') {
+export function getStage(config: StageConfig): ScalingProjectStage {
+  if (config.stage === 'NotApplicable') {
     return 'Not applicable'
   }
   if (config.stage === 'UnderReview') {
