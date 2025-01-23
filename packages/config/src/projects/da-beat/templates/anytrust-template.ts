@@ -6,7 +6,6 @@ import {
   type IntegratedDacBridge,
 } from '../types'
 import type { DaTechnology } from '../types/DaTechnology'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { DAC, type DacTemplateVars } from './dac-template'
 
 type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
@@ -85,7 +84,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     bridge: {
       ...template.bridge,
       technology: anytrustBridgeTechnology,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+      transactionDataType: 'Transaction data (compressed)',
       membersCount,
       requiredMembers: requiredSignatures,
     },

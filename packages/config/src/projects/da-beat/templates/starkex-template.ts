@@ -4,7 +4,6 @@ import {
   type DaTechnology,
   DaUpgradeabilityRisk,
   type DacDaLayer,
-  DacTransactionDataType,
 } from '../types'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { DAC, type DacTemplateVarsWithDiscovery } from './dac-template'
@@ -91,9 +90,7 @@ export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
       ...template.bridge,
       membersCount: membersCount,
       requiredMembers: requiredMembers,
-      transactionDataType:
-        template.bridge.transactionDataType ??
-        DacTransactionDataType.StateDiffs,
+      transactionDataType: template.bridge.transactionDataType ?? 'State diffs',
       technology: bridgeTechnology,
     },
     risks: {

@@ -9,7 +9,6 @@ import {
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-  DacTransactionDataType,
 } from '../da-beat/types'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
@@ -152,7 +151,7 @@ export const cyber: Layer2 = opStackL2({
       requiredMembers: 0,
       membersCount: 0,
       hideMembers: true,
-      transactionDataType: DacTransactionDataType.TransactionData,
+      transactionDataType: 'Transaction data',
       risks: {
         committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
         upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay

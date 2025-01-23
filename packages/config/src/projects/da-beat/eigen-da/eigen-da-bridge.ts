@@ -3,7 +3,6 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../types'
 import type { DaBridge } from '../types/DaBridge'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
 import { toUsedInProject } from '../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('eigenda')
@@ -350,7 +349,7 @@ export const eigenDAbridge = {
   },
   requiredMembers: 0, // currently 0 since threshold is not enforced
   membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
-  transactionDataType: DacTransactionDataType.TransactionData,
+  transactionDataType: 'Transaction data',
   usedIn: toUsedInProject([]),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(

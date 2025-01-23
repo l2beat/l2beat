@@ -9,7 +9,6 @@ import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-  DacTransactionDataType,
 } from '../da-beat/types'
 import {
   WASMVM_OTHER_CONSIDERATIONS,
@@ -432,7 +431,7 @@ export const nova: Layer2 = orbitStackL2({
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignatures,
       membersCount: membersCount,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+      transactionDataType: 'Transaction data (compressed)',
       knownMembers: [
         {
           external: true,

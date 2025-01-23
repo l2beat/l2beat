@@ -10,7 +10,6 @@ import type { DaLinks } from './DaLinks'
 import type { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
 import type { DaRisk } from './DaRisk'
 import type { DaTechnology } from './DaTechnology'
-import type { DacTransactionDataType } from './DacTransactionDataType'
 import type { EthereumDaBridgeRisks } from './EthereumDaRisks'
 import type { UsedInProject } from './UsedInProject'
 
@@ -71,6 +70,12 @@ type CommonDacBridge = {
   /** Risks related to given data availability bridge. */
   risks: DaBridgeRisks
 }
+
+export type DacTransactionDataType =
+  | 'Transaction data (compressed)'
+  | 'Transaction data'
+  | 'State diffs (compressed)'
+  | 'State diffs'
 
 // Used in DacDaLayers integrated into projects
 export type IntegratedDacBridge = Omit<

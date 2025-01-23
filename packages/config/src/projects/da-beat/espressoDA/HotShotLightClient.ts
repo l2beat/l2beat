@@ -4,7 +4,6 @@ import { DaCommitteeSecurityRisk } from '../types'
 import type { DaBridge } from '../types/DaBridge'
 import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../types/DaUpgradeabilityRisk'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
@@ -198,7 +197,7 @@ export const HotShotLightClient = {
       href: 'https://x.com/EspressoSys/status/1861106639690178610',
     },
   ],
-  transactionDataType: DacTransactionDataType.TransactionData,
+  transactionDataType: 'Transaction data',
   usedIn: [],
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
