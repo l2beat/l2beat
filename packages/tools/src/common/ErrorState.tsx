@@ -4,7 +4,7 @@ export function ErrorState() {
   const loadingBarWidth = 44
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-black font-mono text-red-500">
+    <div className="flex h-screen w-screen items-center justify-center font-mono text-red-500">
       <div className="whitespace-pre-wrap">
         <pre className="mb-4">{l2beatAsciiArt}</pre>
         <div className="mb-2 text-red-500">ERROR: System Malfunction</div>
