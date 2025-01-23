@@ -1,12 +1,20 @@
+import { l2beatAsciiArt } from './LoadingState'
+
 export function ErrorState() {
+  const loadingBarWidth = 44
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center font-mono text-red-500">
-      <div className="pixelated mb-8 grid h-64 w-64 grid-cols-10 gap-1">
-        {Array.from({ length: 100 }).map((_, index) => (
-          <div key={index} className="h-full w-full bg-red-500" />
-        ))}
+    <div className="flex h-screen w-screen items-center justify-center bg-black font-mono text-red-500">
+      <div className="whitespace-pre-wrap">
+        <pre className="mb-4">{l2beatAsciiArt}</pre>
+        <div className="mb-2 text-red-500">ERROR: System Malfunction</div>
+        <div className="mb-2 text-red-500">
+          [{new Array(loadingBarWidth).fill('X').join('')}]
+        </div>
+        <div className="break-words text-red-500 text-xs">
+          Report this error to the L2BEAT team.
+        </div>
       </div>
-      <div className="text-2xl">Error ☠️</div>
     </div>
   )
 }
