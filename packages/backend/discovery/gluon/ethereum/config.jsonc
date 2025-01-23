@@ -60,10 +60,9 @@
       "ignoreMethods": [
         "getInterval",
         "intervals",
-        "currentIntervalIndex",
-        "getToBeDistributed",
         "toBeDistributed"
       ],
+      "ignoreInWatchMode": ["currentIntervalIndex", "getToBeDistributed"],
       "ignoreRelatives": [
         "tokens",
         "getTokens",
