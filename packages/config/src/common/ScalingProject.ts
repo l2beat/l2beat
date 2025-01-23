@@ -2,14 +2,75 @@ import type {
   AssetId,
   ChainId,
   EthereumAddress,
+  ProjectId,
   StringWithAutocomplete,
   UnixTime,
   ValueWithSentiment,
   WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
-import type { ProofVerification, WarningWithSentiment } from '../projects'
+import type {
+  BadgeId,
+  DacDaLayer,
+  ProofVerification,
+  StageConfig,
+  WarningWithSentiment,
+} from '../projects'
+import type { ChainConfig } from './ChainConfig'
+import type { KnowledgeNugget } from './KnowledgeNugget'
+import type { Milestone } from './Milestone'
 import type { ReasonForBeingInOther } from './ReasonForBeingInOther'
-import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './dataAvailability'
+import type {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  ProjectDataAvailability,
+} from './dataAvailability'
+
+/** Base interface for Layer2s and Layer3s. T */
+export interface ScalingProject {
+  /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
+  id: ProjectId
+  /** Date of creation of the file (not the project) */
+  createdAt: UnixTime
+  /** Is this project archived? */
+  isArchived?: boolean
+  /** Is this project an upcoming rollup? */
+  isUpcoming?: boolean
+  /** Has this project changed and is under review? */
+  isUnderReview?: boolean
+  /** Information displayed about the project on the frontend */
+  display: ScalingProjectDisplay
+  /** Information required to calculate the stats of the project */
+  config: ScalingProjectConfig
+  /** Technical chain configuration */
+  chainConfig?: ChainConfig
+  /** Data availability of scaling project */
+  dataAvailability?: ProjectDataAvailability
+  /** Data availability solution */
+  dataAvailabilitySolution?: DacDaLayer
+  /** Risk view values for this layer2 */
+  riskView: ScalingProjectRiskView
+  /** Rollup stage */
+  stage: StageConfig
+  /** Deep dive into layer2 technology */
+  technology: ScalingProjectTechnology
+  /** Open-source node details */
+  stateDerivation?: ScalingProjectStateDerivation
+  /** Explains how project validates state */
+  stateValidation?: ScalingProjectStateValidation
+  /** List of smart contracts used in the layer2 */
+  contracts: ScalingProjectContracts
+  /** List of permissioned addresses */
+  permissions?: ScalingProjectPermission[] | 'UnderReview'
+  /** List of permissioned addresses on the chain itself */
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  /** Links to recent developments, milestones achieved by the project */
+  milestones?: Milestone[]
+  /** List of knowledge nuggets: useful articles worth reading */
+  knowledgeNuggets?: KnowledgeNugget[]
+  /** List of badges */
+  badges?: BadgeId[]
+}
 
 export type ScalingProjectCategory =
   | 'Optimistic Rollup'
@@ -30,6 +91,8 @@ export interface ScalingProjectConfig {
   externalAssets?: ProjectExternalAssets
   /** List of contracts in which L1 funds are locked */
   escrows: ScalingProjectEscrow[]
+  /** API parameters used to get transaction count */
+  transactionApi?: ScalingProjectTransactionApi
 }
 
 export interface ProjectExternalAssets {
@@ -131,6 +194,8 @@ export type ScalingProjectDisplay = {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
+  /** Technology provider */
+  provider?: ScalingProjectStack
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
   mainPermissions?: {

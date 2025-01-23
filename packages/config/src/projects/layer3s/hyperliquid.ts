@@ -107,6 +107,7 @@ export const hyperliquid: Layer3 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
+  stage: { stage: 'NotApplicable' },
   stackedRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,

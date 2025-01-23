@@ -23,6 +23,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   type ScalingProjectContract,
+  type ScalingProjectDisplay,
   type ScalingProjectEscrow,
   type ScalingProjectPermission,
   type ScalingProjectPurpose,
@@ -47,7 +48,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types/DaLayer'
-import type { Layer3, Layer3Display } from '../../layer3s/types'
+import type { Layer3 } from '../../layer3s/types'
 import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -152,8 +153,8 @@ interface OrbitStackConfigCommon {
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer3Display['category']
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectDisplay['category']
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
   hostChain: ProjectId
