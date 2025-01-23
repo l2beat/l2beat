@@ -132,8 +132,6 @@ export function getContractsSection(
         }
       : undefined
 
-  console.dir(daSolution, { depth: null })
-
   const escrows =
     projectParams.escrows
       ?.filter((escrow) => escrow.newVersion && !escrow.isHistorical)
