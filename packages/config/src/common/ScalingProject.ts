@@ -26,7 +26,7 @@ import type {
   ProjectDataAvailability,
 } from './dataAvailability'
 
-/** Base interface for Layer2s and Layer3s. T */
+/** Base interface for Layer2s and Layer3s. The hope is that Layer2 and Layer3 will dissapear and only this will remain. */
 export interface ScalingProject {
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
