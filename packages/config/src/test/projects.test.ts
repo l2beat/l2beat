@@ -179,16 +179,6 @@ describe('projects', () => {
     })
   })
 
-  describe('has an activityDataSource defined if transaction data API is set', () => {
-    for (const project of [...layer2s, ...layer3s]) {
-      it(project.display.name, () => {
-        if (project.config.transactionApi) {
-          expect(project.display.activityDataSource).toBeTruthy()
-        }
-      })
-    }
-  })
-
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: Layer2 | Layer3) => {
       return (

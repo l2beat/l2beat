@@ -37,7 +37,6 @@ export const huddle01: Layer3 = underReviewL3({
         'https://youtube.com/@huddle01com',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://huddle01.calderachain.xyz/http',
   escrows: [

@@ -156,7 +156,6 @@ export const swell: Layer2 = {
         'https://swellnetwork.io/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

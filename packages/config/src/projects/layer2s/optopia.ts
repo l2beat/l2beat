@@ -28,7 +28,6 @@ export const optopia: Layer2 = opStackL2({
         'https://mirror.xyz/0x384F32e132501C9C3361C0495841715585164d33',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['OPAI'],
   genesisTimestamp: new UnixTime(1715333977),

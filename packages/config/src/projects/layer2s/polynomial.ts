@@ -29,7 +29,6 @@ export const polynomial: Layer2 = opStackL2({
         'https://discord.gg/Mr9XKU5W',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.polynomial.fi',
   finality: {

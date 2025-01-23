@@ -46,7 +46,6 @@ export const ham: Layer3 = opStackL3({
         'https://t.me/+B93fbhulpb5iYWYx',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1716590734),
   isNodeAvailable: true,

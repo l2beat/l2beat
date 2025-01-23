@@ -31,7 +31,6 @@ export const lambda: Layer2 = opStackL2({
         'https://t.me/HelloLambda',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['LAMB'],
   rpcUrl: 'https://nrpc.lambda.im',

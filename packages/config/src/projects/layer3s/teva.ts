@@ -27,6 +27,5 @@ export const teva: Layer3 = underReviewL3({
         'https://tevaera.medium.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
 })
