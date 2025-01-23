@@ -1,7 +1,7 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 
-import type { ScalingProjectContracts } from './ScalingProjectContracts'
-import type { ScalingProjectRisk } from './ScalingProjectRisk'
+import type { ScalingProjectContracts } from './ScalingProject'
+import type { ScalingProjectRisk } from './ScalingProject'
 import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
 const UNVERIFIED_DESCRIPTION =

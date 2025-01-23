@@ -19,7 +19,7 @@ import {
   type ScalingProjectRiskViewEntry,
   type ScalingProjectTechnologyChoice,
 } from '../../common'
-import type { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
+import type { ScalingProjectTechnology } from '../../common/ScalingProject'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'

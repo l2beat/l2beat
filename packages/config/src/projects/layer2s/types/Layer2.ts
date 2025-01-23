@@ -4,8 +4,8 @@ import type {
   UnixTime,
   WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
-
 import type {
+  ChainConfig,
   KnowledgeNugget,
   Milestone,
   ProjectDataAvailability,
@@ -13,14 +13,13 @@ import type {
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectRiskView,
   ScalingProjectStack,
+  ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
+  ScalingProjectTechnology,
   ScalingProjectTransactionApi,
 } from '../../../common'
-import type { ChainConfig } from '../../../common/ChainConfig'
-import type { ScalingProjectRiskView } from '../../../common/ScalingProjectRiskView'
-import type { ScalingProjectStateDerivation } from '../../../common/ScalingProjectStateDerivation'
-import type { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
-import type { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
 import type { BadgeId } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types/DaLayer'
 import type { StageConfig } from '../common/stages/types'
