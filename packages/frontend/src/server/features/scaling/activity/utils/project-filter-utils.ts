@@ -22,16 +22,20 @@ export function createActivityProjectsFilter(
     case 'rollups':
       return (project) =>
         !isProjectOther(project, previewRecategorisation) &&
+        !(previewRecategorisation && project.isUnderReview) && // If previewRecategorisation is true, we exclude projects that are under review
         (project.display.category === 'Optimistic Rollup' ||
           project.display.category === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !isProjectOther(project, previewRecategorisation) &&
+        !(previewRecategorisation && project.isUnderReview) &&
         (project.display.category === 'Validium' ||
           project.display.category === 'Optimium' ||
           project.display.category === 'Plasma')
     case 'others':
-      return (project) => isProjectOther(project, previewRecategorisation)
+      return (project) =>
+        isProjectOther(project, previewRecategorisation) &&
+        !(previewRecategorisation && project.isUnderReview)
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     default:
