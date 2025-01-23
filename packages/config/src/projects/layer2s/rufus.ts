@@ -1,4 +1,5 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { subtractOne } from '../../common/assessCount'
 import { Badge } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
 import type { Layer2 } from './types'
@@ -6,12 +7,7 @@ import type { Layer2 } from './types'
 export const rufus: Layer2 = underReviewL2({
   id: 'rufus',
   createdAt: new UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
-  badges: [
-    Badge.RaaS.Caldera,
-    Badge.DA.DAC,
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
-  ],
+  badges: [Badge.RaaS.Caldera, Badge.DA.DAC, Badge.Stack.Orbit, Badge.VM.EVM],
   display: {
     name: 'Rufus',
     slug: 'rufus',
@@ -31,12 +27,18 @@ export const rufus: Layer2 = underReviewL2({
         'https://dogelonmars.com/blog',
         'https://t.me/DogelonMars',
         'https://discord.gg/dogelonmars',
-        'https://www.reddit.com/r/dogelon'
+        'https://reddit.com/r/dogelon/',
       ],
     },
   },
   associatedTokens: ['ELON'],
-  rpcUrl: 'https://rufus.calderachain.xyz/http',
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rufus.calderachain.xyz/http',
+    defaultCallsPerMinute: 1500,
+    assessCount: subtractOne,
+    startBlock: 1,
+  },
   escrows: [
     {
       address: EthereumAddress('0x0E1a60c49b3aAABa3313918f63F6CC6c55746B17'), // bridge
