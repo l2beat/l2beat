@@ -1,7 +1,7 @@
 'use client'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
-import { type DiagramParams } from '~/utils/project/get-diagram-params'
+import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import {
   ContractEntry,
   type TechnologyContract,
@@ -9,9 +9,9 @@ import {
 } from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
-import { type Reference } from '../reference-list'
+import type { Reference } from '../reference-list'
 import { RiskList, type TechnologyRisk } from '../risk-list'
-import { type ProjectSectionId } from '../types'
+import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
 
@@ -23,6 +23,12 @@ export interface ContractsSectionProps {
   chainName: string
   contracts: TechnologyContract[]
   nativeContracts: Record<string, TechnologyContract[]>
+  daSolution?: {
+    layerName: string
+    bridgeName: string
+    hostChainName: string
+    contracts: TechnologyContract[]
+  }
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   references: Reference[]
@@ -35,6 +41,7 @@ export function ContractsSection(props: ContractsSectionProps) {
   if (
     props.contracts.length === 0 &&
     Object.keys(props.nativeContracts).length === 0 &&
+    props.daSolution?.contracts.length === 0 &&
     props.escrows.length === 0 &&
     props.risks.length === 0 &&
     !props.isUnderReview
@@ -146,6 +153,25 @@ export function ContractsSection(props: ContractsSectionProps) {
             )
           },
         )}
+      {props.daSolution && props.daSolution.contracts.length > 0 && (
+        <>
+          <h3 className="font-bold">
+            The project uses {props.daSolution.layerName} with the{' '}
+            {props.daSolution.bridgeName} DA Bridge that consist of the
+            following contracts on the {props.daSolution.hostChainName}:
+          </h3>
+          <div className="my-4">
+            {props.daSolution.contracts.map((contract) => (
+              <ContractEntry
+                key={technologyContractKey(contract)}
+                contract={contract}
+                className="my-4"
+                type="contract"
+              />
+            ))}
+          </div>
+        </>
+      )}
       {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
       {props.escrows.length > 0 && (
         <>

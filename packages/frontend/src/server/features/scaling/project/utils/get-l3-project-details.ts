@@ -61,6 +61,8 @@ export async function getL3ProjectDetails({
       )
     : undefined
 
+  console.dir(daSolution, { depth: null })
+
   const contractsSection = getContractsSection(
     {
       id: project.id,
@@ -72,6 +74,7 @@ export async function getL3ProjectDetails({
       isUnderReview: project.isUnderReview,
       escrows: project.config.escrows,
       architectureImage: project.display.architectureImage,
+      daSolution,
     },
     contractsVerificationStatuses,
     projectsChangeReport,

@@ -15,17 +15,18 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type ProjectSectionProps } from '~/components/projects/sections/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { ProjectSectionProps } from '~/components/projects/sections/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import {
-  type TechnologyContract,
-  type TechnologyContractAddress,
+import type {
+  TechnologyContract,
+  TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
-import { type ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
-import { type Reference } from '../../../components/projects/sections/reference-list'
+import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
+import type { Reference } from '../../../components/projects/sections/reference-list'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
@@ -38,6 +39,7 @@ type ProjectParams = {
   isVerified: boolean
   architectureImage?: string
   contracts: ScalingProjectContracts
+  daSolution?: DaSolution
   escrows: ScalingProjectEscrow[] | undefined
 } & (
   | {
@@ -59,7 +61,10 @@ export function getContractsSection(
   contractsVerificationStatuses: ContractsVerificationStatuses,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
-  if (projectParams.contracts.addresses.length === 0) {
+  if (
+    projectParams.contracts.addresses.length === 0 &&
+    projectParams.daSolution?.contracts?.length === 0
+  ) {
     return undefined
   }
   const projectChangeReport = projectsChangeReport?.projects[projectParams.id]
@@ -102,6 +107,32 @@ export function getContractsSection(
       },
     ),
   )
+
+  const daSolution =
+    projectParams.daSolution?.contracts &&
+    projectParams.daSolution.contracts.length !== 0
+      ? {
+          layerName: projectParams.daSolution?.layerName,
+          bridgeName: projectParams.daSolution?.bridgeName,
+          hostChainName: slugToDisplayName(projectParams.daSolution?.hostChain),
+          contracts: projectParams.daSolution.contracts.flatMap((contract) => {
+            const isUnverified = isContractUnverified(
+              contract,
+              contractsVerificationStatuses,
+            )
+
+            return makeTechnologyContract(
+              contract,
+              projectParams,
+              isUnverified,
+              contractsVerificationStatuses,
+              projectChangeReport,
+            )
+          }),
+        }
+      : undefined
+
+  console.dir(daSolution, { depth: null })
 
   const escrows =
     projectParams.escrows
@@ -160,6 +191,7 @@ export function getContractsSection(
     isIncomplete: projectParams.contracts?.isIncomplete,
     isUnderReview:
       projectParams.isUnderReview ?? projectParams.contracts?.isUnderReview,
+    daSolution,
   }
 }
 
