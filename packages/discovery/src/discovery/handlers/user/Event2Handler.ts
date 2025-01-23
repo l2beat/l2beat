@@ -10,13 +10,12 @@ import { orderLogs } from '../../provider/BatchingAndCachingProvider'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toEventFragment } from '../utils/toEventFragment'
 import { isDeepStrictEqual } from 'util'
+import { groupBy } from 'lodash'
 
 interface LogRow {
   log: utils.LogDescription
   value: ContractValue
 }
-
-type PrimitiveType = string | number | boolean
 
 type FilterType =
   | string
@@ -52,6 +51,7 @@ export const Event2HandlerDefinition = z.strictObject({
   remove: z
     .union([Event2HandlerAction, z.array(Event2HandlerAction)])
     .optional(),
+  groupBy: z.string().optional(),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -111,22 +111,48 @@ export class Event2Handler implements Handler {
     address: EthereumAddress,
   ): Promise<HandlerResult> {
     const logs = await fetchLogs(provider, address, this.topic0s)
-    const select = ensureArray(this.definition.select ?? [])
 
-    let logRows: LogRow[] = []
+    const logRows: LogRow[] = []
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)
       logRows.push(getResultObject(parsed, this.keys))
     }
 
+    let values: ContractValue
+    if (this.definition.groupBy !== undefined) {
+      const groupByKey = this.definition.groupBy
+      const grouped = groupBy(
+        logRows,
+        (e) => extractKeys(e, [groupByKey])[groupByKey],
+      )
+      values = {}
+      for (const key in grouped) {
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
+        values[key] = this.processLogs(grouped[key]!)
+      }
+    } else {
+      values = this.processLogs(logRows)
+    }
+
+    return {
+      field: this.field,
+      value: values,
+      ignoreRelative: this.definition.ignoreRelative,
+    }
+  }
+
+  processLogs(logRows: LogRow[]): ContractValue | ContractValue[] {
+    const select = ensureArray(this.definition.select ?? [])
+
+    const extractArray = this.definition.set !== undefined
     if (this.definition.set !== undefined) {
       const setActions = ensureArray(this.definition.set)
-      logRows = await this.executeSets(logRows, setActions, select)
+      logRows = this.executeSets(logRows, setActions)
     } else if (this.definition.add !== undefined) {
       const addActions = ensureArray(this.definition.add)
       const removeActions = ensureArray(this.definition.remove ?? [])
 
-      logRows = await this.executeAddRemove(
+      logRows = this.executeAddRemove(
         logRows,
         addActions,
         removeActions,
@@ -145,19 +171,13 @@ export class Event2Handler implements Handler {
       values = values.map((o) => Object.values(o)[0]!)
     }
 
-    return {
-      field: this.field,
-      value: values,
-      ignoreRelative: this.definition.ignoreRelative,
-    }
+    // TODO(radomski): 
+    // biome-ignore lint/style/noNonNullAssertion: We know it's there
+    return extractArray ? values[0]! : values
   }
 
-  async executeSets(
-    logs: LogRow[],
-    setActions: Event2HandlerAction[],
-    select: string[],
-  ): Promise<LogRow[]> {
-    const result: Map<string, LogRow> = new Map()
+  executeSets(logs: LogRow[], setActions: Event2HandlerAction[]): LogRow[] {
+    let result: LogRow | undefined = undefined
 
     for (const entry of logs) {
       const keep = setActions.some((action) => evaluateAction(entry, action))
@@ -165,20 +185,18 @@ export class Event2Handler implements Handler {
         continue
       }
 
-      const value = select.length > 0 ? extractKeys(entry, select) : entry
-      const string = JSON.stringify(value)
-      result.set(string, entry)
+      result = entry
     }
 
-    return [...result.values()]
+    return ensureArray(result ?? [])
   }
 
-  async executeAddRemove(
+  executeAddRemove(
     logs: LogRow[],
     addActions: Event2HandlerAction[],
     removeActions: Event2HandlerAction[],
     select: string[],
-  ): Promise<LogRow[]> {
+  ): LogRow[] {
     const result: Map<string, LogRow> = new Map()
 
     for (const entry of logs) {
