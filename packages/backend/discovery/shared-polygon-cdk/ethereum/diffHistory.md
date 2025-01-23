@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x50d912b430337afb47109934de0ee1b059e4cad2
+
+# Diff at Thu, 23 Jan 2025 10:00:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c34926fa70131af78b4ff8ff2873e9c9f24dfc80 block: 21665502
+- current block number: 21686453
+
+## Description
+
+Single member change in CreateRollupMultisig.
+
+## Watched changes
+
+```diff
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.1:
+-        "0x9Ec9E740c5423147FCE0c78E0f3cb12ee3Fa02F6"
++        "0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
+      values.$members.0:
+-        "0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
++        "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5"
+    }
+```
+
 Generated with discovered.json: 0xdf95e681dfbbcae8430943754a096c0d9fb31300
 
 # Diff at Mon, 20 Jan 2025 11:48:06 GMT:
