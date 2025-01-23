@@ -449,7 +449,7 @@ export const hashkey: Layer2 = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: 'a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.',
+        text: 'a contract receives a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
   },
