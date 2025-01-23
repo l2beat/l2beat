@@ -552,13 +552,13 @@ If it does, add it to the result
 }
 ```
 
-### State from event handler
+### Event handler
 
-This handler allows you to collect values emitted by a smart contract through a single event type in a highly structured way, supporting multiple values per event and grouping by parameter values.
+TODOOOOOO
 
 **Parameters:**
 
-- `type` - the literal: `"stateFromEvent"`
+- `type` - the literal: `"event"`
 - `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
 - `returnParams` - array of strings that represent event keys that we want to save
 - `groupBy` - (optional) when specified, must be a `returnParam`, the output will be grouped by the values of this param
@@ -573,7 +573,7 @@ Assumes there is `event AddInboundProofLibraryForChain(uint16 chainId, address l
 
 ```json
 {
-  "type": "stateFromEvent",
+  "type": "event",
   "event": "AddInboundProofLibraryForChain",
   "returnParams": ["chainId", "lib"],
   "groupBy": "chainId",

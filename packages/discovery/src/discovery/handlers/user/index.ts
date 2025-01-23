@@ -73,10 +73,6 @@ import {
   StarkWareNamedStorageHandler,
   StarkWareNamedStorageHandlerDefinition,
 } from './StarkWareNamedStorageHandler'
-import {
-  StateFromEventDefinition,
-  StateFromEventHandler,
-} from './StateFromEventHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 import {
   ZKsyncEraScheduledTransactionHandler,
@@ -104,7 +100,6 @@ export const UserHandlerDefinition = z.union([
   LineaRolesModuleHandlerDefinition,
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
-  StateFromEventDefinition,
   HardCodedDefinition,
   StarkWareGovernanceHandlerDefinition,
   LayerZeroMultisigHandlerDefinition,
@@ -155,8 +150,6 @@ export function getUserHandler(
       return new HardCodedHandler(field, definition)
     case 'starkWareGovernance':
       return new StarkWareGovernanceHandler(field, definition, abi)
-    case 'stateFromEvent':
-      return new StateFromEventHandler(field, definition, abi)
     case 'layerZeroMultisig':
       return new LayerZeroMultisigHandler(field, abi)
     case 'arbitrumActors':
