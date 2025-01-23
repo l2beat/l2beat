@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../../../../../discovery/ProjectDiscovery'
-import { DaCommitteeSecurityRisk } from '../../../../types/DaCommitteeSecurityRisk'
-import { DaRelayerFailureRisk } from '../../../../types/DaRelayerFailureRisk'
-import { DaUpgradeabilityRisk } from '../../../../types/DaUpgradeabilityRisk'
+import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { DaCommitteeSecurityRisk } from '../types/DaCommitteeSecurityRisk'
+import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../types/DaUpgradeabilityRisk'
 import { CELESTIA_BLOBSTREAM } from './template'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')

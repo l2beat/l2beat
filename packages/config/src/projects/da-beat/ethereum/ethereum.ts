@@ -1,6 +1,6 @@
-import type { EthereumDaLayer } from '../../types/DaLayer'
-import { EthereumDaLayerRisks } from '../../types/EthereumDaRisks'
-import { enshrinedBridge } from './bridges/enshrinedBridge'
+import type { EthereumDaLayer } from '../types/DaLayer'
+import { EthereumDaLayerRisks } from '../types/EthereumDaRisks'
+import { enshrinedBridge } from './enshrinedBridge'
 
 export const ethereum = {
   id: 'ethereum',

@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
-import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../../types'
-import type { DaBridge } from '../../types/DaBridge'
-import { DaRelayerFailureRisk } from '../../types/DaRelayerFailureRisk'
-import { DacTransactionDataType } from '../../types/DacTransactionDataType'
-import { toUsedInProject } from '../../utils/to-used-in-project'
+import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../types'
+import type { DaBridge } from '../types/DaBridge'
+import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
+import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { toUsedInProject } from '../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('eigenda')
 const eigenDiscovery = new ProjectDiscovery('shared-eigenlayer')

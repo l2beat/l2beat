@@ -1,11 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { NO_BRIDGE } from '../../templates/no-bridge-template'
-import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
-import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import type { BlockchainDaLayer } from '../../types/DaLayer'
-import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
-import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { blobstream } from './bridges/blobstream'
+import { NO_BRIDGE } from '../templates/no-bridge-template'
+import { DaEconomicSecurityRisk } from '../types/DaEconomicSecurityRisk'
+import { DaFraudDetectionRisk } from '../types/DaFraudDetectionRisk'
+import type { BlockchainDaLayer } from '../types/DaLayer'
+import { DasErasureCodingProof } from '../types/DasErasureCodingProof'
+import { DasErasureCodingScheme } from '../types/DasErasureCodingScheme'
+import { SP1Blobstream } from './SP1Blobstream'
+
+export const blobstream = [SP1Blobstream]
 
 export const celestia: BlockchainDaLayer = {
   id: 'celestia',

@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { NO_BRIDGE } from '../../templates/no-bridge-template'
-import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
-import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import type { BlockchainDaLayer } from '../../types/DaLayer'
-import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
-import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
-import { vector } from './bridges/vector'
+import { NO_BRIDGE } from '../templates/no-bridge-template'
+import { DaEconomicSecurityRisk } from '../types/DaEconomicSecurityRisk'
+import { DaFraudDetectionRisk } from '../types/DaFraudDetectionRisk'
+import type { BlockchainDaLayer } from '../types/DaLayer'
+import { DasErasureCodingProof } from '../types/DasErasureCodingProof'
+import { DasErasureCodingScheme } from '../types/DasErasureCodingScheme'
+import { vector } from './vector'
 
 export const avail: BlockchainDaLayer = {
   id: 'avail',
