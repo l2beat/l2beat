@@ -1,9 +1,9 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { Layer2, Layer3 } from '@l2beat/config'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
-import { type RosetteValue } from '~/components/rosette/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { RosetteValue } from '~/components/rosette/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
   isTvlChartDataEmpty,
@@ -19,6 +19,7 @@ import { getOtherConsiderationsSection } from '~/utils/project/technology/get-ot
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
+import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
   project: Layer3
@@ -30,12 +31,14 @@ interface Params {
   hostChain?: Layer2
   hostChainRosetteValues?: RosetteValue[]
   combinedRosetteValues?: RosetteValue[]
+  daSolution?: DaSolution
 }
 
 export async function getL3ProjectDetails({
   project,
   hostChain,
   isVerified,
+  daSolution,
   rosetteValues,
   isHostChainVerified,
   combinedRosetteValues,
@@ -52,6 +55,7 @@ export async function getL3ProjectDetails({
           isUnderReview: !!project.isUnderReview,
           permissions: project.permissions,
           nativePermissions: project.nativePermissions,
+          daSolution,
         },
         contractsVerificationStatuses,
       )
