@@ -184,7 +184,7 @@ function getDacEntries(
       slug: parentProject.display.slug,
       name: daLayer.display?.name ?? `${parentProject.display.name} DAC`,
       nameSecondLine: kindToType(daLayer.kind),
-      href: `/scaling/projects/${parentProject.display.slug}`,
+      href: `/scaling/projects/${parentProject.display.slug}#da-layer`,
       statuses: {},
       risks: getDaLayerRisks(daLayer, tvs),
       fallback: daLayer.fallback,
