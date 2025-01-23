@@ -124,7 +124,7 @@ function createToken(
       amountFormula = {
         type: 'balanceOfEscrow',
         address: legacyToken.address ?? 'native',
-        chain: chain.name,
+        chain: escrow.chain,
         escrowAddresses: [escrow.address],
         decimals: legacyToken.decimals,
       } as BalanceOfEscrowAmountFormula
