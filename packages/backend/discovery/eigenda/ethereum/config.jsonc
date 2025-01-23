@@ -66,48 +66,13 @@
     },
     "StakeRegistry": {
       "fields": {
-        "firstQuorumStrategies": {
+        "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH).",
           "handler": {
             "type": "event2",
             "select": "strategy",
-            "add": {
-              "event": "StrategyAddedToQuorum",
-              "where": ["=", "#quorumNumber", 0]
-            }
-          }
-        },
-        "secondQuorumStrategies": {
-          "description": "The strategies for the second quorum (EIGEN).",
-          "handler": {
-            "type": "event2",
-            "select": "strategy",
-            "add": {
-              "event": "StrategyAddedToQuorum",
-              "where": ["=", "#quorumNumber", 1]
-            }
-          }
-        },
-        "thirdQuorumStrategies": {
-          "description": "The strategies for the third quorum.",
-          "handler": {
-            "type": "event2",
-            "select": "strategy",
-            "add": {
-              "event": "StrategyAddedToQuorum",
-              "where": ["=", "#quorumNumber", 2]
-            }
-          }
-        },
-        "fourthQuorumStrategies": {
-          "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.",
-          "handler": {
-            "type": "event2",
-            "select": "strategy",
-            "add": {
-              "event": "StrategyAddedToQuorum",
-              "where": ["=", "#quorumNumber", 3]
-            }
+            "groupBy": "quorumNumber",
+            "add": { "event": "StrategyAddedToQuorum" }
           }
         }
       }
