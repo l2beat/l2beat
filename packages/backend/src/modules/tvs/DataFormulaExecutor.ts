@@ -100,15 +100,23 @@ export class DataFormulaExecutor {
 
     for (const escrow of config.escrowAddresses) {
       this.logger.info(
-        `Fetching balance of ${config.address} for escrow ${escrow} on ${config.chain}`,
+        `Fetching balance of ${config.address} token for escrow ${escrow} on ${config.chain}`,
       )
-      const escrowBalance = await this.balanceProvider.getTokenBalance(
-        config.chain,
-        config.address,
-        EthereumAddress(escrow),
-        config.decimals,
-        blockNumber,
-      )
+      const escrowBalance =
+        config.address === 'native'
+          ? await this.balanceProvider.getNativeAssetBalance(
+              config.chain,
+              EthereumAddress(escrow),
+              config.decimals,
+              blockNumber,
+            )
+          : await this.balanceProvider.getTokenBalance(
+              config.chain,
+              config.address,
+              EthereumAddress(escrow),
+              config.decimals,
+              blockNumber,
+            )
 
       sum += escrowBalance
     }

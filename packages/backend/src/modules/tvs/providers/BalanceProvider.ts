@@ -34,4 +34,22 @@ export class BalanceProvider {
 
     return Number(BigInt(response.toString()) / 10n ** BigInt(decimals))
   }
+
+  async getNativeAssetBalance(
+    chain: string,
+    holderAddress: EthereumAddress,
+    decimals: number,
+    blockNumber: number,
+  ): Promise<number> {
+    const rpc = this.rpcClients.get(chain)
+    assert(rpc, `${chain}: No RPC configured`)
+
+    const response = await rpc.getBalance(holderAddress, blockNumber)
+
+    if (response.toString() === '0x') {
+      return 0
+    }
+
+    return Number(BigInt(response.toString()) / 10n ** BigInt(decimals))
+  }
 }

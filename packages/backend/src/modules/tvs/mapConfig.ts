@@ -4,7 +4,7 @@ import type {
   BackendProjectEscrow,
 } from '@l2beat/backend-shared'
 import { type ChainConfig, tokenList } from '@l2beat/config'
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { tokenToTicker } from './providers/tickers'
 import {
@@ -123,7 +123,7 @@ function createToken(
 
       amountFormula = {
         type: 'balanceOfEscrow',
-        address: legacyToken.address ?? EthereumAddress.ZERO,
+        address: legacyToken.address ?? 'native',
         chain: chain.name,
         escrowAddresses: [escrow.address],
         decimals: legacyToken.decimals,
