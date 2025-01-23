@@ -69,10 +69,16 @@
       "fields": {
         "watchers": {
           "handler": {
-            "type": "event",
-            "events": "WatcherPermissionSet",
+            "type": "event2",
             "select": "watcher",
-            "latch": { "truthy": { "column": "access" } }
+            "add": {
+              "event": "WatcherPermissionSet",
+              "where": ["!!", "#access"]
+            },
+            "remove": {
+              "event": "WatcherPermissionSet",
+              "where": ["not", ["!!", "#access"]]
+            }
           }
         }
       }

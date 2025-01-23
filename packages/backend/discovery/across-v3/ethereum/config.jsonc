@@ -68,10 +68,16 @@
       "fields": {
         "proposers": {
           "handler": {
-            "type": "event",
-            "events": "ProposerModified",
+            "type": "event2",
             "select": "proposer",
-            "latch": { "truthy": { "column": "enabled" } }
+            "add": {
+              "event": "ProposerModified",
+              "where": ["!!", "enabled"]
+            },
+            "remove": {
+              "event": "ProposerModified",
+              "where": ["not", ["!!", "enabled"]]
+            }
           }
         }
       }

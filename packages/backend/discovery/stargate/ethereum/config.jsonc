@@ -62,39 +62,37 @@
       "fields": {
         "stargateOracles": {
           "handler": {
-            "type": "event",
-            "events": "AppConfigUpdated",
+            "type": "event2",
             "select": "newConfig",
-            "distinct": "newConfig",
-            "where": {
-              "and": {
-                "lhs": {
-                  "eq": {
-                    "column": "userApplication",
-                    "value": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
-                  }
-                },
-                "rhs": { "eq": { "column": "configType", "value": 6 } } // CONFIG_TYPE_ORACLE
-              }
+            "add": {
+              "event": "AppConfigUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#userApplication",
+                  "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                ],
+                ["=", "#configType", 6]
+              ]
             }
           }
         },
         "stargateRelayers": {
           "handler": {
-            "type": "event",
-            "events": "AppConfigUpdated",
+            "type": "event2",
             "select": "newConfig",
-            "distinct": "newConfig",
-            "where": {
-              "and": {
-                "lhs": {
-                  "eq": {
-                    "column": "userApplication",
-                    "value": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
-                  }
-                },
-                "rhs": { "eq": { "column": "configType", "value": 3 } } // CONFIG_TYPE_RELAYER
-              }
+            "add": {
+              "event": "AppConfigUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#userApplication",
+                  "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                ],
+                ["=", "#configType", 3]
+              ]
             }
           }
         },

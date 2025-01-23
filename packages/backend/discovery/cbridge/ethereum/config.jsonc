@@ -23,18 +23,18 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "event",
-            "events": ["PauserAdded", "PauserRemoved"],
+            "type": "event2",
             "select": "account",
-            "latch": { "event": { "value": "PauserAdded" } }
+            "add": { "event": "PauserAdded" },
+            "remove": { "event": "PauserRemoved" }
           }
         },
         "governors": {
           "handler": {
-            "type": "event",
-            "events": ["GovernorAdded", "GovernorRemoved"],
+            "type": "event2",
             "select": "account",
-            "latch": { "event": { "value": "GovernorAdded" } }
+            "add": { "event": "GovernorAdded" },
+            "remove": { "event": "GovernorRemoved" }
           }
         }
       },
@@ -44,18 +44,18 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "event",
-            "events": ["PauserAdded", "PauserRemoved"],
+            "type": "event2",
             "select": "account",
-            "latch": { "event": { "value": "PauserAdded" } }
+            "add": { "event": "PauserAdded" },
+            "remove": { "event": "PauserRemoved" }
           }
         },
         "governors": {
           "handler": {
-            "type": "event",
-            "events": ["GovernorAdded", "GovernorRemoved"],
+            "type": "event2",
             "select": "account",
-            "latch": { "event": { "value": "GovernorAdded" } }
+            "add": { "event": "GovernorAdded" },
+            "remove": { "event": "GovernorRemoved" }
           }
         }
       }
@@ -73,26 +73,44 @@
       "fields": {
         "governors": {
           "handler": {
-            "type": "event",
-            "events": "event GovernorUpdated(address account, bool added)",
+            "type": "event2",
             "select": "account",
-            "latch": { "truthy": { "column": "added" } }
+            "add": {
+              "event": "event GovernorUpdated(address account, bool added)",
+              "where": ["!!", "#added"]
+            },
+            "remove": {
+              "event": "event GovernorUpdated(address account, bool added)",
+              "where": ["not", ["!!", "#added"]]
+            }
           }
         },
         "pausersPauseOnly": {
           "handler": {
-            "type": "event",
-            "events": "event PauserUpdated(address account, uint8 role)",
+            "type": "event2",
             "select": "account",
-            "latch": { "eq": { "column": "role", "value": 1 } }
+            "add": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["=", "#role", 1]
+            },
+            "remove": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["not", ["=", "#role", 1]]
+            }
           }
         },
         "pausersFull": {
           "handler": {
-            "type": "event",
-            "events": "event PauserUpdated(address account, uint8 role)",
+            "type": "event2",
             "select": "account",
-            "latch": { "eq": { "column": "role", "value": 2 } }
+            "add": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["=", "#role", 2]
+            },
+            "remove": {
+              "event": "event PauserUpdated(address account, uint8 role)",
+              "where": ["not", ["=", "#role", 2]]
+            }
           }
         },
         "numRelaxedGuards": {

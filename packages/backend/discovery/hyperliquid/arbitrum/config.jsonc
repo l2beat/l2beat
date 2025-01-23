@@ -22,25 +22,37 @@
         },
         "validatorSetUpdates": {
           "handler": {
-            "type": "event",
-            "events": "FinalizedValidatorSetUpdate",
-            "select": ["epoch", "hotValidatorSetHash", "coldValidatorSetHash"]
+            "type": "event2",
+            "select": ["epoch", "hotValidatorSetHash", "coldValidatorSetHash"],
+            "set": { "event": "FinalizedValidatorSetUpdate" }
           }
         },
         "lockers": {
           "handler": {
-            "type": "event",
-            "events": "ModifiedLocker",
+            "type": "event2",
             "select": "locker",
-            "latch": { "truthy": { "column": "isLocker" } }
+            "add": {
+              "event": "ModifiedLocker",
+              "where": ["!!", "#isLocker"]
+            },
+            "remove": {
+              "event": "ModifiedLocker",
+              "where": ["not", ["!!", "#isLocker"]]
+            }
           }
         },
         "finalizers": {
           "handler": {
-            "type": "event",
-            "events": "ModifiedFinalizer",
+            "type": "event2",
             "select": "finalizer",
-            "latch": { "truthy": { "column": "isFinalizer" } }
+            "add": {
+              "event": "ModifiedFinalizer",
+              "where": ["!!", "#isFinalizer"]
+            },
+            "remove": {
+              "event": "ModifiedFinalizer",
+              "where": ["not", ["!!", "#isFinalizer"]]
+            }
           }
         }
       }

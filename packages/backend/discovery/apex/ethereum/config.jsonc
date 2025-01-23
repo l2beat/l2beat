@@ -55,13 +55,14 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event LogOperatorAdded(address operator)",
-              "event LogOperatorRemoved(address operator)"
-            ],
+            "type": "event2",
             "select": "operator",
-            "latch": { "event": { "value": "LogOperatorAdded" } }
+            "add": {
+              "event": "event LogOperatorAdded(address operator)"
+            },
+            "remove": {
+              "event": "event LogOperatorRemoved(address operator)"
+            }
           }
         },
         "escapeVerifier": {
@@ -99,13 +100,14 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event LogOperatorAdded(address operator)",
-              "event LogOperatorRemoved(address operator)"
-            ],
+            "type": "event2",
             "select": "operator",
-            "latch": { "event": { "value": "LogOperatorAdded" } }
+            "add": {
+              "event": "event LogOperatorAdded(address operator)"
+            },
+            "remove": {
+              "event": "event LogOperatorRemoved(address operator)"
+            }
           }
         },
         "escapeVerifier": {

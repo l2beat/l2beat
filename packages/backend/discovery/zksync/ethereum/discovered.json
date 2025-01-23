@@ -2,7 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "blockNumber": 21365608,
-  "configHash": "0x2e00d43fde324ae8482f7dd57ca21dab7fa8472902454536e3025e40fcec3e66",
+  "configHash": "0xec00eabcc1151b79779f2b8eb798091904a9d90ed42e554be84acf53be547186",
   "contracts": [
     {
       "name": "Multisig 1",

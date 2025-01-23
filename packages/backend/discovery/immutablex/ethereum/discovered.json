@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "blockNumber": 21387345,
-  "configHash": "0x9e2f5520f0aecbe728718dc3d8e0cd1e564aaec2f4e266d2210790ae9a437198",
+  "configHash": "0x275b2211104eca88d209d84b1c479129cae52fd60128a332a900bbd34ce0f8b0",
   "contracts": [
     {
       "name": "Committee",

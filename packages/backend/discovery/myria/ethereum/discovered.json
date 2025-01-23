@@ -2,7 +2,7 @@
   "name": "myria",
   "chain": "ethereum",
   "blockNumber": 19825378,
-  "configHash": "0x291d90809324817b885f98287dd98cf7e9fcf675183c99321d1bda2c39a42f13",
+  "configHash": "0x83090690cda9db638a2caf9c221d7ad6ff0ce10b7be1a00c2705125ed319617b",
   "contracts": [
     {
       "name": "Committee",

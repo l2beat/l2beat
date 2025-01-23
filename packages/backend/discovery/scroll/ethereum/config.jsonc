@@ -105,18 +105,30 @@
       "fields": {
         "sequencers": {
           "handler": {
-            "type": "event",
-            "events": "UpdateSequencer",
+            "type": "event2",
             "select": "account",
-            "latch": { "truthy": { "column": "status" } }
+            "add": {
+              "event": "UpdateSequencer",
+              "where": ["!!", "#status"]
+            },
+            "remove": {
+              "event": "UpdateSequencer",
+              "where": ["not", ["!!", "#status"]]
+            }
           }
         },
         "provers": {
           "handler": {
-            "type": "event",
-            "events": "UpdateProver",
+            "type": "event2",
             "select": "account",
-            "latch": { "truthy": { "column": "status" } }
+            "add": {
+              "event": "UpdateProver",
+              "where": ["!!", "#status"]
+            },
+            "remove": {
+              "event": "UpdateProver",
+              "where": ["not", ["!!", "#status"]]
+            }
           }
         },
         "revertedBatches": {
@@ -223,10 +235,16 @@
       "fields": {
         "whitelisted": {
           "handler": {
-            "type": "event",
-            "events": "WhitelistStatusChanged",
+            "type": "event2",
             "select": "_account",
-            "latch": { "truthy": { "column": "_status" } }
+            "add": {
+              "event": "WhitelistStatusChanged",
+              "where": ["!!", "#_status"]
+            },
+            "remove": {
+              "event": "WhitelistStatusChanged",
+              "where": ["not", ["!!", "#_status"]]
+            }
           }
         }
       }

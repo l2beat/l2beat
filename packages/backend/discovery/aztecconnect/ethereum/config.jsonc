@@ -44,10 +44,16 @@
         },
         "rollupProviders": {
           "handler": {
-            "type": "event",
-            "events": "RollupProviderUpdated",
+            "type": "event2",
             "select": "providerAddress",
-            "latch": { "truthy": { "column": "valid" } }
+            "add": {
+              "event": "RollupProviderUpdated",
+              "where": ["!!", "#valid"]
+            },
+            "remove": {
+              "event": "RollupProviderUpdated",
+              "where": ["not", ["!!", "#valid"]]
+            }
           }
         },
         "accessControl": {

@@ -50,10 +50,16 @@
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER",
           "handler": {
-            "type": "event",
-            "events": "BatchConfirmerStatusChanged",
+            "type": "event2",
             "select": "batchConfirmer",
-            "latch": { "truthy": { "column": "status" } }
+            "add": {
+              "event": "BatchConfirmerStatusChanged",
+              "where": ["!!", "#status"]
+            },
+            "remove": {
+              "event": "BatchConfirmerStatusChanged",
+              "where": ["not", ["!!", "#status"]]
+            }
           }
         }
       }
@@ -63,37 +69,45 @@
         "firstQuorumStrategies": {
           "description": "The strategies for the first quorum (ETH).",
           "handler": {
-            "type": "event",
-            "events": "StrategyAddedToQuorum",
+            "type": "event2",
             "select": "strategy",
-            "where": { "eq": { "column": "quorumNumber", "value": 0 } }
+            "add": {
+              "event": "StrategyAddedToQuorum",
+              "where": ["=", "#quorumNumber", 0]
+            }
           }
         },
         "secondQuorumStrategies": {
           "description": "The strategies for the second quorum (EIGEN).",
           "handler": {
-            "type": "event",
-            "events": "StrategyAddedToQuorum",
+            "type": "event2",
             "select": "strategy",
-            "where": { "eq": { "column": "quorumNumber", "value": 1 } }
+            "add": {
+              "event": "StrategyAddedToQuorum",
+              "where": ["=", "#quorumNumber", 1]
+            }
           }
         },
         "thirdQuorumStrategies": {
           "description": "The strategies for the third quorum.",
           "handler": {
-            "type": "event",
-            "events": "StrategyAddedToQuorum",
+            "type": "event2",
             "select": "strategy",
-            "where": { "eq": { "column": "quorumNumber", "value": 2 } }
+            "add": {
+              "event": "StrategyAddedToQuorum",
+              "where": ["=", "#quorumNumber", 2]
+            }
           }
         },
         "fourthQuorumStrategies": {
           "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.",
           "handler": {
-            "type": "event",
-            "events": "StrategyAddedToQuorum",
+            "type": "event2",
             "select": "strategy",
-            "where": { "eq": { "column": "quorumNumber", "value": 3 } }
+            "add": {
+              "event": "StrategyAddedToQuorum",
+              "where": ["=", "#quorumNumber", 3]
+            }
           }
         }
       }
@@ -137,10 +151,10 @@
         "registeredOperators": {
           "description": "List of all registered operators ids",
           "handler": {
-            "type": "event",
-            "events": ["OperatorRegistered", "OperatorDeregistered"],
+            "type": "event2",
             "select": "operatorId",
-            "latch": { "event": { "value": "OperatorRegistered" } }
+            "add": { "event": "OperatorRegistered" },
+            "remove": { "event": "OperatorDeregistered" }
           }
         },
         "ejectionCooldown": {

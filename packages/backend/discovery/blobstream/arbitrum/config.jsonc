@@ -44,16 +44,32 @@
           "severity": "LOW",
           "type": "PERMISSION",
           "handler": {
-            "type": "event",
-            "events": "ProverUpdated",
+            "type": "event2",
             "select": "prover",
-            "where": {
-              "eq": {
-                "column": "functionId",
-                "value": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
-              }
-            }, // headerRangeFunctionId, see above
-            "latch": { "truthy": { "column": "added" } }
+            "add": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
+                ],
+                ["!!", "#added"]
+              ]
+            },
+            "remove": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
+                ],
+                ["not", ["!!", "#added"]]
+              ]
+            }
           }
         },
         "headerRangeVerifierOwner": {
@@ -71,16 +87,32 @@
           "severity": "LOW",
           "type": "PERMISSION",
           "handler": {
-            "type": "event",
-            "events": "ProverUpdated",
+            "type": "event2",
             "select": "prover",
-            "where": {
-              "eq": {
-                "column": "functionId",
-                "value": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
-              }
-            }, // nextHeaderFunctionId, see above
-            "latch": { "truthy": { "column": "added" } }
+            "add": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
+                ],
+                ["!!", "#added"]
+              ]
+            },
+            "remove": {
+              "event": "ProverUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#functionId",
+                  "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
+                ],
+                ["not", ["!!", "#added"]]
+              ]
+            }
           }
         },
         "nextHeaderVerifierOwner": {

@@ -151,10 +151,16 @@
       "fields": {
         "crewmembers": {
           "handler": {
-            "type": "event",
-            "events": "event SetCrewmember(address indexed crewmember,bool set)",
+            "type": "event2",
             "select": "crewmember",
-            "latch": { "truthy": { "column": "set" } }
+            "add": {
+              "event": "event SetCrewmember(address indexed crewmember,bool set)",
+              "where": ["!!", "#set"]
+            },
+            "remove": {
+              "event": "event SetCrewmember(address indexed crewmember,bool set)",
+              "where": ["not", ["!!", "#set"]]
+            }
           }
         }
       },

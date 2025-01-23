@@ -108,10 +108,16 @@
       "fields": {
         "Minters": {
           "handler": {
-            "type": "event",
-            "events": "IsMinterModified",
+            "type": "event2",
             "select": "minterAddress",
-            "latch": { "truthy": { "column": "newStatus" } }
+            "add": {
+              "event": "IsMinterModified",
+              "where": ["!!", "#newStatus"]
+            },
+            "remove": {
+              "event": "IsMinterModified",
+              "where": ["not", ["!!", "#newStatus"]]
+            }
           }
         },
         "transferRestrictionsDisabledAfter": {
@@ -156,10 +162,16 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "event",
-            "events": "PauserStatusChanged",
+            "type": "event2",
             "select": "pauser",
-            "latch": { "truthy": { "column": "canPause" } }
+            "add": {
+              "event": "PauserStatusChanged",
+              "where": ["!!", "#canPause"]
+            },
+            "remove": {
+              "event": "PauserStatusChanged",
+              "where": ["not", ["!!", "#canPause"]]
+            }
           }
         }
       }

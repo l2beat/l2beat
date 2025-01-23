@@ -4,10 +4,16 @@
   "fields": {
     "additionalProposers": {
       "handler": {
-        "type": "event",
-        "events": "ProposerUpdated",
+        "type": "event2",
         "select": "proposer",
-        "latch": { "truthy": { "column": "added" } }
+        "add": {
+          "event": "ProposerUpdated",
+          "where": ["!!", "#added"]
+        },
+        "remove": {
+          "event": "ProposerUpdated",
+          "where": ["not", ["!!", "#added"]]
+        }
       }
     },
     "owner": {

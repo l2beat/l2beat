@@ -148,10 +148,16 @@
       "fields": {
         "challengers": {
           "handler": {
-            "type": "event",
-            "events": "UpdateChallenger",
+            "type": "event2",
             "select": "account",
-            "latch": { "truthy": { "column": "status" } }
+            "add": {
+              "event": "UpdateChallenger",
+              "where": ["!!", "#status"]
+            },
+            "remove": {
+              "event": "UpdateChallenger",
+              "where": ["not", ["!!", "#status"]]
+            }
           },
           "target": {
             "permissions": [{ "type": "challenge" }]

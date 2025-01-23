@@ -24,10 +24,10 @@
       "fields": {
         "strategies": {
           "handler": {
-            "type": "event",
-            "events": ["AddStrategy", "RemoveStrategy"],
+            "type": "event2",
             "select": "strategy",
-            "latch": { "event": { "value": "AddStrategy" } }
+            "add": { "event": "AddStrategy" },
+            "remove": { "event": "RemoveStrategy" }
           }
         },
         "activeStrategiesIndex": {

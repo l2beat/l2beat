@@ -146,35 +146,26 @@
       "fields": {
         "dataStorePermission": {
           "handler": {
-            "type": "event",
-            "events": [
-              "AddDataStoreRollupPermission",
-              "ChangeDataStoreRollupPermission"
-            ],
+            "type": "event2",
             "select": "pusher",
-            "latch": { "event": { "value": "AddDataStoreRollupPermission" } }
+            "add": { "event": "AddDataStoreRollupPermission" },
+            "remove": { "event": "ChangeDataStoreRollupPermission" }
           }
         },
         "registerOperatorPermission": {
           "handler": {
-            "type": "event",
-            "events": [
-              "AddOperatorRegisterPermission",
-              "ChangeOperatorRegisterPermission"
-            ],
+            "type": "event2",
             "select": "operator",
-            "latch": { "event": { "value": "AddOperatorRegisterPermission" } }
+            "add": { "event": "AddOperatorRegisterPermission" },
+            "remove": { "event": "ChangeOperatorRegisterPermission" }
           }
         },
         "deregisterOperatorPermission": {
           "handler": {
-            "type": "event",
-            "events": [
-              "AddOperatorDeregisterPermission",
-              "ChangeOperatorDeregisterPermission"
-            ],
+            "type": "event2",
             "select": "operator",
-            "latch": { "event": { "value": "AddOperatorDeregisterPermission" } }
+            "add": { "event": "AddOperatorDeregisterPermission" },
+            "remove": { "event": "ChangeOperatorDeregisterPermission" }
           }
         }
       }

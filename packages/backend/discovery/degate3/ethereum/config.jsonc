@@ -35,9 +35,9 @@
         },
         "shutdownTriggered": {
           "handler": {
-            "type": "event",
-            "events": "Shutdown",
-            "select": "timestamp"
+            "type": "event2",
+            "select": "timestamp",
+            "set": { "event": "Shutdown" }
           }
         }
       }
@@ -66,11 +66,24 @@
       "fields": {
         "blockSubmitters": {
           "handler": {
-            "type": "event",
-            "events": "PermissionUpdate",
+            "type": "event2",
             "select": "user",
-            "where": { "eq": { "column": "selector", "value": "0x53228430" } },
-            "latch": { "truthy": { "column": "allowed" } }
+            "add": {
+              "event": "PermissionUpdate",
+              "where": [
+                "and",
+                ["=", "#selector", "0x53228430"],
+                ["!!", "#allowed"]
+              ]
+            },
+            "remove": {
+              "event": "PermissionUpdate",
+              "where": [
+                "and",
+                ["=", "#selector", "0x53228430"],
+                ["not", ["!!", "#allowed"]]
+              ]
+            }
           }
         }
       }

@@ -40,9 +40,9 @@
     },
     "deletedOutputs": {
       "handler": {
-        "type": "event",
-        "events": "OutputsDeleted",
-        "select": ["prevNextOutputIndex", "newNextOutputIndex"]
+        "type": "event2",
+        "select": ["prevNextOutputIndex", "newNextOutputIndex"],
+        "add": { "event": "OutputsDeleted" }
       }
     }
   }

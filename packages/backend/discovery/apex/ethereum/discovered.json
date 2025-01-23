@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 19825348,
-  "configHash": "0x2cfe0f62cf7ddd2892d9afd28a9cb215704d7f0e30712e75251d0d18c2f55f8d",
+  "configHash": "0xc3d0c47396bf001878fde84b3a25ee7898a74a9874d03e66906ef7aa51e8f1cf",
   "contracts": [
     {
       "name": "AggregationRouterV4",

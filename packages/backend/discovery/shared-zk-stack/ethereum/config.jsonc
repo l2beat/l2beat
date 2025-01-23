@@ -98,9 +98,9 @@
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.",
           "handler": {
-            "type": "event",
-            "events": "NewChain",
+            "type": "event2",
             "select": ["chainId", "stateTransitionManager", "chainGovernance"],
+            "add": { "event": "NewChain" },
             "ignoreRelative": true
           }
         },
@@ -202,74 +202,86 @@
       "fields": {
         "zksyncValidators": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
-            ],
+            "type": "event2",
             "select": "validator",
-            "where": { "eq": { "column": "chainId", "value": 324 } },
-            "latch": { "event": { "value": "ValidatorAdded" } }
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 324]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 324]
+            }
           }
         },
         "cronosValidators": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
-            ],
+            "type": "event2",
             "select": "validator",
-            "where": { "eq": { "column": "chainId", "value": 388 } },
-            "latch": { "event": { "value": "ValidatorAdded" } }
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 388]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 388]
+            }
           }
         },
         "zeronetworkValidators": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
-            ],
+            "type": "event2",
             "select": "validator",
-            "where": { "eq": { "column": "chainId", "value": 543210 } },
-            "latch": { "event": { "value": "ValidatorAdded" } }
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 543210]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 543210]
+            }
           }
         },
         "sophonValidators": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
-            ],
+            "type": "event2",
             "select": "validator",
-            "where": { "eq": { "column": "chainId", "value": 50104 } },
-            "latch": { "event": { "value": "ValidatorAdded" } }
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 50104]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 50104]
+            }
           }
         },
         "treasureValidators": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
-            ],
+            "type": "event2",
             "select": "validator",
-            "where": { "eq": { "column": "chainId", "value": 61166 } },
-            "latch": { "event": { "value": "ValidatorAdded" } }
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            }
           }
         },
         "grvtValidators": {
           "handler": {
-            "type": "event",
-            "events": [
-              "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "event ValidatorRemoved(uint256 indexed chainId, address validator)"
-            ],
+            "type": "event2",
             "select": "validator",
-            "where": { "eq": { "column": "chainId", "value": 325 } },
-            "latch": { "event": { "value": "ValidatorAdded" } }
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 325]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 325]
+            }
           }
         },
         "abstractThirdBatchTS": {
@@ -283,13 +295,13 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "event",
-            "events": "BlocksRevert",
+            "type": "event2",
             "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
               "totalBlocksExecuted"
-            ]
+            ],
+            "add": { "event": "BlocksRevert" }
           }
         }
       }

@@ -27,10 +27,16 @@
       "fields": {
         "validators": {
           "handler": {
-            "type": "event",
-            "events": "ValidatorStatusUpdate",
+            "type": "event2",
             "select": "validatorAddress",
-            "latch": { "truthy": { "column": "isActive" } }
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!!", "#isActive"]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["not", ["!!", "#isActive"]]
+            }
           }
         }
       }
@@ -75,9 +81,9 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "event",
-            "events": "BlocksRevert",
-            "select": ["totalBlocksCommitted", "totalBlocksVerified"]
+            "type": "event2",
+            "select": ["totalBlocksCommitted", "totalBlocksVerified"],
+            "add": { "event": "BlocksRevert" }
           }
         }
       },

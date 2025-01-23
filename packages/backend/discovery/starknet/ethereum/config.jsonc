@@ -123,10 +123,10 @@
         // Responsible for updating the state
         "operators": {
           "handler": {
-            "type": "event",
-            "events": ["LogOperatorAdded", "LogOperatorRemoved"],
+            "type": "event2",
             "select": "operator",
-            "latch": { "event": { "value": "LogOperatorAdded" } }
+            "add": { "event": "LogOperatorAdded" },
+            "remove": { "event": "LogOperatorRemoved" }
           }
         },
         "governors": {

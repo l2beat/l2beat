@@ -109,9 +109,9 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "event",
-            "events": "BlocksRevert",
-            "select": ["totalBlocksCommitted", "totalBlocksVerified"]
+            "type": "event2",
+            "select": ["totalBlocksCommitted", "totalBlocksVerified"],
+            "add": { "event": "BlocksRevert" }
           }
         }
       },
@@ -130,10 +130,16 @@
         // network governor can pause tokens and add validators
         "validators": {
           "handler": {
-            "type": "event",
-            "events": "ValidatorStatusUpdate",
+            "type": "event2",
             "select": "validatorAddress",
-            "latch": { "truthy": { "column": "isActive" } }
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!!", "#isActive"]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["not", ["!!", "#isActive"]]
+            }
           }
         }
       },
@@ -144,10 +150,16 @@
       "fields": {
         "tokenListers": {
           "handler": {
-            "type": "event",
-            "events": "TokenListerUpdate",
+            "type": "event2",
             "select": "tokenLister",
-            "latch": { "truthy": { "column": "isActive" } }
+            "add": {
+              "event": "TokenListerUpdate",
+              "where": ["!!", "#isActive"]
+            },
+            "remove": {
+              "event": "TokenListerUpdate",
+              "where": ["not", ["!!", "#isActive"]]
+            }
           }
         }
       }

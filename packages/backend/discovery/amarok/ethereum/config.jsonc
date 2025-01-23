@@ -60,27 +60,27 @@
       "fields": {
         "SEQUENCERS": {
           "handler": {
-            "type": "event",
-            "events": ["SequencerAdded", "SequencerRemoved"],
+            "type": "event2",
             "select": "sequencer",
-            "latch": { "event": { "value": "SequencerAdded" } }
+            "add": { "event": "SequencerAdded" },
+            "remove": { "event": "SequencerRemoved" }
           }
         },
         "RELAYERS": {
           "handler": {
-            "type": "event",
-            "events": ["RelayerAdded", "RelayerRemoved"],
+            "type": "event2",
             "select": "relayer",
-            "latch": { "event": { "value": "RelayerAdded" } }
+            "add": { "event": "RelayerAdded" },
+            "remove": { "event": "RelayerRemoved" }
           }
         },
         "ROUTERS": {
           "description": "Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination.",
           "handler": {
-            "type": "event",
-            "events": ["RouterAdded", "RouterRemoved"],
+            "type": "event2",
             "select": "router",
-            "latch": { "event": { "value": "RouterAdded" } }
+            "add": { "event": "RouterAdded" },
+            "remove": { "event": "RouterRemoved" }
           }
         },
         "relayerFeeVault": {
@@ -114,10 +114,10 @@
           "severity": "LOW",
           "type": "PERMISSION",
           "handler": {
-            "type": "event",
-            "events": ["WatcherAdded", "WatcherRemoved"],
+            "type": "event2",
             "select": "watcher",
-            "latch": { "event": { "value": "WatcherAdded" } }
+            "add": { "event": "WatcherAdded" },
+            "remove": { "event": "WatcherRemoved" }
           }
         }
       },

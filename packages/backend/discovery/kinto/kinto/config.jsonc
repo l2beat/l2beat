@@ -134,8 +134,7 @@
           "description": "List of scheduled operations.",
           "severity": "HIGH",
           "handler": {
-            "type": "event",
-            "events": "OperationScheduled",
+            "type": "event2",
             "select": [
               "operationId",
               "nonce",
@@ -143,15 +142,16 @@
               "caller",
               "target",
               "data"
-            ]
+            ],
+            "add": { "event": "OperationScheduled" }
           }
         },
         "AdditionalRoles": {
           "description": "Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.",
           "handler": {
-            "type": "event",
-            "events": "RoleLabel",
-            "select": ["roleId", "label"]
+            "type": "event2",
+            "select": ["roleId", "label"],
+            "add": { "event": "RoleLabel" }
           }
         },
         "RolesGranted": {

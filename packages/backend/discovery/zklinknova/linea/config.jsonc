@@ -38,10 +38,16 @@
       "fields": {
         "validators": {
           "handler": {
-            "type": "event",
-            "events": "ValidatorStatusUpdate",
+            "type": "event2",
             "select": "validatorAddress",
-            "latch": { "truthy": { "column": "isActive" } }
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!!", "#isActive"]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["not", ["!!", "#isActive"]]
+            }
           }
         }
       }
@@ -54,13 +60,13 @@
       "fields": {
         "revertedBlocks": {
           "handler": {
-            "type": "event",
-            "events": "BlocksRevert",
+            "type": "event2",
             "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
               "totalBlocksExecuted"
-            ]
+            ],
+            "add": { "event": "BlocksRevert" }
           }
         },
         // the 3 following allow us to get an array of validators without creating a new handler

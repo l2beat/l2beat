@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21635651,
-  "configHash": "0x6488c085b9a1cad653f6e94f25660a73b7ed16aff0348527e7af94bc1e795abf",
+  "configHash": "0x7806bf4bc2ffa94154aa045f2df442ba53270154a6afb07a4fbb83816a4e420f",
   "contracts": [
     {
       "name": "NextHeaderVerifier",
