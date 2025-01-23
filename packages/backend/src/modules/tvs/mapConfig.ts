@@ -6,7 +6,7 @@ import type {
 import { type ChainConfig, tokenList } from '@l2beat/config'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
-import { tokenToTicker } from './providers/tickerToCoingeckoId'
+import { tokenToTicker } from './providers/tickers'
 import {
   type AmountConfig,
   type AmountFormula,

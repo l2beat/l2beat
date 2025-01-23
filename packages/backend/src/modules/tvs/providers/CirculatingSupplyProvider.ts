@@ -1,7 +1,7 @@
 import { tokenList } from '@l2beat/config'
 import type { CoingeckoQueryService } from '@l2beat/shared'
 import { assert, CoingeckoId, type UnixTime } from '@l2beat/shared-pure'
-import { tickerToCoingeckoId } from './tickerToCoingeckoId'
+import { tickerToCoingeckoId } from './tickers'
 
 export class CirculatingSupplyProvider {
   constructor(private readonly client: CoingeckoQueryService) {}
