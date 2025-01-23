@@ -33,11 +33,11 @@ export class ValueService {
 
         const valueForProject = token.valueForProject
           ? await this.executeFormula(token.valueForProject, timestamp)
-          : undefined
+          : value
 
         const valueForTotal = token.valueForTotal
           ? await this.executeFormula(token.valueForTotal, timestamp)
-          : undefined
+          : (valueForProject ?? value)
 
         values.push({
           tokenId: token.id,

@@ -120,6 +120,6 @@ export interface TokenValue {
   projectId: ProjectId
   amount: number
   value: number
-  valueForProject?: number
-  valueForTotal?: number
+  valueForProject: number
+  valueForTotal: number
 }
