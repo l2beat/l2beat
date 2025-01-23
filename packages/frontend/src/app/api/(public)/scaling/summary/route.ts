@@ -16,6 +16,7 @@ const getCachedData = cache(
       range: '30d',
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
+      previewRecategorisation: false,
     })
     return {
       chart: {

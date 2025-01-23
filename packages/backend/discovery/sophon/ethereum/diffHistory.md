@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x76767e39a8b67c1328d3b78f09c0e30879d1903c
+
+# Diff at Wed, 22 Jan 2025 12:22:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21429615
+- current block number: 21679920
+
+## Description
+
+L1USDCBridge to add a new owner.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD)
+    +++ description: None
+```
+
+```diff
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x00a6e4c29d4f4c792c4f6c43b197f95b24d626a94e6faf8ee81bc9320d579d7e"
++        "0xab9a40a5f27251ca4b4884dedef5a2b49a8928796a1fd0c6655f1623be961602"
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD","via":[]}]
+      values.$admin:
+-        "0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      values.$implementation:
+-        "0x86dF12f51E3531689e0615bb2F739ddf01337715"
++        "0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB"
+      values.$pastUpgrades.1:
++        ["2025-01-21T18:29:59.000Z","0x152dc623c52d7f2b058ec5b4dfb67f5e0fee14c04dc9c0db4ae02ed2dc4ab998",["0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.owner:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ .../L1USDCBridge/L1USDCBridge.sol                  |   8 +
+ 3 files changed, 8 insertions(+), 988 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429615 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x3b181838Ae9DB831C17237FAbD7c10801Dd49fcD) {
+    +++ description: None
+      name:
+-        "SophonUSDCEscrowMultisig"
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xdd0281d03c618ac9e56421d06a0e8e3bda3b30f7
 
 # Diff at Mon, 20 Jan 2025 11:10:10 GMT:

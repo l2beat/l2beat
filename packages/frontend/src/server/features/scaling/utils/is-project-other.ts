@@ -8,9 +8,10 @@ export function isProjectOther<
       category: string
     }
   },
->(project: T) {
+>(project: T, previewRecategorisation?: boolean) {
+  const migrated = featureFlags.othersMigrated() || !!previewRecategorisation
   return (
-    (featureFlags.othersMigrated() &&
+    (migrated &&
       !!project.display.reasonsForBeingOther &&
       project.display.reasonsForBeingOther.length > 0) ||
     project.display.category === 'Other'

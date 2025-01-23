@@ -6,6 +6,7 @@ import type {
 import { type ChainConfig, tokenList } from '@l2beat/config'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { tokenToTicker } from './providers/tickers'
 import {
   type AmountConfig,
   type AmountFormula,
@@ -157,7 +158,7 @@ function createToken(
 
       amountFormula = {
         type: 'circulatingSupply',
-        ticker: legacyToken.symbol,
+        ticker: tokenToTicker(legacyToken),
       } as CirculatingSupplyAmountFormula
 
       sinceTimestamp = UnixTime.max(
@@ -172,7 +173,8 @@ function createToken(
 
   return {
     id: legacyToken.id,
-    ticker: mapCoingeckoIdToTicker(legacyToken.coingeckoId),
+    // This is a temporary solution
+    ticker: tokenToTicker(legacyToken),
     amount: amountFormula,
     sinceTimestamp,
     untilTimestamp,
@@ -292,12 +294,4 @@ function processFormula(formula: CalculationFormula | ValueFormula): {
 export function hash(input: string[]): string {
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
-}
-
-export function mapCoingeckoIdToTicker(coingeckoId: string): string {
-  const token = tokenList.find((t) => t.coingeckoId === coingeckoId)
-
-  assert(token, `Token not found for coingeckoId ${coingeckoId}`)
-
-  return token.symbol
 }

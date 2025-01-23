@@ -40,6 +40,7 @@ import {
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, type BadgeId, badges } from '../../badges'
+import type { DacDaLayer } from '../../da-beat/types/DaLayer'
 import { getStage } from '../common/stages/getStage'
 import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 import {
@@ -60,6 +61,7 @@ export interface DAProvider {
 export interface PolygonCDKStackConfig {
   createdAt: UnixTime
   daProvider?: DAProvider
+  dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
@@ -592,6 +594,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
       templateVars.additionalBadges ?? [],
     ),
+    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
   }
 }
 

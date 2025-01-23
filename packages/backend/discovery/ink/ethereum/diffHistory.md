@@ -1,4 +1,36 @@
-Generated with discovered.json: 0xe69bdf441999b87ebaabfc1d027b5af5135b8368
+Generated with discovered.json: 0x7a36e6d5d5f232b9a210ec340cdc53833f64658d
+
+# Diff at Wed, 22 Jan 2025 22:51:41 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@af6bc3140c90ba5793649c2811c2989f199e73e5 block: 21629240
+- current block number: 21683128
+
+## Description
+
+Ink is now Stage 1.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (0x5d66C1782664115999C47c9fA5cd031f495D3e4F) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        "FaultDisputeGame"
+      values.respectedGameType:
+-        1
++        0
+      values.respectedGameTypeUpdatedAt:
+-        1733498411
++        1737576635
+    }
+```
+
+Generated with discovered.json: 0x7fbbe7990799ca381049246d6e54e8f8710ac1b3
 
 # Diff at Tue, 21 Jan 2025 11:19:02 GMT:
 

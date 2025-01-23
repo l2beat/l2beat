@@ -143,9 +143,7 @@ export function getCommonDaProjectStats(
 
   // Duration of storage
   const durationOfStorage =
-    project.kind === 'DAC' ||
-    project.kind === 'DA Service' ||
-    project.kind === 'No DAC'
+    project.kind === 'DA Service'
       ? {
           value: 'Flexible',
           tooltip:

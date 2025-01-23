@@ -21,6 +21,7 @@ export const TvlChartDataParams = z.object({
   range: TvlChartRange,
   filter: TvlProjectFilter,
   excludeAssociatedTokens: z.boolean(),
+  previewRecategorisation: z.boolean().default(false),
 })
 
 export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
@@ -46,10 +47,17 @@ export async function getTvlChart(
 
 export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export const getCachedTvlChartData = cache(
-  async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
-    const projectsFilter = createTvlProjectsFilter(filter)
-    const tvlProjects = getTvlProjects(projectsFilter)
-
+  async ({
+    range,
+    excludeAssociatedTokens,
+    filter,
+    previewRecategorisation,
+  }: TvlChartDataParams) => {
+    const projectsFilter = createTvlProjectsFilter(
+      filter,
+      previewRecategorisation,
+    )
+    const tvlProjects = getTvlProjects(projectsFilter, previewRecategorisation)
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
       getTvlValuesForProjects(tvlProjects, range),
