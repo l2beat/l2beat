@@ -1,8 +1,8 @@
 {
   "name": "gluon",
   "chain": "ethereum",
-  "blockNumber": 21387313,
-  "configHash": "0x9bec65ef996cd0b3864a5461257d5a6a0c3aa64eb9dfbdb7043337007b51687c",
+  "blockNumber": 21686363,
+  "configHash": "0x19590b9275aee2bc8ff0deea15fcd36a798ef86ce7bfc14a1b8af346afe1395c",
   "contracts": [
     {
       "name": "SpotData",
@@ -148,16 +148,17 @@
       "sourceHashes": [
         "0xf3c0d8b3babd0cfa68d014bdf409a030133c362c1bef63195ca06e11afcd38bd"
       ],
+      "ignoreInWatchMode": ["currentIntervalIndex", "getToBeDistributed"],
       "sinceTimestamp": 1612360715,
       "values": {
         "$immutable": true,
         "activationInterval": 11520,
-        "currentIntervalIndex": 24,
+        "currentIntervalIndex": 25,
         "currentLogic": "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
         "data": "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
         "extensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
         "getExtensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
-        "getToBeDistributed": [0, "1346505840564614195006", 2730244557],
+        "getToBeDistributed": [0, "1345948284963741724516", 2727341811],
         "getTokens": [
           "0x0000000000000000000000000000000000000000",
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
