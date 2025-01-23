@@ -9,14 +9,15 @@ import type {
   StandaloneDacBridge,
 } from './DaBridge'
 import type { DaChallengeMechanism } from './DaChallengeMechanism'
-import type { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import type { DaEconomicSecurity } from './DaEconomicSecurity'
 import type { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import type { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import type { DaLayerThroughput } from './DaLayerThroughput'
 import type { DaLinks } from './DaLinks'
+import type { DaRiskWithSentiment } from './DaRiskView'
 import type { DaTechnology } from './DaTechnology'
-import type { DataAvailabilitySampling } from './DataAvailabilitySampling'
+import type { DasErasureCodingProof } from './DasErasureCodingProof'
+import type { DasErasureCodingScheme } from './DasErasureCodingScheme'
 import type { EthereumDaLayerRisks } from './EthereumDaRisks'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
@@ -110,4 +111,26 @@ interface DaLayerDisplay {
   description: string
   /** Links related to the data availability layer. */
   links?: DaLinks
+}
+export type DaConsensusAlgorithm = {
+  /** The name of the consensus algorithm. */
+  name: string
+  /** A description of the consensus algorithm. */
+  description: string
+  /** The time it takes to produce a new block. @unit seconds. */
+  blockTime: number
+  /** Consensus finality time. @unit seconds. */
+  consensusFinality: number
+  /** Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period. @unit seconds. */
+  unbondingPeriod: number
+}
+
+type DaAttribute = Omit<DaRiskWithSentiment, 'sentiment'>
+export type DaAttributes = Record<string, DaAttribute>
+
+export type DataAvailabilitySampling = {
+  /** The erasure coding scheme used by the data availability layer. */
+  erasureCodingScheme: DasErasureCodingScheme
+  /** The erasure coding proof type used by the data availability layer. */
+  erasureCodingProof: DasErasureCodingProof
 }

@@ -1,4 +1,4 @@
-import type { DaAttributes } from './DaAttribute'
+import type { DaAttributes } from './DaLayer'
 
 export type DasErasureCodingProof =
   | typeof ValidityProofs

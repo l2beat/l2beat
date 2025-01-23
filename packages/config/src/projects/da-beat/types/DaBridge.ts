@@ -1,14 +1,16 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type {
+  ScalingProjectContract,
   ScalingProjectPermission,
+  ScalingProjectReference,
+  ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
 } from '../../../common'
-import type { DaBridgeContracts } from './DaBridgeContracts'
 import type { DaCommitteeSecurityRisk } from './DaCommitteeSecurityRisk'
 import type { DaLinks } from './DaLinks'
 import type { DaRelayerFailureRisk } from './DaRelayerFailureRisk'
+import type { DaRisk } from './DaRisk'
 import type { DaTechnology } from './DaTechnology'
-import type { DaUpgradeabilityRisk } from './DaUpgradeabilityRisk'
 import type { DacTransactionDataType } from './DacTransactionDataType'
 import type { EthereumDaBridgeRisks } from './EthereumDaRisks'
 import type { UsedInProject } from './UsedInProject'
@@ -133,7 +135,20 @@ export type DaBridgeRisks = {
   /** Attestation - TBD. */
   committeeSecurity: DaCommitteeSecurityRisk
   /** Upgradeability - TBD. @unit seconds. */
-  upgradeability: DaUpgradeabilityRisk
+  upgradeability: DaRisk
   /** Relayer failure - TBD. */
   relayerFailure: DaRelayerFailureRisk
+}
+
+export interface DaBridgeContracts {
+  /** List of risks associated with the contracts */
+  risks: ScalingProjectRisk[]
+  /** List of the contracts on each chain */
+  addresses: Record<string, ScalingProjectContract[]>
+  /** List of references backing up the claim */
+  references?: ScalingProjectReference[]
+  /** The description and research is incomplete */
+  isIncomplete?: boolean
+  /** The description and research is under review */
+  isUnderReview?: boolean
 }
