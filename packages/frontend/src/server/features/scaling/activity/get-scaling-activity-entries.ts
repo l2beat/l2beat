@@ -19,7 +19,7 @@ import { getActivitySyncWarning } from './utils/is-activity-synced'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ProjectService.STATIC.getProjects({
-    select: ['statuses', 'scalingInfo'],
+    select: ['statuses', 'scalingInfo', 'hasActivity'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })

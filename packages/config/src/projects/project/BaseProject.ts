@@ -56,6 +56,7 @@ export interface BaseProject {
   isDaLayer?: true
   isUpcoming?: true
   isArchived?: true
+  hasActivity?: true
 }
 
 export interface ProjectStatuses {

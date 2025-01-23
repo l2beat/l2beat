@@ -81,6 +81,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
     isArchived: p.isArchived ? true : undefined,
     isUpcoming: p.isUpcoming ? true : undefined,
+    hasActivity: p.config.transactionApi ? true : undefined,
   }
 }
 
