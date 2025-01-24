@@ -112,6 +112,13 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
+  CelestiaBlobstream: {
+    display: {
+      name: 'Celestia with Blobstream',
+      description: 'This project utilizes Celestia and has Blobstream enabled, facilitating the bridging of data availability commitments between Celestia and Ethereum.',
+    },
+    type: BadgeType.DA,
+  },
   EigenDA: {
     display: {
       name: 'EigenDA',
