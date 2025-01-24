@@ -372,7 +372,7 @@ The call handler allows you to call amount of the emitted events from the contra
 
 **Case study: Arbitrum validators**
 
-List of validators cannot be easily obtained from the contract, there is no getter. Additionally the method does not emit an event helpful enough to use `arrayFromOneEvent` handler. But it does emit an event that can be used to determine the amount of calls of the functions `setValidator`, when count changes our bot will notify us about the possible changes in the validator set. Later developer can manually update the hardcoded list of validators.
+List of validators cannot be easily obtained from the contract, there is no getter. Additionally the method does not emit an event helpful enough to use `event` handler. But it does emit an event that can be used to determine the amount of calls of the functions `setValidator`, when count changes our bot will notify us about the possible changes in the validator set. Later developer can manually update the hardcoded list of validators.
 
 **Parameters:**
 
