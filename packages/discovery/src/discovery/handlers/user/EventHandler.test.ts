@@ -10,6 +10,10 @@ describe(EventHandler.name, () => {
     'event CurrentBatch2(uint256 batchIndex)',
     'event CurrentBatch(uint256 batchIndex)',
     'event CurrentBatchTimestamp(uint256 batchTimestamp)',
+    'event Update(address user, bool added)',
+    'event Add(address user)',
+    'event Add2(address user)',
+    'event Remove(address user)',
   ]
 
   const abi = new utils.Interface(stringABI)
@@ -24,6 +28,10 @@ describe(EventHandler.name, () => {
   const CurrentBatchMultichain = event<[number, number]>(
     'CurrentBatchMultichain',
   )
+  const Update = event<[EthereumAddress, boolean]>('Update')
+  const Add = event<[EthereumAddress]>('Add')
+  const Add2 = event<[EthereumAddress]>('Add2')
+  const Remove = event<[EthereumAddress]>('Remove')
 
   const ADDRESS = EthereumAddress.random()
 
@@ -34,13 +42,300 @@ describe(EventHandler.name, () => {
     ): Promise<providers.Log[]> => {
       const topic0 = typeof topics[0] === 'string' ? topics[0] : topics[0]?.[0]
       assert(!!topic0)
-      const result = events.filter((e) => e.topics[0] === topic0)
+      const result = events
+        .map((e, i) => ({ ...e, blockNumber: i + 1 }))
+        .filter((e) => e.topics[0] === topic0)
 
       return new Promise((resolve, _) => resolve(result))
     }
   }
 
+  describe('adding and removing events', () => {
+    it('handles multiple adds and single remove for the same user', async () => {
+      const U1 = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([Add(U1), Add(U1), Remove(U1)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'user',
+          add: { event: 'Add' },
+          remove: { event: 'Remove' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([])
+    })
+
+    it('user added, removed, and added again', async () => {
+      const U1 = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([Add(U1), Remove(U1), Add(U1)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'user',
+          add: { event: 'Add' },
+          remove: { event: 'Remove' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([U1])
+    })
+
+    it('two event setting one event unsetting', async () => {
+      const U1 = EthereumAddress.random()
+      const U2 = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([Add(U1), Add(U2), Remove(U1), Add2(U2)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'user',
+          add: { event: ['Add', 'Add2'] },
+          remove: { event: 'Remove' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([U2])
+    })
+
+    it('one event setting one event unsetting', async () => {
+      const U1 = EthereumAddress.random()
+      const U2 = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([Add(U1), Add(U2), Remove(U1), Add(U2)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'user',
+          add: { event: 'Add' },
+          remove: { event: 'Remove' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([U2])
+    })
+
+    it('single event with boolean flag', async () => {
+      const U1 = EthereumAddress.random()
+      const U2 = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([
+          Update(U1, true),
+          Update(U2, true),
+          Update(U1, false),
+          Update(U2, true),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'user',
+          add: { event: 'Update', where: ['=', '#added', true] },
+          remove: { event: 'Update', where: ['=', '#added', false] },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([U2])
+    })
+  })
+
+  describe('adding fetch', () => {
+    it('multiple events with multiple values, grouped and filtered', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([
+          CurrentBatchMultichain(1, 1),
+          CurrentBatchMultichain(2, 2),
+          CurrentBatchMultichain(3, 2),
+          CurrentBatchMultichain(4, 1),
+          CurrentBatchMultichain(42, 3),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          add: {
+            event: 'CurrentBatchMultichain',
+            where: ['!=', '#chainId', 2],
+          },
+          groupBy: 'chainId',
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual({ 1: [1, 4], 2: [], 3: [42] })
+    })
+
+    it('multiple events with no matching filter', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([
+          CurrentBatch(1),
+          CurrentBatch(2),
+          CurrentBatch(3),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          add: { event: 'CurrentBatch', where: ['=', '#batchIndex', 4] },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([])
+    })
+
+    it('multiple events with filter', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([
+          CurrentBatch(1),
+          CurrentBatch(2),
+          CurrentBatch(3),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          add: { event: 'CurrentBatch', where: ['!=', '#batchIndex', 3] },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([1, 2])
+    })
+
+    it('multiple events', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([CurrentBatch(1), CurrentBatch(2)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          add: { event: 'CurrentBatch' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([1, 2])
+    })
+
+    it('single event', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([CurrentBatch(1)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          add: { event: 'CurrentBatch' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual([1])
+    })
+
+    it('no events', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          add: { event: 'CurrentBatch' },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+      expect(result.value).toEqual([])
+    })
+  })
+
   describe('setting fetch', () => {
+    it('groups with some having no events after filtering', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([
+          CurrentBatchMultichain(1, 1),
+          CurrentBatchMultichain(3, 3),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          set: {
+            event: 'CurrentBatchMultichain',
+            where: ['!=', '#chainId', 2],
+          },
+          groupBy: 'chainId',
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual({ 1: 1, 3: 3 })
+    })
+
     it('works on semi-compatible events', async () => {
       const provider = mockObject<IProvider>({
         getLogs: getLogsStub([CurrentBatch(1), CurrentBatchMultichain(2, 3)]),
@@ -360,6 +655,48 @@ describe(EventHandler.name, () => {
       const result = await handler.execute(provider, ADDRESS)
 
       expect(result.value).toEqual(undefined)
+    })
+  })
+
+  describe('errors', () => {
+    it('throws error when where clause references invalid parameter', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([CurrentBatch(1)]),
+      })
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          add: { event: 'CurrentBatch', where: ['=', '#invalidParam', 4] },
+        },
+        stringABI,
+      )
+
+      await expect(async () =>
+        handler.execute(provider, ADDRESS),
+      ).toBeRejectedWith(
+        "Tried to extract column [invalidParam] but it's undefined",
+      )
+    })
+
+    it('throws error when select references invalid parameter', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([CurrentBatch(1)]),
+      })
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['invalidParam'],
+          add: { event: 'CurrentBatch' },
+        },
+        stringABI,
+      )
+
+      await expect(
+        async () => await handler.execute(provider, ADDRESS),
+      ).toBeRejectedWith('Invalid extraction key [invalidParam], not defined')
     })
   })
 

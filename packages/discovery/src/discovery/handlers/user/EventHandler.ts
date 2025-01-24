@@ -261,13 +261,12 @@ function extractKeys(
   return result
 }
 
-function extractKey(
-  value: ContractValue,
-  key: string,
-): ContractValue | undefined {
+function extractKey(value: ContractValue, key: string): ContractValue {
   assert(typeof value === 'object' && !Array.isArray(value), 'Extract keys')
 
-  return value[key]
+  const result = value[key]
+  assert(result !== undefined, `Invalid extraction key [${key}], not defined`)
+  return result
 }
 
 function ensureArray<T>(v: T | T[]): T[] {
