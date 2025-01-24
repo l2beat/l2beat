@@ -33,16 +33,32 @@ export type EventHandlerAction = z.infer<typeof EventHandlerAction>
 const oneOrMany = <T extends z.ZodTypeAny>(schema: T) =>
   z.union([schema, z.array(schema)])
 
-export type EventHandlerDefinition = z.infer<typeof EventHandlerDefinition>
-export const EventHandlerDefinition = z.strictObject({
+const common = {
   type: z.literal('event'),
   select: z.string().or(z.array(z.string())).optional(),
-  set: oneOrMany(EventHandlerAction).optional(),
-  add: oneOrMany(EventHandlerAction).optional(),
-  remove: oneOrMany(EventHandlerAction).optional(),
   groupBy: z.string().optional(),
-  ignoreRelative: z.optional(z.boolean()),
+  ignoreRelative: z.boolean().optional(),
+}
+
+const setOnlySchema = z.object({
+  ...common,
+  set: oneOrMany(EventHandlerAction),
+  add: z.undefined(),
+  remove: z.undefined(),
 })
+
+const addAndRemoveSchema = z.object({
+  ...common,
+  set: z.undefined(),
+  add: oneOrMany(EventHandlerAction),
+  remove: oneOrMany(EventHandlerAction).optional(),
+})
+
+export type EventHandlerDefinition = z.infer<typeof EventHandlerDefinition>
+export const EventHandlerDefinition = z.union([
+  setOnlySchema,
+  addAndRemoveSchema,
+])
 
 export class EventHandler implements Handler {
   readonly dependencies: string[] = []
