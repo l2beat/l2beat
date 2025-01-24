@@ -2439,7 +2439,7 @@ Generated with discovered.json: 0x15b53e5d1d63506e73b32bb5cecc4f309c7d46bd
 
 ## Description
 
-One signer changed, threshold decreased in EigenLayerTokenMultisig. Unverified strat deployed through the Factory.
+One signer changed, threshold decreased in EigenLayerTokenMultisig. Unverified start deployed through the Factory.
 
 ## Watched changes
 
