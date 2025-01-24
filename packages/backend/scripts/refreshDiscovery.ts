@@ -25,6 +25,12 @@ const cmd = command({
       description:
         'where to at which project start discovery, format <project>/<chain>',
     }),
+    confirmed: flag({
+      type: boolean,
+      long: 'yes',
+      short: 'y',
+      description: 'accept the refresh, do not prompt the user',
+    }),
     message: option({
       type: optional(string),
       long: 'message',
@@ -82,7 +88,7 @@ const cmd = command({
       console.log(
         `\nOverall ${toRefresh.length} projects need discovery refresh.`,
       )
-      if (keyInYN('Do you want to continue?')) {
+      if (args.confirmed || keyInYN('Do you want to continue?')) {
         for (const { config } of toRefresh) {
           await discoverAndUpdateDiffHistory(
             {
