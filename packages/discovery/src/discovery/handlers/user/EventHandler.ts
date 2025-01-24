@@ -98,10 +98,7 @@ export class EventHandler implements Handler {
       events.push(...actionEvents)
     }
 
-    const fragments = events.map((e) =>
-      getEventFragment(e, stringAbi, () => true),
-    )
-
+    const fragments = events.map((e) => getEventFragment(e, stringAbi))
     this.abi = new utils.Interface(fragments)
     this.topic0s = [...new Set(fragments.map((f) => this.abi.getEventTopic(f)))]
   }
@@ -291,10 +288,7 @@ function eventsAreCompatible(
   stringAbi: string[],
 ): boolean {
   const events = ensureArray(action.event)
-
-  const fragments = events.map((e) =>
-    getEventFragment(e, stringAbi, () => true),
-  )
+  const fragments = events.map((e) => getEventFragment(e, stringAbi))
 
   const inputsPerEvent = fragments.map((f) => f.inputs.map((elem) => elem))
   const smallest = inputsPerEvent.reduce((min, current) =>
