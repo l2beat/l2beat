@@ -47,7 +47,7 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types/DaLayer'
+import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'
 import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'

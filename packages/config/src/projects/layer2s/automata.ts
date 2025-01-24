@@ -4,14 +4,12 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
-  DaChallengeMechanism,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-  DacTransactionDataType,
-} from '../da-beat/types'
+} from '../da-beat/common'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -84,7 +82,7 @@ export const automata: Layer2 = opStackL2({
     },
     systemCategory: 'custom',
     fallback: DA_LAYERS.ETH_CALLDATA,
-    challengeMechanism: DaChallengeMechanism.DaChallenges,
+    challengeMechanism: 'DA Challenges',
     technology: {
       description: `
       ## Architecture
@@ -130,7 +128,7 @@ export const automata: Layer2 = opStackL2({
       requiredMembers: 0,
       membersCount: 0,
       hideMembers: true,
-      transactionDataType: DacTransactionDataType.TransactionData,
+      transactionDataType: 'Transaction data',
       risks: {
         committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
         upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay

@@ -9,7 +9,6 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
-import { DacTransactionDataType } from '../da-beat/types'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import type { Layer2 } from './types'
 
@@ -191,7 +190,7 @@ export const gpt: Layer2 = polygonCDKStack({
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: DacTransactionDataType.TransactionData,
+      transactionDataType: 'Transaction data',
     },
   }),
 })

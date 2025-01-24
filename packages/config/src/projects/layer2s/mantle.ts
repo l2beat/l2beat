@@ -10,10 +10,9 @@ import {
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaUpgradeabilityRisk,
-  type DacDaLayer,
-} from '../da-beat/types'
-import { DaRelayerFailureRisk } from '../da-beat/types/DaRelayerFailureRisk'
-import { DacTransactionDataType } from '../da-beat/types/DacTransactionDataType'
+} from '../da-beat/common'
+import { DaRelayerFailureRisk } from '../da-beat/common/DaRelayerFailureRisk'
+import type { DacDaLayer } from '../da-beat/types'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -51,6 +50,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   systemCategory: 'custom',
+  challengeMechanism: 'None',
   technology: {
     description: `
       ## Architecture
@@ -78,7 +78,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
       The confirmDataStore() function verify the signatures and if the quorum is reached, the data is considered available.
         `,
     },
-    transactionDataType: DacTransactionDataType.TransactionData,
+    transactionDataType: 'Transaction data',
     requiredMembers: threshold,
     membersCount: committeeMembers,
     risks: {
