@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x5e91b5966da0d3f755b8e4f3adb5ecba1898ccba
+
+# Diff at Fri, 24 Jan 2025 09:46:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@d41ab38c1eb59c6426ed6aa100dbd9b805e5a629 block: 21630370
+- current block number: 21630370
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.cronosValidatorsAdded:
+-        ["0xACBD581D1BedB2F71d2F5F01f881586e0623d591","0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14","0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122","0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"]
+      values.cronosValidatorsRemoved:
+-        ["0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14","0xACBD581D1BedB2F71d2F5F01f881586e0623d591"]
+      values.grvtValidatorsAdded:
+-        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
+-        []
+      values.sophonValidatorsAdded:
+-        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.sophonValidatorsRemoved:
+-        []
+      values.treasureValidatorsAdded:
+-        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.treasureValidatorsRemoved:
+-        []
+      values.zeronetworkValidatorsAdded:
+-        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zeronetworkValidatorsRemoved:
+-        []
+      values.zksyncValidatorsAdded:
+-        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+      values.zksyncValidatorsRemoved:
+-        []
+      values.cronosValidators:
++        ["0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122","0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"]
+      values.grvtValidators:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.sophonValidators:
++        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.treasureValidators:
++        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.zeronetworkValidators:
++        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zksyncValidators:
++        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+    }
+```
+
 Generated with discovered.json: 0xddf66763fd2f8f422ceeeff1382e701e28511520
 
 # Diff at Mon, 20 Jan 2025 11:10:06 GMT:

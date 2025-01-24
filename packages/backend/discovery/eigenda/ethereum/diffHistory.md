@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xf22a6e7e22093b6dcf9736a68b3021fb67967b99
+
+# Diff at Fri, 24 Jan 2025 09:45:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@d41ab38c1eb59c6426ed6aa100dbd9b805e5a629 block: 21628459
+- current block number: 21628459
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628459 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
+      values.firstQuorumStrategies:
+-        ["0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0xAe60d8180437b5C34bB956822ac2710972584473","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"]
+      values.fourthQuorumStrategies:
+-        []
+      values.secondQuorumStrategies:
+-        ["0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"]
+      values.thirdQuorumStrategies:
+-        ["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"]
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies:
++        {"0":["0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0xAe60d8180437b5C34bB956822ac2710972584473","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"],"1":["0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"],"2":["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"]}
+      fieldMeta.firstQuorumStrategies:
+-        {"description":"The strategies for the first quorum (ETH)."}
+      fieldMeta.secondQuorumStrategies:
+-        {"description":"The strategies for the second quorum (EIGEN)."}
+      fieldMeta.thirdQuorumStrategies:
+-        {"description":"The strategies for the third quorum."}
+      fieldMeta.fourthQuorumStrategies:
+-        {"description":"The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum."}
+      fieldMeta.quorumStrategies:
++        {"description":"The strategies for the first quorum (ETH)."}
+    }
+```
+
 Generated with discovered.json: 0xa2e445bc97704b68ef3ecdfb0a26c867f3d17027
 
 # Diff at Mon, 20 Jan 2025 11:09:28 GMT:

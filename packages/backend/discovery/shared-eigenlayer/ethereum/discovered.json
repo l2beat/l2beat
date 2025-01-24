@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 21630802,
+  "blockNumber": 21679901,
   "configHash": "0x5edff3290c9e04686fc9e56f3c878a686755bfface4f1236d7c076857affb811",
   "contracts": [
     {

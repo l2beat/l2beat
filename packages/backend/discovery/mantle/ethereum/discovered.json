@@ -1,8 +1,8 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 21628468,
-  "configHash": "0xd24687d5a6bf3855206986c029f3aa2b73885f974bd5581b5317abe7d058d186",
+  "blockNumber": 21680644,
+  "configHash": "0x9decc1a29ebdd2f3f4fbb8740088e8ca192060335c167a20465e2fb6043d8607",
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -701,13 +701,6 @@
           "via": []
         }
       ],
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "description": "can post data commitments to the DA bridge."
-        }
-      ],
       "ignoreInWatchMode": [
         "getL2ConfirmedBlockNumber",
         "getL2StoredBlockNumber",
@@ -1044,18 +1037,6 @@
           "permission": "configure",
           "to": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
           "description": "can register or change status of DA node operators.",
-          "via": []
-        },
-        {
-          "permission": "configure",
-          "to": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-          "description": "can post data commitments to the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "configure",
-          "to": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
-          "description": "can post data commitments to the DA bridge.",
           "via": []
         },
         {
@@ -1397,11 +1378,6 @@
     {
       "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
       "receivedPermissions": [
-        {
-          "permission": "configure",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "description": "can post data commitments to the DA bridge."
-        },
         {
           "permission": "sequence",
           "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"

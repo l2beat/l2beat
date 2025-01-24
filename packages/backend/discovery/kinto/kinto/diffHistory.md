@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x49866ff978529e8fdaa45b9c2b5788c7cdc38345
+
+# Diff at Fri, 24 Jan 2025 09:48:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@d41ab38c1eb59c6426ed6aa100dbd9b805e5a629 block: 696015
+- current block number: 696015
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 696015 (main branch discovery), not current.
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.RoleGrantDelayChanged.8663528507529876195.roleId:
+-        "8663528507529876195"
+      values.RolesGranted.0.roleId:
+-        0
+      values.RolesGranted.1635978423191113331.roleId:
+-        "1635978423191113331"
+      values.RolesGranted.8663528507529876195.roleId:
+-        "8663528507529876195"
+      values.TargetAdminDelayUpdated.0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75.target:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      values.TargetFunctionRoleUpdated.0x793500709506652Fcc61F0d2D0fDa605638D4293.target:
+-        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
+      values.TargetFunctionRoleUpdated.0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75.target:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      values.TargetFunctionRoleUpdated.0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b.target:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+    }
+```
+
 Generated with discovered.json: 0x3b90c528a7e398c505007bb8ada131133fc280af
 
 # Diff at Mon, 20 Jan 2025 11:10:43 GMT:
