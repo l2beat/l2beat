@@ -708,9 +708,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   return {
     type: 'layer3',
@@ -876,12 +878,22 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ) ?? EthereumAddress.ZERO
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+  
+
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -890,13 +902,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       'postsBlobs',
     ) ??
     false
-
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
-    'RollupProxy',
-    'wasmModuleRoot',
-  )
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
 
   return {
     type: 'layer2',
