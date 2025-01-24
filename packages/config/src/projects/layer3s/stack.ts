@@ -40,7 +40,6 @@ export const stack: Layer3 = opStackL3({
         'https://stack.mirror.xyz/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.stack.so',
   genesisTimestamp: new UnixTime(1709683711),

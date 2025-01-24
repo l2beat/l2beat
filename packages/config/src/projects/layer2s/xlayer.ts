@@ -110,7 +110,6 @@ export const xlayer: Layer2 = polygonCDKStack({
       repositories: [],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [

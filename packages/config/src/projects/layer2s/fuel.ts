@@ -74,7 +74,6 @@ export const fuel: Layer2 = {
         'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',

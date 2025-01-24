@@ -35,7 +35,6 @@ export const muster: Layer3 = orbitStackL3({
       repositories: ['https://github.com/cometh-hq'],
       socialMedia: ['https://x.com/Cometh', 'https://blog.cometh.io/'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://muster.alt.technology',
   discovery,

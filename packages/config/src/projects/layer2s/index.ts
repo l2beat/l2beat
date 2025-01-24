@@ -141,6 +141,7 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { river } from './river'
 import { rss3 } from './rss3'
+import { rufus } from './rufus'
 import { scroll } from './scroll'
 import { shape } from './shape'
 import { silicon } from './silicon'
@@ -338,6 +339,7 @@ export const layer2s: Layer2[] = [
   rise,
   river,
   rss3,
+  rufus,
   scroll,
   silicon,
   singularityfinance,

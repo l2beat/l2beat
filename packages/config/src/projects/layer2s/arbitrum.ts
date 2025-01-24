@@ -139,7 +139,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

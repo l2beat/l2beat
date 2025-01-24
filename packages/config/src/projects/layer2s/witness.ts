@@ -99,7 +99,6 @@ export const witness: Layer2 = polygonCDKStack({
         'https://docs.witnesschain.com/resources/technical-papers',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     chainId: 1702448187,

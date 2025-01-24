@@ -6,7 +6,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
@@ -22,7 +21,9 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  type ScalingProjectCategory,
   type ScalingProjectContract,
+  type ScalingProjectDisplay,
   type ScalingProjectEscrow,
   type ScalingProjectPermission,
   type ScalingProjectPurpose,
@@ -47,7 +48,7 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types/DaLayer'
-import type { Layer3, Layer3Display } from '../../layer3s/types'
+import type { Layer3 } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { StageConfig } from '../common/stages/types'
@@ -158,8 +159,8 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer3Display['category']
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectCategory
   }
   stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId

@@ -45,7 +45,6 @@ export const ancient: Layer2 = opStackL2({
         'https://linkedin.com/company/ancient8',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
   rpcUrl: 'https://rpc.ancient8.gg/',

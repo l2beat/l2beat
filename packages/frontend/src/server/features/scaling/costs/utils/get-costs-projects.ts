@@ -40,9 +40,12 @@ function filterToCondition(
       return (p) =>
         (p.display.category === 'Optimistic Rollup' ||
           p.display.category === 'ZK Rollup') &&
-        !isProjectOther(p, previewRecategorisation)
+        !isProjectOther(p, previewRecategorisation) &&
+        !(previewRecategorisation && p.isUnderReview) // If previewRecategorisation is true, we exclude projects that are under review
     case 'others':
-      return (p) => isProjectOther(p, previewRecategorisation)
+      return (p) =>
+        isProjectOther(p, previewRecategorisation) &&
+        !(previewRecategorisation && p.isUnderReview)
     case 'projects':
       return (p) => new Set(filter.projectIds).has(p.id)
     default:

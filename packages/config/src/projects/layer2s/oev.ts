@@ -36,7 +36,6 @@ export const oev: Layer2 = orbitStackL2({
         'https://medium.com/api3',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://oev.rpc.api3.org/http',
   discovery,

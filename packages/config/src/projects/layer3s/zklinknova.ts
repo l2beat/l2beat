@@ -125,7 +125,6 @@ export const zklinknova: Layer3 = {
         'https://t.me/zkLinkorg',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'zklinknova',
@@ -401,6 +400,7 @@ export const zklinknova: Layer3 = {
       },
     ],
   },
+  stage: { stage: 'NotApplicable' },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

@@ -1,6 +1,7 @@
 import { usePlausible } from 'next-plausible'
 
 type MyEvents = {
+  switchChanged: { name: string; value: string }
   filterChanged: { name: string; value: string }
   checkboxChanged: { name: string; value: string }
   radioGroupChanged: { name: string; value: string }

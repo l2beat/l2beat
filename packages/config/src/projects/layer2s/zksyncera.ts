@@ -90,7 +90,6 @@ export const zksyncera: Layer2 = zkStackL2({
       ],
       rollupCodes: 'https://rollup.codes/zksync-era',
     },
-    activityDataSource: 'Blockchain RPC',
   },
   diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {

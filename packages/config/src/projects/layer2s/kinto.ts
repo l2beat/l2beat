@@ -37,7 +37,6 @@ export const kinto: Layer2 = orbitStackL2({
         'https://medium.com/mamori-finance',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'kinto',

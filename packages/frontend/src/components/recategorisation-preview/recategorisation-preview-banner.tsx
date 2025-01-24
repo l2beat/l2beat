@@ -22,8 +22,8 @@ export function RecategorisationPreviewBanner({
       )}
     >
       <div className="text-balance text-center text-sm">
-        You&apos;re viewing preview of recategorisation that will come into
-        force in{' '}
+        You&apos;re viewing a preview of the recategorisation that will come
+        into force in{' '}
         <TextCountdown
           expiresAt={PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber()}
         />

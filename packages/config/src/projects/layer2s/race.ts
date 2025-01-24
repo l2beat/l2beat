@@ -35,7 +35,6 @@ export const race: Layer2 = opStackL2({
         'https://linkedin.com/company/raceecosystem',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://racemainnet.io',
   isNodeAvailable: true,

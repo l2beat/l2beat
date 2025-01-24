@@ -62,7 +62,6 @@ export const metis: Layer2 = {
         'https://instagram.com/metisl2/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   stage: {
     stage: 'NotApplicable',

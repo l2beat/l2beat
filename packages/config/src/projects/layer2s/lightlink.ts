@@ -101,7 +101,6 @@ export const lightlink: Layer2 = {
         'https://linkedin.com/company/lightlinkchain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   stage: {
     stage: 'NotApplicable',

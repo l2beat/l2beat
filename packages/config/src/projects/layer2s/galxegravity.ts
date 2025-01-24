@@ -36,7 +36,6 @@ export const galxegravity: Layer2 = orbitStackL2({
         'https://t.me/GravityChain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),

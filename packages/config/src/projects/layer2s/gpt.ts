@@ -74,7 +74,6 @@ export const gpt: Layer2 = polygonCDKStack({
         'https://instagram.com/gptprotocol/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['GPT'],
   rpcUrl: 'https://rpc.gptprotocol.io', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)

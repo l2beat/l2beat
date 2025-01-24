@@ -1,4 +1,4 @@
-import type { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type { ScalingProjectTechnologyChoice } from './ScalingProject'
 
 const ZK_SNARKS: ScalingProjectTechnologyChoice = {
   name: 'Zero knowledge SNARK cryptography is used',

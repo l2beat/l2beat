@@ -36,7 +36,6 @@ export const real: Layer2 = orbitStackL2({
         'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'real',

@@ -31,7 +31,6 @@ export const inevm: Layer3 = orbitStackL3({
       repositories: [],
       socialMedia: ['https://x.com/injective'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

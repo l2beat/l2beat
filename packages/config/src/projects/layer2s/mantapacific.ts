@@ -39,7 +39,6 @@ export const mantapacific: Layer2 = opStackL2({
         'https://medium.com/@mantanetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://pacific-rpc.manta.network/http',
   transactionApi: {

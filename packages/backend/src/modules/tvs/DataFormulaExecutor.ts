@@ -18,14 +18,13 @@ export class DataFormulaExecutor {
       }
 
       for (const price of prices) {
-        // TODO: PriceProvider which operates on tickers
         const v = await this.fetchPrice(price, timestamp)
         await this.storage.writePrice(price.id, timestamp, v)
       }
     }
   }
 
-  fetchAmount(_config: AmountConfig, _timestamp: UnixTime): Promise<bigint> {
+  fetchAmount(_config: AmountConfig, _timestamp: UnixTime): Promise<number> {
     throw new Error('Not implemented')
   }
   fetchPrice(_config: PriceConfig, _timestamp: UnixTime): Promise<number> {

@@ -66,7 +66,6 @@ export const gmnetwork: Layer2 = opStackL2({
         'https://t.me/QuestN_Announcement',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,

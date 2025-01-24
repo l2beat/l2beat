@@ -1,4 +1,4 @@
-import type { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type { ScalingProjectTechnologyChoice } from './ScalingProject'
 
 const FRAUD_PROOFS: ScalingProjectTechnologyChoice = {
   name: 'Fraud proofs ensure state correctness',

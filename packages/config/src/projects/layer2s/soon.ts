@@ -34,7 +34,6 @@ export const soon: Layer2 = opStackL2({
         'https://medium.com/@soon_SVM',
       ],
     },
-    // no activityDataSource due to SVM
   },
   usingAltVm: true,
   nonTemplateTechnology: {

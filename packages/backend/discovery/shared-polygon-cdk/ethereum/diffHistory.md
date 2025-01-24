@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7ea03cfe34733cd3a7eaf81a796df0d02c66ffab
+Generated with discovered.json: 0x50d912b430337afb47109934de0ee1b059e4cad2
 
-# Diff at Wed, 22 Jan 2025 16:43:41 GMT:
+# Diff at Thu, 23 Jan 2025 10:00:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@0706e36dbb666cfa8f8fd6c700e273a057edb949 block: 21665502
-- current block number: 21681235
+- comparing to: main@c34926fa70131af78b4ff8ff2873e9c9f24dfc80 block: 21665502
+- current block number: 21686453
 
 ## Description
 
-Add gptprot trigger. MS member change.
+Single member change in CreateRollupMultisig.
 
 ## Watched changes
 
@@ -21,24 +21,6 @@ Add gptprot trigger. MS member change.
       values.$members.0:
 -        "0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
 +        "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5"
-    }
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21665502 (main branch discovery), not current.
-
-```diff
-    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
-    +++ description: None
-+++ description: GPT protocol operator has not posted batches for a long time. If this returns a discomon diff and is >7288, it is active again.
-+++ severity: MEDIUM
-      values.gptLastVerifiedBatch:
-+        [7288]
-      fieldMeta.gptLastVerifiedBatch:
-+        {"severity":"MEDIUM","description":"GPT protocol operator has not posted batches for a long time. If this returns a discomon diff and is >7288, it is active again."}
     }
 ```
 

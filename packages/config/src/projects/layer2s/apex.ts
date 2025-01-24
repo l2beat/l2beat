@@ -145,7 +145,6 @@ export const apex: Layer2 = {
         'https://youtube.com/@apexprotocol',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',

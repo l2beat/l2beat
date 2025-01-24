@@ -44,7 +44,6 @@ export const zeronetwork: Layer2 = zkStackL2({
         'https://youtube.com/@ZERO-Network-L2',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zerion.io/v1/zero',
   chainConfig: {

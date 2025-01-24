@@ -159,7 +159,6 @@ export const mantle: Layer2 = opStackL2({
         'https://t.me/mantlenetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.mantle.xyz',
   genesisTimestamp: new UnixTime(1688428800),

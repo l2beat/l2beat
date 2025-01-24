@@ -92,7 +92,6 @@ export const myria: Layer2 = {
         'https://instagram.com/myriagames',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',

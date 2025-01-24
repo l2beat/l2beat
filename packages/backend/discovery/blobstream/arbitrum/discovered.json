@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "arbitrum",
-  "blockNumber": 295956426,
+  "blockNumber": 298391608,
   "configHash": "0x286a431628903edf1a7f8cf55ff2f3c1e8856d741f170b90b1592d4cb60e571b",
   "contracts": [
     {
@@ -176,7 +176,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -258,7 +258,7 @@
             "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
           }
         },
-        "blobstreamProgramVkey": "0x00e30cadab0b8ad6a5f115c5131a14afce4ec4bbf8acf7c821951778a2d97660",
+        "blobstreamProgramVkey": "0x00b6c8c78a73630fae80e45b2888a00d9ab0cc05a77cd7c027446a6ae2289928",
         "checkRelayer": true,
         "DATA_COMMITMENT_MAX": 10000,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -270,13 +270,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 3560400,
+        "latestBlock": 3675600,
         "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
         "relayers": [
           "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
           "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
         ],
-        "state_proofNonce": 7184,
+        "state_proofNonce": 7375,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"

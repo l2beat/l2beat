@@ -29,7 +29,6 @@ export const shape: Layer2 = opStackL2({
         'https://warpcast.com/shape-l2',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.shape.network',

@@ -34,7 +34,6 @@ export const fluence: Layer2 = orbitStackL2({
         'https://youtube.com/channel/UC3b5eFyKRFlEMwSJ1BTjpbw',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
