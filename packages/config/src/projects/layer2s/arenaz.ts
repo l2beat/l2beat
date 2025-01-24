@@ -142,6 +142,7 @@ export const arenaz: Layer2 = {
     name: 'Arena-Z',
     slug: 'arenaz',
     purposes: ['Gaming', 'Universal'],
+    provider: 'OP Stack',
     description:
       'Arena-Z is an OP stack Optimistic Rollup where studios and gamers, creators and players unite to pioneer the future of entertainment.',
     category: 'Optimistic Rollup',

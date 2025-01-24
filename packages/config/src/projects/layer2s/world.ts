@@ -144,6 +144,7 @@ export const world: Layer2 = {
     slug: 'world',
     purposes: ['Universal', 'Identity'],
     category: 'Optimistic Rollup',
+    provider: 'OP Stack',
     description:
       'World Chain is an OP Stack Rollup built to scale Proof of Personhood, aiming to offer priority blockspace for users with a World ID.',
     links: {
