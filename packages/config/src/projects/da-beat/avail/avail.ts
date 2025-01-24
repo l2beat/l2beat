@@ -1,8 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { DasErasureCodingProof } from '../common/DasErasureCodingProof'
-import { DasErasureCodingScheme } from '../common/DasErasureCodingScheme'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 import type { BlockchainDaLayer } from '../types'
 import { vector } from './vector'
@@ -126,8 +124,8 @@ export const avail: BlockchainDaLayer = {
     frequency: 20, // 20 seconds
   },
   dataAvailabilitySampling: {
-    erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
-    erasureCodingProof: DasErasureCodingProof.ValidityProofs,
+    erasureCodingScheme: '2D Reed-Solomon',
+    erasureCodingProof: 'Validity proofs',
   },
   pruningWindow: 0, // does not prune
   risks: {

@@ -13,12 +13,7 @@ import type {
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
 } from '../../common'
-import type {
-  DasErasureCodingProof,
-  DasErasureCodingScheme,
-  EthereumDaBridgeRisks,
-  EthereumDaLayerRisks,
-} from './common'
+import type { EthereumDaBridgeRisks, EthereumDaLayerRisks } from './common'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 
@@ -132,10 +127,8 @@ type DaAttribute = Omit<DaRiskWithSentiment, 'sentiment'>
 export type DaAttributes = Record<string, DaAttribute>
 
 export interface DataAvailabilitySampling {
-  /** The erasure coding scheme used by the data availability layer. */
-  erasureCodingScheme: DasErasureCodingScheme
-  /** The erasure coding proof type used by the data availability layer. */
-  erasureCodingProof: DasErasureCodingProof
+  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
+  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
 }
 
 export interface DaLayerThroughput {
