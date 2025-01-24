@@ -698,6 +698,29 @@ describe(EventHandler.name, () => {
         async () => await handler.execute(provider, ADDRESS),
       ).toBeRejectedWith('Invalid extraction key [invalidParam], not defined')
     })
+
+    it('throws if event is both adding and removing', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([Update(ADDRESS, true)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: 'user',
+          add: { event: 'Update', where: ['=', '#added', true] },
+          remove: { event: 'Update', where: ['!=', '#added', false] },
+        },
+        stringABI,
+      )
+
+      await expect(
+        async () => await handler.execute(provider, ADDRESS),
+      ).toBeRejectedWith(
+        'log entry cannot trigger both add AND remove actions simultaneously',
+      )
+    })
   })
 
   describe('validation', () => {
