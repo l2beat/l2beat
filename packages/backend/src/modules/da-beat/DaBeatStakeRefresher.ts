@@ -1,11 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  type DaEconomicSecurityType,
-  daLayers,
-  ethereumDaLayer,
-} from '@l2beat/config'
+import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
-import { assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { DABeatConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
@@ -22,10 +17,7 @@ import { AvailStakeAnalyzer } from './stake-analyzers/avail/AvailStakeAnalyzer'
 
 export class DaBeatStakeRefresher {
   private readonly refreshQueue: TaskQueue<void>
-  private readonly analyzers: Record<
-    DaEconomicSecurityType,
-    AbstractStakeAnalyzer
-  >
+  private readonly analyzers: Record<string, AbstractStakeAnalyzer>
   constructor(
     private readonly peripherals: Peripherals,
     private readonly config: DABeatConfig,
@@ -45,7 +37,7 @@ export class DaBeatStakeRefresher {
                   layer.kind === 'EthereumDaLayer' ||
                   layer.kind === 'PublicBlockchain',
               )
-              .map((layer) => layer.economicSecurity?.type),
+              .map((layer) => layer.economicSecurity?.name),
           ),
         ),
       ].map((type) => {
@@ -85,7 +77,7 @@ export class DaBeatStakeRefresher {
               ),
             ]
           default:
-            assertUnreachable(type)
+            throw new Error(`Unsupported economic security: ${type}`)
         }
       }),
     )
