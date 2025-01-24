@@ -149,7 +149,7 @@ export class ActivityRepository extends BaseRepository {
   async getSummedUopsCountForProjectsAndTimeRange(
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
-  ): Promise<Omit<ActivityRecord, 'timestamp' | 'start' | 'end' | 'count'>[]> {
+  ): Promise<{ projectId: ProjectId; uopsCount: number }[]> {
     const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('Activity')
