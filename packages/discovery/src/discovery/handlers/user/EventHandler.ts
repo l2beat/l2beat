@@ -30,13 +30,16 @@ export const EventHandlerAction = z.object({
 })
 export type EventHandlerAction = z.infer<typeof EventHandlerAction>
 
+const oneOrMany = <T extends z.ZodTypeAny>(schema: T) =>
+  z.union([schema, z.array(schema)])
+
 export type EventHandlerDefinition = z.infer<typeof EventHandlerDefinition>
 export const EventHandlerDefinition = z.strictObject({
   type: z.literal('event'),
-  select: z.union([z.string(), z.array(z.string())]).optional(),
-  set: z.union([EventHandlerAction, z.array(EventHandlerAction)]).optional(),
-  add: z.union([EventHandlerAction, z.array(EventHandlerAction)]).optional(),
-  remove: z.union([EventHandlerAction, z.array(EventHandlerAction)]).optional(),
+  select: z.string().or(z.array(z.string())).optional(),
+  set: oneOrMany(EventHandlerAction).optional(),
+  add: oneOrMany(EventHandlerAction).optional(),
+  remove: oneOrMany(EventHandlerAction).optional(),
   groupBy: z.string().optional(),
   ignoreRelative: z.optional(z.boolean()),
 })
@@ -110,27 +113,27 @@ export class EventHandler implements Handler {
       logRows.push({ log, value })
     }
 
-    let values: ContractValue
+    let value: ContractValue | undefined
     if (this.definition.groupBy !== undefined) {
       const groupByKey = this.definition.groupBy
       const grouped = groupBy(logRows, (e) => extractKey(e.value, groupByKey))
-      values = {}
+      value = {}
       for (const key in grouped) {
         // biome-ignore lint/style/noNonNullAssertion: we know it's there
-        values[key] = this.processLogs(grouped[key]!)
+        value[key] = this.processLogs(grouped[key]!)
       }
     } else {
-      values = this.processLogs(logRows)
+      value = this.processLogs(logRows)
     }
 
     return {
       field: this.field,
-      value: values,
+      value,
       ignoreRelative: this.definition.ignoreRelative,
     }
   }
 
-  processLogs(logRows: LogRow[]): ContractValue | ContractValue[] {
+  processLogs(logRows: LogRow[]): ContractValue | ContractValue[] | undefined {
     const select = ensureArray(this.definition.select ?? [])
 
     const extractArray = this.definition.set !== undefined
@@ -160,9 +163,7 @@ export class EventHandler implements Handler {
       values = values.map((o) => Object.values(o)[0]!)
     }
 
-    // TODO(radomski):
-    // biome-ignore lint/style/noNonNullAssertion: We know it's there
-    return extractArray ? values[0]! : values
+    return extractArray ? values[0] : values
   }
 
   executeSets(logs: LogRow[], setActions: EventHandlerAction[]): LogRow[] {
@@ -256,7 +257,7 @@ function ensureArray<T>(v: T | T[]): T[] {
 }
 
 function getEventName(eventString: string): string {
-  if (eventString.includes(' ')) {
+  if (eventString.startsWith(' ')) {
     const fragment = toEventFragment(eventString)
     return fragment.name
   } else {
