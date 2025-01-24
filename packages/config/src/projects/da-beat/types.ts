@@ -13,7 +13,6 @@ import type {
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
 } from '../../common'
-import type { EthereumDaBridgeRisks, EthereumDaLayerRisks } from './common'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 
@@ -38,7 +37,7 @@ export type EthereumDaLayer = CommonDaLayer & {
   kind: 'EthereumDaLayer'
   bridges: [EnshrinedBridge]
   /** Risks associated with the data availability layer. */
-  risks: EthereumDaLayerRisks
+  risks: DaRisk
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
   /** The consensus algorithm used by the data availability layer. */
@@ -149,12 +148,6 @@ export type DaRiskWithSentiment = ValueWithSentiment<string> & {
   type: string
 }
 
-export type DaRiskViewOptions = Record<
-  string,
-  // biome-ignore lint/suspicious/noExplicitAny: we do not care about the type of the arguments
-  DaRiskWithSentiment | ((...args: any[]) => DaRiskWithSentiment)
->
-
 export type DaRiskView = Record<string, DaRiskWithSentiment>
 
 export interface DaTechnology {
@@ -186,7 +179,7 @@ export type NoDacBridge = Omit<CommonDaBridge, 'id' | 'display' | 'usedIn'> & {
 
 export type EnshrinedBridge = CommonDaBridge & {
   type: 'Enshrined'
-  risks: EthereumDaBridgeRisks
+  risks: DaRisk
   callout: string
 }
 
