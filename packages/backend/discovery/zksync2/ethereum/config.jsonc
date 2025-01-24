@@ -112,7 +112,7 @@
           "handler": {
             "type": "event",
             "select": "_removedValidator",
-            "add": {"event": "ValidatorRemoved"}
+            "add": { "event": "ValidatorRemoved" }
           }
         }
       }

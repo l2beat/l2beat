@@ -1,16 +1,16 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
-import { ContractValue } from '@l2beat/discovery-types'
-import { providers, utils } from 'ethers'
-import { IProvider } from '../../provider/IProvider'
-import { Handler, HandlerResult } from '../Handler'
-import { toContractValue } from '../utils/toContractValue'
-import { orderLogs } from '../../provider/BatchingAndCachingProvider'
-import { getEventFragment } from '../utils/getEventFragment'
-import { toEventFragment } from '../utils/toEventFragment'
 import { isDeepStrictEqual } from 'util'
+import type { ContractValue } from '@l2beat/discovery-types'
+import { type providers, utils } from 'ethers'
 import { groupBy } from 'lodash'
+import { orderLogs } from '../../provider/BatchingAndCachingProvider'
+import type { IProvider } from '../../provider/IProvider'
+import type { Handler, HandlerResult } from '../Handler'
+import { getEventFragment } from '../utils/getEventFragment'
+import { toContractValue } from '../utils/toContractValue'
+import { toEventFragment } from '../utils/toEventFragment'
 
 interface LogRow {
   log: utils.LogDescription
@@ -48,9 +48,7 @@ export const EventHandlerDefinition = z.strictObject({
   select: z.union([z.string(), z.array(z.string())]).optional(),
   set: z.union([EventHandlerAction, z.array(EventHandlerAction)]).optional(),
   add: z.union([EventHandlerAction, z.array(EventHandlerAction)]).optional(),
-  remove: z
-    .union([EventHandlerAction, z.array(EventHandlerAction)])
-    .optional(),
+  remove: z.union([EventHandlerAction, z.array(EventHandlerAction)]).optional(),
   groupBy: z.string().optional(),
   ignoreRelative: z.optional(z.boolean()),
 })
@@ -171,7 +169,7 @@ export class EventHandler implements Handler {
       values = values.map((o) => Object.values(o)[0]!)
     }
 
-    // TODO(radomski): 
+    // TODO(radomski):
     // biome-ignore lint/style/noNonNullAssertion: We know it's there
     return extractArray ? values[0]! : values
   }

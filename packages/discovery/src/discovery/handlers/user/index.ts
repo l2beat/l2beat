@@ -39,6 +39,7 @@ import {
   EventCountHandler,
   EventCountHandlerDefinition,
 } from './EventCountHandler'
+import { EventHandler, EventHandlerDefinition } from './EventHandler'
 import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler'
 import {
   LayerZeroMultisigHandler,
@@ -82,7 +83,6 @@ import {
   ZKsyncEraValidatorsHandler,
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
-import { EventHandler, EventHandlerDefinition } from './EventHandler'
 
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = z.union([

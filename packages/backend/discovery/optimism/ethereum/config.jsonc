@@ -162,7 +162,7 @@
             "type": "event",
             "select": ["prevNextOutputIndex", "newNextOutputIndex"],
             "add": {
-                "event": "OutputsDeleted"
+              "event": "OutputsDeleted"
             }
           }
         }
