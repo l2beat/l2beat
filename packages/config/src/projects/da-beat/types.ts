@@ -14,8 +14,6 @@ import type {
   ScalingProjectTechnologyChoice,
 } from '../../common'
 import type {
-  DaFraudDetectionRisk,
-  DaRelayerFailureRisk,
   DasErasureCodingProof,
   DasErasureCodingScheme,
   EthereumDaBridgeRisks,
@@ -103,7 +101,7 @@ export type CommonDaLayer = {
 
 export interface DaLayerRisks {
   economicSecurity: DaRisk
-  fraudDetection: DaFraudDetectionRisk
+  fraudDetection: DaRisk
 }
 
 export interface DaLayerDisplay {
@@ -297,13 +295,10 @@ interface DaBridgeDisplay {
   links: DaLinks
 }
 
-export type DaBridgeRisks = {
-  /** Attestation - TBD. */
+export interface DaBridgeRisks {
   committeeSecurity: DaRisk
-  /** Upgradeability - TBD. @unit seconds. */
   upgradeability: DaRisk
-  /** Relayer failure - TBD. */
-  relayerFailure: DaRelayerFailureRisk
+  relayerFailure: DaRisk
 }
 
 export interface DaBridgeContracts {

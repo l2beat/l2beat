@@ -1,9 +1,8 @@
 import {
   type BlockchainDaLayer,
+  type DaBridgeRisks,
   type DaChallengeMechanism,
-  type DaFraudDetectionRisk,
-  type DaRelayerFailureRisk,
-  type DaRisk,
+  type DaLayerRisks,
   type DaServiceDaLayer,
   type DataAvailabilityLayer,
   type UsedInProject,
@@ -49,10 +48,7 @@ export async function getDaSummaryEntries() {
 export interface DaSummaryEntry extends CommonProjectEntry {
   isPublic: boolean
   economicSecurity: EconomicSecurityData | undefined
-  risks: {
-    economicSecurity: DaRisk
-    fraudDetection: DaFraudDetectionRisk
-  }
+  risks: DaLayerRisks
   fallback: DataAvailabilityLayer | undefined
   challengeMechanism: DaChallengeMechanism | undefined
   tvs: number
@@ -61,12 +57,7 @@ export interface DaSummaryEntry extends CommonProjectEntry {
 
 export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
   tvs: number
-  risks: {
-    isNoBridge: boolean
-    relayerFailure: DaRelayerFailureRisk
-    upgradeability: DaRisk
-    committeeSecurity: DaRisk
-  }
+  risks: DaBridgeRisks & { isNoBridge: boolean }
   usedIn: UsedInProject[]
   dacInfo:
     | {

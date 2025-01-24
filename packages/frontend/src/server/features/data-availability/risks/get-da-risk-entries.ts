@@ -1,8 +1,7 @@
 import {
   type BlockchainDaLayer,
-  type DaFraudDetectionRisk,
-  type DaRelayerFailureRisk,
-  type DaRisk,
+  type DaBridgeRisks,
+  type DaLayerRisks,
   type DaServiceDaLayer,
   daLayers,
   isDaBridgeVerified,
@@ -36,19 +35,12 @@ export async function getDaRiskEntries() {
 export interface DaRiskEntry extends CommonProjectEntry {
   isPublic: boolean
   tvs: number
-  risks: {
-    economicSecurity: DaRisk
-    fraudDetection: DaFraudDetectionRisk
-  }
+  risks: DaLayerRisks
   bridges: DaBridgeRiskEntry[]
 }
 
 export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
-  risks: {
-    relayerFailure: DaRelayerFailureRisk
-    upgradeability: DaRisk
-    committeeSecurity: DaRisk
-  }
+  risks: DaBridgeRisks
   tvs: number
 }
 
