@@ -23,12 +23,10 @@ export function AnomalyIndicator({ anomalies, showComingSoon }: Props) {
         className="w-min select-none text-center"
         title="Anomalies coming soon"
       >
-        <div className="mx-auto text-gray-500 dark:text-gray-50">
-          Coming soon
-        </div>
+        <div className="mx-auto text-secondary">Coming soon</div>
         <div className="flex gap-x-0.5">
           {range(30).map((_, i) => (
-            <div key={i} className="size-0.5 rounded-full bg-neutral-700" />
+            <div key={i} className="size-0.5 rounded-full bg-secondary" />
           ))}
         </div>
       </div>
@@ -41,10 +39,10 @@ export function AnomalyIndicator({ anomalies, showComingSoon }: Props) {
         className="w-min select-none text-center"
         title="No data for anomalies"
       >
-        <div className="mx-auto text-gray-500 dark:text-gray-50">No data</div>
+        <div className="mx-auto text-secondary">No data</div>
         <div className="flex gap-x-0.5">
           {range(30).map((_, i) => (
-            <div key={i} className="size-0.5 rounded-full bg-neutral-700" />
+            <div key={i} className="size-0.5 rounded-full bg-secondary" />
           ))}
         </div>
       </div>
@@ -94,7 +92,7 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
           const isLive = UnixTime.now().add(-4, 'hours').lte(endDateUnixTime)
           return (
             <div
-              className="space-y-0.5 border-t border-divider px-4 py-2 text-sm"
+              className="space-y-0.5 border-t border-divider px-4 py-2"
               key={anomaly.timestamp}
             >
               {isLive && (
@@ -103,7 +101,7 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
                     <span className="absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                     <span className="relative inline-flex size-2 rounded-full bg-red-500"></span>
                   </span>
-                  <span className="font-medium">Live</span>
+                  <span className="font-medium">Ongoing anomaly</span>
                 </div>
               )}
               <div className="flex justify-between gap-2">
@@ -116,7 +114,7 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
               </div>
               {isLive ? (
                 <div className="flex justify-between gap-2">
-                  Last seen:
+                  Last synced:
                   <span>
                     {formatTimestamp(endDate, {
                       mode: 'datetime',
