@@ -97,8 +97,9 @@ const cmd = command({
     for (const c of proofConfigs) {
       console.log(
         `Proof config: ${c.id} |`,
-        `Since: ${c.sinceTimestamp.toDate().toISOString()}`,
-        `Until: ${c.untilTimestamp ? c.untilTimestamp.toDate().toISOString() : '-'} |`,
+        getConfigDetails(c.params),
+        `Since: ${c.sinceTimestamp.toNumber()}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp.toNumber() : '-'} |`,
         'Multiplier:',
         c.costMultiplier,
       )
@@ -107,8 +108,9 @@ const cmd = command({
     for (const c of batchConfigs) {
       console.log(
         `Batch config: ${c.id} |`,
-        `Since: ${c.sinceTimestamp.toDate().toISOString()}`,
-        `Until: ${c.untilTimestamp ? c.untilTimestamp.toDate().toISOString() : '-'} |`,
+        getConfigDetails(c.params),
+        `Since: ${c.sinceTimestamp.toNumber()}`,
+        `Until: ${c.untilTimestamp ? c.untilTimestamp.toNumber() : '-'} |`,
         'Multiplier:',
         c.costMultiplier,
       )
@@ -136,6 +138,14 @@ async function fetchStarkwareApi(
     proof_cost_eth: number
     onchain_data_cost_eth: number
   }
+}
+
+function getConfigDetails(params: TrackedTxCostsConfig['params']) {
+  return params.formula === 'sharpSubmission'
+    ? `Program hashes: ${params.programHashes.join(',')} |`
+    : params.formula === 'functionCall'
+      ? `Selector: ${params.selector} |`
+      : ''
 }
 
 function getDates(startDate: string | undefined, endDate: string | undefined) {
