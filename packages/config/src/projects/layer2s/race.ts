@@ -13,8 +13,8 @@ export const race: Layer2 = opStackL2({
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
   genesisTimestamp: new UnixTime(1720421591),
   additionalBadges: [Badge.Infra.Superchain],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Race Network',
     slug: 'race',
     description:

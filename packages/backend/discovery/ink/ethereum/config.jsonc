@@ -4,12 +4,5 @@
   "chain": "ethereum",
   "initialAddresses": [
     "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364" // SystemConfig
-  ],
-  "overrides": {
-    "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD": {
-      // permissionedGamesTotal from the template ignored as they are using permissioned games by default
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
-      "extends": "opstack/DisputeGameFactory"
-    }
-  }
+  ]
 }

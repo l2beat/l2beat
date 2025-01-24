@@ -22,6 +22,7 @@ import {
   type Milestone,
   OPERATOR,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
   type ScalingProjectEscrow,
@@ -47,7 +48,7 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types/DaLayer'
+import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'
 import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
@@ -150,6 +151,7 @@ interface OrbitStackConfigCommon {
   gasTokens?: string[]
   dataAvailabilitySolution?: DacDaLayer
   hasAtLeastFiveExternalChallengers?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -564,6 +566,7 @@ function orbitStackCommon(
       templateVars.additionalBadges ?? [],
     ),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

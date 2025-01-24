@@ -48,12 +48,12 @@ export const polygonpos: Layer2 = {
   id: ProjectId('polygon-pos'),
   createdAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Polygon PoS',
     slug: 'polygon-pos',
     purposes: ['Universal'],
     category: 'Other',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],

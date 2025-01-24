@@ -28,10 +28,10 @@ export const sophon: Layer2 = zkStackL2({
   },
   additionalBadges: [Badge.DA.Avail],
   createdAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',
     slug: 'sophon',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {

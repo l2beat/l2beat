@@ -12,12 +12,12 @@ export const deri = orbitStackL3({
   discovery,
   additionalBadges: [Badge.L3ParentChain.Arbitrum],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Deri',
     slug: 'deri',
     description:
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
     links: {
       websites: ['https://deri.io/'],
       apps: [],

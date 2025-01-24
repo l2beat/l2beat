@@ -30,8 +30,8 @@ export const blast: Layer2 = opStackL2({
       content: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   nonTemplateTechnology: {
     exitMechanisms: [
       {

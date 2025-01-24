@@ -1,12 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
 import { getCommittee } from '../../../discovery/starkware'
-import {
-  type DaTechnology,
-  DaUpgradeabilityRisk,
-  type DacDaLayer,
-  DacTransactionDataType,
-} from '../types'
-import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../common'
+import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+import type { DaTechnology, DacDaLayer } from '../types'
 import { DAC, type DacTemplateVarsWithDiscovery } from './dac-template'
 
 export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
@@ -91,9 +87,7 @@ export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
       ...template.bridge,
       membersCount: membersCount,
       requiredMembers: requiredMembers,
-      transactionDataType:
-        template.bridge.transactionDataType ??
-        DacTransactionDataType.StateDiffs,
+      transactionDataType: template.bridge.transactionDataType ?? 'State diffs',
       technology: bridgeTechnology,
     },
     risks: {

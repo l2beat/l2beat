@@ -12,11 +12,11 @@ export const fluence: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Fluence',
     slug: 'fluence',
     description:

@@ -21,6 +21,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   type ScalingProjectCategory,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
@@ -47,7 +48,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types/DaLayer'
+import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -150,6 +151,7 @@ interface OpStackConfigCommon {
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
   usingAltVm?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -401,6 +403,7 @@ function opStackCommon(
     ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

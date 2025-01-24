@@ -30,8 +30,8 @@ export const honeypot: Layer2 = {
     Badge.DA.EthereumCalldata,
     Badge.Stack.Cartesi,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Honeypot (Cartesi)',
     shortName: 'Honeypot',
     slug: 'cartesi-honeypot',

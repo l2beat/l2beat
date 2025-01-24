@@ -13,11 +13,11 @@ export const muster: Layer3 = orbitStackL3({
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.AltLayer],
   hostChain: ProjectId('arbitrum'),
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Muster',
     slug: 'muster',
     redWarning:
