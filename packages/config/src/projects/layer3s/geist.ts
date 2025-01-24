@@ -18,13 +18,13 @@ export const geist: Layer3 = orbitStackL3({
     Badge.L3ParentChain.Base,
     Badge.RaaS.Alchemy,
   ],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Geist',
     slug: 'geist',
     description:
