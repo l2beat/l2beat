@@ -85,6 +85,7 @@ export interface PolygonCDKStackConfig {
   additionalBadges?: BadgeId[]
   additionalPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
+  isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
@@ -164,6 +165,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     type: 'layer2',
     createdAt: templateVars.createdAt,
     id: ProjectId(templateVars.discovery.projectName),
+    isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
