@@ -18,6 +18,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
@@ -136,6 +137,7 @@ export const arenaz: Layer2 = {
     Badge.Infra.Superchain,
     Badge.RaaS.Gelato,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Arena-Z',
     slug: 'arenaz',

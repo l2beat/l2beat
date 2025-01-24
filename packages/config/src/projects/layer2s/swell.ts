@@ -18,6 +18,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
@@ -136,6 +137,7 @@ export const swell: Layer2 = {
     Badge.Infra.Superchain,
     Badge.RaaS.AltLayer,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Swellchain',
     slug: 'swell',
