@@ -135,6 +135,11 @@ export const avail: BlockchainDaLayer = {
     fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
-    type: 'Avail',
+    name: 'Avail',
+    token: {
+      symbol: 'AVAIL',
+      decimals: 18,
+      coingeckoId: 'avail',
+    },
   },
 }

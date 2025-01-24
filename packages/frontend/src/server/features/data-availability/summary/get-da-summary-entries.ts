@@ -1,7 +1,6 @@
 import {
   type BlockchainDaLayer,
   type DaChallengeMechanism,
-  type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
   type DaRelayerFailureRisk,
   type DaRisk,
@@ -51,7 +50,7 @@ export interface DaSummaryEntry extends CommonProjectEntry {
   isPublic: boolean
   economicSecurity: EconomicSecurityData | undefined
   risks: {
-    economicSecurity: DaEconomicSecurityRisk
+    economicSecurity: DaRisk
     fraudDetection: DaFraudDetectionRisk
   }
   fallback: DataAvailabilityLayer | undefined

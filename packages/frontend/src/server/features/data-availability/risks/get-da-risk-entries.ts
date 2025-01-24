@@ -1,6 +1,5 @@
 import {
   type BlockchainDaLayer,
-  type DaEconomicSecurityRisk,
   type DaFraudDetectionRisk,
   type DaRelayerFailureRisk,
   type DaRisk,
@@ -38,7 +37,7 @@ export interface DaRiskEntry extends CommonProjectEntry {
   isPublic: boolean
   tvs: number
   risks: {
-    economicSecurity: DaEconomicSecurityRisk
+    economicSecurity: DaRisk
     fraudDetection: DaFraudDetectionRisk
   }
   bridges: DaBridgeRiskEntry[]

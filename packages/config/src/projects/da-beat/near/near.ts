@@ -149,6 +149,11 @@ export const near: BlockchainDaLayer = {
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
   economicSecurity: {
-    type: 'Near',
+    name: 'Near',
+    token: {
+      symbol: 'NEAR',
+      decimals: 24,
+      coingeckoId: 'near',
+    },
   },
 }

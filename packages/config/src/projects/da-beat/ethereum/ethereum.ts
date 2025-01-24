@@ -118,6 +118,11 @@ export const ethereum = {
   pruningWindow: 86400 * 18, // 18 days in seconds
   risks: EthereumDaLayerRisks.SelfVerify,
   economicSecurity: {
-    type: 'Ethereum',
+    name: 'Ethereum',
+    token: {
+      symbol: 'ETH',
+      decimals: 18,
+      coingeckoId: 'ethereum',
+    },
   },
 } satisfies EthereumDaLayer

@@ -1,5 +1,4 @@
 export * from './DaCommitteeSecurityRisk'
-export * from './DaEconomicSecurity'
 export * from './DaEconomicSecurityRisk'
 export * from './DaFraudDetectionRisk'
 export * from './DaRelayerFailureRisk'

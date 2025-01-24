@@ -2,7 +2,6 @@ import {
   type BlockchainDaLayer,
   type DaBridgeRisks,
   DaCommitteeSecurityRisk,
-  type DaEconomicSecurityRisk,
   type DaLayerRisks,
   type DaRisk,
   type DaServiceDaLayer,
@@ -82,7 +81,7 @@ function getEconomicSecurity(
   return {
     ...daLayer.risks.economicSecurity,
     sentiment,
-  } as DaEconomicSecurityRisk
+  } as DaRisk
 }
 
 function adjustSentiment(totalValueSecured: number, slashableFunds: number) {

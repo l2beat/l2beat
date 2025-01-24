@@ -14,8 +14,6 @@ import type {
   ScalingProjectTechnologyChoice,
 } from '../../common'
 import type {
-  DaEconomicSecurity,
-  DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DasErasureCodingProof,
@@ -103,8 +101,8 @@ export type CommonDaLayer = {
   otherConsiderations?: ScalingProjectTechnologyChoice[]
 }
 
-export type DaLayerRisks = {
-  economicSecurity: DaEconomicSecurityRisk
+export interface DaLayerRisks {
+  economicSecurity: DaRisk
   fraudDetection: DaFraudDetectionRisk
 }
 
@@ -333,4 +331,13 @@ export interface UsedInProject {
   id: ProjectId
   name: string
   slug: string
+}
+
+export interface DaEconomicSecurity {
+  name: string
+  token: {
+    symbol: string
+    decimals: number
+    coingeckoId: string
+  }
 }

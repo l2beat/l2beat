@@ -153,6 +153,11 @@ export const celestia: BlockchainDaLayer = {
     fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
   },
   economicSecurity: {
-    type: 'Celestia',
+    name: 'Celestia',
+    token: {
+      symbol: 'TIA',
+      decimals: 6,
+      coingeckoId: 'celestia',
+    },
   },
 }
