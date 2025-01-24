@@ -23,7 +23,6 @@ import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
 import { camp } from './camp'
-import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
@@ -221,7 +220,6 @@ export const layer2s: Layer2[] = [
   bob,
   bobanetwork,
   camp,
-  canto,
   capx,
   celo,
   cyber,
