@@ -29,14 +29,9 @@ export function validateBlip(input: unknown): boolean {
 
       return input.slice(1).every((e) => validateBlip(e))
     }
-    case '!!': {
-      if (input.length > 2) {
-        return false
-      }
-
-      return input.slice(1).every((e) => validateBlip(e))
-    }
     case '=':
+      return input.slice(1).every((e) => validateBlip(e))
+    case '!=':
       return input.slice(1).every((e) => validateBlip(e))
     case 'and':
       return input.slice(1).every((e) => validateBlip(e))

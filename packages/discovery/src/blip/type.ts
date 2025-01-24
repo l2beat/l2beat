@@ -3,6 +3,6 @@ export type BlipSexp =
   | number
   | boolean
   | ['not', BlipSexp]
-  | ['!!', BlipSexp]
   | ['=', ...BlipSexp[]]
+  | ['!=', ...BlipSexp[]]
   | ['and', ...BlipSexp[]]

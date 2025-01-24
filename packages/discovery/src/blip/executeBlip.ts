@@ -21,11 +21,13 @@ export function executeBlip(v: ContractValue, blip: BlipSexp): ContractValue {
   switch (operation) {
     case 'not':
       return !executeBlip(v, blip[1])
-    case '!!':
-      return !!executeBlip(v, blip[1])
     case '=': {
       const [x, ...xs] = blip.slice(1).map((b) => executeBlip(v, b))
       return xs.every((e) => x === e)
+    }
+    case '!=': {
+      const [x, ...xs] = blip.slice(1).map((b) => executeBlip(v, b))
+      return xs.some((e) => x !== e)
     }
     case 'and': {
       const [x, ...xs] = blip.slice(1).map((b) => executeBlip(v, b))

@@ -20,12 +20,13 @@ describe(validateBlip.name, () => {
     expect(validateBlip(['=', 123, false, 123n])).toBeFalsy()
   })
 
-  it('validates !! blips', () => {
-    expect(validateBlip(['!!'])).toBeFalsy()
-    expect(validateBlip(['!!', 123])).toBeTruthy()
-    expect(validateBlip(['!!', 123, false])).toBeFalsy()
-    expect(validateBlip(['!!', 123n])).toBeFalsy()
-    expect(validateBlip(['!!', undefined])).toBeFalsy()
+  it('validates != blips', () => {
+    expect(validateBlip(['!='])).toBeFalsy()
+    expect(validateBlip(['!=', 123])).toBeTruthy()
+    expect(validateBlip(['!=', 123, false])).toBeTruthy()
+    expect(validateBlip(['!=', 123, false, 'alskdjf'])).toBeTruthy()
+    expect(validateBlip(['!=', 123, false, {}])).toBeFalsy()
+    expect(validateBlip(['!=', 123, false, 123n])).toBeFalsy()
   })
 
   it('validates not blips', () => {
