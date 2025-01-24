@@ -43,10 +43,13 @@ export const gpt: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['AI'],
+  isArchived: true,
   display: {
     reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'GPT Protocol',
     slug: 'gpt',
+    headerWarning:
+      'The operator has stopped servicing this Validium and a fork was [deployed outside the shared Polygon AggLayer contracts](https://app.blocksec.com/explorer/tx/eth/0x6e3d75c42350019dce5484cc45e9db89b2a29bf8ff8c000ddfa2aa5a9df08628).',
     description:
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
     links: {
