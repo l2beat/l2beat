@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3566725bc7c5dfe011161fb481447d3954f8fdde
+
+# Diff at Fri, 24 Jan 2025 08:30:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fff69b1db37918a5360f1e3b59d2f37be25d166f block: 21683128
+- current block number: 21693174
+
+## Description
+
+re-add the permissioned games tracker since the default is permissionless games now.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        189
++        190
+    }
+```
+
 Generated with discovered.json: 0x7a36e6d5d5f232b9a210ec340cdc53833f64658d
 
 # Diff at Wed, 22 Jan 2025 22:51:41 GMT:
