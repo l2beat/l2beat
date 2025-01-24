@@ -5,6 +5,9 @@ import { isDeepStrictEqual } from 'util'
 import type { ContractValue } from '@l2beat/discovery-types'
 import { type providers, utils } from 'ethers'
 import { groupBy } from 'lodash'
+import { executeBlip } from '../../../blip/executeBlip'
+import type { BlipSexp } from '../../../blip/type'
+import { validateBlip } from '../../../blip/validateBlip'
 import { orderLogs } from '../../provider/BatchingAndCachingProvider'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
@@ -17,28 +20,13 @@ interface LogRow {
   value: ContractValue
 }
 
-type FilterType =
-  | string
-  | number
-  | boolean
-  | ['!!', FilterType]
-  | ['=', string, FilterType]
-  | ['not', FilterType]
-  | ['and', FilterType, FilterType]
-
-export const EventHandlerFilter = z.union([
-  z.string(),
-  z.number(),
-  z.boolean(),
-  z.tuple([z.literal('!!'), z.any()]),
-  z.tuple([z.literal('='), z.string(), z.any()]),
-  z.tuple([z.literal('not'), z.any()]),
-  z.tuple([z.literal('and'), z.any(), z.any()]),
-])
-
 export const EventHandlerAction = z.object({
   event: z.union([z.string(), z.array(z.string())]),
-  where: EventHandlerFilter.optional(),
+  where: z
+    .unknown()
+    .refine(validateBlip)
+    .transform((v): BlipSexp => v as BlipSexp)
+    .optional(),
 })
 export type EventHandlerAction = z.infer<typeof EventHandlerAction>
 
@@ -111,18 +99,21 @@ export class EventHandler implements Handler {
     const logs = await fetchLogs(provider, address, this.topic0s)
 
     const logRows: LogRow[] = []
-    for (const log of logs) {
-      const parsed = this.abi.parseLog(log)
-      logRows.push(getResultObject(parsed, this.keys))
+    for (const rawLog of logs) {
+      const log = this.abi.parseLog(rawLog)
+      const value: Record<string, ContractValue> = {}
+
+      for (const key of this.keys) {
+        value[key] = toContractValue(log.args[key])
+      }
+
+      logRows.push({ log, value })
     }
 
     let values: ContractValue
     if (this.definition.groupBy !== undefined) {
       const groupByKey = this.definition.groupBy
-      const grouped = groupBy(
-        logRows,
-        (e) => extractKeys(e, [groupByKey])[groupByKey],
-      )
+      const grouped = groupBy(logRows, (e) => extractKey(e.value, groupByKey))
       values = {}
       for (const key in grouped) {
         // biome-ignore lint/style/noNonNullAssertion: we know it's there
@@ -160,7 +151,7 @@ export class EventHandler implements Handler {
 
     let values = logRows.map((r) => r.value)
     if (select.length > 0) {
-      values = logRows.map((entry) => extractKeys(entry, select))
+      values = logRows.map((entry) => extractKeys(entry.value, select))
     }
 
     const onlySingleKey = values.every((v) => Object.keys(v).length === 1)
@@ -203,7 +194,8 @@ export class EventHandler implements Handler {
         evaluateAction(entry, action),
       )
       assert(!(add && remove), 'Both add and remove are true')
-      const value = select.length > 0 ? extractKeys(entry, select) : entry
+      const value =
+        select.length > 0 ? extractKeys(entry.value, select) : entry.value
       const string = JSON.stringify(value)
 
       if (add) {
@@ -229,70 +221,34 @@ async function fetchLogs(
   return logs.flat().sort(orderLogs)
 }
 
-function evaluateAction(log: LogRow, action: EventHandlerAction) {
-  const eventMatch = ensureArray(action.event).some(
+function evaluateAction(log: LogRow, { event, where }: EventHandlerAction) {
+  const eventMatch = ensureArray(event).some(
     (e) => getEventName(e) === log.log.name,
   )
 
-  return eventMatch && evaluateFilter(log, action.where)
-}
-
-function evaluateFilter(
-  e: LogRow,
-  filter?: FilterType | undefined,
-): ContractValue {
-  if (filter === undefined) {
-    return true
-  }
-  if (!Array.isArray(filter)) {
-    if (typeof filter === 'string' && filter.startsWith('#')) {
-      const key = filter.slice(1) // remove leading #
-      // biome-ignore lint/style/noNonNullAssertion: We know it's there
-      return extractKeys(e, [key])[key]!
-    }
-
-    return filter
-  }
-
-  const [operation] = filter
-  switch (operation) {
-    case 'not':
-      return !evaluateFilter(e, filter[1])
-    case '=':
-      return evaluateFilter(e, filter[1]) === evaluateFilter(e, filter[2])
-    case '!!':
-      return !!evaluateFilter(e, filter[1])
-    case 'and':
-      return evaluateFilter(e, filter[1]) && evaluateFilter(e, filter[2])
-    default: {
-      assert(false, 'unhandled')
-    }
-  }
+  return eventMatch && executeBlip(log.value, where ?? true)
 }
 
 function extractKeys(
-  entry: LogRow,
+  value: ContractValue,
   keys: string[],
 ): { [key: string]: ContractValue | undefined } {
   const result: ContractValue = {}
 
-  const value = entry.value
-  assert(typeof value === 'object' && !Array.isArray(value), 'Extract keys')
   for (const selectKey of keys) {
-    result[selectKey] = value[selectKey]
+    result[selectKey] = extractKey(value, selectKey)
   }
 
   return result
 }
 
-function getResultObject(log: utils.LogDescription, keys: string[]): LogRow {
-  const result: Record<string, ContractValue> = {}
+function extractKey(
+  value: ContractValue,
+  key: string,
+): ContractValue | undefined {
+  assert(typeof value === 'object' && !Array.isArray(value), 'Extract keys')
 
-  for (const key of keys) {
-    result[key] = toContractValue(log.args[key])
-  }
-
-  return { log, value: result }
+  return value[key]
 }
 
 function ensureArray<T>(v: T | T[]): T[] {
