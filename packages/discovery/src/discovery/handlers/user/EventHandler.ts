@@ -20,8 +20,11 @@ interface LogRow {
   value: ContractValue
 }
 
+const oneOrMany = <T extends z.ZodTypeAny>(schema: T) =>
+  z.union([schema, z.array(schema)])
+
 export const EventHandlerAction = z.object({
-  event: z.union([z.string(), z.array(z.string())]),
+  event: oneOrMany(z.string()),
   where: z
     .unknown()
     .refine(validateBlip)
@@ -29,9 +32,6 @@ export const EventHandlerAction = z.object({
     .optional(),
 })
 export type EventHandlerAction = z.infer<typeof EventHandlerAction>
-
-const oneOrMany = <T extends z.ZodTypeAny>(schema: T) =>
-  z.union([schema, z.array(schema)])
 
 const common = {
   type: z.literal('event'),
@@ -64,7 +64,6 @@ export class EventHandler implements Handler {
   readonly dependencies: string[] = []
   readonly abi: utils.Interface
   readonly topic0s: string[]
-  readonly keys: string[]
 
   constructor(
     readonly field: string,
@@ -72,41 +71,37 @@ export class EventHandler implements Handler {
     stringAbi: string[],
   ) {
     const events: string[] = []
-    const actions = [definition.set, definition.add, definition.remove]
+    const actions: EventHandlerAction[] = [
+      ensureArray(definition.set ?? []),
+      ensureArray(definition.add ?? []),
+      ensureArray(definition.remove ?? []),
+    ].flat()
+
     for (const action of actions) {
       if (action === undefined) {
         continue
       }
 
-      events.push(...ensureArray(action).flatMap((a) => ensureArray(a.event)))
+      const actionEvents = ensureArray(action.event)
+      const abiCompatible = eventsAreCompatible(action, stringAbi)
+      if (!abiCompatible) {
+        throw new Error(
+          `ABI compatibility error: The following events have incompatible parameter structures:\n` +
+            `• Received events:\n${actionEvents.map((e) => `  - ${e}`).join('\n')}\n\n` +
+            `All events in an action must contain compatible parameter names and types. ` +
+            `Check that these fields match across all event ABIs:\n` +
+            `  1. Parameter names\n` +
+            `  2. Parameter types`,
+        )
+      }
+
+      events.push(...actionEvents)
     }
 
     const fragments = events.map((e) =>
       getEventFragment(e, stringAbi, () => true),
     )
 
-    // TODO(radomski): This might be useless
-    const inputsPerEvent = fragments.map((f) => f.inputs.map((elem) => elem))
-    const smallest = inputsPerEvent.reduce((min, current) =>
-      current.length < min.length ? current : min,
-    )
-    const abiCompatible = inputsPerEvent.every((inputs) => {
-      if (smallest.length > 0) {
-        return smallest.every((elem) =>
-          inputs.some((i) => isDeepStrictEqual(i, elem)),
-        )
-      } else {
-        return false
-      }
-    })
-
-    if (!abiCompatible) {
-      // TODO(radomski): More user friendly error message.
-      // We should know which event is not compatible
-      throw new Error('ABI between events is not compatible')
-    }
-
-    this.keys = smallest.map((e, i) => e.name ?? i.toString())
     this.abi = new utils.Interface(fragments)
     this.topic0s = [...new Set(fragments.map((f) => this.abi.getEventTopic(f)))]
   }
@@ -122,7 +117,7 @@ export class EventHandler implements Handler {
       const log = this.abi.parseLog(rawLog)
       const value: Record<string, ContractValue> = {}
 
-      for (const key of this.keys) {
+      for (const key in log.args) {
         value[key] = toContractValue(log.args[key])
       }
 
@@ -273,10 +268,37 @@ function ensureArray<T>(v: T | T[]): T[] {
 }
 
 function getEventName(eventString: string): string {
-  if (eventString.startsWith(' ')) {
+  if (eventString.includes(' ')) {
     const fragment = toEventFragment(eventString)
     return fragment.name
   } else {
     return eventString
   }
+}
+
+function eventsAreCompatible(
+  action: EventHandlerAction,
+  stringAbi: string[],
+): boolean {
+  const events = ensureArray(action.event)
+
+  const fragments = events.map((e) =>
+    getEventFragment(e, stringAbi, () => true),
+  )
+
+  const inputsPerEvent = fragments.map((f) => f.inputs.map((elem) => elem))
+  const smallest = inputsPerEvent.reduce((min, current) =>
+    current.length < min.length ? current : min,
+  )
+  const abiCompatible = inputsPerEvent.every((inputs) => {
+    if (smallest.length > 0) {
+      return smallest.every((elem) =>
+        inputs.some((i) => isDeepStrictEqual(i, elem)),
+      )
+    } else {
+      return false
+    }
+  })
+
+  return abiCompatible
 }
