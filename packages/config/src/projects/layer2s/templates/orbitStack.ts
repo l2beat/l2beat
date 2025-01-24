@@ -878,7 +878,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ) ?? EthereumAddress.ZERO
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
-  
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
     'RollupProxy',
