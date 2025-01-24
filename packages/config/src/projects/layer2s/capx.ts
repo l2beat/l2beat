@@ -14,7 +14,7 @@ export const capx: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.capx.ai/'],
+      websites: ['https://capx.ai/'],
       apps: [],
       documentation: [],
       explorers: [],
