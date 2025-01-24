@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "GHST",
+      "address": "0x3F382DbD960E3a9bbCeaE22651E88158d2791550"
+    },
+    {
       "symbol": "HSK",
       "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a"
     },
@@ -3194,6 +3198,12 @@
     }
   ],
   "base": [
+    {
+      "symbol": "GHST",
+      "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
+      "source": "canonical",
+      "supply": "zero",
+    },
     {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
