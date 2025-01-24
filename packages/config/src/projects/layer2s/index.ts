@@ -10,6 +10,7 @@ import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { arcology } from './arcology'
+import { arenaz } from './arenaz'
 import { arithmic } from './arithmic'
 import { astarzkevm } from './astarzkevm'
 import { automata } from './automata'
@@ -206,6 +207,7 @@ export const layer2s: Layer2[] = [
   apex,
   arbitrum,
   arcology,
+  arenaz,
   arithmic,
   astarzkevm,
   alienx,

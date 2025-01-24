@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "LOKA",
+      "address": "0x61E90A50137E1F645c9eF4a0d3A4f01477738406"
+    },
+    {
       "symbol": "HSK",
       "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a"
     },

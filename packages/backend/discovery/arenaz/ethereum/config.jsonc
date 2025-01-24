@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "arenaz",
+  "initialAddresses": [
+    "0x564Eb0CeFCcA86160649a8986C419693c82F3678" // L1StandardBridge
+  ]
+}
