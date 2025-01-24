@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xddf66763fd2f8f422ceeeff1382e701e28511520
+Generated with discovered.json: 0x6c0e74b2a6da19b90edf7a8fbd990b2efaf2f474
 
 # Diff at Mon, 20 Jan 2025 11:10:06 GMT:
 
@@ -7,6 +7,8 @@ Generated with discovered.json: 0xddf66763fd2f8f422ceeeff1382e701e28511520
 - current block number: 21630370
 
 ## Description
+
+Add gptprot trigger. MS member change.
 
 Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
 
