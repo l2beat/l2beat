@@ -74,7 +74,7 @@
             },
             "remove": {
               "event": "ProposerModified",
-              "where": ["!=","#enabled", true]
+              "where": ["!=", "#enabled", true]
             }
           }
         }

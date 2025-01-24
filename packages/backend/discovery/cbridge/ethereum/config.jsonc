@@ -81,7 +81,7 @@
             },
             "remove": {
               "event": "event GovernorUpdated(address account, bool added)",
-              "where": ["!=","#added", true]
+              "where": ["!=", "#added", true]
             }
           }
         },
