@@ -77,9 +77,44 @@ async function main() {
 
   const config = mapConfig(backendProject, arbitrum.chainConfig)
 
-  const tvs = await localExecutor.run(config, [
-    UnixTime.now().toStartOf('hour'),
-  ])
-  console.log(tvs)
-  // TODO: breakdown & sum
+  const timestamp = new UnixTime(1737723600) //UnixTime.now().toStartOf('hour')
+  const tvs = await localExecutor.run(config, [timestamp])
+
+  const tokens = tvs.get(timestamp.toNumber())
+  assert(tokens, 'No data for timestamp')
+
+  let total = 0
+  let canonical = 0
+  let external = 0
+  let native = 0
+
+  for (const token of tokens) {
+    const tokenConfig = config.tokens.find((t) => t.id === token.tokenId)
+    assert(tokenConfig, `Token config not found ${token.tokenId}`)
+
+    total += token.valueForTotal
+
+    switch (tokenConfig.source) {
+      case 'canonical':
+        canonical += token.valueForTotal
+        break
+      case 'external':
+        external += token.valueForTotal
+        break
+      case 'native':
+        native += token.valueForTotal
+        break
+      default:
+        throw new Error(`Unknown source ${tokenConfig.source}`)
+    }
+  }
+
+  logger.info(`Total: $${toBillionsString(total)}B`)
+  logger.info(`Canonical: $${toBillionsString(canonical)}B`)
+  logger.info(`External: $${toBillionsString(external)}B`)
+  logger.info(`Native: $${toBillionsString(native)}B`)
+}
+
+function toBillionsString(value: number) {
+  return (value / 1e9).toFixed(2)
 }

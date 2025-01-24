@@ -61,8 +61,8 @@ export class ValueService {
   ): Promise<number> {
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
-    assert(amount)
-    return await Promise.resolve(amount)
+    assert(amount !== undefined)
+    return amount
   }
 
   private async executeValueFormula(
@@ -71,7 +71,7 @@ export class ValueService {
   ): Promise<number> {
     const priceConfig = createPriceConfig(formula)
     const price = await this.storage.getPrice(priceConfig.id, timestamp)
-    assert(price)
+    assert(price !== undefined)
 
     const amount = await this.executeAmountFormula(formula.amount, timestamp)
     const value = amount * price

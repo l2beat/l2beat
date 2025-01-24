@@ -36,9 +36,15 @@ export class DataFormulaExecutor {
       // TODO: save it in storage
       const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
 
-      for (const amount of amounts) {
+      for (const index in amounts) {
+        this.logger.info(`Processing amount ${index} of ${amounts.length}`)
+        const amount = amounts[index]
+
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
-        if (cachedValue) continue
+        if (cachedValue !== undefined) {
+          this.logger.info(`Cached value found for ${amount.id}`)
+          continue
+        }
 
         switch (amount.type) {
           case 'circulatingSupply': {
@@ -63,9 +69,16 @@ export class DataFormulaExecutor {
         }
       }
 
-      for (const price of prices) {
+      for (const index in prices) {
+        this.logger.info(`Processing amount ${index} of ${prices.length}`)
+        const price = prices[index]
+
         const cachedValue = await this.storage.getPrice(price.id, timestamp)
-        if (cachedValue) continue
+        if (cachedValue !== undefined) {
+          this.logger.info(`Cached value found for ${price.id}`)
+          continue
+        }
+
         const v = await this.fetchPrice(price, timestamp)
         await this.storage.writePrice(price.id, timestamp, v)
       }
@@ -77,10 +90,19 @@ export class DataFormulaExecutor {
     timestamp: UnixTime,
   ): Promise<number> {
     this.logger.info(`Fetching circulating supply for ${config.ticker}`)
-    return await this.circulatingSupplyProvider.getCirculatingSupply(
-      config.ticker,
-      timestamp,
-    )
+
+    try {
+      return await this.circulatingSupplyProvider.getCirculatingSupply(
+        config.ticker,
+        timestamp,
+      )
+    } catch {
+      // TODO temporary workaround for issues with UMAMI
+      this.logger.error(
+        `Error fetching circulating supply for ${config.ticker}. Assuming 0`,
+      )
+      return 0
+    }
   }
 
   async fetchTotalSupply(
@@ -131,8 +153,17 @@ export class DataFormulaExecutor {
   }
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
-    this.logger.info(`Fetching price for ${config.ticker}`)
-    return await this.priceProvider.getPrice(config.ticker, timestamp)
+    try {
+      // TODO think about getting prices from STAGING DB
+      this.logger.info(`Fetching price for ${config.ticker}`)
+      return await this.priceProvider.getPrice(config.ticker, timestamp)
+    } catch {
+      // TODO temporary workaround for issues with rhinofi
+      this.logger.error(
+        `Error fetching circulating supply for ${config.ticker}. Assuming 0`,
+      )
+      return 0
+    }
   }
 
   async getBlockNumbers(amounts: AmountConfig[], timestamp: UnixTime) {
