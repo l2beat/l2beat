@@ -72,6 +72,20 @@
       "supply": "zero"
     },
     {
+      "name": "Aavegotchi GHST Token",
+      "coingeckoId": "aavegotchi",
+      "address": "0x3F382DbD960E3a9bbCeaE22651E88158d2791550",
+      "symbol": "GHST",
+      "decimals": 18,
+      "deploymentTimestamp": 1599986900,
+      "coingeckoListingTimestamp": 1600041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12467/large/GHST.png?1696512286",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Across Protocol Token",
       "coingeckoId": "across-protocol",
       "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
@@ -8528,6 +8542,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Aavegotchi GHST Token",
+      "coingeckoId": "aavegotchi",
+      "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
+      "symbol": "GHST",
+      "decimals": 18,
+      "deploymentTimestamp": 1712052491,
+      "coingeckoListingTimestamp": 1600041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12467/large/GHST.png?1696512286",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "Aerodrome",

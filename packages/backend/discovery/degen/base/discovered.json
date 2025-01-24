@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 25417259,
-  "configHash": "0xa4213ae890a466f99e197399b4667db20d364d2b861a883b4c34710211258f5c",
+  "configHash": "0x47b27c0f7a0137cfbde55b2e7eae47daade484a20abdc6f3ee234cc10ba29ce8",
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -296,7 +296,7 @@
       }
     },
     {
-      "name": "DegenMultisig",
+      "name": "AlchemyMultisig2",
       "address": "0x871e290d5447b958131F6d44f915F10032436ee6",
       "template": "GnosisSafe",
       "sourceHashes": [
