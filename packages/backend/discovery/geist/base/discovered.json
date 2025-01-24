@@ -1,7 +1,7 @@
 {
   "name": "geist",
   "chain": "base",
-  "blockNumber": 25460539,
+  "blockNumber": 25463362,
   "configHash": "0x04198959bb59c0e9d88f801326089cad813902bfa04c7ed5e02cfff101aabd61",
   "contracts": [
     {
@@ -47,7 +47,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 5403,
+        "nonce": 5408,
         "VERSION": "1.3.0"
       }
     },
@@ -147,7 +147,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6960,
+        "batchCount": 6965,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xDbc9207a27aD463f0C383c05fC03AeDf1b3D90b1"],
         "bridge": "0x9F904Fea0efF79708B37B99960e05900fE310A8E",
@@ -286,12 +286,12 @@
         "confirmPeriodBlocks": 274908,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5628,
+        "firstUnresolvedNode": 5633,
         "inbox": "0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f",
         "isERC20Enabled": false,
         "lastStakeBlock": 21466317,
-        "latestConfirmed": 5627,
-        "latestNodeCreated": 5628,
+        "latestConfirmed": 5632,
+        "latestNodeCreated": 5633,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60",
@@ -477,7 +477,7 @@
       }
     },
     {
-      "name": "SafeL2",
+      "name": "AlchemyMultisig2",
       "address": "0x871e290d5447b958131F6d44f915F10032436ee6",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -579,7 +579,8 @@
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 9,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "SafeL2"
     },
     {
       "name": "ChallengeManager",
@@ -783,8 +784,8 @@
         "nativeTokenDecimals": 18,
         "rollup": "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09",
         "sequencerInbox": "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5",
-        "sequencerMessageCount": 6960,
-        "sequencerReportedSubMessageCount": 2529952
+        "sequencerMessageCount": 6965,
+        "sequencerReportedSubMessageCount": 2529973
       }
     },
     {

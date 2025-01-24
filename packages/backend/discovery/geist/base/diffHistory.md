@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfad4dce49469c771e323e10d8f943faed7a448c6
+Generated with discovered.json: 0xcf9cec7dd3044473c2a2b09a5cd5bc957f7b83e3
 
-# Diff at Fri, 24 Jan 2025 09:20:53 GMT:
+# Diff at Fri, 24 Jan 2025 10:54:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 25460539
+- current block number: 25463362
 
 ## Description
 
@@ -67,7 +67,7 @@ Initial discovery: standard v32 AnyTrust (with fastconfirmer) orbit stack with c
 
 ```diff
 +   Status: CREATED
-    contract SafeL2 (0x871e290d5447b958131F6d44f915F10032436ee6)
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6)
     +++ description: None
 ```
 

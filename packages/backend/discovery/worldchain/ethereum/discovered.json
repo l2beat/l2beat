@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 21688096,
-  "configHash": "0x9957975f01262ce01921009f140299da8d7f4e4587995026616a09352d22e47a",
+  "configHash": "0x40401c55baa2060c71d609c1ed95df166bfd31c670892136cea4abf3e319b2c9",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -868,7 +868,7 @@
       }
     },
     {
-      "name": "AlchemyMultisig",
+      "name": "AlchemyMultisig1",
       "address": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
       "template": "GnosisSafe",
       "sourceHashes": [
