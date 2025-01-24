@@ -7,8 +7,9 @@ import { memo } from './memo/memo'
 import { near } from './near/near'
 
 export * from './types'
-export * from './common'
-export * from './utils/to-used-in-project'
+// TODO: do not export from common and usedInProject
+export { DaCommitteeSecurityRisk } from './common'
+export { toUsedInProject } from './utils/to-used-in-project'
 
 export const ethereumDaLayer = ethereum
 
