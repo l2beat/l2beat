@@ -1,9 +1,4 @@
-import type {
-  ProjectId,
-  Sentiment,
-  UnixTime,
-  ValueWithSentiment,
-} from '@l2beat/shared-pure'
+import type { ProjectId, Sentiment, UnixTime } from '@l2beat/shared-pure'
 import type {
   DataAvailabilityLayer as ScalingDaLayerOption,
   ScalingProjectContract,
@@ -122,9 +117,6 @@ export interface DaConsensusAlgorithm {
   unbondingPeriod: number
 }
 
-type DaAttribute = Omit<DaRiskWithSentiment, 'sentiment'>
-export type DaAttributes = Record<string, DaAttribute>
-
 export interface DataAvailabilitySampling {
   erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
   erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
@@ -144,11 +136,6 @@ export interface DaLayerThroughput {
 }
 
 export interface DaLinks extends Omit<ScalingProjectLinks, 'rollupCodes'> {}
-export type DaRiskWithSentiment = ValueWithSentiment<string> & {
-  type: string
-}
-
-export type DaRiskView = Record<string, DaRiskWithSentiment>
 
 export interface DaTechnology {
   /** Description of technology used by the data availability layer. [MARKDOWN] */
