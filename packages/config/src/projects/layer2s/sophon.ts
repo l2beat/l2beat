@@ -22,10 +22,7 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const sophon: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: 'sophonValidatorsAdded',
-    removed: 'sophonValidatorsRemoved',
-  },
+  validatorsKey: 'sophonValidators',
   additionalBadges: [Badge.DA.Avail],
   createdAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
   display: {
