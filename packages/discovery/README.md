@@ -29,8 +29,8 @@ Example .env file
 # Always starting from Ethereum
 ETHEREUM_RPC_URL_FOR_DISCOVERY=<RPC_URL>
 ETHEREUM_ETHERSCAN_API_KEY=<API_KEY>
-ETHEREUM_BEACON_API_URL_FOR_DISCOVERY=<BEACON_URL>                          # (optional)
-ETHEREUM_EVENT_RPC_URL_FOR_DISCOVERY=<RPC_URL_THAT_SUPPORTS_UNLIMTED_RANGE> # (optional)
+ETHEREUM_BEACON_API_URL_FOR_DISCOVERY=<BEACON_URL>                           # (optional)
+ETHEREUM_EVENT_RPC_URL_FOR_DISCOVERY=<RPC_URL_THAT_SUPPORTS_UNLIMITED_RANGE> # (optional)
 
 # But some of the handlers are going to switch to Arbitrum and fetch info from there 
 ARBITRUM_RPC_URL_FOR_DISCOVERY=<RPC_URL>
@@ -554,34 +554,176 @@ If it does, add it to the result
 
 ### Event handler
 
-TODOOOOOO
+The event handler allows you to query and process blockchain events to track state changes, group data, and apply filters. It supports three modes: add + remove (for managing dynamic sets), direct fetch (for array like data), and set (for tracking latest values).
 
 **Parameters:**
 
 - `type` - the literal: `"event"`
-- `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
-- `returnParams` - array of strings that represent event keys that we want to save
-- `groupBy` - (optional) when specified, must be a `returnParam`, the output will be grouped by the values of this param
-- `onlyValue` - (optional, default: `false`) when `true`, the `groupBy` key is removed from the output record.
-- `multipleInGroup` - (optional, default: `false`) when `true`, each grouping key will point to an array of values if more than one value exist.
+- `select` - event parameter(s) to extract. Accepts a single string or array of strings (e.g., `"user"` or `["batchIndex", "chainId"]`)
+- `groupBy` - (optional) groups results by the specified event parameter. Returns an object with grouped keys when used.
 - `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
-- `topics` - array of topics to filter events by.
+- `add` - (optional) configuration for events that add entries:
+    - `event` - event name(s) to listen to (string or array).
+    - `where` - (optional) conditional filter using a LISP like format `[OPERATOR, ...args]`.
+        Supports #-prefixed event parameters (e.g., `"#chainId"`), literals like `42`, `"abc"` or `true`, and logical operators (`"not"`, `"="`, `"!="`, `"and"`, etc.).
+- `remove` - (optional) configuration for events that remove entries (same structure as add).
+- `set` - (optional) configuration for events that set/update values (same structure as add). Returns the latest value per group.
+
+Behavior Rules:
+
+Use either add or add + remove or set - these modes are mutually exclusive.
+When using groupBy, the handler returns an object keyed by group values.
+With set, the last event in block order determines the value(s).
 
 **Examples:**
 
-Assumes there is `event AddInboundProofLibraryForChain(uint16 chainId, address lig)` in the abi. Collects the list of all `inboundProofLibraries` ever added for every `chainId`:
+Your configuration directly determines how events are interpreted and what output you get. Here's a breakdown of common scenarios:
+
+**If you use just add**
+
+You get: *A list of all values from matching events*  
+
+**What happens**:  
+Every matching event appends its value(s) to the result  .
+Output preserves emission order (oldest → newest)
+
+Example: Track all registered users:  
 
 ```json
 {
   "type": "event",
-  "event": "AddInboundProofLibraryForChain",
-  "returnParams": ["chainId", "lib"],
-  "groupBy": "chainId",
-  "onlyValue": true,
-  "multipleInGroup": true,
-  "ignoreRelative": true
-},
+  "select": "user",
+  "add": { "event": "Register" }
+}
 ```
+
+Sample Events: `Register(alice) → Register(bob) → Register(alice)`.
+Output: `["alice", "bob"]`
+
+**If you use add + remove**
+
+You get: A dynamically updated list (like allowlists/blocklists)
+
+What happens:
+add events append values to the result.
+remove events delete values from the result.
+Final output = All added values minus removed ones
+
+Example: Track users added/removed from a registry
+
+```json
+{
+  "type": "event",
+  "select": "user",
+  "add": { "event": "Add" },
+  "remove": { "event": "Remove" }
+}
+```
+
+If events are: `Add(alice) → Add(bob) → Remove(alice)`.
+Output becomes: `["bob"]`
+(Alice added then removed, Bob stays added)
+
+**If you use set**
+
+You get: The latest value (like tracking a counter)
+
+What happens:
+Every matching event overwrites previous values.
+Final `output = Value` from the last event in block order
+
+Example: Track latest batch index
+
+```
+{
+  "type": "event",
+  "select": ["batchIndex"],
+  "set": { "event": "CurrentBatch" }
+}
+```
+
+If events are: `CurrentBatch(1) → CurrentBatch(2)`
+Output becomes: `2`
+(Last event wins)
+
+**If you add groupBy**
+
+You get: Values organized into subgroups
+
+What happens:
+Creates a dictionary keyed by your chosen parameter.
+Each group operates independently (add/remove or set logic applies per group)
+
+Example: Track latest batch per chain
+
+```json
+{
+  "type": "event",
+  "select": ["batchIndex"],
+  "set": { "event": "CurrentBatchMultichain" },
+  "groupBy": "chainId"
+}
+```
+If events are:
+`CurrentBatchMultichain(1, 10) → CurrentBatchMultichain(2, 20) → CurrentBatchMultichain(3, 10)`.
+Output becomes:
+
+```js
+{ 
+  10: 3,  // Chain 10's latest is batch 3
+  20: 2   // Chain 20's latest remains batch 2
+}
+```
+
+**If you use where filters**
+
+You get: Only events matching your conditions
+
+What happens:
+Filters events before processing them.
+Uses # to reference event parameters
+
+Example: Track only EVM chains
+
+```json
+{
+  "type": "event",
+  "select": ["batchIndex"],
+  "set": { 
+    "event": "CurrentBatchMultichain",
+    "where": ["=", "#chainId", 1]  // ChainID 1 = Ethereum
+  }
+}
+```
+Events: `CurrentBatchMultichain(batch=5, chain=1) → CurrentBatchMultichain(batch=6, chain=2)`.
+Output: `5` (chain=2 event ignored)
+
+**If you combine multiple events**
+
+You get: Aggregated data from different sources
+
+What happens:
+Events must share identical parameter structure.
+Treated as equivalent sources
+
+Example: Track version from two upgrade events
+
+```json
+{
+  "type": "event",
+  "select": ["version"],
+  "set": { 
+    "event": ["UpgradeV1", "UpgradeV2"] 
+  }
+}
+```
+Works if both events have a version uint256 parameter
+
+**KEEP IN MIND**
+
+- Block Order Matters: Events are processed in blockchain order (oldest → newest). For set, newest overwrites old. For add/remove, sequence changes which operations cancel each other.
+- Groups Are Independent: When using groupBy, each group acts like its own isolated handler. Removing a value in group A doesn't affect group B.
+- Boolean Logic in where: Use `["and", [...], [...]]` for complex conditions.
 
 ### Constructor args handler
 
