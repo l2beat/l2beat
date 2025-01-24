@@ -32,7 +32,7 @@
         "select": "providerAddress",
         "add": {
           "event": "RollupProviderUpdated",
-          "where": ["!!", "#valid"]
+          "where": ["=", "#valid", true]
         }
       }
     },
@@ -42,7 +42,7 @@
         "select": "providerAddress",
         "add": {
           "event": "RollupProviderUpdated",
-          "where": ["not", ["!!", "#valid"]]
+          "where": ["!=", "#valid", true]
         }
       }
     },

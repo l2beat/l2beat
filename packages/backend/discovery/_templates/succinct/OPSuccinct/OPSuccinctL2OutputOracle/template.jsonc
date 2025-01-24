@@ -8,11 +8,11 @@
         "select": "proposer",
         "add": {
           "event": "ProposerUpdated",
-          "where": ["!!", "#added"]
+          "where": ["=", "#added", true]
         },
         "remove": {
           "event": "ProposerUpdated",
-          "where": ["not", ["!!", "#added"]]
+          "where": ["!=", "#added", true]
         }
       }
     },

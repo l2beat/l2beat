@@ -55,7 +55,7 @@
                   "#functionId",
                   "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
                 ],
-                ["!!", "#added"]
+                ["=", "#added", true]
               ]
             },
             "remove": {
@@ -67,7 +67,7 @@
                   "#functionId",
                   "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
                 ],
-                ["not", ["!!", "#added"]]
+                ["!=","#added", true]
               ]
             }
           }
@@ -98,7 +98,7 @@
                   "#functionId",
                   "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
                 ],
-                ["!!", "#added"]
+                ["=", "#added", true]
               ]
             },
             "remove": {
@@ -110,7 +110,7 @@
                   "#functionId",
                   "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
                 ],
-                ["not", ["!!", "#added"]]
+                ["!=","#added", true]
               ]
             }
           }

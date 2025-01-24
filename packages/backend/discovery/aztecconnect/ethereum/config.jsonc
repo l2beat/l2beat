@@ -48,11 +48,11 @@
             "select": "providerAddress",
             "add": {
               "event": "RollupProviderUpdated",
-              "where": ["!!", "#valid"]
+              "where": ["=", "#valid", true]
             },
             "remove": {
               "event": "RollupProviderUpdated",
-              "where": ["not", ["!!", "#valid"]]
+              "where": ["!=", "#valid", true]
             }
           }
         },

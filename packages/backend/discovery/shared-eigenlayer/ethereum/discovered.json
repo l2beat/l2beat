@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21679901,
-  "configHash": "0x5edff3290c9e04686fc9e56f3c878a686755bfface4f1236d7c076857affb811",
+  "configHash": "0x6b5526d4116ccbfe2faa92cafb369a80d2bf60b23fd5403cf9cb875a317b769d",
   "contracts": [
     {
       "name": "DepositContract",

@@ -153,11 +153,11 @@
             "select": "account",
             "add": {
               "event": "UpdateChallenger",
-              "where": ["!!", "#status"]
+              "where": ["=", "#status", true]
             },
             "remove": {
               "event": "UpdateChallenger",
-              "where": ["not", ["!!", "#status"]]
+              "where": ["!=", "#status", true]
             }
           },
           "target": {

@@ -112,11 +112,11 @@
             "select": "minterAddress",
             "add": {
               "event": "IsMinterModified",
-              "where": ["!!", "#newStatus"]
+              "where": ["=", "#newStatus", true]
             },
             "remove": {
               "event": "IsMinterModified",
-              "where": ["not", ["!!", "#newStatus"]]
+              "where": ["!=", "#newStatus", true]
             }
           }
         },
@@ -166,11 +166,11 @@
             "select": "pauser",
             "add": {
               "event": "PauserStatusChanged",
-              "where": ["!!", "#canPause"]
+              "where": ["=", "#canPause", true]
             },
             "remove": {
               "event": "PauserStatusChanged",
-              "where": ["not", ["!!", "#canPause"]]
+              "where": ["!=", "#canPause", true]
             }
           }
         }

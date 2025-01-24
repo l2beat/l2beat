@@ -59,7 +59,7 @@
               "where": [
                 "and",
                 ["=", "#selector", "0x53228430"],
-                ["!!", "#allowed"]
+                ["=", "#allowed", true]
               ]
             },
             "remove": {
@@ -67,7 +67,7 @@
               "where": [
                 "and",
                 ["=", "#selector", "0x53228430"],
-                ["not", ["!!", "#allowed"]]
+                ["!=", "#allowed", true]
               ]
             }
           }

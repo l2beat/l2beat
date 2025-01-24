@@ -55,11 +55,11 @@
             "select": "agent",
             "add": {
               "event": "AgentRegistered",
-              "where": ["!!", "#registered"]
+              "where": ["=", "#registered", true]
             },
             "remove": {
               "event": "AgentRegistered",
-              "where": ["not", ["!!", "#registered"]]
+              "where": ["!=", "#registered", true]
             },
             "ignoreRelative": true
           }
@@ -77,7 +77,7 @@
               "where": [
                 "and",
                 ["=", "#selector", "0x53228430"],
-                ["!!", "#allowed"]
+                ["=", "#allowed", true]
               ]
             },
             "remove": {
@@ -85,7 +85,7 @@
               "where": [
                 "and",
                 ["=", "#selector", "0x53228430"],
-                ["not", ["!!", "#allowed"]]
+                ["!=", "#allowed", true]
               ]
             }
           }

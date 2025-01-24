@@ -70,11 +70,11 @@
             "select": "proposer",
             "add": {
               "event": "ProposerModified",
-              "where": ["!!", "enabled"]
+              "where": ["=", "#enabled", true]
             },
             "remove": {
               "event": "ProposerModified",
-              "where": ["not", ["!!", "enabled"]]
+              "where": ["!=","#enabled", true]
             }
           }
         }

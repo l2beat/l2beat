@@ -77,11 +77,11 @@
             "select": "account",
             "add": {
               "event": "event GovernorUpdated(address account, bool added)",
-              "where": ["!!", "#added"]
+              "where": ["=", "#added", true]
             },
             "remove": {
               "event": "event GovernorUpdated(address account, bool added)",
-              "where": ["not", ["!!", "#added"]]
+              "where": ["!=","#added", true]
             }
           }
         },

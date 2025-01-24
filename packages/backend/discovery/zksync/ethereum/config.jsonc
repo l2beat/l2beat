@@ -134,11 +134,11 @@
             "select": "validatorAddress",
             "add": {
               "event": "ValidatorStatusUpdate",
-              "where": ["!!", "#isActive"]
+              "where": ["=", "#isActive", true]
             },
             "remove": {
               "event": "ValidatorStatusUpdate",
-              "where": ["not", ["!!", "#isActive"]]
+              "where": ["!=", "#isActive", true]
             }
           }
         }
@@ -154,11 +154,11 @@
             "select": "tokenLister",
             "add": {
               "event": "TokenListerUpdate",
-              "where": ["!!", "#isActive"]
+              "where": ["=", "#isActive", true]
             },
             "remove": {
               "event": "TokenListerUpdate",
-              "where": ["not", ["!!", "#isActive"]]
+              "where": ["!=", "#isActive", true]
             }
           }
         }

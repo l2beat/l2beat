@@ -8,11 +8,11 @@
         "select": "ejector",
         "add": {
           "event": "EjectorUpdated",
-          "where": ["!!", "#status"]
+          "where": ["=", "#status", true]
         },
         "remove": {
           "event": "EjectorUpdated",
-          "where": ["not", ["!!", "#status"]]
+          "where": ["!=", "#status", true]
         }
       }
     },

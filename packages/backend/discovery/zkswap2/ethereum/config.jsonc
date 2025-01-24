@@ -41,11 +41,11 @@
             "select": "validatorAddress",
             "add": {
               "event": "ValidatorStatusUpdate",
-              "where": ["!!", "#isActive"]
+              "where": ["=", "#isActive", true]
             },
             "remove": {
               "event": "ValidatorStatusUpdate",
-              "where": ["not", ["!!", "#isActive"]]
+              "where": ["!=", "#isActive", true]
             }
           }
         }

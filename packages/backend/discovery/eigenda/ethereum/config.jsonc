@@ -54,11 +54,11 @@
             "select": "batchConfirmer",
             "add": {
               "event": "BatchConfirmerStatusChanged",
-              "where": ["!!", "#status"]
+              "where": ["=", "#status", true]
             },
             "remove": {
               "event": "BatchConfirmerStatusChanged",
-              "where": ["not", ["!!", "#status"]]
+              "where": ["!=", "#status", true]
             }
           }
         }

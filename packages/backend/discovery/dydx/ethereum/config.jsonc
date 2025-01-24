@@ -202,7 +202,7 @@
             "select": "account",
             "add": {
               "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
-              "where": ["!!", "isPriorityController"]
+              "where": ["=", "#isPriorityController", true]
             }
           }
         }

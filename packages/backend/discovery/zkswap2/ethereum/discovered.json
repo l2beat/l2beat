@@ -2,7 +2,7 @@
   "name": "zkswap2",
   "chain": "ethereum",
   "blockNumber": 16767881,
-  "configHash": "0xbed384f583ab92b964fd362f1fe1f8a0c3ccf192b3428926cd04c6be9cab1409",
+  "configHash": "0xcfd33f480c21790072179c0a5e13b065949e499def6b34b602fb6c8fa596c7df",
   "contracts": [
     {
       "name": "UpgradeGatekeeper",

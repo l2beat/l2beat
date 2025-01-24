@@ -73,11 +73,11 @@
             "select": "watcher",
             "add": {
               "event": "WatcherPermissionSet",
-              "where": ["!!", "#access"]
+              "where": ["=", "#access", true]
             },
             "remove": {
               "event": "WatcherPermissionSet",
-              "where": ["not", ["!!", "#access"]]
+              "where": ["!=", "#access", true]
             }
           }
         }

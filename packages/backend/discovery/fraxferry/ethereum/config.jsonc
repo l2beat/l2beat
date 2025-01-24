@@ -155,11 +155,11 @@
             "select": "crewmember",
             "add": {
               "event": "event SetCrewmember(address indexed crewmember,bool set)",
-              "where": ["!!", "#set"]
+              "where": ["=", "#set", true]
             },
             "remove": {
               "event": "event SetCrewmember(address indexed crewmember,bool set)",
-              "where": ["not", ["!!", "#set"]]
+              "where": ["!=", "#set", true]
             }
           }
         }

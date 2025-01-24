@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 21628459,
-  "configHash": "0x55c3026f7419852b5dd7ae73c8bbae17918fd6a8e70b069491069ee79e02393d",
+  "configHash": "0x3dc8d71e572dc96094cd0d5578d13579543d11933f3b4a2d76a317d315aa2c8b",
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -2011,7 +2011,7 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/EjectionManager": "0x173f69a61dda83e032d68ac1a99ede451237ca145d589b73787ec53a1231e8e8",
+    "eigenlayer/EjectionManager": "0xfc5fa02a56ac63310f2311527b6cb70c9b7cab19d34be73c3602e368397d313d",
     "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"

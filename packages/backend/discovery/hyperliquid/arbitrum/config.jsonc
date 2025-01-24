@@ -33,11 +33,11 @@
             "select": "locker",
             "add": {
               "event": "ModifiedLocker",
-              "where": ["!!", "#isLocker"]
+              "where": ["=", "#isLocker", true]
             },
             "remove": {
               "event": "ModifiedLocker",
-              "where": ["not", ["!!", "#isLocker"]]
+              "where": ["!=", "#isLocker", true]
             }
           }
         },
@@ -47,11 +47,11 @@
             "select": "finalizer",
             "add": {
               "event": "ModifiedFinalizer",
-              "where": ["!!", "#isFinalizer"]
+              "where": ["=", "#isFinalizer", true]
             },
             "remove": {
               "event": "ModifiedFinalizer",
-              "where": ["not", ["!!", "#isFinalizer"]]
+              "where": ["!=", "#isFinalizer", true]
             }
           }
         }
