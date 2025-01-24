@@ -1,6 +1,6 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { Logger, RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { HttpClient } from '../../services'
+import type { HttpClient } from '../http/HttpClient'
 import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
@@ -16,7 +16,7 @@ interface BlockscoutOptions {
   chain: string
 }
 
-// TODO: add retries, use HttpClient2
+// TODO: add retries, use HttpClient
 export class BlockIndexerClient {
   chain: string
 
@@ -97,26 +97,12 @@ export class BlockIndexerClient {
     }
     const url = `${this.options.url}?${query.toString()}`
 
-    const { httpResponse, error } = await this.httpClient.fetch(url).then(
-      (httpResponse) => ({ httpResponse, error: undefined }),
-      (error: unknown) => ({ httpResponse: undefined, error }),
-    )
+    const response = await this.httpClient.fetch(url, {})
 
-    if (!httpResponse) {
-      throw error
-    }
-
-    if (!httpResponse.ok) {
-      throw new Error(
-        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}`,
-      )
-    }
-
-    const text = await httpResponse.text()
-    const etherscanResponse = EtherscanResponse.safeParse(JSON.parse(text))
+    const etherscanResponse = EtherscanResponse.safeParse(response)
 
     if (etherscanResponse.success === false) {
-      const message = `Invalid Etherscan response [${text}] for request [${url}].`
+      const message = `Invalid Etherscan response [${JSON.stringify(response)}] for request [${url}].`
       throw new TypeError(message)
     }
 

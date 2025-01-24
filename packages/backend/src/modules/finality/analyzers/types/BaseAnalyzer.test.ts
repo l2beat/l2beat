@@ -1,19 +1,18 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import {
+import type {
   Database,
   IndexerConfigurationRecord,
   LivenessRecord,
 } from '@l2beat/database'
-import { createTrackedTxId } from '@l2beat/shared'
+import { type RpcClient, createTrackedTxId } from '@l2beat/shared'
 import { mean } from 'lodash'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import {
   BaseAnalyzer,
-  Batch,
-  L2Block,
-  Transaction,
+  type Batch,
+  type L2Block,
+  type Transaction,
   batchesToStateUpdateDelays,
 } from './BaseAnalyzer'
 
@@ -147,6 +146,74 @@ describe(batchesToStateUpdateDelays.name, () => {
     const result = batchesToStateUpdateDelays(t2iBatches, suBatches)
 
     expect(mean(result)).toEqual(66 / 7)
+  })
+
+  it('fallback to lerp when block missing in t2iBatches', () => {
+    const t2iBatches: Batch[] = [
+      {
+        l1Timestamp: 7,
+        l2Blocks: [
+          { blockNumber: 0, timestamp: 0 },
+          { blockNumber: 1, timestamp: 2 },
+          { blockNumber: 2, timestamp: 4 },
+        ],
+      },
+    ]
+
+    const suBatches: Batch[] = [
+      {
+        l1Timestamp: 21,
+        l2Blocks: [
+          { blockNumber: 0, timestamp: 0 },
+          { blockNumber: 1, timestamp: 2 },
+          { blockNumber: 2, timestamp: 4 },
+          { blockNumber: 3, timestamp: 6 },
+          { blockNumber: 4, timestamp: 8 },
+          { blockNumber: 5, timestamp: 10 },
+          { blockNumber: 6, timestamp: 12 },
+        ],
+      },
+    ]
+
+    const result = batchesToStateUpdateDelays(t2iBatches, suBatches)
+
+    expect(mean(result)).toEqual(110 / 7)
+  })
+
+  it('do not fail if first batch has no l2Blocks', () => {
+    const t2iBatches: Batch[] = [
+      {
+        l1Timestamp: 5,
+        l2Blocks: [],
+      },
+      {
+        l1Timestamp: 7,
+        l2Blocks: [
+          { blockNumber: 0, timestamp: 0 },
+          { blockNumber: 1, timestamp: 2 },
+          { blockNumber: 2, timestamp: 4 },
+        ],
+      },
+    ]
+
+    const suBatches: Batch[] = [
+      {
+        l1Timestamp: 21,
+        l2Blocks: [
+          { blockNumber: 0, timestamp: 0 },
+          { blockNumber: 1, timestamp: 2 },
+          { blockNumber: 2, timestamp: 4 },
+          { blockNumber: 3, timestamp: 6 },
+          { blockNumber: 4, timestamp: 8 },
+          { blockNumber: 5, timestamp: 10 },
+          { blockNumber: 6, timestamp: 12 },
+        ],
+      },
+    ]
+
+    const result = batchesToStateUpdateDelays(t2iBatches, suBatches)
+
+    expect(mean(result)).toEqual(110 / 7)
   })
 })
 

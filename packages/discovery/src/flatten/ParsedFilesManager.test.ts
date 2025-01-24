@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { FileContent, ParsedFilesManager } from './ParsedFilesManager'
+import { type FileContent, ParsedFilesManager } from './ParsedFilesManager'
 
 describe(ParsedFilesManager.name, () => {
   const EMPTY_REMAPPINGS: string[] = []

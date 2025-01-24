@@ -1,10 +1,12 @@
-import { ScalingProjectRisk } from './ScalingProjectRisk'
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type {
+  ScalingProjectRisk,
+  ScalingProjectTechnologyChoice,
+} from './ScalingProject'
 
 const ON_CHAIN_CALLDATA: ScalingProjectTechnologyChoice = {
-  name: 'All data required for proofs is published on chain',
+  name: 'All data required for proofs is published onchain',
   description:
-    'All the data that is used to construct the system state is published on chain in the form of cheap calldata. This ensures that it will always be available when needed.',
+    'All the data that is used to construct the system state is published onchain in the form of cheap calldata. This ensures that it will always be available when needed.',
   risks: [],
   references: [],
 }
@@ -135,7 +137,7 @@ function CELESTIA_OFF_CHAIN(
     ? ' The blobstream bridge is used to verify attestations from the Celestia validator set that the data is indeed available.'
     : ' Since the Blobstream bridge is not used, availability of the data is not verified against Celestia validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
   return {
-    name: 'Data is stored on Celestia',
+    name: 'Data is posted to Celestia',
     description:
       `Transactions roots are posted onchain and the full data is posted on Celestia. ` +
       additionalDescription,
@@ -155,6 +157,70 @@ function CELESTIA_OFF_CHAIN(
       {
         text: 'Introducing Blobstream: streaming modular DA to Ethereum',
         href: 'https://blog.celestia.org/introducing-blobstream/',
+      },
+    ],
+  }
+}
+
+function AVAIL_OFF_CHAIN(
+  isUsingVector: boolean,
+): ScalingProjectTechnologyChoice {
+  const additionalDescription = isUsingVector
+    ? ' The vector bridge is used to verify attestations from the Avail validator set that the data is indeed available.'
+    : ' Since the Vector bridge is not used, availability of the data is not verified against Avail validators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+  return {
+    name: 'Data is posted to Avail',
+    description:
+      `Transactions roots are posted onchain and the full data is posted on Avail. ` +
+      additionalDescription,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the sequencer posts an unavailable transaction root.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the data is not available on the external provider.',
+        isCritical: true,
+      },
+    ],
+    references: [
+      {
+        text: "Avail's Data Attestation Bridge: Enabling Secure Validiums and Optimistic Chains",
+        href: 'https://blog.availproject.org/data-attestation-bridge/',
+      },
+    ],
+  }
+}
+
+function EIGENDA_OFF_CHAIN(
+  isUsingServiceManager: boolean,
+): ScalingProjectTechnologyChoice {
+  const additionalDescription = isUsingServiceManager
+    ? ' The ServiceManager bridge is used to verify attestations from the EigenDA operator set that the data is indeed available.'
+    : ' Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+  return {
+    name: 'Data is posted to EigenDA',
+    description:
+      `Transactions roots are posted onchain and the full data is posted on EigenDA. ` +
+      additionalDescription,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the sequencer posts an unavailable transaction root.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the data is not available on the external provider.',
+        isCritical: true,
+      },
+    ],
+    references: [
+      {
+        text: 'EigenDA Docs - Overview',
+        href: 'https://docs.eigenda.xyz/overview',
       },
     ],
   }
@@ -213,5 +279,7 @@ export const TECHNOLOGY_DATA_AVAILABILITY = {
   ANYTRUST_OFF_CHAIN,
   PLASMA_OFF_CHAIN,
   CELESTIA_OFF_CHAIN,
+  AVAIL_OFF_CHAIN,
+  EIGENDA_OFF_CHAIN,
   DACHALLENGES_OFF_CHAIN,
 }

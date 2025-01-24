@@ -1,11 +1,11 @@
 {
   "name": "espresso",
   "chain": "ethereum",
-  "blockNumber": 21273402,
-  "configHash": "0x55565a976c54035e82c1979dfd3f92d6b7aba3c16c6e1c8a7c285342d3f7fddb",
+  "blockNumber": 21372994,
+  "configHash": "0x49e1d2b7fb5210b786deb7185ca24ba5772b244956a0f4892af00c2f0f3ee20e",
   "contracts": [
     {
-      "name": "Safe",
+      "name": "EspressoMultisig",
       "address": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -15,8 +15,13 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "configure",
+          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
+        },
+        {
           "permission": "upgrade",
-          "target": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -36,19 +41,41 @@
         "multisigThreshold": "2 of 3 (67%)",
         "nonce": 0,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "HotShotLightClient",
       "address": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-      "unverified": true,
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xb39829b8c4f7adee8b3f63d4c34b18a92e40670401393ceb3af7105d95f4b8c4"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
+          "description": "can call newFinalizedState() to prove the latest HotShot state.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
-          "target": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
           "via": []
         }
+      ],
+      "ignoreInWatchMode": [
+        "stateHistoryFirstIndex",
+        "getStateHistoryCount",
+        "finalizedState"
       ],
       "sinceTimestamp": 1730830835,
       "values": {
@@ -61,17 +88,104 @@
             ["0x2E81FD03725158903FD32E41b0357C47941BB2c3"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "finalizedState": {
+          "viewNum": 483678,
+          "blockHeight": 472918,
+          "blockCommRoot": "18278523005438341224914445701100123357842897512218761818604054787531085550697"
+        },
+        "genesisStakeTableState": {
+          "threshold": 34,
+          "blsKeyComm": "1561632536195555148145050274009949812309785157828896392838981322602622136791",
+          "schnorrKeyComm": "20147560324529416943341534119711171689827441694011856532375917186049770295574",
+          "amountComm": "349594070000690608819508126396071528924936277306125447047023081215269308099"
+        },
+        "genesisState": { "viewNum": 0, "blockHeight": 0, "blockCommRoot": 0 },
+        "getStateHistoryCount": 273,
+        "getVersion": {
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "patchVersion": 0
+        },
+        "isPermissionedProverEnabled": true,
+        "owner": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+        "permissionedProver": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
+        "stateHistoryFirstIndex": 44,
+        "stateHistoryRetentionPeriod": 864000,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "derivedName": ""
+      "derivedName": "LightClient"
     }
   ],
   "eoas": [
     { "address": "0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc" },
+    {
+      "address": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can call newFinalizedState() to prove the latest HotShot state."
+        }
+      ]
+    },
     { "address": "0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E" },
     { "address": "0xf4b7676d9EC86D2011aB87855424219a97DEB40c" }
   ],
   "abis": {
+    "0x2E81FD03725158903FD32E41b0357C47941BB2c3": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InsufficientSnapshotHistory()",
+      "error InvalidAddress()",
+      "error InvalidArgs()",
+      "error InvalidHotShotBlockForCommitmentCheck()",
+      "error InvalidInitialization()",
+      "error InvalidMaxStateHistory()",
+      "error InvalidProof()",
+      "error NoChangeRequired()",
+      "error NotInitializing()",
+      "error OutdatedState()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ProverNotPermissioned()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error WrongStakeTableUsed()",
+      "event Initialized(uint64 version)",
+      "event NewState(uint64 indexed viewNum, uint64 indexed blockHeight, uint256 blockCommRoot)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PermissionedProverNotRequired()",
+      "event PermissionedProverRequired(address permissionedProver)",
+      "event Upgrade(address implementation)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function disablePermissionedProverMode()",
+      "function finalizedState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
+      "function genesisStakeTableState() view returns (uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)",
+      "function genesisState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
+      "function getHotShotCommitment(uint256 hotShotBlockHeight) view returns (uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)",
+      "function getStateHistoryCount() view returns (uint256)",
+      "function getVersion() pure returns (uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)",
+      "function initialize(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) _genesis, tuple(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner)",
+      "function isPermissionedProverEnabled() view returns (bool)",
+      "function lagOverEscapeHatchThreshold(uint256 blockNumber, uint256 blockThreshold) view returns (bool)",
+      "function newFinalizedState(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) newState, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof)",
+      "function owner() view returns (address)",
+      "function permissionedProver() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setPermissionedProver(address prover)",
+      "function setstateHistoryRetentionPeriod(uint32 historySeconds)",
+      "function stateHistoryCommitments(uint256) view returns (uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)",
+      "function stateHistoryFirstIndex() view returns (uint64)",
+      "function stateHistoryRetentionPeriod() view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x34F5af5158171Ffd2475d21dB5fc3B311F221982": [
       "constructor(address _singleton)"
     ],
@@ -133,6 +247,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -1,8 +1,8 @@
 {
   "name": "zksync",
   "chain": "ethereum",
-  "blockNumber": 20532597,
-  "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
+  "blockNumber": 21365608,
+  "configHash": "0xc9a078602b114115b941385e8ac4ff441b8ce1869394f0785a01ce9f4816ad14",
   "contracts": [
     {
       "name": "Multisig 1",
@@ -92,7 +92,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 372,
+        "nonce": 386,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -108,7 +108,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
           "via": []
         }
       ],
@@ -154,15 +154,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+          "from": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
         },
         {
           "permission": "upgrade",
-          "target": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+          "from": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
         },
         {
           "permission": "upgrade",
-          "target": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+          "from": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
         }
       ],
       "sinceTimestamp": 1592218707,
@@ -193,7 +193,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
           "via": []
         }
       ],
@@ -219,7 +219,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 18742
+        "totalSupply": 18753
       },
       "derivedName": "ZkSyncNFTFactory"
     },
@@ -235,7 +235,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
           "via": []
         }
       ],
@@ -313,7 +313,7 @@
         "$members": [
           "0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
           "0x37A71E0C1A5808343D893Db40e12A74e0A387908",
-          "0x733F602bB867c643542cc807a3D32AD1A86cacc1",
+          "0x890Da36c3dD697CbB88E616668BEDaFA369f3793",
           "0xfB42eb487835B01cbF266f66750a7a89a7247F06",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
           "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
@@ -325,7 +325,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
         "NAME": "Gnosis Safe",
-        "nonce": 117,
+        "nonce": 118,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -349,8 +349,8 @@
     { "address": "0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B" },
     { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
     { "address": "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3" },
-    { "address": "0x733F602bB867c643542cc807a3D32AD1A86cacc1" },
     { "address": "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11" },
+    { "address": "0x890Da36c3dD697CbB88E616668BEDaFA369f3793" },
     { "address": "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607" },
     { "address": "0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3" },
     { "address": "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B" },
@@ -720,6 +720,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

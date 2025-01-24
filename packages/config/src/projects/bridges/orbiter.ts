@@ -1,7 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('orbiter')
 
 export const orbiter: Bridge = {
   type: 'bridge',
@@ -128,12 +131,10 @@ export const orbiter: Bridge = {
     // For contracts, see:
     // https://github.com/Orbiter-Finance/orbiter-sdk/blob/main/src/config/contracts.ts
     addresses: [
-      {
-        address: EthereumAddress('0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc'),
-        name: 'OBSource',
-        description:
-          "Proxies transfers into Makers' accounts (when using custom frontend via SDK).",
-      },
+      discovery.getContractDetails(
+        'OBSource',
+        "Proxies transfers into Makers' accounts (when using custom frontend via SDK).",
+      ),
     ],
     risks: [],
   },

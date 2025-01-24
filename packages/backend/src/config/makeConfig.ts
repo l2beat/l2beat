@@ -1,15 +1,12 @@
-import { Env } from '@l2beat/backend-tools'
 import {
   bridgeToBackendProject,
-  bridges,
-  chains,
   layer2ToBackendProject,
-  layer2s,
-} from '@l2beat/config'
+} from '@l2beat/backend-shared'
+import type { Env } from '@l2beat/backend-tools'
+import { bridges, chains, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
-
-import { Config, DiscordConfig } from './Config'
+import type { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
 import {
@@ -129,35 +126,6 @@ export function makeConfig(
       },
     },
     finality: flags.isEnabled('finality') && {
-      ethereumProviderUrl: env.string([
-        'ETHEREUM_RPC_URL_FOR_FINALITY',
-        'ETHEREUM_RPC_URL',
-      ]),
-      ethereumProviderCallsPerMinute: env.integer(
-        [
-          'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_FINALITY',
-          'ETHEREUM_RPC_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      beaconApiUrl: env.string([
-        'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
-        'ETHEREUM_BEACON_API_URL',
-      ]),
-      beaconApiCPM: env.integer(
-        [
-          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE_FOR_FINALITY',
-          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      beaconApiTimeout: env.integer(
-        [
-          'ETHEREUM_BEACON_API_TIMEOUT_FOR_FINALITY',
-          'ETHEREUM_BEACON_API_TIMEOUT',
-        ],
-        10000,
-      ),
       configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
@@ -195,7 +163,8 @@ export function makeConfig(
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain)),
-      enableCache: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
+      cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
+      cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
     },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
@@ -236,6 +205,26 @@ export function makeConfig(
       ),
     },
     chainConfig: getChainConfig(env),
+    beaconApi: {
+      url: env.optionalString([
+        'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
+        'ETHEREUM_BEACON_API_URL',
+      ]),
+      callsPerMinute: env.integer(
+        [
+          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE_FOR_FINALITY',
+          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+      timeout: env.integer(
+        [
+          'ETHEREUM_BEACON_API_TIMEOUT_FOR_FINALITY',
+          'ETHEREUM_BEACON_API_TIMEOUT',
+        ],
+        10000,
+      ),
+    },
     // Must be last
     flags: flags.getResolved(),
   }

@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 
 interface Deps {
@@ -7,6 +7,8 @@ interface Deps {
   maxRetryDelayMs: number
   logger: Logger
 }
+
+export type RetryHandlerVariant = 'RELIABLE' | 'UNRELIABLE' | 'SCRIPT' | 'TEST'
 
 export class RetryHandler {
   constructor(private readonly $: Deps) {
@@ -41,6 +43,19 @@ export class RetryHandler {
     }
   }
 
+  static create = (retryStrategy: RetryHandlerVariant, logger: Logger) => {
+    switch (retryStrategy) {
+      case 'RELIABLE':
+        return this.RELIABLE_API(logger)
+      case 'UNRELIABLE':
+        return this.UNRELIABLE_API(logger)
+      case 'SCRIPT':
+        return this.SCRIPT(logger)
+      case 'TEST':
+        return this.TEST(logger)
+    }
+  }
+
   static RELIABLE_API = (logger: Logger) =>
     new RetryHandler({
       logger,
@@ -57,17 +72,19 @@ export class RetryHandler {
       maxRetryDelayMs: Infinity,
     })
 
-  static TEST = new RetryHandler({
-    logger: Logger.SILENT,
-    initialRetryDelayMs: 1,
-    maxRetries: 1,
-    maxRetryDelayMs: Infinity,
-  })
+  static SCRIPT = (logger: Logger) =>
+    new RetryHandler({
+      logger: logger,
+      initialRetryDelayMs: 1,
+      maxRetries: 3,
+      maxRetryDelayMs: Infinity,
+    })
 
-  static SCRIPT = new RetryHandler({
-    logger: Logger.SILENT,
-    initialRetryDelayMs: 1,
-    maxRetries: 3,
-    maxRetryDelayMs: Infinity,
-  })
+  static TEST = (logger: Logger) =>
+    new RetryHandler({
+      logger: logger,
+      initialRetryDelayMs: 1,
+      maxRetries: 1,
+      maxRetryDelayMs: Infinity,
+    })
 }

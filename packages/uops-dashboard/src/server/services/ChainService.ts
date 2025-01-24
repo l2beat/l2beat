@@ -1,10 +1,8 @@
 import type { Chain } from '@/chains'
 import type { CountedBlock, StatResults } from '@/types'
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
-import { RateLimiter } from '../../../../backend-tools/dist'
-import { getApiKey, getApiUrl, getScanUrl } from '../clients/apiUrls'
-import { BlockClient } from '../clients/block/BlockClient'
+import { HttpClient, RpcClient } from '@l2beat/shared'
+import type { BlockClient } from '../clients/block/BlockClient'
 import { StarknetClient } from '../clients/block/StarknetClient'
 import { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import { ScanClient } from '../clients/contract/ScanClient'
@@ -14,8 +12,10 @@ import { OpenChainClient } from '../clients/signature/OpenChainClient'
 import { RpcCounter } from '../counters/RpcCounter'
 import { StarknetCounter } from '../counters/StarknetCounter'
 import type { Counter } from '../counters/counter'
-import { DB } from '../db/db'
+import type { DB } from '../db/db'
 import { NameService } from './NameService'
+
+const DEFAULT_BATCH_SIZE = 10
 
 export class ChainService {
   private readonly client: BlockClient
@@ -23,42 +23,21 @@ export class ChainService {
   private readonly nameService?: NameService
 
   constructor(chain: Chain, db: DB) {
-    const http = new HttpClient2()
+    const http = new HttpClient()
 
-    switch (chain.id) {
+    switch (chain.blockchainApi.type) {
       case 'starknet':
         this.client = new StarknetClient(chain)
         this.counter = new StarknetCounter()
         break
-      case 'alephzero':
-      case 'arbitrum':
-      case 'base':
-      case 'blast':
-      case 'ethereum':
-      case 'gravity':
-      case 'linea':
-      case 'lyra':
-      case 'mantle':
-      case 'nova':
-      case 'optimism':
-      case 'polynomial':
-      case 'scroll':
-      case 'silicon':
-      case 'taiko':
-      case 'worldchain':
-      case 'xai':
-      case 'zircuit':
-      case 'zksync-era':
-      case 'zora': {
-        this.client = new RpcClient2({
-          url: getApiUrl(chain.id),
-          chain: chain.id,
+      case 'rpc': {
+        this.client = new RpcClient({
+          url: chain.blockchainApi.url,
+          sourceName: chain.id,
           http,
-          rateLimiter: new RateLimiter({
-            callsPerMinute: chain.batchSize * 30, // heuristic
-          }),
+          callsPerMinute: (chain.customBatchSize ?? DEFAULT_BATCH_SIZE) * 30,
           logger: Logger.SILENT,
-          retryHandler: RetryHandler.RELIABLE_API(Logger.SILENT),
+          retryStrategy: 'RELIABLE',
         })
 
         this.counter = new RpcCounter()
@@ -70,8 +49,8 @@ export class ChainService {
         ]
 
         let contractClient = undefined
-        const scanApiUrl = getScanUrl(chain.id)
-        const scanApiKey = getApiKey(chain.id, 'SCAN')
+        const scanApiUrl = chain.etherscanApiUrl
+        const scanApiKey = getEtherscanApiKey(chain.id)
         if (scanApiUrl && scanApiKey) {
           contractClient = new ScanClient(scanApiUrl, scanApiKey)
         }
@@ -114,4 +93,10 @@ export class ChainService {
 
     return this.counter.countForBlocks(blocks)
   }
+}
+
+export function getEtherscanApiKey(chainId: string): string | undefined {
+  const envName = `${chainId.toUpperCase().replace('-', '_')}_SCAN_API_KEY`
+  const value = process.env[envName]
+  return value
 }

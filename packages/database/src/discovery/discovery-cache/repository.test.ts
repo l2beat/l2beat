@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { DiscoveryCacheRecord } from './entity'
+import type { DiscoveryCacheRecord } from './entity'
 import { DiscoveryCacheRepository } from './repository'
 
 describeDatabase(DiscoveryCacheRepository.name, (db) => {
@@ -18,16 +18,8 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
   })
 
   it('only allows single record per key and overwrites old record with fresh data', async () => {
-    const record1 = mockRecord({
-      value: 'value1',
-      chain: 'optimism',
-      blockNumber: 1_000_000,
-    })
-    const record2 = mockRecord({
-      value: 'value2',
-      chain: 'optimism',
-      blockNumber: 2_000_000,
-    })
+    const record1 = mockRecord({ value: 'value1' })
+    const record2 = mockRecord({ value: 'value2' })
 
     await repository.upsert(record1)
     await repository.upsert(record2)
@@ -46,12 +38,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
       await repository.upsert(record)
     }
     const actual = await repository.findByKey('key1')
-    expect(actual).toEqual({
-      key: 'key1',
-      value: 'value1',
-      chain: 'ethereum',
-      blockNumber: 1_000_000,
-    })
+    expect(actual).toEqual({ key: 'key1', value: 'value1' })
   })
 
   it('allows keys with length > 255', async () => {
@@ -67,8 +54,6 @@ function mockRecord(record?: Partial<DiscoveryCacheRecord>) {
   return {
     key: 'key',
     value: 'value',
-    chain: 'ethereum',
-    blockNumber: 1_000_000,
     ...record,
   }
 }

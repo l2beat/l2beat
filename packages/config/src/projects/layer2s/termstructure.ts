@@ -16,7 +16,7 @@ import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailab
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('termstructure')
 
@@ -51,13 +51,11 @@ const vaultWeight =
 export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
   createdAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
@@ -175,8 +173,6 @@ export const termstructure: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, expirationPeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(expirationPeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage({
     stage0: {

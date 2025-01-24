@@ -1,3 +1,365 @@
+Generated with discovered.json: 0x6c47fe479e86c744abe4883e4fd8ef174d002c82
+
+# Diff at Mon, 20 Jan 2025 11:10:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21564418
+- current block number: 21564418
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21564418 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      issuedPermissions.1.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.1.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.target:
+-        "0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
+      issuedPermissions.0.to:
++        "0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract ZircuitGuardianMultiSig (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+      receivedPermissions.0.from:
++        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.2.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.1.target:
+-        "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"
+      issuedPermissions.1.to:
++        "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"
+      issuedPermissions.0.target:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.to:
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      receivedPermissions.8.target:
+-        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
+      receivedPermissions.8.from:
++        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
+      receivedPermissions.7.target:
+-        "0x994eEb321F9cD79B077a5455fC248c77f30Dd244"
+      receivedPermissions.7.from:
++        "0x994eEb321F9cD79B077a5455fC248c77f30Dd244"
+      receivedPermissions.6.target:
+-        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.6.from:
++        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.5.target:
+-        "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
+      receivedPermissions.5.from:
++        "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
+      receivedPermissions.4.target:
+-        "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
+      receivedPermissions.4.from:
++        "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
+      receivedPermissions.3.target:
+-        "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8"
+      receivedPermissions.3.from:
++        "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8"
+      receivedPermissions.2.target:
+-        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.2.from:
++        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.1.target:
+-        "0x2a721cBE81a128be0F01040e3353c3805A5EA091"
+      receivedPermissions.1.from:
++        "0x2a721cBE81a128be0F01040e3353c3805A5EA091"
+      receivedPermissions.0.target:
+-        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+      receivedPermissions.0.from:
++        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.2.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.1.target:
+-        "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65"
+      issuedPermissions.1.to:
++        "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65"
+      issuedPermissions.0.target:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.to:
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.1.from:
++        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.0.target:
+-        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.0.from:
++        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+Generated with discovered.json: 0xb4f194ab21d15e9cd10698814e227839d45f81fb
+
+# Diff at Wed, 08 Jan 2025 09:08:58 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 21564418
+- current block number: 21564418
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21564418 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
+Generated with discovered.json: 0x08cf2c4e25744f7a6789f00dfd8095dbc77dd493
+
+# Diff at Mon, 06 Jan 2025 09:06:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@76c326507f3e17f647665da0edde4da6efb7079d block: 21388259
+- current block number: 21564418
+
+## Description
+
+Add external wsteth escrow (matches template).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21388259 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L1ERC20TokenBridge (0x912C7271a6A3622dfb8B218eb46a6122aB046C79)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
+Generated with discovered.json: 0xe28dc8a373f6a6e9c1c5f56db7248039a2e48164
+
+# Diff at Thu, 12 Dec 2024 18:36:42 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21366345
+- current block number: 21388259
+
+## Description
+
+Changed finalization period from 5 hours to 4.
+Throttling checks are disabled since ethThrottleWithdrawals.maxAmountPerPeriod is set to 0.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      values.ethThrottleWithdrawals.maxAmountPerPeriod:
+-        "1000000000000000000000"
++        0
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
++++ description: Challenge period (Number of seconds until a state root is finalized).
+      values.FINALIZATION_PERIOD_SECONDS:
+-        18000
++        14400
+      values.finalizationPeriodSeconds:
+-        18000
++        14400
+    }
+```
+
+Generated with discovered.json: 0xf3cc94b95e05fcc954432c345ea9fbac05ea834f
+
+# Diff at Mon, 09 Dec 2024 17:31:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02974be0caac873bba9178e618086aa67aaf0b90 block: 21334344
+- current block number: 21366345
+
+## Description
+
+Moved the zircuit-specific OptiPortal away from the default op stack template as it has custom flow control.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21334344 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal_zircuit"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time."
+    }
+```
+
+Generated with discovered.json: 0x6b1ef83ce197665a204bcae5f0602a71929c06aa
+
+# Diff at Thu, 05 Dec 2024 05:56:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 20827058
+- current block number: 21334344
+
+## Description
+
+Minor upgrade to the verifier to support another type of dummy proof (`0xFFFF`).
+```
+if (_proof.length == 2 && (bytes2(_proof) == 0xDEAD || bytes2(_proof) == 0xFFFF)) {
+            return bytes("");
+        }
+```
+
+## Watched changes
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x15cce087eeab52950ec9f98df3ec3bb507edb1fac086fa0674aad4994d49049d"
++        "0xa755414175ee27be390c32c78aaacaaf640fea05cd3198de33257a27f282b91f"
+      values.$implementation:
+-        "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"
++        "0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e"
+      values.$pastUpgrades.3:
++        ["2024-12-04T15:21:23.000Z","0xa77ba9edb866b52cd4f676f0ff60cc38e85987d4cee650fc232a2a9d13c00dc6",["0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "0c13cfbb19b823f524a346e7ff5b352e24b8d79b"
++        "c3131379c4bf618f2135c29547049b46923f7dca"
+    }
+```
+
+## Source code changes
+
+```diff
+.../zircuit/ethereum/{.flat@20827058 => .flat}/Verifier/Verifier.sol  | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x09f3f25dd9125f5444f20f332977639589728e0e
 
 # Diff at Fri, 01 Nov 2024 12:11:01 GMT:

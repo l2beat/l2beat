@@ -1,31 +1,30 @@
-import { type StageConfig } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
 import { type Row, type Table } from '@tanstack/react-table'
 import React from 'react'
-import { env } from '~/env'
+import { featureFlags } from '~/consts/feature-flags'
+import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
-import {
-  BasicTable,
-  type BasicTableEntry,
-  type BasicTableProps,
-  BasicTableRow,
-} from './basic-table'
+import { BasicTable, type BasicTableProps, BasicTableRow } from './basic-table'
 
-interface BasicEntry extends BasicTableEntry {
-  stage: StageConfig
+interface BasicEntry extends CommonProjectEntry {
+  stageOrder: number
 }
 
 export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
-  if (!env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING) {
+  if (!featureFlags.stageSorting) {
     return <BasicTable {...props} />
   }
 
   const { ethereumEntry, stageTwoAndOne, stageZero, rest } =
     getRollupsTableRows(props.table)
-
   return (
     <BasicTable {...props}>
-      {ethereumEntry && <BasicTableRow row={ethereumEntry} {...props} />}
+      {ethereumEntry && (
+        <BasicTableRow
+          row={ethereumEntry}
+          table={props.table}
+          className="!border-b-0"
+        />
+      )}
       {stageTwoAndOne.length !== 0 && (
         <RowDivider>Stage 2 & 1 projects</RowDivider>
       )}
@@ -33,7 +32,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
         <BasicTableRow
           key={row.id}
           row={row}
-          {...props}
+          table={props.table}
           className={cn(i === stageTwoAndOne.length - 1 && '!border-b-0')}
         />
       ))}
@@ -42,7 +41,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
         <BasicTableRow
           key={row.id}
           row={row}
-          {...props}
+          table={props.table}
           className={cn(i === stageZero.length - 1 && '!border-b-0')}
         />
       ))}
@@ -51,7 +50,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
         <BasicTableRow
           key={row.id}
           row={row}
-          {...props}
+          table={props.table}
           className={cn(i === rest.length - 1 && '!border-b-0')}
         />
       ))}
@@ -64,17 +63,13 @@ function RowDivider({
   className,
 }: { children: React.ReactNode; className?: string }) {
   return (
-    <tr className="group">
-      <td
-        colSpan={3}
-        className={cn('sticky left-0 z-1 px-0 group-first:pt-1', className)}
-      >
-        <div className="h-5 rounded-l bg-surface-tertiary px-2 py-1 text-2xs font-medium uppercase leading-none text-zinc-500 dark:text-n-zinc-300">
-          {children}
+    <tr className="group/divider">
+      <td colSpan={100} className={cn('group-first/divider:pt-1', className)}>
+        <div className="h-5 bg-surface-tertiary">
+          <div className="sticky left-0 w-max px-2 py-1 text-2xs font-medium uppercase leading-none text-zinc-500 dark:text-n-zinc-300">
+            {children}
+          </div>
         </div>
-      </td>
-      <td colSpan={100} className={cn('px-0 group-first:pt-1', className)}>
-        <div className="h-5 rounded-r bg-surface-tertiary px-2 py-1"></div>
       </td>
     </tr>
   )
@@ -89,20 +84,17 @@ function getRollupsTableRows<T extends BasicEntry>(table: Table<T>) {
   const rest: Row<T>[] = []
 
   for (const row of rows) {
-    if (row.original.id === ProjectId.ETHEREUM) {
+    if (row.original.stageOrder === 3) {
       ethereumEntry = row
       continue
     }
 
-    if (
-      row.original.stage.stage === 'Stage 2' ||
-      row.original.stage.stage === 'Stage 1'
-    ) {
+    if (row.original.stageOrder === 2) {
       stageTwoAndOne.push(row)
       continue
     }
 
-    if (row.original.stage.stage === 'Stage 0') {
+    if (row.original.stageOrder === 1) {
       stageZero.push(row)
       continue
     }

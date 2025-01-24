@@ -1,12 +1,15 @@
-import { assert, CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
+import { type ConfigMapping, createAmountId } from '@l2beat/backend-shared'
+import {
+  assert,
+  type CirculatingSupplyEntry,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-
-import { ConfigMapping, createAmountId } from '@l2beat/config'
-import { TvlConfig } from '../../../config/Config'
+import type { TvlConfig } from '../../../config/Config'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface CirculatingSupplyModule {
   start: () => Promise<void> | void
@@ -52,13 +55,13 @@ function createCirculatingSupplyIndexers(
   descendantPriceIndexer: DescendantIndexer,
   dependencies: TvlDependencies,
 ) {
-  const circulatingSupplyService = dependencies.getCirculatingSupplyService()
+  const circulatingSupplyService = dependencies.circulatingSupplyService
   const logger = dependencies.logger.tag({ module: 'circulatingSupply' })
-  const indexerService = dependencies.getIndexerService()
+  const indexerService = dependencies.indexerService
   const db = dependencies.database
-  const hourlyIndexer = dependencies.getHourlyIndexer()
-  const syncOptimizer = dependencies.getSyncOptimizer()
-  const valueService = dependencies.getValueService()
+  const hourlyIndexer = dependencies.hourlyIndexer
+  const syncOptimizer = dependencies.syncOptimizer
+  const valueService = dependencies.valueService
 
   const dataIndexers = new Map<string, CirculatingSupplyIndexer>()
   entries.forEach((circulatingSupply) => {

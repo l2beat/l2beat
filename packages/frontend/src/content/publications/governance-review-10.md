@@ -85,7 +85,7 @@ You can find us to discuss the above and more during our [Hop Office Hours](http
 
 ### **Open Source Contributors - A promising alternative to idea based funding**
 
-Lovegrovegeorge[ published a post](https://forum.polygon.technology/t/open-source-contributors-a-promising-alternative-to-idea-based-funding/13673) that utlines the suggestion of experimenting with directly funding a small number of open source developers that would help with developing any open source initiatives - this could include improving any existing pieces of software used in the ecosystem or creating entirely new tools and libraries.
+Lovegrovegeorge[ published a post](https://forum.polygon.technology/t/open-source-contributors-a-promising-alternative-to-idea-based-funding/13673) that outlines the suggestion of experimenting with directly funding a small number of open source developers that would help with developing any open source initiatives - this could include improving any existing pieces of software used in the ecosystem or creating entirely new tools and libraries.
 
 **When/where to catch us:**
 

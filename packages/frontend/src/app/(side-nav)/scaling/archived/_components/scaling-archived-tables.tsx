@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -7,72 +8,93 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
+import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingArchivedTable } from './table/scaling-archived-table'
 
-export function ScalingArchivedTables({
-  entries,
-}: { entries: CategorisedScalingEntries<ScalingArchivedEntry> }) {
+export function ScalingArchivedTables(
+  props: TabbedScalingEntries<ScalingArchivedEntry>,
+) {
   const includeFilters = useScalingFilter()
+  const [tab, setTab] = useState('rollups')
+  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: entries.rollups.filter(includeFilters),
-    validiumsAndOptimiums: entries.validiumsAndOptimiums.filter(includeFilters),
-    others: entries.others?.filter(includeFilters) ?? [],
+    rollups: props.rollups.filter(includeFilters),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
+    others: props.others.filter(includeFilters),
   }
+
+  const entries = checked
+    ? getRecategorisedEntries(
+        filteredEntries,
+        (a, b) => b.tvlOrder - a.tvlOrder,
+      )
+    : filteredEntries
 
   const initialSort = {
     id: 'total',
     desc: true,
   }
 
+  useEffect(() => {
+    if (!checked && tab === 'others' && entries.others.length === 0) {
+      setTab('rollups')
+    }
+  }, [checked, entries.others, tab])
+
   return (
     <>
       <ScalingUpcomingAndArchivedFilters
         items={[
-          ...filteredEntries.rollups,
-          ...filteredEntries.validiumsAndOptimiums,
-          ...filteredEntries.others,
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
         ]}
         className="max-md:ml-4 max-md:mt-4"
       />
-      <DirectoryTabs defaultValue="rollups">
+      <DirectoryTabs value={tab} onValueChange={setTab}>
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
-            Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
+            Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums{' '}
-            <CountBadge>
-              {filteredEntries.validiumsAndOptimiums.length}
-            </CountBadge>
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {filteredEntries.others.length > 0 && (
+          {entries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{filteredEntries.others.length}</CountBadge>
+              Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
-            <ScalingArchivedTable entries={filteredEntries.rollups} />
+            <RollupsInfo />
+            <ScalingArchivedTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
-            <ScalingArchivedTable
-              entries={filteredEntries.validiumsAndOptimiums}
-            />
+          <DirectoryTabsContent value="validiumsAndOptimiums">
+            <ValidiumsAndOptimiumsInfo />
+            <ScalingArchivedTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {filteredEntries.others.length > 0 && (
+        {entries.others.length > 0 && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
-              <ScalingArchivedTable entries={filteredEntries.others} />
+              <OthersInfo />
+              <ScalingArchivedTable entries={entries.others} />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

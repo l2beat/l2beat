@@ -4,7 +4,7 @@ import { describe } from 'mocha'
 
 import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../test/database'
-import { L2CostRecord } from './entity'
+import type { L2CostRecord } from './entity'
 import { L2CostRepository } from './repository'
 
 describeDatabase(L2CostRepository.name, (db) => {
@@ -121,6 +121,43 @@ describeDatabase(L2CostRepository.name, (db) => {
       ])
 
       expect(results).toEqual([])
+    })
+  })
+
+  describe(L2CostRepository.prototype.getGasSumByTimeRangeAndConfigId
+    .name, () => {
+    it('should return sum of gas used for given time range and configurations id', async () => {
+      // add second record to txIdA
+      await repository.insertMany([
+        {
+          timestamp: START.add(-1, 'hours'),
+          txHash: '0x4',
+          configurationId: txIdA,
+          gasUsed: 200,
+          gasPrice: 1n,
+          calldataLength: 100,
+          calldataGasUsed: 100,
+          blobGasPrice: null,
+          blobGasUsed: null,
+        },
+      ])
+
+      const result = await repository.getGasSumByTimeRangeAndConfigId(
+        [txIdA, txIdB],
+        START.add(-1, 'hours'),
+        START,
+      )
+
+      expect(result).toEqualUnsorted([
+        {
+          configurationId: txIdA,
+          totalCostInWei: 300n,
+        },
+        {
+          configurationId: txIdB,
+          totalCostInWei: 400n,
+        },
+      ])
     })
   })
 

@@ -1,7 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Response } from 'node-fetch'
-import { HttpClient } from '../HttpClient'
+import type { HttpClient } from '../../clients'
 import { BlockscoutV2Client } from './BlockscoutV2Client'
 
 const API_URL = 'https://example.com/api'
@@ -10,7 +9,7 @@ const NOW = UnixTime.now()
 const responseMock = {
   items: [
     {
-      block: 19917670,
+      block_number: 19917670,
       block_index: 260,
       created_contract: null,
       error: null,
@@ -60,9 +59,7 @@ describe(BlockscoutV2Client.name, () => {
   describe(BlockscoutV2Client.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: mockFn().resolvesTo(
-          new Response(JSON.stringify({ status: '1', message: 'OK' })),
-        ),
+        fetch: mockFn().resolvesTo({ status: '1', message: 'OK' }),
       })
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
@@ -77,37 +74,9 @@ describe(BlockscoutV2Client.name, () => {
       )
     })
 
-    it('throws on non-2XX result', async () => {
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response('', { status: 404 })
-        },
-      })
-
-      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
-      await expect(blockscoutClient.call('mod', 'id', 'act')).toBeRejectedWith(
-        'Server responded with non-2XX result: 404 Not Found',
-      )
-    })
-
-    it('throws on non-json response', async () => {
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response('mytestresp')
-        },
-      })
-
-      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
-      await expect(blockscoutClient.call('mod', 'id', 'act')).toBeRejectedWith(
-        `Unexpected token 'm', "mytestresp" is not valid JSON`,
-      )
-    })
-
     it('returns a success response', async () => {
       const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response(JSON.stringify(responseMock))
-        },
+        fetch: async () => responseMock,
       })
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)

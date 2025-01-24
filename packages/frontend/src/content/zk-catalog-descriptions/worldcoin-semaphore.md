@@ -2,7 +2,7 @@ Worldcoin uses two types of circuits: Semaphore to prove the inclusion of a Worl
 
 ## Semaphore
 
-Worldcoin uses two semaphore anonymity sets, one called 'orb' (OpWorldID_One), used for verified humans, and the other called 'phone' (OpWorldID_Zero) for verified unique devices. More information can be found [here](https://docs.worldcoin.org/concepts). The two contracts have the same source code and contain multiple verification keys for multiple semaphore verifiers of different sizes, going from size 16 to 32. Currently, only the ones with size 30 are used. An example of a semaphore verification transaction can be found [here](https://app.blocksec.com/explorer/tx/optimism/0xfe3821e05483c290300d9da497fcf9720e3a7369a1b483786faa28fd694ce2b7?line=8).
+Worldcoin uses two semaphore anonymity sets, one called 'orb' (OpWorldID_One), used for verified humans, and the other called 'phone' (OpWorldID_Zero) for verified unique devices. More information can be found [here](https://docs.world.org/world-id/concepts). The two contracts have the same source code and contain multiple verification keys for multiple semaphore verifiers of different sizes, going from size 16 to 32. Currently, only the ones with size 30 are used. An example of a semaphore verification transaction can be found [here](https://app.blocksec.com/explorer/tx/optimism/0xfe3821e05483c290300d9da497fcf9720e3a7369a1b483786faa28fd694ce2b7?line=8).
 
 The circuit is written in circom and the keys are generated using the snarkjs library. The semaphore artifacts can be found [here](https://storage.googleapis.com/trustedsetup-a86f4.appspot.com/semaphore/semaphore_top_index.html).
 
@@ -12,7 +12,7 @@ The procedure is explained for the semaphore circuit of size 30. While, as menti
 
 ![Semaphore verification process](/images/zk-catalog/semaphore-verification.png)
 
-**From the .circom to the .r1cs file**: the circom version used in the original verification key generation process is non deterministic, meaning that a different r1cs file is generated every time the circom file is compiled. A workaround is currently being investigated.
+**From the .circom to the .r1cs file**: the circom version used in the original verification key generation process is non-deterministic, meaning that a different r1cs file is generated every time the circom file is compiled. A workaround is currently being investigated.
 
 **From the .r1cs to the onchain verification keys**: download the corresponding r1cs file from the semaphore artifacts. This can be done manually or with the following command:
 

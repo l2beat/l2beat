@@ -1,8 +1,8 @@
 {
   "name": "degate3",
   "chain": "ethereum",
-  "blockNumber": 18939732,
-  "configHash": "0x59b272da0d65b6f780237f55503b40da0033b0c88e28c75b7a041282560cb8e3",
+  "blockNumber": 21394291,
+  "configHash": "0x48e221a1ea80def59f37db2b266238f6684097c296d9b2ce4eeeeb225fe3bfc7",
   "contracts": [
     {
       "name": "TimeLock1",
@@ -13,7 +13,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x9C07A72177c5A05410cA338823e790876E79D73B"
+          "from": "0x9C07A72177c5A05410cA338823e790876E79D73B"
         }
       ],
       "sinceTimestamp": 1699753175,
@@ -63,7 +63,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
+          "to": "0xf2991507952d9594E71A44A54fb19f3109D213A5",
           "via": []
         }
       ],
@@ -108,7 +108,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 110
+        "transactionCount": 130
       },
       "derivedName": "MultiSigWallet"
     },
@@ -160,7 +160,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
+          "to": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
           "via": []
         }
       ],
@@ -187,7 +187,7 @@
         "$upgradeCount": 1,
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x9ebdbab57c486aeff6341b8bb14d59c88c9591e4f510481f065ce0cb288d4f0f",
-        "getBlockHeight": 697,
+        "getBlockHeight": 8283,
         "getConstants": {
           "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           "MAX_OPEN_FORCED_REQUESTS": 1000000,
@@ -207,8 +207,8 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x10fcd74fd0ac02a40ad9aea01b9a0a38644cf09d5ea86bb6906b5e08bd2f1a80",
-        "getMerkleRoot": "0x24e77aee7c868187d5d351f6187a42652afc0d79d77a25f84678c90994b84f26",
+        "getMerkleAssetRoot": "0x1b1e450c5194a25509ceb5df5699d9fe91ff4ef421a9c14dd7f7c9cfb3e20cf2",
+        "getMerkleRoot": "0x276e71c7f8dd2793e2e8bcd07b0fea8faf578e8d478d20b26fd06441fe0be53f",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": {
           "syncedAt": 0,
@@ -235,13 +235,13 @@
           "depositState": {
             "freeDepositMax": 5000,
             "freeDepositRemained": 4999,
-            "lastDepositBlockNum": 18919470,
+            "lastDepositBlockNum": 21394260,
             "freeSlotPerBlock": 1,
             "depositFee": 4480000000000000
           },
-          "merkleRoot": "0x24e77aee7c868187d5d351f6187a42652afc0d79d77a25f84678c90994b84f26",
-          "merkleAssetRoot": "0x10fcd74fd0ac02a40ad9aea01b9a0a38644cf09d5ea86bb6906b5e08bd2f1a80",
-          "numBlocks": 697,
+          "merkleRoot": "0x276e71c7f8dd2793e2e8bcd07b0fea8faf578e8d478d20b26fd06441fe0be53f",
+          "merkleAssetRoot": "0x1b1e450c5194a25509ceb5df5699d9fe91ff4ef421a9c14dd7f7c9cfb3e20cf2",
+          "numBlocks": 8283,
           "numPendingForcedTransactions": 0,
           "protocolFeeData": {
             "syncedAt": 0,
@@ -281,7 +281,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x54D7aE423Edb07282645e740C046B9373970a168"
+          "from": "0x54D7aE423Edb07282645e740C046B9373970a168"
         }
       ],
       "sinceTimestamp": 1699753451,

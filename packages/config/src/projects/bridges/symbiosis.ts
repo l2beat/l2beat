@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('symbiosis')
 
@@ -16,7 +16,7 @@ export const symbiosis: Bridge = {
     slug: 'symbiosis',
     category: 'Hybrid',
     description:
-      'Symbiosis is a cross-chain AMM DEX externally validated my a MPC relayers network.',
+      'Symbiosis is a cross-chain AMM DEX externally validated my an MPC relayers network.',
     links: {
       websites: [
         'https://symbiosis.finance/',
@@ -64,7 +64,7 @@ export const symbiosis: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Symbiosis uses a MPC relayer network to facilitate cross-chain transfers. An AMM on BOBA BNB is used to perform swaps.',
+        'Symbiosis uses an MPC relayer network to facilitate cross-chain transfers. An AMM on BOBA BNB is used to perform swaps.',
       references: [],
       risks: [],
     },
@@ -123,17 +123,14 @@ export const symbiosis: Bridge = {
         'MetaRouter',
         'An upgradeable contract to process funds by provided route.',
       ),
-      {
-        address: discovery.getContract('Bridge').address,
-        name: 'Bridge',
-        description:
-          'A contract that generates Oracle requests for the Symbiosis relayers network.',
-      },
-      {
-        address: discovery.getContract('Portal').address,
-        name: 'Portal',
-        description: 'A contract that stores "bridged" liquidity.',
-      },
+      discovery.getContractDetails(
+        'Bridge',
+        'A contract that generates Oracle requests for the Symbiosis relayers network.',
+      ),
+      discovery.getContractDetails(
+        'Portal',
+        'A contract that stores "bridged" liquidity.',
+      ),
     ],
     risks: [],
     isIncomplete: true,

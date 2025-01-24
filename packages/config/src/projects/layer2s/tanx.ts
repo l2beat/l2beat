@@ -19,6 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -30,7 +31,8 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('brine')
 
@@ -66,6 +68,7 @@ export const tanx: Layer2 = {
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'tanX',
     slug: 'tanx',
@@ -86,7 +89,6 @@ export const tanx: Layer2 = {
         'https://linkedin.com/company/tanx-fi',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -107,16 +109,14 @@ export const tanx: Layer2 = {
       resyncLastDays: 7,
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.DAC],
-      bridge: DA_BRIDGES.DAC_MEMBERS({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      mode: DA_MODES.STATE_DIFFS,
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.DAC],
+    bridge: DA_BRIDGES.DAC_MEMBERS({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
     }),
-  ],
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
@@ -133,8 +133,6 @@ export const tanx: Layer2 = {
         },
       ],
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.CANONICAL,
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,
@@ -194,4 +192,10 @@ export const tanx: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 }

@@ -12,7 +12,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierContracts } from '../../discovery/starkware'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 
@@ -86,8 +86,6 @@ export const layer2financezk: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
-    destinationToken: RISK_VIEW.CANONICAL,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
@@ -102,30 +100,17 @@ export const layer2financezk: Layer2 = {
       discovery.getContractDetails('Proxy', {
         name: 'StarkExchange',
       }),
-      {
-        name: 'Committee',
-        address: EthereumAddress('0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9'),
-      },
-      {
-        name: 'Broker',
-        description:
-          'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
-        address: discovery.getContract('Broker').address,
-      },
-      {
-        name: 'StrategyCompound',
-        description:
-          'It is through this contract that groups of users interact with the Compound DeFi protocol.',
-        address: EthereumAddress('0x5b000954F70B0410685193B0afd3074B744B5C97'),
-      },
-      {
-        name: 'GpsFactRegistryAdapter',
-        address: EthereumAddress('0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE'),
-      },
-      {
-        name: 'OrderRegistry',
-        address: discovery.getContract('OrderRegistry').address,
-      },
+      discovery.getContractDetails('Committee'),
+      discovery.getContractDetails(
+        'Broker',
+        'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
+      ),
+      discovery.getContractDetails(
+        'StrategyCompound',
+        'It is through this contract that groups of users interact with the Compound DeFi protocol.',
+      ),
+      discovery.getContractDetails('GpsFactRegistryAdapter'),
+      discovery.getContractDetails('OrderRegistry'),
       ...getSHARPVerifierContracts(
         discovery,
         discovery.getAddressFromValue('GpsFactRegistryAdapter', 'gpsContract'),

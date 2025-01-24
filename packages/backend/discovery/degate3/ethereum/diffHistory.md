@@ -1,3 +1,149 @@
+Generated with discovered.json: 0x8bed8cee9a50902a55ed4a9cd6ffc6fcafa5c3a2
+
+# Diff at Mon, 20 Jan 2025 11:09:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21394291
+- current block number: 21394291
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21394291 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x9C07A72177c5A05410cA338823e790876E79D73B"
+      receivedPermissions.0.from:
++        "0x9C07A72177c5A05410cA338823e790876E79D73B"
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf2991507952d9594E71A44A54fb19f3109D213A5"
+      issuedPermissions.0.to:
++        "0xf2991507952d9594E71A44A54fb19f3109D213A5"
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d"
+      issuedPermissions.0.to:
++        "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d"
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x54D7aE423Edb07282645e740C046B9373970a168"
+      receivedPermissions.0.from:
++        "0x54D7aE423Edb07282645e740C046B9373970a168"
+    }
+```
+
+Generated with discovered.json: 0x2f5ff9403f5b0ceba03cfcc60518cca1105fba5f
+
+# Diff at Fri, 13 Dec 2024 14:49:01 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@057a0310a9622d3c37d8b5e224c59b5dbd3a0507 block: 21386590
+- current block number: 21394291
+
+## Description
+
+Discovery refresh. 
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21386590 (main branch discovery), not current.
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0x8CCc06C4C3B2b06616EeE1B62F558f5b9C08f973"]
+      values.$pastUpgrades.0.1:
++        "0xb1e5bc43a9a516618be17e0075ca12b7420b5daa42e377af2906a2c8d9619bdc"
+      values.$pastUpgrades.0.0:
+-        ["2023-11-11T23:57:23.000Z","0xb1e5bc43a9a516618be17e0075ca12b7420b5daa42e377af2906a2c8d9619bdc",["0x8CCc06C4C3B2b06616EeE1B62F558f5b9C08f973"]]
++        "2023-11-11T23:57:23.000Z"
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
++        ["0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b"]
+      values.$pastUpgrades.0.1:
++        "0x618d6d6bdaa4be3257aa4c695f9c10806e261f0e9759fc3133a5798fed43c062"
+      values.$pastUpgrades.0.0:
+-        ["2023-11-11T23:56:59.000Z","0x618d6d6bdaa4be3257aa4c695f9c10806e261f0e9759fc3133a5798fed43c062",["0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b"]]
++        "2023-11-11T23:56:59.000Z"
+    }
+```
+
+Generated with discovered.json: 0xb5875a416bbdd56d85843d2622665c30797be502
+
+# Diff at Thu, 12 Dec 2024 13:02:19 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 18939732
+- current block number: 21386590
+
+## Description
+
+Refresh discovery. Contract has not changed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18939732 (main branch discovery), not current.
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
+-        ["0x8CCc06C4C3B2b06616EeE1B62F558f5b9C08f973"]
+      values.$pastUpgrades.0.1:
+-        "0xb1e5bc43a9a516618be17e0075ca12b7420b5daa42e377af2906a2c8d9619bdc"
+      values.$pastUpgrades.0.0:
+-        "2023-11-11T23:57:23.000Z"
++        ["2023-11-11T23:57:23.000Z","0xb1e5bc43a9a516618be17e0075ca12b7420b5daa42e377af2906a2c8d9619bdc",["0x8CCc06C4C3B2b06616EeE1B62F558f5b9C08f973"]]
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      values.$pastUpgrades.0.2:
+-        ["0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b"]
+      values.$pastUpgrades.0.1:
+-        "0x618d6d6bdaa4be3257aa4c695f9c10806e261f0e9759fc3133a5798fed43c062"
+      values.$pastUpgrades.0.0:
+-        "2023-11-11T23:56:59.000Z"
++        ["2023-11-11T23:56:59.000Z","0x618d6d6bdaa4be3257aa4c695f9c10806e261f0e9759fc3133a5798fed43c062",["0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b"]]
+    }
+```
+
 Generated with discovered.json: 0xdef5a9fbe57f50db67d090afb663c692ff4c5ec3
 
 # Diff at Mon, 21 Oct 2024 11:05:32 GMT:

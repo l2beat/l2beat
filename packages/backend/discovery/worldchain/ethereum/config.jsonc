@@ -10,16 +10,10 @@
     // "0x8eeF04eef96fef1050702453f75F0Fc4f8F70973", // ProtocolVersions
     // "0xF9adF7c9502C5C60352C20a4d22683422DbD061F" // DelayedWETH
   ],
-  "names": {
-    "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "AlchemyMultisig",
-    "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB": "L1OpUSDCBridgeAdapter"
-  },
   "overrides": {
-    "L1OpUSDCBridgeAdapter": {
-      "displayName": "L1OpUSDCBridgeAdapter",
-      "description": "Custom external escrow for USDC bridged to Worldchain.",
-      "ignoreMethods": ["proxiableUUID"],
-      "ignoreRelatives": ["USDC", "LINKED_ADAPTER"]
+    "0x069c4c579671f8c120b1327a73217D01Ea2EC5ea": {
+      // permissionedGamesTotal from the template ignored as they are using permissioned games by default
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     }
   }
 }

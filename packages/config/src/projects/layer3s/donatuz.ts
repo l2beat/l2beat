@@ -1,30 +1,32 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { underReviewL3 } from '../layer2s/templates/underReview'
-import { Layer3 } from './types'
+import { EIGENDA_DA_PROVIDER, opStackL3 } from '../layer2s/templates/opStack'
+import type { Layer3 } from './types'
 
-export const donatuz: Layer3 = underReviewL3({
-  id: 'donatuz',
+const discovery = new ProjectDiscovery('donatuz', 'base')
+
+export const donatuz: Layer3 = opStackL3({
   createdAt: new UnixTime(1726497628), // 2024-09-16T14:40:28Z
+  discovery,
+  daProvider: EIGENDA_DA_PROVIDER,
   hostChain: ProjectId('base'),
-  badges: [
+  additionalBadges: [
     Badge.L3ParentChain.Base,
     Badge.DA.EigenDA,
-    Badge.Stack.OPStack,
-    Badge.VM.EVM,
     Badge.RaaS.Conduit,
-    Badge.Infra.Superchain,
+  ],
+  additionalPurposes: ['Social'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
     name: 'Donatuz',
     slug: 'donatuz',
-    category: 'Optimium',
     description:
       'Donatuz is a Layer-3 that aims at providing social media creators with innovative monetization tools to earn money from their content.',
-    purposes: ['Social'],
-    provider: 'OP Stack',
     links: {
       websites: ['https://donatuz.org/'],
       apps: ['https://bridge.donatuz.com'],
@@ -37,22 +39,9 @@ export const donatuz: Layer3 = underReviewL3({
         'https://linkedin.com/company/donatuz/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
+  genesisTimestamp: new UnixTime(1719319433),
   rpcUrl: 'https://rpc.donatuz.com',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.donatuz.com',
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-    startBlock: 1,
-  },
-  escrows: [
-    {
-      chain: 'base',
-      address: EthereumAddress('0xb765Df9d2925a82678F4B7bc60eF5294c1604514'), // OptimismPortal
-      sinceTimestamp: new UnixTime(1719319541),
-      tokens: '*',
-    },
-  ],
+  isNodeAvailable: true,
+  discoveryDrivenData: true,
 })

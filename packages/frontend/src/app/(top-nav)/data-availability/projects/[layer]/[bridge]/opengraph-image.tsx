@@ -1,4 +1,4 @@
-import { daLayers } from '@l2beat/config'
+import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
@@ -10,9 +10,10 @@ const size = {
   width: 1200,
   height: 630,
 }
+const projects = [...daLayers, ethereumDaLayer]
 
 export async function generateStaticParams() {
-  return daLayers.flatMap((layer) => ({
+  return projects.flatMap((layer) => ({
     layer: layer.display.slug,
   }))
 }
@@ -35,7 +36,7 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-  const project = daLayers.find((p) => p.display.slug === params.layer)
+  const project = projects.find((p) => p.display.slug === params.layer)
   if (!project) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 })
   }
@@ -50,12 +51,14 @@ export default async function Image({ params }: Props) {
   ]
   return new ImageResponse(
     <ProjectOpengraphImage
-      background="da-beat"
       baseUrl={baseUrl}
       slug={project.display.slug}
       name={project.display.name}
       size={size}
-    />,
+    >
+      {/* See comment in zk-catalog/[slug]/opengraph-image.tsx for explanation why we use &nbsp; */}
+      DATA&nbsp;AVAILABILITY&nbsp;•&nbsp;PROJECT&nbsp;PAGE
+    </ProjectOpengraphImage>,
     {
       ...size,
       fonts: [

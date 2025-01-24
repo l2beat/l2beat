@@ -1,21 +1,37 @@
 import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
-import { ConfigReader } from '@l2beat/discovery'
+import type { ConfigReader } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import { getChainFullName } from '@l2beat/discovery/dist/config/config.discovery'
-import { ApiCodeResponse } from './types'
+import type { ApiCodeResponse } from './types'
 
 export function getCode(
   configReader: ConfigReader,
   project: string,
   address: string,
 ): ApiCodeResponse {
+  const codePaths = getCodePaths(configReader, project, address)
+  return {
+    sources: codePaths
+      .map(({ name, path }) => ({
+        name: name,
+        code: readFileSync(path, 'utf-8'),
+      }))
+      .sort((a, b) => compareFiles(a.name, b.name)),
+  }
+}
+
+export function getCodePaths(
+  configReader: ConfigReader,
+  project: string,
+  address: string,
+): { name: string; path: string }[] {
   const [chainShortName, simpleAddress] = address.split(':')
   const chain = getChainFullName(chainShortName)
   const discovery = configReader.readDiscovery(project, chain)
   const contract = discovery.contracts.find((x) => x.address === simpleAddress)
   if (!contract) {
-    return { sources: [] }
+    return []
   }
 
   const similar = discovery.contracts.filter((x) => x.name === contract.name)
@@ -28,18 +44,15 @@ export function getCode(
   const root = join(configReader.rootPath, 'discovery', project, chain, '.flat')
 
   if (!hasImplementations) {
-    const source = readFileSync(join(root, name + '.sol'), 'utf-8')
-    return { sources: [{ name: `${contract.name}.sol`, code: source }] }
+    return [{ name: `${contract.name}.sol`, path: join(root, name + '.sol') }]
   } else {
     const dir = readdirSync(join(root, name))
-    return {
-      sources: dir
-        .map((file) => ({
-          name: file,
-          code: readFileSync(join(root, name, file), 'utf-8'),
-        }))
-        .sort((a, b) => compareFiles(a.name, b.name)),
-    }
+    return dir
+      .map((file) => ({
+        name: file,
+        path: join(root, name, file),
+      }))
+      .sort((a, b) => compareFiles(a.name, b.name))
   }
 }
 

@@ -2,15 +2,10 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.7142857142857143
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 5/7 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 4/6 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
-  }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
   }
   exitWindow: {
     definingMetric: -86400
@@ -28,22 +23,17 @@
   }
   sequencerFailure: {
     definingMetric: 86400
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 1d delay on this operation."
     secondLine: "1d delay"
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: 1
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
+    definingMetric: 2
+    description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
-  }
-  validatedBy: {
-    description: "Smart contracts on arbitrum validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer."
-    sentiment: "warning"
-    value: "Arbitrum"
   }
 }
 
@@ -51,15 +41,10 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.7142857142857143
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 5/7 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 4/6 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
-  }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
   }
   exitWindow: {
     definingMetric: -86400
@@ -76,20 +61,15 @@
   }
   sequencerFailure: {
     definingMetric: 172800
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 2d delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 2d delay on this operation."
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: 1
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
+    definingMetric: 2
+    description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
-  }
-  validatedBy: {
-    description: "Smart contracts on arbitrum validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer."
-    sentiment: "warning"
-    value: "Arbitrum"
   }
 }

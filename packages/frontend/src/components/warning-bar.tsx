@@ -1,12 +1,14 @@
 import { type FC } from 'react'
 
+import { type Sentiment, assertUnreachable } from '@l2beat/shared-pure'
 import { cva } from 'class-variance-authority'
-import { OutLinkIcon } from '~/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { ShieldIcon } from '~/icons/shield'
 import { cn } from '~/utils/cn'
 import { Callout } from './callout'
 import { Markdown } from './markdown/markdown'
 import { PlainLink } from './plain-link'
+
 export interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'
   text: string
@@ -60,7 +62,7 @@ export function WarningBar({
           body={
             <div className="flex items-center gap-1">
               {textElement}
-              <OutLinkIcon className="shrink-0" />
+              <CustomLinkIcon className="shrink-0" />
             </div>
           }
         />
@@ -76,4 +78,19 @@ export function WarningBar({
       body={textElement}
     />
   )
+}
+
+export function sentimentToWarningBarColor(
+  sentiment: Exclude<Sentiment, 'good' | 'UnderReview'>,
+): WarningBarProps['color'] {
+  switch (sentiment) {
+    case 'bad':
+      return 'red'
+    case 'warning':
+      return 'yellow'
+    case 'neutral':
+      return 'gray'
+    default:
+      assertUnreachable(sentiment)
+  }
 }

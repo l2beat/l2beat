@@ -24,8 +24,8 @@ Dragan, a technical program manager at OP labs, [published a proposal](https://g
 
 
 * **Holocene block derivation**: a set of changes that render the derivation pipeline stricter and simpler, but also improve worst-case scenarios for Fault Proofs and Interoperability.
-* **EIP-1559 configurability: **The elasticity and denominator EIP-1559 parameters become configurable via the SystemConfig L1 contract, allowing gas target and gas limit to be independently configured.
-* **MIPS contract upgrade: **Updates to support additional calls made by the new op-program version.
+* **EIP-1559 configurability:** The elasticity and denominator EIP-1559 parameters become configurable via the SystemConfig L1 contract, allowing gas target and gas limit to be independently configured.
+* **MIPS contract upgrade:** Updates to support additional calls made by the new op-program version.
 
 
 ### **Season 7: Reflection Period Guide**
@@ -433,7 +433,7 @@ Koloz from Matter Labs [submitted a proposal](https://forum.zknation.io/t/zip-00
 * **Custom Errors**: Replace all string-based reverts with custom errors improving gas usage insights into reverts.
 * **Solhint Rules:** Implement stricter solhint rules, including but not limited to enforcing consistent naming conventions, requiring explicit visibility for state variables and functions, and limiting function complexity.
 * **Floating Point Compiler Versions:** Implement floating compiler versions for interfaces and libraries so they can be used within ecosystem projects without defining an exact compiler version.
-* **Gas Optimizations: **Implement minor gas optimizations, such as caching array lengths in loops, using unchecked blocks for arithmetic operations where overflow/underflow is impossible, and packing variables to use fewer storage slots.
+* **Gas Optimizations:** Implement minor gas optimizations, such as caching array lengths in loops, using unchecked blocks for arithmetic operations where overflow/underflow is impossible, and packing variables to use fewer storage slots.
 
 The proposal was [audited by Open Zeppelin](https://drive.google.com/file/d/1iZ4x9OgfD2dCxdDGbBiBX4p5royjH5FG/view), who found three low-severity issues, which have since been addressed.
 

@@ -1,20 +1,7 @@
-export interface DiscoveryCache {
-  set(
-    key: string,
-    value: string,
-    chain: string,
-    blockNumber: number,
-  ): Promise<void>
-  get(key: string): Promise<string | undefined>
-}
+import type { CacheEntry, DiscoveryCache } from './DiscoveryCache'
 
 export interface BlockNumberProvider {
   getBlockNumber(): Promise<number>
-}
-
-export interface CacheEntry {
-  read(): string | undefined
-  write(value: string): void
 }
 
 // If reorgSafeDepth is provided, we need to refresh
@@ -69,7 +56,7 @@ export class ReorgAwareCache {
   private async writeEntry(key: string, value: string, blockNumber: number) {
     const isReorgSafe = await this.isBlockNumberReorgSafe(blockNumber)
     if (isReorgSafe) {
-      await this.cache.set(key, value, this.chain, blockNumber)
+      await this.cache.set(key, value)
     }
   }
 

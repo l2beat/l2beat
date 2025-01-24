@@ -2,20 +2,29 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lyra')
 
 export const lyra: Layer2 = opStackL2({
   createdAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalBadges: [
+    Badge.DA.Celestia,
+    Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
+  ],
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Derive',
     slug: 'derive',
@@ -33,7 +42,6 @@ export const lyra: Layer2 = opStackL2({
         'https://discord.gg/Derive',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),
@@ -146,6 +154,132 @@ export const lyra: Layer2 = opStackL2({
       },
       tokens: ['WBTC'],
       chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
+      sinceTimestamp: new UnixTime(1725056027),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['LBTC'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5'),
+      sinceTimestamp: new UnixTime(1727390399),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['eBTC'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0x76624ff43D610F64177Bb9c194A2503642e9B803'),
+      sinceTimestamp: new UnixTime(1727390367),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['cbBTC'],
+      chain: 'base',
+      includeInTotal: false,
+    },
+    {
+      address: EthereumAddress('0x4e798659b9846F1da7B6D6B5d09d581270aB6FEC'),
+      sinceTimestamp: new UnixTime(1709518033),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['USDC'],
+      chain: 'base',
+      includeInTotal: false,
+    },
+    {
+      address: EthereumAddress('0x3BcB0FF2D4B674784ac1c33bc85a047b5a726E71'),
+      sinceTimestamp: new UnixTime(1724140527),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['USDe'],
+      chain: 'base',
+      includeInTotal: false,
+    },
+    {
+      address: EthereumAddress('0xF982c812099d03AFFa0c8062aa1abcb584c23329'),
+      sinceTimestamp: new UnixTime(1717674807),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['weETH'],
+      chain: 'base',
+      includeInTotal: false,
+    },
+    {
+      address: EthereumAddress('0xBd282333710B9C7e33E8a37d027885A7C079Ae23'),
+      sinceTimestamp: new UnixTime(1711532017),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['WETH'],
+      chain: 'base',
+      includeInTotal: false,
+    },
+    {
+      address: EthereumAddress('0x2805B908a0F9CA58a2b3b7900341b4EBd0B994e9'),
+      sinceTimestamp: new UnixTime(1709502861),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['wstETH'],
+      chain: 'base',
+      includeInTotal: false,
     },
     {
       address: EthereumAddress('0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa'),
@@ -461,6 +595,21 @@ export const lyra: Layer2 = opStackL2({
       tokens: ['sUSDe'],
       chain: 'ethereum',
     },
+    {
+      address: EthereumAddress('0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A'),
+      sinceTimestamp: new UnixTime(1724140487),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['USDe'],
+      chain: 'ethereum',
+    },
     // {
     //     address: EthereumAddress('0x44ed9cE901B367B1EF9DDBD4974C82A514c50DEc'),
     //     sinceTimestamp: new UnixTime(1717724797),
@@ -620,6 +769,22 @@ export const lyra: Layer2 = opStackL2({
       },
       tokens: ['sUSDe'],
       chain: 'arbitrum',
+    },
+    {
+      address: EthereumAddress('0x5fAA613365331A5062F3A00126954b742aBEb2FF'),
+      sinceTimestamp: new UnixTime(1724140518),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['USDe'],
+      chain: 'arbitrum',
+      includeInTotal: false,
     },
     // {
     //     address: EthereumAddress('0x2805B908a0F9CA58a2b3b7900341b4EBd0B994e9'),

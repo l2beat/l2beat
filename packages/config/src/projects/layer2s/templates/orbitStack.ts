@@ -1,41 +1,41 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
   ProjectId,
-  UnixTime,
+  type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  ChainConfig,
+  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRisk,
-  ScalingProjectRiskView,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectStateValidationCategory,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ReasonForBeingInOther,
+  type ScalingProjectContract,
+  type ScalingProjectDisplay,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRisk,
+  type ScalingProjectRiskView,
+  type ScalingProjectStateDerivation,
+  type ScalingProjectStateValidation,
+  type ScalingProjectStateValidationCategory,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   pickWorseRisk,
@@ -46,21 +46,22 @@ import {
   formatChallengePeriod,
   formatDelay,
 } from '../../../common/formatDelays'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { Badge, BadgeId, badges } from '../../badges'
-import { Layer3, Layer3Display } from '../../layer3s/types'
-import { StageConfig } from '../common'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { Badge, type BadgeId, badges } from '../../badges'
+import type { DacDaLayer } from '../../da-beat/types'
+import type { Layer3 } from '../../layer3s/types'
+import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import {
+import type {
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
-import { mergeBadges } from './utils'
+import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
-const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
@@ -108,6 +109,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 interface OrbitStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
+  additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
@@ -135,7 +137,7 @@ interface OrbitStackConfigCommon {
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
@@ -145,22 +147,25 @@ interface OrbitStackConfigCommon {
   nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
+  isArchived?: boolean
+  gasTokens?: string[]
+  dataAvailabilitySolution?: DacDaLayer
+  hasAtLeastFiveExternalChallengers?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer3Display['category']
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectDisplay['category']
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
   hostChain: ProjectId
-  nativeToken?: string
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
-  nativeToken?: string
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -306,14 +311,27 @@ function defaultStateValidation(
   }
 }
 
+const wmrValidForBlobstream = [
+  '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
+]
+
 function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
-  explorerLinkFormat: string,
+  explorerUrl: string | undefined,
   blockNumberOpcodeTimeSeconds: number,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+  const nativeContractRisks = templateVars.nonTemplateContractRisks ?? [
+    CONTRACTS.UPGRADE_NO_DELAY_RISK,
+  ]
+
+  const discoveryDrivenSections = templateVars.discoveryDrivenData
+    ? generateDiscoveryDrivenSections(
+        templateVars.discovery,
+        nativeContractRisks,
+        templateVars.additionalDiscoveries,
+      )
+    : undefined
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -332,6 +350,12 @@ function orbitStackCommon(
     'SequencerInbox',
     'sequencerVersion',
   )
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
   const currentRequiredStake = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'currentRequiredStake',
@@ -344,7 +368,8 @@ function orbitStackCommon(
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
-      templateVars.badges?.find((b) => badges[b].type === 'DA') !== undefined,
+      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
+        undefined,
       'DA badge is required for external DA',
     )
   }
@@ -392,23 +417,20 @@ function orbitStackCommon(
   return {
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
-    contracts: {
-      addresses:
-        templateVars.discoveryDrivenData === true
-          ? templateVars.discovery.getDiscoveredContracts()
-          : unionBy(
-              [
-                ...(templateVars.nonTemplateContracts ?? []),
-                ...templateVars.discovery.resolveOrbitStackTemplates()
-                  .contracts,
-              ],
-              'address',
-            ),
-      nativeAddresses: templateVars.nativeAddresses,
-      risks: templateVars.nonTemplateContractRisks ?? [
-        CONTRACTS.UPGRADE_NO_DELAY_RISK,
-      ],
-    },
+    isArchived: templateVars.isArchived ?? undefined,
+    contracts: discoveryDrivenSections
+      ? discoveryDrivenSections.contracts
+      : {
+          addresses: unionBy(
+            [
+              ...(templateVars.nonTemplateContracts ?? []),
+              ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
+            ],
+            'address',
+          ),
+          nativeAddresses: templateVars.nativeAddresses,
+          risks: nativeContractRisks,
+        },
     chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness:
@@ -417,16 +439,20 @@ function orbitStackCommon(
         (templateVars.nonTemplateTechnology?.dataAvailability ??
         postsToExternalDA)
           ? (() => {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
+              if (isUsingValidBlobstreamWmr) {
+                return TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true)
+              } else {
+                const DAC = templateVars.discovery.getContractValue<{
+                  membersCount: number
+                  requiredSignatures: number
+                }>('SequencerInbox', 'dacKeyset')
+                const { membersCount, requiredSignatures } = DAC
 
-              return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
-                membersCount,
-                requiredSignatures,
-              })
+                return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
+                  membersCount,
+                  requiredSignatures,
+                })
+              }
             })()
           : {
               ...(usesBlobs
@@ -437,13 +463,12 @@ function orbitStackCommon(
                   text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
                   href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
                 },
-                {
-                  text: 'SequencerInbox.sol - Etherscan source code, addSequencerL2BatchFromOrigin function',
-                  href: getCodeLink(
-                    templateVars.sequencerInbox,
-                    explorerLinkFormat,
-                  ),
-                },
+                ...explorerReferences(explorerUrl, [
+                  {
+                    text: 'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                    address: safeGetImplementation(templateVars.sequencerInbox),
+                  },
+                ]),
               ],
             },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
@@ -457,17 +482,19 @@ function orbitStackCommon(
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
-        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
         description:
-          FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
+          FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract').description +
           ` After a delay of ${formatSeconds(
             selfSequencingDelaySeconds,
           )} in which a Sequencer has failed to include a transaction that was directly posted to the smart contract, it can be forcefully included by anyone on the host chain, which finalizes its ordering.`,
         references: [
-          {
-            text: 'SequencerInbox.sol - Etherscan source code, forceInclusion function',
-            href: getCodeLink(templateVars.sequencerInbox, explorerLinkFormat),
-          },
+          ...explorerReferences(explorerUrl, [
+            {
+              text: 'SequencerInbox.sol - source code, forceInclusion function',
+              address: safeGetImplementation(templateVars.sequencerInbox),
+            },
+          ]),
           {
             text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
             href: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
@@ -511,16 +538,17 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions:
-      templateVars.discoveryDrivenData === true
-        ? templateVars.discovery.getDiscoveredPermissions()
-        : [
-            sequencers,
-            validators,
-            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-            ...(templateVars.nonTemplatePermissions ?? []),
-          ],
-    nativePermissions: templateVars.nativePermissions,
+    permissions: discoveryDrivenSections
+      ? discoveryDrivenSections.permissions
+      : [
+          sequencers,
+          validators,
+          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
+          ...(templateVars.nonTemplatePermissions ?? []),
+        ],
+    nativePermissions: discoveryDrivenSections
+      ? discoveryDrivenSections.nativePermissions
+      : templateVars.nativePermissions,
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -535,17 +563,14 @@ function orbitStackCommon(
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
-      templateVars.badges ?? [],
+      templateVars.additionalBadges ?? [],
     ),
-    discoveryDrivenData: templateVars.discoveryDrivenData,
+    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
-  assert(
-    templateVars.hostChain !== 'Multiple',
-    'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-  )
   const layer2s = require('..').layer2s as Layer2[]
 
   const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
@@ -593,10 +618,18 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
   const riskView = {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
         nOfChallengers,
+        templateVars.hasAtLeastFiveExternalChallengers ?? false,
         challengePeriodSeconds,
       ),
       secondLine: formatChallengePeriod(challengePeriodSeconds),
@@ -604,15 +637,19 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     dataAvailability:
       (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
         ? (() => {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-            return RISK_VIEW.DATA_EXTERNAL_DAC({
-              membersCount,
-              requiredSignatures,
-            })
+            if (isUsingValidBlobstreamWmr) {
+              return RISK_VIEW.DATA_CELESTIA(true)
+            } else {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
+              return RISK_VIEW.DATA_EXTERNAL_DAC({
+                membersCount,
+                requiredSignatures,
+              })
+            }
           })()
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
@@ -628,12 +665,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
       secondLine: formatDelay(challengePeriodSeconds + validatorAfkTimeSeconds),
     },
-    validatedBy:
-      templateVars.nonTemplateRiskView?.validatedBy ??
-      RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
-    destinationToken:
-      templateVars.nonTemplateRiskView?.destinationToken ??
-      RISK_VIEW.NATIVE_AND_CANONICAL(),
   }
 
   const getStackedRisks = () => {
@@ -667,11 +698,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           baseChain.riskView.proposerFailure,
           RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
         ),
-      validatedBy:
-        templateVars.stackedRiskView?.validatedBy ?? riskView.validatedBy,
-      destinationToken:
-        templateVars.stackedRiskView?.destinationToken ??
-        riskView.destinationToken,
     }
   }
 
@@ -685,15 +711,17 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   return {
     type: 'layer3',
     ...orbitStackCommon(
       templateVars,
-      getExplorerLinkFormat(templateVars.hostChain),
+      baseChain.chainConfig?.explorerUrl,
       blockNumberOpcodeTimeSeconds,
     ),
     hostChain: templateVars.hostChain,
@@ -742,8 +770,14 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             },
           )),
     dataAvailability: postsToExternalDA
-      ? [
-          (() => {
+      ? (() => {
+          if (isUsingValidBlobstreamWmr) {
+            return addSentimentToDataAvailability({
+              layers: [DA_LAYERS.CELESTIA],
+              bridge: DA_BRIDGES.BLOBSTREAM,
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            })
+          } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
               requiredSignatures: number
@@ -758,8 +792,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
             })
-          })(),
-        ]
+          }
+        })()
       : baseChain.dataAvailability,
     stackedRiskView: getStackedRisks(),
     riskView,
@@ -773,11 +807,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             templateVars.discovery.getEscrowDetails({
               includeInTotal: false,
               address: templateVars.bridge.address,
-              tokens: templateVars.nativeToken
-                ? [templateVars.nativeToken]
-                : ['ETH'],
-              description: templateVars.nativeToken
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+              tokens: templateVars.gasTokens ?? ['ETH'],
+              description: templateVars.gasTokens
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
@@ -850,11 +882,20 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -866,7 +907,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
+    ...orbitStackCommon(templateVars, ethereum.explorerUrl, 12),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
@@ -926,9 +967,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               rollupNodeLink: templateVars.nodeSourceLink,
             },
           )),
-    dataAvailability: [
-      postsToExternalDA
-        ? (() => {
+    dataAvailability: postsToExternalDA
+      ? (() => {
+          if (isUsingValidBlobstreamWmr) {
+            return addSentimentToDataAvailability({
+              layers: [DA_LAYERS.CELESTIA],
+              bridge: DA_BRIDGES.BLOBSTREAM,
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            })
+          } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
               requiredSignatures: number
@@ -943,21 +990,22 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
             })
-          })()
-        : addSentimentToDataAvailability({
-            layers: [
-              usesBlobs
-                ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-                : DA_LAYERS.ETH_CALLDATA,
-            ],
-            bridge: DA_BRIDGES.ENSHRINED,
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          }),
-    ],
+          }
+        })()
+      : addSentimentToDataAvailability({
+          layers: [
+            usesBlobs
+              ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+              : DA_LAYERS.ETH_CALLDATA,
+          ],
+          bridge: DA_BRIDGES.ENSHRINED,
+          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+        }),
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
+          templateVars.hasAtLeastFiveExternalChallengers ?? false,
           challengePeriodSeconds,
         ),
         secondLine: formatChallengePeriod(challengePeriodSeconds),
@@ -966,15 +1014,19 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         (templateVars.nonTemplateRiskView?.dataAvailability ??
         postsToExternalDA)
           ? (() => {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
+              if (isUsingValidBlobstreamWmr) {
+                return RISK_VIEW.DATA_CELESTIA(true)
+              } else {
+                const DAC = templateVars.discovery.getContractValue<{
+                  membersCount: number
+                  requiredSignatures: number
+                }>('SequencerInbox', 'dacKeyset')
+                const { membersCount, requiredSignatures } = DAC
+                return RISK_VIEW.DATA_EXTERNAL_DAC({
+                  membersCount,
+                  requiredSignatures,
+                })
+              }
             })()
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
@@ -992,23 +1044,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           challengePeriodSeconds + validatorAfkTimeSeconds,
         ),
       },
-      validatedBy:
-        templateVars.nonTemplateRiskView?.validatedBy ??
-        RISK_VIEW.VALIDATED_BY_ETHEREUM,
-      destinationToken:
-        templateVars.nonTemplateRiskView?.destinationToken ??
-        RISK_VIEW.NATIVE_AND_CANONICAL(),
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: templateVars.nativeToken
-            ? [templateVars.nativeToken]
-            : ['ETH'],
-          description: templateVars.nativeToken
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+          tokens: templateVars.gasTokens ?? ['ETH'],
+          description: templateVars.gasTokens
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
             : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
           ...upgradeability,
         }),
@@ -1026,45 +1070,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,
-      finality: templateVars.finality ?? 'coming soon',
+      finality: templateVars.finality,
     },
   }
-}
-
-function getExplorerLinkFormat(hostChain: ProjectId): string {
-  if (hostChain === ProjectId('ethereum')) {
-    return ETHEREUM_EXPLORER_URL
-  } else if (hostChain === ProjectId('arbitrum')) {
-    return 'https://arbiscan.io/address/{0}#code'
-  } else if (hostChain === ProjectId('base')) {
-    return 'https://basescan.org/address/{0}#code'
-  } else if (hostChain === ProjectId('nova')) {
-    return 'https://nova.arbiscan.io/address/{0}#code'
-  }
-
-  assert(false, `Host chain ${hostChain.toString()} is not supported`)
-}
-
-function getCodeLink(
-  contract: ContractParameters,
-  explorerUrlFormat: string,
-  implementationIndex?: number,
-): string {
-  return explorerUrlFormat.replace(
-    '{0}',
-    safeGetImplementation(contract, implementationIndex),
-  )
-}
-
-function safeGetImplementation(
-  contract: ContractParameters,
-  implementationIndex?: number,
-): string {
-  const implementation = get$Implementations(contract.values)[
-    implementationIndex ?? 0
-  ]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
 }

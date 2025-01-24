@@ -1,16 +1,15 @@
-import {
+import type { BackendProject } from '@l2beat/backend-shared'
+import type { Database } from '@l2beat/database'
+import type {
   ConfigReader,
   DiscoveryChainConfig,
   DiscoveryConfig,
   DiscoveryDiff,
 } from '@l2beat/discovery'
-import { ChainConverter } from '@l2beat/shared-pure'
-
-import { BackendProject } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import type { ChainConverter } from '@l2beat/shared-pure'
 import { getDashboardContracts } from './props/getDashboardContracts'
 import {
-  DashboardProject,
+  type DashboardProject,
   getDashboardProjects,
 } from './props/getDashboardProjects'
 import { getDiff } from './props/utils/getDiff'

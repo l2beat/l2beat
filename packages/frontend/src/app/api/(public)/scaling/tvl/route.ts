@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getTvlChart } from '~/server/features/scaling/tvl/get-tvl-chart-data'
@@ -17,6 +18,7 @@ const getCachedResponse = cache(
       range,
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
+      previewRecategorisation: false,
     })
 
     const latestTvlData = data.at(-1)
@@ -54,5 +56,6 @@ const getCachedResponse = cache(
   ['scaling-tvl-route'],
   {
     tags: ['tvl'],
+    revalidate: UnixTime.HOUR,
   },
 )

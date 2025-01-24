@@ -15,11 +15,6 @@
     ]
     value: "Onchain (SD)"
   }
-  destinationToken: {
-    description: "USDC transferred is considered canonical as it is the basis of the perpetual protocol on the chain."
-    sentiment: "good"
-    value: "Canonical"
-  }
   exitWindow: {
     definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
@@ -60,10 +55,5 @@
       }
     ]
     value: "ZK proofs (ST)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

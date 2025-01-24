@@ -1,10 +1,10 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
 import { createDatabase } from '@l2beat/database'
 import { ApiServer } from './api/ApiServer'
-import { Config } from './config'
-import { ApplicationModule } from './modules/ApplicationModule'
+import type { Config } from './config'
+import type { ApplicationModule } from './modules/ApplicationModule'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
@@ -18,7 +18,6 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
-import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
@@ -59,7 +58,7 @@ export class Application {
       createFinalityModule(
         config,
         logger,
-        peripherals,
+        database,
         providers,
         trackedTxsModule?.indexer,
       ),
@@ -73,7 +72,6 @@ export class Application {
       config.api.port,
       logger,
       modules.flatMap((x) => x?.routers ?? []),
-      getErrorReportingMiddleware(),
     )
 
     if (config.isReadonly) {

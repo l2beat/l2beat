@@ -4,7 +4,7 @@ import { assert } from '@l2beat/shared-pure'
 import { rlpDecode } from '../../utils/rlpDecode'
 import { constants } from './const'
 import { decodeUint32 } from './numerics'
-import { PolygonZkEvmTransaction, RawPolygonZkEvmBlock } from './types'
+import type { PolygonZkEvmTransaction, RawPolygonZkEvmBlock } from './types'
 
 export { decodeBatch }
 
@@ -152,7 +152,7 @@ function rlpToTransaction(
   }
 
   const nonce = BigNumber.from(zeroIfEmpty(rawNonce))
-  const gasPrice = BigNumber.from(rawGasPrice)
+  const gasPrice = BigNumber.from(zeroIfEmpty(rawGasPrice))
   const gasLimit = BigNumber.from(rawGasLimit)
   let to: string | undefined = undefined
 

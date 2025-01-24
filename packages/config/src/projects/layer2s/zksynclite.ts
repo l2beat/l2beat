@@ -24,7 +24,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync')
 
@@ -84,7 +84,6 @@ export const zksynclite: Layer2 = {
         'https://twitter.com/zkSyncDevs',
       ],
     },
-    activityDataSource: 'Explorer API',
     liveness: {
       explanation:
         'ZKsync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
@@ -160,13 +159,11 @@ export const zksynclite: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -246,8 +243,6 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stage: getStage(
     {
@@ -262,10 +257,7 @@ export const zksynclite: Layer2 = {
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: [
-          true,
-          'The Security Council, even though it has a threshold below the recommended 75% (currently 9/15), is considered properly set up since it has been created before the Stages requirement specification and the protocol is extremely ossified. Moreover, the threshold and list of members are hardcoded and not updateable without a contract upgrade.',
-        ],
+        securityCouncilProperlySetUp: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

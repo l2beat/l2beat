@@ -1,14 +1,13 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { RetryHandler } from '../../tools'
-import { HttpClient2 } from '../http/HttpClient2'
+import type { HttpClient } from '../http/HttpClient'
 import { LoopringClient } from './LoopringClient'
 
 describe(LoopringClient.name, () => {
   describe(LoopringClient.prototype.getBlockWithTransactions.name, () => {
     it('gets block with txs', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockBlock(10),
       })
       const degateClient = mockClient({
@@ -26,7 +25,7 @@ describe(LoopringClient.name, () => {
 
   describe(LoopringClient.prototype.queryBlock.name, () => {
     it('correctly queries API', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockBlock(10),
       })
       const degateClient = mockClient({
@@ -47,7 +46,7 @@ describe(LoopringClient.name, () => {
     })
 
     it('works for latest Loopring', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockBlock(10),
       })
       const degateClient = mockClient({
@@ -69,7 +68,7 @@ describe(LoopringClient.name, () => {
     })
 
     it('works for latest Degate', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockBlock(10, 'degate3'),
       })
       const degateClient = mockClient({
@@ -124,20 +123,19 @@ describe(LoopringClient.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
+  http?: HttpClient
   logger?: Logger
   url?: string
   type?: 'loopring' | 'degate3'
 }) {
   return new LoopringClient({
-    http: deps.http ?? mockObject<HttpClient2>(),
+    http: deps.http ?? mockObject<HttpClient>(),
     logger: deps.logger ?? Logger.SILENT,
-    rateLimiter: deps.rateLimiter ?? RateLimiter.TEST,
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     url: deps.url ?? 'https://example.com',
     type: deps.type ?? 'loopring',
+    sourceName: 'test',
   })
 }
 

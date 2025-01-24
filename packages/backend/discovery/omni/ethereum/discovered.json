@@ -1,11 +1,11 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 21071443,
-  "configHash": "0x07b4f3f26146c1ce1f0c42788ede7013238e284df05ba0554d707090a9708aa1",
+  "blockNumber": 21679341,
+  "configHash": "0x234f21c317f24b881b0c8f184d2dfea1f8594fb7c8acc94611fa0ac963ab8d00",
   "contracts": [
     {
-      "name": "BridgeGovernance",
+      "name": "OmniBridgeGovernance",
       "address": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -16,15 +16,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
         },
         {
           "permission": "upgrade",
-          "target": "0x88ad09518695c6c3712AC10a214bE5109a655671"
+          "from": "0x88ad09518695c6c3712AC10a214bE5109a655671"
         },
         {
           "permission": "upgrade",
-          "target": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -36,8 +36,8 @@
           "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
           "0xb8173f558f75EE263013fd6294177bf75279a21e",
           "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
-          "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E",
-          "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c",
+          "0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
+          "0xA07888742c18d7e658132AE0148fF205fFF46481",
           "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9",
           "0x0101016044726994aFd16f4A99f0d960090D35e7",
           "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
@@ -55,7 +55,36 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 16 (50%)",
-        "nonce": 83,
+        "nonce": 84,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1686042107,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
+          "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
+          "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -71,7 +100,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
         }
       ],
@@ -129,7 +158,7 @@
         "messageSender": "0x0000000000000000000000000000000000000000",
         "messageSourceChainId": 0,
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-        "requiredBlockConfirmations": 130,
+        "requiredBlockConfirmations": 175,
         "requiredSignatures": 4,
         "sourceChainId": 1,
         "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -164,7 +193,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 1,
+        "nonce": 3,
         "VERSION": "1.4.1"
       }
     },
@@ -236,7 +265,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
         }
       ],
@@ -302,7 +331,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+          "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
           "via": []
         }
       ],
@@ -319,8 +348,9 @@
         ],
         "$upgradeCount": 1,
         "adapters": ["0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5"],
+        "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
-        "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
+        "expectedAdaptersHash": "0x0a74748a93656acd952c12f9e5b2b6a3eead25ba1c94ffa6ddb26f454a179cae",
         "expectedThreshold": 1,
         "implementation": "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
         "isInitialized": true,
@@ -347,7 +377,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
         }
       ],
@@ -390,7 +420,8 @@
       "fieldMeta": {
         "validatorList": {
           "severity": "MEDIUM",
-          "description": "Array of the signers in the validator multisig"
+          "description": "Array of the signers in the validator multisig",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "BridgeValidators"
@@ -398,28 +429,46 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0101016044726994aFd16f4A99f0d960090D35e7" },
     { "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af" },
     { "address": "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d" },
+    { "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd" },
+    { "address": "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9" },
     { "address": "0x258667E543C913264388B33328337257aF208a8f" },
     {
       "address": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
+          "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
         }
       ]
     },
     { "address": "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5" },
     { "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6" },
     { "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6" },
+    { "address": "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b" },
+    { "address": "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf" },
+    { "address": "0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B" },
+    { "address": "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893" },
     { "address": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC" },
     { "address": "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0" },
+    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
+    { "address": "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97" },
+    { "address": "0x839395e20bbB182fa440d08F850E6c7A8f6F0780" },
     { "address": "0x9bd93c5ad5e0a6be890c82FD77eE42ce8B642eF8" },
+    { "address": "0xA07888742c18d7e658132AE0148fF205fFF46481" },
     { "address": "0xB1dD1828794075f7521365163A93DE9e68e3c49f" },
+    { "address": "0xb8173f558f75EE263013fd6294177bf75279a21e" },
     { "address": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe" },
     { "address": "0xBF3d6f830CE263CAE987193982192Cd990442B53" },
+    { "address": "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8" },
+    { "address": "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709" },
+    { "address": "0xd26a3F686D43f2A62BA9eaE2ff77e9f516d945B9" },
+    { "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A" },
+    { "address": "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992" },
     { "address": "0xeca6EAa2C77d8f0aA9247e681C64455deAae51aC" },
+    { "address": "0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5" },
     { "address": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d" },
     { "address": "0xfA98B60E02A61B6590f073cAD56e68326652d094" },
     { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
@@ -549,6 +598,9 @@
     ],
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": [
       "constructor(address _masterCopy)"
+    ],
+    "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": [
+      "constructor(address _singleton)"
     ],
     "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": [
       "function upgradeTo(uint256 version, address implementation)",
@@ -827,6 +879,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

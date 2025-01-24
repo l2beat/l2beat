@@ -1,4 +1,5 @@
-import { type Layer2, type Layer3, toBackendProject } from '@l2beat/config'
+import { toBackendProject } from '@l2beat/backend-shared'
+import { type Layer2, type Layer3 } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
@@ -36,6 +37,7 @@ export const getCachedTvlBreakdownForProjectData = cache(
   ['getCachedTvlBreakdownForProject'],
   {
     tags: ['tvl'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

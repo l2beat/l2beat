@@ -1,64 +1,70 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
-import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
-  type ProjectsChangeReport,
+  type Project,
+  ProjectService,
+  type ScalingProjectCategory,
+  type ScalingProjectStack,
+} from '@l2beat/config'
+import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
+import { type RosetteValue } from '~/components/rosette/types'
+import { groupByTabs } from '~/utils/group-by-tabs'
+import {
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
+import { compareTvl } from '../tvl/utils/compare-tvl'
 import {
   type LatestTvl,
   get7dTokenBreakdown,
 } from '../tvl/utils/get-7d-token-breakdown'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingArchivedEntries() {
-  const [projectsChangeReport, projectsVerificationStatuses, tvl] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      getProjectsVerificationStatuses(),
-      get7dTokenBreakdown({ type: 'layer2' }),
-    ])
-
-  const projects = [...layer2s, ...layer3s].filter((p) => p.isArchived)
+  const [projectsChangeReport, tvl, projects] = await Promise.all([
+    getProjectsChangeReport(),
+    get7dTokenBreakdown({ type: 'layer2' }),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'scalingInfo', 'scalingRisks'],
+      where: ['isScaling', 'isArchived'],
+    }),
+  ])
 
   const entries = projects.map((project) =>
     getScalingArchivedEntry(
       project,
-      !!projectsVerificationStatuses[project.id.toString()],
-      projectsChangeReport,
+      projectsChangeReport.getChanges(project.id),
       tvl.projects[project.id.toString()],
     ),
   )
 
-  // Use data we already pulled instead of fetching it again
-  const remappedForOrdering = Object.fromEntries(
-    Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
-  )
-  return groupByMainCategories(orderByTvl(entries, remappedForOrdering))
+  return groupByTabs(entries.sort(compareTvl))
 }
 
-export type ScalingArchivedEntry = ReturnType<typeof getScalingArchivedEntry>
+export interface ScalingArchivedEntry extends CommonScalingEntry {
+  category: ScalingProjectCategory
+  purposes: string[]
+  provider: ScalingProjectStack | undefined
+  risks: RosetteValue[] | undefined
+  totalTvl: number | undefined
+  tvlOrder: number
+}
 
 function getScalingArchivedEntry(
-  project: Layer2 | Layer3,
-  isVerified: boolean,
-  projectsChangeReport: ProjectsChangeReport,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
+  changes: ProjectChanges,
   latestTvl: LatestTvl['projects'][string] | undefined,
-) {
+): ScalingArchivedEntry {
   return {
-    entryType: 'archived' as const,
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-    }),
-    risks: project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
+    ...getCommonScalingEntry({ project, changes }),
+    category: project.scalingInfo.type,
+    purposes: project.scalingInfo.purposes,
+    provider: project.scalingInfo.stack,
+    risks: getL2Risks(
+      project.scalingRisks.stacked ?? project.scalingRisks.self,
+    ),
     totalTvl: latestTvl?.breakdown.total,
+    tvlOrder: latestTvl?.breakdown.total ?? -1,
   }
 }

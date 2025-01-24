@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import type { utils } from 'ethers'
 
 import { toFunctionFragment } from './toFunctionFragment'
 

@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { Config } from './Config'
+import type { Config } from './Config'
 import { makeConfig } from './makeConfig'
 
 export type { Config }

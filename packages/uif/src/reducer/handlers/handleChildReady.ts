@@ -1,7 +1,7 @@
 import { continueOperations } from '../helpers/continueOperations'
-import { ChildReadyAction } from '../types/IndexerAction'
-import { IndexerReducerResult } from '../types/IndexerReducerResult'
-import { IndexerState } from '../types/IndexerState'
+import type { ChildReadyAction } from '../types/IndexerAction'
+import type { IndexerReducerResult } from '../types/IndexerReducerResult'
+import type { IndexerState } from '../types/IndexerState'
 
 export function handleChildReady(
   state: IndexerState,

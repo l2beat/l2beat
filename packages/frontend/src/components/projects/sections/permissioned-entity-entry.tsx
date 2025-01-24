@@ -1,17 +1,20 @@
 import { Callout } from '~/components/callout'
-import { OutLink } from '~/components/out-link'
+import { CopyButton } from '~/components/copy-button'
+import { CustomLink } from '~/components/link/custom-link'
 import { BulletIcon } from '~/icons/bullet'
 import { cn } from '~/utils/cn'
 
 export interface PermissionedEntityEntryProps {
-  name: string
-  href: string
+  entity: {
+    name: string
+    href: string
+    key?: string
+  }
   className?: string
 }
 
 export function PermissionedEntityEntry({
-  name,
-  href,
+  entity,
   className,
 }: PermissionedEntityEntryProps) {
   return (
@@ -20,13 +23,24 @@ export function PermissionedEntityEntry({
       icon={<BulletIcon className="size-5" />}
       body={
         <>
-          <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
-            <OutLink key={href} href={href}>
-              {name}
-            </OutLink>
+          <div className="flex flex-col flex-wrap gap-x-2 !leading-[1.15]">
+            <CustomLink key={entity.href} href={entity.href}>
+              {entity.name}
+            </CustomLink>
+            {entity.key && (
+              <div className="mt-1 flex items-center justify-center gap-1 text-gray-850 dark:text-gray-400">
+                <strong className="text-primary">Key:</strong>{' '}
+                {formatKey(entity.key)}{' '}
+                <CopyButton toCopy={entity.key} iconClassName="size-3.5" />
+              </div>
+            )}
           </div>
         </>
       }
     />
   )
+}
+
+function formatKey(key: string) {
+  return `${key.slice(0, 6)}...${key.slice(key.length - 4)}`
 }

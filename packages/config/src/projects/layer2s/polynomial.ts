@@ -1,16 +1,18 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polynomial')
 
 export const polynomial: Layer2 = opStackL2({
   createdAt: new UnixTime(1726570826), // 2024-09-17T11:00:26Z
   discovery,
-  badges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
+  additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Exchange'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Polynomial',
     slug: 'polynomial',
@@ -27,11 +29,10 @@ export const polynomial: Layer2 = opStackL2({
         'https://discord.gg/Mr9XKU5W',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.polynomial.fi',
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     genesisTimestamp: new UnixTime(1718038175),
     minTimestamp: new UnixTime(1718049059),
     l2BlockTimeSeconds: 2,
@@ -51,6 +52,21 @@ export const polynomial: Layer2 = opStackL2({
   ],
   discoveryDrivenData: true,
   nonTemplateEscrows: [
+    {
+      address: EthereumAddress('0xDf9Fa2b420689384E8DD55a706262DC0ED37020F'),
+      sinceTimestamp: new UnixTime(1728993695),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['USD0++'],
+      chain: 'ethereum',
+    },
     {
       address: EthereumAddress('0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc'),
       sinceTimestamp: new UnixTime(1721219231),

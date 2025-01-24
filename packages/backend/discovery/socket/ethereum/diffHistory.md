@@ -1,3 +1,574 @@
+Generated with discovered.json: 0x5cd23a81c3339de9fb1a0058227163ea0f695722
+
+# Diff at Mon, 20 Jan 2025 09:25:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21579626
+- current block number: 21579626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579626 (main branch discovery), not current.
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      fieldMeta.plugs.type:
++        "CODE_CHANGE"
+    }
+```
+
+Generated with discovered.json: 0x3503eafda0d0da3d8088681cdf0a5034540c9393
+
+# Diff at Wed, 08 Jan 2025 12:04:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21428964
+- current block number: 21579626
+
+## Description
+
+New plugs and owner changes to a new socket EOA.
+
+## Watched changes
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.144:
++        "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.143:
++        "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.142:
++        "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.141:
++        "0x95c879322BA01e1c7Fe5EB3F3724C49C6aF7e426"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.140:
++        "0x3Deb3254730eEF7c50fb5b133CA0EaeA2e59127d"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.139:
++        "0x1a0e7Efa0F74703A930B2b1Cb6565b1d8981dd85"
+    }
+```
+
+```diff
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98) {
+    +++ description: None
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xeeF6520437A6545b4F325F6675C4CD49812d457b)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428964 (main branch discovery), not current.
+
+```diff
+    contract USD0++ Vault Polynomial (0xDf9Fa2b420689384E8DD55a706262DC0ED37020F) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+      sourceHashes:
++        ["0xc3321c0d760c3f5fe8845b9fdd3fb32455ca5317920d929526142e921ddc68d9"]
+    }
+```
+
+Generated with discovered.json: 0x9cdfbc24d1629059d43619ffceb966fdb28a3f57
+
+# Diff at Wed, 18 Dec 2024 10:57:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21394305
+- current block number: 21428964
+
+## Description
+
+Owner pointers of socketadmin.eth changed to a new (socket-funded) EOA.
+
+## Watched changes
+
+```diff
+    contract WBTC Vault Reya (0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract WETH Vault Reya (0x64dF894688c5052BeAdC35371cF69151Ebc5D658) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.138:
++        "0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188"
+    }
+```
+
+```diff
+    contract USDe Vault Reya (0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract USDC Vault Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+Generated with discovered.json: 0x14dd41929a299910e18622e57318631aefcd6b63
+
+# Diff at Fri, 13 Dec 2024 14:51:52 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@057a0310a9622d3c37d8b5e224c59b5dbd3a0507 block: 21388211
+- current block number: 21394305
+
+## Description
+
+New socket, unverified.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.137:
++        "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93"
+    }
+```
+
+Generated with discovered.json: 0x78fb2ab272ee12498d40aeb036dff44dff969d4b
+
+# Diff at Thu, 12 Dec 2024 18:27:06 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21358014
+- current block number: 21388211
+
+## Description
+
+New plugs (SolvBTC, SolvBTC.BNN).
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.136:
++        "0xA2bE759B86CeA53372C3e9a882047cdC3884D568"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.135:
++        "0x94104d7801f30d2f9069118C65Fe63A3A11515B1"
+    }
+```
+
+Generated with discovered.json: 0xf3fa224072fe364832c2eb794cce180e0b0147d8
+
+# Diff at Sun, 08 Dec 2024 13:17:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21122046
+- current block number: 21358014
+
+## Description
+
+New plugs, crawl result and tokens added.
+
+## Watched changes
+
+```diff
+    contract USDT Vault Kinto (0x1D18263107a138C7fb0De65b4a78d193ff9664c1) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract cbBTC Vault Kinto (0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.134:
++        "0x12a4CC40a8F89E40F8C849c2F89741D5C9590a14"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.133:
++        "0x1734067c2CDcFb81ef9672F80DA2D7bfC2CFAE73"
+    }
+```
+
+```diff
+    contract LINK Vault Kinto (0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract SPX Vault Kinto (0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21122046 (main branch discovery), not current.
+
+```diff
+    contract eBTC Vault Derive (0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5) {
+    +++ description: None
+      name:
+-        "eBTC Vault Lyra"
++        "eBTC Vault Derive"
+    }
+```
+
+```diff
+    contract USDe Vault Derive (0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A) {
+    +++ description: None
+      name:
+-        "USDe Vault Lyra"
++        "USDe Vault Derive"
+    }
+```
+
+```diff
+    contract rsETH Vault Derive (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      name:
+-        "rsETH Vault Lyra"
++        "rsETH Vault Derive"
+    }
+```
+
+```diff
+    contract WBTC Vault Derive (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    +++ description: None
+      name:
+-        "WBTC Vault Lyra"
++        "WBTC Vault Derive"
+    }
+```
+
+```diff
+    contract rswETH Vault Derive (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4) {
+    +++ description: None
+      name:
+-        "rswETH Vault Lyra"
++        "rswETH Vault Derive"
+    }
+```
+
+```diff
+    contract USDT Vault Derive (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa) {
+    +++ description: None
+      name:
+-        "USDT Vault Lyra"
++        "USDT Vault Derive"
+    }
+```
+
+```diff
+    contract cbBTC Vault Derive (0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50) {
+    +++ description: None
+      name:
+-        "cbBTC Vault Lyra"
++        "cbBTC Vault Derive"
+    }
+```
+
+```diff
+    contract sDAI Vault Derive (0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142) {
+    +++ description: None
+      name:
+-        "sDAI Vault Lyra"
++        "sDAI Vault Derive"
+    }
+```
+
+```diff
+    contract USDC Vault Derive (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    +++ description: None
+      name:
+-        "USDC Vault Lyra"
++        "USDC Vault Derive"
+    }
+```
+
+```diff
+    contract LBTC Vault Derive (0x76624ff43D610F64177Bb9c194A2503642e9B803) {
+    +++ description: None
+      name:
+-        "LBTC Vault Lyra"
++        "LBTC Vault Derive"
+    }
+```
+
+```diff
+    contract SNX Vault Derive (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592) {
+    +++ description: None
+      name:
+-        "SNX Vault Lyra"
++        "SNX Vault Derive"
+    }
+```
+
+```diff
+    contract DAI Vault Derive (0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91) {
+    +++ description: None
+      name:
+-        "DAI Vault Lyra"
++        "DAI Vault Derive"
+    }
+```
+
+```diff
+    contract weETH Vault Derive (0x8180EcCC825b692ef65FF099a0A387743788bf78) {
+    +++ description: None
+      name:
+-        "weETH Vault Lyra"
++        "weETH Vault Derive"
+    }
+```
+
+```diff
+    contract WETH Vault Derive (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    +++ description: None
+      name:
+-        "WETH Vault Lyra"
++        "WETH Vault Derive"
+    }
+```
+
+```diff
+    contract sUSDe Vault Derive (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf) {
+    +++ description: None
+      name:
+-        "sUSDe Vault Lyra"
++        "sUSDe Vault Derive"
+    }
+```
+
+```diff
+    contract wstETH Vault Derive (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3) {
+    +++ description: None
+      name:
+-        "wstETH Vault Lyra"
++        "wstETH Vault Derive"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract sdeUSD Vault Reya (0x0A5A19376064fED2A0A9f3120B2426c957BC289D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract deUSD Vault Reya (0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault Zora (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault Kinto (0x1D18263107a138C7fb0De65b4a78d193ff9664c1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KLAUS Vault Zora (0x528DBFcf6e2cbC62B05d7a74711AA7C44FF43cA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Zora (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbBTC Vault Kinto (0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LINK Vault Kinto (0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SPX Vault Kinto (0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6f738121fd1b6546caabeef37c420d34b7d8e266
 
 # Diff at Tue, 05 Nov 2024 14:29:39 GMT:

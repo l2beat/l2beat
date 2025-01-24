@@ -1,3 +1,92 @@
+Generated with discovered.json: 0xd8b5b71ffcbf9c2f94fd005768ad7a52434db357
+
+# Diff at Mon, 20 Jan 2025 11:10:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21365608
+- current block number: 21365608
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21365608 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      issuedPermissions.0.to:
++        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      receivedPermissions.2.from:
++        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      receivedPermissions.1.target:
+-        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      receivedPermissions.1.from:
++        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      receivedPermissions.0.target:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+      receivedPermissions.0.from:
++        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      issuedPermissions.0.to:
++        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+      issuedPermissions.0.to:
++        "0x38A43F4330f24fe920F943409709fc9A6084C939"
+    }
+```
+
+Generated with discovered.json: 0x508e143b6c1eb25e0a450918be3b5846d8765cce
+
+# Diff at Mon, 09 Dec 2024 14:41:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02974be0caac873bba9178e618086aa67aaf0b90 block: 20532597
+- current block number: 21365608
+
+## Description
+
+ZkSync Multisig signer replaced.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.2:
+-        "0x733F602bB867c643542cc807a3D32AD1A86cacc1"
++        "0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
+    }
+```
+
 Generated with discovered.json: 0x8f01f894bad9f0f854d5972808549b8416ca4697
 
 # Diff at Mon, 14 Oct 2024 10:58:21 GMT:

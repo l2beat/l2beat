@@ -49,7 +49,19 @@
       "extends": "global/ProxyAdmin" // shape does not work (tofix)
     },
     "InvestmentManager": {
-      "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager."
+      "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
+      "fields": {
+        "pauserRegistry": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "defines addresses that can pause or unpause ability to invest into strategies."
+              }
+            ]
+          }
+        }
+      }
     },
     "L1MantleToken": {
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
@@ -98,6 +110,14 @@
             "type": "array",
             "method": "operatorList",
             "length": "{{ numOperators }}"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "sign data commitments for the DA bridge."
+              }
+            ]
           }
         }
       }
@@ -128,7 +148,19 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "fields": {
+        "pauserRegistry": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+              }
+            ]
+          }
+        }
+      }
     },
     "MantleFirstStrat": {
       "description": "Basic do-nothing investment strategy.",
@@ -137,13 +169,35 @@
         "sharesToUnderlyingView",
         "underlyingToShares",
         "underlyingToSharesView"
-      ]
+      ],
+      "fields": {
+        "pauserRegistry": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+              }
+            ]
+          }
+        }
+      }
     },
     "DataLayrChallengeUtils": {
       "ignoreMethods": ["nextPowerOf2"]
     },
     "RegistryPermission": {
       "fields": {
+        "permissionPerson": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can register or change status of DA node operators."
+              }
+            ]
+          }
+        },
         "dataStorePermission": {
           "handler": {
             "type": "arrayFromTwoEvents",
@@ -151,6 +205,14 @@
             "addKey": "pusher",
             "removeEvent": "ChangeDataStoreRollupPermission",
             "removeKey": "pusher"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can post data commitments to the DA bridge."
+              }
+            ]
           }
         },
         "registerOperatorPermission": {

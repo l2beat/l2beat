@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
@@ -29,7 +29,7 @@ export const aztecconnect: Layer2 = {
     warning: `EOL: Aztec team shut down their offchain rollup infrastructure on March 31st, 2024. Onchain deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
-    purposes: ['Payments'],
+    purposes: ['Payments', 'Privacy'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
@@ -44,7 +44,6 @@ export const aztecconnect: Layer2 = {
         'https://discord.gg/UDtJr9u',
       ],
     },
-    activityDataSource: 'Explorer API',
   },
   config: {
     escrows: [
@@ -74,13 +73,11 @@ export const aztecconnect: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -128,8 +125,6 @@ export const aztecconnect: Layer2 = {
         },
       ],
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   stage: getStage(
     {
@@ -261,12 +256,10 @@ export const aztecconnect: Layer2 = {
       }),
       // rollupBeneficiary is encoded in proofData. Can be set arbitrarily for each rollup.
       // https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L704
-      {
-        address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
-        description:
-          'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
-        name: 'AztecFeeDistributor',
-      },
+      discovery.getContractDetails(
+        'AztecFeeDistributor',
+        'Contract responsible for distributing fees and reimbursing gas to Rollup Providers.',
+      ),
       discovery.getContractDetails(
         'DefiBridgeProxy',
         'Bridge Connector to various DeFi Bridges.',

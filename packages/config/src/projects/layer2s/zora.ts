@@ -1,18 +1,20 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
 
 export const zora: Layer2 = opStackL2({
   createdAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
-  badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   additionalPurposes: ['NFT'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Zora',
     slug: 'zora',
@@ -33,16 +35,37 @@ export const zora: Layer2 = opStackL2({
         'https://zora.community',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zora.energy',
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     genesisTimestamp: new UnixTime(1686693839),
     minTimestamp: new UnixTime(1710386579),
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'analyze',
+  },
+  chainConfig: {
+    name: 'zora',
+    chainId: 7777777,
+    explorerUrl: 'https://explorer.zora.energy/',
+    explorerApi: {
+      url: 'https://explorer.zora.energy/api',
+      type: 'blockscout',
+    },
+    // ~ Timestamp of block number 0 on Zora
+    // The first full hour timestamp that will return the block number
+    // https://explorer.zora.energy/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 5882,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'zora',
   },
   genesisTimestamp: new UnixTime(1686695915),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),

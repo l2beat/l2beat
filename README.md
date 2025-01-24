@@ -24,4 +24,4 @@ When you want to publish all previous changes to NPM:
 
 - now run `pnpm changeset version`, this will change the generated `.changeset/file.md` into an entry into `CHANGELOG.md` and `package.json` in changed packages
 
-After your PR with changed `CHANGELOG.md` and `package.json` is merged into `main`, a CI step will run which will try to publish all change changes.
+After your PR with changed `CHANGELOG.md` and `package.json` is merged into `main`, a CI step will run which will try to publish all changes.

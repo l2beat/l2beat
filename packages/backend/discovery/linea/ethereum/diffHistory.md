@@ -1,3 +1,527 @@
+Generated with discovered.json: 0x72516bc727c7c6f1a4b40a5e8bc54fa05c8c22a8
+
+# Diff at Mon, 20 Jan 2025 11:09:42 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21434844
+- current block number: 21434844
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      issuedPermissions.1.target:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.1.via.2.delay:
+-        0
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.0.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+    }
+```
+
+```diff
+    contract USDCBridgeProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x504A330327A089d8364C4ab3811Ee26976d388ce"
+      receivedPermissions.0.from:
++        "0x504A330327A089d8364C4ab3811Ee26976d388ce"
+    }
+```
+
+```diff
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x41fAD3Df1B07B647D120D055259E474fE8046eb5"
+      issuedPermissions.0.to:
++        "0x41fAD3Df1B07B647D120D055259E474fE8046eb5"
+    }
+```
+
+```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.2.from:
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.1.target:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.from:
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.0.from:
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      directlyReceivedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      directlyReceivedPermissions.0.from:
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      issuedPermissions.3.target:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.3.via.2.delay:
+-        0
+      issuedPermissions.3.via.1.delay:
+-        0
+      issuedPermissions.3.via.0.delay:
+-        0
+      issuedPermissions.3.to:
++        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.2.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.2.via.1.delay:
+-        0
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.1.target:
+-        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      issuedPermissions.1.to:
++        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      issuedPermissions.0.target:
+-        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+      issuedPermissions.0.to:
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A Timelock with currently 0s minimum delay.
+      issuedPermissions.1.target:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.via.0.description:
+-        "propose transactions in the Timelock."
+      issuedPermissions.1.to:
++        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.1.description:
++        "propose transactions in the Timelock."
+      issuedPermissions.0.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.to:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.description:
++        "propose transactions in the Timelock."
+      directlyReceivedPermissions.0.target:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      directlyReceivedPermissions.0.from:
++        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions.2.target:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.2.from:
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.1.target:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.from:
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.0.from:
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      directlyReceivedPermissions.0.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      directlyReceivedPermissions.0.from:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions.1.target:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      directlyReceivedPermissions.1.from:
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      directlyReceivedPermissions.0.target:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      directlyReceivedPermissions.0.from:
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+    }
+```
+
+Generated with discovered.json: 0x6fdf9898969d773a717bb79403088b72fdecd3d6
+
+# Diff at Thu, 19 Dec 2024 06:41:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ba3abe5bc7194f8b3495f894c1b7e7b769bcdbb1 block: 21078909
+- current block number: 21434844
+
+## Description
+
+Linea upgrades to [alpha v4](https://docs.linea.build/release-notes#alpha-v4)!
+
+This upgrade adds new roles, deprecates `finalizeBlocksWithoutProof` and adds self-proposing/-proving if there weren't any finalized batches by the operator in the previous 6 months, among smaller changes.
+
+## Watched changes
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      sourceHashes.1:
+-        "0x4c5d4e5696bc435eefd0ba909c6a8a7748c4c49260fcb51a360f07af3c38d76f"
++        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
+      values.$implementation:
+-        "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"
++        "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"
+      values.$pastUpgrades.2:
++        ["2024-12-16T13:52:11.000Z","0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",["0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_CUSTOM_CONTRACT_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.REMOVE_RESERVED_TOKEN_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_MESSAGE_SERVICE_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_REMOTE_TOKENBRIDGE_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SET_RESERVED_TOKEN_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.owner:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.paused:
+-        false
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
+      values.CONTRACT_VERSION:
++        "1.0"
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.PAUSE_ALL_ROLE:
++        "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77"
+      values.PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
+      values.PAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c"
+      values.REMOVE_RESERVED_TOKEN_ROLE:
++        "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35"
+      values.SET_CUSTOM_CONTRACT_ROLE:
++        "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe"
+      values.SET_MESSAGE_SERVICE_ROLE:
++        "0x77974cc9cb5bafc9bb265be792d93fa46355c05701895b82f6d3b4b448c8ce00"
+      values.SET_REMOTE_TOKENBRIDGE_ROLE:
++        "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24"
+      values.SET_RESERVED_TOKEN_ROLE:
++        "0xeaf25fcc6b7d45bda16c56628df3f435e20319ef53b065c11ee4510083f0ae2d"
+      values.UNPAUSE_ALL_ROLE:
++        "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b"
+      values.UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE:
++        "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd"
+      values.UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE:
++        "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      sourceHashes.1:
+-        "0x6eace22f38b33b52c0608ca553753365c7aaa2ac2e9efba018e6f2c4864b9e40"
++        "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
+      values.$implementation:
+-        "0x1825242411792536469Cbb5843fd27Ce3e9e583A"
++        "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
+      values.$pastUpgrades.8:
++        ["2024-12-16T13:52:11.000Z","0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",["0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.accessControl.PAUSE_MANAGER_ROLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_MANAGER:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_L1_L2_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_L2_L1_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_ALL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_L1_L2_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_L2_L1_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_BLOB_SUBMISSION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_BLOB_SUBMISSION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_FINALIZATION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_FINALIZATION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.USED_RATE_LIMIT_RESETTER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.VERIFIER_UNSETTER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.GENERAL_PAUSE_TYPE:
+-        1
+      values.L1_L2_PAUSE_TYPE:
+-        2
+      values.L2_L1_PAUSE_TYPE:
+-        3
+      values.PAUSE_MANAGER_ROLE:
+-        "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26"
+      values.PROVING_SYSTEM_PAUSE_TYPE:
+-        4
+      values.CONTRACT_VERSION:
++        "6.0"
+      values.fallbackOperator:
++        "0x3697bD0bC6C050135b8321F989a5316eACbF367D"
+      values.PAUSE_ALL_ROLE:
++        "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77"
+      values.PAUSE_BLOB_SUBMISSION_ROLE:
++        "0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77"
+      values.PAUSE_FINALIZATION_ROLE:
++        "0xe37c272ea30e2bb381ad7cf89ae754b49153250609f36d0cbdad8b64c184bb5c"
+      values.PAUSE_L1_L2_ROLE:
++        "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598"
+      values.PAUSE_L2_L1_ROLE:
++        "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6"
+      values.UNPAUSE_ALL_ROLE:
++        "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b"
+      values.UNPAUSE_BLOB_SUBMISSION_ROLE:
++        "0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40"
+      values.UNPAUSE_FINALIZATION_ROLE:
++        "0x1ab87f7458c0e3d07e9881c14ee67f0141703614fd48ea5b15ed987e5f4b030e"
+      values.UNPAUSE_L1_L2_ROLE:
++        "0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc"
+      values.UNPAUSE_L2_L1_ROLE:
++        "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770"
+      values.USED_RATE_LIMIT_RESETTER_ROLE:
++        "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
+      values.VERIFIER_UNSETTER_ROLE:
++        "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D)
+    +++ description: A proxy contract forwarding calls to a predefined (immutable) target contract.
+```
+
+## Source code changes
+
+```diff
+.../linea/ethereum/.flat/CallForwardingProxy.sol   |   23 +
+ .../LineaRollup/LineaRollup.sol                    | 2267 +++++++++++---------
+ .../TokenBridge/TokenBridge.sol                    | 1798 +++++++++++++---
+ 3 files changed, 2743 insertions(+), 1345 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21078909 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      name:
+-        "ERC20Bridge"
++        "TokenBridge"
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","delay":0},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574","delay":0},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
+      issuedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.via.1:
++        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}
+      issuedPermissions.0.via.0.address:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      template:
++        "linea/TokenBridge"
+      description:
++        "Contract used to bridge and escrow ERC-20 tokens."
+    }
+```
+
+```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "AdminMultisig"
++        "LineaAdminMultisig"
+      receivedPermissions:
++        [{"permission":"configure","target":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions in the Timelock."},{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","target":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      name:
+-        "zkEVM"
++        "LineaRollup"
+      issuedPermissions.3:
++        {"permission":"upgrade","target":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","delay":0},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574","delay":0},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574","delay":0},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}]}
+      issuedPermissions.1:
++        {"permission":"operateLinea","target":"0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "operateLinea"
+      issuedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+      issuedPermissions.0.via.0:
+-        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6","delay":0}
+      values.generalPause:
+-        false
+      values.l1l2Pause:
+-        false
+      values.l2l1Pause:
+-        false
+      values.provenCompressedBlocksWithoutProof:
+-        [2242752]
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.19:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.18:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.17:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.16:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.15:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.14:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.13:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.12:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.11:
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.10:
++        "0x0000000000000000000000000000000000000000"
+      values.isPaused_BLOB_SUBMISSION:
++        false
+      values.isPaused_CALLDATA_SUBMISSION:
++        false
+      values.isPaused_COMPLETE_TOKEN_BRIDGING:
++        false
+      values.isPaused_FINALIZATION:
++        false
+      values.isPaused_GENERAL:
++        false
+      values.isPaused_INITIATE_TOKEN_BRIDGING:
++        false
+      values.isPaused_L1_L2:
++        false
+      values.isPaused_L2_L1:
++        false
+      values.Operators:
++        ["0x46d2F319fd42165D4318F099E143dEA8124E9E3e","0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"]
+      template:
++        "linea/LineaRollup"
+      description:
++        "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2."
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A Timelock with currently 0s minimum delay.
+      receivedPermissions:
+-        [{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}]
+      values.Canceller:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.delayFormatted:
++        "0s"
+      values.Executor:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.Proposer:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      template:
++        "linea/Timelock"
+      description:
++        "A Timelock with currently 0s minimum delay."
+      issuedPermissions:
++        [{"permission":"configure","target":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","via":[]},{"permission":"configure","target":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","delay":0,"description":"propose transactions in the Timelock."}]}]
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      description:
++        "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe."
+      receivedPermissions:
++        [{"permission":"configure","target":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions in the Timelock.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","target":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","target":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
+    }
+```
+
 Generated with discovered.json: 0x36a3a62508cac2618869c642a34cd0abe5d19e63
 
 # Diff at Wed, 30 Oct 2024 14:01:12 GMT:

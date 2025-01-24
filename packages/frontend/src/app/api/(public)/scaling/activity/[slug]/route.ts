@@ -1,5 +1,5 @@
 import { layer2s, layer3s } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
@@ -45,7 +45,7 @@ const getCachedResponse = cache(
       ? { type: 'all' }
       : { type: 'projects', projectIds: [project.id] }
 
-    const { data } = await getActivityChart(filter, range)
+    const { data } = await getActivityChart(filter, range, false)
 
     const oldestProjectData = data.at(0)
     const latestProjectData = data.at(-1)
@@ -86,5 +86,6 @@ const getCachedResponse = cache(
   ['scaling-activity-project-route'],
   {
     tags: ['activity'],
+    revalidate: UnixTime.DAY,
   },
 )

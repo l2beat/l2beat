@@ -1,14 +1,14 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { CoingeckoQueryService } from '@l2beat/shared'
-import { Config } from '../../config'
-import { Peripherals } from '../../peripherals/Peripherals'
+import type { Config } from '../../config'
+import type { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { Providers } from '../../providers/Providers'
-import { Clock } from '../../tools/Clock'
+import type { Providers } from '../../providers/Providers'
+import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import {
+import type {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
@@ -90,7 +90,7 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.uses.l2costs &&
     config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
   ) {
-    const coingeckoClient = providers.coingeckoClient
+    const coingeckoClient = providers.clients.coingecko
     const coingeckoQueryService = new CoingeckoQueryService(
       coingeckoClient,
       logger.tag({ tag: 'trackedTxs' }),

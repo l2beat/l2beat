@@ -1,15 +1,13 @@
-import { RateLimiter } from '@l2beat/backend-tools'
-import { ConfigMapping } from '@l2beat/config'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
-import { assert, PremintedEntry, ProjectId } from '@l2beat/shared-pure'
-import { TvlConfig } from '../../../config/Config'
+import type { ConfigMapping } from '@l2beat/backend-shared'
+import { assert, type PremintedEntry, ProjectId } from '@l2beat/shared-pure'
+import type { TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PremintedIndexer } from '../indexers/PremintedIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountService } from '../services/AmountService'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface PremintedModule {
   start: () => Promise<void> | void
@@ -53,10 +51,10 @@ function createIndexers(
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ) {
   const logger = dependencies.logger.tag({ module: 'preminted' })
-  const indexerService = dependencies.getIndexerService()
-  const syncOptimizer = dependencies.getSyncOptimizer()
-  const circulatingSupplyService = dependencies.getCirculatingSupplyService()
-  const valueService = dependencies.getValueService()
+  const indexerService = dependencies.indexerService
+  const syncOptimizer = dependencies.syncOptimizer
+  const circulatingSupplyService = dependencies.circulatingSupplyService
+  const valueService = dependencies.valueService
 
   const dataIndexers: PremintedIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -75,16 +73,7 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = new RpcClient2({
-      chain: chainConfig.chain,
-      url: chainConfig.config.providerUrl,
-      rateLimiter: new RateLimiter({
-        callsPerMinute: chainConfig.config.providerCallsPerMinute,
-      }),
-      http: new HttpClient2(),
-      logger,
-      retryHandler: RetryHandler.RELIABLE_API(logger),
-    })
+    const rpcClient = dependencies.clients.getRpcClient(chain)
 
     const amountService = new AmountService({
       rpcClient: rpcClient,

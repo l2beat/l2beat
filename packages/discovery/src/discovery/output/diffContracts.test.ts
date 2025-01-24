@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -57,6 +57,7 @@ describe(diffContracts.name, () => {
         after: JSON.stringify(NEW_ADDRESS),
         description: undefined,
         severity: undefined,
+        type: undefined,
       },
       {
         key: 'values.$admin',
@@ -64,6 +65,7 @@ describe(diffContracts.name, () => {
         after: JSON.stringify(NEW_ADMIN),
         description: undefined,
         severity: undefined,
+        type: undefined,
       },
       {
         key: 'values.A',
@@ -71,24 +73,28 @@ describe(diffContracts.name, () => {
         after: 'false',
         description: undefined,
         severity: undefined,
+        type: undefined,
       },
       {
         key: 'values.B',
         before: 'true',
         description: undefined,
         severity: undefined,
+        type: undefined,
       },
       {
         key: 'values.D.3',
         after: '4',
         description: undefined,
         severity: undefined,
+        type: undefined,
       },
       {
         key: 'values.A.F',
         after: '"dontIgnoreMe"',
         description: undefined,
         severity: undefined,
+        type: undefined,
       },
     ])
   })

@@ -1,11 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
-import { ConfigMapping } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import { ConfigMapping } from '@l2beat/backend-shared'
+import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
-import { Config } from '../../../config/Config'
-import { Providers } from '../../../providers/Providers'
-import { Clock } from '../../../tools/Clock'
-import { ApplicationModule } from '../../ApplicationModule'
+import type { Config } from '../../../config/Config'
+import type { Providers } from '../../../providers/Providers'
+import type { Clock } from '../../../tools/Clock'
+import type { ApplicationModule } from '../../ApplicationModule'
 import { TvlCleaner } from '../utils/TvlCleaner'
 import { initAggLayerModule } from './AggLayerModule'
 import { initBlockTimestampModule } from './BlockTimestampModule'
@@ -32,7 +32,7 @@ export function initTvlModule(
 
   const dependencies = new TvlDependencies(database, clock, logger, providers)
 
-  const syncOptimizer = dependencies.getSyncOptimizer()
+  const syncOptimizer = dependencies.syncOptimizer
 
   const configMapping = new ConfigMapping(
     config.tvl.prices,
@@ -53,7 +53,7 @@ export function initTvlModule(
     ],
   )
 
-  const hourlyIndexer = dependencies.getHourlyIndexer()
+  const hourlyIndexer = dependencies.hourlyIndexer
 
   assert(config.tvl.prices.length > 0, 'Tokens should be configured')
 

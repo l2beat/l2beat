@@ -1,48 +1,31 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { ChainConfig, OnchainVerifier } from '@l2beat/config'
 import {
-  ChainConfig,
-  Layer2Display,
-  PERFORMED_BY,
-  ProofVerification,
-  ZkCatalogProject,
-} from '@l2beat/config'
-import {
-  BlockscoutInternalTransaction,
+  type BlockscoutInternalTransaction,
   BlockscoutV2Client,
 } from '@l2beat/shared'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
-import { Peripherals } from '../../peripherals/Peripherals'
+import type { Peripherals } from '../../peripherals/Peripherals'
 
-import { Database } from '@l2beat/database'
-import { Clock } from '../../tools/Clock'
+import type { Database } from '@l2beat/database'
+import type { Clock } from '../../tools/Clock'
 import {
   VerifiersStatusRefresher,
-  VerifiersStatusRefresherDeps,
+  type VerifiersStatusRefresherDeps,
 } from './VerifiersStatusRefresher'
 
 const zkVerifierAddress = EthereumAddress.random()
-const zksMock: ZkCatalogProject[] = [
+const mockVerifiers: OnchainVerifier[] = [
   {
-    type: 'zk-catalog',
-    createdAt: UnixTime.now(),
-    display: mockObject<Layer2Display>({
-      name: 'zk-mock',
-    }),
-    proofVerification: mockObject<ProofVerification>({
-      verifiers: [
-        {
-          name: 'Example Verifier',
-          description: '',
-          verified: 'failed',
-          contractAddress: zkVerifierAddress,
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [],
-          performedBy: PERFORMED_BY.l2beat,
-        },
-      ],
-    }),
+    name: 'Example Verifier',
+    description: '',
+    verified: 'failed',
+    contractAddress: zkVerifierAddress,
+    chainId: ChainId.ETHEREUM,
+    subVerifiers: [],
+    performedBy: { name: 'Joe', link: 'https://example.com' },
   },
 ]
 
@@ -98,9 +81,7 @@ describe(VerifiersStatusRefresher.name, () => {
         db: mockDatabase({
           verifierStatus: verifierStatusRepositoryMock,
         }),
-        verifiersListProvider: mockFn(
-          () => zksMock[0].proofVerification.verifiers,
-        ),
+        verifiersListProvider: mockFn(async () => mockVerifiers),
       })
 
       refresher.getBlockscoutClient = mockFn().returns(
@@ -131,7 +112,7 @@ describe(VerifiersStatusRefresher.name, () => {
     it('throws if no verifiers found', async () => {
       const refresher = createVerifierStatusRefresher({
         chains: [],
-        verifiersListProvider: () => [],
+        verifiersListProvider: () => Promise.resolve([]),
       })
 
       await expect(() => refresher.refresh()).toBeRejectedWith(
@@ -149,7 +130,7 @@ function createVerifierStatusRefresher(
     peripherals: mockObject<Peripherals>(),
     clock: mockObject<Clock>(),
     logger: Logger.SILENT,
-    verifiersListProvider: () => [],
+    verifiersListProvider: () => Promise.resolve([]),
     chains: [],
     ...deps,
   })

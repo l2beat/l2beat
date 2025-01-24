@@ -5,10 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('xlayer')
 
@@ -37,7 +39,7 @@ const upgradeability = {
 export const xlayer: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.Infra.AggLayer],
+  additionalBadges: [Badge.DA.DAC, Badge.Infra.AggLayer],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -71,8 +73,8 @@ export const xlayer: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          text: 'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
+          href: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
     },
@@ -91,6 +93,7 @@ export const xlayer: Layer2 = polygonCDKStack({
       },
     ],
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'X Layer',
     slug: 'xlayer',
@@ -106,7 +109,6 @@ export const xlayer: Layer2 = polygonCDKStack({
       repositories: [],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [
@@ -155,6 +157,16 @@ export const xlayer: Layer2 = polygonCDKStack({
         'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
     },
     {
+      name: 'RollupManager',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('XLayerValidium', 'rollupManager'),
+        ),
+      ],
+      description:
+        'Permissioned to revert batches that are not yet finalized and to initialize / upgrade the validium contract to a new (existing) version.',
+    },
+    {
       name: 'DACProxyAdminOwner',
       accounts: [
         discovery.formatPermissionedAccount(
@@ -172,4 +184,12 @@ export const xlayer: Layer2 = polygonCDKStack({
       ...upgradeability,
     }),
   ],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

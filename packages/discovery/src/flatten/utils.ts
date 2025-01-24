@@ -1,8 +1,8 @@
 import { createHash } from 'crypto'
 import { Hash256 } from '@l2beat/shared-pure'
-import { ContractSources } from '../discovery/source/SourceCodeService'
-import { ContractSource } from '../utils/IEtherscanClient'
-import { FileContent } from './ParsedFilesManager'
+import type { ContractSources } from '../discovery/source/SourceCodeService'
+import type { ContractSource } from '../utils/IEtherscanClient'
+import type { FileContent } from './ParsedFilesManager'
 import { flattenStartingFrom } from './flatten'
 import { format } from './format'
 
@@ -64,8 +64,14 @@ export function flatteningHash(source: ContractSource): string | undefined {
     }))
     .filter((e) => e.path.endsWith('.sol'))
 
-  const flat = flattenStartingFrom(source.name, input, source.remappings)
-  return sha2_256bit(formatIntoHashable(flat))
+  const content =
+    input.length === 0
+      ? Object.values(source.files).join('\n')
+      : formatIntoHashable(
+          flattenStartingFrom(source.name, input, source.remappings),
+        )
+
+  return sha2_256bit(content)
 }
 
 export function formatIntoHashable(source: string) {

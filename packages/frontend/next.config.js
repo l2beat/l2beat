@@ -1,9 +1,18 @@
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
 import './src/env.js'
-import { withSentryConfig } from '@sentry/nextjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      // Do not put @l2beat/backend or @l2beat/config here!
+      '@l2beat/database',
+      '@l2beat/discovery',
+      '@l2beat/discovery-types',
+      '@l2beat/shared-pure',
+      '@l2beat/shared',
+    ],
+  },
   images: {
     domains: [
       'assets.coingecko.com',
@@ -48,11 +57,6 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: '/bridges/tvl',
-        destination: '/bridges/summary',
-        permanent: false,
-      },
-      {
         source: '/bridges',
         destination: '/bridges/summary',
         permanent: false,
@@ -92,38 +96,18 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/scaling/tvl',
+        destination: '/scaling/tvs',
+        permanent: true,
+      },
+      {
         source: '/scaling/detailedTvl',
-        destination: '/scaling/tvl',
+        destination: '/scaling/tvs',
         permanent: true,
       },
       {
-        source: '/project/layer2.finance',
-        destination: '/scaling/projects/layer2finance',
-        permanent: true,
-      },
-      {
-        source: '/project/leverj',
-        destination: '/scaling/projects/gluon',
-        permanent: true,
-      },
-      {
-        source: '/projects/leverj',
-        destination: '/scaling/projects/gluon',
-        permanent: true,
-      },
-      {
-        source: '/projects/fuel',
-        destination: '/scaling/projects/fuelv1',
-        permanent: true,
-      },
-      {
-        source: '/projects/zkswapv2',
-        destination: '/scaling/projects/zkspace',
-        permanent: true,
-      },
-      {
-        source: '/projects/deversifi',
-        destination: '/scaling/projects/rhinofi',
+        source: '/scaling/projects/:name/tvl-breakdown',
+        destination: '/scaling/projects/:name/tvs-breakdown',
         permanent: true,
       },
     ]
@@ -202,50 +186,7 @@ const nextConfig = {
 }
 
 function createNextConfig() {
-  const plausibleConfig = createPlausibleProxyPlugin()(nextConfig)
-  if (process.env.NODE_ENV === 'production') {
-    return withSentryConfig(plausibleConfig, {
-      // For all available options, see:
-      // https://github.com/getsentry/sentry-webpack-plugin#options
-
-      org: 'l2beat-9de9804ec',
-      project: 'frontend',
-
-      // Only print logs for uploading source maps in CI
-      silent: !process.env.CI,
-
-      // For all available options, see:
-      // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-      // Upload a larger set of source maps for prettier stack traces (increases build time)
-      widenClientFileUpload: true,
-
-      // Automatically annotate React components to show their full name in breadcrumbs and session replay
-      reactComponentAnnotation: {
-        enabled: true,
-      },
-
-      // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-      // This can increase your server load as well as your hosting bill.
-      // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-      // side errors will fail.
-      tunnelRoute: '/monitoring',
-
-      // Hides source maps from generated client bundles
-      hideSourceMaps: true,
-
-      // Automatically tree-shake Sentry logger statements to reduce bundle size
-      disableLogger: true,
-
-      // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-      // See the following for more information:
-      // https://docs.sentry.io/product/crons/
-      // https://vercel.com/docs/cron-jobs
-      automaticVercelMonitors: true,
-    })
-  }
-
-  return plausibleConfig
+  return createPlausibleProxyPlugin()(nextConfig)
 }
 
 // biome-ignore lint/style/noDefaultExport: config file

@@ -1,16 +1,16 @@
-import { CoingeckoClient, HttpClient2, RetryHandler } from '@l2beat/shared'
+import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
   AssetId,
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  Token,
+  type Token,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { chains } from '../chains'
 import { bridges } from '../projects'
 import { config } from '../test/config'
@@ -157,13 +157,14 @@ describe('tokens', () => {
     it('every token has correct CoingeckoId', async function () {
       this.timeout(10000)
 
-      const http = new HttpClient2()
+      const http = new HttpClient()
       const coingeckoClient = new CoingeckoClient({
         apiKey: config.coingeckoApiKey,
         http,
-        retryHandler: RetryHandler.TEST,
+        retryStrategy: 'TEST',
         logger: Logger.SILENT,
-        rateLimiter: RateLimiter.COINGECKO(),
+        callsPerMinute: 10,
+        sourceName: 'coingeckoApi',
       })
 
       const coinsList = await coingeckoClient.getCoinList({

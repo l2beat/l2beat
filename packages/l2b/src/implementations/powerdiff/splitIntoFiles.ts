@@ -1,11 +1,11 @@
 import { createHash } from 'crypto'
-import { Configuration } from './types'
+import type { Configuration } from './types'
 
 import * as fs from 'fs'
 import * as path from 'path'
 import { assert } from '@l2beat/shared-pure'
-import { ASTNode, parse } from '@mradomski/fast-solidity-parser'
-import { LeftRightPair } from '../powerdiff'
+import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
+import type { LeftRightPair } from '../powerdiff'
 
 interface Result {
   filePathsList: LeftRightPair[]

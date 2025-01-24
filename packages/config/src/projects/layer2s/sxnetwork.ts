@@ -1,23 +1,27 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
 
 export const sxnetwork: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
-  nativeToken: 'SX',
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  gasTokens: ['SX'],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Betting'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'SX Network',
     slug: 'sxnetwork',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
     links: {
@@ -34,7 +38,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
         'https://discord.com/invite/sxnetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('ERC20Bridge'),
@@ -66,4 +69,10 @@ export const sxnetwork: Layer2 = orbitStackL2({
         "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

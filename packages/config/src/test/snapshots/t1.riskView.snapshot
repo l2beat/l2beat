@@ -6,11 +6,6 @@
     sentiment: "neutral"
     value: ""
   }
-  destinationToken: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
-  }
   exitWindow: {
     description: "No information available."
     sentiment: "neutral"
@@ -27,11 +22,6 @@
     value: ""
   }
   stateValidation: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
-  }
-  validatedBy: {
     description: "No information available."
     sentiment: "neutral"
     value: ""

@@ -1,4 +1,4 @@
-import { VerifierStatus } from '../../kysely/generated/types'
+import type { VerifierStatus } from '../../kysely/generated/types'
 
 export const selectVerifierStatus = [
   'address',

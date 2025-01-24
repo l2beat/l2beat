@@ -1,9 +1,10 @@
 import { assert } from '@l2beat/shared-pure'
-import { BaseTypeCaster } from './BaseTypeCaster'
+import type { BaseTypeCaster } from './BaseTypeCaster'
 import { ChainPrefix } from './ChainPrefix'
 import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
 import { Mapping } from './Mapping'
+import { TimeSince } from './TimeSince'
 import { Undecimal } from './Undecimal'
 
 export const TypeConverters = {
@@ -12,6 +13,7 @@ export const TypeConverters = {
   Mapping,
   ChainPrefix,
   GreaterThan,
+  TimeSince,
 }
 
 export function isCustomTypeCaster(name: string): boolean {

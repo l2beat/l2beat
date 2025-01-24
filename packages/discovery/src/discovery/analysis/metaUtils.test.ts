@@ -1,18 +1,18 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
+import type {
   DiscoveryContractField,
   PermissionConfiguration,
 } from '../config/RawDiscoveryConfig'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
-import { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
+import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
-  ContractMeta,
+  type ContractMeta,
   findHighestSeverity,
   getMetaFromUpgradeability,
   getTargetsMeta,
-  interpolateDescription,
+  interpolateString,
   invertMeta,
   mergeContractMeta,
   mergePermissions,
@@ -39,6 +39,10 @@ describe('metaUtils', () => {
         categories: new Set(['Gateways&Escrows', 'Core']),
         types: new Set(['CODE_CHANGE', 'EXTERNAL']),
         severity: 'LOW',
+        references: [
+          { text: 'Source Code', href: 'link1' },
+          { text: 'Source Code', href: 'link2' },
+        ],
       }
       const b: ContractMeta = {
         displayName: undefined,
@@ -59,6 +63,10 @@ describe('metaUtils', () => {
         categories: new Set(['Upgrades&Governance', 'Core']),
         types: new Set(['PERMISSION', 'L2', 'EXTERNAL']),
         severity: 'MEDIUM',
+        references: [
+          { text: 'Some docs', href: 'link1' },
+          { text: 'Source Code', href: 'link2' },
+        ],
       }
 
       const result = mergeContractMeta(a, b)
@@ -92,6 +100,11 @@ describe('metaUtils', () => {
         ]),
         types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2', 'PERMISSION']),
         severity: 'MEDIUM',
+        references: [
+          { text: 'Source Code', href: 'link1' },
+          { text: 'Source Code', href: 'link2' },
+          { text: 'Some docs', href: 'link1' },
+        ],
       })
     })
   })
@@ -187,6 +200,7 @@ describe('metaUtils', () => {
               },
               {
                 type: 'configure',
+                condition: 'condition C1 is met',
                 delay: 0,
                 description:
                   'configuring the {{ $.address }} contract allows freeze funds',
@@ -235,11 +249,13 @@ describe('metaUtils', () => {
               target: selfAddress,
               description:
                 'configuring the 0x0000000000000000000000000000000000001234 allows to change this number: 1122',
+              condition: undefined,
             },
           ],
           categories: new Set(['Core']),
           severity: 'LOW',
           types: new Set(['CODE_CHANGE']),
+          references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           canActIndependently: false,
@@ -253,9 +269,11 @@ describe('metaUtils', () => {
               target: selfAddress,
               description:
                 'upgrading the 0x0000000000000000000000000000000000001234 contract gives access to all funds',
+              condition: undefined,
             },
             {
               type: 'configure',
+              condition: 'condition C1 is met',
               delay: 0,
               target: selfAddress,
               description:
@@ -264,6 +282,7 @@ describe('metaUtils', () => {
           ],
           severity: 'HIGH',
           types: new Set(['EXTERNAL', 'L2']),
+          references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           canActIndependently: false,
@@ -277,9 +296,11 @@ describe('metaUtils', () => {
               target: selfAddress,
               description:
                 'upgrading the 0x0000000000000000000000000000000000001234 contract gives access to all funds',
+              condition: undefined,
             },
             {
               type: 'configure',
+              condition: 'condition C1 is met',
               delay: 0,
               target: selfAddress,
               description:
@@ -288,6 +309,7 @@ describe('metaUtils', () => {
           ],
           severity: 'HIGH',
           types: new Set(['EXTERNAL', 'L2']),
+          references: undefined,
         },
       })
     })
@@ -405,6 +427,7 @@ describe('metaUtils', () => {
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
           severity: 'MEDIUM',
+          references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           canActIndependently: false,
@@ -425,6 +448,7 @@ describe('metaUtils', () => {
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
+          references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           canActIndependently: false,
@@ -445,6 +469,7 @@ describe('metaUtils', () => {
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
+          references: undefined,
         },
       })
     })
@@ -483,7 +508,7 @@ describe('metaUtils', () => {
         },
       )
 
-      const result = interpolateDescription(description, analysis)
+      const result = interpolateString(description, analysis)
 
       expect(result).toEqual(
         'Contract with address 0x1234567890123456789012345678901234567890 and value 42',
@@ -496,8 +521,8 @@ describe('metaUtils', () => {
         EthereumAddress.from('0x1234567890123456789012345678901234567890'),
       )
 
-      expect(() => interpolateDescription(description, analysis)).toThrow(
-        'Value for variable "{{ missingValue }}" in contract description not found in contract analysis',
+      expect(() => interpolateString(description, analysis)).toThrow(
+        'Value for variable "{{ missingValue }}" in contract field not found in contract analysis',
       )
     })
   })

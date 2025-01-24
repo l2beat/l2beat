@@ -1,6 +1,6 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
+import type { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
 
 export function getTransferQuery(
   transfersConfig: { from: EthereumAddress; to: EthereumAddress }[],
@@ -36,7 +36,7 @@ export function getTransferQuery(
       return 16 * nonZeroBytes + 4 * zeroBytes;
     """;
 
-    SELECT
+    SELECT DISTINCT
       txs.hash,
       traces.from_address,
       traces.to_address,

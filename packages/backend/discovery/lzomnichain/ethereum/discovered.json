@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 21041947,
-  "configHash": "0x9d96b20a841797ca5d2e377b9c244b1781d5c5b56faf0686676a0c3d77c5503a",
+  "blockNumber": 21465397,
+  "configHash": "0x81b790090f5e1a239c7ec905a98f9ea5cec6d03c24c68aafefdfd8e47a34a95f",
   "contracts": [
     {
       "name": "FPValidator",
@@ -19,6 +19,63 @@
         "stargateBridgeAddress": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
         "stargateTokenAddress": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
         "utilsVersion": 1
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x19565F4771843467aAD632d6B56c75396785b06C",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1673194823,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x18A5Af69DfC02dc950f7534Ae97A180F34B75d7a",
+          "0x8c2641b5915171845EfDdC9fcAc20427B9347fF4",
+          "0x3CA9A84E7c91F2167007cAce3017BaD23D2b14BC",
+          "0xAC0248e9C78774bA0ef9E71B1Ce1393a10C17E3C"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfc932e23eb883c79232f64aba7fea65a0212afdd2c1a13f5aad49180b5491c17",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 6,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "BobaEscrow1",
+      "address": "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55",
+      "sourceHashes": [
+        "0x4c44eee696dd0864f47fbfe674aef4ae88749ff56e2e3a873171609d0b439e71"
+      ],
+      "sinceTimestamp": 1663003197,
+      "values": { "$immutable": true },
+      "derivedName": "Lib_ResolvedDelegateProxy"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b",
+      "sourceHashes": [
+        "0x18a9d79116896cd3b8e528eac1b995e7848e0e84b8c4d2cce4ab6efc0406a1b8"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982"
+        }
+      ],
+      "sinceTimestamp": 1634980603,
+      "values": {
+        "$immutable": true,
+        "owner": "0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8"
       }
     },
     {
@@ -64,7 +121,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
           "via": []
         }
       ],
@@ -169,7 +226,9 @@
           "292": 20,
           "301": 20,
           "303": 20,
-          "317": 20
+          "317": 20,
+          "332": 20,
+          "339": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -479,6 +538,14 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "317": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "332": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "339": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -1107,6 +1174,22 @@
             "outboundBlockConfirm": 15,
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
             "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "332": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "339": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
           }
         },
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
@@ -1407,6 +1490,14 @@
           "317": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "332": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "339": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ]
         },
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
@@ -1491,7 +1582,9 @@
           "292": 2,
           "301": 2,
           "303": 2,
-          "317": 2
+          "317": 2,
+          "332": 2,
+          "339": 2
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1571,10 +1664,68 @@
           "292": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
           "301": "0x000000000000000000000000fe5dfa6b4d6be848b57dd378b0798af60f1e6d35",
           "303": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "317": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+          "317": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "332": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "339": "0x00000000000000000000000081a57678343ca220a9029523477715e00e4024be"
         }
       },
       "derivedName": "UltraLightNodeV2"
+    },
+    {
+      "name": "UsdcEscrow",
+      "address": "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E",
+      "sourceHashes": [
+        "0x7242f25c64a6bc6489c9da3281cf3e61090983ebe87a8859580d74133fd9fdb5"
+      ],
+      "ignoreInWatchMode": ["circulatingSupply"],
+      "sinceTimestamp": 1665428735,
+      "values": {
+        "$immutable": true,
+        "circulatingSupply": "30314741722897180",
+        "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "NO_EXTRA_GAS": 0,
+        "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
+        "precrime": "0x0000000000000000000000000000000000000000",
+        "PT_SEND": 0,
+        "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "useCustomAdapterParams": true
+      },
+      "derivedName": "ProxyERC20"
+    },
+    {
+      "name": "EuraEscrow",
+      "address": "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
+      "sourceHashes": [
+        "0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781",
+        "0xebb3af4d8e88b43e1d66732a0650acc3a2616dcb49321d3c59a88e79c0fdd781"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1657699079,
+      "values": {
+        "$admin": "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b",
+        "$implementation": "0xd735611AE930D2fd3788AAbf7696e6D8f664d15e",
+        "$pastUpgrades": [
+          [
+            "2022-07-13T07:57:59.000Z",
+            "0xd2414c34bb25f0d843866a0ccb9581eafe40ad2d2a5c34b20f2054462af720a4",
+            ["0xd735611AE930D2fd3788AAbf7696e6D8f664d15e"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "canonicalToken": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+        "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "name": "LayerZero Bridge agEUR",
+        "paused": false,
+        "treasury": "0x8667DBEBf68B0BFa6Db54f550f41Be16c4067d60"
+      },
+      "derivedName": "LayerZeroBridge"
     },
     {
       "name": "TSS Oracle",
@@ -1584,7 +1735,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
           "via": []
         }
       ],
@@ -1618,6 +1769,37 @@
       "values": {
         "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1647498793,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
+          "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
+          "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
+          "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
+          "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326",
+          "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 862,
+        "VERSION": "1.3.0"
       }
     },
     {
@@ -1660,7 +1842,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
           "via": []
         }
       ],
@@ -1673,6 +1855,50 @@
       }
     },
     {
+      "name": "BobaEscrow3",
+      "address": "0x6F537839714761388B6d7ED61Bc09579d5dA2F41",
+      "sourceHashes": [
+        "0x4c44eee696dd0864f47fbfe674aef4ae88749ff56e2e3a873171609d0b439e71"
+      ],
+      "sinceTimestamp": 1660932033,
+      "values": { "$immutable": true },
+      "derivedName": "Lib_ResolvedDelegateProxy"
+    },
+    {
+      "name": "StoneEscrow",
+      "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+      "sourceHashes": [
+        "0x1a8cae05167405ef1f44b7cb7a4bab3f238a55a7bf5aa460008c3d7c129ba951"
+      ],
+      "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"],
+      "sinceTimestamp": 1695535811,
+      "values": {
+        "$immutable": true,
+        "cap": "100000000000000000000000",
+        "circulatingSupply": "40946374336212145870420",
+        "DAY_INTERVAL": 86400,
+        "decimals": 18,
+        "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
+        "enable": true,
+        "getQuota": "99999620812448766495366",
+        "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "minter": "0xEc306E46549A7E8f4fCE823D3058f2D134133B17",
+        "name": "StakeStone Ether",
+        "NO_EXTRA_GAS": 0,
+        "owner": "0x83000EF01eD5C15462ef20066091Abd3654e523f",
+        "precrime": "0x0000000000000000000000000000000000000000",
+        "PT_FEED": 1,
+        "PT_SEND": 0,
+        "PT_SET_CAP": 3,
+        "PT_SET_ENABLE": 2,
+        "symbol": "STONE",
+        "token": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+        "totalSupply": "117231981237214231260008",
+        "useCustomAdapterParams": false
+      },
+      "derivedName": "Stone"
+    },
+    {
       "name": "LayerZero Relayer",
       "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
       "unverified": true,
@@ -1680,7 +1906,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
           "via": []
         }
       ],
@@ -1725,6 +1951,34 @@
       "derivedName": ""
     },
     {
+      "name": "WagmiEscrow",
+      "address": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
+      "sourceHashes": [
+        "0x9792608d4255e9f79bcb27779fde9c452f59b73a77a5771491a3816521f79a1f"
+      ],
+      "ignoreInWatchMode": ["circulatingSupply", "totalSupply"],
+      "sinceTimestamp": 1688483015,
+      "values": {
+        "$immutable": true,
+        "cap": "4761000000000000000000000000",
+        "circulatingSupply": "385193122633136433411280907",
+        "decimals": 18,
+        "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
+        "GLOBAL_MAX_TOTAL_SUPPLY": "4761000000000000000000000000",
+        "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "name": "Wagmi",
+        "NO_EXTRA_GAS": 0,
+        "owner": "0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373",
+        "precrime": "0x0000000000000000000000000000000000000000",
+        "PT_SEND": 0,
+        "symbol": "WAGMI",
+        "token": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
+        "totalSupply": "2639856967206793118294282880",
+        "useCustomAdapterParams": true
+      },
+      "derivedName": "WagmiToken"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "sourceHashes": [
@@ -1733,11 +1987,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
+          "from": "0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
         },
         {
           "permission": "upgrade",
-          "target": "0x5a54fe5234E811466D5366846283323c954310B2"
+          "from": "0x5a54fe5234E811466D5366846283323c954310B2"
         }
       ],
       "sinceTimestamp": 1661448939,
@@ -1755,11 +2009,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
+          "from": "0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
         },
         {
           "permission": "upgrade",
-          "target": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          "from": "0x902F09715B6303d4173037652FA7377e5b98089E"
         }
       ],
       "sinceTimestamp": 1647317012,
@@ -1767,6 +2021,37 @@
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
+    },
+    {
+      "name": "Stargate Token",
+      "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+      "sourceHashes": [
+        "0xac50167fb1f106a80bc4b42fa94a317588fdc8c18258beeccf85b89d36daa385"
+      ],
+      "sinceTimestamp": 1647504559,
+      "values": {
+        "$immutable": true,
+        "chainId": 1,
+        "decimals": 18,
+        "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "isMain": true,
+        "name": "StargateToken",
+        "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+        "paused": false,
+        "symbol": "STG",
+        "totalSupply": "1000000000000000000000000000"
+      },
+      "derivedName": "StargateToken"
+    },
+    {
+      "name": "BobaEscrow2",
+      "address": "0xB0003eB166654f7e57c0463F8D1a438eB238c490",
+      "sourceHashes": [
+        "0x4c44eee696dd0864f47fbfe674aef4ae88749ff56e2e3a873171609d0b439e71"
+      ],
+      "sinceTimestamp": 1661794745,
+      "values": { "$immutable": true },
+      "derivedName": "Lib_ResolvedDelegateProxy"
     },
     {
       "name": "LayerZero Multisig",
@@ -1793,7 +2078,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 175,
+        "nonce": 200,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1820,6 +2105,37 @@
       "derivedName": "VerifierNetwork"
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1641206015,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
+          "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1",
+          "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+          "0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002",
+          "0x34Eb88EAD486A09CAcD8DaBe013682Dc5F1DC41D",
+          "0xf8b3b2aE2C97799249874A32f033b931e59fc349"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x3f90ab77cbc6ed795e5cafa72aca01277755cf4ea8b64ebeb7b3215a73e9d179",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 159,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
       "sourceHashes": [
@@ -1827,16 +2143,87 @@
       ],
       "sinceTimestamp": 1694217119,
       "values": { "$immutable": true }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1633974294,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x3205aFb074BECbEaB6D13Ef835b48789EbfAB60c",
+          "0xB9d9BBB9087eE8996Ce24970a3a50924581291FF",
+          "0x8A7f7C5b556B1298a74c0e89df46Eba117A2F6c1",
+          "0x3c1Cb7D4c0ce0dc72eDc7Ea06acC866e62a8f1d8"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfddf3a4e0d1ae6b7d4ce66e2c7c09c2b7dfab1a30b002863a8605f6d836b9360",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 195,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "LinkEscrow",
+      "address": "0xEe381e476b4335B8584A2026f3E845edaC2c69de",
+      "sourceHashes": [
+        "0x7242f25c64a6bc6489c9da3281cf3e61090983ebe87a8859580d74133fd9fdb5"
+      ],
+      "ignoreInWatchMode": ["circulatingSupply"],
+      "sinceTimestamp": 1663802015,
+      "values": {
+        "$immutable": true,
+        "circulatingSupply": "999976247242992374583649413",
+        "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "NO_EXTRA_GAS": 0,
+        "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
+        "precrime": "0x0000000000000000000000000000000000000000",
+        "PT_SEND": 0,
+        "token": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "useCustomAdapterParams": true
+      },
+      "derivedName": "ProxyERC20"
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b" },
+    { "address": "0x18A5Af69DfC02dc950f7534Ae97A180F34B75d7a" },
+    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
+    { "address": "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1" },
+    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
+    { "address": "0x3205aFb074BECbEaB6D13Ef835b48789EbfAB60c" },
+    { "address": "0x34Eb88EAD486A09CAcD8DaBe013682Dc5F1DC41D" },
+    { "address": "0x3c1Cb7D4c0ce0dc72eDc7Ea06acC866e62a8f1d8" },
+    { "address": "0x3CA9A84E7c91F2167007cAce3017BaD23D2b14BC" },
+    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
     { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
     { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
     { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
     { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
+    { "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326" },
+    { "address": "0x83000EF01eD5C15462ef20066091Abd3654e523f" },
+    { "address": "0x8A7f7C5b556B1298a74c0e89df46Eba117A2F6c1" },
+    { "address": "0x8c2641b5915171845EfDdC9fcAc20427B9347fF4" },
+    { "address": "0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002" },
     { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" }
+    { "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc" },
+    { "address": "0xAC0248e9C78774bA0ef9E71B1Ce1393a10C17E3C" },
+    { "address": "0xB9d9BBB9087eE8996Ce24970a3a50924581291FF" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" },
+    { "address": "0xf8b3b2aE2C97799249874A32f033b931e59fc349" }
   ],
   "abis": {
     "0x07245eEa05826F5984c7c3C8F478b04892e4df89": [
@@ -1852,6 +2239,26 @@
       "function stargateTokenAddress() view returns (address)",
       "function utilsVersion() view returns (uint8)",
       "function validateProof(bytes32 _packetHash, bytes _transactionProof, uint256 _remoteAddressSize) view returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload) packet)"
+    ],
+    "0x19565F4771843467aAD632d6B56c75396785b06C": [
+      "constructor(address _singleton)"
+    ],
+    "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55": [
+      "constructor(address _proxyTarget)",
+      "function addressManager(string) view returns (address)",
+      "function setTargetContract(address _proxyTarget)",
+      "function transferProxyOwnership(address _newOwner)"
+    ],
+    "0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": [
       "constructor(address _ulnv2)",
@@ -1963,6 +2370,61 @@
       "function withdrawNative(address _to, uint256 _amount)",
       "function withdrawZRO(address _to, uint256 _amount)"
     ],
+    "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E": [
+      "constructor(address _lzEndpoint, address _proxyToken)",
+      "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload, bytes _reason)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceiveFromChain(uint16 indexed _srcChainId, bytes _fromAddress, address indexed _to, uint256 _amount)",
+      "event RetryMessageSuccess(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _payloadHash)",
+      "event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes indexed _toAddress, uint256 _amount)",
+      "event SetMinDstGas(uint16 _dstChainId, uint16 _type, uint256 _minDstGas)",
+      "event SetPrecrime(address precrime)",
+      "event SetTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "event SetTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "event SetUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function NO_EXTRA_GAS() view returns (uint256)",
+      "function PT_SEND() view returns (uint16)",
+      "function circulatingSupply() view returns (uint256)",
+      "function estimateSendFee(uint16 _dstChainId, bytes _toAddress, uint256 _amount, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) view returns (bytes)",
+      "function getTrustedRemoteAddress(uint16 _remoteChainId) view returns (bytes)",
+      "function isTrustedRemote(uint16 _srcChainId, bytes _srcAddress) view returns (bool)",
+      "function lzEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function minDstGasLookup(uint16, uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function owner() view returns (address)",
+      "function precrime() view returns (address)",
+      "function renounceOwnership()",
+      "function retryMessage(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload) payable",
+      "function sendFrom(address _from, uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setMinDstGas(uint16 _dstChainId, uint16 _packetType, uint256 _minGas)",
+      "function setPrecrime(address _precrime)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function setTrustedRemote(uint16 _srcChainId, bytes _path)",
+      "function setTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "function setUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function trustedRemoteLookup(uint16) view returns (bytes)",
+      "function useCustomAdapterParams() view returns (bool)"
+    ],
+    "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x5a54fe5234E811466D5366846283323c954310B2": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
       "event Upgraded(address indexed implementation)",
@@ -1976,6 +2438,9 @@
       "function endpoint() view returns (address)",
       "function increment(uint16 _chainId, address _ua, bytes _path) returns (uint64)",
       "function outboundNonce(uint16, bytes) view returns (uint64)"
+    ],
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": [
+      "constructor(address _singleton)"
     ],
     "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": [
       "constructor(uint16 _chainId)",
@@ -2035,6 +2500,90 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x6F537839714761388B6d7ED61Bc09579d5dA2F41": [
+      "constructor(address _proxyTarget)",
+      "function addressManager(string) view returns (address)",
+      "function setTargetContract(address _proxyTarget)",
+      "function transferProxyOwnership(address _newOwner)"
+    ],
+    "0x7122985656e38BDC0302Db86685bb972b145bD3C": [
+      "constructor(address _minter, address _layerZeroEndpoint, uint256 _cap)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event FeedToChain(uint16 indexed dstChainId, address indexed from, bytes toAddress, uint256 price)",
+      "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload, bytes _reason)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceiveFromChain(uint16 indexed _srcChainId, address indexed _to, uint256 _amount)",
+      "event RetryMessageSuccess(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _payloadHash)",
+      "event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes _toAddress, uint256 _amount)",
+      "event SetCapFor(uint16 indexed dstChainId, bytes toAddress, uint256 cap)",
+      "event SetEnableFor(uint16 indexed dstChainId, bytes toAddress, bool flag)",
+      "event SetMinDstGas(uint16 _dstChainId, uint16 _type, uint256 _minDstGas)",
+      "event SetPrecrime(address precrime)",
+      "event SetTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "event SetTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "event SetUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DAY_INTERVAL() view returns (uint256)",
+      "function DEFAULT_PAYLOAD_SIZE_LIMIT() view returns (uint256)",
+      "function NO_EXTRA_GAS() view returns (uint256)",
+      "function PT_FEED() view returns (uint16)",
+      "function PT_SEND() view returns (uint16)",
+      "function PT_SET_CAP() view returns (uint16)",
+      "function PT_SET_ENABLE() view returns (uint16)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(address _from, uint256 _amount)",
+      "function cap() view returns (uint256)",
+      "function circulatingSupply() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function enable() view returns (bool)",
+      "function estimateSendFee(uint16 _dstChainId, bytes _toAddress, uint256 _amount, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) view returns (bytes)",
+      "function getQuota() view returns (uint256)",
+      "function getTrustedRemoteAddress(uint16 _remoteChainId) view returns (bytes)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function isTrustedRemote(uint16 _srcChainId, bytes _srcAddress) view returns (bool)",
+      "function lzEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function minDstGasLookup(uint16, uint16) view returns (uint256)",
+      "function mint(address _to, uint256 _amount)",
+      "function minter() view returns (address)",
+      "function name() view returns (string)",
+      "function nonblockingLzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function owner() view returns (address)",
+      "function payloadSizeLimitLookup(uint16) view returns (uint256)",
+      "function precrime() view returns (address)",
+      "function quota(uint256) view returns (uint256)",
+      "function renounceOwnership()",
+      "function retryMessage(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload) payable",
+      "function sendFrom(address _from, uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams) payable",
+      "function setCapFor(uint16 _dstChainId, uint256 _cap, bytes _toAddress) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setEnableFor(uint16 _dstChainId, bool _flag, bytes _toAddress) payable",
+      "function setMinDstGas(uint16 _dstChainId, uint16 _packetType, uint256 _minGas)",
+      "function setPayloadSizeLimit(uint16 _dstChainId, uint256 _size)",
+      "function setPrecrime(address _precrime)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function setTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "function setTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "function setUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function token() view returns (address)",
+      "function tokenPrice() returns (uint256 price)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function trustedRemoteLookup(uint16) view returns (bytes)",
+      "function updatePrice(uint16 _dstChainId, bytes _toAddress) payable returns (uint256 price)",
+      "function useCustomAdapterParams() view returns (bool)"
+    ],
     "0x902F09715B6303d4173037652FA7377e5b98089E": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
       "event Upgraded(address indexed implementation)",
@@ -2042,6 +2591,69 @@
       "function implementation() returns (address)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x92CC36D66e9d739D50673d1f27929a371FB83a67": [
+      "constructor(address _lzEndpoint)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload, bytes _reason)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceiveFromChain(uint16 indexed _srcChainId, address indexed _to, uint256 _amount)",
+      "event RetryMessageSuccess(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _payloadHash)",
+      "event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes _toAddress, uint256 _amount)",
+      "event SetMinDstGas(uint16 _dstChainId, uint16 _type, uint256 _minDstGas)",
+      "event SetPrecrime(address precrime)",
+      "event SetTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "event SetTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "event SetUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DEFAULT_PAYLOAD_SIZE_LIMIT() view returns (uint256)",
+      "function GLOBAL_MAX_TOTAL_SUPPLY() view returns (uint256)",
+      "function NO_EXTRA_GAS() view returns (uint256)",
+      "function PT_SEND() view returns (uint16)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function cap() view returns (uint256)",
+      "function circulatingSupply() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function estimateSendFee(uint16 _dstChainId, bytes _toAddress, uint256 _amount, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) view returns (bytes)",
+      "function getTrustedRemoteAddress(uint16 _remoteChainId) view returns (bytes)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function isTrustedRemote(uint16 _srcChainId, bytes _srcAddress) view returns (bool)",
+      "function lzEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function minDstGasLookup(uint16, uint16) view returns (uint256)",
+      "function mint(address _to, uint256 _amount)",
+      "function name() view returns (string)",
+      "function nonblockingLzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function owner() view returns (address)",
+      "function payloadSizeLimitLookup(uint16) view returns (uint256)",
+      "function precrime() view returns (address)",
+      "function renounceOwnership()",
+      "function retryMessage(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload) payable",
+      "function sendFrom(address _from, uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setMinDstGas(uint16 _dstChainId, uint16 _packetType, uint256 _minGas)",
+      "function setPayloadSizeLimit(uint16 _dstChainId, uint256 _size)",
+      "function setPrecrime(address _precrime)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function setTrustedRemote(uint16 _srcChainId, bytes _path)",
+      "function setTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "function setUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function token() view returns (address)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function trustedRemoteLookup(uint16) view returns (bytes)",
+      "function useCustomAdapterParams() view returns (bool)"
     ],
     "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": [
       "constructor(address owner)",
@@ -2066,6 +2678,49 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": [
+      "constructor(string _name, string _symbol, address _endpoint, uint16 _mainEndpointId, uint256 _initialSupplyOnMainEndpoint)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(bool isPaused)",
+      "event ReceiveFromChain(uint16 srcChainId, uint64 nonce, uint256 qty)",
+      "event SendToChain(uint16 dstChainId, bytes to, uint256 qty)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function chainId() view returns (uint16)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function dstContractLookup(uint16) view returns (bytes)",
+      "function endpoint() view returns (address)",
+      "function estimateSendTokensFee(uint16 _dstChainId, bool _useZro, bytes txParameters) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function isMain() view returns (bool)",
+      "function lzReceive(uint16 _srcChainId, bytes _fromAddress, uint64 nonce, bytes _payload)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pauseSendTokens(bool _pause)",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function sendTokens(uint16 _dstChainId, bytes _to, uint256 _qty, address zroPaymentAddress, bytes adapterParam) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setDestination(uint16 _dstChainId, bytes _destinationContractAddress)",
+      "function setReceiveVersion(uint16 version)",
+      "function setSendVersion(uint16 version)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0xB0003eB166654f7e57c0463F8D1a438eB238c490": [
+      "constructor(address _proxyTarget)",
+      "function addressManager(string) view returns (address)",
+      "function setTargetContract(address _proxyTarget)",
+      "function transferProxyOwnership(address _newOwner)"
     ],
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": [
       "constructor(address _singleton)"
@@ -2126,6 +2781,50 @@
       "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
+    "0xd735611AE930D2fd3788AAbf7696e6D8f664d15e": [
+      "constructor()",
+      "error InvalidCaller()",
+      "error InvalidEndpoint()",
+      "error InvalidPayload()",
+      "error InvalidSource()",
+      "error NotGovernor()",
+      "error NotGovernorOrGuardian()",
+      "error ZeroAddress()",
+      "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "event Paused(address account)",
+      "event ReceiveFromChain(uint16 indexed _srcChainId, bytes indexed _srcAddress, address indexed _toAddress, uint256 _amount, uint64 _nonce)",
+      "event SendToChain(address indexed _sender, uint16 indexed _dstChainId, bytes indexed _toAddress, uint256 _amount, uint64 _nonce)",
+      "event SetTrustedRemote(uint16 _srcChainId, bytes _srcAddress)",
+      "event Unpaused(address account)",
+      "function balanceOf(address) view returns (uint256)",
+      "function canonicalToken() view returns (address)",
+      "function estimateSendFee(uint16 _dstChainId, bytes _toAddress, uint256 _amount, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) view returns (bytes)",
+      "function initialize(string _name, address _lzEndpoint, address _treasury)",
+      "function isTrustedRemote(uint16 _srcChainId, bytes _srcAddress) view returns (bool)",
+      "function lzEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function name() view returns (string)",
+      "function nonblockingLzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function pauseSendTokens(bool pause)",
+      "function paused() view returns (bool)",
+      "function retryMessage(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload) payable",
+      "function send(uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams) payable",
+      "function sendCredit(uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams) payable",
+      "function sendWithPermit(uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams, uint256 deadline, uint8 v, bytes32 r, bytes32 s) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function setTrustedRemote(uint16 _srcChainId, bytes _srcAddress)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function sweep(uint256 amount, address recipient)",
+      "function treasury() view returns (address)",
+      "function trustedRemoteLookup(uint16) view returns (bytes)",
+      "function withdraw(uint256 amount, address recipient) returns (uint256)",
+      "function withdrawFor(uint256 amount, address recipient) returns (uint256)"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -2175,12 +2874,62 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8": [
+      "constructor(address _singleton)"
+    ],
     "0xdeA04ef31C4B4FDf31CB58923F37869739280d49": [
       "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) view returns (uint256)",
       "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) payable returns (uint256)"
+    ],
+    "0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373": [
+      "constructor(address _singleton)"
+    ],
+    "0xEe381e476b4335B8584A2026f3E845edaC2c69de": [
+      "constructor(address _lzEndpoint, address _proxyToken)",
+      "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload, bytes _reason)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceiveFromChain(uint16 indexed _srcChainId, bytes _fromAddress, address indexed _to, uint256 _amount)",
+      "event RetryMessageSuccess(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _payloadHash)",
+      "event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes indexed _toAddress, uint256 _amount)",
+      "event SetMinDstGas(uint16 _dstChainId, uint16 _type, uint256 _minDstGas)",
+      "event SetPrecrime(address precrime)",
+      "event SetTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "event SetTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "event SetUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function NO_EXTRA_GAS() view returns (uint256)",
+      "function PT_SEND() view returns (uint16)",
+      "function circulatingSupply() view returns (uint256)",
+      "function estimateSendFee(uint16 _dstChainId, bytes _toAddress, uint256 _amount, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) view returns (bytes)",
+      "function getTrustedRemoteAddress(uint16 _remoteChainId) view returns (bytes)",
+      "function isTrustedRemote(uint16 _srcChainId, bytes _srcAddress) view returns (bool)",
+      "function lzEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function minDstGasLookup(uint16, uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function owner() view returns (address)",
+      "function precrime() view returns (address)",
+      "function renounceOwnership()",
+      "function retryMessage(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload) payable",
+      "function sendFrom(address _from, uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setMinDstGas(uint16 _dstChainId, uint16 _packetType, uint256 _minGas)",
+      "function setPrecrime(address _precrime)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function setTrustedRemote(uint16 _srcChainId, bytes _path)",
+      "function setTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "function setUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function trustedRemoteLookup(uint16) view returns (bytes)",
+      "function useCustomAdapterParams() view returns (bool)"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

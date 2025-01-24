@@ -1,3 +1,205 @@
+Generated with discovered.json: 0x237c81cffbb2e1143a8a11ff314fa0363e17b36e
+
+# Diff at Mon, 20 Jan 2025 11:09:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21628877
+- current block number: 21628877
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628877 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      issuedPermissions.0.to:
++        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
+      directlyReceivedPermissions.0.from:
++        "0xB524735356985D2f267FA010D681f061DfF03715"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      receivedPermissions.0.from:
++        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+    }
+```
+
+Generated with discovered.json: 0x0f35b730661bd82dbea92413045a93d136735522
+
+# Diff at Wed, 15 Jan 2025 09:06:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21543430
+- current block number: 21628877
+
+## Description
+
+Soneium adapter added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.1868:
++        "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
+      values.CrossChainContracts.1868:
++        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Soneium_Adapter (0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Soneium_Adapter.sol   | 596 +++++++++++++++++++++
+ 1 file changed, 596 insertions(+)
+```
+
+Generated with discovered.json: 0x4a75fdca8455fbd7d6fb3c4a66c4947552961416
+
+# Diff at Fri, 03 Jan 2025 10:43:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21388072
+- current block number: 21543430
+
+## Description
+
+New Arbitrum_Adapter: No changes  except for comments.
+
+New standard OP_Adapter for the Ink RU.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Arbitrum_Adapter (0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.42161:
+-        "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426"
++        "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210"
+      values.Adapters.57073:
++        "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
+      values.CrossChainContracts.57073:
++        "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Ink_Adapter (0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21388072 => .flat}/Arbitrum_Adapter.sol |  10 +
+ .../across-v3/ethereum/.flat/Ink_Adapter.sol       | 596 +++++++++++++++++++++
+ 2 files changed, 606 insertions(+)
+```
+
+Generated with discovered.json: 0x5cf4cef23f0cb03295260afbe5b50fdd11ebf6d1
+
+# Diff at Thu, 12 Dec 2024 17:59:11 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21142111
+- current block number: 21388072
+
+## Description
+
+Ignored current time value.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21142111 (main branch discovery), not current.
+
+```diff
+    contract UMAOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24) {
+    +++ description: None
+      values.getCurrentTime:
+-        1731059123
+    }
+```
+
+Generated with discovered.json: 0x6e237fc3e7c6a0dfacdf8c3facadcfce1cd29744
+
+# Diff at Tue, 10 Dec 2024 10:36:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21142111
+- current block number: 21142111
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21142111 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AcrossConfigStore (0x3B03509645713718B78951126E0A6de6f10043f5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonTokenBridger (0x48d990AbDA20afa1fD1da713AbC041B60a922c65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UMAOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x52dadfca973170d723ce40d572f31cce6594232a
 
 # Diff at Fri, 08 Nov 2024 09:45:41 GMT:

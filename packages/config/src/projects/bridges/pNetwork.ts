@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('pNetwork')
 
@@ -15,7 +15,7 @@ export const pNetwork: Bridge = {
     name: 'pNetwork',
     slug: 'pnetwork',
     warning:
-      'TVL of the bridge does not take into the account pTokens minted on Ethereum. These are wrapped tokens that should be backed 1:1 with their native counterparts on\
+      'TVS of the bridge does not take into the account pTokens minted on Ethereum. These are wrapped tokens that should be backed 1:1 with their native counterparts on\
     other chains, for example pBTC being backed by BTC on  Bitcoin or pFTM backed by FTM on Fantom.',
     category: 'Token Bridge',
     links: {
@@ -152,7 +152,7 @@ export const pNetwork: Bridge = {
     {
       name: 'PNETWORK',
       description:
-        'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in a MPC network.',
+        'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
       accounts: [
         discovery.getPermissionedAccount('ERC20 Vault V2', 'PNETWORK'),
         discovery.getPermissionedAccount('ERC20 Vault V1', 'PNETWORK'),

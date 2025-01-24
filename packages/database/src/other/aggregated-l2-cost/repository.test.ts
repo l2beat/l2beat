@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import { AggregatedL2CostRecord } from './entity'
+import type { AggregatedL2CostRecord } from './entity'
 import { AggregatedL2CostRepository } from './repository'
 
 const NOW = UnixTime.now()

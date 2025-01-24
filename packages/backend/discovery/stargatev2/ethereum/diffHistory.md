@@ -1,3 +1,107 @@
+Generated with discovered.json: 0xa1e0402cf375332155040f08ecbba275d26a4ed8
+
+# Diff at Mon, 20 Jan 2025 11:10:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630210
+- current block number: 21630210
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630210 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+      issuedPermissions.0.to:
++        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+    }
+```
+
+```diff
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      receivedPermissions.0.from:
++        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+      receivedPermissions.0.from:
++        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+    }
+```
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5"
+      issuedPermissions.0.to:
++        "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5"
+    }
+```
+
+Generated with discovered.json: 0x4373ee5870d10cf8513a86e72d2f437908a1d41b
+
+# Diff at Wed, 15 Jan 2025 13:35:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21465483
+- current block number: 21630210
+
+## Description
+
+Nethermind signer size increased to 3.
+
+## Watched changes
+
+```diff
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      values.signerSize:
+-        2
++        3
+    }
+```
+
+Generated with discovered.json: 0x6c58969bd600f3cc53761d45cded299e14a788b8
+
+# Diff at Mon, 23 Dec 2024 13:29:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18325a975c44684702f30ee366361589e4c2ed8c block: 21264298
+- current block number: 21465483
+
+## Description
+
+Signer added to the Nethermind verifier  / DVN
+
+## Watched changes
+
+```diff
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      values.signerSize:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0xb5f1f88016b07d76f8d6a883b987da97d8363150
 
 # Diff at Mon, 25 Nov 2024 10:53:07 GMT:

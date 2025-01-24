@@ -1,0 +1,38 @@
+// corn riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: 1
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    sentiment: "bad"
+    value: "External (DAC)"
+  }
+  exitWindow: {
+    definingMetric: -86400
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: 1033656
+    description: "Anyone can become a Proposer after 11d 23h of inactivity from the currently whitelisted Proposers."
+    secondLine: "11d 23h delay"
+    sentiment: "good"
+    value: "Self propose"
+  }
+  sequencerFailure: {
+    definingMetric: 86400
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 1d delay on this operation."
+    secondLine: "1d delay"
+    sentiment: "good"
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: 1
+    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 5d 14h challenge period."
+    secondLine: "5d 14h challenge period"
+    sentiment: "bad"
+    value: "Fraud proofs (INT)"
+  }
+}

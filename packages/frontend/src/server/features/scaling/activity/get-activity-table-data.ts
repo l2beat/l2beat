@@ -1,4 +1,4 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Project, layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
@@ -7,14 +7,13 @@ import { countPerSecond } from './utils/count-per-second'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getLastDayTps, getLastDayUops } from './utils/get-last-day'
 import { getLastDayRatio } from './utils/get-last-day-ratio'
-import { getSyncStatus } from './utils/get-sync-status'
 import {
   getTpsWeeklyChange,
   getUopsWeeklyChange,
 } from './utils/get-weekly-change'
 import { sumTpsCount, sumUopsCount } from './utils/sum-activity-count'
 
-export async function getActivityTable(projects: (Layer2 | Layer3)[]) {
+export async function getActivityTable(projects: Project[]) {
   if (env.MOCK) {
     return getMockActivityTableData()
   }
@@ -24,9 +23,9 @@ export async function getActivityTable(projects: (Layer2 | Layer3)[]) {
 export type ActivityProjectTableData = NonNullable<ActivityTableData[string]>
 type ActivityTableData = Awaited<ReturnType<typeof getActivityTableData>>
 
-async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
+async function getActivityTableData(projects: Project[]) {
   const db = getDb()
-  const range = getFullySyncedActivityRange('30d')
+  const range = getFullySyncedActivityRange('max')
   const records = await db.activity.getByProjectsAndTimeRange(
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],
     range,
@@ -55,7 +54,7 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
           tps: {
             change: getTpsWeeklyChange(records),
             pastDayCount: getLastDayTps(records),
-            summedCount: sumTpsCount(records),
+            summedCount: sumTpsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.count),
               timestamp: maxCount.countTimestamp.toNumber(),
@@ -64,14 +63,14 @@ async function getActivityTableData(projects: (Layer2 | Layer3)[]) {
           uops: {
             change: getUopsWeeklyChange(records),
             pastDayCount: getLastDayUops(records),
-            summedCount: sumUopsCount(records),
+            summedCount: sumUopsCount(records.slice(-30)),
             maxCount: {
               value: countPerSecond(maxCount.uopsCount),
               timestamp: maxCount.uopsTimestamp.toNumber(),
             },
           },
           ratio: getLastDayRatio(records),
-          syncStatus: getSyncStatus(lastRecord.timestamp),
+          syncedUntil: lastRecord.timestamp,
         },
       ]
     }),
@@ -110,7 +109,7 @@ function getMockActivityTableData(): ActivityTableData {
           },
         },
         ratio: 1.1,
-        syncStatus: getSyncStatus(UnixTime.now()),
+        syncedUntil: UnixTime.now(),
       },
     ]),
   )

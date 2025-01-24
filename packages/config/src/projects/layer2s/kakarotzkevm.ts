@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const kakarotzkevm: Layer2 = upcomingL2({
   id: 'kakarotzkevm',
@@ -22,7 +22,9 @@ export const kakarotzkevm: Layer2 = upcomingL2({
         'https://twitter.com/KakarotZkEvm',
         'https://t.me/KakarotZkEvm',
         'https://discord.gg/kakarotzkevm',
+        'https://linkedin.com/company/kkrt-labs',
       ],
+      rollupCodes: 'https://rollup.codes/kakarot',
     },
   },
 })

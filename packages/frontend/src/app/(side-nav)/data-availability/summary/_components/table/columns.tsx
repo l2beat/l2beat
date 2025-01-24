@@ -1,13 +1,12 @@
 import { type Row, createColumnHelper } from '@tanstack/react-table'
-import { NaBadge } from '~/components/badge/na-badge'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
+import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { formatCurrency } from '~/utils/number-format/format-currency'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
-import { DaLayerCell } from '../../../_components/da-layer-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 import {
@@ -22,7 +21,7 @@ export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
 const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
-  cell: (ctx) => <DaLayerCell entry={ctx.row.original} />,
+  cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   meta: {
     tooltip:
       'The data availability layer where the data (transaction data or state diffs) is posted.',
@@ -55,10 +54,7 @@ const daBridgeRisksColumn = columnHelper.display({
     const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
 
     return (
-      <GrissiniCell
-        values={risks}
-        hasNoBridge={firstBridge.type === 'NoBridge'}
-      />
+      <GrissiniCell values={risks} hasNoBridge={firstBridge.risks.isNoBridge} />
     )
   },
   meta: {
@@ -68,19 +64,14 @@ const daBridgeRisksColumn = columnHelper.display({
 
 const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
-  cell: (ctx) => {
-    const valueToFormat =
-      ctx.row.original.usedIn.length > 0 ? ctx.row.original.tvs : 0
-
-    return (
-      <div className="w-full pr-5 text-right text-sm font-medium">
-        {formatCurrency(valueToFormat, 'usd')}
-      </div>
-    )
-  },
+  cell: (ctx) => (
+    <div className="w-full pr-5 text-right text-sm font-medium">
+      {formatDollarValueNumber(ctx.row.original.tvs)}
+    </div>
+  ),
   meta: {
     tooltip:
-      'Total value secured (TVS) is the total value locked of all projects using this layer.',
+      'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
     align: 'right',
   },
 })
@@ -92,7 +83,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
       return (
         <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-          {formatCurrency(0, 'usd')}
+          {formatDollarValueNumber(0)}
         </div>
       )
     }
@@ -113,32 +104,16 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
 
 const membersColumn = columnHelper.display({
   header: 'Members',
-  cell: (ctx) => {
-    const [firstBridge] = ctx.row.original.bridges
-
-    if (!firstBridge) {
-      return <NaBadge />
-    }
-
-    if (firstBridge.type !== 'DAC') {
-      return <NaBadge />
-    }
-
-    if (firstBridge.hideMembers) {
-      return <NaBadge />
-    }
-
-    return <DacMembersCell {...firstBridge} />
-  },
+  cell: (ctx) => (
+    <DacMembersCell dacInfo={ctx.row.original.bridges[0]?.dacInfo} />
+  ),
 })
 
 const challengeMechanismColumn = columnHelper.display({
   header: 'Challenge\nmechanism',
   cell: (ctx) => (
     <TwoRowCell>
-      <TwoRowCell.First>
-        {ctx.row.original.challengeMechanism?.value ?? 'None'}
-      </TwoRowCell.First>
+      <TwoRowCell.First>{ctx.row.original.challengeMechanism}</TwoRowCell.First>
     </TwoRowCell>
   ),
   meta: {
@@ -200,10 +175,10 @@ const bridgeRisksColumn = virtual(
 const bridgeTvsColumn = virtual(
   columnHelper.display({
     id: 'bridge-tvs',
-    header: 'Value Secured',
+    header: 'Value secured',
     meta: {
       tooltip:
-        'Value secured is the total value locked of all projects using this bridge.',
+        'The sum of the total value secured (TVS) across all L2s & L3s that use this DA layer and DA bridge, and are listed on L2BEAT.',
     },
   }),
 )

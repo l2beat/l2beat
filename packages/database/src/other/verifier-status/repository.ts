@@ -1,6 +1,6 @@
-import { ChainId } from '@l2beat/shared-pure'
+import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { VerifierStatusRecord, toRecord, toRow } from './entity'
+import { type VerifierStatusRecord, toRecord, toRow } from './entity'
 import { selectVerifierStatus } from './select'
 
 export class VerifierStatusRepository extends BaseRepository {

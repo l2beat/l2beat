@@ -1,9 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import config from './multichain-config.json'
-import { Bridge } from './types'
+import type { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('multichain')
 
 export const multichain: Bridge = {
   type: 'bridge',
@@ -109,16 +112,14 @@ export const multichain: Bridge = {
   contracts: {
     isIncomplete: true,
     addresses: [
-      {
-        address: EthereumAddress('0x6b7a87899490EcE95443e979cA9485CBE7E71522'),
-        name: 'AnyswapV4Router',
-        description: 'Multichain Liquidity Network Router V4.',
-      },
-      {
-        address: EthereumAddress('0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705'),
-        name: 'AnyswapV6Router',
-        description: 'Multichain Liquidity Network Router V6.',
-      },
+      discovery.getContractDetails(
+        'AnyswapV4Router',
+        'Multichain Liquidity Network Router V4.',
+      ),
+      discovery.getContractDetails(
+        'AnyswapV6Router',
+        'Multichain Liquidity Network Router V6.',
+      ),
     ],
     risks: [],
   },

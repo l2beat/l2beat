@@ -7,34 +7,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
+import { useTracking } from '~/hooks/use-custom-event'
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
 
-const UNDEFINED_VALUE = 'undefined-value'
-
-interface Option<T extends string> {
-  label: string
-  value: T | undefined
-}
-
-interface Props<T extends string> {
+interface Props {
   title: string
-  options: Option<T>[]
-  value: T | undefined
-  onValueChange: (option: T | undefined) => void
+  options: string[]
+  value: string | undefined
+  onValueChange: (option: string | undefined) => void
 }
 
-export function TableFilter<T extends string>({
-  title,
-  options,
-  value,
-  onValueChange,
-}: Props<T>) {
-  // Select component does not support undefined values
-  // so we need to replace them with a special value
-  // that will be handled by the onValueChange handler
-  const mappedOptions = replaceUndefined(options)
-
+export function TableFilter({ title, options, value, onValueChange }: Props) {
+  const { track } = useTracking()
   const onClick = useCallback(
     (e: MouseEvent) => {
       if (value !== undefined) {
@@ -67,15 +52,21 @@ export function TableFilter<T extends string>({
           onValueChange(undefined)
           return
         }
-        const mappedValue = (
-          newValue === UNDEFINED_VALUE ? undefined : newValue
-        ) as T | undefined
-        onValueChange(mappedValue)
+        track('filterChanged', {
+          props: {
+            name: title,
+            value: newValue,
+          },
+        })
+        onValueChange(newValue)
       }}
       disabled={options.length < 2 && !value}
     >
       <SelectTrigger
-        className={cn(value !== undefined && 'text-brand')}
+        className={cn(
+          'primary-card:bg-surface-secondary primary-card:data-[state=open]:hover:bg-surface-tertiary',
+          value !== undefined && 'text-brand',
+        )}
         icon={
           value !== undefined ? (
             <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
@@ -89,31 +80,20 @@ export function TableFilter<T extends string>({
       >
         <SelectValue placeholder={title} />
       </SelectTrigger>
-      <SelectContent className="flex flex-col" align="start">
-        {mappedOptions.map((option) => (
-          <SelectItem key={option.label} value={option.value}>
-            {option.label}
+      <SelectContent
+        className={cn('flex flex-col primary-card:bg-surface-secondary')}
+        align="start"
+      >
+        {options.map((option) => (
+          <SelectItem
+            key={option}
+            value={option}
+            className="primary-card:focus:bg-surface-tertiary"
+          >
+            {option}
           </SelectItem>
         ))}
       </SelectContent>
     </Select>
   )
-}
-
-function replaceUndefined<T extends string>(
-  options: Option<T>[],
-): {
-  label: string
-  value: T
-}[] {
-  return options.map((option) => {
-    if (option.value === undefined) {
-      return { label: option.label, value: UNDEFINED_VALUE as T }
-    }
-
-    return {
-      label: option.label,
-      value: option.value,
-    }
-  })
 }

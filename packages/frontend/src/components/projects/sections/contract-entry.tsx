@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { CustomLink } from '~/components/link/custom-link'
+import { linkVariants } from '~/components/link/custom-link'
 import { HighlightableLink } from '~/components/link/highlightable/highlightable-link'
 import { Markdown } from '~/components/markdown/markdown'
 import { BulletIcon } from '~/icons/bullet'
@@ -12,6 +12,7 @@ import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
 import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
+import { type Participant, ParticipantsEntry } from './permissions/participants'
 import { UpgradeConsiderations } from './permissions/upgrade-considerations'
 import {
   type UsedInProject,
@@ -27,6 +28,7 @@ export interface TechnologyContract {
   upgradeableBy?: string[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
+  participants?: Participant[]
   upgradeConsiderations?: string
   references: Reference[]
   implementationChanged: boolean
@@ -109,9 +111,9 @@ export function ContractEntry({
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((name) => (
-                  <CustomLink key={name} href={`#${name}`}>
+                  <a key={name} className={linkVariants()} href={`#${name}`}>
                     {name}
-                  </CustomLink>
+                  </a>
                 ))}
               </div>
             </div>
@@ -121,6 +123,9 @@ export function ContractEntry({
               <strong className="text-primary">Upgrade delay:</strong>{' '}
               {contract.upgradeDelay}
             </p>
+          )}
+          {contract.participants && (
+            <ParticipantsEntry participants={contract.participants} />
           )}
           {sharedProxies && sharedProxies.length !== 0 && (
             <UsedInProjectEntry
@@ -188,4 +193,10 @@ function getCalloutProps(
     color: undefined,
     icon: <BulletIcon className="size-5" />,
   }
+}
+
+export function technologyContractKey(contract: TechnologyContract) {
+  return `${contract.name}-${contract.chain}-${contract.addresses
+    .map((a) => a.address)
+    .join('-')}`
 }

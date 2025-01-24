@@ -1,8 +1,9 @@
 import { createGetStage, isSatisfied } from './stage'
-import { ChecklistTemplate } from './types'
+import type { ChecklistTemplate } from './types'
 
 interface GetStageOptions {
   rollupNodeLink?: string
+  securityCouncilReference?: string
 }
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
@@ -79,7 +80,11 @@ const getBlueprint = (opts?: GetStageOptions) =>
             'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
         },
         securityCouncilProperlySetUp: {
-          positive: 'The Security Council is properly set up.',
+          positive:
+            'The Security Council is properly set up' +
+            (opts?.securityCouncilReference
+              ? ` [(List of members)](${opts.securityCouncilReference}).`
+              : '.'),
           negative: 'The Security Council is not properly set up.',
         },
       },

@@ -1,18 +1,22 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fluence')
 
 export const fluence: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Fluence',
     slug: 'fluence',
     description:
@@ -30,7 +34,6 @@ export const fluence: Layer2 = orbitStackL2({
         'https://youtube.com/channel/UC3b5eFyKRFlEMwSJ1BTjpbw',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -39,7 +42,7 @@ export const fluence: Layer2 = orbitStackL2({
       tokens: '*',
     }),
   ],
-  nativeToken: 'FLT',
+  gasTokens: ['FLT'],
   associatedTokens: ['FLT'],
   rpcUrl: 'https://rpc.mainnet.fluence.dev',
   bridge: discovery.getContract('ERC20Bridge'),
@@ -55,4 +58,10 @@ export const fluence: Layer2 = orbitStackL2({
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

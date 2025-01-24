@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
 import { describeDatabase, mockDatabase } from '../../../test/database'
 import { IndexerService } from '../IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import { ManagedMultiIndexer } from './ManagedMultiIndexer'
-import {
+import type {
   Configuration,
   ManagedMultiIndexerOptions,
   RemovalConfiguration,

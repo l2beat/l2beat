@@ -1,11 +1,11 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
-  CleanDateRange,
+  type CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../../utils/deleteArchivedRecords'
-import { PriceRecord, toRecord, toRow } from './entity'
+import { type PriceRecord, toRecord, toRow } from './entity'
 import { selectPrice } from './select'
 
 export class PriceRepository extends BaseRepository {

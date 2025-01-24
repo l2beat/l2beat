@@ -1,4 +1,4 @@
-import {
+import type {
   ApiCodeResponse,
   ApiPreviewResponse,
   ApiProjectResponse,
@@ -47,17 +47,28 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   return data as ApiPreviewResponse
 }
 
-export function executeCommand(
-  command: string,
+export function executeDiscover(
   project: string,
   chain: string,
   devMode: boolean,
 ): EventSource {
   const params = new URLSearchParams({
-    command,
     project,
     chain,
     devMode: devMode.toString(),
   })
-  return new EventSource(`/api/terminal/execute?${params}`)
+  return new EventSource(`/api/terminal/discover?${params}`)
+}
+
+export function executeMatchFlat(
+  project: string,
+  address: string,
+  against: 'templates' | 'projects',
+): EventSource {
+  const params = new URLSearchParams({
+    project,
+    address,
+    against,
+  })
+  return new EventSource(`/api/terminal/match-flat?${params}`)
 }

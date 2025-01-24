@@ -1,3 +1,471 @@
+Generated with discovered.json: 0xddf66763fd2f8f422ceeeff1382e701e28511520
+
+# Diff at Mon, 20 Jan 2025 11:10:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630370
+- current block number: 21630370
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.from:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.1.target:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.1.from:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.0.target:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.0.from:
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+Generated with discovered.json: 0x9689f25484248ef4dcada49eedef9676e5c7572e
+
+# Diff at Mon, 20 Jan 2025 09:25:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21630370
+- current block number: 21630370
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      fieldMeta.getOwners.type:
++        "PERMISSION"
+      fieldMeta.getThreshold.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0x089edefbfba6e10c0a05b5f4799e7ef7af5a1815
+
+# Diff at Fri, 10 Jan 2025 11:44:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e594a564c9c62a7edef1a6e3f64f955bf70aa8eb block: 21585244
+- current block number: 21593851
+
+## Description
+
+UpgradeTimestamp added for the latest ZKsync Protocol Upgrade v25 (QoL upgrade, partly reviewed below).
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.1:
++        {"_protocolVersion":107374182400,"_upgradeTimestamp":1736517600}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585244 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.GrvtDiamond:
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.GrvtSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.grvtThirdBatchTS:
+-        1733327159
+      values.grvtValidatorsAdded:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
++        []
+      fieldMeta.grvtThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
+Generated with discovered.json: 0x403fce2f16a4bdb19d6487a08be2ae753e9a6875
+
+# Diff at Thu, 09 Jan 2025 06:50:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edc6acaed84d40aabd5185e0a0b5ebaf1c90143b block: 21543858
+- current block number: 21585244
+
+## Description
+
+Upgrade BridgeHub, StateTransitionManager, L1SharedBridge. [Tally proposal](https://www.tally.xyz/gov/zksync/proposal/39897055470405054808751466940888279812739313934036970931300785151980460250983?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
+
+Minor changes only (replacing `require()` with `if(revert()))` and adding docs).
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x0d42e482e85877d75871eacd767228a9e735bb3e0478cb2b80235d6f428ba055"
++        "0x568d6f26c34f7da5f4ac55957f99d9e66cbf967d550fa27ec431fb66bbd36a0b"
+      values.$implementation:
+-        "0x509dA1BE24432F8804C4A9FF4a3c3f80284CDd13"
++        "0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"
+      values.$pastUpgrades.2:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"]]
+      values.$upgradeCount:
+-        2
++        3
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GenesisUpgrade (0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2)
+    +++ description: None
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x96877e17c5bb84aa94de97c0a9764405e673c26bbf2c649349984d825b326940"
++        "0x2322249822d1ffda838f7005dd4137d161f15f2cc3553e9bffba7c04a44d9226"
+      values.$implementation:
+-        "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"
++        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
+      values.$pastUpgrades.2:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.genesisUpgrade:
+-        "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2"
++        "0x6e2BC597F1e83F9fC7c1f69157F2C12476873971"
+      values.getSemverProtocolVersion.2:
+-        2
++        0
+      values.getSemverProtocolVersion.1:
+-        24
++        25
+      values.initialCutHash:
+-        "0x88acf7bca5d9b0309546e053ad035bd6d8da5f13f39ca1d8f8ffab1a8d4aa60f"
++        "0x0b30ec2102ea8e2cf92d22857c347d3b29bde8dfaf6f2ae19045f19c5a94ba5a"
+      values.protocolVersion:
+-        103079215106
++        107374182400
+      values.storedBatchZero:
+-        "0x1574fa776dec8da2071e5f20d71840bfcbd82c2bca9ad68680edfedde1710bc4"
++        "0x83325e26523f69ee6ea60aea582325d22f3c6a85db5e4890e14d62a377635a6b"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xee3958605e4357a1803d3eb2c6d0d455fdbcc9c550a55b801834030d2a39cef8"
++        "0x23ebe4dfc517328a5acc1f6f8aa84be593be5db9d6357fcdcd69c62ca60853f7"
+      values.$implementation:
+-        "0xb56A8225A745756DD215faf22E4796f373561AcD"
++        "0xF5A14DCdde1143443f06033200D345c2a2828A99"
+      values.$pastUpgrades.2:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0xF5A14DCdde1143443f06033200D345c2a2828A99"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.ERA_CHAIN_ID:
+-        324
+      values.ERA_DIAMOND_PROXY:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GenesisUpgrade (0x6e2BC597F1e83F9fC7c1f69157F2C12476873971)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../BridgeHub/Bridgehub.sol                        | 143 ++++++---
+ .../{.flat@21543858 => .flat}/GenesisUpgrade.sol   | 352 +++++++++++++++------
+ .../L1SharedBridge/L1SharedBridge.sol              | 278 +++++++++++-----
+ .../StateTransitionManager.sol                     | 126 ++++++--
+ 4 files changed, 645 insertions(+), 254 deletions(-)
+```
+
+Generated with discovered.json: 0x630ceb70bec843b173e2618cf268f7e1adda1539
+
+# Diff at Fri, 03 Jan 2025 12:08:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21421036
+- current block number: 21543858
+
+## Description
+
+Multisig signer changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0) {
+    +++ description: None
+      values.$members.5:
+-        "0x3133781381bC58564D5e9888c208ED0b7BD7721F"
+      values.$members.4:
+-        "0xDFbD13B78010BF2110a168FA59b682c8a6D96564"
++        "0x3133781381bC58564D5e9888c208ED0b7BD7721F"
+      values.$members.3:
+-        "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c"
++        "0xDFbD13B78010BF2110a168FA59b682c8a6D96564"
+      values.$members.2:
+-        "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
++        "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c"
+      values.$members.1:
+-        "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2"
++        "0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
+      values.$members.0:
+-        "0x09040e439Ca5F1CF50CF4e9BE9b1F1FB8ef1ce07"
++        "0x2Fd57fdFba5aABbFdc43Fd450c2817D1401E72F2"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x689e4270aa9108022db71e3b0f874b583a00bdef
+
+# Diff at Thu, 12 Dec 2024 11:47:09 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21357589
+- current block number: 21386218
+
+## Description
+
+Config related changes. Adding Sophon discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21357589 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.treasureThirdBatchTS:
+-        1732907795
+      values.treasureValidatorsAdded:
++        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.treasureValidatorsRemoved:
++        []
+      fieldMeta.treasureThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
+Generated with discovered.json: 0x94a03248b7c968a9228f4c918b302f081aaa268f
+
+# Diff at Tue, 10 Dec 2024 11:08:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21357589
+- current block number: 21357589
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21357589 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x84b9b6d9912626f624bbec1ed2469d79f770962f
+
+# Diff at Sun, 08 Dec 2024 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21334370
+- current block number: 21357589
+
+## Description
+
+ML MS single member change.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      values.$members.1:
+-        "0xe79af29d618141Ffef951B240b250d47030D56d7"
++        "0x8A23548a640De1137e58e2D9600e1c5913E3D674"
+    }
+```
+
+Generated with discovered.json: 0x130741beb8896a212215e004768fdc2a13bfb95d
+
+# Diff at Thu, 05 Dec 2024 06:01:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 21313606
+- current block number: 21334370
+
+## Description
+
+GRVT chain is active (chainId says mainnet). No launch announcement yet.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
++++ description: If non-zero, the third batch has been posted (launch monitor).
++++ severity: MEDIUM
+      values.grvtThirdBatchTS:
+-        0
++        1733327159
+    }
+```
+
 Generated with discovered.json: 0xc3e18d834ba499a857aacbf4ae99de7db3c45493
 
 # Diff at Mon, 02 Dec 2024 08:23:33 GMT:

@@ -1,0 +1,154 @@
+{
+  "name": "hyperliquid",
+  "chain": "arbitrum",
+  "blockNumber": 287788820,
+  "configHash": "0xc5100dff874cb36967aecd68adedf030a7aa4bfb42f9a8e55d82fc9d5284d9ad",
+  "contracts": [
+    {
+      "name": "HyperliquidBridge",
+      "address": "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+      "sourceHashes": [
+        "0x8c22d9d0e8dc4b87b77a97aca8a01a2050b5c416ff894e2b0c18daf22c76b122"
+      ],
+      "description": "Single contract containing all the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions.",
+      "sinceTimestamp": 1701389130,
+      "values": {
+        "$immutable": true,
+        "blockDurationMillis": 350,
+        "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f",
+        "constructorArgs": {
+          "hotAddresses": ["0x45C3bbc5cA908ab49441FFe9742b919fC6dDb10A"],
+          "coldAddresses": ["0x720237467c57cDF4bf9A501c77a27b5076d76E04"],
+          "powers": ["1"],
+          "usdcAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+          "_disputePeriodSeconds": "600",
+          "_blockDurationMillis": "350",
+          "_lockerThreshold": "2"
+        },
+        "disputePeriodSeconds": 200,
+        "epoch": 5,
+        "finalizers": [
+          "0x58E1b0E63C905D5982324FCd9108582623b8132e",
+          "0x263294039413B96D25E4173a5F7599F8b3801504",
+          "0xda6816df552c3f9e0FB64979fb357800d690d79B",
+          "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
+          "0xf9d2282A4A4C216f624717C0747D23146FC048c5"
+        ],
+        "getLockersVotingLock": [],
+        "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
+        "lockers": [
+          "0x58E1b0E63C905D5982324FCd9108582623b8132e",
+          "0x263294039413B96D25E4173a5F7599F8b3801504",
+          "0xda6816df552c3f9e0FB64979fb357800d690d79B",
+          "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
+          "0xf9d2282A4A4C216f624717C0747D23146FC048c5"
+        ],
+        "lockerThreshold": 2,
+        "nValidators": 4,
+        "paused": false,
+        "pendingValidatorSetUpdate": {
+          "epoch": 5,
+          "totalValidatorPower": 4,
+          "updateTime": 0,
+          "updateBlockNumber": 261233949,
+          "nValidators": 4,
+          "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
+          "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f"
+        },
+        "totalValidatorPower": 4,
+        "usdcToken": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "validatorSetUpdates": [
+          {
+            "epoch": 0,
+            "hotValidatorSetHash": "0xb15b2587729ccdb8964a76d16dee10ef93b2d56d128b086a1faba59267daab49",
+            "coldValidatorSetHash": "0x8d08d5a33a7a0a2497944c7ac876fff8209aa0599bcabbe46a6799ace4c745e2"
+          },
+          {
+            "epoch": 1,
+            "hotValidatorSetHash": "0x31c911ebc19cb679b56d69d79453ce25c2086ec68669b335c5eca3baf4ad70eb",
+            "coldValidatorSetHash": "0x1835f56615a1106fdb579d5564c739601e4769b4aadc18ba349aecfa291f2dfc"
+          },
+          {
+            "epoch": 3,
+            "hotValidatorSetHash": "0xb60851b8ee9f0a3cdf0561ecaacaefa869421c369570dc983f0b384d013a377a",
+            "coldValidatorSetHash": "0xdcf508c02509dc258e2dbafdcf94225b8b1558c0eea7adc1e559597594ddfba1"
+          },
+          {
+            "epoch": 4,
+            "hotValidatorSetHash": "0x7972697522860105015057426b352bb4552574635af2613e99c622f5df100f5b",
+            "coldValidatorSetHash": "0xf7bfa3b4f93562141e4eed9a8e0cfb203acfe3c97e91d50fd810c4730e117880"
+          },
+          {
+            "epoch": 5,
+            "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
+            "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f"
+          }
+        ]
+      },
+      "derivedName": "Bridge2"
+    }
+  ],
+  "eoas": [
+    { "address": "0x263294039413B96D25E4173a5F7599F8b3801504" },
+    { "address": "0x45C3bbc5cA908ab49441FFe9742b919fC6dDb10A" },
+    { "address": "0x58E1b0E63C905D5982324FCd9108582623b8132e" },
+    { "address": "0x720237467c57cDF4bf9A501c77a27b5076d76E04" },
+    { "address": "0xda6816df552c3f9e0FB64979fb357800d690d79B" },
+    { "address": "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc" },
+    { "address": "0xf9d2282A4A4C216f624717C0747D23146FC048c5" }
+  ],
+  "abis": {
+    "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": [
+      "constructor(address[] hotAddresses, address[] coldAddresses, uint64[] powers, address usdcAddress, uint64 _disputePeriodSeconds, uint64 _blockDurationMillis, uint64 _lockerThreshold)",
+      "event ChangedBlockDurationMillis(uint64 newBlockDurationMillis)",
+      "event ChangedDisputePeriodSeconds(uint64 newDisputePeriodSeconds)",
+      "event ChangedLockerThreshold(uint64 newLockerThreshold)",
+      "event Deposit(address indexed user, uint64 usd)",
+      "event FailedPermitDeposit(address user, uint64 usd, uint32 errorCode)",
+      "event FailedWithdrawal(bytes32 message, uint32 errorCode)",
+      "event FinalizedValidatorSetUpdate(uint64 epoch, bytes32 hotValidatorSetHash, bytes32 coldValidatorSetHash)",
+      "event FinalizedWithdrawal(address indexed user, address destination, uint64 usd, uint64 nonce, bytes32 message)",
+      "event InvalidatedWithdrawal(tuple(address user, address destination, uint64 usd, uint64 nonce, uint64 requestedTime, uint64 requestedBlockNumber, bytes32 message) withdrawal)",
+      "event ModifiedFinalizer(address indexed finalizer, bool isFinalizer)",
+      "event ModifiedLocker(address indexed locker, bool isLocker)",
+      "event Paused(address account)",
+      "event RequestedValidatorSetUpdate(uint64 epoch, bytes32 hotValidatorSetHash, bytes32 coldValidatorSetHash, uint64 updateTime)",
+      "event RequestedWithdrawal(address indexed user, address destination, uint64 usd, uint64 nonce, bytes32 message, uint64 requestedTime)",
+      "event Unpaused(address account)",
+      "function batchedDepositWithPermit(tuple(address user, uint64 usd, uint64 deadline, tuple(uint256 r, uint256 s, uint8 v) signature)[] deposits)",
+      "function batchedFinalizeWithdrawals(bytes32[] messages)",
+      "function batchedRequestWithdrawals(tuple(address user, address destination, uint64 usd, uint64 nonce, tuple(uint256 r, uint256 s, uint8 v)[] signatures)[] withdrawalRequests, tuple(uint64 epoch, address[] validators, uint64[] powers) hotValidatorSet)",
+      "function blockDurationMillis() view returns (uint64)",
+      "function changeBlockDurationMillis(uint64 newBlockDurationMillis, uint64 nonce, tuple(uint64 epoch, address[] validators, uint64[] powers) activeColdValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures)",
+      "function changeDisputePeriodSeconds(uint64 newDisputePeriodSeconds, uint64 nonce, tuple(uint64 epoch, address[] validators, uint64[] powers) activeColdValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures)",
+      "function changeLockerThreshold(uint64 newLockerThreshold, uint64 nonce, tuple(uint64 epoch, address[] validators, uint64[] powers) activeColdValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures)",
+      "function coldValidatorSetHash() view returns (bytes32)",
+      "function disputePeriodSeconds() view returns (uint64)",
+      "function emergencyUnlock(tuple(uint64 epoch, address[] hotAddresses, address[] coldAddresses, uint64[] powers) newValidatorSet, tuple(uint64 epoch, address[] validators, uint64[] powers) activeColdValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures, uint64 nonce)",
+      "function epoch() view returns (uint64)",
+      "function finalizeValidatorSetUpdate()",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function finalizers(address) view returns (bool)",
+      "function getLockersVotingLock() view returns (address[])",
+      "function hotValidatorSetHash() view returns (bytes32)",
+      "function invalidateWithdrawals(bytes32[] messages, uint64 nonce, tuple(uint64 epoch, address[] validators, uint64[] powers) activeColdValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures)",
+      "function isVotingLock(address locker) view returns (bool)",
+      "function lockerThreshold() view returns (uint64)",
+      "function lockers(address) view returns (bool)",
+      "function modifyFinalizer(address finalizer, bool _isFinalizer, uint64 nonce, tuple(uint64 epoch, address[] validators, uint64[] powers) activeValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures)",
+      "function modifyLocker(address locker, bool _isLocker, uint64 nonce, tuple(uint64 epoch, address[] validators, uint64[] powers) activeValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures)",
+      "function nValidators() view returns (uint64)",
+      "function paused() view returns (bool)",
+      "function pendingValidatorSetUpdate() view returns (uint64 epoch, uint64 totalValidatorPower, uint64 updateTime, uint64 updateBlockNumber, uint64 nValidators, bytes32 hotValidatorSetHash, bytes32 coldValidatorSetHash)",
+      "function requestedWithdrawals(bytes32) view returns (address user, address destination, uint64 usd, uint64 nonce, uint64 requestedTime, uint64 requestedBlockNumber, bytes32 message)",
+      "function totalValidatorPower() view returns (uint64)",
+      "function unvoteEmergencyLock()",
+      "function updateValidatorSet(tuple(uint64 epoch, address[] hotAddresses, address[] coldAddresses, uint64[] powers) newValidatorSet, tuple(uint64 epoch, address[] validators, uint64[] powers) activeHotValidatorSet, tuple(uint256 r, uint256 s, uint8 v)[] signatures)",
+      "function usdcToken() view returns (address)",
+      "function usedMessages(bytes32) view returns (bool)",
+      "function voteEmergencyLock()",
+      "function withdrawalsInvalidated(bytes32) view returns (bool)"
+    ]
+  },
+  "usedTemplates": {}
+}

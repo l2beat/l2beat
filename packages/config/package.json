@@ -18,7 +18,6 @@
     "socket-crawl": "node -r esbuild-register scripts/socketcrawl",
     "socket-convert": "node -r esbuild-register scripts/socketconvert",
     "fill-ts": "node -r esbuild-register scripts/fillts",
-    "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",

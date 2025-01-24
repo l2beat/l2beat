@@ -90,7 +90,7 @@ function BridgesChartHeader({
   return (
     <header className="flex justify-between">
       <div>
-        <h1 className="text-xl font-bold md:text-2xl">Value Locked</h1>
+        <h1 className="text-xl font-bold md:text-2xl">Value Secured</h1>
         <ChartTimeRange range={timeRange} />
       </div>
       <div className="flex flex-col items-end">

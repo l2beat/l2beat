@@ -1,21 +1,26 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
+  isArchived: true,
   discovery,
-  badges: [],
+  additionalBadges: [],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Parallel',
     slug: 'parallel',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    headerWarning:
+      'Parallel is [deprecating their Orbit stack Layer 2](https://medium.com/@ParallelFi/the-withdrawal-on-parallel-l2-is-now-available-c3b4b572864e).',
     description:
       'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
     links: {
@@ -32,7 +37,6 @@ export const parallel: Layer2 = orbitStackL2({
         'https://t.me/parallelfi_community',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   trackedTxs: [
     {

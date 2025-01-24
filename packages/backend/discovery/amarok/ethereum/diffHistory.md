@@ -1,3 +1,337 @@
+Generated with discovered.json: 0x9cba6b283436eb2fcdd8335acd38aa4195ba4877
+
+# Diff at Mon, 20 Jan 2025 11:09:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21629064
+- current block number: 21629064
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629064 (main branch discovery), not current.
+
+```diff
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+      directlyReceivedPermissions.0.from:
++        "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+    }
+```
+
+```diff
+    contract Relayer10 (0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      issuedPermissions.1.to:
++        "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      issuedPermissions.0.target:
+-        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
+    }
+```
+
+```diff
+    contract Relayer5 (0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9"
+      issuedPermissions.0.to:
++        "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9"
+    }
+```
+
+```diff
+    contract Relayer1 (0xaBcC9b596420A9E9172FD5938620E265a0f9Df92) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      issuedPermissions.1.to:
++        "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      issuedPermissions.0.target:
+-        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+      receivedPermissions.1.from:
++        "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+      receivedPermissions.0.target:
+-        "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+      receivedPermissions.0.from:
++        "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+      directlyReceivedPermissions.0.target:
+-        "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      directlyReceivedPermissions.0.from:
++        "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+      receivedPermissions.1.from:
++        "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+      receivedPermissions.0.target:
+-        "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+      receivedPermissions.0.from:
++        "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+    }
+```
+
+Generated with discovered.json: 0x4b7c46a103cfc7425d971c364573e5fcbc38ca91
+
+# Diff at Mon, 20 Jan 2025 09:24:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21629064
+- current block number: 21629064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629064 (main branch discovery), not current.
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      fieldMeta.watcherManager.type:
++        "PERMISSION"
+    }
+```
+
+```diff
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d) {
+    +++ description: None
+      fieldMeta.WATCHERS.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0x928d06b615df002af069b0d831fde9c695890f54
+
+# Diff at Wed, 15 Jan 2025 09:44:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21388078
+- current block number: 21629064
+
+## Description
+
+Signer change in a sub-MS.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1) {
+    +++ description: None
+      values.$members.1:
++        "0xbe8109517300c78f2bbdC00d9EA8Cf597160017E"
+      values.$members.0:
+-        "0xbe8109517300c78f2bbdC00d9EA8Cf597160017E"
++        "0x8B85EA591d41F29F5c741ea22Ed6B4ad71a750ba"
+      values.multisigThreshold:
+-        "1 of 1 (100%)"
++        "1 of 2 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xc7414748081f2c9e2bf85e8c9b38dc502ab947ae
+
+# Diff at Thu, 12 Dec 2024 18:00:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21285509
+- current block number: 21388078
+
+## Description
+
+Multisig threshold change, ignored lastProposeAggregateRootAt.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b) {
+    +++ description: None
+      values.$members.13:
+-        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.12:
+-        "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682"
+      values.$members.11:
+-        "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895"
++        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.10:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682"
+      values.$members.9:
+-        "0x40b46a6C2DEFdCFC1b6Cfb667CD0c024F1FfBBA9"
++        "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895"
+      values.$members.8:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.7:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "0xf0c1d7d38972c117F899Ea190afd6FeEee04E5fd"
+      values.$members.6:
+-        "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.5:
+-        "0x6fd2072B961aCC9bd6e188f957a0FB1CEb8632dc"
++        "0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e"
+      values.$members.4:
+-        "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
++        "0x5aA748326f03C651749E7998D88647e59Ee386Bc"
+      values.$members.3:
+-        "0x5aA748326f03C651749E7998D88647e59Ee386Bc"
++        "0xebD4919C075417a86F19713dADe101852867A04F"
+      values.$members.2:
+-        "0xebD4919C075417a86F19713dADe101852867A04F"
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.1:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
+      values.$members.0:
+-        "0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
++        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$threshold:
+-        6
++        5
+      values.multisigThreshold:
+-        "6 of 14 (43%)"
++        "5 of 12 (42%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285509 (main branch discovery), not current.
+
+```diff
+    contract RelayerProxyHub3 (0xB4F8D176466f5F544bAd53737bffAaeA17185c05) {
+    +++ description: None
+      values.lastProposeAggregateRootAt:
+-        1732782143
+    }
+```
+
+Generated with discovered.json: 0x98b4f5e84bbaff9188ce66e71b18ab07b6613d18
+
+# Diff at Tue, 10 Dec 2024 10:36:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9ed5a41ddcad978cfdf826bc7a4827bf4a91c814 block: 21285509
+- current block number: 21285509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21285509 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Relayer3 (0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer10 (0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub1 (0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer5 (0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer1 (0xaBcC9b596420A9E9172FD5938620E265a0f9Df92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub3 (0xB4F8D176466f5F544bAd53737bffAaeA17185c05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub2 (0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer7 (0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer11 (0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x08be3bca758a6a558eaa261af2e07743cd31e7ae
 
 # Diff at Thu, 28 Nov 2024 10:09:41 GMT:

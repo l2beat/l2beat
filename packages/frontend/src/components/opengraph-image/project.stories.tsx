@@ -15,5 +15,6 @@ export const Default: Story = {
     slug: 'arbitrum',
     name: 'Arbitrum',
     size: { width: 1200, height: 630 },
+    children: 'SCALING • PROJECT PAGE',
   },
 }

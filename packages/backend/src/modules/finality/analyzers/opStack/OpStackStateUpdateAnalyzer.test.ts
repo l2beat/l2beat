@@ -2,8 +2,8 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { Database } from '@l2beat/database'
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import type { Database } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
 import { OpStackStateUpdateAnalyzer } from './OpStackStateUpdateAnalyzer'
 
 describe(OpStackStateUpdateAnalyzer.name, () => {

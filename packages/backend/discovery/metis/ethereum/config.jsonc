@@ -7,7 +7,9 @@
     "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
   ],
   "names": {
-    "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer",
+    "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer-CTC-batches",
+    "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": "ChainStorageContainer-CTC-queue",
+    "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer-SCC-batches",
     "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "StateCommitmentChain",
     "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig",
     "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken",
@@ -205,7 +207,7 @@
         "getTotalElementsByChainId"
       ]
     },
-    "ChainStorageContainer": {
+    "ChainStorageContainer-SCC-batches": {
       "ignoreMethods": ["get"],
       "fields": {
         "getGlobalMetadataByChainId": {

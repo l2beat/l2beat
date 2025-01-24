@@ -1,10 +1,10 @@
-import { ActivityRecord, Database } from '@l2beat/database'
-import { ProjectId } from '@l2beat/shared-pure'
-import { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
-import { BlockActivityIndexer } from './BlockActivityIndexer'
-import { BlockTargetIndexer } from './BlockTargetIndexer'
-import { DayActivityIndexer } from './DayActivityIndexer'
-import { DayTargetIndexer } from './DayTargetIndexer'
+import type { ActivityRecord, Database } from '@l2beat/database'
+import type { ProjectId } from '@l2beat/shared-pure'
+import type { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
+import type { BlockActivityIndexer } from './BlockActivityIndexer'
+import type { BlockTargetIndexer } from './BlockTargetIndexer'
+import type { DayActivityIndexer } from './DayActivityIndexer'
+import type { DayTargetIndexer } from './DayTargetIndexer'
 
 export interface ActivityIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

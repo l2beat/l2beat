@@ -15,11 +15,6 @@
     ]
     value: "Onchain"
   }
-  destinationToken: {
-    description: "Tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Canonical"
-  }
   exitWindow: {
     definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
@@ -45,11 +40,6 @@
     sentiment: "bad"
     value: "None"
   }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
-  }
 }
 
 // bugbuster stackedRiskView didn't change 1
@@ -60,11 +50,6 @@
     description: "All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum."
     sentiment: "good"
     value: "Onchain"
-  }
-  destinationToken: {
-    description: "Tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Canonical"
   }
   exitWindow: {
     definingMetric: 0
@@ -81,7 +66,7 @@
   }
   sequencerFailure: {
     definingMetric: 43200
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 12h delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
     sentiment: "good"
     value: "Self sequence"
   }
@@ -90,10 +75,5 @@
     description: "Currently the system permits invalid state roots. More details in project overview."
     sentiment: "bad"
     value: "None"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

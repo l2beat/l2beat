@@ -1,4 +1,9 @@
-import { assert, Bytes, EthereumAddress, HEX_REGEX } from '@l2beat/shared-pure'
+import {
+  assert,
+  type Bytes,
+  type EthereumAddress,
+  HEX_REGEX,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export const Quantity = {
@@ -27,22 +32,58 @@ export const EVMTransaction = z
       .optional(),
     input: z.string(),
     type: Quantity.decode.transform((n) => String(n)).optional(),
+    blobVersionedHashes: z.array(z.string()).optional(),
+    blockNumber: z.union([
+      Quantity.decode.transform((n) => Number(n)),
+      z.null(),
+    ]),
   })
-  .transform(({ hash, from, to, input, type }) => ({
-    hash,
-    from,
-    to,
-    data: input,
-    type,
+  .transform((tx) => ({
+    hash: tx.hash,
+    from: tx.from,
+    to: tx.to,
+    data: tx.input,
+    type: tx.type,
+    blobVersionedHashes: tx.blobVersionedHashes,
+    blockNumber: tx.blockNumber,
   }))
 
+export const EVMTransactionResponse = z.object({
+  result: EVMTransaction,
+})
+
+const EVMTransactionReceipt = z.object({
+  logs: z.array(
+    z.object({
+      topics: z.array(z.string()),
+      data: z.string(),
+    }),
+  ),
+})
+
+export const EVMTransactionReceiptResponse = z.object({
+  result: EVMTransactionReceipt,
+})
+
+export type EVMBlock = z.infer<typeof EVMBlock>
+const EVMBlock = z.object({
+  timestamp: Quantity.decode.transform((n) => Number(n)),
+  hash: z.string(),
+  number: Quantity.decode.transform((n) => Number(n)),
+  parentBeaconBlockRoot: z.string().optional(),
+})
+
 export const EVMBlockResponse = z.object({
-  result: z.object({
-    transactions: z.array(EVMTransaction),
-    timestamp: Quantity.decode.transform((n) => Number(n)),
-    hash: z.string(),
-    number: Quantity.decode.transform((n) => Number(n)),
-  }),
+  result: EVMBlock,
+})
+
+export type EVMBlockWithTransactions = z.infer<typeof EVMBlockWithTransactions>
+const EVMBlockWithTransactions = EVMBlock.extend({
+  transactions: z.array(EVMTransaction),
+})
+
+export const EVMBlockWithTransactionsResponse = z.object({
+  result: EVMBlockWithTransactions,
 })
 
 export const EVMBalanceResponse = z.object({

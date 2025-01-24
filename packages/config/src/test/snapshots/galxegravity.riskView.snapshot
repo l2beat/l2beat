@@ -7,11 +7,6 @@
     sentiment: "bad"
     value: "External (DAC)"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: -86400000
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
@@ -28,7 +23,7 @@
   }
   sequencerFailure: {
     definingMetric: 86400000
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1000d delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 1000d delay on this operation."
     secondLine: "1000d delay"
     sentiment: "good"
     value: "Self sequence"
@@ -39,10 +34,5 @@
     secondLine: "5d 14h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

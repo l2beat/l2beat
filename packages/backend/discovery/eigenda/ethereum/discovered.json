@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 21027344,
-  "configHash": "0x66d48c9dde2cf31d21627515d2c02128e361747ff78ef99174e2bda8d1d898da",
+  "blockNumber": 21628459,
+  "configHash": "0x24a314ae7e419a3a7920171b575d691458e35df7314b156f0e3494b071072df0",
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "to": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "via": []
         }
       ],
@@ -88,7 +88,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "to": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "via": []
         }
       ],
@@ -124,7 +124,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "to": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "via": []
         }
       ],
@@ -174,9 +174,7 @@
           "0x35a645a980a13c0cb3024a5e78408ddde2b5affd306cd331ce2be9cd5968ca23",
           "0x9451e780b7a82699a8a5345caf25822345920da114581a31b412b59694f13adc",
           "0xdc9181f5b57437dcaaf3bb375cb770220dd467a179bdcab6f03e752face8d62e",
-          "0x7730acb2b5ee650752a368bef35a1adb3c6ff5c5f4a5bea02ab270995f71de2b",
           "0x5449c61f4d7836d10de82e8ad4a77810589ab145061da0338929c6561545b44c",
-          "0x567f5cd99014498aee2e719ee1a87c7120a16205b724e4ac1b20e90864474174",
           "0x53db8d725c0ab3508a316c447486588e8ecf3f0e312e1eb660a78cc4da0435b9",
           "0x52cdf25657d146c979e43ac697ed359fc5efb203895b5ed797b3c534e6354eb0",
           "0x145b636c35a83c7c7556c0e7dec00a749d211b0657f89784a568416e0a25e2c2",
@@ -189,11 +187,9 @@
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
           "0xcf4cc1f05f4170ef53fde71a959613b16e62c0c342f277631867a342a4ed7e00",
           "0xf4d2e74aefcf9a4201e7fcd300f93faf1628fdf83397a950dd49c48cc5113aaf",
-          "0x1d32e0504112b36c7a6a366f240377b60afea521d5395183530ae19c200e3d65",
           "0x2b8ecfbc8ddc1cf0fd356e16eb1e4c4b36df5e35fd6fa1f5b1c36ee5b3c23cb5",
           "0x74e99d8b01a4e92c6c37961c04d1956cab258a9dd036696515961e751101b7db",
           "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
-          "0xb5c088b142b2dd97033afa110f14c9da7c200cf184051120cdcc6606c21ca6a2",
           "0xa690a40ebd66ce38902c677e02aae0ead0211e7c3fa39ea7b3f2abd1e97cef53",
           "0xcc56edf242711db7c53178bfdc4d7e40221c1baaa84531b3d311cbdacca1a201",
           "0xa7c993401ecdaacd73e1db1bc2072602f12a88c59f3ea03b138d9589bc5cd900",
@@ -205,19 +201,14 @@
           "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
           "0x512ddcdcd4e5969911b89a5b7673fa11c18669f13f5d227fbfa4fe74452809b5",
           "0x6f6bb4800c7f533bbbfd0887c4e0c6b5dc30c3161a07b9d93f79e7351cc76d99",
-          "0x7c30dd2baf4333dcd3c9ca87a0bed83db48c28d7ef51d9abcf81f7f28484cfae",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
-          "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
           "0x45511e592e63f31ee9d590d400a88fea67d774959e8311c60e80c5dd8007821b",
           "0xcd20267af3ab10d4f8ba356d3b2ee2479d47214c981074ba8dd5852d10f67e37",
           "0x1b69dd1bd6075967241a19424bedf47abbd6e1c096757fa347b89b2bbd658cdb",
           "0x8feaa592bbd5699a73eddcfcafc7fc264f210145a0a24d63979d6be2e6a5c0c3",
-          "0xbcef38e227949081e43edb1ae15ce4b3aed9ca83171673e2ce3b17de3b0cc236",
           "0xcffbe594450f504166351b566f219f6f04720479e380652dbbc5cb43fe812b35",
-          "0x2132f42328aea8f2f05aefef829d08027201a19ed7752e9adae92424cb8c6022",
           "0x9e9ac054de136666faca763435497280f286223f6d412e4ca844a7916d7d3fc2",
           "0x2c785bd766946121479e4b017d543dcb3834c895b0aba4eb06c4d005ac0c598a",
-          "0xcb7644ecdc1e03e4e841e1026f054156d906941450e454a130265b0b2999ac68",
           "0xed3e75b0d95c82ef333aa13929a00b8e6c4e04c812006b21f3743c78f774992a",
           "0x7bd201d192cd84f224b5fc8fd8b3ce7ce8009021d4253d57dc44e7276fc20ae0",
           "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb",
@@ -239,46 +230,31 @@
           "0xfdaa0fe4307b2e9f18c1211f08ba2613a2ec3002eaad3e2d61f87b9cb25e305d",
           "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
           "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
-          "0xd6e2be452864cc8794926587487737ab897b2ad406ec3da00c017428674d531b",
           "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
           "0x23300304fd0646813aa0be7ccc7118087f34331f5892b9dd8ae54b6f0c669224",
           "0xddc70367e7acf0865b3da4c7bd35bd822f00abe639de80a507536684027f8cab",
           "0x495069623e95f02bcc9e1d2b3648723d7f41ea7d675d7627e1bf5a61016f4836",
-          "0x63f7150e8558b88e054a77bd4da64949d3568d26157b4d06e30b9b1d30502e34",
           "0xf5cb5ed8b9977a41406e89704eb1e0d06cad740a6cde74857036f17e0a01b4a9",
           "0x4e69818bbb7112a75a417a8da67ba346b541bc18a4fcd78897cf0d20d5573f14",
-          "0x80e3f6d141688bb29420c312878954ff58b508e5b7242b3ecd7b7214d5df15e4",
-          "0x224c36e2f4706dd3515f7f6396de04b36a23f7a8fa33fd3953d4d52592a54139",
           "0xb1466ebd795b92cdd28a91fda29fc81ddbb10d46e2a29c1bec4be99431dbcf1d",
-          "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f",
           "0x0496a1c5a3f9d2350177e1d3fc810b61acfcfd24e1d40e1d716524fd379e858a",
           "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
           "0x298a5d7f39ddadc4ea6ec53dfe8f53da3bcb79f78959d6f0b052db493af7a750",
           "0x94d2c886f24ae27781d3da791b60f350b623ee1bd098ae2afdf078536caeecac",
           "0x3de65d5688bab111480ec6fbc980b0de1bdda1c812df51db1e3c677f085553a7",
           "0xeb1e8a9a0cc314d9ebb782fd565febeff180eae541796ce5222209ed97b3c9b2",
-          "0x23f6630e854df99c2176aac4809a29e5a4565bd6721f404604209937c6960a8f",
-          "0xf16a4cf52b0540cc3c979650ec99156b21f1bef1d17fd5d372470d81a03a7bf2",
-          "0x2485088f4d2e5f9089ae09b1916fde5667d1cc6773104197abb49440e692cc41",
-          "0xdbf03be4c90917ec42220446cee2b1226ac96fd074c5c03501e49f5b199674f8",
-          "0xefb45317c27a2b82a1c6f8d939a14b769e53b677e19a53665d03ce8e376df45f",
           "0x3a552b77ef1900fb007ad48c8d3c350381872ed1364a590b34ac3ce717c1fe8d",
-          "0xd15f3e73ac81a7f7e272a2f2f323e952191dd9b1d5657bb8c3f9549e1df62afc",
           "0x0bab77e7b94af273411482782c1999adfc91b7d76af43eb60b4802278b8204d0",
           "0xc9b5d442ddc595b864aa084df07b9916eb8f0cdd5db35b3bb31ee0d92f3f87a7",
           "0xfc21b74985e0e61048bc1b2ac0ae1ed161df79c844f622d1d196bc0e9c4b1ae6",
           "0x5daadb1375f140b8fc46467900d9fdf9bc1102865f14cd03b97828dca7370f5d",
-          "0x1d440e1f3778d49fac0276a77e4e4890973ca6e30188d774819654d6857528b1",
           "0x1b73d155033b05e547058feec5392b5149df5e0486939fbddcd8370f29996ff5",
           "0xe5cd2e818d6329b8798fd0458768ff2556e64399843ee9e1a4745594c845f29f",
           "0x96a8253ec47844b652a612aa4150bb92275490d6263c2175a585de95d6eaecbd",
           "0xff1a2ff97703610ad072e0d3792fea94aa13f2b5d95b791a884916c7e148dc7c",
           "0xc821b71eedeb24dc5b0da3644bfecea1aadfb73ec66ee09f7ecb76165232cd77",
           "0xe2a7aca3a4a60407b3faf5aeb525404c583d39336e7fcb00328fa9d5ae8ab2ce",
-          "0x43274a5e2030994531f497f5dca641c3eeccd4e4c083b0d1527694562e91825e",
           "0x5a3cb349f8416f06020994e9d0288283b70b432b049ddc0d6cd88823a1238f54",
-          "0x3d27c4a144b4627134658fedd9753faeedd9e738276360a2d1566587f165a5bc",
-          "0xe02eb821060cd7b07b2f998d5409117190a38200eff09700ffaa322c5819008d",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x9f38709f446fcd85a0a1909aa45a6ef8efcdbf85df20073e598db86e566ea2ea",
           "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
@@ -300,8 +276,6 @@
           "0xfaadebdb6cb8d82a27c41dccb96d35b6a42c45132cb777a1b3ba70c3fb6b2370",
           "0x5b2274de8738752b57013b4b6bc7da9d3b1d231d9f09e9cec3387c806f84f2a0",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
-          "0xb2a1eea9734c6913d8bb849051d4cc19b8310a134a49054395129b1a20f299db",
-          "0xbfa7b15ee3e230688bae0116125206f07046efaefc4983df233efc4f635b0c83",
           "0x7589e32e34b503623a02b00149346424838461e88188478f3129c3c020224fd3",
           "0x6c1d43ae1a74bfbb3194940cac14182a6d75bd447e79f5dd5d8c4e1f5a19bc12",
           "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
@@ -322,46 +296,33 @@
           "0xde53519c0b50ce1cd275100ee06201a3b7226f63a30b86dd2cb316111738eaf5",
           "0x39495b08d4d21acf806b4c32512ac907e1dcd2a3217d5d5b9fd20f25714c8a36",
           "0x1861c2cf819ad84c9e6de80ba0f5314734d8ade8892321e381baec534c3c3fc2",
-          "0x00f23d80265845805632286d56635c29d2a4f0743a07e36e686d9dabfaff93c1",
-          "0x4234c98d060d30258d25732fa8f252686dddda8758ccd6e3fe1fc82f4b97f6b5",
           "0x83a970734199a554104e51933e39e7f712000abb43de137401120483a36bce50",
-          "0x3bd1aa0ed62a2a4d97ac6376e32d66d7b6b98de53a93bd2a8393b3ef88237b4e",
-          "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
           "0x3ceb264831fd0409c2be704857d44726a904ffb020c199cc0e965c076104d170",
-          "0xea0a4d9f9735dbd78e46e26120e10320f583a4dcaa93eedd292237451651c67e",
           "0x7a56a2226e44d5e4a2194d23f492a418bee9a3088e7809a239838b81c8a1a8d7",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
           "0x8f6ea0107f79f10ea0198872746c612f0878d26bc8f285199130d2d00a10e092",
-          "0xd6d38b5a8e2a4cf5abf95c8173840aa774fac2ad98fd2c7bdaed8921063e6425",
           "0x81eab2df34764a3124ba5b3e5a8e017418fbd5b7db42fc92b24333f79a010801",
-          "0x91f9c3a43cd54c92a6f3253398e8f592d1b6ad8d376fe189a81786a6a1a84dde",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x5cba09edb487ff0398e56aa7add0675724b755d5ef0feb06ef03f26ace53745a",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
-          "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
           "0x7020be1384be2be43386e97a3b5b332027a86df13dd684a5b2c6f109b560e0af",
           "0xe9b67ca9a3930733843aa8b2ccddf5257a88517f5a71686bfd8b5ce28a1cf92f",
           "0x1c110f1cd7a151472377c5576c61825dec9d057ab1d188fe02b77900ab890424",
           "0x90602bdb9617a0d2f08f30c8a03bf3e37052f0e0c24965ee3406a42f55c449dc",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
           "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
-          "0x8482ab441df56bd6332c29b019b37eb8810cda09a7011316f9d8f1448a77b52b",
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x607bfc20f482482ff1a1585e2d1296146cce65cef0fa271eecba591de650576e",
           "0x6d703438b7e75f6adae53e8c3f48de7256db52a20a6aca679a07cf5dceb537c9",
           "0x839f4b2b3fcfabfcf03a1fda25214870c95e3c905a0f8c0a885ee53177df960c",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
-          "0xf401d55add4ba77a5d6122d10e30c7324715ee0c76c6c89ef179a3c3259e5aff",
           "0x61a037630ed03eba219a0c1b99e744f25072c3ec2040d50091664182b1feee43",
-          "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
           "0xe5418418d084fbf58aaab319d27d38d56a1fe417ee3d553c50265c6461fe296a",
           "0x9a9465fec50da13302323f66f8fa753de709d3faa299f66f9a955e676563da45",
-          "0xb7c6d23c14482f3f1c57237b92ae3be97b917abbb3af8461783755b237093174",
           "0x9e6f62da5509519a81e7ce9549000fa7991483cb9053221968351252b70a1fb9",
           "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
           "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
-          "0x9f80a535ab06889e44d4d1efd4c06f5fbbef89051cd4151fcf434edc755f9ffc",
           "0xab8f5fb53d5b1a01f560a22700bc55f71807b21523a25ff674837245dab433a8",
           "0x37826de7eefbbb8ede0f1b634eb5029b2fa1788c1fe47d7b6182c3533f0d07d1",
           "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
@@ -385,7 +346,27 @@
           "0x2e8be17a9566a25a30c37aaaa57a870a922d9713833cd401a0d59d9e67fa9dcc",
           "0x6b9d91f76e2c7d4fa17b0c498144cc857b43c1488f6f7a0cc7ed4a5f4c1fed5a",
           "0xea61fbbb7f1348ee997d00f89fa83c92ede1d2f2b4962b30e29e46ca39b40e35",
-          "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3"
+          "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
+          "0xaf930adfea7effc82f17b340f479fe75bbab93e76a83a3014e89ebcd7eeb3521",
+          "0x804f5abbee04949521088005e87e72569b26043b13e4645953eb39adb74cfc6e",
+          "0x958ebc7061e9c6b6f55330547d053587e465f1b17d3d29c9e0ff7fced335b1fc",
+          "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
+          "0x13cb0150a640902f3d32e152e340384441e1c0bcfd3b34cf17b3f76c6030ab82",
+          "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
+          "0x903031a70695f8c94aed1a36044804a65be3da21523663c5e44d95bce12bb261",
+          "0xb7c6d23c14482f3f1c57237b92ae3be97b917abbb3af8461783755b237093174",
+          "0x5d1b4cf5cb2b91e53f4f9bcf8caec3555d2470c1d525423cafe86f5e66f56c24",
+          "0xd6d38b5a8e2a4cf5abf95c8173840aa774fac2ad98fd2c7bdaed8921063e6425",
+          "0x4234c98d060d30258d25732fa8f252686dddda8758ccd6e3fe1fc82f4b97f6b5",
+          "0x567f5cd99014498aee2e719ee1a87c7120a16205b724e4ac1b20e90864474174",
+          "0x7730acb2b5ee650752a368bef35a1adb3c6ff5c5f4a5bea02ab270995f71de2b",
+          "0x1d32e0504112b36c7a6a366f240377b60afea521d5395183530ae19c200e3d65",
+          "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
+          "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
+          "0xbdd732ea30885f35952cc61fb2fa054a2bad17bc86626ef2abd0e26aab36442e",
+          "0xb2a1eea9734c6913d8bb849051d4cc19b8310a134a49054395129b1a20f299db",
+          "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
+          "0x40ade5577b77152036616d1655f9127a6ae08cd8234c1043e08626f59bf8065f"
         ],
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -407,14 +388,16 @@
         },
         "quorumCount": {
           "severity": "HIGH",
-          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config"
+          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
+          "type": "RISK_PARAMETER"
         },
         "registeredOperators": {
           "description": "List of all registered operators ids"
         },
         "ejectionCooldown": {
           "severity": "MEDIUM",
-          "description": "The time in seconds that an operator must wait before being able to re-register after being ejected."
+          "description": "The time in seconds that an operator must wait before being able to re-register after being ejected.",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "RegistryCoordinator"
@@ -452,21 +435,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "67306612251289776260048",
+        "totalShares": "33341287514195386861859",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -483,7 +469,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "to": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "via": []
         }
       ],
@@ -559,21 +545,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "915686175704614960787",
+        "totalShares": "828316814013991705728",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -603,7 +592,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "nonce": 8,
         "VERSION": "1.3.0"
       }
     },
@@ -640,21 +629,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "30348713362539300926582",
+        "totalShares": "19720928647452952338118",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -691,21 +683,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "150612876423971940649752",
+        "totalShares": "150311496525519038834902",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -742,21 +737,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "13298735743627740371880",
+        "totalShares": "7681024153536765216400",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -793,30 +791,67 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "18282072332895161295365",
+        "totalShares": "17953962891806745307202",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
     {
-      "name": "",
+      "name": "StrategyBase",
       "address": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
       "unverified": true,
+      "template": "eigenlayer/Strategy",
+      "proxyType": "Beacon proxy",
+      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
+      "ignoreInWatchMode": ["totalShares"],
       "sinceTimestamp": 1724651639,
-      "values": { "$immutable": true }
+      "values": {
+        "$admin": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+        "$beacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
+        "$implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
+        "paused": 0,
+        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
+        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+        "totalShares": "3559840567650574613682376",
+        "underlyingToken": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
+      },
+      "fieldMeta": {
+        "getTVLLimits": {
+          "severity": "LOW",
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "severity": "LOW",
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "severity": "LOW",
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "derivedName": "StrategyBase"
     },
     {
       "name": "StrategyBaseTVLLimits",
@@ -851,21 +886,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "33004243777841745913082",
+        "totalShares": "30596916045323549202039",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -876,30 +914,31 @@
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
+      "displayName": "ProxyAdmin",
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
         },
         {
           "permission": "upgrade",
-          "target": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
         },
         {
           "permission": "upgrade",
-          "target": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
         },
         {
           "permission": "upgrade",
-          "target": "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
         },
         {
           "permission": "upgrade",
-          "target": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
         },
         {
           "permission": "upgrade",
-          "target": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
         }
       ],
       "sinceTimestamp": 1712353787,
@@ -920,7 +959,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "to": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "via": []
         }
       ],
@@ -968,7 +1007,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 49712,
+        "batchId": 77873,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1000,25 +1039,29 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 49712,
+        "taskNumber": 77873,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
         "BLOCK_STALE_MEASURE": {
           "severity": "MEDIUM",
-          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert."
+          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert.",
+          "type": "RISK_PARAMETER"
         },
         "quorumAdversaryThresholdPercentages": {
           "severity": "MEDIUM",
-          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on."
+          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.",
+          "type": "RISK_PARAMETER"
         },
         "quorumConfirmationThresholdPercentages": {
           "severity": "MEDIUM",
-          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on."
+          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum and so on.",
+          "type": "RISK_PARAMETER"
         },
         "batchConfirmers": {
           "severity": "MEDIUM",
-          "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge."
+          "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "EigenDAServiceManager"
@@ -1056,21 +1099,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "10433810009334661120831",
+        "totalShares": "9723121253560135235192",
         "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1107,21 +1153,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "563024806287939937628825",
+        "totalShares": "936225476617155133310065",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1158,21 +1207,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "79932414729799846937868",
+        "totalShares": "80327706631562480166265",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1209,21 +1261,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "7856762846985112870851",
+        "totalShares": "5626003368192963817566",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1254,21 +1309,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "270465622153764215381112078",
+        "totalShares": "401736739002147125523441464",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1305,21 +1363,24 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8365968530974423246799",
+        "totalShares": "8356580441429392320800",
         "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "fieldMeta": {
         "getTVLLimits": {
           "severity": "LOW",
-          "description": "Maximum TVL of the strategy."
+          "description": "Maximum TVL of the strategy.",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
           "severity": "LOW",
-          "description": "Maximum value of one deposit transaction"
+          "description": "Maximum value of one deposit transaction",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
           "severity": "LOW",
-          "description": "Same as TVL limit"
+          "description": "Same as TVL limit",
+          "type": "RISK_PARAMETER"
         }
       }
     },
@@ -1334,7 +1395,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "to": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "via": []
         }
       ],
@@ -1927,12 +1988,42 @@
       "function userUnderlying(address user) returns (uint256)",
       "function userUnderlyingView(address user) view returns (uint256)",
       "function withdraw(address depositor, address token, uint256 amountShares)"
+    ],
+    "0xe9FA8F904d97854C7389b68923262ADCC6C27827": [
+      "constructor(address _strategyManager)",
+      "event ExchangeRateEmitted(uint256 rate)",
+      "event Initialized(uint8 version)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
+      "event StrategyTokenSet(address token, uint8 decimals)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
+      "function explanation() pure returns (string)",
+      "function initialize(address _underlyingToken, address _pauserRegistry)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function setPauserRegistry(address newPauserRegistry)",
+      "function shares(address user) view returns (uint256)",
+      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
+      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
+      "function strategyManager() view returns (address)",
+      "function totalShares() view returns (uint256)",
+      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
+      "function underlyingToken() view returns (address)",
+      "function unpause(uint256 newPausedStatus)",
+      "function userUnderlying(address user) returns (uint256)",
+      "function userUnderlyingView(address user) view returns (uint256)",
+      "function withdraw(address recipient, address token, uint256 amountShares)"
     ]
   },
   "usedTemplates": {
-    "eigenlayer/EjectionManager": "0xb5c46205bf1e35452e10c8015c98bece257b7c2adb82ab4999fda33193a8a894",
-    "eigenlayer/Strategy": "0xecfa84ed37fe2b3a715680ef8f3137e1bfd82351afa85222bc0241a5c8714272",
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "eigenlayer/EjectionManager": "0x8ceb5dda8b87f1f70640cb025eae396a7320f2ab6e2de45c469be35e31d4ae45",
+    "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

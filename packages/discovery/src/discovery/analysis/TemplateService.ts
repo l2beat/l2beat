@@ -2,20 +2,15 @@ import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
 
 import { hashJson } from '@l2beat/shared'
-import { EthereumAddress, Hash256, json } from '@l2beat/shared-pure'
-import { merge } from 'lodash'
+import { EthereumAddress, type Hash256, type json } from '@l2beat/shared-pure'
 import {
   flattenFirstSource,
   formatIntoHashable,
   sha2_256bit,
 } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
-import {
-  DiscoveryContract,
-  RawDiscoveryConfig,
-} from '../config/RawDiscoveryConfig'
-import { ContractSources } from '../source/SourceCodeService'
+import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
@@ -173,39 +168,6 @@ export class TemplateService {
     this.allTemplateHashes = result
     return result
   }
-
-  applyTemplateOnContractOverrides(
-    contractOverrides: ContractOverrides,
-    template: string,
-  ): ContractOverrides {
-    return {
-      name: contractOverrides.name,
-      address: contractOverrides.address,
-      ...this.applyTemplate(contractOverrides, template),
-    }
-  }
-
-  applyTemplate(
-    contract: DiscoveryContract,
-    template: string,
-  ): DiscoveryContract {
-    const templateJson = this.loadContractTemplate(template)
-    return DiscoveryContract.parse(merge({}, templateJson, contract))
-  }
-
-  inlineTemplates(rawConfig: RawDiscoveryConfig): void {
-    if (rawConfig.overrides === undefined) {
-      return
-    }
-    for (const [name, contract] of Object.entries(rawConfig.overrides)) {
-      if (contract.extends !== undefined) {
-        rawConfig.overrides[name] = this.applyTemplate(
-          contract,
-          contract.extends,
-        )
-      }
-    }
-  }
 }
 
 function listAllPaths(path: string): string[] {
@@ -220,7 +182,7 @@ function listAllPaths(path: string): string[] {
 }
 
 export function hashFirstSource(sources: ContractSources): Hash256 | undefined {
-  if (!sources.isVerified) {
+  if (!sources.isVerified || sources.sources.length < 1) {
     return
   }
 

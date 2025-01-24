@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { FlatSourcesController } from './FlatSourcesController'
+import type { FlatSourcesController } from './FlatSourcesController'
 
 export function createFlatSourcesRouter(controller: FlatSourcesController) {
   const router = new Router()

@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('chainport')
 const congressSize = discovery.getContractValue<number>(
@@ -131,7 +131,7 @@ export const chainport: Bridge = {
       ),
       discovery.getContractDetails(
         'ChainportCongressMembersRegistry',
-        `Registry of the Chainport Congress members. Acts as a ${congressThreshold}-of-${congressSize} multisig.`,
+        `Registry of the Chainport Congress members. Acts as a ${congressThreshold} / ${congressSize} multisig.`,
       ),
     ],
     risks: [],

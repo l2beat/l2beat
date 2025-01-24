@@ -1,7 +1,7 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
+import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { StageBadge } from '~/components/badge/stage-badge'
-import { UpcomingBadge } from '~/components/badge/upcoming-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
@@ -11,7 +11,6 @@ import {
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { env } from '~/env'
 import { InfoIcon } from '~/icons/info'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
@@ -24,20 +23,16 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
-  const isOther =
-    env.NEXT_PUBLIC_FEATURE_FLAG_OTHER_PROJECTS && project.header.isOther
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5',
+        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5',
         className,
       )}
     >
       <ProjectStat
         title="Tokens"
-        value={
-          <TokenBreakdownStat breakdown={project.header.tvl?.tokenBreakdown} />
-        }
+        value={<TokenBreakdownStat tokenTvl={project.header.tvl?.tokens} />}
       />
       <ProjectStat
         title="Daily UOPS"
@@ -46,27 +41,28 @@ export function ScalingProjectStats({ project, className }: Props) {
           project.header.activity ? (
             <ValueWithPercentageChange
               change={project.header.activity.uopsWeeklyChange}
-              changeClassName="text-base font-medium"
+              className="font-medium !leading-none md:text-xl md:font-bold"
+              changeClassName="md:text-base md:font-medium !leading-none"
             >
               {project.header.activity.lastDayUops.toFixed(2)}
             </ValueWithPercentageChange>
           ) : (
-            <UpcomingBadge />
+            <NoDataBadge />
           )
         }
       />
       <ProjectStat
-        title="30D tx count"
+        title="30D ops count"
         value={
           project.header.activity ? (
-            formatNumber(project.header.activity.txCount)
+            formatNumber(project.header.activity.uopsCount)
           ) : (
-            <UpcomingBadge />
+            <NoDataBadge />
           )
         }
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
-      {project.stageConfig.stage !== 'NotApplicable' && !isOther ? (
+      {project.stageConfig.stage !== 'NotApplicable' ? (
         <ProjectStat
           title="Stage"
           value={
@@ -88,9 +84,7 @@ export function ScalingProjectStats({ project, className }: Props) {
       ) : null}
       <ProjectStat
         title="Type"
-        value={
-          <TypeCell>{isOther ? 'Other' : project.header.category}</TypeCell>
-        }
+        value={<TypeCell>{project.header.category}</TypeCell>}
       />
       <ProjectStat
         title={pluralize(project.header.purposes.length, 'Purpose')}
@@ -119,9 +113,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-gray-500 dark:text-gray-600">
-          {props.title}
-        </span>
+        <span className="text-xs text-secondary">{props.title}</span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">

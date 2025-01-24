@@ -75,15 +75,15 @@ export const OMNICHAIN_TOKENS = escrows
   .map((escrow) => getName(escrow))
   .filter((x, i, a) => a.indexOf(x) === i)
 
+const discovery = new ProjectDiscovery('lzomnichain')
+
 export const OMNICHAIN_ESCROWS = escrows.map((escrow) => ({
   address: escrow.address,
   sinceTimestamp: escrow.sinceTimestamp,
   tokens: escrow.tokens,
   newVersion: true,
   useContractName: true,
-  contract: {
-    name: getName(escrow) + ' Token',
-  },
+  contract: discovery.getContractDetails(escrow.address),
   chain: 'ethereum',
 }))
 
@@ -98,7 +98,6 @@ function getName(escrow: LzTokenEscrow) {
   }
 }
 
-const discovery = new ProjectDiscovery('lzomnichain')
 const inactiveChainIds = ['2', '12']
 interface AppConfig {
   relayer: string

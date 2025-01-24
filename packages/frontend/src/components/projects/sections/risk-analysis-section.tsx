@@ -7,7 +7,7 @@ import { BigPentagonRosette } from '../../rosette/pentagon/big-pentagon-rosette'
 import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 import { type RosetteValue } from '../../rosette/types'
 import { SentimentText } from '../../sentiment-text'
-import { WarningBar } from '../../warning-bar'
+import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
 
@@ -109,7 +109,7 @@ export function SingleRisk({
               className="my-2"
               icon={RoundedWarningIcon}
               text={value.warning.value}
-              color={value.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+              color={sentimentToWarningBarColor(value.warning.sentiment)}
             />
           )}
           {value.description && (

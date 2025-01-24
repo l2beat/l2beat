@@ -6,27 +6,31 @@ import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { ChevronIcon } from '~/icons/chevron'
 import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { ChartLegend } from '../core/chart-legend'
 import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
-import { TvlChartHover } from './tvl-chart-hover'
-import { useTvlChartRenderParams } from './use-tvl-chart-render-params'
+import { RecategorisedTvlChartHover } from './recategorised-tvl-chart-hover'
+import { useRecategorisedTvlChartRenderParams } from './use-recategorised-tvl-chart-render-params'
 
 export function ScalingSummaryTvlChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvlChartRange }) {
-  const { data, isLoading } = api.tvl.chart.useQuery({
+  const { checked } = useRecategorisationPreviewContext()
+  const { data, isLoading } = api.tvl.recategorisedChart.useQuery({
     range: timeRange,
     excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
+    previewRecategorisation: checked,
   })
 
   const { formatYAxisLabel, valuesStyle, columns, change, total } =
-    useTvlChartRenderParams({ data, unit: unit, milestones: [] })
+    useRecategorisedTvlChartRenderParams({ data, unit, milestones: [] })
 
   return (
     <ChartProvider
@@ -35,7 +39,7 @@ export function ScalingSummaryTvlChart({
       formatYAxisLabel={formatYAxisLabel}
       range={timeRange}
       isLoading={isLoading}
-      renderHoverContents={(data) => <TvlChartHover data={data} />}
+      renderHoverContents={(data) => <RecategorisedTvlChartHover {...data} />}
     >
       <section className="flex flex-col gap-4">
         <Header
@@ -45,6 +49,22 @@ export function ScalingSummaryTvlChart({
           timeRange={timeRange}
         />
         <Chart disableMilestones />
+        <ChartLegend
+          elements={[
+            {
+              name: 'Rollups',
+              color: 'bg-indicator-rollups',
+            },
+            {
+              name: 'Validiums & Optimiums',
+              color: 'bg-indicator-validiums-optimiums',
+            },
+            {
+              name: 'Others',
+              color: 'bg-indicator-others',
+            },
+          ]}
+        />
       </section>
     </ChartProvider>
   )
@@ -64,17 +84,17 @@ function Header({ total, unit, change, timeRange }: Props) {
     <div className="flex items-start justify-between">
       <div>
         <div className="flex items-center gap-3">
-          <span className="text-xl font-bold">Value Locked</span>
+          <span className="text-xl font-bold">Value Secured</span>
           <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-blue-400 px-3 py-2 text-[13px] font-bold leading-none text-[#1459CB] dark:border-blue-500 dark:text-blue-500 max-md:hidden"
-            href="/scaling/tvl"
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
+            href="/scaling/tvs"
           >
             View details
             <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
           </Link>
         </div>
         <CustomLink
-          href="/scaling/tvl"
+          href="/scaling/tvs"
           className="flex items-center gap-1 text-xs leading-[1.15] md:hidden"
           underline={false}
         >

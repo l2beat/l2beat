@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x7536c54b991de1839fe16d6c38190cd779ad663f
+
+# Diff at Mon, 20 Jan 2025 11:09:51 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
+      issuedPermissions.0.to:
++        "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
+    }
+```
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      receivedPermissions.3.target:
+-        "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+      receivedPermissions.3.from:
++        "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+      receivedPermissions.2.target:
+-        "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
+      receivedPermissions.2.from:
++        "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
+      receivedPermissions.1.target:
+-        "0x830433dE03ABedE062660CC629e1A2c714272474"
+      receivedPermissions.1.from:
++        "0x830433dE03ABedE062660CC629e1A2c714272474"
+      receivedPermissions.0.target:
+-        "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+      receivedPermissions.0.from:
++        "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+      directlyReceivedPermissions.0.target:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
+      directlyReceivedPermissions.0.from:
++        "0xFb504CD4eD46024B83c4337044995CF112205f18"
+    }
+```
+
+```diff
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+    }
+```
+
+```diff
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+    }
+```
+
+```diff
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+    }
+```
+
+```diff
+    contract  (0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
+      receivedPermissions.0.from:
++        "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
+    }
+```
+
+```diff
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xFb504CD4eD46024B83c4337044995CF112205f18) {
+    +++ description: None
+      directlyReceivedPermissions.3.target:
+-        "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+      directlyReceivedPermissions.3.from:
++        "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+      directlyReceivedPermissions.2.target:
+-        "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
+      directlyReceivedPermissions.2.from:
++        "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
+      directlyReceivedPermissions.1.target:
+-        "0x830433dE03ABedE062660CC629e1A2c714272474"
+      directlyReceivedPermissions.1.from:
++        "0x830433dE03ABedE062660CC629e1A2c714272474"
+      directlyReceivedPermissions.0.target:
+-        "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+      directlyReceivedPermissions.0.from:
++        "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+    }
+```
+
+Generated with discovered.json: 0x536d1a9b795df535fdedbc640fbcb209178395f5
+
+# Diff at Mon, 20 Jan 2025 09:25:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 20792032
+- current block number: 20792032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      fieldMeta.policyAdmin.type:
++        "PERMISSION"
+      fieldMeta.required.type:
++        "PERMISSION"
+    }
+```
+
 Generated with discovered.json: 0x5ab02c379209488d67b40755b0562076d19c466b
 
 # Diff at Fri, 29 Nov 2024 09:08:53 GMT:

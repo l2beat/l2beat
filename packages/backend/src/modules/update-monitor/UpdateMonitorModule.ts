@@ -1,16 +1,13 @@
-import { Logger } from '@l2beat/backend-tools'
-import {
-  ConfigReader,
-  HttpClient as DiscoveryHttpClient,
-  DiscoveryLogger,
-} from '@l2beat/discovery'
+import type { Logger } from '@l2beat/backend-tools'
+import { ConfigReader, DiscoveryLogger } from '@l2beat/discovery'
 import { ChainConverter } from '@l2beat/shared-pure'
 
-import { Config } from '../../config'
-import { Peripherals } from '../../peripherals/Peripherals'
+import { HttpClient } from '@l2beat/shared'
+import type { Config } from '../../config'
+import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { Clock } from '../../tools/Clock'
-import { ApplicationModule } from '../ApplicationModule'
+import type { Clock } from '../../tools/Clock'
+import type { ApplicationModule } from '../ApplicationModule'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateNotifier } from './UpdateNotifier'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
@@ -45,18 +42,18 @@ export function createUpdateMonitorModule(
   )
 
   // TODO: get rid of that once we achieve full library separation
-  const discoveryHttpClient = new DiscoveryHttpClient()
+  const http = new HttpClient()
 
-  const { chains, enableCache } = config.updateMonitor
+  const { chains, cacheEnabled, cacheUri } = config.updateMonitor
   const runners = chains.map((chainConfig) =>
     createDiscoveryRunner(
-      discoveryHttpClient,
-      configReader,
+      http,
       peripherals,
       DiscoveryLogger.SILENT,
       chains,
       chainConfig.name,
-      !!enableCache,
+      !!cacheEnabled,
+      cacheUri,
     ),
   )
 

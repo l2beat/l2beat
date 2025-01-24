@@ -7,8 +7,11 @@ import {
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { formatCurrency } from '~/utils/number-format/format-currency'
+import {
+  type DaBridgeSummaryEntry,
+  type DaSummaryEntry,
+} from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import {
   BasicDaTable,
   getRowTypeClassNames,
@@ -63,7 +66,7 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
 function BridgeCells({
   bridge,
 }: {
-  bridge: DaSummaryEntry['bridges'][number]
+  bridge: DaBridgeSummaryEntry
   excludeBridge?: boolean
 }) {
   const bridgeRisks = mapBridgeRisksToRosetteValues(bridge.risks)
@@ -82,14 +85,14 @@ function BridgeCells({
       >
         <GrissiniCell
           values={bridgeRisks}
-          hasNoBridge={bridge.type === 'NoBridge'}
+          hasNoBridge={bridge.risks.isNoBridge}
         />
       </TableCell>
       <TableCell
         className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]"
         href={bridge.href}
       >
-        {formatCurrency(bridge.tvs, 'usd')}
+        {formatDollarValueNumber(bridge.tvs)}
       </TableCell>
       <TableCell className="text-sm font-medium">
         <ProjectsUsedIn usedIn={bridge.usedIn} />

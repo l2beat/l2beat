@@ -1,17 +1,17 @@
-import { AmountRecord } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import type { AmountRecord } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
 import {
-  AggLayerL2Token,
-  AggLayerNativeEtherPreminted,
-  AggLayerNativeEtherWrapped,
+  type AggLayerL2Token,
+  type AggLayerNativeEtherPreminted,
+  type AggLayerNativeEtherWrapped,
   Bytes,
-  EthereumAddress,
-  UnixTime,
+  type EthereumAddress,
+  type UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { MulticallRequest } from '../../../peripherals/multicall/types'
+import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import type { MulticallRequest } from '../../../peripherals/multicall/types'
 
 export const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
@@ -31,7 +31,7 @@ export type Config<T extends AggLayerAmountConfig['type']> =
   AggLayerAmountConfig & { type: T } & { id: string }
 
 export interface AggLayerServiceDependencies {
-  readonly rpcClient: RpcClient2
+  readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
   readonly bridgeAddress: EthereumAddress
 }

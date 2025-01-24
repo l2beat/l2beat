@@ -17,7 +17,7 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
@@ -93,13 +93,14 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 export const arbitrum: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [
+  additionalBadges: [
     Badge.VM.WasmVM,
     Badge.Stack.Nitro,
     Badge.Other.Governance,
     Badge.Other.L3HostChain,
   ],
   discovery,
+  hasAtLeastFiveExternalChallengers: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -138,7 +139,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -453,6 +453,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
       tokens: '*',
       excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'PEPE', 'rsETH'],
+      premintedTokens: ['LOGX', 'AIUS', 'YBR', 'FFM'],
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
       ...upgradeExecutorUpgradeability,

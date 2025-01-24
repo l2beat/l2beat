@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -7,25 +8,57 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import { type CategorisedScalingEntries } from '~/utils/group-by-main-categories'
+import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingSummaryFilters } from '../../_components/scaling-summary-filters'
-import { OthersComingSoonNotice } from './table/others-coming-soon-notice'
+import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
 
-type Props = CategorisedScalingEntries<ScalingSummaryEntry>
+type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
   const includeFilters = useScalingFilter()
+  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
     rollups: props.rollups.filter(includeFilters),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others?.filter(includeFilters) ?? [],
+    others: props.others.filter(includeFilters),
   }
+
+  const entries = checked
+    ? getRecategorisedEntries(
+        filteredEntries,
+        (a, b) => b.tvlOrder - a.tvlOrder,
+      )
+    : filteredEntries
+
+  const projectToBeMigratedToOthers = useMemo(
+    () =>
+      checked
+        ? []
+        : [
+            ...entries.rollups,
+            ...entries.validiumsAndOptimiums,
+            ...entries.others,
+          ]
+            .filter((project) => project.statuses?.countdowns?.otherMigration)
+            .map((project) => ({
+              slug: project.slug,
+              name: project.name,
+            })),
+    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
+  )
 
   const initialSort = {
     id: 'total',
@@ -37,49 +70,48 @@ export function ScalingSummaryTables(props: Props) {
       <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
       <ScalingSummaryFilters
         items={[
-          ...filteredEntries.rollups,
-          ...filteredEntries.validiumsAndOptimiums,
-          ...filteredEntries.others,
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
         ]}
         className="mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
-            Rollups <CountBadge>{filteredEntries.rollups.length}</CountBadge>
+            Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiums-and-optimiums">
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
             Validiums & Optimiums
-            <CountBadge>
-              {filteredEntries.validiumsAndOptimiums.length}
-            </CountBadge>
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
             Others
-            {filteredEntries.others.length > 0 && (
-              <CountBadge>{filteredEntries.others.length}</CountBadge>
-            )}
+            <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
-            <ScalingSummaryRollupsTable entries={filteredEntries.rollups} />
+            <RollupsInfo />
+            <ScalingSummaryRollupsTable entries={entries.rollups} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiums-and-optimiums">
+          <DirectoryTabsContent value="validiumsAndOptimiums">
+            <ValidiumsAndOptimiumsInfo />
             <ScalingSummaryValidiumsAndOptimiumsTable
-              entries={filteredEntries.validiumsAndOptimiums}
+              entries={entries.validiumsAndOptimiums}
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
-            {filteredEntries.others.length > 0 ? (
-              <ScalingSummaryOthersTable entries={filteredEntries.others} />
-            ) : (
-              <OthersComingSoonNotice />
-            )}
+            <OthersInfo />
+            <ScalingSummaryOthersTable entries={entries.others} />
+            <OtherMigrationTabNotice
+              projectsToBeMigrated={projectToBeMigratedToOthers}
+              className="mt-2"
+            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

@@ -2,7 +2,19 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "across-v3",
-  "initialAddresses": ["0xc186fA914353c44b2E33eBE05f21846F1048bEda"],
+  "initialAddresses": [
+    "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+
+    // NOTE(radomski): All addresses below this comment were added into the
+    // initialAddresses automatically during the process of removing the
+    // check-verified-contracts. When going over this project again please bear in
+    // mind that these addresses could not be used by the project anymore. Decide
+    // for yourself whether keep them here or should they be removed or fetched
+    // from some fields of other contracts.
+    "0xeE3Afe347D5C74317041E2618C49534dAf887c24",
+    "0x48d990AbDA20afa1fD1da713AbC041B60a922c65",
+    "0x3B03509645713718B78951126E0A6de6f10043f5"
+  ],
   "names": {
     "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool",
     "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
@@ -16,7 +28,12 @@
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
     "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32": "WorldChain_Adapter",
-    "0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Alephzero_Adapter"
+    "0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Alephzero_Adapter",
+    "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": "Ink_Adapter",
+    "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2": "Soneium_Adapter",
+    "0xeE3Afe347D5C74317041E2618C49534dAf887c24": "UMAOptimisticOracle",
+    "0x48d990AbDA20afa1fD1da713AbC041B60a922c65": "PolygonTokenBridger",
+    "0x3B03509645713718B78951126E0A6de6f10043f5": "AcrossConfigStore"
   },
   "overrides": {
     "HubPool": {
@@ -95,6 +112,18 @@
     "OptimisticGovernor": {
       "ignoreMethods": ["getCurrentTime"],
       "ignoreRelatives": ["collateral"]
+    },
+    "PolygonTokenBridger": {
+      "ignoreRelatives": [
+        "destination",
+        "l1PolygonRegistry",
+        "l1Weth",
+        "l2WrappedMatic",
+        "maticToken"
+      ]
+    },
+    "UMAOptimisticOracle": {
+      "ignoreMethods": ["getCurrentTime"]
     }
   }
 }

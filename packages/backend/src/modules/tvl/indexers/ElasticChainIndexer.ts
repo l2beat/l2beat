@@ -1,13 +1,13 @@
-import { INDEXER_NAMES } from '@l2beat/config'
+import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import {
   assert,
-  Configuration,
-  RemovalConfiguration,
+  type Configuration,
+  type RemovalConfiguration,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
-import {
+import type {
   ElasticChainAmountConfig,
   ElasticChainAmountIndexerDeps,
 } from './types'

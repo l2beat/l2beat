@@ -1,18 +1,13 @@
 'use client'
 
-import {
-  type RowModel,
-  type Table,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
-import { env } from '~/env'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { compareActivityEntry } from '~/server/features/scaling/activity/utils/compare-activity-entry'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -22,36 +17,26 @@ import { getScalingActivityColumns } from './columns'
 interface Props {
   entries: ScalingActivityEntry[]
   rollups?: boolean
-  customSortedRowModel?: (
-    table: Table<ScalingActivityEntry>,
-  ) => () => RowModel<ScalingActivityEntry>
 }
 
-export function ScalingActivityTable({
-  entries,
-  rollups,
-  customSortedRowModel,
-}: Props) {
+export function ScalingActivityTable({ entries, rollups }: Props) {
   const { metric } = useActivityMetricContext()
   const { sorting, setSorting } = useTableSorting()
 
   const tableEntries = useMemo(() => {
     const tableEntries = entries
+      .sort((a, b) => compareActivityEntry(a, b, { metric }))
       .map((e) => mapToTableEntry(e, metric))
-      .sort((a, b) => {
-        return b.data.pastDayCount - a.data.pastDayCount
-      })
     return tableEntries ?? []
   }, [entries, metric])
 
   const table = useTable({
     columns: getScalingActivityColumns(metric, {
-      activity:
-        !!customSortedRowModel && env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
+      activity: true,
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: customSortedRowModel ?? getSortedRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
     },
@@ -68,12 +53,14 @@ export function ScalingActivityTable({
 function mapToTableEntry(entry: ScalingActivityEntry, metric: ActivityMetric) {
   return {
     ...entry,
-    data: {
-      ...entry.data,
-      change: entry.data[metric].change,
-      pastDayCount: entry.data[metric].pastDayCount,
-      summedCount: entry.data[metric].summedCount,
-      maxCount: entry.data[metric].maxCount,
-    },
+    data: entry.data
+      ? {
+          ...entry.data,
+          change: entry.data[metric].change,
+          pastDayCount: entry.data[metric].pastDayCount,
+          summedCount: entry.data[metric].summedCount,
+          maxCount: entry.data[metric].maxCount,
+        }
+      : undefined,
   }
 }

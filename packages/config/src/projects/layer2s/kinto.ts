@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
 const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
@@ -16,8 +16,9 @@ const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
 export const kinto: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
-  badges: [Badge.RaaS.Caldera],
+  additionalBadges: [Badge.RaaS.Caldera],
   additionalPurposes: ['RWA'],
+  // additionalDiscoveries: {['kinto']: l2discovery}, // not yet ready mainly due to AccessManager not being disco-driveable
   display: {
     name: 'Kinto',
     slug: 'kinto',
@@ -27,11 +28,7 @@ export const kinto: Layer2 = orbitStackL2({
       websites: ['https://kinto.xyz'],
       apps: ['https://engen.kinto.xyz'],
       documentation: ['https://docs.kinto.xyz'],
-      explorers: [
-        'https://explorer.kinto.xyz/',
-        'https://kintoscan.io/',
-        'https://searchkinto.com/',
-      ],
+      explorers: ['https://explorer.kinto.xyz/', 'https://kintoscan.io/'],
       repositories: ['https://github.com/kintoxyz'],
       socialMedia: [
         'https://twitter.com/kintoxyz',
@@ -40,7 +37,6 @@ export const kinto: Layer2 = orbitStackL2({
         'https://medium.com/mamori-finance',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'kinto',
@@ -61,6 +57,7 @@ export const kinto: Layer2 = orbitStackL2({
       },
     ],
   },
+  hasAtLeastFiveExternalChallengers: true,
   discoveryDrivenData: true,
   isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),
@@ -97,8 +94,36 @@ export const kinto: Layer2 = orbitStackL2({
     {
       rollupNodeLink:
         'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
+      securityCouncilReference:
+        'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
     },
   ),
+  nonTemplateTechnology: {
+    otherConsiderations: [
+      {
+        name: 'Enforced smart wallets and KYC',
+        description: `
+      The Kinto L2 node is a fork of Arbitrum's geth implementation with notable changes to the state transition function. 
+      A valid state transition in Kinto [disallows all contract calls by EOAs](https://github.com/KintoXYZ/kinto-go-ethereum/blob/7aba9b812a82d9339d29a2345946c3d7030a0377/core/kinto_hardfork_7.go#L58) and new contract creation, unless specifically whitelisted. 
+      The current whitelist is sourced directly from the KintoAppRegistry smart contract on Kinto L2, and can be modified by its Owner without delay. 
+      This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted.
+        
+      The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.`,
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: "a KYC provider changes the users' KYC status.",
+          },
+        ],
+        references: [
+          {
+            text: 'User Owned KYC - Kinto documentation',
+            href: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/how-does-kinto-solve-it',
+          },
+        ],
+      },
+    ],
+  },
   trackedTxs: [
     {
       uses: [
@@ -211,6 +236,53 @@ export const kinto: Layer2 = orbitStackL2({
       description:
         "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
     }),
+    {
+      address: EthereumAddress('0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013'),
+      sinceTimestamp: new UnixTime(1730655983),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['LINK'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xC9a9f47Ae41Fa4287837751AF7325e87a1dE9326'),
+      sinceTimestamp: new UnixTime(1730656015),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['LINK'],
+      chain: 'arbitrum',
+      includeInTotal: false,
+    },
+    {
+      address: EthereumAddress('0xbE60CC82A67AC7BBA8F41408B0C6833cE73e0E4D'),
+      sinceTimestamp: new UnixTime(1730657767),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['cbBTC'],
+      chain: 'base',
+      includeInTotal: false,
+    },
     {
       address: EthereumAddress('0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94'),
       sinceTimestamp: new UnixTime(1716142367),

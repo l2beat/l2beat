@@ -1,16 +1,24 @@
 import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { HandlerExecutor } from '../handlers/HandlerExecutor'
-import { IProvider } from '../provider/IProvider'
-import { ProxyDetector } from '../proxies/ProxyDetector'
-import { ContractSources } from '../source/SourceCodeService'
-import { SourceCodeService } from '../source/SourceCodeService'
+import { createContractConfig } from '../config/ContractConfig'
+import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import type { HandlerExecutor } from '../handlers/HandlerExecutor'
+import type { IProvider } from '../provider/IProvider'
+import type { ProxyDetector } from '../proxies/ProxyDetector'
+import type { ContractSources } from '../source/SourceCodeService'
+import type { SourceCodeService } from '../source/SourceCodeService'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { AddressAnalyzer } from './AddressAnalyzer'
-import { TemplateService } from './TemplateService'
+import type { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
+  const overrides = DiscoveryContract.parse({})
+  const config = createContractConfig(
+    { address: EthereumAddress.random(), ...overrides },
+    {},
+  )
+
   describe(AddressAnalyzer.prototype.analyze.name, () => {
     it('handles EOAs', async () => {
       const provider = mockObject<IProvider>({
@@ -29,7 +37,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 
@@ -125,7 +133,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 
@@ -137,6 +145,7 @@ describe(AddressAnalyzer.name, () => {
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
+        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -246,7 +255,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 
@@ -258,6 +267,7 @@ describe(AddressAnalyzer.name, () => {
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
+        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -363,7 +373,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         provider,
         address,
-        undefined,
+        config,
         undefined,
       )
 
@@ -375,6 +385,7 @@ describe(AddressAnalyzer.name, () => {
         deploymentTimestamp: undefined,
         isVerified: true,
         proxyType: 'EIP1967 proxy',
+        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),

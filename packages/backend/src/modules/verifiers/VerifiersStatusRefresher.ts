@@ -1,11 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 
-import { ChainConfig, VerifiersListProvider } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import type { ChainConfig, OnchainVerifier } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import { BlockscoutV2Client } from '@l2beat/shared'
-import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
-import { Peripherals } from '../../peripherals/Peripherals'
-import { Clock } from '../../tools/Clock'
+import { assert, type ChainId, UnixTime } from '@l2beat/shared-pure'
+import type { Peripherals } from '../../peripherals/Peripherals'
+import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export type VerifiersStatusRefresherDeps = {
@@ -13,7 +13,7 @@ export type VerifiersStatusRefresherDeps = {
   peripherals: Peripherals
   clock: Clock
   logger: Logger
-  verifiersListProvider: VerifiersListProvider
+  verifiersListProvider: () => Promise<OnchainVerifier[]>
   chains: ChainConfig[]
 }
 
@@ -40,7 +40,7 @@ export class VerifiersStatusRefresher {
   }
 
   async refresh() {
-    const verifiers = this.$.verifiersListProvider()
+    const verifiers = await this.$.verifiersListProvider()
 
     assert(verifiers.length > 0, 'No verifier addresses found')
 

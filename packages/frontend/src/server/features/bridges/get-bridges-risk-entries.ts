@@ -1,74 +1,74 @@
-import { type Bridge, bridges } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
-import { getUnderReviewStatus } from '~/utils/project/under-review'
 import {
-  type ProjectsChangeReport,
+  type BridgeDisplay,
+  type BridgeRiskView,
+  type Project,
+  ProjectService,
+} from '@l2beat/config'
+import { type ValueWithSentiment } from '@l2beat/shared-pure'
+import {
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../projects-change-report/get-projects-change-report'
+import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
 import { getProjectsLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
-import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { getDestination } from './get-destination'
+import {
+  type CommonBridgesEntry,
+  getCommonBridgesEntry,
+} from './get-common-bridges-entry'
 
 export async function getBridgeRiskEntries() {
-  const [tvl, projectsVerificationStatuses, projectsChangeReport] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsVerificationStatuses(),
-      getProjectsChangeReport(),
-    ])
+  const [tvl, projectsChangeReport, projects] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
+      where: ['isBridge'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
+  ])
 
-  const included = bridges.filter(
-    (project) => !project.isUpcoming && !project.isArchived,
-  )
+  return projects
+    .map((project) =>
+      getBridgesRiskEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+        tvl[project.id],
+      ),
+    )
+    .sort(compareTvl)
+}
 
-  const entries = included
-    .map((project) => {
-      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-
-      return getBridgesRiskEntry(project, projectsChangeReport, isVerified)
-    })
-    .filter(notUndefined)
-
-  return orderByTvl(entries, tvl)
+export interface BridgesRiskEntry extends CommonBridgesEntry {
+  type: BridgeDisplay['category']
+  destination: ValueWithSentiment<string>
+  riskView: BridgeRiskView
+  tvlOrder: number
 }
 
 function getBridgesRiskEntry(
-  project: Bridge,
-  projectsChangeReport: ProjectsChangeReport,
-  isVerified: boolean,
+  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks'>,
+  changes: ProjectChanges,
+  tvl: number | undefined,
 ) {
-  const hasImplementationChanged =
-    projectsChangeReport.hasImplementationChanged(project.id.toString())
-  const hasHighSeverityFieldChanged =
-    projectsChangeReport.hasHighSeverityFieldChanged(project.id.toString())
-
   return {
-    id: project.id,
-    href: `/bridges/projects/${project.display.slug}`,
-    type: project.type,
-    name: project.display.name,
-    shortName: project.display.shortName,
-    slug: project.display.slug,
-    warning: project.display.warning,
-    isArchived: project.isArchived,
-    underReviewStatus: getUnderReviewStatus({
-      isUnderReview: isAnySectionUnderReview(project),
-      hasImplementationChanged,
-      hasHighSeverityFieldChanged,
-    }),
-    isVerified,
-    category: project.display.category,
-    destination: getDestination(
-      project.type === 'bridge'
-        ? project.technology.destination
-        : [project.display.name],
-    ),
-    ...project.riskView,
+    ...getCommonBridgesEntry({ project, changes }),
+    type: project.bridgeInfo.category,
+    destination: getDestination(project.bridgeInfo.destination),
+    riskView: project.bridgeRisks,
+    tvlOrder: tvl ?? -1,
   }
 }
 
-export type BridgesRiskEntry = Awaited<
-  ReturnType<typeof getBridgeRiskEntries>
->[number]
+function getDestination(destinations: string[]): ValueWithSentiment<string> {
+  if (destinations.length === 0) {
+    throw new Error('Invalid destination')
+  }
+  if (destinations.length === 1) {
+    return { value: destinations[0]!, sentiment: 'neutral' }
+  }
+  return {
+    value: 'Various',
+    description: destinations.join(',\n'),
+    sentiment: 'neutral',
+  }
+}

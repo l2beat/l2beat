@@ -1,3 +1,137 @@
+Generated with discovered.json: 0x1a978bbd8dd65979f9151824b151a69fb42ea006
+
+# Diff at Mon, 20 Jan 2025 11:09:36 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21387345
+- current block number: 21387345
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387345 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
+      issuedPermissions.0.to:
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+    }
+```
+
+```diff
+    contract IMXProxyGovernanceMultisig2 (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+      receivedPermissions.0.from:
++        "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+    }
+```
+
+Generated with discovered.json: 0xbd9548fa6861c96f6b104fd0b3ea89441ae80b15
+
+# Diff at Thu, 12 Dec 2024 15:33:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21334467
+- current block number: 21387345
+
+## Description
+
+Removed Multisig1 as admin of StarkExchange, now admin is only Multisig2.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","target":"0xD2C37fC6fD89563187f3679304975655e448D192","via":[]}
+      issuedPermissions.0.target:
+-        "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91"
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.$admin:
+-        ["0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91","0xD2C37fC6fD89563187f3679304975655e448D192"]
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract IMXProxyGovernanceMultisig1 (0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0x05d320eff815b3c241c92574418be87d8d86f1d6
+
+# Diff at Thu, 05 Dec 2024 06:21:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7dc480bf5499525d0b44afce03521538ecc8ec73 block: 19910271
+- current block number: 21334467
+
+## Description
+
+Second Governor MS added.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0xD2C37fC6fD89563187f3679304975655e448D192","via":[]}
+      values.$admin:
+-        "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91"
++        ["0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91","0xD2C37fC6fD89563187f3679304975655e448D192"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract IMXProxyGovernanceMultisig2 (0xD2C37fC6fD89563187f3679304975655e448D192)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../IMXProxyGovernanceMultisig2/GnosisSafe.sol     | 953 +++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |  35 +
+ 2 files changed, 988 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19910271 (main branch discovery), not current.
+
+```diff
+    contract IMXProxyGovernanceMultisig1 (0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91) {
+    +++ description: None
+      name:
+-        "ProxyGovernanceMultisig"
++        "IMXProxyGovernanceMultisig1"
+    }
+```
+
 Generated with discovered.json: 0xd4d8b2065a48ffd2e041bd13b7f423fd023fda45
 
 # Diff at Mon, 21 Oct 2024 11:06:37 GMT:

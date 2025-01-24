@@ -1,8 +1,8 @@
 {
   "name": "dydx",
   "chain": "ethereum",
-  "blockNumber": 21085080,
-  "configHash": "0x847ede6a024e5b92079594fdc9dc23cdb1b71bfe3a16bd0235f77ffed4ab6ecb",
+  "blockNumber": 21343041,
+  "configHash": "0x600ade0f5aa10f5039aeea7e2a4f3427133fa9cca640ff42ab515c2b9d79e2f0",
   "contracts": [
     {
       "name": "MerkleDistributor",
@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0",
+          "to": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0",
           "via": []
         }
       ],
@@ -66,9 +66,9 @@
         "CONFIG_UPDATER_ROLE": "0x1ab0187632b3cb5ac848b647a9edd463e705607328ab29602e80fc3fa8001918",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getAreRootUpdatesPaused": false,
-        "getCurrentEpoch": 42,
+        "getCurrentEpoch": 43,
         "getEpochParameters": { "interval": 2419200, "offset": 1628002800 },
-        "getIpfsEpoch": 42,
+        "getIpfsEpoch": 43,
         "getIpfsUpdatePeriod": 180,
         "getIpnsName": "rewards-data.dydx.foundation",
         "getRewardsOracle": "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354",
@@ -391,7 +391,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x639192D54431F8c816368D3FB4107Bc168d0E871"
+          "from": "0x639192D54431F8c816368D3FB4107Bc168d0E871"
         }
       ],
       "sinceTimestamp": 1627708831,
@@ -410,7 +410,7 @@
       "ignoreInWatchMode": ["_nextAvailableBridgeId", "totalSupply"],
       "sinceTimestamp": 1694426279,
       "values": {
-        "_nextAvailableBridgeId": 6163,
+        "_nextAvailableBridgeId": 6230,
         "$immutable": true,
         "decimals": 18,
         "DELEGATE_BY_TYPE_TYPEHASH": "0x10d8d059343739efce7dad10d09f0806da52b252b3e6a7951920d2d6ec4102e5",
@@ -422,7 +422,7 @@
         "name": "Wrapped Ethereum DYDX",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "wethDYDX",
-        "totalSupply": "546314843832030934604375544"
+        "totalSupply": "546945056713322374333760466"
       },
       "derivedName": "WrappedEthereumDydxToken"
     },
@@ -474,7 +474,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790",
+          "to": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790",
           "via": []
         }
       ],
@@ -553,21 +553,21 @@
         "DISTRIBUTION_START": 1628002800,
         "EPOCH_PARAMETERS_ROLE": "0xa69ba352872fe0ee634bc8d48d2a09a61267da1bfb2015e67a11ad05fe21f04b",
         "getBlackoutWindow": 259200,
-        "getContractBalanceAvailableToBorrow": 175594840435,
-        "getContractBalanceAvailableToWithdraw": 266521946573,
-        "getCurrentEpoch": 42,
+        "getContractBalanceAvailableToBorrow": 174897250231,
+        "getContractBalanceAvailableToWithdraw": 265768743074,
+        "getCurrentEpoch": 43,
         "getEpochParameters": { "interval": 2419200, "offset": 1628002800 },
         "getRewardsPerSecond": 0,
         "getShortfall": [],
         "getShortfallCount": 0,
-        "getTimeRemainingInCurrentEpoch": 1657165,
-        "getTotalActiveBalanceCurrentEpoch": 175593844683,
-        "getTotalActiveBalanceNextEpoch": 175593844683,
+        "getTimeRemainingInCurrentEpoch": 964489,
+        "getTotalActiveBalanceCurrentEpoch": 174896254479,
+        "getTotalActiveBalanceNextEpoch": 174896254479,
         "getTotalBorrowedBalance": 4248,
         "getTotalBorrowerDebtBalance": 0,
         "getTotalDebtAvailableToWithdraw": 0,
-        "getTotalInactiveBalanceCurrentEpoch": 90927106138,
-        "getTotalInactiveBalanceNextEpoch": 90927106138,
+        "getTotalInactiveBalanceCurrentEpoch": 90871492843,
+        "getTotalInactiveBalanceNextEpoch": 90871492843,
         "hasEpochZeroStarted": true,
         "inBlackoutWindow": false,
         "name": "dYdX Staked USDC",
@@ -579,7 +579,7 @@
         "STAKED_TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "symbol": "stkUSDC",
         "TOTAL_ALLOCATION": 10000,
-        "totalSupply": 266520950821
+        "totalSupply": 265767747322
       },
       "derivedName": "LiquidityStakingV1"
     },
@@ -607,7 +607,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
+          "to": "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d",
           "via": []
         }
       ],
@@ -664,7 +664,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
+          "to": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C",
           "via": []
         }
       ],
@@ -749,7 +749,7 @@
         "STAKE_OPERATOR_ROLE": "0xa6fbd0d4ef0ac50b4de984ab8f303863596293cce6d67dd6111979bcf56abe74",
         "STAKED_TOKEN": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "symbol": "stkDYDX",
-        "totalSupply": "1657016793040967136754568"
+        "totalSupply": "1107991039572858348898853"
       },
       "derivedName": "SafetyModuleV2"
     },
@@ -762,7 +762,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
+          "from": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
         }
       ],
       "sinceTimestamp": 1627708955,
@@ -781,7 +781,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x01d3348601968aB85b4bb028979006eac235a588"
+          "from": "0x01d3348601968aB85b4bb028979006eac235a588"
         }
       ],
       "sinceTimestamp": 1627709450,
@@ -944,7 +944,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+          "from": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
         }
       ],
       "sinceTimestamp": 1627710079,
@@ -975,7 +975,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
+          "from": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
         }
       ],
       "sinceTimestamp": 1627709620,
@@ -996,7 +996,7 @@
       "values": {
         "$immutable": true,
         "dydx": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
-        "lastUpdate": 1720860251,
+        "lastUpdate": 1732982951,
         "recipient": "0x0000000000000000000000000000000000000001",
         "vestingAmount": "369630137000000000000000000",
         "vestingBegin": 1628002800,
@@ -1045,12 +1045,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
+          "to": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
+          "to": "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0",
           "via": []
         }
       ],
@@ -1264,7 +1264,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+          "from": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
         }
       ],
       "sinceTimestamp": 1627913849,

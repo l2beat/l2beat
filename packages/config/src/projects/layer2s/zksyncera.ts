@@ -3,8 +3,8 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -63,13 +63,7 @@ export const zksyncera: Layer2 = zkStackL2({
     added: `zksyncValidatorsAdded`,
     removed: 'zksyncValidatorsRemoved',
   },
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.ZKStack,
-    Badge.Other.L3HostChain,
-    Badge.Infra.ElasticChain,
-  ],
+  additionalBadges: [Badge.Other.L3HostChain],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -96,7 +90,6 @@ export const zksyncera: Layer2 = zkStackL2({
       ],
       rollupCodes: 'https://rollup.codes/zksync-era',
     },
-    activityDataSource: 'Blockchain RPC',
   },
   diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {
@@ -126,7 +119,7 @@ export const zksyncera: Layer2 = zkStackL2({
       description:
         'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',
       sharedEscrow: {
-        type: 'ElasticChian',
+        type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
           '0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102',
         ),

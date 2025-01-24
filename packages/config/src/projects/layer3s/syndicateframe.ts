@@ -1,18 +1,20 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
 
 export const syndicateframe: Layer3 = opStackL3({
   createdAt: new UnixTime(1711471599), // 2024-03-26T16:46:39Z
   discovery,
-  badges: [Badge.L3ParentChain.Base, Badge.RaaS.Caldera],
+  additionalBadges: [Badge.L3ParentChain.Base, Badge.RaaS.Caldera],
   additionalPurposes: ['Social'],
   hostChain: ProjectId('base'),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Syndicate Frame Chain',
     shortName: 'Frame Chain',
@@ -35,7 +37,6 @@ export const syndicateframe: Layer3 = opStackL3({
         'https://x.com/syndicateio',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc-frame.syndicate.io',
   genesisTimestamp: new UnixTime(1707371473),

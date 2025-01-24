@@ -1,6 +1,6 @@
-import { DiscoveryCache as DiscoveryCacheInterface } from '@l2beat/discovery'
+import type { DiscoveryCache as DiscoveryCacheInterface } from '@l2beat/discovery'
 
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 
 export class DiscoveryCache implements DiscoveryCacheInterface {
   constructor(private readonly db: Database) {}
@@ -10,12 +10,7 @@ export class DiscoveryCache implements DiscoveryCacheInterface {
     return record?.value
   }
 
-  async set(
-    key: string,
-    value: string,
-    chain: string,
-    blockNumber: number,
-  ): Promise<void> {
-    await this.db.discoveryCache.upsert({ key, value, chain, blockNumber })
+  async set(key: string, value: string): Promise<void> {
+    await this.db.discoveryCache.upsert({ key, value })
   }
 }

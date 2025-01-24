@@ -17,6 +17,7 @@ export function getRenderPaths<T extends { timestamp: number }>({
     let startX: number | undefined
     let lastX: number | undefined
     let lastY: number | undefined
+    let minY = Infinity
 
     const seriesGroup = getSeriesGroups(context.columns, si)
 
@@ -25,11 +26,13 @@ export function getRenderPaths<T extends { timestamp: number }>({
       paths: seriesGroup.map((group, gi) => {
         const prevGroup = gi > 0 ? seriesGroup.at(gi - 1) : undefined
         const path = new Path2D()
+        minY = Infinity
 
         for (const [groupPointIndex, point] of group.entries()) {
           const pointIndex = (prevGroup?.length ?? 0) + groupPointIndex
           const x = (pointIndex / (context.columns.length - 1)) * chart.width
           const y = chart.height - context.getY(point.value) * usableHeight
+          minY = Math.min(minY, y)
 
           if (pointIndex === 0) {
             path.moveTo(x, y)
@@ -53,6 +56,7 @@ export function getRenderPaths<T extends { timestamp: number }>({
           dashed: group.at(0)?.dashed ?? false,
           startX,
           lastX,
+          minY,
         }
       }),
     }

@@ -3,6 +3,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
+import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getEthPrices } from './utils/get-eth-prices'
@@ -20,6 +21,7 @@ export const TvlChartDataParams = z.object({
   range: TvlChartRange,
   filter: TvlProjectFilter,
   excludeAssociatedTokens: z.boolean(),
+  previewRecategorisation: z.boolean().default(false),
 })
 
 export type TvlChartDataParams = z.infer<typeof TvlChartDataParams>
@@ -45,10 +47,17 @@ export async function getTvlChart(
 
 export type TvlChartData = Awaited<ReturnType<typeof getCachedTvlChartData>>
 export const getCachedTvlChartData = cache(
-  async ({ range, excludeAssociatedTokens, filter }: TvlChartDataParams) => {
-    const projectsFilter = createTvlProjectsFilter(filter)
-    const tvlProjects = getTvlProjects(projectsFilter)
-
+  async ({
+    range,
+    excludeAssociatedTokens,
+    filter,
+    previewRecategorisation,
+  }: TvlChartDataParams) => {
+    const projectsFilter = createTvlProjectsFilter(
+      filter,
+      previewRecategorisation,
+    )
+    const tvlProjects = getTvlProjects(projectsFilter, previewRecategorisation)
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
       getTvlValuesForProjects(tvlProjects, range),
@@ -66,6 +75,7 @@ export const getCachedTvlChartData = cache(
   ['tvl-chart-data'],
   {
     tags: ['tvl'],
+    revalidate: UnixTime.HOUR,
   },
 )
 
@@ -104,8 +114,7 @@ function getMockTvlChartData({ range }: TvlChartDataParams): TvlChartData {
   const target = getTvlTargetTimestamp().toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from =
-    days !== Infinity ? target.add(-days, 'days') : new UnixTime(1573776000)
+  const from = days !== null ? target.add(-days, 'days') : MIN_TIMESTAMPS.tvl
   const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {

@@ -1,24 +1,30 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { DiscoveryLogger } from '../DiscoveryLogger'
-import {
+import type { DiscoveryLogger } from '../DiscoveryLogger'
+import type {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
   AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
 import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { IProvider } from '../provider/IProvider'
+import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
 
 export class DiscoveryEngine {
+  private objectCount: number = 0
+
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
     private readonly logger: DiscoveryLogger,
   ) {}
+
+  reset() {
+    this.objectCount = 0
+  }
 
   async discover(
     provider: IProvider,
@@ -27,7 +33,6 @@ export class DiscoveryEngine {
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
-    let count = 0
 
     config.initialAddresses.forEach((address) => {
       toAnalyze[address.toString()] = new Set()
@@ -72,17 +77,17 @@ export class DiscoveryEngine {
         }))
       toAnalyze = {}
 
-      const total = count + leftToAnalyze.length
+      const total = this.objectCount + leftToAnalyze.length
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
           const skipReason = shouldSkip(
             EthereumAddress(address),
             config,
             depth,
-            count,
+            this.objectCount,
           )
           if (skipReason !== undefined) {
-            const info = `${++count}/${total}`
+            const info = `${++this.objectCount}/${total}`
             const entries = [
               chalk.gray(info),
               chalk.gray(address),
@@ -96,8 +101,7 @@ export class DiscoveryEngine {
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
-            config.overrides.get(address),
-            config.typesFor(address.toString()),
+            config.for(address),
             templates,
           )
           resolved[address.toString()] = analysis
@@ -112,41 +116,8 @@ export class DiscoveryEngine {
             }
           }
 
-          const info = `${++count}/${total}`
-          if (analysis.type === 'EOA') {
-            const entries = [chalk.gray(info), address, chalk.blue('EOA')]
-            this.logger.log(entries.join(' '))
-          } else if (analysis.type === 'Contract') {
-            const entries = [
-              chalk.gray(info),
-              address,
-              chalk.blue(analysis.name || '???'),
-            ]
-            this.logger.log(entries.join(' '))
-
-            const logs: string[] = []
-            if (analysis.proxyType) {
-              logs.push(chalk.cyan(`P ${analysis.proxyType}`))
-            }
-            if (analysis.extendedTemplate) {
-              logs.push(
-                chalk.green(
-                  `T ${analysis.extendedTemplate.template} (${analysis.extendedTemplate.reason})`,
-                ),
-              )
-            }
-            for (const relative of Object.keys(analysis.relatives)) {
-              logs.push(chalk.gray(`R ${relative}`))
-            }
-            for (const [key, value] of Object.entries(analysis.errors)) {
-              logs.push(chalk.red(`E ${key} - ${value}`))
-            }
-            for (const [i, log] of logs.entries()) {
-              const prefix = i === logs.length - 1 ? `└─` : `├─`
-              const indent = ' '.repeat(6)
-              this.logger.log(`${indent}${chalk.gray(prefix)} ${log}`)
-            }
-          }
+          this.objectCount += 1
+          this.logObject(analysis, total)
         }),
       )
 
@@ -164,8 +135,49 @@ export class DiscoveryEngine {
       )
     })
 
-    this.checkErrors(Object.values(resolved))
-    return Object.values(resolved)
+    const result = Object.values(resolved)
+    this.checkErrors(result)
+    this.reset()
+
+    return result
+  }
+
+  private logObject(analysis: Analysis, total: number) {
+    const info = `${this.objectCount}/${total}`
+    if (analysis.type === 'EOA') {
+      const entries = [chalk.gray(info), analysis.address, chalk.blue('EOA')]
+      this.logger.log(entries.join(' '))
+    } else if (analysis.type === 'Contract') {
+      const entries = [
+        chalk.gray(info),
+        analysis.address,
+        chalk.blue(analysis.name || '???'),
+      ]
+      this.logger.log(entries.join(' '))
+
+      const logs: string[] = []
+      if (analysis.proxyType) {
+        logs.push(chalk.cyan(`P ${analysis.proxyType}`))
+      }
+      if (analysis.extendedTemplate) {
+        logs.push(
+          chalk.green(
+            `T ${analysis.extendedTemplate.template} (${analysis.extendedTemplate.reason})`,
+          ),
+        )
+      }
+      for (const relative of Object.keys(analysis.relatives)) {
+        logs.push(chalk.gray(`R ${relative}`))
+      }
+      for (const [key, value] of Object.entries(analysis.errors)) {
+        logs.push(chalk.red(`E ${key} - ${value}`))
+      }
+      for (const [i, log] of logs.entries()) {
+        const prefix = i === logs.length - 1 ? `└─` : `├─`
+        const indent = ' '.repeat(6)
+        this.logger.log(`${indent}${chalk.gray(prefix)} ${log}`)
+      }
+    }
   }
 
   private checkErrors(resolved: Analysis[]): void {

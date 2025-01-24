@@ -1,8 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('playblock', 'nova')
 
@@ -10,8 +12,12 @@ export const playblock: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   hostChain: ProjectId('nova'),
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
@@ -27,10 +33,9 @@ export const playblock: Layer3 = orbitStackL3({
       repositories: ['https://github.com/playnance-games/PlayBlock'],
       socialMedia: ['https://twitter.com/Playnancetech'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // not on coingecko
-  // nativeToken: 'PBG',
+  // gasTokens: ['PBG'],
   // associatedTokens: ['PBG'],
   rpcUrl: 'https://playnance.drpc.org/',
   bridge: discovery.getContract('Bridge'),
@@ -53,4 +58,10 @@ export const playblock: Layer3 = orbitStackL3({
         'This contract can upgrade the implementations of the rollup proxies.',
     }),
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

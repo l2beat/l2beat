@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "hyperliquid",
+  "chain": "arbitrum",
+  "initialAddresses": ["0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7"],
+  "names": {
+    "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": "HyperliquidBridge"
+  },
+  "overrides": {
+    "0xaf88d065e77c8cC2239327C5EDb3A432268e5831": {
+      // USDC
+      "ignoreDiscovery": true
+    },
+    "HyperliquidBridge": {
+      "description": "Single contract containing all the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions.",
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs",
+            "nameArgs": true
+          }
+        },
+        "validatorSetUpdates": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "FinalizedValidatorSetUpdate",
+            "returnParams": [
+              "epoch",
+              "hotValidatorSetHash",
+              "coldValidatorSetHash"
+            ]
+          }
+        },
+        "lockers": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ModifiedLocker",
+            "valueKey": "locker",
+            "flagKey": "isLocker"
+          }
+        },
+        "finalizers": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ModifiedFinalizer",
+            "valueKey": "finalizer",
+            "flagKey": "isFinalizer"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "phala",
+  "initialAddresses": ["0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521"],
+  "names": {
+    "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8": "OPSuccinctL2OutputOracle",
+    "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SuccinctGateway",
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
+    "0xeBf5859b7646ca9cf8A981613569bF28394F2571": "SystemConfig"
+  },
+  "overrides": {
+    "SystemConfig": {
+      "ignoreRelatives": ["disputeGameFactory"] // not used
+    },
+    "SuccinctGateway": {
+      "fields": {
+        "opSuccinctVerifier": {
+          "handler": {
+            "type": "call",
+            "method": "routes",
+            "args": ["0x11b6a09d"] // 0x11b6a09d is first 4 bytes of the proposed output proofs
+          }
+        }
+      }
+    }
+  }
+}

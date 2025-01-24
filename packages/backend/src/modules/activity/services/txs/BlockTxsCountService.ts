@@ -1,11 +1,11 @@
-import { AssessCount } from '@l2beat/config'
-import { ActivityRecord } from '@l2beat/database'
-import { BlockProvider } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { AssessCount } from '@l2beat/config'
+import type { ActivityRecord } from '@l2beat/database'
+import type { BlockProvider } from '@l2beat/shared'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
-import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
-import { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
+import type { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
+import type { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
 
 interface Dependencies {
   provider: BlockProvider

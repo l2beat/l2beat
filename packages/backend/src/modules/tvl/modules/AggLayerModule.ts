@@ -1,27 +1,25 @@
-import { RateLimiter } from '@l2beat/backend-tools'
 import {
   AGGLAYER_L2BRIDGE_ADDRESS,
-  ConfigMapping,
+  type ConfigMapping,
   createAmountId,
-} from '@l2beat/config'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
+} from '@l2beat/backend-shared'
 import {
   assert,
-  AggLayerL2Token,
-  AggLayerNativeEtherPreminted,
-  AggLayerNativeEtherWrapped,
+  type AggLayerL2Token,
+  type AggLayerNativeEtherPreminted,
+  type AggLayerNativeEtherWrapped,
   ProjectId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
+import type { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { AggLayerIndexer } from '../indexers/AggLayerIndexer'
-import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { AggLayerAmountConfig } from '../indexers/types'
+import type { AggLayerAmountConfig } from '../indexers/types'
 import { AggLayerService } from '../services/AggLayerService'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface AggLayerModule {
   start: () => Promise<void> | void
@@ -64,9 +62,9 @@ function createIndexers(
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ) {
   const logger = dependencies.logger.tag({ module: 'aggLayer' })
-  const indexerService = dependencies.getIndexerService()
-  const syncOptimizer = dependencies.getSyncOptimizer()
-  const valueService = dependencies.getValueService()
+  const indexerService = dependencies.indexerService
+  const syncOptimizer = dependencies.syncOptimizer
+  const valueService = dependencies.valueService
 
   const dataIndexers: AggLayerIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -89,16 +87,7 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = new RpcClient2({
-      chain: chainConfig.chain,
-      url: chainConfig.config.providerUrl,
-      rateLimiter: new RateLimiter({
-        callsPerMinute: chainConfig.config.providerCallsPerMinute,
-      }),
-      http: new HttpClient2(),
-      logger,
-      retryHandler: RetryHandler.RELIABLE_API(logger),
-    })
+    const rpcClient = dependencies.clients.getRpcClient(chain)
 
     const aggLayerService = new AggLayerService({
       rpcClient: rpcClient,

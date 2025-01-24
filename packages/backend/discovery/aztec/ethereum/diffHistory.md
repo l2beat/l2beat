@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x973a87a37aeec1a15a69a59ac6969d4e1b719a91
+
+# Diff at Mon, 20 Jan 2025 09:24:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21387141
+- current block number: 21387141
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387141 (main branch discovery), not current.
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      fieldMeta.rollupProviders.type:
++        "PERMISSION"
+      fieldMeta.verifier.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0x2f4ce62254dbbb7ee54f687f9e15eecb6bf7e23d
+
+# Diff at Tue, 10 Dec 2024 09:52:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@08d3ccfe28a784d003a319e971007097ac1aec27 block: 20361394
+- current block number: 21371328
+
+## Description
+
+Partial discodrive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20361394 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+      template:
++        "aztecv1/AztecFeeDistributor"
+      description:
++        "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers."
+    }
+```
+
+```diff
+    contract TurboVerifier (0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8) {
+    +++ description: Turbo Plonk ZK verifier.
+      template:
++        "aztecv1/TurboVerifier"
+      description:
++        "Turbo Plonk ZK verifier."
+    }
+```
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      template:
++        "aztecv1/RollupProcessor"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract HistoricalTurboVerifier (0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1)
+    +++ description: None
+```
+
+```diff
+    contract AztecMultisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      name:
+-        "Aztec Multisig"
++        "AztecMultisig"
+    }
+```
+
 Generated with discovered.json: 0xa09907ba10fd4a69aa6f0c4a8b9a18a9d3e86ce3
 
 # Diff at Mon, 14 Oct 2024 10:49:32 GMT:

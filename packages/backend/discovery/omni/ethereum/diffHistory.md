@@ -1,3 +1,248 @@
+Generated with discovered.json: 0xeb694a49375e7680cc55522bcae9139ae0157d10
+
+# Diff at Wed, 22 Jan 2025 10:10:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21579380
+- current block number: 21679341
+
+## Description
+
+sub-MS owner change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      values.$members.2:
+-        "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0"
++        "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
+    }
+```
+
+Generated with discovered.json: 0xe2d1d68cc760157d9da2710a3ea1520096eff046
+
+# Diff at Mon, 20 Jan 2025 11:09:49 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21579380
+- current block number: 21579380
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579380 (main branch discovery), not current.
+
+```diff
+    contract OmniBridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.2.from:
++        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.1.target:
+-        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.1.from:
++        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.0.target:
+-        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+      receivedPermissions.0.from:
++        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+```diff
+    contract MultiTokenMediator (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
+      issuedPermissions.0.to:
++        "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E"
+    }
+```
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+      issuedPermissions.0.to:
++        "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6"
+    }
+```
+
+Generated with discovered.json: 0x3cf15bbf09c942810f45bdc12b41ad94c8b309bb
+
+# Diff at Mon, 20 Jan 2025 09:25:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21579380
+- current block number: 21579380
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579380 (main branch discovery), not current.
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      fieldMeta.validatorList.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0xb29db7782b209f4c6705d03393b3d8139a13f482
+
+# Diff at Wed, 08 Jan 2025 11:13:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 21428761
+- current block number: 21579380
+
+## Description
+
+New expected adapters hash, Hashi still optional.
+
+## Watched changes
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.expectedAdaptersHash:
+-        "0x1f8c600da3ac9efbad8aeccc97ebbdc71e7f928fbc2589cd663f5063c0f4af52"
++        "0x0a74748a93656acd952c12f9e5b2b6a3eead25ba1c94ffa6ddb26f454a179cae"
+    }
+```
+
+Generated with discovered.json: 0xa110d151b4ecd24c5245269a01c27963881e38cb
+
+# Diff at Wed, 18 Dec 2024 10:36:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21071443
+- current block number: 21428761
+
+## Description
+
+The requiredBlockConfirmations of the bridge are raised to 175.
+
+Two OmniBridgeGovernance MS members are changed.
+
+The expectedAdaptersHash of the HashiManager changed without our discovery recognizing the change in adapters. For ref: [Tenderly trace of setting the two adapters](https://dashboard.tenderly.co/tx/mainnet/0xc45be0d0becee51c0d8985169217231ddfdc2d1f62b5961b0eb04e04c6605bde) `0x7606e9d8655e48159e7bec8541c2e71a7aa3e418` (LayerZero) and `0xcbb5c5e8b7ae3fc01eeb2c8fecdc609df7d21a19` ([DendrETH](https://github.com/metacraft-labs/DendrETH)) while we still discover only `0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5` for the `adapters` value. Looking at the code, this is apparently how the HashiManager contract is supposed to work as it does not save new adapter addresses when setting a new expected adapters hash.
+
+Hashi is still optional for bridging (`HASHI_IS_MANDATORY=false`).
+
+## Watched changes
+
+```diff
+    contract OmniBridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      values.$members.4:
+-        "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c"
++        "0xA07888742c18d7e658132AE0148fF205fFF46481"
+      values.$members.3:
+-        "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E"
++        "0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5"
+    }
+```
+
+```diff
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e) {
+    +++ description: None
+      values.requiredBlockConfirmations:
+-        130
++        175
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.expectedAdaptersHash:
+-        "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a"
++        "0x1f8c600da3ac9efbad8aeccc97ebbdc71e7f928fbc2589cd663f5063c0f4af52"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071443 (main branch discovery), not current.
+
+```diff
+    contract OmniBridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      name:
+-        "BridgeGovernance"
++        "OmniBridgeGovernance"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.AdaptersFromStorage:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x67450b31edfaadab300dc80a39f10000188eee25
+
+# Diff at Tue, 03 Dec 2024 13:12:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@62514a3ae1e0d198a488f9c1029dd57ab15c60f6 block: 21071443
+- current block number: 21071443
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21071443 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x800925fe243370aecbf94f1313ff3237591234ee
 
 # Diff at Tue, 29 Oct 2024 12:59:25 GMT:

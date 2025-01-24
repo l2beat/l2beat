@@ -1,19 +1,23 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('alephzero')
 
 export const alephzero: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:
@@ -26,10 +30,9 @@ export const alephzero: Layer2 = orbitStackL2({
       repositories: ['https://github.com/Cardinal-Cryptography'],
       socialMedia: ['https://x.com/Aleph__Zero'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['AZERO'],
-  nativeToken: 'AZERO',
+  gasTokens: ['AZERO'],
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -53,4 +56,10 @@ export const alephzero: Layer2 = orbitStackL2({
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

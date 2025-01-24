@@ -10,11 +10,12 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
@@ -30,6 +31,7 @@ export const bugbuster: Layer3 = {
     Badge.DA.EthereumCalldata,
     Badge.L3ParentChain.Optimism,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Bug Buster',
     slug: 'bugbuster',
@@ -55,7 +57,6 @@ export const bugbuster: Layer3 = {
         'https://optimism.cartesiscan.io/applications/0x3ff5c7383f614256053c3f6b86a47ba974937299',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -133,7 +134,7 @@ export const bugbuster: Layer3 = {
       references: [],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [],
     },
     exitMechanisms: [
@@ -144,13 +145,12 @@ export const bugbuster: Layer3 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
+
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
@@ -170,8 +170,6 @@ export const bugbuster: Layer3 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(0),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.CANONICAL,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   stackedRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
@@ -181,8 +179,6 @@ export const bugbuster: Layer3 = {
       HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
     ),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.CANONICAL,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   permissions: [
     {

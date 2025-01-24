@@ -2,7 +2,7 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0xf3b1fe36854fe7db011f4e2a3ed30fa740e86981816b395b308c2ab99a1e5f9d",
+  "configHash": "0x87029825ba1c971fcedaa658c2ea6cbbd14cdc0a899d935bdcbec67a767758b5",
   "contracts": [
     {
       "name": "EthereumL1Messenger",
@@ -148,7 +148,10 @@
       "derivedName": "FillManager"
     }
   ],
-  "eoas": [{ "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70" }],
+  "eoas": [
+    { "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70" },
+    { "address": "0xdC256EC77E97448d29D88118e55C82067150b768" }
+  ],
   "abis": {
     "0x12B8489913E2afBCed131d52c345C380BBB65baf": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

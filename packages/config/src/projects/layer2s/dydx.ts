@@ -25,7 +25,7 @@ import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dydx')
 const maxPriorityDelay = discovery.getContractValue<number>(
@@ -74,6 +74,7 @@ const longTimelockUpgradeability = {
 const finalizationPeriod = 0
 
 export const dydx: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('dydx'),
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
@@ -121,7 +122,6 @@ export const dydx: Layer2 = {
         'https://linkedin.com/company/dydx',
       ],
     },
-    activityDataSource: 'Closed API',
     liveness: {
       explanation:
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
@@ -180,15 +180,12 @@ export const dydx: Layer2 = {
         },
       },
     ],
-    finality: 'coming soon',
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.STATE_DIFFS,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.STATE_DIFFS,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -244,8 +241,6 @@ export const dydx: Layer2 = {
         },
       ],
     },
-    destinationToken: RISK_VIEW.CANONICAL_USDC,
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {

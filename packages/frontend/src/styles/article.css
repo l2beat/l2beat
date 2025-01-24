@@ -82,6 +82,6 @@
 
 /* Make sure this is compatible with the <Link /> component */
 .article a {
-  @apply text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
+  @apply text-link underline transition-colors hover:text-blue-550;
   font-weight: 600;
 }

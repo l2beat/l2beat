@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x30a169217ca755f08b00a20abf52f780806ad015
+
+# Diff at Mon, 20 Jan 2025 11:09:40 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 19825376
+- current block number: 19825376
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825376 (main branch discovery), not current.
+
+```diff
+    contract Proxy (0x82123571C8a5e0910280C066bc634c4945FFcbC8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"
+      issuedPermissions.0.to:
++        "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"
+    }
+```
+
+Generated with discovered.json: 0xb56ed70b923c0a2ed22dc5d1b0f34083c193a01a
+
+# Diff at Wed, 04 Dec 2024 14:14:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5ce1f4558272638b4ce9e4501463a3fa3ee115cb block: 19825376
+- current block number: 19825376
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825376 (main branch discovery), not current.
+
+```diff
+    contract Committee (0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9) {
+    +++ description: None
+      name:
+-        ""
++        "Committee"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StrategyCompound (0x5b000954F70B0410685193B0afd3074B744B5C97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Comp (0xc00e94Cb662C3520282E6f5717214004A7f26888)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x97311829fba2addaf36879b5132f3914016d29a4
 
 # Diff at Mon, 21 Oct 2024 11:07:00 GMT:

@@ -1,0 +1,49 @@
+// phala riskView didn't change 1
+
+{
+  dataAvailability: {
+    definingMetric: Infinity
+    description: "All of the data needed for proof construction is published on Ethereum L1."
+    sentiment: "good"
+    value: "Onchain"
+  }
+  exitWindow: {
+    definingMetric: 0
+    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    secondLine: undefined
+    sentiment: "bad"
+    value: "None"
+  }
+  proposerFailure: {
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    sentiment: "bad"
+    sources: [
+      {
+        contract: "OPSuccinctL2OutputOracle"
+        references: []
+      }
+    ]
+    value: "Cannot withdraw"
+  }
+  sequencerFailure: {
+    definingMetric: 43200
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
+    secondLine: "12h delay"
+    sentiment: "good"
+    sources: [
+      {
+        contract: "OptimismPortal"
+        references: []
+      }
+    ]
+    value: "Self sequence"
+  }
+  stateValidation: {
+    definingMetric: Infinity
+    description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
+    secondLine: "8h execution delay"
+    sentiment: "good"
+    value: "ZK proofs (SN)"
+  }
+}

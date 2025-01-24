@@ -5,10 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('wirex')
 
@@ -38,8 +40,9 @@ const upgradeability = {
 
 export const wirex: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  badges: [Badge.DA.DAC, Badge.RaaS.Gateway],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['Payments'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Pay Chain',
     slug: 'wirex',
@@ -57,7 +60,6 @@ export const wirex: Layer2 = polygonCDKStack({
         'https://wirexpaychain.com/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'wirex',
@@ -176,4 +178,12 @@ export const wirex: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

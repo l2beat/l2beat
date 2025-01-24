@@ -1,7 +1,12 @@
-import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  type EthereumAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { Layer2, Layer3, bridges, layer2s, layer3s } from '../'
+import { type Layer2, type Layer3, bridges, layer2s, layer3s } from '../'
+import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
 import { checkRisk } from './helpers'
 
@@ -84,7 +89,7 @@ describe('projects', () => {
             })
           }
 
-          if ('address' in contract && project.permissions !== 'UnderReview') {
+          if (project.permissions !== 'UnderReview') {
             const upgradableBy = contract.upgradableBy
             const actors =
               project.permissions?.map((x) => {
@@ -174,31 +179,6 @@ describe('projects', () => {
     })
   })
 
-  describe('has an activityDataSource defined if transaction data API is set', () => {
-    for (const project of [...layer2s, ...layer3s]) {
-      it(project.display.name, () => {
-        if (project.config.transactionApi) {
-          expect(project.display.activityDataSource).toBeTruthy()
-        }
-      })
-    }
-  })
-
-  describe('regular L3s have proper host chain set', () => {
-    it('should have proper host chain set', () => {
-      const applicableProjects = layer3s.filter(
-        (l3) => !l3.isUpcoming && !l3.isUnderReview,
-      )
-
-      // Name mapping for easier test resolution
-      const l3sWithInvalidHostChain = applicableProjects
-        .filter((l3) => l3.hostChain === 'Multiple')
-        .map((l3) => l3.display.name)
-
-      expect(l3sWithInvalidHostChain).toEqual([])
-    })
-  })
-
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: Layer2 | Layer3) => {
       return (
@@ -218,7 +198,7 @@ describe('projects', () => {
     for (const p of projects) {
       it(`${p.id.toString()} is discovery driven`, () => {
         assert(
-          p.discoveryDrivenData === true,
+          isDiscoveryDriven(p),
           'New projects are expected to be discovery driven. Read the comment in constants.ts',
         )
       })

@@ -1,19 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  AmountConfigBase,
+  type AmountConfigBase,
   AssetId,
   Bytes,
-  EscrowEntry,
+  type EscrowEntry,
   EthereumAddress,
   ProjectId,
-  TotalSupplyEntry,
+  type TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { RpcClient2 } from '@l2beat/shared'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { ChainAmountConfig } from '../indexers/types'
+import type { RpcClient } from '@l2beat/shared'
+import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import type { ChainAmountConfig } from '../indexers/types'
 import {
   AmountService,
   encodeErc20BalanceQuery,
@@ -30,7 +30,7 @@ describe(AmountService.name, () => {
   const timestamp = new UnixTime(923_234)
 
   it('calls RPC if multicall does not support native balance', async () => {
-    const mockRpc = mockObject<RpcClient2>({
+    const mockRpc = mockObject<RpcClient>({
       getBalance: () => Promise.resolve(BigInt(0)),
     })
     const mockMulticall = mockObject<MulticallClient>({
@@ -63,7 +63,7 @@ describe(AmountService.name, () => {
     })
 
     const service = new AmountService({
-      rpcClient: mockObject<RpcClient2>({}),
+      rpcClient: mockObject<RpcClient>({}),
       multicallClient: mockMulticall,
       logger: Logger.SILENT,
     })
@@ -87,7 +87,7 @@ describe(AmountService.name, () => {
     })
 
     const service = new AmountService({
-      rpcClient: mockObject<RpcClient2>({}),
+      rpcClient: mockObject<RpcClient>({}),
       multicallClient: mockMulticall,
       logger: Logger.SILENT,
     })
@@ -125,7 +125,7 @@ describe(AmountService.name, () => {
         ]),
       })
       const service = new AmountService({
-        rpcClient: mockObject<RpcClient2>({}),
+        rpcClient: mockObject<RpcClient>({}),
         multicallClient,
         logger: Logger.SILENT,
       })

@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { DiscoveryCacheRecord, toRecord, toRow } from './entity'
+import { type DiscoveryCacheRecord, toRecord, toRow } from './entity'
 import { selectDiscoveryCache } from './select'
 
 export class DiscoveryCacheRepository extends BaseRepository {
@@ -12,8 +12,6 @@ export class DiscoveryCacheRepository extends BaseRepository {
         cb.column('key').doUpdateSet((eb) => ({
           key: eb.ref('excluded.key'),
           value: eb.ref('excluded.value'),
-          chain: eb.ref('excluded.chain'),
-          blockNumber: eb.ref('excluded.blockNumber'),
         })),
       )
       .execute()
@@ -36,15 +34,6 @@ export class DiscoveryCacheRepository extends BaseRepository {
       .select(selectDiscoveryCache)
       .execute()
     return rows.map(toRecord)
-  }
-
-  async deleteAfter(blockNumber: number, chain: string): Promise<number> {
-    const result = await this.db
-      .deleteFrom('DiscoveryCache')
-      .where('blockNumber', '>', blockNumber)
-      .where('chain', '=', chain)
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
   }
 
   async deleteAll(): Promise<number> {

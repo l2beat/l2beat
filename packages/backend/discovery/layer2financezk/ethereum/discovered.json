@@ -2,7 +2,7 @@
   "name": "layer2financezk",
   "chain": "ethereum",
   "blockNumber": 19825376,
-  "configHash": "0x6fd4301a2c9e4ae00ed8224575e08660581e9726e77386f40cd7a19a38b45d4d",
+  "configHash": "0x9c5ed3b67c63a23dc62b650b4a69f045ca7d17f6d80c33000c920d890a3008ce",
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -16,6 +16,23 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
       }
+    },
+    {
+      "name": "StrategyCompound",
+      "address": "0x5b000954F70B0410685193B0afd3074B744B5C97",
+      "sourceHashes": [
+        "0xd4db48e0b7efb71ded88f8c4a839b0175d98cfd365e8beaf4630e60dfb8ea404"
+      ],
+      "sinceTimestamp": 1648452775,
+      "values": {
+        "$immutable": true,
+        "broker": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+        "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+        "uniswap": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "derivedName": "StrategyCompound"
     },
     {
       "name": "GpsFactRegistryAdapter",
@@ -49,7 +66,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "to": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
           "via": []
         }
       ],
@@ -138,6 +155,23 @@
       }
     },
     {
+      "name": "Comp",
+      "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+      "sourceHashes": [
+        "0xface33f588d07cf7b8c64c6200efc11c45d45332a47c27e8c49859d6bc5c8001"
+      ],
+      "sinceTimestamp": 1583280535,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DELEGATION_TYPEHASH": "0xe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf",
+        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
+        "name": "Compound",
+        "symbol": "COMP",
+        "totalSupply": "10000000000000000000000000"
+      }
+    },
+    {
       "name": "Broker",
       "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
       "sourceHashes": [
@@ -155,11 +189,12 @@
       }
     },
     {
-      "name": "",
+      "name": "Committee",
       "address": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
       "unverified": true,
       "sinceTimestamp": 1650870230,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     }
   ],
   "eoas": [
@@ -168,7 +203,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
+          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8"
         }
       ]
     },
@@ -316,6 +351,24 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "function registerMessage(address to, bytes32 messageHash)"
+    ],
+    "0x5b000954F70B0410685193B0afd3074B744B5C97": [
+      "constructor(address _broker, address _comp, address _uniswap, address _weth)",
+      "event BrokerUpdated(address broker)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event WrapTokenUpdated(address wrapToken, bool enabled)",
+      "function broker() view returns (address)",
+      "function comp() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function sellErc(address inputToken, address outputToken, uint256 inputAmt) returns (uint256 outputAmt)",
+      "function sellEth(address outputToken) payable returns (uint256 outputAmt)",
+      "function setSupportedWrapToken(address _wrapToken, bool _enabled)",
+      "function supportedWrapTokens(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function uniswap() view returns (address)",
+      "function updateBroker(address _broker)",
+      "function weth() view returns (address)"
     ],
     "0x62BCA4DB742A99c834e2c24b609656A70EA25379": [
       "event LogFrozen()",
@@ -480,6 +533,32 @@
       "function proxyNominateNewGovernor(address newGovernor)",
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)"
+    ],
+    "0xc00e94Cb662C3520282E6f5717214004A7f26888": [
+      "constructor(address account)",
+      "event Approval(address indexed owner, address indexed spender, uint256 amount)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "function DELEGATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_TYPEHASH() view returns (bytes32)",
+      "function allowance(address account, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 rawAmount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function checkpoints(address, uint32) view returns (uint32 fromBlock, uint96 votes)",
+      "function decimals() view returns (uint8)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address) view returns (address)",
+      "function getCurrentVotes(address account) view returns (uint96)",
+      "function getPriorVotes(address account, uint256 blockNumber) view returns (uint96)",
+      "function name() view returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function numCheckpoints(address) view returns (uint32)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address dst, uint256 rawAmount) returns (bool)",
+      "function transferFrom(address src, address dst, uint256 rawAmount) returns (bool)"
     ],
     "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": [
       "constructor(address _onchainVaults)",

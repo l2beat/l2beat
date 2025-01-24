@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 9010064,
-  "configHash": "0x6c55b858b842e046139e5aa87fd8f201e2b06d85311095d9aec21c8711b5ab0e",
+  "configHash": "0x0702b4c35358ba4afa5564c73ddcb21458fc4de5ee6d48ab38b780c0d0aa40f7",
   "contracts": [
     {
       "name": "LineaOwner",
@@ -16,7 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
+          "from": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -310,7 +310,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
+          "to": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
           "via": []
         }
       ],
@@ -349,7 +349,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
+          "to": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
           "via": []
         }
       ],
@@ -398,7 +398,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"
+          "from": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"
         }
       ],
       "sinceTimestamp": 1709218009,
@@ -707,7 +707,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "zklinknova/secondaryGateway": "0x158951e7297f2d4fa3d6bef7b6047d1d475e781367c84efa4d5e2a0b4b2ca8a8"
   }
 }

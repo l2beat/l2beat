@@ -1,90 +1,34 @@
 import type {
-  ProjectId,
+  EthereumAddress,
   Sentiment,
+  TrackedTxsConfigSubtype,
+  TrackedTxsConfigType,
   UnixTime,
   WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
-
 import type {
-  DataAvailabilityHistory,
-  KnowledgeNugget,
-  Layer2Provider,
-  Milestone,
+  ScalingProject,
   ScalingProjectConfig,
-  ScalingProjectContracts,
   ScalingProjectDisplay,
-  ScalingProjectPermission,
-  ScalingProjectTransactionApi,
 } from '../../../common'
-import type { ChainConfig } from '../../../common/ChainConfig'
-import type { ScalingProjectRiskView } from '../../../common/ScalingProjectRiskView'
-import type { ScalingProjectStateDerivation } from '../../../common/ScalingProjectStateDerivation'
-import type { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
-import type { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
-import { type BadgeId } from '../../badges'
-import type { StageConfig } from '../common/stages/types'
-import type { Layer2FinalityConfig } from './Layer2FinalityConfig'
-import type { Layer2LivenessConfig } from './Layer2LivenessConfig'
-import type { Layer2TxConfig } from './Layer2TrackedTxsConfig'
 
-export interface Layer2 {
+export interface Layer2 extends ScalingProject {
   type: 'layer2'
-  /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
-  id: ProjectId
-  /** Date of creation of the file (not the project) */
-  createdAt: UnixTime
-  /** Is this layer2 archived? */
-  isArchived?: boolean
-  /** Is this layer2 an upcoming rollup? */
-  isUpcoming?: boolean
-  /** Has this layer2 changed and is under review? */
-  isUnderReview?: boolean
-  /** Information displayed about the layer2 on the frontend */
   display: Layer2Display
-  /** Information required to calculate the stats of the layer2 */
   config: Layer2Config
-  /** Technical chain configuration */
-  chainConfig?: ChainConfig
-  /** Data availability of scaling project */
-  dataAvailability?: DataAvailabilityHistory
-  /** Risk view values for this layer2 */
-  riskView: ScalingProjectRiskView
-  /** Rollup stage */
-  stage: StageConfig
-  /** Deep dive into layer2 technology */
-  technology: ScalingProjectTechnology
-  /** Open-source node details */
-  stateDerivation?: ScalingProjectStateDerivation
-  /** Explains how project validates state */
-  stateValidation?: ScalingProjectStateValidation
-  /** List of smart contracts used in the layer2 */
-  contracts: ScalingProjectContracts
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
-  /** List of permissioned addresses on the host chain */
-  permissions?: ScalingProjectPermission[] | 'UnderReview'
-  /** List of permissioned addresses on the chain itself */
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
-  /** Links to recent developments, milestones achieved by the project */
-  milestones?: Milestone[]
-  /** List of knowledge nuggets: useful articles worth reading */
-  knowledgeNuggets?: KnowledgeNugget[]
-  /** List of badges */
-  badges?: BadgeId[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
 }
 
-export type Layer2Display = ScalingProjectDisplay & {
-  /** Technology provider */
-  provider?: Layer2Provider
+export interface Layer2Display extends ScalingProjectDisplay {
   /** Tooltip contents for liveness tab for given project */
-  liveness?: Layer2LivenessDisplay
+  liveness?: ProjectLivenessInfo
   finality?: Layer2FinalityDisplay
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }
-export interface Layer2LivenessDisplay {
+
+export interface ProjectLivenessInfo {
   explanation?: string
   warnings?: {
     stateUpdates?: string
@@ -104,19 +48,121 @@ export interface Layer2FinalityDisplay {
 }
 
 export interface Layer2Config extends ScalingProjectConfig {
-  /** API parameters used to get transaction count */
-  transactionApi?: ScalingProjectTransactionApi
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: Layer2LivenessConfig
   /** Configuration for getting finality data */
-  finality?: Layer2FinalityConfig | 'coming soon'
+  finality?: Layer2FinalityConfig
 }
 
 export interface WarningWithSentiment {
   /** Content of the warning */
   content: string
   /** Color with which the warning should be displayed */
-  sentiment: Extract<Sentiment, 'bad' | 'warning'>
+  sentiment: Extract<Sentiment, 'bad' | 'warning' | 'neutral'>
 }
+
+export type Layer2TxConfig = {
+  uses: Layer2TrackedTxUse[]
+  query: TrackedTxQuery
+  _hackCostMultiplier?: number
+}
+
+export type Layer2TrackedTxUse = {
+  type: TrackedTxsConfigType
+  subtype: TrackedTxsConfigSubtype
+}
+
+type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
+
+interface FunctionCall {
+  formula: 'functionCall'
+  address: EthereumAddress
+  selector: `0x${string}`
+  functionSignature: `function ${string}`
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface Transfer {
+  formula: 'transfer'
+  from: EthereumAddress
+  to: EthereumAddress
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface SharpSubmission {
+  formula: 'sharpSubmission'
+  programHashes: string[]
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface SharedBridge {
+  formula: 'sharedBridge'
+  chainId: number
+  address: EthereumAddress
+  selector: `0x${string}`
+  functionSignature: `function ${string}`
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+export interface Layer2LivenessConfig {
+  duplicateData: {
+    from: TrackedTxsConfigSubtype
+    to: TrackedTxsConfigSubtype
+  }
+}
+
+/**
+ * Determines how the state update should be handled.
+ * - `analyze`: The state update delay should be analyzed as a part of the update.
+ * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
+ * - `disabled`: The state update analyzer will not be run.
+ */
+export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
+
+export type Layer2FinalityConfig =
+  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
+  | {
+      type:
+        | 'Linea'
+        | 'zkSyncEra'
+        | 'Scroll'
+        | 'zkSyncLite'
+        | 'Starknet'
+        | 'Arbitrum'
+        | 'Loopring'
+        | 'Degate'
+        | 'PolygonZkEvm'
+
+      minTimestamp: UnixTime
+      lag: number
+      stateUpdate: StateUpdateMode
+    }
+  | {
+      type: 'OPStack'
+      minTimestamp: UnixTime
+      lag: number
+      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
+      // you can get this values by calling the RPC method optimism_rollupConfig
+      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
+      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
+      // <rpc-url> | jq
+      genesisTimestamp: UnixTime
+      l2BlockTimeSeconds: number
+      stateUpdate: StateUpdateMode
+    }
+
+export type FinalityType = Layer2FinalityConfig['type']

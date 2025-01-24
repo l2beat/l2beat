@@ -1,9 +1,9 @@
 import { type Metadata } from 'next'
-import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
-
+import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
+import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
-import { env } from '~/env'
+import { PlausibleProvider } from '~/providers/plausible-provider'
 import { TRPCReactProvider } from '~/trpc/react'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { TooltipProvider } from '../components/core/tooltip/tooltip'
@@ -11,8 +11,7 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
-import { searchBarProjects } from '~/components/search-bar/search-bar-projects'
+import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -22,6 +21,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const terms = getCollection('glossary')
+  const searchBarProjects = await getSearchBarProjects()
 
   return (
     // We suppress the hydration warning here because we're using:
@@ -40,16 +40,13 @@ export default async function RootLayout({
         />
       </head>
       <body className={roboto.variable}>
-        <PlausibleProvider
-          domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-          enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
-        >
-          <TRPCReactProvider>
-            <ThemeProvider
-              attribute="class"
-              storageKey="l2beat-theme"
-              disableTransitionOnChange
-            >
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute="class"
+            storageKey="l2beat-theme"
+            disableTransitionOnChange
+          >
+            <PlausibleProvider>
               <TooltipProvider delayDuration={300} disableHoverableContent>
                 <GlossaryContextProvider
                   terms={terms.map((term) => ({
@@ -58,14 +55,16 @@ export default async function RootLayout({
                   }))}
                 >
                   <SearchBarContextProvider projects={searchBarProjects}>
-                    {children}
+                    <RecategorisationPreviewContextProvider>
+                      {children}
+                    </RecategorisationPreviewContextProvider>
                   </SearchBarContextProvider>
                   <ProgressBar />
                 </GlossaryContextProvider>
               </TooltipProvider>
-            </ThemeProvider>
-          </TRPCReactProvider>
-        </PlausibleProvider>
+            </PlausibleProvider>
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   )

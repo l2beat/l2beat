@@ -24,6 +24,7 @@
     "0xdfe97868233d1aa22e815a266982f2cf17685a27": "L2OutputOracle",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
+    "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L1DAIEscrow",
     "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortal",
     "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": "SystemConfig",
     "0x76943C0D61395d8F2edF9060e1533529cAe05dE6": "wstETHEscrow",
@@ -40,20 +41,47 @@
     "0x050ed6F6273c7D836a111E42153BC00D0380b87d": "PermissionedDisputeGame",
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
-    "0x82511d494B5C942BE57498a70Fdd7184Ee33B975": "DelayedWETH_PermissionlessGames",
-    "0x9F9b897e37de5052cD70Db6D08474550DDb07f39": "DelayedWETH_PermissionedGames"
-  },
-  "types": {
-    "DisputeGameMap": {
-      "typeCaster": "Mapping",
-      "arg": {
-        "0": "FaultDisputeGame",
-        "1": "PermissionedDisputeGame"
-      }
-    }
+    "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": "DelayedWETH_PermissionlessGames",
+    "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": "DelayedWETH_PermissionedGames",
+    "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
   },
   "overrides": {
+    "L1DAIEscrow": {
+      "description": "Stores DAI deposited from the attached L1DAITokenBridge."
+    },
+    "SecurityCouncilMultisig": {
+      "references": [
+        {
+          "text": "Security Council members - Optimism Collective Governance Forum",
+          "href": "https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"
+        }
+      ],
+      "fields": {
+        "isL2beatStillAnOwner": {
+          "handler": {
+            "type": "call",
+            "method": "isOwner",
+            "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"] // our address in the Security Council
+          }
+        }
+      }
+    },
+    "LivenessGuard": {
+      "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
+      "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
+      "fields": {
+        "timeSinceLastL2beatInteraction": {
+          "handler": {
+            "type": "call",
+            "method": "lastLive",
+            "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"] // our address in the Security Council
+          },
+          "returnType": "(TimeSince)"
+        }
+      }
+    },
     "SynthetixBridgeEscrow": {
+      "description": "Custom escrow for SNX bridged via canonical messaging.",
       "ignoreRelatives": ["owner"]
     },
     "DelayedWETH_PermissionedGames": {
@@ -107,6 +135,7 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "L1DAITokenBridge": {
+      "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
       "ignoreRelatives": [
         "l1Token",
         "l2DAITokenBridge",
@@ -189,6 +218,7 @@
       "ignoreInWatchMode": ["scalar"]
     },
     "FeesCollector": {
+      "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"]
     },
     "DisputeGameFactory": {

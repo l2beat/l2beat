@@ -1,3 +1,108 @@
+Generated with discovered.json: 0xb7361fabb5c4f220896fcdfd4c4e95882f669b47
+
+# Diff at Mon, 20 Jan 2025 11:09:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21543439
+- current block number: 21543439
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543439 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
+      receivedPermissions.0.from:
++        "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
+    }
+```
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
+      issuedPermissions.0.to:
++        "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
+    }
+```
+
+Generated with discovered.json: 0x77908f6e1a3a728a0bf3d25092ad5f91724d4096
+
+# Diff at Fri, 03 Jan 2025 10:46:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f2f208ac8a91552305da5e03332108446838b892 block: 21357562
+- current block number: 21543439
+
+## Description
+
+Congress members (chainport bridge governance for e.g. upgrades) added (1  changed, one added). Quorum increased to 3/4.
+
+## Watched changes
+
+```diff
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa) {
+    +++ description: None
+      values.allMembers.3:
++        "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
+      values.allMembers.2:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+      values.allMembers.1:
+-        "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
++        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.getAllMemberAddresses.3:
++        "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
+      values.getAllMemberAddresses.2:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+      values.getAllMemberAddresses.1:
+-        "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
++        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.getMinimalQuorum:
+-        2
++        3
+      values.getNumberOfMembers:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x1ffae2f2e0c49d3a19397c6b4b2d88c4b385e973
+
+# Diff at Sun, 08 Dec 2024 11:46:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@59fd7a30471906b5a479f280731621e94e22f17c block: 21279513
+- current block number: 21357562
+
+## Description
+
+Change congress member scheduled.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        61
++        62
+    }
+```
+
 Generated with discovered.json: 0x1696acdb8f632b356b3afcfaa947d7f999961ac7
 
 # Diff at Wed, 27 Nov 2024 13:53:35 GMT:

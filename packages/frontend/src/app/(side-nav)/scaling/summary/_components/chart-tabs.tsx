@@ -3,7 +3,7 @@ import * as Tabs from '@radix-ui/react-tabs'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
 import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
 import { type ChartUnit } from '~/components/chart/types'
-import { MainPageCard } from '~/components/main-page-card'
+import { PrimaryCard } from '~/components/primary-card'
 import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { cn } from '~/utils/cn'
 import { type TimeRange } from '~/utils/range/range'
@@ -16,7 +16,7 @@ interface Props {
 
 export function ChartTabs({ unit, timeRange, className }: Props) {
   return (
-    <MainPageCard className={cn(className, 'pb-1')}>
+    <PrimaryCard className={cn(className, 'pb-1')}>
       <Tabs.Root defaultValue="tvl">
         <Tabs.Content value="tvl">
           <ScalingSummaryTvlChart unit={unit} timeRange={timeRange} />
@@ -33,6 +33,6 @@ export function ChartTabs({ unit, timeRange, className }: Props) {
           </Tabs.Trigger>
         </Tabs.List>
       </Tabs.Root>
-    </MainPageCard>
+    </PrimaryCard>
   )
 }

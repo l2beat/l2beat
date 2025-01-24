@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
+import { CustomLink } from '~/components/link/custom-link'
+import { externalLinks } from '~/consts/external-links'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
@@ -14,7 +16,6 @@ import { SatisfiedIcon } from '~/icons/satisfied'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { StageBadge } from '../../badge/stage-badge'
 import { Callout } from '../../callout'
-import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
@@ -99,7 +100,7 @@ export function StageSection({
             <AccordionItem
               key={stage.stage}
               value={stage.stage}
-              className="mb-4 rounded-lg bg-gray-200 dark:bg-zinc-700"
+              className="mb-4 rounded-lg bg-surface-secondary"
             >
               <AccordionTrigger className="p-4 text-lg font-normal">
                 <div className="flex select-none items-center justify-start gap-3">
@@ -166,7 +167,7 @@ export function StageSection({
         })}
       </Accordion>
       <CustomLink
-        href="https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe "
+        href={externalLinks.articles.stages}
         className="mt-3 block text-sm"
       >
         Learn more about Rollup stages

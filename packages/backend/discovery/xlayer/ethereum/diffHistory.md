@@ -1,3 +1,131 @@
+Generated with discovered.json: 0x750011224acc0426108e062745e9f260a8b59a24
+
+# Diff at Mon, 20 Jan 2025 12:06:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@658eb33e9afd98eac45a3037d195357115d19a86 block: 21579520
+- current block number: 21665594
+
+## Description
+
+New local admin (EOA, was EOA, no warn necessary).
+
+## Watched changes
+
+```diff
+    contract XLayerValidium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      values.admin:
+-        "0x491619874b866c3cDB7C8553877da223525ead01"
++        "0xa90B4C8B8807569980F6cC958c8905383136B5eA"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "0xa90B4C8B8807569980F6cC958c8905383136B5eA"
+    }
+```
+
+Generated with discovered.json: 0xf179d7b0ac740bbc36a3efc299a288c61a12d03f
+
+# Diff at Mon, 20 Jan 2025 11:10:22 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21579520
+- current block number: 21579520
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21579520 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumDAC (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x05652Ec92366F3C2255991a265c499E01Ba58e6a"
+      directlyReceivedPermissions.0.from:
++        "0x05652Ec92366F3C2255991a265c499E01Ba58e6a"
+    }
+```
+
+Generated with discovered.json: 0x5eb3b0bb62b5e238073347573831491b15662331
+
+# Diff at Wed, 08 Jan 2025 11:41:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3e3597c92f09cb5fc5a7ac01db63929f663c026f block: 20832964
+- current block number: 21579520
+
+## Description
+
+Upgrade to rollupType 8 (same implementation as [rollupType 7 from the servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta) but different verifier code).
+
+The previous rollupType was 4.
+
+## Watched changes
+
+```diff
+    contract XLayerValidium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
++        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      values.$implementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.$pastUpgrades.1:
++        ["2025-01-07T13:41:23.000Z","0x9d23f56225d22a2a1b82c2aa6122b1a29896686b30bb1f3def0189043699d46f",["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]]
+      values.$upgradeCount:
+-        1
++        2
+      derivedName:
+-        "PolygonValidiumStorageMigration"
++        "PolygonValidiumEtrog"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract XLayerVerifier (0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../XLayerValidium/PolygonValidiumEtrog.sol}       |  203 ++--
+ .../xlayer/ethereum/.flat/XLayerVerifier.sol       | 1225 ++++++++++++++++++++
+ 2 files changed, 1336 insertions(+), 92 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20832964 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract XLayerVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x146dcaf500c70a6bd92e607fa08868ab8a97ece3
 
 # Diff at Mon, 21 Oct 2024 11:12:12 GMT:

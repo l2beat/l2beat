@@ -17,11 +17,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -49,18 +51,20 @@ export const morph: Layer2 = {
   type: 'layer2',
   id: ProjectId('morph'),
   createdAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Morph',
     slug: 'morph',
     description:
-      'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs.',
+      'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs and has plans for decentralizing the Sequencer. Their mission is to build the first blockchain for consumers, where user-friendly applications integrate seamlessly into everyday life, becoming indispensable utilities.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://morphl2.io'],
-      apps: ['https://bridge-holesky.morphl2.io'],
+      apps: ['https://bridge.morphl2.io/'],
       documentation: ['https://docs.morphl2.io'],
-      explorers: ['https://explorer-holesky.morphl2.io'],
+      explorers: ['https://explorer.morphl2.io'],
       repositories: ['https://github.com/morph-l2'],
       socialMedia: [
         'https://twitter.com/MorphL2',
@@ -92,6 +96,12 @@ export const morph: Layer2 = {
     },
   }),
   config: {
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://rpc.morphl2.io',
+      startBlock: 1,
+      defaultCallsPerMinute: 300,
+    },
     escrows: [
       {
         address: EthereumAddress('0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304'),
@@ -128,13 +138,11 @@ export const morph: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED, // TODO: check
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_1R_ZK,
@@ -150,7 +158,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
+            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
           ],
         },
       ],
@@ -161,7 +169,7 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
+            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
           ],
         },
       ],
@@ -172,7 +180,7 @@ export const morph: Layer2 = {
         {
           contract: 'L1MessageQueueWithGasPriceOracle',
           references: [
-            'https://etherscan.io/address/0x828F68e2E05a34fA836416F124350E25021876ac#code',
+            'https://etherscan.io/address/0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA#code',
           ],
         },
         {
@@ -189,13 +197,11 @@ export const morph: Layer2 = {
         {
           contract: 'MorphRollup',
           references: [
-            'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code',
+            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
           ],
         },
       ],
     },
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   },
   technology: {
     newCryptography: {
@@ -210,7 +216,7 @@ export const morph: Layer2 = {
       references: [
         {
           text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L219',
+          href: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A',
         },
       ],
       risks: [
@@ -250,12 +256,16 @@ export const morph: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code',
+          text: 'EnforcedTxGateway proxy - PAUSED - Etherscan source code',
+          href: 'https://etherscan.io/address//0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7#readProxyContract#F7',
+        },
+        {
+          text: 'EnforcedTxGateway.sol implementation - Etherscan source code',
           href: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
         },
         {
-          text: 'Rollup.sol - proposer can indicate which messages were skipped',
-          href: 'https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code#F1#L258',
+          text: 'Rollup.sol - Sequencer decides if / how many transactions to dequeue',
+          href: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code#F1#L534',
         },
       ],
     },

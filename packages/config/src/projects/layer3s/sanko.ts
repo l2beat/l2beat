@@ -1,18 +1,28 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
+  additionalBadges: [
+    Badge.DA.DAC,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Caldera,
+  ],
   additionalPurposes: ['Gaming', 'Social'],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Sanko',
     slug: 'sanko',
@@ -34,7 +44,6 @@ export const sanko: Layer3 = orbitStackL3({
         'https://t.me/sankogamecorp',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'sanko',
@@ -55,7 +64,7 @@ export const sanko: Layer3 = orbitStackL3({
     minTimestampForTvl: new UnixTime(1712970000),
     coingeckoPlatform: 'sanko',
   },
-  nativeToken: 'DMT',
+  gasTokens: ['DMT'],
   associatedTokens: ['DMT'],
   rpcUrl: 'https://mainnet.sanko.xyz',
   bridge: discovery.getContract('ERC20Bridge'),
@@ -79,4 +88,10 @@ export const sanko: Layer3 = orbitStackL3({
     },
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

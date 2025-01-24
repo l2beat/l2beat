@@ -1,23 +1,23 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   Bytes,
-  EscrowEntry,
-  EthereumAddress,
-  UnixTime,
+  type EscrowEntry,
+  type EthereumAddress,
+  type UnixTime,
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
-import { AmountRecord } from '@l2beat/database'
-import { RpcClient2 } from '@l2beat/shared'
+import type { AmountRecord } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
 import { utils } from 'ethers'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import {
+import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import type {
   MulticallRequest,
   MulticallResponse,
 } from '../../../peripherals/multicall/types'
-import { ChainAmountConfig } from '../indexers/types'
+import type { ChainAmountConfig } from '../indexers/types'
 
 export const multicallInterface = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',
@@ -31,7 +31,7 @@ export const erc20Interface = new utils.Interface([
 type Config = ChainAmountConfig & { id: string }
 
 export interface AmountServiceDependencies {
-  readonly rpcClient: RpcClient2
+  readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
   logger: Logger
 }

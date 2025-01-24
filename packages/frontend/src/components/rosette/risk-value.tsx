@@ -13,7 +13,9 @@ export function RiskValue({ name, value, sentiment, warning }: RosetteValue) {
         <UnderReviewBadge />
       ) : (
         <div className="flex items-center gap-1 text-base">
-          <SentimentText sentiment={sentiment}>{value}</SentimentText>
+          <SentimentText sentiment={sentiment} vibrant={true}>
+            {value}
+          </SentimentText>
           {warning && (
             <RoundedWarningIcon
               className={cn('size-5', sentimentToFillColor(warning.sentiment))}

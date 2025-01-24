@@ -1,4 +1,136 @@
-Generated with discovered.json: 0xbd229300f517fe0ac8341ca1290ca1a2f48b2191
+Generated with discovered.json: 0x42c4c98a1e6d41c31d0f357f2798019647313d02
+
+# Diff at Mon, 20 Jan 2025 11:09:26 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
+      issuedPermissions.0.to:
++        "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
+    }
+```
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x639192D54431F8c816368D3FB4107Bc168d0E871"
+      receivedPermissions.0.from:
++        "0x639192D54431F8c816368D3FB4107Bc168d0E871"
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
+      issuedPermissions.0.to:
++        "0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
+      issuedPermissions.0.to:
++        "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
+      issuedPermissions.0.to:
++        "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
+      receivedPermissions.0.from:
++        "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x01d3348601968aB85b4bb028979006eac235a588"
+      receivedPermissions.0.from:
++        "0x01d3348601968aB85b4bb028979006eac235a588"
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+      receivedPermissions.0.from:
++        "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
+      receivedPermissions.0.from:
++        "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"
+      issuedPermissions.1.to:
++        "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"
+      issuedPermissions.0.target:
+-        "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+      issuedPermissions.0.to:
++        "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+      receivedPermissions.0.from:
++        "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+    }
+```
+
+Generated with discovered.json: 0xeddfee2f0ff6ab6de42da0af973f6412cb1837c8
 
 # Diff at Thu, 31 Oct 2024 10:41:14 GMT:
 

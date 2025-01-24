@@ -1,11 +1,10 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { Block } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import type { Block } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { RetryHandler } from '../../tools/RetryHandler'
-import { HttpClient2 } from '../http/HttpClient2'
+import type { HttpClient } from '../http/HttpClient'
 import { FuelClient } from './FuelClient'
 import { tai64ToUnix } from './tai64ToUnix'
-import {
+import type {
   FuelBlockResponse,
   FuelError,
   FuelLatestBlockNumberResponse,
@@ -27,7 +26,7 @@ describe(FuelClient.name, () => {
         ],
       }
 
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockFuelBlockResponse(mockFuelBlock, mockTia64time),
       })
 
@@ -41,7 +40,7 @@ describe(FuelClient.name, () => {
 
   describe(FuelClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => mockFuelLatestBlockNumberResponse(100),
       })
       const client = mockClient({ http })
@@ -54,7 +53,7 @@ describe(FuelClient.name, () => {
 
   describe(FuelClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient2>({
+      const http = mockObject<HttpClient>({
         fetch: async () => 'data-returned-from-api',
       })
 
@@ -108,19 +107,17 @@ describe(FuelClient.name, () => {
 })
 
 function mockClient(deps: {
-  http?: HttpClient2
+  http?: HttpClient
   url?: string
-  rateLimiter?: RateLimiter
-  retryHandler?: RetryHandler
   generateId?: () => string
 }) {
   return new FuelClient({
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient2>({}),
-    rateLimiter:
-      deps.rateLimiter ?? new RateLimiter({ callsPerMinute: 100_000 }),
-    retryHandler: deps.retryHandler ?? RetryHandler.TEST,
+    http: deps.http ?? mockObject<HttpClient>({}),
+    callsPerMinute: 100_000,
+    retryStrategy: 'TEST',
     logger: Logger.SILENT,
+    sourceName: 'test',
   })
 }
 

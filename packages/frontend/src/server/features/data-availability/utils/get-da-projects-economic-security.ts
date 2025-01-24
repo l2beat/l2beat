@@ -1,5 +1,4 @@
 import { daLayers, ethereumDaLayer } from '@l2beat/config'
-import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
 import { notUndefined } from '@l2beat/shared-pure'
 import { compact, keyBy, round } from 'lodash'
 import { env } from '~/env'
@@ -30,22 +29,25 @@ async function getProjectsEconomicSecurityData() {
   )
 
   const arr = [...daLayers, ethereumDaLayer].map((daLayer) => {
-    if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+    if (
+      !(
+        daLayer.kind === 'PublicBlockchain' ||
+        daLayer.kind === 'EthereumDaLayer'
+      ) ||
+      !daLayer.economicSecurity
+    ) {
       return undefined
     }
 
     const id = daLayer.id
-    const type = daLayer.economicSecurity.type
-
-    const thresholdStake = stakes[type]
+    const thresholdStake = stakes[daLayer.economicSecurity.name]
 
     if (!thresholdStake) {
       return { id, status: 'StakeNotSynced' as const }
     }
 
-    const meta = daEconomicSecurityMeta[type]
-
-    const currentPrice = meta ? currentPrices[meta.coingeckoId] : undefined
+    const currentPrice =
+      currentPrices[daLayer.economicSecurity.token.coingeckoId]
 
     if (!currentPrice) {
       return { id, status: 'CurrentPriceNotSynced' as const }
@@ -56,7 +58,7 @@ async function getProjectsEconomicSecurityData() {
       // We're intentionally trading precision for ease of use in Client Components
       economicSecurity:
         Number((thresholdStake * BigInt(round(currentPrice * 100))) / 100n) /
-        10 ** meta.decimals,
+        10 ** daLayer.economicSecurity.token.decimals,
     }
   })
 

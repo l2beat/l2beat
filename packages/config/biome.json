@@ -4,8 +4,6 @@
     "ignore": [
       "src/projects/bridges/multichain-config.json",
       "src/projects/bridges/socket-vaults.json",
-      "src/verification/*/verified.json",
-      "src/verification/*/manuallyVerified.jsonc",
       "scripts/multichain/cache.json",
       "scripts/multichain/intermediate.json"
     ]

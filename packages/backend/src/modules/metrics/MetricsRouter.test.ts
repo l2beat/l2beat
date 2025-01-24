@@ -1,7 +1,7 @@
 import { mockObject } from 'earl'
-import { Histogram } from 'prom-client'
+import type { Histogram } from 'prom-client'
 
-import { Config } from '../../config'
+import type { Config } from '../../config'
 import { createTestApiServer } from '../../test/testApiServer'
 import { createMetricsRouter } from './MetricsRouter'
 

@@ -51,7 +51,7 @@
       "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
     },
     "NodeLicenseRegistry": {
-      "description": "This is the contract where Xai Sentry Keys to run a node are minted.",
+      "description": "This is the contract where Xai Sentry Keys for running a sentry node are minted.",
       "ignoreMethods": [
         "getPricingTier",
         "tokenByIndex",
@@ -59,9 +59,13 @@
         "getAverageCost",
         "getMintTimestamp",
         "ownerOf",
-        "tokenURI"
+        "tokenURI",
+        "_averageCost",
+        "_mintTimestamps",
+        "ethToXai"
       ],
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": ["totalSupply"],
+      "ignoreRelatives": ["esXaiAddress", "xaiAddress", "usdcAddress"]
     }
   }
 }

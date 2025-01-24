@@ -1,9 +1,13 @@
 import { Env } from '@l2beat/backend-tools'
-import { ScalingProjectTransactionApi, layer2s, layer3s } from '@l2beat/config'
+import {
+  type ScalingProjectTransactionApi,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
-import { BlockscoutChainConfig, EtherscanChainConfig } from '../Config'
+import type { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
+import type { BlockscoutChainConfig, EtherscanChainConfig } from '../Config'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 const DEFAULT_RESYNC_LAST_DAYS = 7
@@ -66,13 +70,12 @@ export function getChainActivityBlockExplorerConfig(
   if (!project.explorerApi || !project.name) {
     return undefined
   }
-  const ENV_NAME = project.name.toUpperCase()
   return project.explorerApi?.type === 'etherscan'
     ? {
         type: project.explorerApi.type,
         apiKey: env.string([
-          `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_ACTIVITY`,
-          `${ENV_NAME}_ETHERSCAN_API_KEY`,
+          Env.key(project.name, 'ETHERSCAN_API_KEY_FOR_ACTIVITY'),
+          Env.key(project.name, 'ETHERSCAN_API_KEY'),
         ]),
         url: project.explorerApi.url,
       }
@@ -86,19 +89,20 @@ export function getChainActivityConfig(
   env: Env,
   project: { id: ProjectId; transactionApi: ScalingProjectTransactionApi },
 ): ActivityTransactionConfig {
-  const ENV_NAME = project.id.toUpperCase().replace(/-/g, '_')
-
   if (project.transactionApi.type === 'rpc') {
     return {
       type: 'rpc',
       url: env.string(
-        [`${ENV_NAME}_RPC_URL_FOR_ACTIVITY`, `${ENV_NAME}_RPC_URL`],
+        [
+          Env.key(project.id, 'RPC_URL_FOR_ACTIVITY'),
+          Env.key(project.id, 'RPC_URL'),
+        ],
         project.transactionApi.defaultUrl,
       ),
       callsPerMinute: env.integer(
         [
-          `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_ACTIVITY`,
-          `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+          Env.key(project.id, 'RPC_CALLS_PER_MINUTE_FOR_ACTIVITY'),
+          Env.key(project.id, 'RPC_CALLS_PER_MINUTE'),
         ],
         project.transactionApi.defaultCallsPerMinute ??
           DEFAULT_RPC_CALLS_PER_MINUTE,
@@ -118,13 +122,16 @@ export function getChainActivityConfig(
     return {
       type: project.transactionApi.type,
       url: env.string(
-        [`${ENV_NAME}_API_URL_FOR_ACTIVITY`, `${ENV_NAME}_API_URL`],
+        [
+          Env.key(project.id, 'API_URL_FOR_ACTIVITY'),
+          Env.key(project.id, 'API_URL'),
+        ],
         project.transactionApi.defaultUrl,
       ),
       callsPerMinute: env.integer(
         [
-          `${ENV_NAME}_API_CALLS_PER_MINUTE_FOR_ACTIVITY`,
-          `${ENV_NAME}_API_CALLS_PER_MINUTE`,
+          Env.key(project.id, 'API_CALLS_PER_MINUTE_FOR_ACTIVITY'),
+          Env.key(project.id, 'API_CALLS_PER_MINUTE'),
         ],
         project.transactionApi.defaultCallsPerMinute ??
           DEFAULT_RPC_CALLS_PER_MINUTE,

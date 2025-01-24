@@ -38,7 +38,7 @@ const chainSlugToName: Record<string, string> = {
   647: 'Stavanger testnet',
   901: 'Lyra testnet',
   919: 'Mode testnet',
-  957: 'Lyra',
+  957: 'Derive',
   1024: 'Parallel',
   1729: 'Reya Cronos Testnet',
   2999: 'Aevo',
@@ -53,6 +53,7 @@ const chainSlugToName: Record<string, string> = {
   81457: 'Blast',
   421613: 'Arbitrum Goerli',
   421614: 'Arbitrum Sepolia',
+  777777: 'Zora',
   11155111: 'Sepolia',
   11155112: 'Aevo testnet',
   11155420: 'Optimism Sepolia',
@@ -71,6 +72,8 @@ const ownerAddressToName: Record<string, string> = {
   '0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34': 'socketadmin.eth EOA',
   '0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13': 'LooksRareMultisig',
   '0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332': 'PolynomialEOA',
+  '0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836': 'Socket EOA',
+  '0xeeF6520437A6545b4F325F6675C4CD49812d457b': 'Socket EOA 2',
   // Add more owner addresses and their corresponding names here to get them integrated in the output
 }
 

@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('omni')
 const threshold = discovery.getContractValue<number>(
@@ -17,7 +17,7 @@ const size = discovery.getContractValue<number>(
 const validatorsString = `${threshold} / ${size}`
 
 const upgrades = {
-  upgradableBy: ['BridgeGovernance'],
+  upgradableBy: ['OmniBridgeGovernance'],
   upgradeDelay: 'No delay',
 }
 
@@ -27,7 +27,7 @@ const warningText = paused ? 'The bridge is currently paused.' : undefined
 
 const pausable = {
   paused,
-  pausableBy: ['BridgeGovernance'],
+  pausableBy: ['OmniBridgeGovernance'],
 }
 
 export const omni: Bridge = {
@@ -182,7 +182,7 @@ export const omni: Bridge = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'BridgeGovernance',
+      'OmniBridgeGovernance',
       'Can update the contracts and parameters of the bridge.',
     ),
     {

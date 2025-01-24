@@ -1,4 +1,4 @@
-import { HttpClient } from '@l2beat/shared'
+import type { HttpClient } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
@@ -92,19 +92,6 @@ describe(DiscordClient.name, () => {
       const message = 'a'.repeat(2001)
       await expect(discord.sendMessage(message, 'PUBLIC')).toBeRejectedWith(
         `Discord error: Message size exceeded (2000 characters)`,
-      )
-    })
-
-    it('throws error', async () => {
-      const error = JSON.stringify({ message: 'error', code: '0001' })
-
-      const httpClient = mockObject<HttpClient>({
-        fetch: async () => new Response(error, { status: 400 }),
-      })
-      const discord = new DiscordClient(httpClient, config)
-
-      await expect(discord.sendMessage('', 'PUBLIC')).toBeRejectedWith(
-        `Discord error: ${error}`,
       )
     })
   })

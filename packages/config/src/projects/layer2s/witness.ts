@@ -5,10 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('witness')
 
@@ -37,7 +39,7 @@ const upgradeability = {
 export const witness: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   discovery,
-  badges: [Badge.DA.DAC],
+  additionalBadges: [Badge.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -78,11 +80,10 @@ export const witness: Layer2 = polygonCDKStack({
       ],
     },
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Witness Chain',
     slug: 'witness',
-    headerWarning:
-      'Witness Chain is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     description:
       'Witness Chain is a Validium built on the Polygon CDK stack and Eigenlayer validates services. The purpose of the project is to create a DePIN coordination Layer.',
     links: {
@@ -97,7 +98,6 @@ export const witness: Layer2 = polygonCDKStack({
         'https://docs.witnesschain.com/resources/technical-papers',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     chainId: 1702448187,
@@ -164,4 +164,12 @@ export const witness: Layer2 = polygonCDKStack({
       ...upgradeability,
     }),
   ],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

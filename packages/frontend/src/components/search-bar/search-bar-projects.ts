@@ -1,98 +1,86 @@
-import {
-  type Bridge,
-  type DaLayer,
-  type Layer2,
-  type Layer3,
-  type ZkCatalogProject,
-  bridges,
-  daLayers,
-  layer2s,
-  layer3s,
-  zkCatalogProjects,
-} from '@l2beat/config'
+import { type Project, ProjectService } from '@l2beat/config'
 import { type SearchBarProject } from './search-bar-entry'
 
-export const searchBarProjects = toSearchBarProjects([
-  ...layer2s,
-  ...layer3s,
-  ...bridges,
-  ...daLayers,
-  ...zkCatalogProjects,
-])
+export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
+  const projects = await ProjectService.STATIC.getProjects({
+    optional: [
+      'scalingInfo',
+      'daBridges',
+      'isZkCatalog',
+      'isScaling',
+      'isBridge',
+      'isDaLayer',
+      'isUpcoming',
+    ],
+  })
 
-function toSearchBarProjects(
-  projects: (Layer2 | Layer3 | Bridge | DaLayer | ZkCatalogProject)[],
-): SearchBarProject[] {
-  return projects.flatMap((project): SearchBarProject | SearchBarProject[] => {
-    if (project.type === 'DaLayer') {
-      return project.bridges.map((bridge) => ({
-        type: 'project',
-        id: `${project.id}-${bridge.id}`,
-        category: 'da',
-        kind: 'da',
-        isUpcoming: !!project.isUpcoming,
-        name:
-          project.kind === 'DAC'
-            ? project.display.name
-            : `${project.display.name} with ${bridge.display.name}`,
-        iconUrl: `/icons/${project.display.slug}.png`,
-        href: `/data-availability/projects/${project.display.slug}/${bridge.display.slug}`,
-        tags: [project.display.slug, bridge.display.slug],
-        createdAt: bridge.createdAt.toNumber(),
-      }))
+  return projects.flatMap((p): SearchBarProject[] => {
+    const results: SearchBarProject[] = []
+    const common = {
+      type: 'project',
+      id: p.id,
+      name: p.name,
+      kind: getKind(p),
+      isUpcoming: !!p.isUpcoming,
+      iconUrl: `/icons/${p.slug}.png`,
+      createdAt: p.addedAt.toNumber(),
+      tags: [p.slug],
+    } satisfies Partial<SearchBarProject>
+
+    if (p.isZkCatalog) {
+      results.push({
+        ...common,
+        id: `${p.id}-zk-catalog`,
+        href: `/zk-catalog/${p.slug}`,
+        category: 'zkCatalog',
+      })
     }
 
-    if (project.type === 'zk-catalog') {
-      return {
-        type: 'project',
-        id: `zk-catalog-${project.display.slug}`,
-        category: 'zkCatalog',
-        kind: 'zkCatalog',
-        isUpcoming: false,
-        name: project.display.name,
-        iconUrl: `/icons/${project.display.slug}.png`,
-        href: `/zk-catalog/${project.display.slug}`,
-        tags: [project.display.slug],
-        createdAt: project.createdAt.toNumber(),
+    if (p.isScaling) {
+      results.push({
+        ...common,
+        href: `/scaling/projects/${p.slug}`,
+        category: 'scaling',
+      })
+    }
+
+    if (p.isBridge) {
+      results.push({
+        ...common,
+        href: `/bridges/projects/${p.slug}`,
+        category: 'bridges',
+      })
+    }
+
+    if (p.daBridges) {
+      for (const b of p.daBridges) {
+        results.push({
+          ...common,
+          id: `${p.id}-${b.id}`,
+          name:
+            b.type === 'StandaloneDacBridge'
+              ? p.name
+              : `${p.name} with ${b.display.name}`,
+          href: `/data-availability/projects/${p.slug}/${b.display.slug}`,
+          category: 'da',
+          tags: [p.slug, b.display.slug],
+          createdAt: b.createdAt.toNumber(),
+        })
       }
     }
 
-    const common = {
-      type: 'project',
-      id: project.id,
-      category: project.type === 'bridge' ? 'bridges' : 'scaling',
-      kind: project.type,
-      isUpcoming: !!project.isUpcoming,
-      name: project.display.name,
-      iconUrl: `/icons/${project.display.slug}.png`,
-      href: getHref(project),
-      tags: [project.display.slug],
-      createdAt: project.createdAt.toNumber(),
-    } satisfies SearchBarProject
-
-    if (project.type === 'bridge') {
-      return common
-    }
-
-    return [
-      common,
-      ...(project.stateValidation?.proofVerification && !project.isUpcoming
-        ? [
-            {
-              ...common,
-              id: `zk-catalog-${project.id}`,
-              category: 'zkCatalog' as const,
-              href: `/zk-catalog/${project.display.slug}`,
-            },
-          ]
-        : []),
-    ]
+    return results
   })
 }
 
-function getHref(project: Layer2 | Layer3 | Bridge) {
-  if (project.type === 'layer2' || project.type === 'layer3') {
-    return `/scaling/projects/${project.display.slug}`
-  }
-  return `/bridges/projects/${project.display.slug}`
+function getKind(
+  p: Project<never, 'scalingInfo' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'>,
+): SearchBarProject['kind'] {
+  if (p.scalingInfo?.layer === 'layer2') return 'layer2'
+  if (p.scalingInfo?.layer === 'layer3') return 'layer3'
+  if (p.isBridge) return 'bridge'
+  if (p.isZkCatalog) return 'zkCatalog'
+  if (p.isDaLayer) return 'da'
+  // Should never happen
+  return 'da'
 }

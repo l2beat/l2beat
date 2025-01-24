@@ -1,10 +1,11 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('blast')
 
@@ -25,12 +26,12 @@ export const blast: Layer2 = opStackL2({
       repositories: ['https://github.com/blast-io'],
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
-    activityDataSource: 'Blockchain RPC',
     tvlWarning: {
-      content: 'The TVL does account for rehypothecated tokens.',
+      content: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   nonTemplateTechnology: {
     exitMechanisms: [
       {
@@ -89,7 +90,7 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     // timestamp of the first blob tx
     minTimestamp: new UnixTime(1716846455),
     l2BlockTimeSeconds: 2,

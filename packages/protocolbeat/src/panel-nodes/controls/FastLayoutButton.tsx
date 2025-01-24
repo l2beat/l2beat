@@ -1,6 +1,6 @@
-import { Node } from '../store/State'
+import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import { NodeLocations } from '../store/utils/storage'
+import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
 
 export function FastLayoutButton() {

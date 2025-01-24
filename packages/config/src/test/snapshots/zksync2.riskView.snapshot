@@ -16,17 +16,12 @@
       {
         contract: "ZKsync"
         references: [
-          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216"
-          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120"
+          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529"
+          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F12#L121"
         ]
       }
     ]
     value: "Onchain (SD)"
-  }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
@@ -35,8 +30,8 @@
       {
         contract: "ZKsync"
         references: [
-          "https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114"
-          "https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128"
+          "https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L130"
+          "https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L148"
         ]
       }
     ]
@@ -50,21 +45,21 @@
       {
         contract: "ZKsync"
         references: [
-          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219"
+          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L270"
         ]
       }
     ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone."
+    description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
     sentiment: "warning"
     sources: [
       {
         contract: "ZKsync"
         references: [
-          "https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53"
-          "https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95"
+          "https://etherscan.io/address/0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L57"
+          "https://etherscan.io/address/0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96"
         ]
       }
     ]
@@ -85,22 +80,17 @@
       {
         contract: "ZKsync"
         references: [
-          "https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448"
-          "https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23"
+          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529"
+          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F10#L26"
         ]
       }
       {
         contract: "Verifier"
         references: [
-          "https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F1#L343"
+          "https://etherscan.io/address/0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66#code#F1#L343"
         ]
       }
     ]
     value: "ZK proofs (ST, SN)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

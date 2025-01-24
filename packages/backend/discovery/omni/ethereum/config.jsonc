@@ -10,7 +10,7 @@
     "0x88ad09518695c6c3712AC10a214bE5109a655671": "MultiTokenMediator",
     "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "ForeignAMB",
     "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "BridgeValidators",
-    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "BridgeGovernance",
+    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "OmniBridgeGovernance",
     "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "GnosisSafe",
     "0x87D48c565D0D85770406D248efd7dc3cbd41e729": "AAVEInterestERC20",
     "0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5": "AAVEIncentivesController",
@@ -22,7 +22,16 @@
   "overrides": {
     "HashiManager": {
       "proxyType": "Eternal Storage proxy",
-      "ignoreRelatives": ["yaho", "yaru", "targetAddress"] // until HASHI_IS_MANDATORY=true we ignore this optional external validator
+      "ignoreRelatives": ["yaho", "yaru", "targetAddress"], // until HASHI_IS_MANDATORY=true we ignore this optional external validator
+      "fields": {
+        "AdaptersFromStorage": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x21aa67cae9293b939ada82eb9133293e592da66aa847a5596523bd6d2bf2529b",
+            "returnType": "address"
+          }
+        }
+      }
     },
     "MultiTokenMediator": {
       "proxyType": "Eternal Storage proxy",
@@ -40,13 +49,6 @@
           "type": "PERMISSION"
         }
       }
-    },
-    "BridgeGovernance": {
-      "ignoreInWatchMode": ["nonce"],
-      "ignoreRelatives": ["$members"]
-    },
-    "GnosisSafe": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "AAVEIncentivesController": {
       "ignoreDiscovery": true

@@ -2,39 +2,29 @@
 
 {
   dataAvailability: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
-  }
-  destinationToken: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   exitWindow: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   proposerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   sequencerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   stateValidation: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
-  }
-  validatedBy: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
 }
 
@@ -42,38 +32,28 @@
 
 {
   dataAvailability: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
-  }
-  destinationToken: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   exitWindow: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   proposerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   sequencerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
   stateValidation: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
-  }
-  validatedBy: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "This risk is currently under review."
+    sentiment: "UnderReview"
+    value: "Under Review"
   }
 }

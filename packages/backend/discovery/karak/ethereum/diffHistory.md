@@ -1,3 +1,246 @@
+Generated with discovered.json: 0x8c56fafc06cd57be79c3dfa36c8a9c80f48a4c16
+
+# Diff at Mon, 20 Jan 2025 11:09:38 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20920155
+- current block number: 20920155
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920155 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x0a23342520Aa8Ca963c4201801F4D3E95e731637) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.1.target:
+-        "0x4179f43f3b994e97090557363b09F403138a729e"
+      issuedPermissions.1.to:
++        "0x4179f43f3b994e97090557363b09F403138a729e"
+      issuedPermissions.0.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) {
+    +++ description: None
+      directlyReceivedPermissions.6.target:
+-        "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB"
+      directlyReceivedPermissions.6.from:
++        "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB"
+      directlyReceivedPermissions.5.target:
+-        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      directlyReceivedPermissions.5.from:
++        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      directlyReceivedPermissions.4.target:
+-        "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"
+      directlyReceivedPermissions.4.from:
++        "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"
+      directlyReceivedPermissions.3.target:
+-        "0x952851CecB07705A5bb483C1CE080F97e1E7491E"
+      directlyReceivedPermissions.3.from:
++        "0x952851CecB07705A5bb483C1CE080F97e1E7491E"
+      directlyReceivedPermissions.2.target:
+-        "0x622333688CC1878C7ff4205c89bDe051798788A7"
+      directlyReceivedPermissions.2.from:
++        "0x622333688CC1878C7ff4205c89bDe051798788A7"
+      directlyReceivedPermissions.1.target:
+-        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      directlyReceivedPermissions.1.from:
++        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      directlyReceivedPermissions.0.target:
+-        "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9"
+      directlyReceivedPermissions.0.from:
++        "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9"
+    }
+```
+
+```diff
+    contract KarakMultisig (0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    +++ description: None
+      receivedPermissions.9.target:
+-        "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB"
+      receivedPermissions.9.from:
++        "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB"
+      receivedPermissions.8.target:
+-        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      receivedPermissions.8.from:
++        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      receivedPermissions.7.target:
+-        "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"
+      receivedPermissions.7.from:
++        "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"
+      receivedPermissions.6.target:
+-        "0x952851CecB07705A5bb483C1CE080F97e1E7491E"
+      receivedPermissions.6.from:
++        "0x952851CecB07705A5bb483C1CE080F97e1E7491E"
+      receivedPermissions.5.target:
+-        "0x622333688CC1878C7ff4205c89bDe051798788A7"
+      receivedPermissions.5.from:
++        "0x622333688CC1878C7ff4205c89bDe051798788A7"
+      receivedPermissions.4.target:
+-        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      receivedPermissions.4.from:
++        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      receivedPermissions.3.target:
+-        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      receivedPermissions.3.from:
++        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      receivedPermissions.2.target:
+-        "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9"
+      receivedPermissions.2.from:
++        "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9"
+      receivedPermissions.1.target:
+-        "0x622333688CC1878C7ff4205c89bDe051798788A7"
+      receivedPermissions.1.from:
++        "0x622333688CC1878C7ff4205c89bDe051798788A7"
+      receivedPermissions.0.target:
+-        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      receivedPermissions.0.from:
++        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      directlyReceivedPermissions.0.target:
+-        "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"
+      directlyReceivedPermissions.0.from:
++        "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"
+    }
+```
+
+```diff
+    contract SystemConfig (0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.1.target:
+-        "0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E"
+      issuedPermissions.1.to:
++        "0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E"
+      issuedPermissions.0.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x952851CecB07705A5bb483C1CE080F97e1E7491E) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract OptimismPortal (0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+    }
+```
+
+```diff
+    contract AddressManager (0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "set and change address mappings."
+      issuedPermissions.0.to:
++        "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
+      issuedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+Generated with discovered.json: 0x56e5c9762b6da42fdf0a59c93d7f2d61acea1af1
+
+# Diff at Wed, 08 Jan 2025 09:02:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 20920155
+- current block number: 20920155
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920155 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
 Generated with discovered.json: 0x14574b93b408c1c62b3797cd6c5cae25455d1063
 
 # Diff at Fri, 01 Nov 2024 12:09:34 GMT:

@@ -4,19 +4,23 @@ import { anomaly } from './anomaly'
 import { apechain } from './apechain'
 import { aviveworld } from './aviveworld'
 import { b3 } from './b3'
+import { bitlazer } from './bitlazer'
 import { blessnet } from './blessnet'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
-import { dcamonster } from './dcamonster'
 import { degen } from './degen'
 import { deri } from './deri'
 import { dodochain } from './dodochain'
 import { donatuz } from './donatuz'
 import { educhain } from './educhain'
 import { fiefdom } from './fiefdom'
+import { geist } from './geist'
 import { ham } from './ham'
+import { henez } from './henez'
 import { hook } from './hook'
+import { huddle01 } from './huddle01'
+import { hyperliquid } from './hyperliquid'
 import { inevm } from './inevm'
 import { l3x } from './l3x'
 import { lumiterra } from './lumiterra'
@@ -25,6 +29,7 @@ import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
 import { mxc } from './mxc'
+import { onchain } from './onchain'
 import { orb3 } from './orb3'
 import { oursong } from './oursong'
 import { playblock } from './playblock'
@@ -39,10 +44,11 @@ import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
 import { teva } from './teva'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 import { unite } from './unite'
 import { winr } from './winr'
 import { xai } from './xai'
+import { xrone } from './xrone'
 import { zklinknova } from './zklinknova'
 
 export * from './types'
@@ -53,25 +59,30 @@ export const layer3s: Layer3[] = [
   alphadune,
   apechain,
   aviveworld,
+  bitlazer,
   blessnet,
   bugbuster,
   b3,
   cheese,
   clique,
   degen,
-  dcamonster,
   deri,
   dodochain,
   donatuz,
   educhain,
   fiefdom,
+  geist,
   inevm,
   ham,
+  henez,
+  huddle01,
+  hyperliquid,
   hook,
   rari,
   zklinknova,
   teva,
   xai,
+  onchain,
   orb3,
   popapex,
   popboss,
@@ -93,4 +104,5 @@ export const layer3s: Layer3[] = [
   superposition,
   syndr,
   winr,
+  xrone,
 ]

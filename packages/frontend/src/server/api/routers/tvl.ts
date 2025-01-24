@@ -1,4 +1,8 @@
 import {
+  RecategorisedTvlChartDataParams,
+  getRecategorisedTvlChart,
+} from '~/server/features/scaling/tvl/get-recategorised-tvl-chart-data'
+import {
   TvlChartDataParams,
   getTvlChart,
 } from '~/server/features/scaling/tvl/get-tvl-chart-data'
@@ -12,6 +16,11 @@ export const tvlRouter = router({
   chart: procedure.input(TvlChartDataParams).query(async ({ input }) => {
     return getTvlChart(input)
   }),
+  recategorisedChart: procedure
+    .input(RecategorisedTvlChartDataParams)
+    .query(async ({ input }) => {
+      return getRecategorisedTvlChart(input)
+    }),
   tokenChart: procedure.input(TokenTvlChartParams).query(async ({ input }) => {
     return getTokenTvlChart(input)
   }),

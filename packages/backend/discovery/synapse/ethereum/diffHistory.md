@@ -1,3 +1,113 @@
+Generated with discovered.json: 0x441dc0769256621f3a0a015d692bac7fded1dd4a
+
+# Diff at Mon, 20 Jan 2025 11:10:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21387773
+- current block number: 21387773
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
+      issuedPermissions.0.to:
++        "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x2796317b0fF8538F253012862c06787Adfb8cEb6"
+      receivedPermissions.0.from:
++        "0x2796317b0fF8538F253012862c06787Adfb8cEb6"
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      directlyReceivedPermissions.0.from:
++        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+    }
+```
+
+Generated with discovered.json: 0xab88fa47af9c7ed244ccbc4c60d4c5a9b23479f8
+
+# Diff at Thu, 12 Dec 2024 16:59:31 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 19876012
+- current block number: 21387773
+
+## Description
+
+Ignored not needed supply/balance values in config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F) {
+    +++ description: None
+      values.totalSupply:
+-        "8865787005661770066402784"
+    }
+```
+
+Generated with discovered.json: 0xba4fb0f0c2caac3aa6869cb778bc4a93721efa15
+
+# Diff at Tue, 03 Dec 2024 13:08:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@62514a3ae1e0d198a488f9c1029dd57ab15c60f6 block: 19876012
+- current block number: 19876012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19876012 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Liquidity Pool (0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1BridgeZap (0x6571d6be3d8460CF5F7d6711Cd9961860029D85F)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe589659878092c72ae95852604998e068961f7cf
 
 # Diff at Mon, 21 Oct 2024 11:11:16 GMT:

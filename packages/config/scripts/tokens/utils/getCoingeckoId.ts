@@ -1,7 +1,7 @@
-import { CoinListPlatformEntry } from '@l2beat/shared'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { CoinListPlatformEntry } from '@l2beat/shared'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ScriptLogger } from './ScriptLogger'
+import type { ScriptLogger } from './ScriptLogger'
 
 export function getCoingeckoId(
   logger: ScriptLogger,

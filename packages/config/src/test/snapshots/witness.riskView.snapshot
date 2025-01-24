@@ -13,11 +13,6 @@
     ]
     value: "External (DAC)"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: -432000
     description: "Even though there is a 10d Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to 15d."
@@ -37,7 +32,6 @@
       {
         contract: "PolygonRollupManager"
         references: [
-          "https://etherscan.io/address/0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
           "https://etherscan.io/address/0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
         ]
       }
@@ -69,10 +63,5 @@
       }
     ]
     value: "ZK proofs (ST, SN)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

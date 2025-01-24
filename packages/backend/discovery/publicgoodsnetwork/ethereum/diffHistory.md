@@ -1,3 +1,498 @@
+Generated with discovered.json: 0xe348fbe605105fec4b5acf78b225c5d9853af43a
+
+# Diff at Mon, 20 Jan 2025 11:09:56 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21637087
+- current block number: 21637087
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637087 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "set and change address mappings."
+      issuedPermissions.0.to:
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract BalanceClaimer (0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21) {
+    +++ description: Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      receivedPermissions.1.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
+      receivedPermissions.1.from:
++        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
+      receivedPermissions.0.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.0.from:
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+    }
+```
+
+```diff
+    contract PgnMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.1.from:
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.0.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      receivedPermissions.0.from:
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.6.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
+      receivedPermissions.6.from:
++        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
+      receivedPermissions.5.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.5.from:
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.4.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      receivedPermissions.4.from:
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      receivedPermissions.3.target:
+-        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      receivedPermissions.3.from:
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      receivedPermissions.2.target:
+-        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      receivedPermissions.2.from:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      receivedPermissions.1.target:
+-        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      receivedPermissions.1.from:
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      receivedPermissions.0.target:
+-        "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
+      receivedPermissions.0.from:
++        "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
+      directlyReceivedPermissions.0.target:
+-        "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
+      directlyReceivedPermissions.0.from:
++        "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
+    }
+```
+
+```diff
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.1.target:
+-        "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167"
+      issuedPermissions.1.to:
++        "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167"
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.to:
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xA38d0c4E6319F9045F20318BA5f04CDe94208608) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.1.target:
+-        "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3"
+      issuedPermissions.1.to:
++        "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3"
+      issuedPermissions.0.target:
+-        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
+      issuedPermissions.0.to:
++        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.2.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.1.target:
+-        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
+      issuedPermissions.1.to:
++        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
+      issuedPermissions.0.target:
+-        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      issuedPermissions.0.to:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      issuedPermissions.0.description:
++        "withdraw ETH escrowed in the OptimismPortal."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) {
+    +++ description: None
+      directlyReceivedPermissions.5.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
+      directlyReceivedPermissions.5.from:
++        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
+      directlyReceivedPermissions.4.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      directlyReceivedPermissions.4.from:
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      directlyReceivedPermissions.3.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      directlyReceivedPermissions.3.from:
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      directlyReceivedPermissions.2.target:
+-        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      directlyReceivedPermissions.2.from:
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      directlyReceivedPermissions.1.target:
+-        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      directlyReceivedPermissions.1.from:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      directlyReceivedPermissions.0.target:
+-        "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
+      directlyReceivedPermissions.0.from:
++        "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.1.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.via.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.1.to:
++        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      issuedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.target:
+-        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      issuedPermissions.0.to:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      issuedPermissions.0.description:
++        "withdraw ERC-20 tokens escrowed in the bridge."
+    }
+```
+
+Generated with discovered.json: 0x4855bac05b03baa4d5d1bdbfc9459b74e341cc6c
+
+# Diff at Thu, 16 Jan 2025 12:37:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b471de2d691e0c6d99ad89859efde79edd3d4dfb block: 21428894
+- current block number: 21637087
+
+## Description
+
+ConduitMultisig signer changes.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.8:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.7:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.6:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.5:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.4:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.3:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.2:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.1:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.0:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 9 (44%)"
+    }
+```
+
+Generated with discovered.json: 0x64f7bd3bfe8a96b4ff88b306b9100f6c29c17653
+
+# Diff at Wed, 08 Jan 2025 09:39:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3870091bac574174d64874eed9f76e846e3c3c9e block: 21428894
+- current block number: 21428894
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428894 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
+Generated with discovered.json: 0xf2c34bb8ea00da0d45419dedffb6de0495deb57f
+
+# Diff at Wed, 18 Dec 2024 10:43:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a44ef6747febdd9930ef05420e60556c20899f13 block: 21415736
+- current block number: 21428894
+
+## Description
+
+OptiPortal unpaused, ready for claims through the BalanceClaimer added in the last upgrade.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.paused:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0x450ab2617c6d7c7826a6f90f48870b03e998d403
+
+# Diff at Mon, 16 Dec 2024 14:40:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f33537d5b381f743921fc5e40006feb3f31e39a6 block: 21370693
+- current block number: 21415736
+
+## Description
+
+Upgrade to a new version of OptimismPortal which adds an `IEthBalanceWithdrawer` that allows the `BALANCE_CLAIMER` address to withdraw ETH and bypass the usual OP stack proving of withdrawals.
+
+A similar uprade is made to the L1StandardBridge regarding ERC20 tokens, and referencing the same privileged address which is the following SC:
+
+### BalanceClaimer.sol
+
+Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal tx on the L2.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","target":"0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"}]}
+      receivedPermissions.5.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      receivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.4.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      receivedPermissions.3.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      receivedPermissions.2.target:
+-        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
+-        "opstack/OptimismPortal"
++        "opstack/OptimismPortal_PGN_withdraw"
+      sourceHashes.1:
+-        "0x8d871731877bb6dfe48e64a821acb08680fe17b500908486a34315093c236d0b"
++        "0x18ba9f08d5c62bddd4131c2df38d760af4011869233e575569a52379ec8eee6a"
+      issuedPermissions.2:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.1.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
+      issuedPermissions.1.via.0:
+-        {"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0}
+      issuedPermissions.0.permission:
+-        "guard"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      values.$implementation:
+-        "0x436e9FC7894e26718637f086d42B4a06439C8ae0"
++        "0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09"
+      values.$pastUpgrades.1:
++        ["2024-12-13T23:16:59.000Z","0x3fe74b8c72f294ff456a997ea43070350485d48cb96da3390ae02837cf626789",["0x75A2AAc09C8A51Bdde7303B06F1aD2fFFcCf8c09"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.6.0"
++        "1.7.0"
+      values.BALANCE_CLAIMER:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","target":"0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b","description":"upgrading the bridge implementation can give access to all funds escrowed therein."}
+      directlyReceivedPermissions.4.target:
+-        "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"
++        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.3.target:
+-        "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
++        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+      directlyReceivedPermissions.2.target:
+-        "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
++        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+      directlyReceivedPermissions.1.target:
+-        "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      template:
+-        "opstack/L1StandardBridge"
++        "opstack/L1StandardBridge_PGN_withdraw"
+      sourceHashes.1:
+-        "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
++        "0x6e17f8c044cb5416af604d756bb7ab831395f1ea7638248701de78a55271e561"
+      issuedPermissions.1:
++        {"permission":"upgrade","target":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0,"description":"upgrading the bridge implementation can give access to all funds escrowed therein."}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.target:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+      issuedPermissions.0.via.0:
+-        {"address":"0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4","delay":0,"description":"upgrading the bridge implementation can give access to all funds escrowed therein."}
+      values.$implementation:
+-        "0x459bA3BD8fb18CCBf557Ae9Fab13ceD2542B0d8E"
++        "0xF5328094aE48F975CF588f361DDCC749F706aAF0"
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+      values.BALANCE_CLAIMER:
++        "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BalanceClaimer (0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21)
+    +++ description: Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.
+```
+
+## Source code changes
+
+```diff
+.../.flat/BalanceClaimer/BalanceClaimer.sol        | 437 +++++++++++++++++++++
+ .../ethereum/.flat/BalanceClaimer/Proxy.p.sol      | 211 ++++++++++
+ .../L1StandardBridge/L1StandardBridge.sol          | 145 ++++++-
+ .../OptimismPortal/OptimismPortal.sol              |  45 ++-
+ 4 files changed, 813 insertions(+), 25 deletions(-)
+```
+
+Generated with discovered.json: 0x962172660b260c8e4757ea803798cee6b6258bdd
+
+# Diff at Tue, 10 Dec 2024 07:45:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d01c69c8d162d3e9a035a25c270d68755988c138 block: 21279547
+- current block number: 21370693
+
+## Description
+
+The OptimismPortal is paused. Added headerWarn.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x460884ac8fa58dba8bbb255ed7bb94bc81022108
 
 # Diff at Wed, 27 Nov 2024 14:00:26 GMT:

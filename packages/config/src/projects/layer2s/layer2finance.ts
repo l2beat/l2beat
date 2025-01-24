@@ -1,7 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
-import { Layer2 } from './types'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('layer2finance')
 
 export const layer2finance: Layer2 = {
   isArchived: true,
@@ -12,7 +15,7 @@ export const layer2finance: Layer2 = {
     name: 'Layer2.Finance',
     slug: 'layer2finance',
     warning:
-      'Currently the TVL is calculated incorrectly, because it does not take assets locked in DeFi into account.',
+      'Currently the TVS is calculated incorrectly, because it does not take assets locked in DeFi into account.',
     description:
       'Layer2.Finance aims to democratize access to DeFi protocols for everyone. Users can aggregate their DeFi usage and save on Ethereum fees.',
     purposes: ['Exchange'],
@@ -50,18 +53,9 @@ export const layer2finance: Layer2 = {
   contracts: {
     isUnderReview: true,
     addresses: [
-      {
-        name: 'RollupChain',
-        address: EthereumAddress('0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05'),
-      },
-      {
-        name: 'TransitionDisputer',
-        address: EthereumAddress('0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f'),
-      },
-      {
-        name: 'Registry',
-        address: EthereumAddress('0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8'),
-      },
+      discovery.getContractDetails('RollupChain'),
+      discovery.getContractDetails('TransitionDisputer'),
+      discovery.getContractDetails('Registry'),
     ],
     risks: [
       {

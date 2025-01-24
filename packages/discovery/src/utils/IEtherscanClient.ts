@@ -1,7 +1,7 @@
-import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import type { HttpClient } from '@l2beat/shared'
+import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { BlockscoutClient } from './BlockscoutClient'
 import { EtherscanClient } from './EtherscanClient'
-import { HttpClient } from './HttpClient'
 
 // If a given instance of Etherscan does not support some endpoint set a
 // corresponding variable to true, otherwise do not set to anything -
@@ -21,6 +21,12 @@ interface BlockscoutExplorerConfig {
   type: 'blockscout'
   url: string
   unsupported?: EtherscanUnsupportedMethods
+}
+
+export interface Transaction {
+  input: string
+  to: EthereumAddress
+  hash: Hash256
 }
 
 export type ExplorerConfig = EtherscanExplorerConfig | BlockscoutExplorerConfig
@@ -43,10 +49,10 @@ export interface IEtherscanClient {
   ): Promise<Hash256 | undefined>
 
   getFirstTxTimestamp(address: EthereumAddress): Promise<UnixTime>
-  getLast10OutgoingTxs(
+  getAtMost10RecentOutgoingTxs(
     address: EthereumAddress,
     blockNumber: number,
-  ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]>
+  ): Promise<Transaction[]>
 }
 
 export function getExplorerClient(

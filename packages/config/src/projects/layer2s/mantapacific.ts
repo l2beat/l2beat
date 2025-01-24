@@ -2,11 +2,12 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantapacific')
 
@@ -14,6 +15,10 @@ export const mantapacific: Layer2 = opStackL2({
   createdAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Manta Pacific',
     slug: 'mantapacific',
@@ -34,7 +39,6 @@ export const mantapacific: Layer2 = opStackL2({
         'https://medium.com/@mantanetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://pacific-rpc.manta.network/http',
   transactionApi: {
@@ -84,7 +88,7 @@ export const mantapacific: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
+  additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   knowledgeNuggets: [
     {
       title: 'Blobstream and Celestia Architecture',

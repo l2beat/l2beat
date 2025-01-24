@@ -1,16 +1,22 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 
 export const blessnet: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
   additionalPurposes: ['Interoperability'],
-  badges: [Badge.RaaS.Caldera, Badge.DA.DAC],
-  hostChain: ProjectId.ARBITRUM,
+  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Blessnet',
     slug: 'blessnet',
@@ -27,7 +33,6 @@ export const blessnet: Layer3 = orbitStackL3({
       repositories: ['https://github.com/bless-net'],
       socialMedia: ['https://x.com/blessdotnet'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // nonTemplateEscrows: [ // not deployed
   //   discovery.getEscrowDetails({
@@ -46,9 +51,9 @@ export const blessnet: Layer3 = orbitStackL3({
   //     tokens: '*',
   //   }),
   // ],
-  // nativeToken: 'INJ',
+  // gasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  // nativeToken: 'BLESS', // not on CG
+  // gasTokens: ['BLESS'], // not on CG
   // associatedTokens: ['BLESS'],
   rpcUrl: 'https://blessnet.calderachain.xyz/http',
   discovery,
@@ -56,4 +61,10 @@ export const blessnet: Layer3 = orbitStackL3({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

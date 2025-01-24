@@ -14,17 +14,18 @@
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
     "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
     "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "EjectionManager",
-    "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": "StakeRegistry"
+    "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": "StakeRegistry",
+    "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": "StrategyBase",
+    "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B": "StakedALT",
+    "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault"
   },
   "sharedModules": {
-    "EigenLayerOperationsMultisig": "shared-eigenlayer",
-    "EigenLayerExecutorMultisig": "shared-eigenlayer",
-    "EigenLayerCommunityMultisig": "shared-eigenlayer",
-    "EigenPodManager": "shared-eigenlayer",
-    "DepositContract": "shared-eigenlayer",
-    "EigenLayerBeaconOracle": "shared-eigenlayer"
+    "bloppi": "shared-eigenlayer"
   },
   "overrides": {
+    "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {
+      "extends": "eigenlayer/Strategy" // temporary manual override until the proxy is verified and the shape fits
+    },
     "EigenDAServiceManager": {
       "ignoreRelatives": ["getRestakeableStrategies"], // strategies are already tracked in eigenLayer
       "ignoreInWatchMode": ["batchId", "taskNumber"],
@@ -156,6 +157,28 @@
     },
     "EjectionManager": {
       "extends": "eigenlayer/EjectionManager"
+    },
+    "StrategyBase": {
+      "ignoreMethods": [
+        "sharesToUnderlying",
+        "sharesToUnderlyingView",
+        "underlyingToShares",
+        "underlyingToSharesView"
+      ]
+    },
+    "StakedALT": {
+      "ignoreMethods": ["uri", "exists"]
+    },
+    "ERC4626Vault": {
+      "ignoreMethods": [
+        "convertToAssets",
+        "convertToShares",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "RewardPools"
+      ]
     }
   }
 }

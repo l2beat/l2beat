@@ -2,6 +2,7 @@ import {
   EthereumAddress,
   Hash256,
   UnixTime,
+  type json,
   stringAs,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
@@ -26,10 +27,9 @@ const BlockscoutResponse = z.union([
   BlockscoutErrorResponse,
 ])
 
-export function parseBlockscoutResponse(value: string): BlockscoutResponse {
+export function parseBlockscoutResponse(response: json): BlockscoutResponse {
   try {
-    const json: unknown = JSON.parse(value)
-    return BlockscoutResponse.parse(json)
+    return BlockscoutResponse.parse(response)
   } catch {
     throw new TypeError('Invalid Blockscout response')
   }
@@ -175,6 +175,4 @@ export const TransactionListEntry = z.object({
 })
 
 export const OneTransactionListResult = z.array(TransactionListEntry).length(1)
-export const TwentyTransactionListResult = z
-  .array(TransactionListEntry)
-  .length(20)
+export const TransactionListResult = z.array(TransactionListEntry)

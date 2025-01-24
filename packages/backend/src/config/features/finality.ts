@@ -1,8 +1,8 @@
-import { Env } from '@l2beat/backend-tools'
-import { Layer2, Layer2FinalityConfig, layer2s } from '@l2beat/config'
-import { ProjectId, notUndefined } from '@l2beat/shared-pure'
+import type { Env } from '@l2beat/backend-tools'
+import { type Layer2, type Layer2FinalityConfig, layer2s } from '@l2beat/config'
+import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
 
-import { FeatureFlags } from '../FeatureFlags'
+import type { FeatureFlags } from '../FeatureFlags'
 
 export type FinalityProjectConfig = Layer2FinalityConfig & {
   projectId: ProjectId
@@ -19,7 +19,6 @@ export function getFinalityConfigurations(
       if (
         !layer2.config.finality ||
         !flags.isEnabled('finality', layer2.id.toString()) ||
-        layer2.config.finality === 'coming soon' ||
         layer2.isArchived
       ) {
         return

@@ -1,6 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
-import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { NoInfoCell } from '~/components/table/cells/no-info-cell'
 import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
@@ -29,10 +28,10 @@ export const bridgesSummaryActiveColumns = [
         b.original.validatedBy,
       ),
   }),
-  columnHelper.accessor('category', {
+  columnHelper.accessor('type', {
     header: 'Type',
     cell: (ctx) => {
-      return <TypeCell>{ctx.row.original.category}</TypeCell>
+      return <TypeCell>{ctx.getValue()}</TypeCell>
     },
     meta: {
       tooltip:
@@ -48,10 +47,6 @@ export const bridgesSummaryActiveColumns = [
       header: 'Total',
       cell: (ctx) => {
         const value = ctx.row.original.tvl
-        if (value.breakdown?.total === undefined) {
-          return <NoDataBadge />
-        }
-
         return (
           <TotalCell
             associatedTokenSymbols={value.associatedTokens}
@@ -65,7 +60,7 @@ export const bridgesSummaryActiveColumns = [
       meta: {
         align: 'right',
         tooltip:
-          'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
+          'Total value secured in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago.',
       },
     },
   ),

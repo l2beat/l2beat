@@ -1,46 +1,37 @@
-export type ChainId =
-  | 'alephzero'
-  | 'arbitrum'
-  | 'base'
-  | 'blast'
-  | 'ethereum'
-  | 'gravity'
-  | 'immutablex'
-  | 'linea'
-  | 'lyra'
-  | 'mantle'
-  | 'nova'
-  | 'optimism'
-  | 'polynomial'
-  | 'scroll'
-  | 'silicon'
-  | 'starknet'
-  | 'taiko'
-  | 'worldchain'
-  | 'xai'
-  | 'zircuit'
-  | 'zksync-era'
-  | 'zora'
-
 export type Chain = {
-  id: ChainId
+  /** Id for internal purposes, set it to an arbitraty string*/
+  id: string
+  /** This will be displayed on the UOPS explorer */
   name: string
-  suggestedBlocksCount: number
-  batchSize: number
+  /** Currently we support two types of blockchain APIs. Provide the type and the working url.*/
+  blockchainApi: {
+    type: 'rpc' | 'starknet'
+    url: string
+  }
+  /** If the chain has Etherscan instance deployed provide the address here. With this configured UOPS explorer will show contract names.*/
+  etherscanApiUrl?: string
+  /** Go to block explorer and find out how the link looks for the block */
   getBlockLink: (blockNumber: number) => string
+  /** Go to block explorer and find out how the link looks for the transaction */
   getTxLink: (txHash: string) => string
+  /** Go to block explorer and find out how the link looks for the address */
   getContractLink: (address: string) => string
-  getTransactionTypeName?: (type: number) => string
+
+  // Backend logic related
+  customSuggestedBlocksCount?: number
+  customBatchSize?: number
 }
 
 export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'alephzero',
     name: 'Aleph Zero EVM',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.alephzero-testnet.gelato.digital',
+    },
     getBlockLink: (blockNumber: number) =>
-      `https://evm-explorer.alephzero.org//block/${blockNumber}`,
+      `https://evm-explorer.alephzero.org/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
       `https://evm-explorer.alephzero.org/tx/${txHash}`,
     getContractLink: (address: string) =>
@@ -49,10 +40,13 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'arbitrum',
     name: 'Arbitrum One',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://arbitrum-one.publicnode.com',
+    },
+    etherscanApiUrl: 'https://api.arbiscan.io',
     getBlockLink: (blockNumber: number) =>
-      `https://arbiscan.io//block/${blockNumber}`,
+      `https://arbiscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
       `https://app.blocksec.com/explorer/tx/arbitrum/${txHash}`,
     getContractLink: (address: string) =>
@@ -61,8 +55,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'base',
     name: 'Base',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://mainnet.base.org',
+    },
+    etherscanApiUrl: 'https://api.basescan.org',
     getBlockLink: (blockNumber: number) =>
       `https://basescan.org/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -73,8 +70,10 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'blast',
     name: 'Blast',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.blast.io/',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://blastscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://blastscan.io/tx/${txHash}`,
@@ -84,8 +83,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'ethereum',
     name: 'Ethereum',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://ethereum-rpc.publicnode.com',
+    },
+    etherscanApiUrl: 'https://api.etherscan.io',
     getBlockLink: (blockNumber: number) =>
       `https://etherscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -94,10 +96,25 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://etherscan.io/address/${address}`,
   },
   {
+    id: 'facet',
+    name: 'Facet',
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://mainnet.facet.org/',
+    },
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.facet.org/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://explorer.facet.org/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.facet.org/address/${address}`,
+  },
+  {
     id: 'gravity',
     name: 'Gravity',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.gravity.xyz',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://explorer.gravity.xyz/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.gravity.xyz/tx/${txHash}`,
@@ -105,10 +122,27 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://explorer.gravity.xyz/address/${address}`,
   },
   {
+    id: 'immutable',
+    name: 'Immutable zkEVM',
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.immutable.com',
+    },
+    getBlockLink: (blockNumber: number) =>
+      `https://explorer.immutable.com/block/${blockNumber}`,
+    getTxLink: (txHash: string) =>
+      `https://explorer.immutable.com/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://explorer.immutable.com/address/${address}`,
+  },
+  {
     id: 'linea',
     name: 'Linea',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://linea-rpc.publicnode.com',
+    },
+    etherscanApiUrl: 'https://api.lineascan.build',
     getBlockLink: (blockNumber: number) =>
       `https://lineascan.build/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://lineascan.build/tx/${txHash}`,
@@ -118,8 +152,10 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'lyra',
     name: 'Derive',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.lyra.finance',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://explorer.lyra.finance/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.lyra.finance/tx/${txHash}`,
@@ -129,8 +165,10 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'mantle',
     name: 'Mantle',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.mantle.xyz',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://explorer.mantle.xyz/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.mantle.xyz/tx/${txHash}`,
@@ -140,8 +178,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'nova',
     name: 'Arbitrum Nova',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://nova.arbitrum.io/rpc',
+    },
+    etherscanApiUrl: 'https://api-nova.arbiscan.io',
     getBlockLink: (blockNumber: number) =>
       `https://nova.arbiscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://nova.arbiscan.io/tx/${txHash}`,
@@ -151,8 +192,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'optimism',
     name: 'OP Mainnet',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://mainnet.optimism.io',
+    },
+    etherscanApiUrl: 'https://api.polygonscan.com',
     getBlockLink: (blockNumber: number) =>
       `https://optimistic.etherscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -161,21 +205,39 @@ export const SUPPORTED_CHAINS: Chain[] = [
       `https://optimistic.etherscan.io/address/${address}`,
   },
   {
+    id: 'polygonpos',
+    name: 'Polygon PoS',
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://polygon-rpc.com/',
+    },
+    etherscanApiUrl: 'https://api.polygonscan.com',
+    getBlockLink: (blockNumber: number) =>
+      `https://polygonscan.com/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://polygonscan.com/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://polygonscan.com/address/${address}`,
+  },
+  {
     id: 'polynomial',
     name: 'Polynomial',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.polynomial.fi',
+    },
     getBlockLink: (blockNumber: number) =>
-      `https://polynomialscan.io//block/${blockNumber}`,
+      `https://polynomialscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://polynomialscan.io/tx/${txHash}`,
     getContractLink: (address: string) =>
-      `https://polynomialscan.io//address/${address}`,
+      `https://polynomialscan.io/address/${address}`,
   },
   {
     id: 'scroll',
     name: 'Scroll',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.scroll.io',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://scrollscan.com/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://scrollscan.com/tx/${txHash}`,
@@ -185,8 +247,10 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'silicon',
     name: 'Silicon',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.silicon.network',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://scope.silicon.network/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://scope.silicon.network/tx/${txHash}`,
@@ -196,8 +260,10 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'starknet',
     name: 'Starknet',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'starknet',
+      url: 'https://starknet-mainnet.public.blastapi.io',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://starkscan.co/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://starkscan.co/tx/${txHash}`,
@@ -207,8 +273,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'taiko',
     name: 'Taiko',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.taiko.xyz',
+    },
+    etherscanApiUrl: 'https://api.taikoscan.io',
     getBlockLink: (blockNumber: number) =>
       `https://taikoscan.io//block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://taikoscan.io/tx/${txHash}`,
@@ -218,8 +287,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'worldchain',
     name: 'World Chain',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://worldchain-mainnet.g.alchemy.com/public',
+    },
+    etherscanApiUrl: 'https://api.worldscan.org',
     getBlockLink: (blockNumber: number) =>
       `https://worldscan.org/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://worldscan.org/tx/${txHash}`,
@@ -229,8 +301,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'xai',
     name: 'Xai',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://xai-chain.net/rpc',
+    },
+    etherscanApiUrl: 'https://api.xaiscan.io',
     getBlockLink: (blockNumber: number) =>
       `https://xaiscan.io//block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://xaiscan.io/tx/${txHash}`,
@@ -240,8 +315,10 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'zircuit',
     name: 'Zircuit',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://zircuit1-mainnet.p2pify.com',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://explorer.zircuit.com//blocks/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.zircuit.com/tx/${txHash}`,
@@ -251,8 +328,11 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'zksync-era',
     name: 'ZKsync Era',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://mainnet.era.zksync.io',
+    },
+    etherscanApiUrl: 'https://api-era.zksync.network',
     getBlockLink: (blockNumber: number) =>
       `https://era.zksync.network//block/${blockNumber}`,
     getTxLink: (txHash: string) =>
@@ -263,8 +343,10 @@ export const SUPPORTED_CHAINS: Chain[] = [
   {
     id: 'zora',
     name: 'Zora',
-    suggestedBlocksCount: 100,
-    batchSize: 10,
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://rpc.zora.energy',
+    },
     getBlockLink: (blockNumber: number) =>
       `https://explorer.zora.energy/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://explorer.zora.energy/tx/${txHash}`,

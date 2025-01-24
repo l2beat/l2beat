@@ -1,88 +1,37 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  AllProviders,
-  ConfigReader,
+  type AllProviders,
   DiscoveryConfig,
-  DiscoveryEngine,
-  IProvider,
+  type DiscoveryEngine,
+  type IProvider,
 } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { getZeroStats } from '@l2beat/discovery/dist/discovery/provider/Stats'
+import { ProviderStats } from '@l2beat/discovery'
 import { DiscoveryRunner } from './DiscoveryRunner'
-
-const ADDRESS = EthereumAddress.random()
 
 describe(DiscoveryRunner.name, () => {
   const MOCK_PROVIDER = mockObject<IProvider>({})
 
-  describe(DiscoveryRunner.prototype.run.name, () => {
-    it('injects initial addresses', async () => {
-      const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().returns({
-          contracts: [{ address: ADDRESS }],
-        }),
-      })
-      const runner = new DiscoveryRunner(
-        mockObject<AllProviders>({
-          get: () => MOCK_PROVIDER,
-          getStats: () => ({
-            highLevelCounts: getZeroStats(),
-            cacheCounts: getZeroStats(),
-            lowLevelCounts: getZeroStats(),
-          }),
-        }),
-        engine,
-        configReader,
-        'ethereum',
-      )
-
-      await runner.run(getMockConfig(), 1, {
-        logger: Logger.SILENT,
-        injectInitialAddresses: true,
-      })
-
-      expect(engine.discover).toHaveBeenNthCalledWith(
-        1,
-        MOCK_PROVIDER,
-        new DiscoveryConfig({
-          ...getMockConfig().raw,
-          maxAddresses: 600,
-          maxDepth: 18,
-          initialAddresses: [ADDRESS],
-        }),
-      )
-    })
-
+  describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
       const sourceConfig: DiscoveryConfig = new DiscoveryConfig({
         ...getMockConfig().raw,
       })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().returns({
-          contracts: [{ address: ADDRESS }],
-        }),
-      })
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({
           get: () => MOCK_PROVIDER,
           getStats: () => ({
-            highLevelCounts: getZeroStats(),
-            cacheCounts: getZeroStats(),
-            lowLevelCounts: getZeroStats(),
+            highLevelMeasurements: new ProviderStats(),
+            cacheMeasurements: new ProviderStats(),
+            lowLevelMeasurements: new ProviderStats(),
           }),
         }),
         engine,
-        configReader,
         'ethereum',
       )
-      await runner.run(sourceConfig, 1, {
-        logger: Logger.SILENT,
-        injectInitialAddresses: true,
-      })
+      await runner.discoverWithRetry(sourceConfig, 1, Logger.SILENT)
 
       expect(sourceConfig).toEqual(getMockConfig())
     })
@@ -99,22 +48,16 @@ describe(DiscoveryRunner.name, () => {
           mockObject<AllProviders>({
             get: () => MOCK_PROVIDER,
             getStats: () => ({
-              highLevelCounts: getZeroStats(),
-              cacheCounts: getZeroStats(),
-              lowLevelCounts: getZeroStats(),
+              highLevelMeasurements: new ProviderStats(),
+              cacheMeasurements: new ProviderStats(),
+              lowLevelMeasurements: new ProviderStats(),
             }),
           }),
           engine,
-          mockObject<ConfigReader>({}),
           'ethereum',
         )
 
-        await runner.run(getMockConfig(), 1, {
-          logger: Logger.SILENT,
-          injectInitialAddresses: false,
-          maxRetries: 2,
-          retryDelayMs: 10,
-        })
+        await runner.discoverWithRetry(getMockConfig(), 1, Logger.SILENT, 2, 10)
 
         expect(engine.discover).toHaveBeenCalledTimes(3)
       })
@@ -130,24 +73,24 @@ describe(DiscoveryRunner.name, () => {
           mockObject<AllProviders>({
             get: () => MOCK_PROVIDER,
             getStats: () => ({
-              highLevelCounts: getZeroStats(),
-              cacheCounts: getZeroStats(),
-              lowLevelCounts: getZeroStats(),
+              highLevelMeasurements: new ProviderStats(),
+              cacheMeasurements: new ProviderStats(),
+              lowLevelMeasurements: new ProviderStats(),
             }),
           }),
           engine,
-          mockObject<ConfigReader>({}),
           'ethereum',
         )
 
         await expect(
           async () =>
-            await runner.run(getMockConfig(), 1, {
-              logger: Logger.SILENT,
-              injectInitialAddresses: false,
-              maxRetries: 1,
-              retryDelayMs: 10,
-            }),
+            await runner.discoverWithRetry(
+              getMockConfig(),
+              1,
+              Logger.SILENT,
+              1,
+              10,
+            ),
         ).toBeRejectedWith('error')
       })
     })

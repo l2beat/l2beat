@@ -1,21 +1,29 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
+import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { underReviewL2 } from './templates/underReview'
-import { Layer2 } from './types'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
+import { orbitStackL2 } from './templates/orbitStack'
+import type { Layer2 } from './types'
 
-export const ebichain: Layer2 = underReviewL2({
-  id: 'ebichain',
+const discovery = new ProjectDiscovery('ebichain')
+
+export const ebichain: Layer2 = orbitStackL2({
+  discovery,
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
-  badges: [Badge.Stack.Orbit, Badge.VM.EVM, Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalPurposes: ['Exchange'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Ebi Chain',
     slug: 'ebichain',
+    headerWarning:
+      'ebi.xyz DEX [is winding down](https://x.com/ebixyzdex/status/1861326984078598388).',
     description:
       'Ebi Chain is a Layer-2 hosting the Ebi.xyz platform, a limit order book decentralised platform for trading perpetual futures.',
-    purposes: ['Exchange'],
-    category: 'Optimium',
-    provider: 'Arbitrum',
     links: {
       websites: ['https://ebi.xyz/en/home/'],
       apps: ['https://ebi.xyz/en/trade/contract/'],
@@ -28,22 +36,16 @@ export const ebichain: Layer2 = underReviewL2({
         'https://discord.com/invite/ebixyz',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.ebi.xyz',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.ebi.xyz',
-    startBlock: 1,
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
-  escrows: [
-    {
-      chain: 'ethereum',
-      address: EthereumAddress('0x73CF739b0233027cd516998e177d473D0a45E037'), // ERC20Bridge
-      sinceTimestamp: new UnixTime(1713462371),
-      tokens: '*',
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  discoveryDrivenData: true,
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
-  ],
+    discovery,
+  }),
 })

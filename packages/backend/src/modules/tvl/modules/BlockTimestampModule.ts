@@ -1,6 +1,6 @@
-import { TvlConfig } from '../../../config/Config'
+import type { TvlConfig } from '../../../config/Config'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface BlockTimestampModule {
   start: () => Promise<void> | void
@@ -32,10 +32,10 @@ function createBlockTimestampIndexers(
   dependencies: TvlDependencies,
 ) {
   const logger = dependencies.logger.tag({ module: 'blockTimestamp' })
-  const hourlyIndexer = dependencies.getHourlyIndexer()
-  const indexerService = dependencies.getIndexerService()
+  const hourlyIndexer = dependencies.hourlyIndexer
+  const indexerService = dependencies.indexerService
   const db = dependencies.database
-  const syncOptimizer = dependencies.getSyncOptimizer()
+  const syncOptimizer = dependencies.syncOptimizer
 
   const blockTimestampIndexers = new Map<string, BlockTimestampIndexer>()
 

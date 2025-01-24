@@ -1,22 +1,20 @@
-import { RateLimiter } from '@l2beat/backend-tools'
-import { ConfigMapping, createAmountId } from '@l2beat/config'
-import { HttpClient2, RetryHandler, RpcClient2 } from '@l2beat/shared'
+import { type ConfigMapping, createAmountId } from '@l2beat/backend-shared'
 import {
   assert,
-  ElasticChainEther,
-  ElasticChainL2Token,
+  type ElasticChainEther,
+  type ElasticChainL2Token,
   ProjectId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
+import type { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ElasticChainIndexer } from '../indexers/ElasticChainIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { ElasticChainAmountConfig } from '../indexers/types'
+import type { ElasticChainAmountConfig } from '../indexers/types'
 import { ElasticChainService } from '../services/ElasticChainService'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface ElasticChainModule {
   start: () => Promise<void> | void
@@ -59,9 +57,9 @@ function createIndexers(
   blockTimestampIndexers?: Map<string, BlockTimestampIndexer>,
 ) {
   const logger = dependencies.logger.tag({ module: 'elasticChain' })
-  const indexerService = dependencies.getIndexerService()
-  const syncOptimizer = dependencies.getSyncOptimizer()
-  const valueService = dependencies.getValueService()
+  const indexerService = dependencies.indexerService
+  const syncOptimizer = dependencies.syncOptimizer
+  const valueService = dependencies.valueService
 
   const dataIndexers: ElasticChainIndexer[] = []
   const valueIndexers: ValueIndexer[] = []
@@ -82,21 +80,17 @@ function createIndexers(
       continue
     }
 
-    const rpcClient = new RpcClient2({
-      chain: chainConfig.chain,
-      url: chainConfig.config.providerUrl,
-      rateLimiter: new RateLimiter({
-        callsPerMinute: chainConfig.config.providerCallsPerMinute,
-      }),
-      http: new HttpClient2(),
-      logger,
-      retryHandler: RetryHandler.RELIABLE_API(logger),
-    })
+    const rpcClient = dependencies.clients.getRpcClient(chain)
 
-    const bridgeAddress = elasticChainAmountEntries.find(
-      (e) => e.type === 'elasticChainL2Token',
-    )?.l2BridgeAddress
-    assert(bridgeAddress, 'Bridge address not found')
+    const sharedEscrow = config.projects
+      .find((p) => p.projectId === chain)
+      ?.escrows.find(
+        (e) => e.sharedEscrow && e.sharedEscrow.type === 'ElasticChain',
+      )
+    assert(
+      sharedEscrow && sharedEscrow.sharedEscrow?.type === 'ElasticChain',
+      `${chain}: Shared escrow not found`,
+    )
 
     const elasticChainService = new ElasticChainService({
       rpcClient: rpcClient,
@@ -104,7 +98,7 @@ function createIndexers(
         rpcClient,
         chainConfig.config.multicallConfig,
       ),
-      bridgeAddress,
+      bridgeAddress: sharedEscrow.sharedEscrow.l2BridgeAddress,
     })
 
     const blockTimestampIndexer =

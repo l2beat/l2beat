@@ -1,6 +1,318 @@
 {
   "ethereum": [
     {
+      "symbol": "GHST",
+      "address": "0x3F382DbD960E3a9bbCeaE22651E88158d2791550"
+    },
+    {
+      "symbol": "HSK",
+      "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a"
+    },
+    {
+      "symbol": "XCHNG",
+      "address": "0xb712d62fe84258292d1961b5150a19bc4ab49026"
+    },
+    {
+      "symbol": "SPEC",
+      "address": "0xadf7c35560035944e805d98ff17d58cde2449389"
+    },
+    {
+      "symbol": "ARC",
+      "address": "0xc82e3db60a52cf7529253b4ec688f631aad9e7c2"
+    },
+    {
+      "symbol": "GALA",
+      "address": "0xd1d2eb1b1e90b638588728b4130137d262c87cae"
+    },
+    {
+      "symbol": "BADGER",
+      "address": "0x3472a5a71965499acd81997a54bba8d852c6e53d"
+    },
+    {
+      "symbol": "FIS",
+      "address": "0xef3a930e1ffffacd2fc13434ac81bd278b0ecc8d"
+    },
+    {
+      "symbol": "FARM",
+      "address": "0xa0246c9032bc3a600820415ae600c6388619a14d"
+    },
+    {
+      "symbol": "GEAR",
+      "address": "0xba3335588d9403515223f109edc4eb7269a9ab5d"
+    },
+    {
+      "symbol": "PNK",
+      "deploymentTimestamp": 1521078220,
+      "address": "0x93ed3fbe21207ec2e8f2d3c3de6e058cb73bc04d"
+    },
+    {
+      "symbol": "PORK",
+      "address": "0xb9f599ce614feb2e1bbe58f180f370d05b39344e"
+    },
+    {
+      "symbol": "STORJ",
+      "deploymentTimestamp": 1497888995,
+      "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac"
+    },
+    {
+      "symbol": "GTC",
+      "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f"
+    },
+    {
+      "symbol": "KIBSHI",
+      "address": "0x02e7f808990638e9e67e1f00313037ede2362361"
+    },
+    {
+      "symbol": "TRB",
+      "address": "0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0"
+    },
+    {
+      "symbol": "WAMPL",
+      "address": "0xedb171c18ce90b633db442f2a6f72874093b49ef"
+    },
+    {
+      "symbol": "MLN",
+      "deploymentTimestamp": 1548528970,
+      "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892"
+    },
+    {
+      "symbol": "scrvUSD",
+      "category": "stablecoin",
+      "address": "0x0655977feb2f289a4ab78af67bab0d17aab84367"
+    },
+    {
+      "symbol": "T",
+      "address": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5"
+    },
+    {
+      "symbol": "CTX",
+      "address": "0x321c2fe4446c7c963dc41dd58879af648838f98d"
+    },
+    {
+      "symbol": "FOOM",
+      "address": "0xd0d56273290d339aaf1417d9bfa1bb8cfe8a0933"
+    },
+    {
+      "symbol": "COW",
+      "address": "0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab"
+    },
+    {
+      "symbol": "MOON",
+      "address": "0xb2490e357980ce57bf5745e181e537a64eb367b1"
+    },
+    {
+      "symbol": "EURS",
+      "category": "stablecoin",
+      "deploymentTimestamp": 1529686012,
+      "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8"
+    },
+    {
+      "symbol": "LON",
+      "address": "0x0000000000095413afc295d19edeb1ad7b71c952"
+    },
+    {
+      "symbol": "VITA",
+      "address": "0x81f8f0bb1cb2a06649e51913a151f0e7ef6fa321"
+    },
+    {
+      "symbol": "AXGT",
+      "address": "0xdd66781d0e9a08d4fbb5ec7bac80b691be27f21d"
+    },
+    {
+      "symbol": "PSP",
+      "address": "0xcafe001067cdef266afb7eb5a286dcfd277f3de5"
+    },
+    {
+      "symbol": "BITCOIN",
+      "address": "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9"
+    },
+    {
+      "symbol": "OGN",
+      "deploymentTimestamp": 1538435171,
+      "address": "0x8207c1ffc5b6804f6024322ccf34f29c3541ae26"
+    },
+    {
+      "symbol": "OVR",
+      "address": "0x21bfbda47a0b4b5b1248c767ee49f7caa9b23697"
+    },
+    {
+      "symbol": "OLAS",
+      "address": "0x0001a500a6b18995b03f44bb040a5ffc28e45cb0"
+    },
+    {
+      "symbol": "ETH+",
+      "category": "ether",
+      "address": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8"
+    },
+    {
+      "symbol": "APW",
+      "address": "0x4104b135dbc9609fc1a9490e61369036497660c8"
+    },
+    {
+      "symbol": "ALI",
+      "address": "0x6b0b3a982b4634ac68dd83a4dbf02311ce324181"
+    },
+    {
+      "symbol": "FOX",
+      "deploymentTimestamp": 1553639047,
+      "address": "0xc770eefad204b5180df6a14ee197d99d808ee52d"
+    },
+    {
+      "symbol": "FORT",
+      "address": "0x41545f8b9472d758bb669ed8eaeeecd7a9c4ec29"
+    },
+    {
+      "symbol": "DOG",
+      "address": "0xbaac2b4491727d78d2b78815144570b9f2fe8899"
+    },
+    {
+      "symbol": "eUSD",
+      "category": "stablecoin",
+      "address": "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f"
+    },
+    {
+      "symbol": "TRADE",
+      "address": "0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1"
+    },
+    {
+      "symbol": "WXM",
+      "address": "0xde654f497A563dd7A121c176a125dD2F11F13a83"
+    },
+    {
+      "symbol": "UNP",
+      "address": "0x23d7Ff057c696fEE679c60cEf61Fee6614218f04"
+    },
+    {
+      "symbol": "HMKR",
+      "address": "0x3300b02efa180c99a2F61f4731665b51e4E254C4"
+    },
+    {
+      "symbol": "EXD",
+      "address": "0x02dE007D412266a2e0Fa9287C103474170F06560"
+    },
+    {
+      "symbol": "DIVI",
+      "address": "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77"
+    },
+    {
+      "symbol": "sUSDS",
+      "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
+    },
+    {
+      "symbol": "USDS",
+      "category": "stablecoin",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+    },
+    {
+      "symbol": "OPN",
+      "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509"
+    },
+    {
+      "symbol": "SUI", // wormhole version
+      "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
+      "coingeckoId": "sui"
+    },
+    {
+      "symbol": "NEAR", // wormhole version
+      "address": "0x1C88d38D04ACd3Edd9051ec587c67AbFF04bf30D",
+      "coingeckoId": "near"
+    },
+    {
+      "symbol": "WBNB", // wormhole version
+      "address": "0x418d75f65a02b3d53b2418fb8e1fe493759c7605"
+    },
+    {
+      "symbol": "WAVAX", // wormhole version
+      "address": "0x85f138bfEE4ef8e540890CFb48F620571d67Eda3"
+    },
+    {
+      "symbol": "PUFFER",
+      "address": "0x4d1C297d39C5c1277964D0E3f8Aa901493664530"
+    },
+    {
+      "symbol": "ONDO",
+      "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3"
+    },
+    {
+      "symbol": "COW",
+      "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
+    },
+    {
+      "symbol": "DODO",
+      "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd"
+    },
+    {
+      "symbol": "BGB",
+      "address": "0x54D2252757e1672EEaD234D27B1270728fF90581"
+    },
+    {
+      "symbol": "FUEL",
+      "address": "0x675B68AA4d9c2d3BB3F0397048e62E6B7192079c"
+    },
+    {
+      "symbol": "stAVAIL",
+      "address": "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a"
+    },
+    {
+      "symbol": "stAZUR",
+      "coingeckoId": "azuro-protocol", // the staked version is not on CG
+      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB"
+    },
+    {
+      "symbol": "stAethir",
+      "coingeckoId": "aethir", // the staked version is not on CG
+      "address": "0xc96Aa65F31E41b4Ca6924B86D93e25686019E59C"
+    },
+    {
+      "symbol": "stZENT",
+      "coingeckoId": "zentry", // the staked version is not on CG
+      "address": "0x996d67AA9b37df96428ad3608cb21352BF1FDB90"
+    },
+    {
+      "symbol": "BEAM",
+      "address": "0x62D0A8458eD7719FDAF978fe5929C6D342B0bFcE"
+    },
+    {
+      "symbol": "FFM",
+      "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92"
+    },
+    // { // error when trying to get coingeckoListingTS
+    //   "symbol": "DF",
+    //   "address": "0x431ad2ff6a9C365805eBaD47Ee021148d6f7DBe0"
+    // },
+    {
+      "symbol": "YBR",
+      "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3"
+    },
+    {
+      "symbol": "LOGX",
+      "address": "0xa3F4341C3fEf5963AB04135D2014AC7d68222E19"
+    },
+    {
+      "symbol": "AIUS",
+      "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852"
+    },
+    {
+      "symbol": "FNXAI",
+      "address": "0x939069722D568B5498CcBA4356E800EaefEFD2a5"
+    },
+    {
+      "symbol": "GENOME",
+      "address": "0x7AE4f8885f6cFa41a692cb9DA3789cfa6A83e9f2"
+    },
+    {
+      "symbol": "MORPHO",
+      "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2"
+    },
+    {
+      "symbol": "Mog",
+      "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a"
+    },
+    {
+      "symbol": "USD0++",
+      "address": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0"
+    },
+    {
       "symbol": "ZRC",
       "address": "0xfd418e42783382E86Ae91e445406600Ba144D162"
     },
@@ -196,7 +508,7 @@
       "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
     },
     {
-      "symbol": "ankrMATIC",
+      "symbol": "ankrPOL",
       "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C"
     },
     {
@@ -230,6 +542,10 @@
     {
       "symbol": "AURORA",
       "address": "0xAaAAAA20D9E0e2461697782ef11675f668207961"
+    },
+    {
+      "symbol": "AXL",
+      "address": "0x467719aD09025FcC6cF6F8311755809d45a5E5f3"
     },
     {
       "symbol": "AXS",
@@ -752,6 +1068,10 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "JASMY",
+      "address": "0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC"
+    },
+    {
       "symbol": "KCS",
       "address": "0xf34960d9d60be18cC1D5Afc1A6F012A723a28811",
       "coingeckoId": "kucoin-shares"
@@ -852,6 +1172,10 @@
     {
       "symbol": "MATIC",
       "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+    },
+    {
+      "symbol": "MAV",
+      "address": "0x7448c7456a97769F6cD04F1E83A4a23cCdC46aBD"
     },
     {
       "symbol": "MC",
@@ -1261,6 +1585,10 @@
       "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF"
     },
     {
+      "symbol": "SSV",
+      "address": "0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54"
+    },
+    {
       "symbol": "STARL",
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
     },
@@ -1302,6 +1630,10 @@
     {
       "symbol": "SUSHI",
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
+    },
+    {
+      "symbol": "SWELL",
+      "address": "0x0a6E7Ba5042B38349e437ec6Db6214AEC7B35676"
     },
     {
       "symbol": "SX",
@@ -1424,6 +1756,10 @@
       "symbol": "USDT",
       "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
       "category": "stablecoin"
+    },
+    {
+      "symbol": "USUAL",
+      "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E"
     },
     {
       "symbol": "VENT",
@@ -1563,6 +1899,20 @@
   ],
   "galxegravity": [
     {
+      "symbol": "atETH",
+      "address": "0xc314b8637B05A294Ae9D9C29300d5f667c748baD",
+      "category": "ether",
+      "supply": "totalSupply",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Latch.io mint-bridge"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDC.e",
       "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
       "coingeckoId": "usd-coin",
@@ -1616,6 +1966,82 @@
   ],
   "zircuit": [
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ENA",
+      "address": "0x813635891aA06bd55036bbd8f7d1A34aB3de9a0F",
+      "source": "external",
+      "coingeckoId": "ethena",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pumpBTC",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "coingeckoId": "pumpbtc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "stakestone-ether",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "pzETH",
       "category": "ether",
       "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
@@ -1652,29 +2078,13 @@
       "address": "0x850CDF416668210ED0c36bfFF5d21921C7adA3b8",
       "category": "ether",
       "coingeckoId": "sweth",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero OFT",
-            "slug": "omnichain"
-          }
-        ]
-      }
-    },
-    {
-      "symbol": "USDe",
-      "coingeckoId": "ethena-usde",
-      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero v2",
-            "slug": "stargate"
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -1700,7 +2110,7 @@
       "address": "0xD8b29106d4ceBad087C30B10c0E41BAa3A9ea703",
       "category": "ether",
       "coingeckoId": "restaked-swell-eth",
-      "source": "native",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
@@ -1713,6 +2123,61 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "XBG",
+      "address": "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "EDU",
+      "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
+      "coingeckoId": "edu-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDX",
+      "address": "0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
+      "source": "native",
+      "supply": "totalSupply", // minted natively on multiple chains, no bridging
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "LINK",
+      "address": "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "TIA.n",
+      "address": "0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (NTT)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "SOL",
       "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
@@ -2290,7 +2755,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargate"
+            "slug": "stargatev2"
           }
         ]
       }
@@ -2304,8 +2769,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -2409,7 +2874,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)"
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
           }
         ]
       }
@@ -2657,8 +3123,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -2672,8 +3138,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -2732,6 +3198,91 @@
     }
   ],
   "base": [
+    {
+      "symbol": "GHST",
+      "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "CLANKER",
+      "address": "0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "SAINT",
+      "address": "0x7588880d9c78E81FAde7b7e8DC0781E95995a792",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "SEKOIA",
+      "address": "0x1185cB5122Edad199BdBC0cbd7a0457E448f23c7",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "VADER",
+      "address": "0x731814e491571A2e9eE3c5b1F7f3b962eE8f4870",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "CONVO",
+      "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "GAME",
+      "address": "0x1C4CcA7C5DB003824208aDDA61Bd749e55F463a3",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "LUNA",
+      "address": "0x55cD6469F597452B5A7536e2CD98fDE4c1247ee4",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
+    {
+      "symbol": "AIXBT",
+      "address": "0x4F9Fd6Be4a90f2620860d680c0d4d5Fb53d1A825",
+      "source": "native",
+      "supply": "totalSupply" // virtuals tokens are fully circulating
+    },
     {
       "symbol": "UP",
       "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
@@ -2991,7 +3542,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)"
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
           }
         ]
       }
@@ -3006,8 +3558,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3021,8 +3573,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3129,8 +3681,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3144,8 +3696,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3265,8 +3817,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3280,8 +3832,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3300,6 +3852,19 @@
     }
   ],
   "linea": [
+    {
+      "symbol": "SOULS",
+      "address": "0xeC859566fC5d7ED84Ac823509F3f7db06C461b20",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "inETH",
       "address": "0x5A7a183B6B44Dc4EC2E3d2eF43F98C5152b1d76d",
@@ -3475,6 +4040,12 @@
       "coingeckoId": "foxy"
     },
     {
+      "symbol": "CROAK",
+      "address": "0xacb54d07ca167934f57f829bee2cc665e1a5ebef",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "ZERO",
       "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
       "source": "native",
@@ -3496,8 +4067,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3511,8 +4082,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3549,6 +4120,12 @@
     }
   ],
   "kroma": [
+    {
+      "symbol": "KRO",
+      "address": "0x25500000d700bbE27104577CCcce8eAbCC96c8ad",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "M-BTC",
       "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
@@ -3696,8 +4273,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3711,8 +4288,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3892,8 +4469,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -3907,8 +4484,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -4038,8 +4615,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -4053,8 +4630,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "stargate"
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
           }
         ]
       }
@@ -4077,6 +4654,22 @@
     }
   ],
   "zksync2": [
+    {
+      "symbol": "rsETH",
+      "category": "ether",
+      "address": "0x6be2425c381eb034045b527780d2bf4e21ab7236",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "wBTC",
       "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
@@ -4723,6 +5316,48 @@
   ],
   "bob": [
     {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "uniBTC",
+      "address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 24/12/06
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via bedrock.technology)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "FBTC",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
       "source": "external",
@@ -4731,6 +5366,434 @@
         "bridges": [
           {
             "name": "FBTC FireBridge"
+          }
+        ]
+      }
+    }
+  ],
+  "degen": [
+    {
+      "symbol": "WETH",
+      "address": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+      "category": "ether",
+      "coingeckoId": "weth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xF1815bd50389c46847f0Bda824eC8da914045D14",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    }
+  ],
+  "swell": [
+    {
+      "symbol": "rswETH",
+      "address": "0x18d33689ae5d02649a859a1cf16c9f0563975258",
+      "category": "ether",
+      "coingeckoId": "restaked-swell-eth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "swETH",
+      "address": "0x09341022ea237a4db1644de7ccf8fa0e489d85b7",
+      "category": "ether",
+      "coingeckoId": "sweth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0xa6cb988942610f6731e664379d15ffcfbf282b44",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "swBTC",
+      "address": "0x1cf7b5f266a0f39d6f9408b90340e3e71df8bf7b",
+      "coingeckoId": "swell-restaked-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "rSWELL",
+      "address": "0x939f1cc163fdc38a77571019eb4ad1794873bf8c",
+      "coingeckoId": "swell-network",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SWELL",
+      "address": "0x2826d136f5630ada89c1678b64a61620aab77aea",
+      "coingeckoId": "swell-network",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "stBTC",
+      "address": "0xf6718b2701d4a6498ef77d7c152b2137ab28b8a3",
+      "coingeckoId": "lorenzo-stbtc",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "rsETH",
+      "category": "ether",
+      "address": "0xc3eacf0612346366db554c991d7858716db09f58",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "category": "stablecoin",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ENA",
+      "address": "0x58538e6a46e07434d7e7375bc268d3cb839c0133",
+      "source": "external",
+      "coingeckoId": "ethena",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ezETH",
+      "category": "ether",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pzETH",
+      "category": "ether",
+      "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
+      "coingeckoId": "renzo-restaked-lst",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "uBTC",
+      "address": "0xfa3198ecf05303a6d96e57a45e6c815055d255b1",
+      "coingeckoId": "wrapped-bitcoin-universal",
+      "source": "external", // from b2 (bsquared) bitcoin l2 via lockbox
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xb89c6ED617f5F46175E41551350725A09110bbCE",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)"
+          }
+        ]
+      }
+    }
+  ],
+  "corn": [
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LBTC",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "coingeckoId": "lombard-staked-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "eBTC",
+      "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+      "coingeckoId": "ether-fi-staked-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x85aDfA60dDf86b67E6fD493Bd2c774b2eD772D14",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC.e",
+      "category": "stablecoin",
+      "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
+      "source": "external",
+      "coingeckoId": "usd-coin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WETH",
+      "category": "ether",
+      "address": "0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
+      "source": "external",
+      "coingeckoId": "ethereum",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "stBTC",
+      "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
+      "source": "external",
+      "coingeckoId": "lorenzo-stbtc",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
+  "ink": [
+    {
+      "symbol": "USD₮0",
+      "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
+  "soneium": [
+    {
+      "symbol": "ASTR",
+      "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
+      "coingeckoId": "astar",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }

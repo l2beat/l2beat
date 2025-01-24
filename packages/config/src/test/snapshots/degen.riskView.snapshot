@@ -2,18 +2,13 @@
 
 {
   dataAvailability: {
-    definingMetric: 1
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/3 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
-    definingMetric: -86400000
+    definingMetric: -345600
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
@@ -27,9 +22,9 @@
     value: "Self propose"
   }
   sequencerFailure: {
-    definingMetric: 86400000
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1000d delay on this operation."
-    secondLine: "1000d delay"
+    definingMetric: 345600
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 4d delay on this operation."
+    secondLine: "4d delay"
     sentiment: "good"
     value: "Self sequence"
   }
@@ -40,29 +35,19 @@
     sentiment: "bad"
     value: "Fraud proofs (INT)"
   }
-  validatedBy: {
-    description: "Smart contracts on base validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer."
-    sentiment: "warning"
-    value: "Base"
-  }
 }
 
 // degen stackedRiskView didn't change 1
 
 {
   dataAvailability: {
-    definingMetric: 1
-    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 1/1 that is tasked with protecting and supplying the data."
+    definingMetric: 0.6666666666666666
+    description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/3 that is tasked with protecting and supplying the data."
     sentiment: "bad"
     value: "External (DAC)"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
-    definingMetric: -86400000
+    definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
@@ -75,8 +60,8 @@
     value: "Self propose"
   }
   sequencerFailure: {
-    definingMetric: 86443200
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1000d 12h delay on this operation."
+    definingMetric: 388800
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 4d 12h delay on this operation."
     sentiment: "good"
     value: "Self sequence"
   }
@@ -86,10 +71,5 @@
     secondLine: "5d 14h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
-  }
-  validatedBy: {
-    description: "Smart contracts on base validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer."
-    sentiment: "warning"
-    value: "Base"
   }
 }

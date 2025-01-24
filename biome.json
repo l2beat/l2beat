@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
   "files": {
-    "ignore": ["node_modules/", ".cache/", "dist/", ".next/"]
+    "ignore": ["node_modules/", ".cache/", "dist/", ".next/", "build/"]
   },
   "formatter": {
     "enabled": true,
@@ -67,7 +67,8 @@
         "noNamespace": "error",
         "noNonNullAssertion": "error",
         "useAsConstAssertion": "error",
-        "useLiteralEnumMembers": "error"
+        "useLiteralEnumMembers": "error",
+        "useImportType": "error"
       },
       "performance": {
         "noAccumulatingSpread": "error",

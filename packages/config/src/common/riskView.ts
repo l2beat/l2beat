@@ -1,14 +1,14 @@
 import {
   assert,
-  ProjectId,
-  Sentiment,
-  WarningValueWithSentiment,
+  type ProjectId,
+  type Sentiment,
+  type WarningValueWithSentiment,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
-import { ScalingProjectRiskView } from './ScalingProjectRiskView'
+import type { ScalingProjectRiskViewEntry } from './ScalingProject'
+import type { ScalingProjectRiskView } from './ScalingProject'
 import { DATA_AVAILABILITY } from './dataAvailability'
 
 // State validation
@@ -104,6 +104,7 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
 
 export function STATE_ARBITRUM_FRAUD_PROOFS(
   nOfChallengers: number,
+  hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
 ): ScalingProjectRiskViewEntry {
   const challengePeriod = challengeWindowSeconds
@@ -125,11 +126,16 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
       'Interactive proofs (INT) require multiple transactions over time to resolve. ' +
       'The challenge protocol can be subject to delay attacks.'
     sentiment = 'bad'
-  } else {
+  } else if (hasAtLeastFiveExternalChallengers) {
     descriptionBase =
-      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. ` +
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. At least 5 Challengers are external to the Operator. ` +
       'Interactive proofs (INT) require multiple transactions over time to resolve.'
     sentiment = 'warning'
+  } else {
+    descriptionBase =
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. There are fewer than 5 Challengers external to the Operator among these. ` +
+      'Interactive proofs (INT) require multiple transactions over time to resolve.'
+    sentiment = 'bad'
   }
 
   return {
@@ -234,6 +240,43 @@ export function DATA_CELESTIA(
   }
 }
 
+export function DATA_AVAIL(
+  isUsingVector: boolean,
+): ScalingProjectRiskViewEntry {
+  const additional = isUsingVector
+    ? ' Transaction data is checked against the Vector bridge data roots, signed off by Vector validators.'
+    : ' Transaction data is not checked against the Vector bridge data roots onchain, but L2 nodes can verify data availability by running an Avail light client.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation fully rely on data that is posted on Avail.` +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
+export function DATA_EIGENDA(
+  isUsingServiceManager: boolean,
+): ScalingProjectRiskViewEntry {
+  const additional = isUsingServiceManager
+    ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
+    : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation fully rely on data that is posted on EigenDA.` +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
+export const DATA_POS: ScalingProjectRiskViewEntry = {
+  value: 'PoS network',
+  description:
+    'Data is guaranteed to be available by an external proof of stake network of validators. On Ethereum, DA is attested via signed block headers.',
+  sentiment: 'warning',
+}
+
 // bridges
 
 export const VALIDATED_BY_ETHEREUM: ScalingProjectRiskViewEntry = {
@@ -259,12 +302,12 @@ function capitalize(str: string): string {
 }
 
 export function NATIVE_AND_CANONICAL(
-  nativeTokens = 'ETH',
+  gasTokens = ['ETH'],
   isAre: 'is' | 'are' = 'is',
 ): ScalingProjectRiskViewEntry {
   return {
     value: 'Native & Canonical',
-    description: `${nativeTokens} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
+    description: `${gasTokens.join(', ')} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
     sentiment: 'good',
   }
 }
@@ -295,8 +338,6 @@ export const UPCOMING_RISK_VIEW: ScalingProjectRiskView = {
   exitWindow: UPCOMING_RISK,
   sequencerFailure: UPCOMING_RISK,
   proposerFailure: UPCOMING_RISK,
-  destinationToken: UPCOMING_RISK,
-  validatedBy: UPCOMING_RISK,
 }
 
 export const UNDER_REVIEW_RISK: ScalingProjectRiskViewEntry = {
@@ -311,8 +352,6 @@ export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView = {
   exitWindow: UNDER_REVIEW_RISK,
   sequencerFailure: UNDER_REVIEW_RISK,
   proposerFailure: UNDER_REVIEW_RISK,
-  destinationToken: UNDER_REVIEW_RISK,
-  validatedBy: UNDER_REVIEW_RISK,
 }
 
 // SEQUENCER COLUMN
@@ -324,7 +363,7 @@ export function SEQUENCER_SELF_SEQUENCE(
     delay !== undefined
       ? delay === 0
         ? ' There is no delay on this operation.'
-        : ` There is a ${formatSeconds(delay)} delay on this operation.`
+        : ` There can be up to a ${formatSeconds(delay)} delay on this operation.`
       : ''
   return {
     value: 'Self sequence',
@@ -332,6 +371,13 @@ export function SEQUENCER_SELF_SEQUENCE(
     sentiment: 'good',
     definingMetric: delay,
   }
+}
+
+const SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER: ScalingProjectRiskViewEntry = {
+  value: 'Self sequence',
+  description:
+    'Users can self sequence transactions by sending them on L1. There is no privileged operator.',
+  sentiment: 'good',
 }
 
 export function SEQUENCER_SELF_SEQUENCE_ZK(
@@ -395,16 +441,16 @@ export function SEQUENCER_ENQUEUE_VIA(
 ): ScalingProjectRiskViewEntry {
   return {
     value: `Enqueue via ${layer}`,
-    description: `Users can submit transactions to an ${layer} queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.`,
+    description: `Users can submit transactions to an ${layer} queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone.`,
     sentiment: 'warning',
   }
 }
 
 export function SEQUENCER_NO_MECHANISM(
-  disabled?: boolean,
+  isItThereButJustDisabled?: boolean,
 ): ScalingProjectRiskViewEntry {
   const additional =
-    disabled === true
+    isItThereButJustDisabled === true
       ? ' Although the functionality exists in the code, it is currently disabled.'
       : ''
   return {
@@ -492,6 +538,17 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: ScalingProjectRiskViewEntry = {
     'Anyone can be a Proposer and propose new roots to the L1 bridge.',
   sentiment: 'good',
   definingMetric: 0,
+}
+
+function PROPOSER_POLYGON_POS(
+  stakedValidatorSetSize: number,
+  validatorSetSizeCap: number,
+): ScalingProjectRiskViewEntry {
+  return {
+    value: 'Cannot withdraw',
+    description: `The Polygon PoS network is composed of ${stakedValidatorSetSize} validators. Blocks are included in the chain only if signed by 2/3+1 of the network stake. It's currently not possible to join the set if the validator cap is reached. The current validator cap is set to ${validatorSetSizeCap}. In the event of a failure in reaching consensus, withdrawals are frozen.`,
+    sentiment: 'warning',
+  }
 }
 
 export function EXIT_WINDOW(
@@ -632,6 +689,9 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_L3,
   DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
+  DATA_AVAIL,
+  DATA_EIGENDA,
+  DATA_POS,
 
   // validatedBy
   VALIDATED_BY_ETHEREUM,
@@ -645,6 +705,7 @@ export const RISK_VIEW = {
   // sequencerFailure
   SEQUENCER_SELF_SEQUENCE,
   SEQUENCER_SELF_SEQUENCE_ZK,
+  SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
   SEQUENCER_FORCE_VIA_L1,
   SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
   SEQUENCER_FORCE_VIA_L1_LOOPRING,
@@ -661,6 +722,7 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
+  PROPOSER_POLYGON_POS,
 
   // exitWindow
   EXIT_WINDOW,

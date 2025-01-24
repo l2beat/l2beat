@@ -1,4 +1,4 @@
-import { Value } from '../../kysely/generated/types'
+import type { Value } from '../../kysely/generated/types'
 
 export const selectValue = [
   'projectId',

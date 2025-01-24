@@ -9,7 +9,7 @@ import { utils } from 'ethers'
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -225,12 +225,10 @@ export const acrossV3: Bridge = {
         'BondToken',
         `Token (${bondSymbol}) used to bond the data worker for proposing Relayer refund bundles. It also used as a required bond to dispute a bundle proposal. Currently, the bond amount is set to ${bondAmount} ${bondSymbol}.`,
       ),
-      {
-        name: 'UMAOptimisticOracle',
-        address: EthereumAddress('0xeE3Afe347D5C74317041E2618C49534dAf887c24'),
-        description:
-          'UMA Optimistic Oracle smart contract. It registers dispute requests, status of disputes, and dispute settlement.',
-      },
+      discovery.getContractDetails(
+        'UMAOptimisticOracle',
+        'UMA Optimistic Oracle smart contract. It registers dispute requests, status of disputes, and dispute settlement.',
+      ),
       discovery.getContractDetails(
         'GovernorV2',
         'Owner of the Optimistic Oracle. This contract is used to execute a proposed UMA governance action that has been approved by UMA token holders.',
@@ -261,22 +259,20 @@ export const acrossV3: Bridge = {
       discovery.getContractDetails('Zora_Adapter'),
       discovery.getContractDetails('WorldChain_Adapter'),
       discovery.getContractDetails('Alephzero_Adapter'),
+      discovery.getContractDetails('Ink_Adapter'),
+      discovery.getContractDetails('Soneium_Adapter'),
       discovery.getContractDetails(
         'Ethereum_SpokePool',
         'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.',
       ),
-      {
-        name: 'PolygonTokenBridger',
-        address: EthereumAddress('0x48d990AbDA20afa1fD1da713AbC041B60a922c65'),
-        description:
-          'Contract deployed on Ethereum and Polygon PoS to facilitate token transfers from Polygon to the HubPool.',
-      },
-      {
-        name: 'AcrossConfigStore',
-        address: EthereumAddress('0x3B03509645713718B78951126E0A6de6f10043f5'),
-        description:
-          'Contract storing configurations such as token rate models and minimum transfer thresholds, meant for off-chain consumption.',
-      },
+      discovery.getContractDetails(
+        'PolygonTokenBridger',
+        'Contract deployed on Ethereum and Polygon PoS to facilitate token transfers from Polygon to the HubPool.',
+      ),
+      discovery.getContractDetails(
+        'AcrossConfigStore',
+        'Contract storing configurations such as token rate models and minimum transfer thresholds, meant for off-chain consumption.',
+      ),
     ],
     risks: [
       {

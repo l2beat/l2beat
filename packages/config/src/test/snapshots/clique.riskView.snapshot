@@ -6,11 +6,6 @@
     sentiment: "UnderReview"
     value: "Under Review"
   }
-  destinationToken: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
   exitWindow: {
     description: "This risk is currently under review."
     sentiment: "UnderReview"
@@ -27,11 +22,6 @@
     value: "Under Review"
   }
   stateValidation: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
-  validatedBy: {
     description: "This risk is currently under review."
     sentiment: "UnderReview"
     value: "Under Review"
@@ -46,11 +36,6 @@
     sentiment: "UnderReview"
     value: "Under Review"
   }
-  destinationToken: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
   exitWindow: {
     description: "This risk is currently under review."
     sentiment: "UnderReview"
@@ -67,11 +52,6 @@
     value: "Under Review"
   }
   stateValidation: {
-    description: "This risk is currently under review."
-    sentiment: "UnderReview"
-    value: "Under Review"
-  }
-  validatedBy: {
     description: "This risk is currently under review."
     sentiment: "UnderReview"
     value: "Under Review"

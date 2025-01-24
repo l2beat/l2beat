@@ -1,69 +1,64 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
-import { groupByMainCategories } from '~/utils/group-by-main-categories'
 import {
-  type ProjectsChangeReport,
+  type Project,
+  type ProjectDataAvailability,
+  ProjectService,
+  type ScalingProjectCategory,
+  type ScalingProjectStack,
+} from '@l2beat/config'
+import { groupByTabs } from '~/utils/group-by-tabs'
+import {
+  type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
-import { getCurrentEntry } from '../../utils/get-current-entry'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import {
+  type CommonScalingEntry,
+  getCommonScalingEntry,
+} from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { orderByStageAndTvl } from '../utils/order-by-stage-and-tvl'
+import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 
 export async function getScalingDaEntries() {
-  const activeProjects = [...layer2s, ...layer3s].filter(
-    (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
-  )
-  const [tvl, projectsVerificationStatuses, projectsChangeReport] =
-    await Promise.all([
-      getProjectsLatestTvlUsd(),
-      getProjectsVerificationStatuses(),
-      getProjectsChangeReport(),
-    ])
+  const [tvl, projectsChangeReport, projects] = await Promise.all([
+    getProjectsLatestTvlUsd(),
+    getProjectsChangeReport(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'scalingInfo', 'scalingDa'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
+  ])
 
-  const entries = activeProjects
-    .map((p) => {
-      const isVerified = !!projectsVerificationStatuses[p.id.toString()]
-      return getScalingDataAvailabilityEntry(
-        p,
-        projectsChangeReport,
-        isVerified,
-      )
-    })
-    .filter(notUndefined)
+  const entries = projects
+    .map((project) =>
+      getScalingDaEntry(
+        project,
+        projectsChangeReport.getChanges(project.id),
+        tvl[project.id],
+      ),
+    )
+    .filter((entry) => entry !== undefined)
+    .sort(compareStageAndTvl)
 
-  return groupByMainCategories(orderByStageAndTvl(entries, tvl))
+  return groupByTabs(entries)
 }
 
-function getScalingDataAvailabilityEntry(
-  project: Layer2 | Layer3,
-  projectsChangeReport: ProjectsChangeReport,
-  isVerified: boolean,
-) {
-  const dataAvailability = getCurrentEntry(project.dataAvailability)
-  if (!dataAvailability) return
+export interface ScalingDaEntry extends CommonScalingEntry {
+  category: ScalingProjectCategory
+  dataAvailability: ProjectDataAvailability
+  provider: ScalingProjectStack | undefined
+  tvlOrder: number
+}
 
+function getScalingDaEntry(
+  project: Project<'scalingInfo' | 'statuses' | 'scalingDa'>,
+  changes: ProjectChanges,
+  tvl: number | undefined,
+): ScalingDaEntry {
   return {
-    entryType: 'data-availability' as const,
-    ...getCommonScalingEntry({
-      project,
-      isVerified,
-      hasImplementationChanged: projectsChangeReport.hasImplementationChanged(
-        project.id,
-      ),
-      hasHighSeverityFieldChanged:
-        projectsChangeReport.hasHighSeverityFieldChanged(project.id),
-    }),
-    dataAvailability: {
-      layer: dataAvailability.layer,
-      bridge: dataAvailability.bridge,
-      mode: dataAvailability.mode,
-    },
+    ...getCommonScalingEntry({ project, changes }),
+    category: project.scalingInfo.type,
+    dataAvailability: project.scalingDa,
+    provider: project.scalingInfo.stack,
+    tvlOrder: tvl ?? -1,
   }
 }
-
-export type ScalingDataAvailabilityEntry = Exclude<
-  ReturnType<typeof getScalingDataAvailabilityEntry>,
-  undefined
->

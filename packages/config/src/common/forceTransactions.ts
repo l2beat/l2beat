@@ -1,7 +1,9 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 
-import { ScalingProjectRisk } from './ScalingProjectRisk'
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type {
+  ScalingProjectRisk,
+  ScalingProjectTechnologyChoice,
+} from './ScalingProject'
 
 const EXIT_CENSORSHIP: ScalingProjectRisk = {
   category: 'Users can be censored if',
@@ -67,12 +69,15 @@ function STARKEX_PERPETUAL_WITHDRAW(
   }
 }
 
-const CANONICAL_ORDERING: ScalingProjectTechnologyChoice = {
-  name: 'Users can force any transaction',
-  description:
-    'Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.',
-  risks: [],
-  references: [],
+function CANONICAL_ORDERING(
+  forcedInbox: 'smart contract' | 'EOA inbox',
+): ScalingProjectTechnologyChoice {
+  return {
+    name: 'Users can force any transaction',
+    description: `Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the ${forcedInbox} on the host chain directly.`,
+    risks: [],
+    references: [],
+  }
 }
 
 const PROPOSE_OWN_BLOCKS: ScalingProjectTechnologyChoice = {
@@ -81,7 +86,7 @@ const PROPOSE_OWN_BLOCKS: ScalingProjectTechnologyChoice = {
     'Because the block production is open to anyone if users experience censorship from the operator they can propose their own blocks which would include their transactions.',
   risks: [
     {
-      category: 'Users can be censored if',
+      category: 'Funds can be frozen if',
       text: 'the operator refuses to include their transactions and users lack resources to propose blocks themselves.',
     },
   ],

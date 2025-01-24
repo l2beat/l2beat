@@ -9,16 +9,11 @@
       {
         contract: "MorphRollup"
         references: [
-          "https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code"
+          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
         ]
       }
     ]
     value: "Onchain"
-  }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
   }
   exitWindow: {
     definingMetric: 0
@@ -29,7 +24,7 @@
       {
         contract: "MorphRollup"
         references: [
-          "https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code"
+          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
         ]
       }
     ]
@@ -43,7 +38,7 @@
       {
         contract: "MorphRollup"
         references: [
-          "https://etherscan.io/address/0xaD900dB30Bcdf84c38Df0067eA327bbEccCF071A#code"
+          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
         ]
       }
     ]
@@ -56,7 +51,7 @@
       {
         contract: "L1MessageQueueWithGasPriceOracle"
         references: [
-          "https://etherscan.io/address/0x828F68e2E05a34fA836416F124350E25021876ac#code"
+          "https://etherscan.io/address/0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA#code"
         ]
       }
       {
@@ -74,10 +69,5 @@
     secondLine: "2d challenge period"
     sentiment: "bad"
     value: "Fraud proofs (1R, ZK)"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

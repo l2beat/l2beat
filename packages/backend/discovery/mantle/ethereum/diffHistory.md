@@ -1,3 +1,661 @@
+Generated with discovered.json: 0x69900d75b4626ceab1aff3d4b730ef346975432c
+
+# Diff at Wed, 22 Jan 2025 14:31:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21628468
+- current block number: 21680644
+
+## Description
+
+Refined mantle DA permissions.
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.5:
+-        "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
++        "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628468 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x075a48633dc6845f92339741E9c96b88f1b2A86f) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd","description":"defines addresses that can pause or unpause ability to invest into strategies."},{"permission":"configure","from":"0xA937660031787C4408587D2c6A67Ec4B260630F5","description":"defines addresses that can pause or unpause ability to deposit tokens into strategies."},{"permission":"configure","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1","description":"defines addresses that can pause or unpause ability to deposit tokens into strategies."}]
+    }
+```
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      issuedPermissions.10:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      issuedPermissions.9:
++        {"permission":"configure","to":"0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.8:
++        {"permission":"configure","to":"0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.7:
++        {"permission":"configure","to":"0xB61298691FE0df10634A67dd83b2253E74cbF7fb","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.6:
++        {"permission":"configure","to":"0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.5:
++        {"permission":"configure","to":"0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.4:
++        {"permission":"configure","to":"0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.3:
++        {"permission":"configure","to":"0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.2:
++        {"permission":"configure","to":"0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","to":"0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}
+      issuedPermissions.0.description:
++        "sign data commitments for the DA bridge."
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "defines addresses that can pause or unpause ability to invest into strategies."
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","description":"can post data commitments to the DA bridge."}]
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.2:
++        {"permission":"configure","to":"0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A","description":"can post data commitments to the DA bridge.","via":[]}
+      issuedPermissions.1:
++        {"permission":"configure","to":"0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749","description":"can post data commitments to the DA bridge.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "can register or change status of DA node operators."
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+      issuedPermissions.0.description:
++        "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+    }
+```
+
+Generated with discovered.json: 0x856e8d101462721c93e61079414df593a1e69ba4
+
+# Diff at Mon, 20 Jan 2025 11:09:44 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21628468
+- current block number: 21628468
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628468 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      directlyReceivedPermissions.0.from:
++        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+    }
+```
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83) {
+    +++ description: None
+      directlyReceivedPermissions.4.target:
+-        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
+      directlyReceivedPermissions.4.from:
++        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
+      directlyReceivedPermissions.3.target:
+-        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
+      directlyReceivedPermissions.3.from:
++        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
+      directlyReceivedPermissions.2.target:
+-        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+      directlyReceivedPermissions.2.from:
++        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+      directlyReceivedPermissions.1.target:
+-        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
+      directlyReceivedPermissions.1.from:
++        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
+      directlyReceivedPermissions.0.target:
+-        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
+      directlyReceivedPermissions.0.from:
++        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      receivedPermissions.1.from:
++        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      receivedPermissions.0.target:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      receivedPermissions.0.from:
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.1.target:
+-        "0x6667961f5e9C98A76a48767522150889703Ed77D"
+      issuedPermissions.1.to:
++        "0x6667961f5e9C98A76a48767522150889703Ed77D"
+      issuedPermissions.0.target:
+-        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      issuedPermissions.0.to:
++        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.1.target:
+-        "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
+      issuedPermissions.1.to:
++        "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x47D58744D8515d9aaEAf961bc03625118bd91EBb) {
+    +++ description: None
+      directlyReceivedPermissions.4.target:
+-        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
+      directlyReceivedPermissions.4.from:
++        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
+      directlyReceivedPermissions.3.target:
+-        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
+      directlyReceivedPermissions.3.from:
++        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
+      directlyReceivedPermissions.2.target:
+-        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
+      directlyReceivedPermissions.2.from:
++        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
+      directlyReceivedPermissions.1.target:
+-        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      directlyReceivedPermissions.1.from:
++        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      directlyReceivedPermissions.0.target:
+-        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+      directlyReceivedPermissions.0.from:
++        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.17.target:
+-        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
+      receivedPermissions.17.from:
++        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
+      receivedPermissions.16.target:
+-        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
+      receivedPermissions.16.from:
++        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
+      receivedPermissions.15.target:
+-        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
+      receivedPermissions.15.from:
++        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
+      receivedPermissions.14.target:
+-        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
+      receivedPermissions.14.from:
++        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
+      receivedPermissions.13.target:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      receivedPermissions.13.from:
++        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      receivedPermissions.12.target:
+-        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+      receivedPermissions.12.from:
++        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+      receivedPermissions.11.target:
+-        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
+      receivedPermissions.11.from:
++        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
+      receivedPermissions.10.target:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      receivedPermissions.10.from:
++        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      receivedPermissions.9.target:
+-        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
+      receivedPermissions.9.from:
++        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
+      receivedPermissions.8.target:
+-        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      receivedPermissions.8.from:
++        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      receivedPermissions.7.target:
+-        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
+      receivedPermissions.7.from:
++        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
+      receivedPermissions.6.target:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.6.from:
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.5.target:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      receivedPermissions.5.from:
++        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      receivedPermissions.4.target:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      receivedPermissions.4.from:
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      receivedPermissions.3.target:
+-        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
+      receivedPermissions.3.from:
++        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
+      receivedPermissions.2.target:
+-        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+      receivedPermissions.2.from:
++        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+      receivedPermissions.1.target:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      receivedPermissions.1.from:
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      receivedPermissions.0.target:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.0.from:
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      directlyReceivedPermissions.3.target:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
+      directlyReceivedPermissions.3.from:
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      directlyReceivedPermissions.2.target:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      directlyReceivedPermissions.2.from:
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      directlyReceivedPermissions.1.target:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      directlyReceivedPermissions.1.from:
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      directlyReceivedPermissions.0.target:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+      directlyReceivedPermissions.0.from:
++        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+    }
+```
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "set and change address mappings."
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.target:
+-        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      issuedPermissions.0.to:
++        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+    }
+```
+
+```diff
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      directlyReceivedPermissions.4.target:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      directlyReceivedPermissions.4.from:
++        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      directlyReceivedPermissions.3.target:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      directlyReceivedPermissions.3.from:
++        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      directlyReceivedPermissions.2.target:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      directlyReceivedPermissions.2.from:
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      directlyReceivedPermissions.1.target:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      directlyReceivedPermissions.1.from:
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      directlyReceivedPermissions.0.target:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      directlyReceivedPermissions.0.from:
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+```diff
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+    }
+```
+
+Generated with discovered.json: 0xc255606c537d8bbcfd7ca92f9bdaa71f2e4b5217
+
+# Diff at Wed, 15 Jan 2025 07:44:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 20928041
+- current block number: 21628468
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0x56a3eef31355d8dbf683b9b688070ace8be3d26e
+
+# Diff at Wed, 08 Jan 2025 09:03:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@deefa974378c2cd6b74f061e1f5a494bbbe1d63a block: 20928041
+- current block number: 20928041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20928041 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
 Generated with discovered.json: 0xe53857c87cf6112b4a07960caadccfe172c5ded2
 
 # Diff at Fri, 01 Nov 2024 12:09:55 GMT:

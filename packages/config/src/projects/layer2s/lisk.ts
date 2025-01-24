@@ -1,8 +1,10 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lisk')
 
@@ -11,7 +13,8 @@ export const lisk: Layer2 = opStackL2({
   discovery,
   genesisTimestamp: new UnixTime(1714728793),
   associatedTokens: ['LSK'],
-  badges: [Badge.RaaS.Gelato, Badge.Other.MigratedFromL1],
+  additionalBadges: [Badge.RaaS.Gelato, Badge.Other.MigratedFromL1],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Lisk',
     slug: 'lisk',
@@ -34,11 +37,11 @@ export const lisk: Layer2 = opStackL2({
         'https://youtube.com/channel/UCuqpGfg_bOQ8Ja4pj811PWg',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   l1StandardBridgePremintedTokens: ['LSK'],
+  nonTemplateExcludedTokens: ['USDC'],
   finality: {
-    type: 'OPStack-blob',
+    type: 'OPStack',
     genesisTimestamp: new UnixTime(1714728791),
     minTimestamp: new UnixTime(1714746983), // first blob
     l2BlockTimeSeconds: 2,
@@ -50,4 +53,14 @@ export const lisk: Layer2 = opStackL2({
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.api.lisk.com',
   discoveryDrivenData: true,
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xE3622468Ea7dD804702B56ca2a4f88C0936995e6'),
+      name: 'External USDC Vault',
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom externally governed escrow for USDC bridged to Lisk.',
+      tokens: ['USDC'],
+    }),
+  ],
 })

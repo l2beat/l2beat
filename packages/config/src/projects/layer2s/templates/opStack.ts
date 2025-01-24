@@ -1,7 +1,4 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -9,56 +6,61 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  type DataAvailabilityBridge,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectStateDerivation,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ReasonForBeingInOther,
+  type ScalingProjectCategory,
+  type ScalingProjectContract,
+  type ScalingProjectDisplay,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRiskView,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectStateDerivation,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
-import { ChainConfig } from '../../../common/ChainConfig'
+import type { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
 import {
   formatChallengePeriod,
   formatDelay,
 } from '../../../common/formatDelays'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
-import { Badge, BadgeId, badges } from '../../badges'
-import { type Layer3, type Layer3Display } from '../../layer3s/types'
+import { Badge, type BadgeId, badges } from '../../badges'
+import type { DacDaLayer } from '../../da-beat/types'
+import type { Layer3 } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { StageConfig } from '../common/stages/types'
-import {
-  type Layer2,
-  type Layer2Display,
+import type { StageConfig } from '../common/stages/types'
+import type {
+  Layer2,
+  Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
-import { mergeBadges } from './utils'
+import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -67,11 +69,18 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   bridge: DA_BRIDGES.NONE,
 }
 
+export const EIGENDA_DA_PROVIDER: DAProvider = {
+  layer: DA_LAYERS.EIGEN_DA,
+  riskView: RISK_VIEW.DATA_EIGENDA(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
+  bridge: DA_BRIDGES.NONE,
+}
+
 export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
   nodeSourceLink?: string,
-  daLayer: DataAvailabilityLayer = DA_LAYERS.EXTERNAL,
+  daLayer: DataAvailabilityLayer = DA_LAYERS.NONE,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -94,9 +103,13 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  architectureImage?: string
+  isArchived?: true
   createdAt: UnixTime
   daProvider?: DAProvider
+  dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
+  additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -132,9 +145,13 @@ interface OpStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  badges?: BadgeId[]
+  additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  riskView?: ScalingProjectRiskView
+  gasTokens?: string[]
+  usingAltVm?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -144,27 +161,36 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer3Display['category']
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectCategory
   }
   stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
-  nativeToken?: string
 }
 
 function opStackCommon(
   templateVars: OpStackConfigCommon,
-): Omit<
-  Layer2,
-  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
-> {
+  explorerUrl?: string,
+): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+  const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
+  const discoveryDrivenSections = templateVars.discoveryDrivenData
+    ? generateDiscoveryDrivenSections(
+        templateVars.discovery,
+        nativeContractRisks,
+        templateVars.additionalDiscoveries,
+      )
+    : undefined
+
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
 
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
@@ -188,7 +214,9 @@ function opStackCommon(
   }
 
   if (daBadge === undefined) {
-    daBadge = templateVars.badges?.find((b) => badges[b].type === 'DA')
+    daBadge = templateVars.additionalBadges?.find(
+      (b) => badges[b].type === 'DA',
+    )
   }
   assert(daBadge !== undefined, 'DA badge must be defined')
 
@@ -201,8 +229,12 @@ function opStackCommon(
     upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
+  const automaticBadges = templateVars.usingAltVm
+    ? [Badge.Stack.OPStack, daBadge]
+    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
   return {
+    isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
@@ -219,14 +251,12 @@ function opStackCommon(
             isCritical: true,
           },
         ],
-        references: [
+        references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, deleteL2Outputs function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              l2OutputOracle,
-            )}#code`,
+            text: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
+            address: safeGetImplementation(l2OutputOracle),
           },
-        ],
+        ]),
       },
       dataAvailability: templateVars.nonTemplateTechnology
         ?.dataAvailability ?? {
@@ -237,49 +267,42 @@ function opStackCommon(
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
           },
-          {
-            text: 'BatchInbox - Etherscan address',
-            href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
-          },
-          {
-            text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              portal,
-            )}#code`,
-          },
+          ...explorerReferences(explorerUrl, [
+            { text: 'BatchInbox - address', address: sequencerInbox },
+            {
+              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              address: safeGetImplementation(portal),
+            },
+          ]),
         ],
       },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_OPERATOR,
-        references: [
+        references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, CHALLENGER address',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              l2OutputOracle,
-            )}#code`,
+            text: 'L2OutputOracle.sol - source code, CHALLENGER address',
+            address: safeGetImplementation(l2OutputOracle),
           },
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER address',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              l2OutputOracle,
-            )}#code`,
+            text: 'L2OutputOracle.sol - source code, PROPOSER address',
+            address: safeGetImplementation(l2OutputOracle),
           },
-        ],
+        ]),
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
-        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
+        ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
         references: [
           {
             text: 'Sequencing Window - OP Mainnet Specs',
             href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
           },
-          {
-            text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
-              portal,
-            )}#code`,
-          },
+          ...explorerReferences(explorerUrl, [
+            {
+              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              address: safeGetImplementation(portal),
+            },
+          ]),
         ],
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
@@ -292,26 +315,20 @@ function opStackCommon(
               'FINALIZATION_PERIOD_SECONDS',
             ),
           ),
-          references: [
+          references: explorerReferences(explorerUrl, [
             {
-              text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-              href: `https://etherscan.io/address/${safeGetImplementation(
-                portal,
-              )}#code`,
+              text: 'OptimismPortal.sol - source code, proveWithdrawalTransaction function',
+              address: safeGetImplementation(portal),
             },
             {
-              text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-              href: `https://etherscan.io/address/${safeGetImplementation(
-                portal,
-              )}#code`,
+              text: 'OptimismPortal.sol - source code, finalizeWithdrawalTransaction function',
+              address: safeGetImplementation(portal),
             },
             {
-              text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-              href: `https://etherscan.io/address/${safeGetImplementation(
-                l2OutputOracle,
-              )}#code`,
+              text: 'L2OutputOracle.sol - source code, PROPOSER check',
+              address: safeGetImplementation(l2OutputOracle),
             },
-          ],
+          ]),
           risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
         },
         {
@@ -340,33 +357,31 @@ function opStackCommon(
         },
       ],
     },
-    permissions:
-      templateVars.discoveryDrivenData === true
-        ? templateVars.discovery.getDiscoveredPermissions()
-        : [
-            ...templateVars.discovery.getOpStackPermissions({
-              batcherHash: 'Sequencer',
-              PROPOSER: 'Proposer',
-              GUARDIAN: 'Guardian',
-              CHALLENGER: 'Challenger',
-              ...(templateVars.roleOverrides ?? {}),
-            }),
-            ...(templateVars.nonTemplatePermissions ?? []),
+    permissions: discoveryDrivenSections
+      ? discoveryDrivenSections.permissions
+      : [
+          ...templateVars.discovery.getOpStackPermissions({
+            batcherHash: 'Sequencer',
+            PROPOSER: 'Proposer',
+            GUARDIAN: 'Guardian',
+            CHALLENGER: 'Challenger',
+            ...(templateVars.roleOverrides ?? {}),
+          }),
+          ...(templateVars.nonTemplatePermissions ?? []),
+        ],
+    nativePermissions: discoveryDrivenSections
+      ? discoveryDrivenSections.nativePermissions
+      : templateVars.nonTemplateNativePermissions,
+    contracts: discoveryDrivenSections
+      ? discoveryDrivenSections.contracts
+      : {
+          addresses: [
+            ...templateVars.discovery.getOpStackContractDetails(upgradeability),
+            ...(templateVars.nonTemplateContracts ?? []),
           ],
-    nativePermissions: templateVars.nonTemplateNativePermissions,
-    contracts: {
-      addresses:
-        templateVars.discoveryDrivenData === true
-          ? templateVars.discovery.getDiscoveredContracts()
-          : [
-              ...templateVars.discovery.getOpStackContractDetails(
-                upgradeability,
-              ),
-              ...(templateVars.nonTemplateContracts ?? []),
-            ],
-      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-      nativeAddresses: templateVars.nonTemplateNativeContracts,
-    },
+          risks: nativeContractRisks,
+          nativeAddresses: templateVars.nonTemplateNativeContracts,
+        },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),
@@ -386,11 +401,9 @@ function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: mergeBadges(
-      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
-      templateVars.badges ?? [],
-    ),
-    discoveryDrivenData: templateVars.discoveryDrivenData,
+    badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
+    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 
@@ -419,18 +432,21 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
+  // if usesBlobs is set to false at this point it means that it uses calldata
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
 
   if (daProvider === undefined) {
     assert(
@@ -451,10 +467,10 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
 
   return {
     type: 'layer2',
-    ...opStackCommon(templateVars),
+    ...opStackCommon(templateVars, ethereum.explorerUrl),
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage,
+      architectureImage: templateVars.architectureImage ?? architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category:
@@ -493,6 +509,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: portal.address,
@@ -560,7 +577,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    dataAvailability: [
+    dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
             layers: daProvider.fallback
@@ -578,8 +595,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
-    ],
-    riskView: {
+    riskView: templateVars.riskView ?? {
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
         secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
@@ -625,8 +641,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           },
         ],
       },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     },
     stage:
       templateVars.stage === undefined
@@ -762,15 +776,13 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         },
       ],
     },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(
+      templateVars.gasTokens ?? ['ETH'],
+    ),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }
 
   const getStackedRisks = () => {
-    assert(
-      templateVars.hostChain !== 'Multiple',
-      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
-    )
     return {
       stateValidation: pickWorseRisk(
         riskView.stateValidation,
@@ -807,7 +819,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 
   return {
     type: 'layer3',
-    ...opStackCommon(templateVars),
+    ...opStackCommon(templateVars, baseChain.chainConfig?.explorerUrl),
     hostChain: templateVars.hostChain,
     display: {
       architectureImage,
@@ -863,18 +875,17 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         : templateVars.stage,
     dataAvailability:
       daProvider !== undefined
-        ? [
-            addSentimentToDataAvailability({
-              layers: daProvider.fallback
-                ? [daProvider.layer, daProvider.fallback]
-                : [daProvider.layer],
-              bridge: daProvider.bridge,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }),
-          ]
+        ? addSentimentToDataAvailability({
+            layers: daProvider.fallback
+              ? [daProvider.layer, daProvider.fallback]
+              : [daProvider.layer],
+            bridge: daProvider.bridge,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+          })
         : baseChain.dataAvailability,
     config: {
       associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: false,
@@ -910,14 +921,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     },
     stateDerivation: templateVars.stateDerivation,
   }
-}
-
-function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = get$Implementations(contract.values)[0]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
 }
 
 function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {

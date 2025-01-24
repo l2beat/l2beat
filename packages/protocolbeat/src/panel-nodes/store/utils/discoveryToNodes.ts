@@ -1,5 +1,5 @@
-import { ApiAddressType } from '../../../api/types'
-import { Field, Node } from '../State'
+import type { ApiAddressType } from '../../../api/types'
+import type { Field, Node } from '../State'
 import type { DiscoveryContract, DiscoveryOutput } from './parseDiscovery'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -67,11 +67,14 @@ function mapFields(
   }
   return Object.entries(values).flatMap(
     ([key, value]: [string, unknown]): Field[] => {
+      if (IGNORED_FIELDS.includes(key)) {
+        return []
+      }
+
       if (
         typeof value === 'string' &&
         (isAddress(value) || isChainAddress(value)) &&
-        !implementations.includes(value) &&
-        !IGNORED_FIELDS.includes(key)
+        !implementations.includes(value)
       ) {
         if (value === ZERO_ADDRESS) {
           return []
@@ -131,7 +134,7 @@ function getDisplay(
       name,
     }
   }
-  if (contract.proxyType === 'gnosis safe') {
+  if (isMultisigLike(contract)) {
     const threshold = contract.values?.['$threshold'] as number
     const members = (contract.values?.['$members'] as string[]).length
     const percentage = ((threshold / members) * 100).toFixed(0)
@@ -152,4 +155,17 @@ function getAsStringArray(value: unknown): string[] {
     return value.filter((x) => typeof x === 'string')
   }
   return []
+}
+
+// TODO(radomski): Duplicated from config/ProjectDiscovery.ts
+// We should come up with a way to distinguish contract properties
+function isMultisigLike(contract: DiscoveryContract | undefined): boolean {
+  if (contract === undefined) {
+    return false
+  }
+
+  const hasMembers = contract.values?.['$members'] !== undefined
+  const hasThreshold = contract.values?.['$threshold'] !== undefined
+
+  return hasMembers && hasThreshold
 }

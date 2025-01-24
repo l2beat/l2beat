@@ -1,11 +1,12 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2, Layer3 } from '@l2beat/config'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
-import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
+import { getDb } from '~/server/database'
 import { getCostsForProjects } from './get-costs-for-projects'
-import { type LatestCostsProjectResponse } from './types'
+import type { LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
-import { type CostsTimeRange } from './utils/range'
+import { isCostsSynced } from './utils/is-costs-synced'
+import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
 
 export function getCostsTable(
   ...parameters: Parameters<typeof getCachedCostsTableData>
@@ -20,7 +21,7 @@ export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 
 export const getCachedCostsTableData = cache(
   async (timeRange: CostsTimeRange) => {
-    const projects = getCostsProjects()
+    const projects = getCostsProjects().filter((p) => !p.isArchived)
     const projectsCosts = await getCostsForProjects(projects, timeRange)
     const projectsActivity = await getLatestActivityForProjects(
       projects,
@@ -29,12 +30,13 @@ export const getCachedCostsTableData = cache(
 
     return Object.fromEntries(
       Object.entries(projectsCosts).map(([projectId, costs]) => {
+        const isSynced = isCostsSynced(costs.syncedUntil)
         return [
           projectId,
           {
             ...withTotal(costs),
-            syncStatus: getSyncStatus(costs.syncedUntil),
-            txCount: projectsActivity[projectId],
+            uopsCount: projectsActivity[projectId],
+            isSynced,
           },
         ]
       }),
@@ -46,13 +48,21 @@ export const getCachedCostsTableData = cache(
   },
 )
 
-function getSyncStatus(syncedUntil: UnixTime) {
-  const isSynced = UnixTime.now()
-    .add(-1, 'days')
-    .add(-1, 'hours')
-    .lte(syncedUntil)
+async function getLatestActivityForProjects(
+  projects: (Layer2 | Layer3)[],
+  timeRange: CostsTimeRange,
+) {
+  const db = getDb()
+  const range = getFullySyncedCostsRange(timeRange)
+  const summedCounts =
+    await db.activity.getSummedUopsCountForProjectsAndTimeRange(
+      projects.map((p) => p.id),
+      range,
+    )
 
-  return { isSynced, syncedUntil: syncedUntil.toNumber() }
+  return Object.fromEntries(
+    summedCounts.map((record) => [record.projectId, record.uopsCount]),
+  )
 }
 
 function withTotal(data: LatestCostsProjectResponse) {
@@ -92,8 +102,8 @@ function getMockCostsTableData(): CostsTableData {
       return [
         p.id,
         {
-          syncStatus: getSyncStatus(UnixTime.now()),
-          txCount: 1500,
+          isSynced: true,
+          uopsCount: 1500,
           gas: {
             total: 1000000,
             overhead: 100000,

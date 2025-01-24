@@ -1,5 +1,5 @@
-import { type Layer2Provider, type Layer3Provider } from '@l2beat/config'
-
+import type { ScalingProjectStack } from '@l2beat/config'
+import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
 import { LoopringIcon } from '~/icons/providers/loopring-icon'
@@ -11,31 +11,22 @@ import { StarkWareIcon } from '~/icons/providers/starkware-icon'
 import { TaikoIcon } from '~/icons/providers/taiko-icon'
 import { ZKStackIcon } from '~/icons/providers/zkstack-icon'
 import { ZkSyncLiteIcon } from '~/icons/providers/zksync-lite-icon'
-import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 
-import type { JSX } from 'react'
-
 export interface TypeCellProps {
   children: string | undefined
-  disableColors?: boolean
-  provider?: Layer2Provider | Layer3Provider
+  provider?: ScalingProjectStack
 }
 
-export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
-  const isRollup = children?.includes('Rollup')
+export function TypeCell({ provider, children }: TypeCellProps) {
   const providerProps = provider ? providerMap[provider] : undefined
 
   return (
-    <span
-      className={cn(
-        isRollup && !disableColors && 'text-green-300 dark:text-green-450',
-      )}
-    >
+    <span>
       {children ?? EM_DASH}
       {providerProps ? (
         <TypeTooltip
@@ -56,7 +47,7 @@ interface ProviderProps {
 }
 
 export const providerMap: Record<
-  Layer2Provider | Layer3Provider,
+  ScalingProjectStack,
   ProviderProps | undefined
 > = {
   StarkEx: {
@@ -91,7 +82,7 @@ export const providerMap: Record<
     Icon: PolygonIcon,
     text: "This project is based on Polygon's code base.",
   },
-  Starknet: {
+  'SN Stack': {
     Icon: StarknetIcon,
     text: "This project is based on Starknet's code base.",
   },
@@ -100,7 +91,6 @@ export const providerMap: Record<
     text: "This project is based on Taiko's code base.",
   },
   'Cartesi Rollups': undefined,
-  'zkLink Nexus': undefined,
 }
 
 interface TypeTooltipProps {

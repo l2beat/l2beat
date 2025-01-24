@@ -3,12 +3,12 @@ import { join } from 'path'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
-import { LEVEL, LogLevel } from './LogLevel'
-import { LogThrottle, LogThrottleOptions } from './LogThrottle'
+import { LEVEL, type LogLevel } from './LogLevel'
+import { LogThrottle, type LogThrottleOptions } from './LogThrottle'
 import { parseLogArguments } from './parseLogArguments'
 import { resolveError } from './resolveError'
 import { tagService } from './tagService'
-import { LogEntry, LoggerOptions } from './types'
+import type { LogEntry, LoggerOptions } from './types'
 
 /**
  * [Read full documentation](https://github.com/l2beat/tools/blob/master/packages/backend-tools/src/logger/docs.md)
@@ -117,7 +117,7 @@ export class Logger {
   tag(
     tags: Pick<
       LoggerOptions,
-      'tag' | 'module' | 'feature' | 'chain' | 'project'
+      'tag' | 'module' | 'feature' | 'chain' | 'project' | 'source'
     >,
   ): Logger {
     return this.configure(tags)
@@ -195,6 +195,7 @@ export class Logger {
       module: this.options.module,
       chain: parsed.chain ?? this.options.chain,
       project: parsed.project ?? this.options.project,
+      source: this.options.source,
     }
   }
 

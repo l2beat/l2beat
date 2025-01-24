@@ -11,10 +11,11 @@ import {
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metis')
 
@@ -30,6 +31,10 @@ export const metis: Layer2 = {
   id: ProjectId('metis'),
   createdAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.Fork.OVM],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
@@ -57,7 +62,6 @@ export const metis: Layer2 = {
         'https://instagram.com/metisl2/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   stage: {
     stage: 'NotApplicable',
@@ -101,13 +105,11 @@ export const metis: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.MEMO],
-      bridge: DA_BRIDGES.NONE,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.MEMO],
+    bridge: DA_BRIDGES.NONE,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
@@ -127,8 +129,6 @@ export const metis: Layer2 = {
       ],
     },
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('METIS'),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {
@@ -285,18 +285,9 @@ export const metis: Layer2 = {
         'StateCommitmentChain',
         'The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.',
       ),
-      {
-        name: 'ChainStorageContainer-CTC-batches',
-        address: EthereumAddress('0x38473Feb3A6366757A249dB2cA4fBB2C663416B7'),
-      },
-      {
-        name: 'ChainStorageContainer-CTC-queue',
-        address: EthereumAddress('0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57'),
-      },
-      {
-        name: 'ChainStorageContainer-SCC-batches',
-        address: EthereumAddress('0x10739F09f6e62689c0aA8A1878816de9e166d6f9'),
-      },
+      discovery.getContractDetails('ChainStorageContainer-CTC-batches'),
+      discovery.getContractDetails('ChainStorageContainer-CTC-queue'),
+      discovery.getContractDetails('ChainStorageContainer-SCC-batches'),
       discovery.getContractDetails(
         'BondManager',
         "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",

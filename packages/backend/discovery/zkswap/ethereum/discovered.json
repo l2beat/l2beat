@@ -2,7 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 20311131,
-  "configHash": "0x651914ce661d79a29f4959d5466bfd8b5c975114bf075b964500a1fc70ee5547",
+  "configHash": "0x1f3d8665fb7729b709afe91fe3653d43352448756f59a533bdff772e1f789e8f",
   "contracts": [
     {
       "name": "Governance",
@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
           "via": []
         }
       ],
@@ -40,7 +40,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
           "via": []
         }
       ],
@@ -88,7 +88,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
           "via": []
         }
       ],
@@ -112,23 +112,23 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x02ecef526f806f06357659fFD14834fe82Ef4B04"
+          "from": "0x02ecef526f806f06357659fFD14834fe82Ef4B04"
         },
         {
           "permission": "upgrade",
-          "target": "0x27C229937745d697d28FC7853d1bFEA7331Edf56"
+          "from": "0x27C229937745d697d28FC7853d1bFEA7331Edf56"
         },
         {
           "permission": "upgrade",
-          "target": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3"
+          "from": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3"
         },
         {
           "permission": "upgrade",
-          "target": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+          "from": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
         },
         {
           "permission": "upgrade",
-          "target": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
+          "from": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
         }
       ],
       "sinceTimestamp": 1613135194,
@@ -167,7 +167,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
           "via": []
         }
       ],
@@ -214,7 +214,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+          "to": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
           "via": []
         }
       ],

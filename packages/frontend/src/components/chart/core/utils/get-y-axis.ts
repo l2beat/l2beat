@@ -4,7 +4,7 @@ import { calculateTicks } from './calculate-ticks'
 export function getYAxis(
   values: number[],
   isLogScale: boolean,
-  format: (value: number) => string,
+  format: (value: number, ticks?: number[]) => string,
   labelCount = 3,
 ) {
   if (values.length === 0) {
@@ -14,7 +14,7 @@ export function getYAxis(
     }
   }
   const ticks = calculateTicks(labelCount, values, isLogScale)
-  const labels = ticks.map(format)
+  const labels = ticks.map((tick) => format(tick, ticks))
   const min = ticks[0]
   const max = ticks[ticks.length - 1]
   assert(min !== undefined && max !== undefined, 'No min or max')

@@ -1,19 +1,18 @@
-import { DiscoveryChainConfig } from '@l2beat/discovery'
-import {
+import type { BackendProject } from '@l2beat/backend-shared'
+import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type {
   AmountConfigEntry,
   ChainId,
   PriceConfigEntry,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { BackendProject } from '@l2beat/config'
-import { ChainConverter } from '@l2beat/shared-pure'
-import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
-import { MulticallConfigEntry } from '../peripherals/multicall/types'
-import { ResolvedFeatureFlag } from './FeatureFlags'
-import { ChainApi } from './chain/ChainApi'
-import { FinalityProjectConfig } from './features/finality'
+import type { ChainConverter } from '@l2beat/shared-pure'
+import type { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
+import type { MulticallConfigEntry } from '../peripherals/multicall/types'
+import type { ResolvedFeatureFlag } from './FeatureFlags'
+import type { ChainApi } from './chain/ChainApi'
+import type { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -35,10 +34,16 @@ export interface Config {
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
-  readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
   readonly daBeat: DABeatConfig | false
   readonly chainConfig: ChainApi[]
+  readonly beaconApi: {
+    readonly url: string | undefined
+    readonly callsPerMinute: number
+    readonly timeout: number
+  }
+
+  readonly flags: ResolvedFeatureFlag[]
 }
 
 export interface ApiConfig {
@@ -105,11 +110,6 @@ export interface TrackedTxsConfig {
 }
 
 export interface FinalityConfig {
-  readonly ethereumProviderUrl: string
-  readonly ethereumProviderCallsPerMinute: number
-  readonly beaconApiUrl: string
-  readonly beaconApiCPM: number
-  readonly beaconApiTimeout: number
   readonly configurations: FinalityProjectConfig[]
 }
 
@@ -168,7 +168,8 @@ export interface MetricsAuthConfig {
 
 export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
-  readonly enableCache?: boolean
+  readonly cacheEnabled?: boolean
+  readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
 }

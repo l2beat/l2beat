@@ -16,6 +16,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/command'
+import { useTracking } from '~/hooks/use-custom-event'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import {
@@ -35,6 +36,7 @@ interface Props {
 
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const { track } = useTracking()
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
   const router = useRouterWithProgressBar()
@@ -93,6 +95,17 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     setOpen(false)
   }
 
+  function onItemSelect(item: SearchBarProject | AnySearchBarEntry) {
+    setOpen(false)
+    setValue('')
+    router.push(item.href)
+    track('searchBarProjectSelected', {
+      props: {
+        name: item.name,
+      },
+    })
+  }
+
   // Hide virtual keyboard on touch start
   useOnClickOutside(inputRef, () => inputRef.current?.blur(), 'touchstart')
 
@@ -104,7 +117,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
     >
-      <Command shouldFilter={false} sidebar className="rounded-none">
+      <Command shouldFilter={false} className="rounded-none">
         <CommandInput
           ref={inputRef}
           placeholder="Search for projects"
@@ -117,17 +130,14 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
         </CommandInput>
         <CommandList className="max-h-screen md:h-[270px] md:max-h-[270px] [@supports(height:100dvh)]:max-h-dvh">
           <CommandEmpty>No results found.</CommandEmpty>
+
           {filteredProjects.length > 0 && value === '' && (
             <CommandGroup heading="Recently added projects">
               {filteredProjects.map((project) => {
                 return (
                   <SearchBarItem
                     key={project.id}
-                    onSelect={() => {
-                      setOpen(false)
-                      setValue('')
-                      router.push(project.href)
-                    }}
+                    onSelect={() => onItemSelect(project)}
                     label={entryToLabel(project)}
                   >
                     <Image
@@ -145,22 +155,27 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
           )}
           {value !== '' &&
             grouped.length > 0 &&
-            grouped.map(([group, items]) => (
+            grouped.map(([group, items], groupIndex) => (
               <CommandGroup
                 heading={searchBarCategories[group].name}
                 key={group}
               >
-                {items.map((item) => {
+                {items.map((item, index) => {
                   return (
                     <SearchBarItem
                       key={item.href}
-                      onSelect={() => {
-                        setOpen(false)
-                        setValue('')
-                        router.push(item.href)
-                      }}
+                      onSelect={() => onItemSelect(item)}
                       label={entryToLabel(item)}
-                      value={`${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`}
+                      value={
+                        // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
+                        // For example try to search "nea" without this hack.
+                        // It will scroll to "Neva" but highlight "Rainbow Bridge" (highlight is correct cuz near is tag for it)
+                        // Using '-' as value makes first item always selected.
+                        // https://github.com/pacocoursey/cmdk/issues/171#issuecomment-1775421795
+                        groupIndex === 0 && index === 0
+                          ? '-'
+                          : `${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`
+                      }
                     >
                       {item.type === 'project' && (
                         <Image

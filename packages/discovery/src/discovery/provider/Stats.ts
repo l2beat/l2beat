@@ -1,77 +1,139 @@
-import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { formatSI } from '@l2beat/shared'
+import { assert, formatAsAsciiTable } from '@l2beat/shared-pure'
+import type { DiscoveryLogger } from '../DiscoveryLogger'
 
-export interface ProviderStats {
-  callCount: number
-  getStorageCount: number
-  getLogsCount: number
-  getTransactionCount: number
-  getDebugTraceCount: number
-  getBytecodeCount: number
-  getSourceCount: number
-  getDeploymentCount: number
-  getBlockCount: number
-  getBlockNumberCount: number
+export const ProviderMeasurement = {
+  CALL: 0,
+  GET_STORAGE: 1,
+  GET_LOGS: 2,
+  GET_TRANSACTION: 3,
+  GET_DEBUG_TRACE: 4,
+  GET_BYTECODE: 5,
+  GET_SOURCE: 6,
+  GET_DEPLOYMENT: 7,
+  GET_BLOCK: 8,
+  GET_BLOCKNUMBER: 9,
+} as const
+
+export const ProviderMeasurementCount = Object.keys(ProviderMeasurement).length
+
+interface ProviderMark {
+  count: number
+  durations: number[]
+}
+
+export class ProviderStats {
+  private measurements: ProviderMark[] = Array.from(
+    { length: ProviderMeasurementCount },
+    () =>
+      ({
+        count: 0,
+        durations: [],
+      }) satisfies ProviderMark,
+  )
+
+  mark(key: number, durations: number, count: number = 1): void {
+    assert(key >= 0 && key < this.measurements.length, 'key out of bounds')
+    assert(
+      this.measurements[key] !== undefined,
+      `entry should not be undefined`,
+    )
+    this.measurements[key].count += count
+    const partDuration = durations / count
+    for (let i = 0; i < count; i++) {
+      this.measurements[key].durations.push(partDuration)
+    }
+  }
+
+  get(key: number): ProviderMark {
+    assert(key >= 0 && key < this.measurements.length, 'key out of bounds')
+    assert(
+      this.measurements[key] !== undefined,
+      `entry should not be undefined`,
+    )
+    return this.measurements[key]
+  }
+
+  static add(a: ProviderStats, b: ProviderStats): ProviderStats {
+    const result = new ProviderStats()
+    for (let i = 0; i < ProviderMeasurementCount; i++) {
+      const one = a.get(i)
+      const two = b.get(i)
+      result.measurements[i] = {
+        count: one.count + two.count,
+        durations: [...one.durations, ...two.durations],
+      }
+    }
+
+    return result
+  }
 }
 
 export interface AllProviderStats {
-  highLevelCounts: ProviderStats
-  cacheCounts: ProviderStats
-  lowLevelCounts: ProviderStats
+  highLevelMeasurements: ProviderStats
+  cacheMeasurements: ProviderStats
+  lowLevelMeasurements: ProviderStats
 }
 
-export function getZeroStats(): ProviderStats {
-  return {
-    callCount: 0,
-    getStorageCount: 0,
-    getLogsCount: 0,
-    getTransactionCount: 0,
-    getDebugTraceCount: 0,
-    getBytecodeCount: 0,
-    getSourceCount: 0,
-    getDeploymentCount: 0,
-    getBlockCount: 0,
-    getBlockNumberCount: 0,
-  }
-}
-
-export function addStats(a: ProviderStats, b: ProviderStats): ProviderStats {
-  const keys = Object.keys(a) as (keyof ProviderStats)[]
-  const result = getZeroStats()
-  for (const key of keys) {
-    result[key] = a[key] + b[key]
-  }
-
-  return result
-}
-
-export function printProviderStats({
-  highLevelCounts,
-  cacheCounts,
-  lowLevelCounts,
-}: AllProviderStats): void {
-  const keys = Object.keys(highLevelCounts) as (keyof ProviderStats)[]
+export function printProviderStats(
+  logger: DiscoveryLogger,
+  {
+    highLevelMeasurements,
+    cacheMeasurements,
+    lowLevelMeasurements,
+  }: AllProviderStats,
+): void {
   const headers = [
     'Operation',
     'High Level',
+    '<- Duration',
     'Caching',
     'Caching %',
+    '<- Duration',
     'Low Level',
+    '<- Duration',
     'Avg multicall size',
   ]
-  const rows = keys.map((key) =>
-    [
-      key,
-      highLevelCounts[key],
-      cacheCounts[key],
-      `${Math.floor(
-        (cacheCounts[key] / Math.max(1, highLevelCounts[key])) * 100,
-      )} %`,
-      lowLevelCounts[key],
-      (
-        (highLevelCounts[key] - cacheCounts[key]) /
-        Math.max(1, lowLevelCounts[key])
-      ).toFixed(0),
-    ].map((x) => x.toString()),
-  )
-  console.log(formatAsAsciiTable(headers, rows))
+
+  const rows = []
+  const keys = Object.keys(ProviderMeasurement)
+  for (let key = 0; key < ProviderMeasurementCount; key++) {
+    const highLevelEntry = highLevelMeasurements.get(key)
+    const cacheEntry = cacheMeasurements.get(key)
+    const lowLevelEntry = lowLevelMeasurements.get(key)
+
+    rows.push(
+      [
+        keys[key] ?? '',
+        highLevelEntry.count,
+        formatDurations(highLevelEntry.durations),
+        cacheEntry.count,
+        `${Math.floor((cacheEntry.count / Math.max(1, highLevelEntry.count)) * 100)} %`,
+        formatDurations(cacheEntry.durations),
+        lowLevelEntry.count,
+        formatDurations(lowLevelEntry.durations),
+        (
+          (highLevelEntry.count - cacheEntry.count) /
+          Math.max(1, lowLevelEntry.count)
+        ).toFixed(0),
+      ].map((x) => x.toString()),
+    )
+  }
+
+  logger.log(formatAsAsciiTable(headers, rows))
+}
+
+function formatDurations(durations: number[]): string {
+  if (durations.length === 0) {
+    return ''
+  }
+
+  const sum = durations.reduce((acc, v) => acc + v)
+  const avg = sum / durations.length
+  const variance =
+    durations.reduce((acc, v) => acc + Math.pow(v - avg, 2), 0) /
+    durations.length
+  const stdDev = Math.sqrt(variance)
+
+  return `${formatSI(avg / 1000, 's')} ± ${formatSI(stdDev / 1000, 's')}`
 }

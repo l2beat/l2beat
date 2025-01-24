@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('synapse')
 
@@ -121,22 +121,18 @@ export const synapse: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        name: 'L1BridgeZap',
-        description:
-          'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
-        address: EthereumAddress('0x6571d6be3d8460CF5F7d6711Cd9961860029D85F'),
-      },
+      discovery.getContractDetails(
+        'L1BridgeZap',
+        'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
+      ),
       discovery.getContractDetails(
         'SynapseBridge',
         "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
       ),
-      {
-        name: 'Liquidity Pool',
-        description:
-          'Contract utilized as Liquidity Pool, allowing users to bridge their tokens to canonical versions on Ethereum.',
-        address: EthereumAddress('0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8'),
-      },
+      discovery.getContractDetails(
+        'Liquidity Pool',
+        'Contract utilized as Liquidity Pool, allowing users to bridge their tokens to canonical versions on Ethereum.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('3 minutes')],
   },

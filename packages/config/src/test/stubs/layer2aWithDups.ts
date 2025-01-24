@@ -10,7 +10,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { Layer2 } from '../../projects'
+import type { Layer2 } from '../../projects'
 
 export const layer2aWithDups: Layer2 = {
   type: 'layer2',
@@ -51,6 +51,7 @@ export const layer2aWithDups: Layer2 = {
         address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
         contract: {
           name: 'SynthetixBridgeEscrow',
+          isVerified: true,
         },
         sinceTimestamp: new UnixTime(1609459200),
         tokens: ['SNX'],
@@ -62,6 +63,7 @@ export const layer2aWithDups: Layer2 = {
         newVersion: true,
         contract: {
           name: 'L1Escrow',
+          isVerified: true,
         },
         sinceTimestamp: new UnixTime(1609459200),
         tokens: ['SNX'],
@@ -69,21 +71,17 @@ export const layer2aWithDups: Layer2 = {
       },
     ],
   },
-  dataAvailability: [
-    addSentimentToDataAvailability({
-      layers: [DA_LAYERS.ETH_CALLDATA],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA,
-    }),
-  ],
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [DA_LAYERS.ETH_CALLDATA],
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_UNKNOWN,
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   },
   technology: {
     stateCorrectness: {
@@ -95,7 +93,9 @@ export const layer2aWithDups: Layer2 = {
     },
     dataAvailability: { ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL },
     operator: { ...OPERATOR.CENTRALIZED_SEQUENCER },
-    forceTransactions: { ...FORCE_TRANSACTIONS.CANONICAL_ORDERING },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
+    },
     exitMechanisms: [],
     otherConsiderations: [
       {
@@ -228,6 +228,7 @@ export const layer2aWithDups: Layer2 = {
         address: EthereumAddress('0xB37D31b2A74029B5951a2778F959282E2D518595'),
         name: 'L2 Contract',
         chain: 'optimism',
+        isVerified: true,
       },
       {
         address: EthereumAddress('0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'),
@@ -241,30 +242,37 @@ export const layer2aWithDups: Layer2 = {
             EthereumAddress('0x82B67a43b69914E611710C62e629dAbB2f7AC6AB'),
           ],
         },
+        isVerified: true,
       },
       {
         name: 'CanonicalTransactionChain',
         address: EthereumAddress('0x5E4e65926BA27467555EB562121fac00D24E9dD2'),
+        isVerified: true,
       },
       {
         name: 'Duplicate CanonicalTransactionChain',
         address: EthereumAddress('0x5E4e65926BA27467555EB562121fac00D24E9dD2'),
+        isVerified: true,
       },
       {
         name: 'StateCommitmentChain',
         address: EthereumAddress('0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19'),
+        isVerified: true,
       },
       {
         name: 'ChainStorageContainer-CTC-batches',
         address: EthereumAddress('0xD16463EF9b0338CE3D73309028ef1714D220c024'),
+        isVerified: true,
       },
       {
         name: 'ChainStorageContainer-SCC-batches',
         address: EthereumAddress('0xb0ddFf09c4019e31960de11bD845E836078E8EbE'),
+        isVerified: true,
       },
       {
         name: 'BondManager',
         address: EthereumAddress('0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1'),
+        isVerified: true,
       },
       {
         name: 'L1CrossDomainMessenger',
@@ -278,10 +286,12 @@ export const layer2aWithDups: Layer2 = {
             EthereumAddress('0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5'),
           ],
         },
+        isVerified: true,
       },
       {
         name: 'Lib_AddressManager',
         address: EthereumAddress('0xdE1FCfB0851916CA5101820A69b13a4E276bd81F'),
+        isVerified: true,
       },
       {
         name: 'L1StandardBridge',
@@ -295,14 +305,17 @@ export const layer2aWithDups: Layer2 = {
             EthereumAddress('0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB'),
           ],
         },
+        isVerified: true,
       },
       {
         name: 'SynthetixBridgeToLayer2a',
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
+        isVerified: true,
       },
       {
         name: 'L1DaiGateway',
         address: EthereumAddress('0x10E6593CDda8c58a1d0f14C5164B376352a55f2F'),
+        isVerified: true,
       },
     ],
     risks: [],

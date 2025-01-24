@@ -5,10 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('astarzkevm')
 
@@ -36,7 +38,7 @@ const upgradeability = {
 
 export const astarzkevm: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
-  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -78,6 +80,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   },
   rollupModuleContract: discovery.getContract('AstarValidium'),
   rollupVerifierContract: discovery.getContract('AstarVerifier'),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Astar zkEVM',
     slug: 'astarzkevm',
@@ -96,7 +99,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
         'https://t.me/PlasmOfficial',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'astarzkevm',
@@ -164,4 +166,12 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

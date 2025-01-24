@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 19825348,
-  "configHash": "0x337a5ff15a122bd974e00bbfe46a4cf2b443ee344d041a199bbf3b8bf4e15bda",
+  "configHash": "0x14cb48c062be6dc832518a6b1c6cfbd4cfb5b339f343c2e74362484283589f1c",
   "contracts": [
     {
       "name": "AggregationRouterV4",
@@ -152,12 +152,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
+          "to": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
+          "to": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
           "via": []
         }
       ],
@@ -314,7 +314,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -351,7 +351,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
+          "to": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
           "via": []
         }
       ],
@@ -502,7 +502,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
+          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"
         }
       ]
     },
@@ -521,7 +521,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
+          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"
         }
       ]
     },
@@ -1251,6 +1251,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -1,5 +1,5 @@
-import { assert, Block, UnixTime } from '@l2beat/shared-pure'
-import { BlockClient } from '../../clients'
+import { assert, type Block, type UnixTime } from '@l2beat/shared-pure'
+import type { BlockClient } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {

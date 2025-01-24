@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xf933d119c99ac49dd3d24c878123b8826a163877
+Generated with discovered.json: 0x39515448c38df54f444e2cf7de684ec7597085f5
+
+# Diff at Mon, 20 Jan 2025 11:09:52 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
+      receivedPermissions.0.from:
++        "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
+    }
+```
+
+```diff
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
+      receivedPermissions.0.from:
++        "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
+    }
+```
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
+      issuedPermissions.0.to:
++        "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
+      issuedPermissions.0.to:
++        "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
+    }
+```
+
+Generated with discovered.json: 0xdf5ab49ccaead3dcfcfadfb442fd14eccad7037c
 
 # Diff at Mon, 21 Oct 2024 11:08:48 GMT:
 

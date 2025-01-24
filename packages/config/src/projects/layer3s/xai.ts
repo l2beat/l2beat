@@ -1,9 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { DaEconomicSecurityRisk } from '../da-beat/common'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
@@ -11,8 +14,12 @@ export const xai: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD,
+  ],
   display: {
     name: 'Xai',
     slug: 'xai',
@@ -30,13 +37,12 @@ export const xai: Layer3 = orbitStackL3({
         'https://discord.gg/xaigames',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
-  nativeToken: 'XAI',
+  gasTokens: ['XAI'],
   rpcUrl: 'https://xai-chain.net/rpc',
   nonTemplateTechnology: {
     stateCorrectness: {
@@ -97,4 +103,45 @@ export const xai: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      knownMembers: [
+        {
+          external: false,
+          name: 'Xai',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Ex Populus',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Rug Radio',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'LayerZero',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Team Secret',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Offchain Labs',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+      ],
+    },
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    },
+    discovery,
+  }),
 })

@@ -1,3 +1,107 @@
+Generated with discovered.json: 0xaf1789d5aa68cdb95fdbced8505a71d082d6b9d3
+
+# Diff at Mon, 20 Jan 2025 11:09:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630127
+- current block number: 21630127
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630127 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      issuedPermissions.0.to:
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      issuedPermissions.0.to:
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      issuedPermissions.0.to:
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+      receivedPermissions.2.from:
++        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+      receivedPermissions.1.target:
+-        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+      receivedPermissions.1.from:
++        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+      receivedPermissions.0.target:
+-        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+      receivedPermissions.0.from:
++        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+    }
+```
+
+Generated with discovered.json: 0xbaa26c2dbd2246ca46f0f0eefc8a0af6574f1b24
+
+# Diff at Wed, 15 Jan 2025 13:18:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 20878349
+- current block number: 21630127
+
+## Description
+
+Polygon zkEVM upgraded to rollupTypeID 6 (prev 5), this is called [the servicing update](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta), and was deployed onchain in oct 2024. It adds minor changes like `rollbackBatches()` for batches that are not yet verified and allows local chain admins to upgrade to already-deployed new versions for their chain.
+
+## Watched changes
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf303702e52579ed796873f92868d2ebedd55360bf53043519e6061b19df3eb4b"
++        "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
+      values.$implementation:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
+      values.$pastUpgrades.4:
++        ["2025-01-15T12:16:11.000Z","0x9328cfd3d2833dca2d0ea16fbb34f8fc096c26ca8334476c5bf7107f32436029",["0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"]]
+      values.$upgradeCount:
+-        4
++        5
+    }
+```
+
+## Source code changes
+
+```diff
+.../PolygonZkEVMEtrog/PolygonZkEVMEtrog.sol        | 111 +++++++++++++++------
+ 1 file changed, 81 insertions(+), 30 deletions(-)
+```
+
 Generated with discovered.json: 0x211f698e7103ca1f1041c810857bdada90077456
 
 # Diff at Mon, 21 Oct 2024 11:09:04 GMT:

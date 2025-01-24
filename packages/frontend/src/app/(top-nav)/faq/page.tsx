@@ -1,6 +1,7 @@
 import { isArray } from 'lodash'
 import { type Metadata } from 'next'
 import { ContentWrapper } from '~/components/content-wrapper'
+import { FullPageHeader } from '~/components/full-page-header'
 import { Markdown } from '~/components/markdown/markdown'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -22,7 +23,7 @@ export default async function Page() {
   }))
 
   return (
-    <>
+    <div className="reading">
       <Header />
       <ContentWrapper>
         <main className="flex">
@@ -60,25 +61,23 @@ export default async function Page() {
         </main>
       </ContentWrapper>
       <ScrollToTopButton />
-    </>
+    </div>
   )
 }
 
 function Header() {
   return (
-    <header className="bg-pure-white py-24 dark:bg-zinc-900">
-      <ContentWrapper className="flex items-center justify-center leading-[1.15]">
-        <div className="w-full">
-          <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
-            <h1 className="text-6xl font-bold">FAQ</h1>
-            <p className="w-full text-lg font-light lg:w-2/3">
-              Hi! We are glad you&apos;ve made it here. Below you will find
-              answers to most frequently asked questions about L2BEAT.
-            </p>
-          </div>
+    <FullPageHeader>
+      <div className="w-full">
+        <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
+          <h1 className="text-5xl font-bold md:text-6xl">FAQ</h1>
+          <p className="w-full text-lg font-light lg:w-2/3">
+            Hi! We are glad you&apos;ve made it here. Below you will find
+            answers to most frequently asked questions about L2BEAT.
+          </p>
         </div>
-      </ContentWrapper>
-    </header>
+      </div>
+    </FullPageHeader>
   )
 }
 

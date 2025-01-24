@@ -8,13 +8,13 @@ import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import {
   ConfigReader,
-  DiscoveryDiff,
+  type DiscoveryDiff,
   diffDiscovery,
   discover,
   discoveryDiffToMarkdown,
   getChainConfig,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
@@ -26,6 +26,7 @@ export async function updateDiffHistory(
   projectName: string,
   chain: string,
   description?: string,
+  overwriteCache: boolean = false,
 ) {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
@@ -57,6 +58,7 @@ export async function updateDiffHistory(
       projectName,
       chain,
       saveSources,
+      overwriteCache,
     )
     codeDiff = rerun.codeDiff
 
@@ -152,6 +154,7 @@ async function performDiscoveryOnPreviousBlock(
   projectName: string,
   chain: string,
   saveSources: boolean,
+  overwriteCache: boolean,
 ) {
   if (discoveryFromMainBranch === undefined) {
     return { prevDiscovery: undefined, codeDiff: undefined }
@@ -174,6 +177,7 @@ async function performDiscoveryOnPreviousBlock(
     flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
     saveSources,
+    overwriteCache,
   })
 
   const prevDiscoveryFile = readFileSync(

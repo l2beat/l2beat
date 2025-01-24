@@ -1,10 +1,10 @@
-import { HttpClient, flattenStartingFrom } from '@l2beat/discovery'
+import { flattenStartingFrom } from '@l2beat/discovery'
 import {
-  ExplorerConfig,
+  type ExplorerConfig,
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
-import { CliLogger } from '@l2beat/shared'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { type CliLogger, HttpClient } from '@l2beat/shared'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 
 export async function fetchAndFlatten(
   address: EthereumAddress,

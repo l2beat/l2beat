@@ -112,6 +112,14 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
+  CelestiaBlobstream: {
+    display: {
+      name: 'Celestia with Blobstream',
+      description:
+        'This project utilizes Celestia and has Blobstream enabled, facilitating the bridging of data availability commitments between Celestia and Ethereum.',
+    },
+    type: BadgeType.DA,
+  },
   EigenDA: {
     display: {
       name: 'EigenDA',
@@ -314,6 +322,13 @@ export const badges = {
     display: {
       name: 'Built on the Cartesi stack',
       description: 'The project is built on the Cartesi stack',
+    },
+    type: BadgeType.Stack,
+  },
+  SNStack: {
+    display: {
+      name: 'Built on the SN Stack',
+      description: 'The project is built on the SN Stack',
     },
     type: BadgeType.Stack,
   },

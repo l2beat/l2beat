@@ -1,4 +1,4 @@
-import { FlatSources } from '../../kysely/generated/types'
+import type { FlatSources } from '../../kysely/generated/types'
 
 export const selectFlatSources = [
   'projectName',

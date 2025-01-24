@@ -1,3 +1,989 @@
+Generated with discovered.json: 0x762db5a3aa545309c8918757e03be80f473e3ed4
+
+# Diff at Thu, 12 Dec 2024 17:18:51 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa5a98638066331a8ea6329a256a3462e7da2b3a block: 21378825
+- current block number: 21387870
+
+## Description
+
+Discovery refresh.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.38:
++        {"sourceChainSelector":"7937294810946806131","offRamp":"0x3B45dd27E0cF84F1af98DEaBDc8f96303475ef58"}
+      values.onRamps.7937294810946806131:
++        "0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.38:
++        "0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9"
+    }
+```
+
+```diff
+    contract RMN (0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F) {
+    +++ description: None
+      values.getPermaBlessedCommitStores.6:
++        "0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x3B45dd27E0cF84F1af98DEaBDc8f96303475ef58)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9.sol | 1297 ++++++++
+ ...-0x3B45dd27E0cF84F1af98DEaBDc8f96303475ef58.sol | 3430 ++++++++++++++++++++
+ ...-0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5.sol | 2982 +++++++++++++++++
+ 3 files changed, 7709 insertions(+)
+```
+
+Generated with discovered.json: 0x665e9b7a4f462ac0496b7020db1800904e953310
+
+# Diff at Wed, 11 Dec 2024 11:00:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@28849b80c374bb8843eff17341701a3084c3bdb9 block: 21122789
+- current block number: 21378825
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.37:
++        {"sourceChainSelector":"3993510008929295315","offRamp":"0x8B3eEed4948684c3ec1bb60967820f40285018B8"}
+      values.offRamps.36:
++        {"sourceChainSelector":"3849287863852499584","offRamp":"0xdE81f1627ef2F6E23A2C0f338623C78c10EA57AC"}
+      values.offRamps.35:
++        {"sourceChainSelector":"2049429975587534727","offRamp":"0x5EDa6801dBD2bBdbF0401d34c730fa2C3A97C3F4"}
+      values.offRamps.34:
++        {"sourceChainSelector":"5406759801798337480","offRamp":"0xF3AC96642F9BA5De3BBc864d609E3F534dD3b7F9"}
+      values.offRamps.33:
++        {"sourceChainSelector":"6916147374840168594","offRamp":"0x9a3Ed7007809CfD666999e439076B4Ce4120528D"}
+      values.onRamps.3734403246176062136:
+-        "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1"
++        "0x3455D8E039736944e66e19eAc77a42e8077B07bf"
+      values.onRamps.4051577828743386545:
+-        "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B"
++        "0x15a9D79d6b3485F70bF82bC49dDD1fcB37A7149c"
+      values.onRamps.4949039107694359620:
+-        "0x925228D7B82d883Dde340A55Fe8e6dA56244A22C"
++        "0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284"
+      values.onRamps.6433500567565415381:
+-        "0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630"
++        "0xaFd31C0C78785aDF53E4c185670bfd5376249d8A"
+      values.onRamps.11344663589394136015:
+-        "0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69"
++        "0x948306C220Ac325fa9392A6E601042A3CD0b480d"
+      values.onRamps.15971525489660198786:
+-        "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7"
++        "0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937"
+      values.onRamps.465200170687744372:
+-        "0xF538dA6c673A30338269655f4e019B71ba58CFd4"
++        "0xf50B9A46C394bD98491ce163d420222d8030F6F0"
+      values.onRamps.7264351850409363825:
+-        "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65"
++        "0xeA6d4a24B262aB3e61a8A62f018A30beCD086f82"
+      values.onRamps.4411394078118774322:
+-        "0x4545F9a17DA50110632C14704a15d893BF9CBD27"
++        "0x6751cA96b769129dFE6eB8E349c310deCEDb4e36"
+      values.onRamps.8805746078405598895:
+-        "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC"
++        "0x75d536eED32f4c8Bb39F4B0c992163f5BA49B84e"
+      values.onRamps.6916147374840168594:
++        "0xdC5b578ff3AFcC4A4a6E149892b9472390b50844"
+      values.onRamps.5406759801798337480:
++        "0xddF4b4aF7A9603869C90189EFa8826683D0D234b"
+      values.onRamps.2049429975587534727:
++        "0xdB6ebB3ea15595E516dEf4a9875479573a4F19b6"
+      values.onRamps.3849287863852499584:
++        "0x1B960560324c03db5565545B353198fdd07A195d"
+      values.onRamps.3993510008929295315:
++        "0x3Ac0D8fe5b4e8d0a95C507CCd83F6A8d73A8c6b1"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.37:
++        "0xdCF6F209d36d93A26B251D2CFE994bEF02954110"
+      values.getPriceUpdaters.36:
++        "0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99"
+      values.getPriceUpdaters.35:
++        "0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159"
+      values.getPriceUpdaters.34:
++        "0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9"
+      values.getPriceUpdaters.33:
++        "0xE41677500B425999cB4133950ca3aB79eA7470a6"
+    }
+```
+
+```diff
+    contract ManyChainMultiSig (0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF) {
+    +++ description: None
+      values.getConfig.signers.8:
++        {"addr":"0xE062e7D123AC8dF480C56147f911144F55C10f88","index":8,"group":1}
+      values.getConfig.signers.7.addr:
+-        "0xF081825b65C366D2bD3Ee7ebC28a66C76474cdEA"
++        "0xAe735fd5e74887064DFf99C637f291caE5485A75"
+      values.getConfig.signers.6.addr:
+-        "0xAf8553D478235210bea964AE1900C068753b1799"
++        "0x9E2FD656eFffF4cbAc9fd45C017D4DD8fBC550E5"
+      values.getConfig.signers.5.addr:
+-        "0xA34aAf7a569504E73a12566121f890B1DFE5146d"
++        "0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429"
+      values.getConfig.signers.4.addr:
+-        "0xa2E004594939e2Dd4cBb680536576f6d5B435077"
++        "0x776D5B14ef1D5C58B0d48b53114f2Aa0faccB307"
+      values.getConfig.signers.3.addr:
+-        "0x6F9dc914D7E124FF68c8618CC3C00b17B15F9b4C"
++        "0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.getConfig.signers.2.addr:
+-        "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC"
++        "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4"
+      values.getConfig.signers.1.addr:
+-        "0x0c44E75A018d846C12CDcFFcD15C34aC0bd7eB60"
++        "0x2CD36141d4AEFb8e57209770b965043Ed3129D9F"
+      values.getConfig.signers.0.addr:
+-        "0x06e5891D9b2Ee77740355A309BAF49caaB672f98"
++        "0x20a446033409CeB9c541A89b2B4F114d79Aa1840"
+    }
+```
+
+```diff
+    contract RMN (0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F) {
+    +++ description: None
+      values.getPermaBlessedCommitStores.5:
++        "0xdCF6F209d36d93A26B251D2CFE994bEF02954110"
+      values.getPermaBlessedCommitStores.4:
++        "0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99"
+      values.getPermaBlessedCommitStores.3:
++        "0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159"
+      values.getPermaBlessedCommitStores.2:
++        "0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x15a9D79d6b3485F70bF82bC49dDD1fcB37A7149c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x1B960560324c03db5565545B353198fdd07A195d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x3455D8E039736944e66e19eAc77a42e8077B07bf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x3Ac0D8fe5b4e8d0a95C507CCd83F6A8d73A8c6b1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x5EDa6801dBD2bBdbF0401d34c730fa2C3A97C3F4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x6751cA96b769129dFE6eB8E349c310deCEDb4e36)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x75d536eED32f4c8Bb39F4B0c992163f5BA49B84e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x8B3eEed4948684c3ec1bb60967820f40285018B8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x948306C220Ac325fa9392A6E601042A3CD0b480d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x9a3Ed7007809CfD666999e439076B4Ce4120528D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xaFd31C0C78785aDF53E4c185670bfd5376249d8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xdB6ebB3ea15595E516dEf4a9875479573a4F19b6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xdC5b578ff3AFcC4A4a6E149892b9472390b50844)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xdCF6F209d36d93A26B251D2CFE994bEF02954110)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xddF4b4aF7A9603869C90189EFa8826683D0D234b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xdE81f1627ef2F6E23A2C0f338623C78c10EA57AC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0xE41677500B425999cB4133950ca3aB79eA7470a6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xeA6d4a24B262aB3e61a8A62f018A30beCD086f82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xF3AC96642F9BA5De3BBc864d609E3F534dD3b7F9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xf50B9A46C394bD98491ce163d420222d8030F6F0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159.sol | 1297 ++++++++
+ ...-0xE41677500B425999cB4133950ca3aB79eA7470a6.sol | 1297 ++++++++
+ ...-0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9.sol | 1297 ++++++++
+ ...-0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99.sol | 1297 ++++++++
+ ...-0xdCF6F209d36d93A26B251D2CFE994bEF02954110.sol | 1297 ++++++++
+ ...-0x5EDa6801dBD2bBdbF0401d34c730fa2C3A97C3F4.sol | 3430 ++++++++++++++++++++
+ ...-0x8B3eEed4948684c3ec1bb60967820f40285018B8.sol | 3430 ++++++++++++++++++++
+ ...-0x9a3Ed7007809CfD666999e439076B4Ce4120528D.sol | 3430 ++++++++++++++++++++
+ ...-0xF3AC96642F9BA5De3BBc864d609E3F534dD3b7F9.sol | 3430 ++++++++++++++++++++
+ ...-0xdE81f1627ef2F6E23A2C0f338623C78c10EA57AC.sol | 3430 ++++++++++++++++++++
+ ...-0x15a9D79d6b3485F70bF82bC49dDD1fcB37A7149c.sol | 2982 +++++++++++++++++
+ ...-0x1B960560324c03db5565545B353198fdd07A195d.sol | 2982 +++++++++++++++++
+ ...-0x3455D8E039736944e66e19eAc77a42e8077B07bf.sol | 2982 +++++++++++++++++
+ ...-0x3Ac0D8fe5b4e8d0a95C507CCd83F6A8d73A8c6b1.sol | 2982 +++++++++++++++++
+ ...-0x6751cA96b769129dFE6eB8E349c310deCEDb4e36.sol | 2982 +++++++++++++++++
+ ...-0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284.sol | 2982 +++++++++++++++++
+ ...-0x75d536eED32f4c8Bb39F4B0c992163f5BA49B84e.sol | 2982 +++++++++++++++++
+ ...-0x948306C220Ac325fa9392A6E601042A3CD0b480d.sol | 2982 +++++++++++++++++
+ ...-0xaFd31C0C78785aDF53E4c185670bfd5376249d8A.sol | 2982 +++++++++++++++++
+ ...-0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937.sol | 2982 +++++++++++++++++
+ ...-0xdB6ebB3ea15595E516dEf4a9875479573a4F19b6.sol | 2982 +++++++++++++++++
+ ...-0xdC5b578ff3AFcC4A4a6E149892b9472390b50844.sol | 2982 +++++++++++++++++
+ ...-0xddF4b4aF7A9603869C90189EFa8826683D0D234b.sol | 2982 +++++++++++++++++
+ ...-0xeA6d4a24B262aB3e61a8A62f018A30beCD086f82.sol | 2982 +++++++++++++++++
+ ...-0xf50B9A46C394bD98491ce163d420222d8030F6F0.sol | 2982 +++++++++++++++++
+ 25 files changed, 68365 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21122789 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PriceRegistry (0x020082A7a9c2510e1921116001152DEE4da81985)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x0238d2C272f17CF11AEDB08CDE515d56ED25E2E4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x047204D42d93a6471F7c9Ec94292B4B00E8e0786)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x057152DB365B47851B0A0bd431644b8eE21fE1b4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x06f9817a91595E1B595F789Fb91529e8651da9B8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x0Bc42675799D0C1efE3CDe64857714ae84f075B4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x0C291Ae31730901515e5C46406A6ba2d88c1f4aA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (0x0D736853812A12F085DE867aDF4eA4ABA9521Fc0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x0DAFed8dAF42040dB2c6227ca2AEB14D9C8B2602)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOnRamp (0x0f27c8532457b66D6037141DEB0ed479Dad04B3c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x1175E4CFd6a73A4c1F1f2c1400a08D88554FA62e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x123ed44f3B863a684437Ebf18F8a744c250Ee5cA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x1580C7d4754f5671626e42f0372D56104B092CFA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOffRamp (0x1C207dabc46902dF9028b27D6d301c3849b2D12c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommitStore (0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x21377fe476Fb8587CbAFd47155093597Fa4df45E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x2764910B500689BbC9DB16c7AD61c6DD32FDE73B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x2c5C39F515277E64D96C28f3fc49Ad1d6a25B5B4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommitStore (0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x2dd317E7e36544C5222818F228d607c209517470)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOnRamp (0x333f976915195ba9044fD0cd603cEcE936f6264e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommitStore (0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommitStore (0x40c558575093eC1099CC21B020d9b8D13c74417F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOffRamp (0x41627a90f2c6238f2BADAB72D5aB050B857fdAb5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x44622f4604353E4815A4212d5a3dD137A1C7FF14)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnWithFromMintTokenPool (0x45A103142585bdFc49cdb137f2a45D1AE7F84b6b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0x485858BA818aab8744f2932A4982bfB0E7Db0005)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x4C3aEe10334461F1f33c0A8843424de3F8fb7709)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x4Ce6f5cacF8Bd393104c12F6151B727eabBf675c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x50f6631B377be52E132DF35a2F05eA54fda882ac)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableLockReleaseTokenPool (0x5756880B6a1EAba0175227bf02a7E87c1e02B28C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x57D3bb46aF4A9b210FAE046796013090D428475F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0x5Be290d68db372cc487B1356649D906efC4f58Ca)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOffRamp (0x61135E701a2214C170c5F596D0067798FEfbaaE4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x619ED9fE2E5CfD9FAE364E703b60eA776Bb5924E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x6452d693860ab7e18fC5858C05980F63d93F37a6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnWithFromMintTokenPool (0x66D40E0D2819a2264B2a61f5DD578573B9dedCEc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0x67F4e731f446Ff76716E7E3c955CD5A75C1B1787)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x69c24c970B65e22Ac26864aF10b2295B7d78f93A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x6ce8b799002BbECc7df94c18BF150B3b0E4A28F4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x6dDF2F3f93688dfc9d37DF7078982cE8E6494DB2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x6Ff6BF3BF8af2e419DDC7BF038aFa5EB92b6cD7e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x73aEB5ECA03Ad587B8Fdcc2B61f9fb4D2e3D90c1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x7559a84Ae7B75F4B0E0E540312A3Ec912B2128CA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (0x75a852478792E5a99bc4cdd0aDBd97129B0d9799)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x78196436aF11b948c7036424B1ceA711fAdAd288)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommitStore (0x7986C9892389854cAAbAC785ff18123B0070a5Fd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x80Cc104119901fd66088C9a8219E50D9547dE2d4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x8272dbBA30f14900b22b4bfC8DB4E88B02bA413a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x8291a8E8dCF429e2FA7d032bF3E583ee959F3B06)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x8300e89e82A840176eb250EcDA0A7dBDb4a6B12D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (0x89c9038906887A69bD9C20f81B1B4C309F9A6D04)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x8BcD7e48Dd2104ed83eb1CE0c6E7610604AE9062)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommitStore (0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x8c6028e38391cfC2A1a28f4359EA5732E9422e56)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x9797E886EDe987AEf6A62885dFD6CcA885D828E6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0x9F02c16190691CC4ceCD53A9267Bd24e37B6d06C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xa17698199466E71bAFC31F226db341B7840701E7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xa35304aA2D659e5E06A768fEc4Af3B443916C215)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xa370CEcd451ecf15c2A01ec47762E967dF7574DA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDCTokenPool (0xA81f4AB595dE5C14759245DE5ce9899D380FeFda)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xA82A87a9b6550e89dd8a7C8a1E3e421974eaf858)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xa96787DCe9Df7BF7bB033E39777bd108E29D349b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (0xAFcC997D86713FeC802Cc665122d64a5130bDd1D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xb854536206EB6C1013b1642b576196E5EF19D7BA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xBA0E1c1F702D7Ec44a555759517BDBe9f7c824C3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOffRamp (0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xBF7cb652A2d5ed3BFc3832Ef8Af33Ffb0cDc0982)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xc07556a0Bd177F8de4D077f449C2653A072F3798)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0xc1D8f275f651E1CAe3A6D971d0836cDAcD25d91a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (0xc2ef2f272D2C09b0a8523cEf32C96D3A7f379979)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xc43c01026128Aa758A65D12dB6a72CE4DD778dF2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xC456EaE992e4f2925E3F75Ac4809dF387756CD29)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xc62c311FE64abf19CF33195e15c188Ca6d1AaD3e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOffRamp (0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOnRamp (0xCC19bC4D43d17eB6859F0d22BA300967C97780b0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xcd196D3905AfA0eCB4e0e62C2D7d6c52f9C73526)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xcd69c117bf91Fc57d5fC237dFAbA5f17B5322733)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0xCE8342b8eFd4D804B97Df92bC6bb930099098fDE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0xcfd0637093193ac909f74F9de95c2d4B92Df23c4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOnRamp (0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xd1b3015ceFCAC84dB3EFCBB18FBdd50BA5aF49DE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xd8f734c938200BA294d0De5B555E8ff77d66c351)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xdCa0A2341ed5438E06B9982243808A76B9ADD6d0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOnRamp (0xdF1d7FD22aC3aB5171E275796f123224039f3b24)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOnRamp (0xe2Eb229e88F56691e96bb98256707Bc62160FE73)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xE2F0dad85D504aa046b9F704a426fD6C5493e366)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (0xE31009Ac8385147A74463F686Dd148e99d291739)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPoolAndProxy (0xE58eDBb7Fdd5f2DD5cfAD2667e5D570E1a0a6A84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPoolAndProxy (0xeAD31B98179e2637Bb052a970Ac92Cbb2E26461d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xeaE89E53B8317CaB04165F5323285252D5669B73)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xf0D19c04f04382048fC9ad157C529CeB2c7be823)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0xf5224EfD7Ea9edFa6b6e06964084b92426DCdE99)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xF84Bf7D614F3138D805186C497995d4eD315fA72)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOffRamp (0xfF51C00546AA3d9051a4B96Ae81346E14709CD24)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xbc993ce5d94a07786ec32924d84bca55a06a590c
 
 # Diff at Wed, 30 Oct 2024 14:23:35 GMT:

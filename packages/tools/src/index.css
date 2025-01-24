@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .pixelated {
+    image-rendering: pixelated;
+  }
+
+  .pixel-animate {
+    @apply animate-pixelate transition-none;
+    animation-delay: calc(var(--pixel-index) * 0.05s);
+  }
+}

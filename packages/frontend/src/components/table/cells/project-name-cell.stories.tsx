@@ -14,14 +14,11 @@ export const All: Story = {
     project: {
       name: 'All Features Project',
       shortName: 'AFP',
-      isVerified: false,
-      redWarning: 'Red warning message',
-      underReviewStatus: 'config',
-      data: {
-        syncStatus: {
-          isSynced: false,
-          syncedUntil: 1714857600,
-        },
+      statuses: {
+        underReview: 'config',
+        redWarning: 'Red warning message',
+        verificationWarning: true,
+        syncWarning: 'Some random content saying that this is not synced',
       },
     },
   },
@@ -31,7 +28,8 @@ export const Layer3: Story = {
   args: {
     project: {
       name: 'Layer3 Project',
-      hostChain: 'Arbitrum One',
+      nameSecondLine: 'Arbitrum One',
+      statuses: undefined,
     },
   },
 }

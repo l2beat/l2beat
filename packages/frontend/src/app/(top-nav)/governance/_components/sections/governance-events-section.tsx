@@ -1,5 +1,7 @@
+'use client'
 import { CustomLink } from '~/components/link/custom-link'
-import { OutLinkIcon } from '~/icons/outlink'
+import { useIsMobile } from '~/hooks/use-breakpoint'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { type GovernanceEventEntry } from '../../_utils/get-governance-event-entries'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
@@ -26,10 +28,11 @@ export function GovernanceEventsSection({ events, className }: Props) {
 
 function Event({ event }: { event: GovernanceEventEntry }) {
   const hostname = new URL(event.link).hostname
+  const isMobile = useIsMobile()
 
   return (
     <GovernanceCard
-      type={event.highlighted ? 'purple' : 'secondary'}
+      type={event.highlighted ? 'purple' : isMobile ? 'primary' : 'secondary'}
       size="medium"
       className="flex flex-col justify-between md:h-[288px]"
     >
@@ -51,7 +54,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           type={event.highlighted ? 'plain' : 'primary'}
         >
           {hostname}
-          <OutLinkIcon />
+          <CustomLinkIcon />
         </CustomLink>
       </div>
       <div>

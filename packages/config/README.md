@@ -26,7 +26,6 @@ CONFIG_ALCHEMY_API_KEY=
 - `pnpm lint` - check if the code satisfies the biome configuration
 - `pnpm test` - run tests
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
-- `pnpm check-verified-contracts` - verify whether source code of given address is verified on Etherscan
 - `pnpm tokens` - update `src/tokens/generated.json` based on `src/tokens/tokens.jsonc`. `generated.jsonc` is a source of truth about each token data.
 - `pnpm tokens:verify` - when checking a PR run it to see whether tokens were added using a script
 
