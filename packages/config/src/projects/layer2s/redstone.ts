@@ -37,11 +37,11 @@ export const redstone: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Redstone',
     slug: 'redstone',
     architectureImage: 'opstack-dachallenge',

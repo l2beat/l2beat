@@ -58,11 +58,11 @@ export const fraxtal: Layer2 = opStackL2({
   },
   associatedTokens: ['FXS', 'FPIS'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Fraxtal',
     slug: 'fraxtal',
     description:

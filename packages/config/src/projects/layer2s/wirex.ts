@@ -43,8 +43,8 @@ export const wirex: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['Payments'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'Pay Chain',
     slug: 'wirex',
     description:

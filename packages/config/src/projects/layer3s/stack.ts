@@ -18,11 +18,11 @@ export const stack: Layer3 = opStackL3({
   ],
   additionalPurposes: ['Social'],
   hostChain: ProjectId('base'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Stack',
     slug: 'stack',
     description:

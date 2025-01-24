@@ -13,8 +13,8 @@ export const metal: Layer2 = opStackL2({
   discovery,
   associatedTokens: ['MTL'],
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Metal',
     slug: 'metal',
     description:

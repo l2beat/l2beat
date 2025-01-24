@@ -40,11 +40,11 @@ export const gmnetwork: Layer2 = opStackL2({
     Badge.RaaS.AltLayer,
   ],
   additionalPurposes: ['AI'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'GM Network',
     slug: 'gmnetwork',
     architectureImage: 'opstack-dachallenge',

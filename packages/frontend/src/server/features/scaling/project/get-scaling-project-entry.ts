@@ -48,7 +48,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
     header,
-    reasonsForBeingOther: project.display.reasonsForBeingOther,
+    reasonsForBeingOther: project.reasonsForBeingOther,
     countdowns: getCountdowns(project),
   }
   const daSolution = getDaSolution(project)

@@ -21,6 +21,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   type ScalingProjectCategory,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
@@ -150,6 +151,7 @@ interface OpStackConfigCommon {
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
   usingAltVm?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -401,6 +403,7 @@ function opStackCommon(
     ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

@@ -12,11 +12,11 @@ export const hychain: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1710846977), // 2024-03-19T11:16:17Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Caldera],
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'HYCHAIN',
     slug: 'hychain',
     description:

@@ -41,8 +41,8 @@ export const silicon: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [Badge.DA.DAC],
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'Silicon',
     slug: 'silicon',
     description:

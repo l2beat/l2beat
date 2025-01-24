@@ -15,11 +15,11 @@ export const l3x: Layer3 = orbitStackL3({
   hostChain: ProjectId('arbitrum'),
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'L3X',
