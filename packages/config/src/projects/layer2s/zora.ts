@@ -14,8 +14,8 @@ export const zora: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   additionalPurposes: ['NFT'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Zora',
     slug: 'zora',
     description:

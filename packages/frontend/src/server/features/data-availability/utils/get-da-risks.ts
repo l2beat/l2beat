@@ -2,8 +2,8 @@ import {
   type BlockchainDaLayer,
   type DaBridgeRisks,
   DaCommitteeSecurityRisk,
-  type DaEconomicSecurityRisk,
   type DaLayerRisks,
+  type DaRisk,
   type DaServiceDaLayer,
   type DacDaLayer,
   type IntegratedDacBridge,
@@ -81,7 +81,7 @@ function getEconomicSecurity(
   return {
     ...daLayer.risks.economicSecurity,
     sentiment,
-  } as DaEconomicSecurityRisk
+  } as DaRisk
 }
 
 function adjustSentiment(totalValueSecured: number, slashableFunds: number) {
@@ -94,7 +94,7 @@ function adjustSentiment(totalValueSecured: number, slashableFunds: number) {
 }
 
 // Should be a parte of the config
-function getCommitteeSecurity(bridge: Bridge): DaCommitteeSecurityRisk {
+function getCommitteeSecurity(bridge: Bridge): DaRisk {
   if (
     bridge.type !== 'IntegratedDacBridge' ||
     bridge.risks.committeeSecurity.type !== 'Auto'

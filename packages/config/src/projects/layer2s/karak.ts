@@ -14,11 +14,11 @@ export const karak: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'K2',
     slug: 'k2',
     description: 'K2 is a general-purpose Optimium.',

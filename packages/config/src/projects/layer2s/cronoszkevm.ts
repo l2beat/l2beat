@@ -23,8 +23,8 @@ export const cronoszkevm: Layer2 = zkStackL2({
     removed: 'cronosValidatorsRemoved',
   },
   additionalBadges: [Badge.DA.CustomDA],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
     description:

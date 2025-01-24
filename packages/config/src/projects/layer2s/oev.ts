@@ -12,11 +12,11 @@ export const oev: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'OEV Network',
     slug: 'oev',
     description:

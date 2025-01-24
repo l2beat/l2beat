@@ -11,8 +11,8 @@ export const shape: Layer2 = opStackL2({
   createdAt: new UnixTime(1730131160), // 2024-10-28
   additionalBadges: [Badge.RaaS.Alchemy, Badge.Infra.Superchain],
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Shape',
     slug: 'shape',
     description:

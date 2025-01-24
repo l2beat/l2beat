@@ -12,11 +12,11 @@ export const everclear: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
   additionalBadges: [Badge.RaaS.Gelato, Badge.DA.DAC],
   additionalPurposes: ['Interoperability'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Everclear Hub',
     slug: 'everclear',
     description:

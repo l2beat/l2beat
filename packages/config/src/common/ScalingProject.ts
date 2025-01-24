@@ -70,6 +70,8 @@ export interface ScalingProject {
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: BadgeId[]
+  /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export type ScalingProjectCategory =
@@ -196,8 +198,6 @@ export type ScalingProjectDisplay = {
   category: ScalingProjectCategory
   /** Technology provider */
   provider?: ScalingProjectStack
-  /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
-  reasonsForBeingOther?: ReasonForBeingInOther[]
   mainPermissions?: {
     proposer: {
       value: string

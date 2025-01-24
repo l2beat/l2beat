@@ -13,11 +13,11 @@ export const reya: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1715019483), // 2024-05-06T18:18:03Z
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Reya',
     slug: 'reya',
     description:
