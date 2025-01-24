@@ -15,15 +15,15 @@ export const mantapacific: Layer2 = opStackL2({
   createdAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Manta Pacific',
     slug: 'mantapacific',
     description:
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     links: {
       websites: ['https://pacific.manta.network/'],
       apps: ['https://pacific-bridge.manta.network/'],

@@ -1,17 +1,20 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import {
-  type DaBridgeRisks,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
-  type DaLayerRisks,
   DaUpgradeabilityRisk,
-  type DacDaLayer,
-  type IntegratedDacBridge,
+} from '../common'
+import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+import type {
+  DaBridgeRisks,
+  DaChallengeMechanism,
+  DaLayerRisks,
+  DacDaLayer,
+  DacTransactionDataType,
+  IntegratedDacBridge,
 } from '../types'
-import type { DaLinks } from '../types/DaLinks'
-import { DaRelayerFailureRisk } from '../types/DaRelayerFailureRisk'
-import type { DacTransactionDataType } from '../types/DacTransactionDataType'
+import type { DaLinks } from '../types'
 
 type TemplateSpecific = {
   /** DAC display settings */
@@ -46,7 +49,7 @@ type Optionals = {
     | 'otherConsiderations'
   >
   /** Optional challenge mechanism, defaults to undefined */
-  challengeMechanism?: DacDaLayer['challengeMechanism']
+  challengeMechanism?: DaChallengeMechanism
   /** Optional fallback, defaults to undefined */
   fallback?: DacDaLayer['fallback']
 }
@@ -119,7 +122,7 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
     type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback,
-    challengeMechanism: template.challengeMechanism,
+    challengeMechanism: template.challengeMechanism ?? 'None',
     technology: {
       ...template.layer?.technology,
       description: layerTechnology,

@@ -13,8 +13,8 @@ export const mint: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['NFT'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Mint',
     slug: 'mint',
     description: 'Mint Blockchain is a Layer 2 network for NFTs.',

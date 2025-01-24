@@ -14,8 +14,8 @@ export const lisk: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [Badge.RaaS.Gelato, Badge.Other.MigratedFromL1],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Lisk',
     slug: 'lisk',
     description:

@@ -18,11 +18,11 @@ export const donatuz: Layer3 = opStackL3({
     Badge.RaaS.Conduit,
   ],
   additionalPurposes: ['Social'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Donatuz',
     slug: 'donatuz',
     description:

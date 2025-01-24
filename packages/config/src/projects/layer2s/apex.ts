@@ -119,8 +119,8 @@ export const apex: Layer2 = {
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
     name: 'ApeX',
     slug: 'apex',
     description: `ApeX Pro is a non-custodial trading platform that delivers

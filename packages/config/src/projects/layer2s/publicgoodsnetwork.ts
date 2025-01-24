@@ -19,11 +19,11 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
   ],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Public Goods Network',
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',

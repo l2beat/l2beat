@@ -17,11 +17,11 @@ export const ham: Layer3 = opStackL3({
     Badge.RaaS.Caldera,
   ],
   additionalPurposes: ['Social'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Ham',
     slug: 'ham',
     description:

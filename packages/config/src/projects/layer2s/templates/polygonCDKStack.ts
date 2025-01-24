@@ -22,6 +22,7 @@ import {
   type KnowledgeNugget,
   type Milestone,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
   type ScalingProjectContract,
@@ -40,7 +41,7 @@ import {
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types/DaLayer'
+import type { DacDaLayer } from '../../da-beat/types'
 import { getStage } from '../common/stages/getStage'
 import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 import {
@@ -85,6 +86,7 @@ export interface PolygonCDKStackConfig {
   additionalPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
   isArchived?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -597,6 +599,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       templateVars.additionalBadges ?? [],
     ),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

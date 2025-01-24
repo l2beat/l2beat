@@ -10,8 +10,8 @@ export const dbk: Layer2 = opStackL2({
   createdAt: new UnixTime(1726825120), // 2024-09-20T09:38:40Z
   discovery,
   additionalBadges: [],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'DeBank Chain',
     slug: 'dbk',
     description:
