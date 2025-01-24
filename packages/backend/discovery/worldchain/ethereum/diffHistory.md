@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x82c7136e9bdfc905df454437022015db15bf933b
+
+# Diff at Fri, 24 Jan 2025 12:44:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6d249f6bb37fd32f322f4476674a3d823378a9c4 block: 21693166
+- current block number: 21694441
+
+## Description
+
+Moved Alchemy MS to commonAddressNames.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21693166 (main branch discovery), not current.
+
+```diff
+    contract AlchemyMultisig1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      name:
+-        "AlchemyMultisig"
++        "AlchemyMultisig1"
+    }
+```
+
 Generated with discovered.json: 0xa9f680aa52e1b8e752cea842879ef5f7d2a64d6a
 
 # Diff at Thu, 23 Jan 2025 15:30:29 GMT:

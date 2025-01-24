@@ -1,8 +1,8 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 21693166,
-  "configHash": "0x0d7ff49801dfa64c53ce0267690c2ad590bb339636660eb23f00fd650e87318a",
+  "blockNumber": 21694441,
+  "configHash": "0xc7997d00605c74eb22cd58ce4bfee403017aef4f13ad867d54b412b27d8cc15c",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -69,7 +69,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 410,
+        "gameCount": 414,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x48cf980849a7eEA03180f7dea4E21C112097b03E",
@@ -79,7 +79,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 410,
+        "permissionedGamesTotal": 414,
         "version": "1.0.0"
       }
     },
@@ -868,7 +868,7 @@
       }
     },
     {
-      "name": "AlchemyMultisig",
+      "name": "AlchemyMultisig1",
       "address": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1104,8 +1104,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1301449,
-          "prevBlockNum": 21692949
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 21694315
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1242,7 +1242,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630224",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630232",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
