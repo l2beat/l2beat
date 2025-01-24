@@ -20,7 +20,7 @@ export function CostsMetricControls<T extends string>({
       className={className}
     >
       <RadioGroupItem value="total">TOTAL</RadioGroupItem>
-      <RadioGroupItem value="per-l2-tx">PER L2 TX</RadioGroupItem>
+      <RadioGroupItem value="per-l2-uop">PER L2 User Op</RadioGroupItem>
     </RadioGroup>
   )
 }
