@@ -15,6 +15,8 @@ import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
+import path from 'path'
+import { writeFileSync } from 'fs'
 
 main().catch((e: unknown) => {
   console.error(e)
@@ -88,21 +90,30 @@ async function main() {
   let external = 0
   let native = 0
 
+  const tokenBreakdown: { ticker: string, source: string, amount: number, value: number }[] = []
+
   for (const token of tokens) {
     const tokenConfig = config.tokens.find((t) => t.id === token.tokenId)
     assert(tokenConfig, `Token config not found ${token.tokenId}`)
 
     total += token.valueForTotal
 
+    tokenBreakdown.push({
+      ticker: tokenConfig.ticker,
+      source: tokenConfig.source,
+      amount: token.amount,
+      value: token.value,
+    })
+
     switch (tokenConfig.source) {
       case 'canonical':
-        canonical += token.valueForTotal
+        canonical += token.value
         break
       case 'external':
-        external += token.valueForTotal
+        external += token.value
         break
       case 'native':
-        native += token.valueForTotal
+        native += token.value
         break
       default:
         throw new Error(`Unknown source ${tokenConfig.source}`)
@@ -113,6 +124,9 @@ async function main() {
   logger.info(`Canonical: $${toBillionsString(canonical)}B`)
   logger.info(`External: $${toBillionsString(external)}B`)
   logger.info(`Native: $${toBillionsString(native)}B`)
+
+  // dump token breakdown to file
+  writeFileSync(path.join(__dirname, 'token-breakdown.json'), JSON.stringify(tokenBreakdown, null, 2))
 }
 
 function toBillionsString(value: number) {
