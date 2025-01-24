@@ -3202,7 +3202,7 @@
       "symbol": "GHST",
       "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
       "source": "canonical",
-      "supply": "zero",
+      "supply": "zero"
     },
     {
       "symbol": "USDe",

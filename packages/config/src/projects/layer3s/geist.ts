@@ -26,10 +26,10 @@ export const geist: Layer3 = orbitStackL3({
     name: 'Geist',
     slug: 'geist',
     description:
-      'Geist is an Orbit stack Optimium on Base. It is focused on creating a better gaming and metaverse experience around AavegotchiDAO and the GHST governance token.',
+      'Geist is an Orbit stack Optimium on Base. It is focused on creating a better gaming and metaverse experience around the AavegotchiDAO and the GHST governance token.',
     category: 'Optimium',
     links: {
-      websites: ['https://playongeist.com/'],
+      websites: ['https://playongeist.com/', 'https://dapp.aavegotchi.com/'],
       apps: [
         'https://bridge.arbitrum.io/?destinationChain=geist-mainnet&sourceChain=base',
         'https://dapp.aavegotchi.com/migrate?type=migrateTokens&fromChain=137&toChain=63157',
@@ -38,8 +38,9 @@ export const geist: Layer3 = orbitStackL3({
       explorers: ['https://geist-mainnet.explorer.alchemy.com/'],
       repositories: [],
       socialMedia: [
+        'https://x.com/PlayOnGeist',
         'https://x.com/aavegotchi',
-        'https://dapp.aavegotchi.com/?utm_source=geist',
+        'https://discord.gg/Aavegotchi',
       ],
     },
   },
