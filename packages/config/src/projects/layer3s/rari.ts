@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('rari', 'arbitrum')
 export const rari: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [
-    Badge.DA.Celestia,
+    Badge.DA.CelestiaBlobstream,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
   ],
