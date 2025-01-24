@@ -1,4 +1,4 @@
-import type { DaAttributes } from '../types/DaLayer'
+import type { DaAttributes } from '../types'
 
 export type DasErasureCodingScheme =
   | typeof OneDReedSolomon

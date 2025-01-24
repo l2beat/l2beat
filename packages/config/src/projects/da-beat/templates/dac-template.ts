@@ -14,7 +14,7 @@ import type {
   DacTransactionDataType,
   IntegratedDacBridge,
 } from '../types'
-import type { DaLinks } from '../types/DaLinks'
+import type { DaLinks } from '../types'
 
 type TemplateSpecific = {
   /** DAC display settings */

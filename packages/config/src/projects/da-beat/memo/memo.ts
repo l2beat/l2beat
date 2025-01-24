@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types/DaLayer'
+import type { BlockchainDaLayer } from '../types'
 
 export const memo: BlockchainDaLayer = {
   id: 'memo',

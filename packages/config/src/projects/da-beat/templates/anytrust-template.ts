@@ -1,7 +1,7 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { DaUpgradeabilityRisk } from '../common'
 import type { DaBridge, DacDaLayer, IntegratedDacBridge } from '../types'
-import type { DaTechnology } from '../types/DaTechnology'
+import type { DaTechnology } from '../types'
 import { DAC, type DacTemplateVars } from './dac-template'
 
 type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {

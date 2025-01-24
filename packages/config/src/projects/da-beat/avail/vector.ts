@@ -3,7 +3,7 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import type { DaBridge } from '../types/DaBridge'
+import type { DaBridge } from '../types'
 
 const discovery = new ProjectDiscovery('vector')
 

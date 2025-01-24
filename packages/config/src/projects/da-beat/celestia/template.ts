@@ -1,5 +1,5 @@
 import type { OnChainDaBridge } from '../types'
-import type { DaLinks } from '../types/DaLinks'
+import type { DaLinks } from '../types'
 
 type TemplateVars = Pick<
   OnChainDaBridge,

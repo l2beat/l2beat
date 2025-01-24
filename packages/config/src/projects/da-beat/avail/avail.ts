@@ -4,7 +4,7 @@ import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { DasErasureCodingProof } from '../common/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../common/DasErasureCodingScheme'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types/DaLayer'
+import type { BlockchainDaLayer } from '../types'
 import { vector } from './vector'
 
 export const avail: BlockchainDaLayer = {

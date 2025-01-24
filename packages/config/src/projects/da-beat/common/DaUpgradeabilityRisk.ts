@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { DaRisk } from '../types/DaRisk'
+import type { DaRisk } from '../types'
 
 const Immutable: DaRisk = {
   type: 'Immutable',

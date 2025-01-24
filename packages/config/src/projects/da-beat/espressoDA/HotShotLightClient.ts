@@ -5,7 +5,7 @@ import {
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
 } from '../common'
-import type { DaBridge } from '../types/DaBridge'
+import type { DaBridge } from '../types'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
