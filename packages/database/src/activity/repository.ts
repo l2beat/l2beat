@@ -146,17 +146,19 @@ export class ActivityRepository extends BaseRepository {
     )
   }
 
-  async getSummedCountForProjectsAndTimeRange(
+  async getSummedUopsCountForProjectsAndTimeRange(
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
-  ): Promise<
-    Omit<ActivityRecord, 'timestamp' | 'start' | 'end' | 'uopsCount'>[]
-  > {
+  ): Promise<Omit<ActivityRecord, 'timestamp' | 'start' | 'end' | 'count'>[]> {
     const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('Activity')
       .select(['projectId'])
-      .select((eb) => eb.fn.sum('count').as('count'))
+      .select((eb) =>
+        eb.fn
+          .sum(eb.fn.coalesce('Activity.uopsCount', 'Activity.count'))
+          .as('count'),
+      )
       .where(
         'projectId',
         'in',
@@ -169,7 +171,7 @@ export class ActivityRepository extends BaseRepository {
 
     return rows.map((row) => ({
       projectId: ProjectId(row.projectId),
-      count: Number(row.count),
+      uopsCount: Number(row.count),
     }))
   }
 
