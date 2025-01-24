@@ -7,7 +7,9 @@ import { EventHandler, EventHandlerDefinition } from './EventHandler'
 describe(EventHandler.name, () => {
   const stringABI = [
     'event CurrentBatchMultichain(uint256 batchIndex, uint256 chainId)',
+    'event CurrentBatch2(uint256 batchIndex)',
     'event CurrentBatch(uint256 batchIndex)',
+    'event CurrentBatchTimestamp(uint256 batchTimestamp)',
   ]
 
   const abi = new utils.Interface(stringABI)
@@ -18,6 +20,7 @@ describe(EventHandler.name, () => {
       abi.encodeEventLog(abi.getEvent(name), args) as providers.Log
 
   const CurrentBatch = event<[number]>('CurrentBatch')
+  const CurrentBatch2 = event<[number]>('CurrentBatch2')
   const CurrentBatchMultichain = event<[number, number]>(
     'CurrentBatchMultichain',
   )
@@ -38,6 +41,63 @@ describe(EventHandler.name, () => {
   }
 
   describe('setting fetch', () => {
+    it('works on semi-compatible events', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([CurrentBatch(1), CurrentBatchMultichain(2, 3)]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          set: { event: ['CurrentBatch', 'CurrentBatchMultichain'] },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual(2)
+    })
+
+    it('throws if ABI compatiblity is not met', async () => {
+      expect(() => {
+        new EventHandler(
+          'field',
+          {
+            type: 'event',
+            set: { event: ['CurrentBatch2', 'CurrentBatchTimestamp'] },
+          },
+          stringABI,
+        )
+      }).toThrow('ABI compatibility error')
+    })
+
+    it('multiple events with multiple sources', async () => {
+      const provider = mockObject<IProvider>({
+        getLogs: getLogsStub([
+          CurrentBatch2(1),
+          CurrentBatch(2),
+          CurrentBatch2(3),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          set: { event: ['CurrentBatch', 'CurrentBatch2'] },
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual(3)
+    })
+
     it('multiple events with multiple values, grouped and filtered', async () => {
       const provider = mockObject<IProvider>({
         getLogs: getLogsStub([
