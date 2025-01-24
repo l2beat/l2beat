@@ -205,7 +205,17 @@ export class EventHandler implements Handler {
       const remove = removeActions.some((action) =>
         evaluateAction(entry, action),
       )
-      assert(!(add && remove), 'Both add and remove are true')
+
+      assert(
+        !(add && remove),
+        `Conflict detected in log processing:\n` +
+          `  A log entry cannot trigger both add AND remove actions simultaneously\n` +
+          `Potential resolutions:\n` +
+          `  1. Check event handler conditions for overlaps\n` +
+          `  2. Verify mutually exclusive filters in add/remove actions\n` +
+          `  3. Make sure that remove where clause is opposite to add one`,
+      )
+
       const value =
         select.length > 0 ? extractKeys(entry.value, select) : entry.value
       const string = JSON.stringify(value)
