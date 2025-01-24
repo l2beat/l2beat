@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -14,9 +14,6 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('gpt')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'GptProtocolDAC',
@@ -120,21 +117,7 @@ export const gpt: Layer2 = polygonCDKStack({
   rollupModuleContract: discovery.getContract('GptProtocolValidium'),
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
-  nonTemplateEscrows: [
-    shared.getEscrowDetails({
-      address: bridge.address,
-      tokens: ['GPT', 'WETH'],
-      sinceTimestamp: new UnixTime(1712620800),
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherWrapped',
-        tokensToAssignFromL1: ['GPT'],
-        wethAddress: EthereumAddress(
-          '0x5A77f1443D16ee5761d310e38b62f77f726bC71c',
-        ),
-      },
-    }),
-  ],
+  nonTemplateEscrows: [], // removed as their rpc is broken and last tvs was USD 81
   nonTemplateTechnology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
