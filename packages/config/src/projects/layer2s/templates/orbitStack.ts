@@ -22,6 +22,7 @@ import {
   type Milestone,
   OPERATOR,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
   type ScalingProjectEscrow,
@@ -150,6 +151,7 @@ interface OrbitStackConfigCommon {
   gasTokens?: string[]
   dataAvailabilitySolution?: DacDaLayer
   hasAtLeastFiveExternalChallengers?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -564,6 +566,7 @@ function orbitStackCommon(
       templateVars.additionalBadges ?? [],
     ),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

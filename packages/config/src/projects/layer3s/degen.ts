@@ -22,11 +22,11 @@ export const degen: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['Social'],
   gasTokens: ['DEGEN'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Degen Chain',
     slug: 'degen',
     description:

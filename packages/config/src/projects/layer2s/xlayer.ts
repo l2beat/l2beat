@@ -93,8 +93,8 @@ export const xlayer: Layer2 = polygonCDKStack({
       },
     ],
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'X Layer',
     slug: 'xlayer',
     description:

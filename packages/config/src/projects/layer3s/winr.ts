@@ -18,11 +18,11 @@ export const winr: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['Gaming'],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'WINR',
     slug: 'winr',
     description:

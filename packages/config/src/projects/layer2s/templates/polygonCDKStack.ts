@@ -22,6 +22,7 @@ import {
   type KnowledgeNugget,
   type Milestone,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
   type ScalingProjectContract,
@@ -84,6 +85,7 @@ export interface PolygonCDKStackConfig {
   additionalBadges?: BadgeId[]
   additionalPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -595,6 +597,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       templateVars.additionalBadges ?? [],
     ),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

@@ -34,11 +34,11 @@ export const xterio: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.DA.CustomDA, Badge.RaaS.AltLayer],
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     architectureImage: 'opstack-dachallenge',
     name: 'Xterio Chain',
     slug: 'xterio',

@@ -49,12 +49,12 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       isOther:
         p.display.category === 'Other' ||
         (PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
-          !!p.display.reasonsForBeingOther &&
-          p.display.reasonsForBeingOther.length > 0),
+          !!p.reasonsForBeingOther &&
+          p.reasonsForBeingOther.length > 0),
       hostChain: getHostChain(
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),
-      reasonsForBeingOther: p.display.reasonsForBeingOther,
+      reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.provider,
       raas: getRaas(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',

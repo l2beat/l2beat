@@ -67,8 +67,8 @@ export const rhinofi: Layer2 = {
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
     name: 'rhino.fi',
     slug: 'rhinofi',
     description: 'rhino.fi is a Validium based on the StarkEx technology.',

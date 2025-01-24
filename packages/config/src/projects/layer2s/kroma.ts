@@ -88,8 +88,8 @@ export const kroma: Layer2 = {
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Kroma',
     slug: 'kroma',
     description:

@@ -80,8 +80,8 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   },
   rollupModuleContract: discovery.getContract('AstarValidium'),
   rollupVerifierContract: discovery.getContract('AstarVerifier'),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'Astar zkEVM',
     slug: 'astarzkevm',
     description:

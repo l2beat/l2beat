@@ -136,11 +136,11 @@ export const mantle: Layer2 = opStackL2({
   associatedTokens: ['MNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Mantle',
     slug: 'mantle',
     architectureImage: 'mantle',

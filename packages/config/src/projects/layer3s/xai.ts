@@ -16,11 +16,11 @@ export const xai: Layer3 = orbitStackL3({
   hostChain: ProjectId('arbitrum'),
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD,
-    ],
     name: 'Xai',
     slug: 'xai',
     description:

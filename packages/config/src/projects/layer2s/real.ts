@@ -15,11 +15,11 @@ export const real: Layer2 = orbitStackL2({
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['RWA'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Re.al',
     slug: 'real',
     description:

@@ -11,8 +11,8 @@ export const superlumio: Layer2 = opStackL2({
   createdAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
   discovery,
   additionalBadges: [Badge.RaaS.Conduit],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'SuperLumio',
     slug: 'superlumio',
     description:

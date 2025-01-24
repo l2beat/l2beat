@@ -21,11 +21,11 @@ export const lyra: Layer2 = opStackL2({
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Derive',
     slug: 'derive',
     description:

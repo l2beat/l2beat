@@ -21,11 +21,11 @@ export const ancient: Layer2 = opStackL2({
   additionalPurposes: ['Gaming'],
   discovery,
   associatedTokens: ['A8'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Ancient8',
     slug: 'ancient8',
     description:

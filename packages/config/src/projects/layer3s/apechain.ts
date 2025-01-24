@@ -16,11 +16,11 @@ export const apechain: Layer3 = orbitStackL3({
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
   ],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'ApeChain',
     slug: 'apechain',
     description:
