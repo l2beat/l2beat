@@ -16,7 +16,7 @@ export const REASON_FOR_BEING_OTHER = {
     label: 'No DA bridge',
     shortDescription: 'There is no data availability bridge',
     description:
-      'Projects without a data availability bridge fully rely on single entities (the sequencer) to honestly rely available data roots on Ethereum. A malicious sequencer can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
+      'Projects without a data availability bridge fully rely on single entities (the sequencer) to honestly rely on available data roots on Ethereum. A malicious sequencer can collude with the proposer to finalize an unavailable state, which can cause loss of funds.',
   },
   SMALL_DAC: {
     label: 'Small DAC',
