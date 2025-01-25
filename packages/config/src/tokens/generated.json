@@ -2859,6 +2859,20 @@
       "supply": "zero"
     },
     {
+      "name": "League of Kingdoms Arena",
+      "coingeckoId": "league-of-kingdoms",
+      "address": "0x61E90A50137E1F645c9eF4a0d3A4f01477738406",
+      "symbol": "LOKA",
+      "decimals": 18,
+      "deploymentTimestamp": 1641359360,
+      "coingeckoListingTimestamp": 1642636800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22572/large/loka_64pix.png?1696521891",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Ledgity Token",
       "coingeckoId": "ledgity-token",
       "address": "0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc",

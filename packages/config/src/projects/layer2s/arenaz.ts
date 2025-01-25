@@ -32,7 +32,7 @@ import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('soneium')
+const discovery = new ProjectDiscovery('arenaz')
 
 function safeGetImplementation(contract: ContractParameters): string {
   const implementation = get$Implementations(contract.values)[0]
@@ -55,9 +55,10 @@ const sequencerInbox = EthereumAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
-const genesisTimestamp = new UnixTime(1733498411)
+const genesisTimestamp = new UnixTime(1731366083)
 
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
+const permissionedDisputeGame = discovery.getContract('PermissionedDisputeGame')
 
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'OptimismPortal2',
@@ -125,43 +126,42 @@ const permissionedGameMaxClockExtension =
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
   permissionedGameClockExtension * (permissionedGameMaxDepth - 3) // the rest, excluding also the last depth
 
-export const soneium: Layer2 = {
+export const arenaz: Layer2 = {
   type: 'layer2',
-  id: ProjectId('soneium'),
-  createdAt: new UnixTime(1724842746),
+  id: ProjectId('arenaz'),
+  createdAt: new UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.RaaS.Gelato,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
-    name: 'Soneium',
-    slug: 'soneium',
-    stateValidationImage: 'opfp',
-    description:
-      'Soneium is an Optimistic rollup based on the OP Stack. It is built by Sony Block Solutions Labs and planned to stand as a versatile, general-purpose blockchain.',
-    purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    name: 'Arena-Z',
+    slug: 'arenaz',
+    purposes: ['Gaming', 'Universal'],
     provider: 'OP Stack',
+    description:
+      'Arena-Z is an OP stack Optimistic Rollup where studios and gamers, creators and players unite to pioneer the future of entertainment.',
+    category: 'Optimistic Rollup',
     links: {
-      websites: ['https://soneium.org/en/'],
-      apps: ['https://bridge.soneium.org/'],
-      documentation: ['https://docs.soneium.org/docs/builders/overview'],
-      explorers: ['https://soneium.blockscout.com/'],
-      repositories: ['https://github.com/Soneium'],
-      socialMedia: [
-        'https://x.com/soneium',
-        'https://t.me/SoneiumOfficial',
-        'https://discord.gg/rWWPBHug9w',
+      websites: ['https://arena-z.gg/'],
+      apps: [
+        'https://bridge.arena-z.gg/bridge/arena-z',
+        'https://leagueofkingdoms.com/',
       ],
+      documentation: [],
+      explorers: ['https://explorer.arena-z.gg/'],
+      repositories: [],
+      socialMedia: ['https://x.com/OfficialArenaZ'],
     },
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
-      explanation: `Soneium is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+      explanation: `Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets confirmed ${formatSeconds(
         maxClockDuration,
@@ -173,31 +173,26 @@ export const soneium: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         // OptimismPortal
-        address: EthereumAddress(portal.address),
+        address: EthereumAddress('0xB20f99b598E8d888d1887715439851BC68806b22'),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
         // L1StandardBridge
-        address: EthereumAddress('0xeb9bf100225c214efc3e7c651ebbadcf85177607'),
+        address: EthereumAddress('0x564Eb0CeFCcA86160649a8986C419693c82F3678'),
         tokens: '*',
-      }),
-      discovery.getEscrowDetails({
-        // Custom USDC escrow
-        address: EthereumAddress('0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb'),
-        tokens: ['USDC'],
       }),
     ],
     transactionApi: {
       type: 'rpc',
-      defaultUrl: 'https://rpc.soneium.org/',
-      defaultCallsPerMinute: 2000,
+      defaultUrl: 'https://rpc.arena-z.gg/',
+      defaultCallsPerMinute: 5000,
       startBlock: 1,
       assessCount: subtractOneAfterBlockInclusive(1),
     },
     finality: {
       type: 'OPStack',
-      minTimestamp: new UnixTime(1733134753),
-      genesisTimestamp: new UnixTime(1733134753),
+      minTimestamp: genesisTimestamp,
+      genesisTimestamp: genesisTimestamp,
       l2BlockTimeSeconds: 2,
       lag: 0,
       stateUpdate: 'disabled',
@@ -270,25 +265,6 @@ export const soneium: Layer2 = {
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     })(),
   },
-  chainConfig: {
-    name: 'soneium',
-    chainId: 1868,
-    blockscoutV2ApiUrl: 'https://soneium.blockscout.com/api/v2',
-    explorerUrl: 'https://soneium.blockscout.com/',
-    explorerApi: {
-      url: 'https://soneium.blockscout.com/api',
-      type: 'blockscout',
-    },
-    minTimestampForTvl: new UnixTime(1733134751),
-    multicallContracts: [
-      {
-        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-        batchSize: 150,
-        sinceBlock: 1,
-        version: '3',
-      },
-    ],
-  },
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
@@ -298,10 +274,6 @@ export const soneium: Layer2 = {
         {
           category: 'Funds can be stolen if',
           text: 'no validator checks the published state. Fraud proofs assume at least one honest and able validator.',
-        },
-        {
-          category: 'Funds can be frozen if',
-          text: 'permissioned proposers fail to publish state roots to the L1.',
         },
       ],
       references: [
@@ -313,7 +285,7 @@ export const soneium: Layer2 = {
         },
         {
           text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
-          href: `https://etherscan.io/address/0x42D15f045159Ce4adE9EDC7da5704eF36056c936#code`,
+          href: `https://etherscan.io/address/${permissionedDisputeGame.address}#code`,
         },
       ],
     },
@@ -458,7 +430,7 @@ export const soneium: Layer2 = {
     stage1: {
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: false,
-      usersHave7DaysToExit: true,
+      usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: true,
     },
@@ -468,27 +440,15 @@ export const soneium: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
+  milestones: [],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: 'a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.',
+      },
+    ],
   },
-  milestones: [
-    {
-      name: 'Soneium RPC providers censor IP-infringing tokens',
-      link: 'https://x.com/donnoh_eth/status/1879210463952818472',
-      date: '2025-01-14T00:00:00Z',
-      description:
-        'RPC providers blacklist certain tokens - can still be used by self-hosting or forcing txs from L1.',
-      type: 'incident',
-    },
-    {
-      name: 'Soneium Launch',
-      link: 'https://x.com/soneium/status/1878988222866350348',
-      date: '2025-01-14T00:00:00Z',
-      description: 'Soneium is live on Ethereum mainnet.',
-      type: 'general',
-    },
-  ],
-  knowledgeNuggets: [],
 }
