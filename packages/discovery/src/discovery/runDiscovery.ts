@@ -129,13 +129,7 @@ async function justDiscover(
     http,
     overwriteCache,
   )
-  return toDiscoveryOutput(
-    config.name,
-    config.chain,
-    config.hash,
-    blockNumber,
-    result,
-  )
+  return toDiscoveryOutput(config, blockNumber, result)
 }
 
 export async function discover(

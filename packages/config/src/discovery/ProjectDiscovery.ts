@@ -61,10 +61,10 @@ export class ProjectDiscovery {
     public readonly chain: string = 'ethereum',
     configReader = new ConfigReader(join(process.cwd(), '../backend')),
   ) {
-    const config = configReader.readConfig(projectName, chain)
+    const discovery = configReader.readDiscovery(projectName, chain)
     this.discoveries = [
-      configReader.readDiscovery(projectName, chain),
-      ...config.sharedModules.map((module) =>
+      discovery,
+      ...(discovery.sharedModules ?? []).map((module) =>
         configReader.readDiscovery(module, chain),
       ),
     ]
