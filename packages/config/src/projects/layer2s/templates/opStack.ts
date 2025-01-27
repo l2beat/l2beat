@@ -20,6 +20,7 @@ import {
   type Milestone,
   NUGGETS,
   OPERATOR,
+  ProjectDataAvailability,
   RISK_VIEW,
   type ReasonForBeingInOther,
   ScalingProject,
@@ -594,24 +595,16 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    dataAvailability:
-      daProvider !== undefined
-        ? addSentimentToDataAvailability({
-            layers: daProvider.fallback
-              ? [daProvider.layer, daProvider.fallback]
-              : [daProvider.layer],
-            bridge: daProvider.bridge,
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          })
-        : addSentimentToDataAvailability({
-            layers: [
-              usesBlobs
-                ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-                : DA_LAYERS.ETH_CALLDATA,
-            ],
-            bridge: DA_BRIDGES.ENSHRINED,
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          }),
+    dataAvailability: decideDA(
+      daProvider,
+      addSentimentToDataAvailability({
+        layers: [
+          usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+        ],
+        bridge: DA_BRIDGES.ENSHRINED,
+        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      }),
+    ),
     riskView:
       templateVars.riskView ?? getRiskView(templateVars, portal, daProvider),
     stage: templateVars.stage ?? computedStage(templateVars, daProvider),
@@ -702,16 +695,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
     riskView,
     stage: templateVars.stage ?? computedStage(templateVars, daProvider),
-    dataAvailability:
-      daProvider !== undefined
-        ? addSentimentToDataAvailability({
-            layers: daProvider.fallback
-              ? [daProvider.layer, daProvider.fallback]
-              : [daProvider.layer],
-            bridge: daProvider.bridge,
-            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-          })
-        : baseChain.dataAvailability,
+    dataAvailability: decideDA(daProvider, baseChain.dataAvailability),
     config: {
       associatedTokens: templateVars.associatedTokens,
       gasTokens: templateVars.gasTokens,
@@ -858,6 +842,23 @@ function computedStage(
               : '',
         },
       )
+}
+
+function decideDA(
+  daProvider: DAProvider | undefined,
+  nativeDA: ProjectDataAvailability | undefined,
+): ProjectDataAvailability | undefined {
+  if (daProvider !== undefined) {
+    return addSentimentToDataAvailability({
+      layers: daProvider.fallback
+        ? [daProvider.layer, daProvider.fallback]
+        : [daProvider.layer],
+      bridge: daProvider.bridge,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    })
+  }
+
+  return nativeDA
 }
 
 function technologyDA(
