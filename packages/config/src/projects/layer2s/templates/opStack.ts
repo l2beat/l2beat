@@ -142,7 +142,6 @@ interface OpStackConfigCommon {
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
   chainConfig?: ChainConfig
-  upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
   usesBlobs?: boolean
   isUnderReview?: boolean
@@ -160,6 +159,7 @@ interface OpStackConfigCommon {
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
+  upgradesAndGovernance?: string
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
