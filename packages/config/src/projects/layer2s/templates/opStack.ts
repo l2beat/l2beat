@@ -613,31 +613,29 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     baseChain.chainConfig?.explorerUrl,
   )
 
-  const getStackedRisks = () => {
-    return {
-      stateValidation: pickWorseRisk(
-        common.riskView.stateValidation,
-        baseChain.riskView.stateValidation,
-      ),
-      dataAvailability: pickWorseRisk(
-        common.riskView.dataAvailability,
-        baseChain.riskView.dataAvailability,
-      ),
-      exitWindow: pickWorseRisk(
-        common.riskView.exitWindow,
-        baseChain.riskView.exitWindow,
-      ),
-      sequencerFailure: sumRisk(
-        common.riskView.sequencerFailure,
-        baseChain.riskView.sequencerFailure,
-        RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
-      ),
-      proposerFailure: sumRisk(
-        common.riskView.proposerFailure,
-        baseChain.riskView.proposerFailure,
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
-      ),
-    }
+  const stackedRisk = {
+    stateValidation: pickWorseRisk(
+      common.riskView.stateValidation,
+      baseChain.riskView.stateValidation,
+    ),
+    dataAvailability: pickWorseRisk(
+      common.riskView.dataAvailability,
+      baseChain.riskView.dataAvailability,
+    ),
+    exitWindow: pickWorseRisk(
+      common.riskView.exitWindow,
+      baseChain.riskView.exitWindow,
+    ),
+    sequencerFailure: sumRisk(
+      common.riskView.sequencerFailure,
+      baseChain.riskView.sequencerFailure,
+      RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
+    ),
+    proposerFailure: sumRisk(
+      common.riskView.proposerFailure,
+      baseChain.riskView.proposerFailure,
+      RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+    ),
   }
 
   return {
@@ -645,7 +643,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     ...common,
     hostChain: templateVars.hostChain,
     display: { ...common.display, ...templateVars.display },
-    stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
+    stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
     dataAvailability: decideDA(templateVars, baseChain.dataAvailability),
   }
 }
