@@ -35,21 +35,6 @@ export function AnomalyIndicator({ anomalies, showComingSoon }: Props) {
     )
   }
 
-  if (anomalies.length === 0) {
-    return (
-      <div
-        className="w-min select-none text-center"
-        title="No data for anomalies"
-      >
-        <div className="mx-auto text-secondary">No data</div>
-        <div className="flex gap-x-0.5">
-          {range(30).map((_, i) => (
-            <div key={i} className="size-0.5 rounded-full bg-secondary" />
-          ))}
-        </div>
-      </div>
-    )
-  }
   const indicators = toAnomalyIndicatorEntries(anomalies)
 
   return (
