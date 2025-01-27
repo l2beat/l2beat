@@ -18,10 +18,7 @@ export const status: Layer2 = upcomingL2({
       documentation: ['https://status.app/specs'],
       explorers: [],
       repositories: ['https://github.com/status-im'],
-      socialMedia: [
-        'https://x.com/ethstatus',
-        'https://www.youtube.com/@Statusim',
-      ],
+      socialMedia: ['https://x.com/ethstatus'],
     },
   },
 })
