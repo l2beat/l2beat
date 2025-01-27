@@ -20,12 +20,12 @@ import {
   type Milestone,
   NUGGETS,
   OPERATOR,
-  ProjectDataAvailability,
+  type ProjectDataAvailability,
   RISK_VIEW,
   type ReasonForBeingInOther,
-  ScalingProject,
+  type ScalingProject,
   type ScalingProjectCategory,
-  ScalingProjectConfig,
+  type ScalingProjectConfig,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
   type ScalingProjectEscrow,
@@ -173,10 +173,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 function opStackCommon(
   templateVars: OpStackConfigCommon,
   explorerUrl?: string,
-): Omit<
-  ScalingProject,
-  'type' | 'display' | 'config' | 'stage' | 'riskView'
-> & {
+): Omit<ScalingProject, 'type' | 'display' | 'config'> & {
   display: Pick<
     ScalingProjectDisplay,
     'architectureImage' | 'purposes' | 'provider' | 'category' | 'warning'
@@ -449,6 +446,8 @@ function opStackCommon(
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    riskView: templateVars.riskView ?? getRiskView(templateVars, portal),
+    stage: templateVars.stage ?? computedStage(templateVars, daProvider),
   }
 }
 
@@ -477,28 +476,13 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
-  // if usesBlobs is set to false at this point it means that it uses calldata
-  const postsToCelestia =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+  const daProvider = getDAProvider(templateVars)
 
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
-  if (daProvider === undefined) {
-    assert(
-      templateVars.isNodeAvailable !== undefined,
-      'isNodeAvailable must be defined if no DA provider is defined',
-    )
-  }
 
   const FINALIZATION_PERIOD_SECONDS: number =
     templateVars.discovery.getContractValue<number>(
@@ -612,9 +596,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
       }),
     ),
-    riskView:
-      templateVars.riskView ?? getRiskView(templateVars, portal, daProvider),
-    stage: templateVars.stage ?? computedStage(templateVars, daProvider),
     stateDerivation: templateVars.stateDerivation,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
@@ -633,19 +614,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
-  const postsToCelestia = templateVars.discovery.getContractValue<{
-    isSomeTxsLengthEqualToCelestiaDAExample: boolean
-  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
-
-  if (daProvider === undefined) {
-    assert(
-      templateVars.isNodeAvailable !== undefined,
-      'isNodeAvailable must be defined if no DA provider is defined',
-    )
-  }
+  const daProvider = getDAProvider(templateVars)
 
   const portal =
     templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
@@ -657,51 +626,41 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
-  const riskView: ScalingProjectRiskView = getRiskView(
-    templateVars,
-    portal,
-    daProvider,
-  )
+  const common = opStackCommon(templateVars, baseChain.chainConfig?.explorerUrl)
 
   const getStackedRisks = () => {
     return {
       stateValidation: pickWorseRisk(
-        riskView.stateValidation,
+        common.riskView.stateValidation,
         baseChain.riskView.stateValidation,
       ),
       dataAvailability: pickWorseRisk(
-        riskView.dataAvailability,
+        common.riskView.dataAvailability,
         baseChain.riskView.dataAvailability,
       ),
       exitWindow: pickWorseRisk(
-        riskView.exitWindow,
+        common.riskView.exitWindow,
         baseChain.riskView.exitWindow,
       ),
       sequencerFailure: sumRisk(
-        riskView.sequencerFailure,
+        common.riskView.sequencerFailure,
         baseChain.riskView.sequencerFailure,
         RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
       ),
       proposerFailure: sumRisk(
-        riskView.proposerFailure,
+        common.riskView.proposerFailure,
         baseChain.riskView.proposerFailure,
         RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
       ),
     }
   }
 
-  const common = opStackCommon(templateVars, baseChain.chainConfig?.explorerUrl)
   return {
     type: 'layer3',
     ...common,
     hostChain: templateVars.hostChain,
-    display: {
-      ...common.display,
-      ...templateVars.display,
-    },
+    display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
-    riskView,
-    stage: templateVars.stage ?? computedStage(templateVars, daProvider),
     dataAvailability: decideDA(daProvider, baseChain.dataAvailability),
     config: {
       ...common.config,
@@ -738,7 +697,6 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
 function getRiskView(
   templateVars: OpStackConfigCommon,
   portal: ContractParameters,
-  daProvider: DAProvider | undefined,
 ): ScalingProjectRiskView {
   const FINALIZATION_PERIOD_SECONDS: number =
     templateVars.discovery.getContractValue<number>(
@@ -749,6 +707,7 @@ function getRiskView(
   const l2OutputOracle =
     templateVars.l2OutputOracle ??
     templateVars.discovery.getContract('L2OutputOracle')
+  const daProvider = getDAProvider(templateVars)
 
   return {
     stateValidation: {
@@ -869,4 +828,26 @@ function technologyDA(
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
+}
+
+function getDAProvider(
+  templateVars: OpStackConfigCommon,
+): DAProvider | undefined {
+  const postsToCelestia =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSomeTxsLengthEqualToCelestiaDAExample: boolean
+    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
+  if (daProvider === undefined) {
+    assert(
+      templateVars.isNodeAvailable !== undefined,
+      'isNodeAvailable must be defined if no DA provider is defined',
+    )
+  }
+
+  return daProvider
 }
