@@ -100,7 +100,7 @@ export function StageSection({
             <AccordionItem
               key={stage.stage}
               value={stage.stage}
-              className="mb-4 rounded-lg bg-surface-secondary"
+              className="bg-surface-secondary mb-4 rounded-lg"
             >
               <AccordionTrigger className="p-4 text-lg font-normal">
                 <div className="flex select-none items-center justify-start gap-3">

@@ -44,7 +44,7 @@ function NavLinkGroupSingleLink({
       {group.icon}
       <span
         className={cn(
-          'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300',
+          'text-primary ml-1 text-base font-medium tracking-tight transition-colors duration-300',
           isActive && 'text-brand',
         )}
       >
@@ -79,7 +79,7 @@ function NavLinkMultipleGroup({
             <div>{group.icon}</div>
             <span
               className={cn(
-                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                'text-primary ml-1 text-base font-medium tracking-tight transition-colors duration-300 ',
                 isActive && 'text-brand',
               )}
             >
@@ -88,7 +88,7 @@ function NavLinkMultipleGroup({
           </div>
           <ChevronIcon
             className={cn(
-              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
+              'fill-primary size-3 -rotate-90 transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
               isActive && 'fill-brand',
             )}
           />
@@ -106,7 +106,7 @@ function NavLinkMultipleGroup({
             <div>{group.icon}</div>
             <span
               className={cn(
-                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                'text-primary ml-1 text-base font-medium tracking-tight transition-colors duration-300 ',
                 isActive && 'text-brand',
               )}
             >
@@ -116,7 +116,7 @@ function NavLinkMultipleGroup({
           <CollapsibleTrigger className="group size-6">
             <ChevronIcon
               className={cn(
-                'm-auto size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
+                'fill-primary m-auto size-3 -rotate-90 transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
                 isActive && 'fill-brand',
               )}
             />
@@ -124,7 +124,7 @@ function NavLinkMultipleGroup({
         </div>
       )}
       <CollapsibleContent>
-        <ul className="mb-3 ml-[15px] mt-2 flex flex-col gap-0.5 border-l border-divider pl-[14px]">
+        <ul className="border-divider mb-3 ml-[15px] mt-2 flex flex-col gap-0.5 border-l pl-[14px]">
           {group.links?.map(
             (link) =>
               !link.disabled && (

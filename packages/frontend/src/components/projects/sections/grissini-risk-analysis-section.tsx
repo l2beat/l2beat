@@ -39,7 +39,7 @@ export function GrissiniRiskAnalysisSection({
           {value.description && (
             <Markdown
               className={cn(
-                'leading-snug text-gray-850 dark:text-gray-400 md:text-lg',
+                'text-gray-850 leading-snug md:text-lg dark:text-gray-400',
                 hideRisks ? 'mt-0' : 'mt-1.5',
               )}
             >

@@ -25,7 +25,7 @@ export function TopNavLink({
           'flex h-full items-center font-medium',
           large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2 max-xl:text-sm',
           pathname.startsWith(href) && [
-            'pt-0.5 text-brand',
+            'text-brand pt-0.5',
             !withoutUnderline && 'border-b-2 border-current',
           ],
         )}

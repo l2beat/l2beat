@@ -67,7 +67,7 @@ export function DaRiskSummarySection({
         </div>
       )}
       {layer.risks.length > 0 && bridge.risks.length > 0 && (
-        <HorizontalSeparator className="my-4 border-divider md:my-6" />
+        <HorizontalSeparator className="border-divider my-4 md:my-6" />
       )}
       {bridge.risks.length > 0 && (
         <div className="flex flex-col gap-2">

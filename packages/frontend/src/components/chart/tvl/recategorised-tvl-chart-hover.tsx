@@ -32,7 +32,7 @@ export function RecategorisedTvlChartHover(props: Props) {
     },
   ]
   return (
-    <div className="flex w-[158px] flex-col gap-1 [@media(min-width:600px)]:w-60!">
+    <div className="[@media(min-width:600px)]:w-60! flex w-[158px] flex-col gap-1">
       <div>
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',
@@ -47,7 +47,7 @@ export function RecategorisedTvlChartHover(props: Props) {
         </span>
         {total}
       </div>
-      <hr className="w-full border-gray-200 dark:border-gray-650 md:border-t" />
+      <hr className="dark:border-gray-650 w-full border-gray-200 md:border-t" />
       <div>
         {values.map(
           (v, i) =>
@@ -57,7 +57,10 @@ export function RecategorisedTvlChartHover(props: Props) {
                   <div
                     role="img"
                     aria-label="Square icon"
-                    className={cn('mt-0.5 size-3 rounded-sm sm:mt-1', v.className)}
+                    className={cn(
+                      'mt-0.5 size-3 rounded-sm sm:mt-1',
+                      v.className,
+                    )}
                   ></div>
                   <span className="w-20 sm:w-fit">{v.title}</span>
                 </span>

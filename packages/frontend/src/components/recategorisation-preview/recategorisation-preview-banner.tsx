@@ -17,7 +17,7 @@ export function RecategorisationPreviewBanner({
   return (
     <div
       className={cn(
-        'relative flex w-full flex-col items-center justify-center gap-1 bg-brand px-4 py-1.5 text-primary-invert md:flex-row md:gap-3',
+        'bg-brand text-primary-invert relative flex w-full flex-col items-center justify-center gap-1 px-4 py-1.5 md:flex-row md:gap-3',
         className,
       )}
     >

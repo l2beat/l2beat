@@ -85,7 +85,7 @@ export const OverflowWrapper = ({
         title="Scroll left"
         onClick={() => onArrowClick('left')}
         className={cn(
-          'pointer-events-none absolute inset-y-0 -left-px z-10 w-6 bg-linear-to-r opacity-0 transition-opacity duration-300',
+          'bg-linear-to-r pointer-events-none absolute inset-y-0 -left-px z-10 w-6 opacity-0 transition-opacity duration-300',
           (visibleArrows === 'left' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}
@@ -111,7 +111,7 @@ export const OverflowWrapper = ({
         title="Scroll right"
         onClick={() => onArrowClick('right')}
         className={cn(
-          'pointer-events-none absolute inset-y-0 -right-px z-10 w-6 bg-linear-to-l opacity-0 transition-opacity duration-200',
+          'bg-linear-to-l pointer-events-none absolute inset-y-0 -right-px z-10 w-6 opacity-0 transition-opacity duration-200',
           (visibleArrows === 'right' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}

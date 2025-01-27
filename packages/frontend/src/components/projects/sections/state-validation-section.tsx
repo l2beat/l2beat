@@ -23,13 +23,13 @@ export function StateValidationSection({
       {diagram && (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={diagram} />
-          <figcaption className="text-xs text-secondary">
+          <figcaption className="text-secondary text-xs">
             {diagram.caption}
           </figcaption>
         </figure>
       )}
       <div className="flex flex-col gap-6">
-        <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+        <Markdown className="text-gray-850 leading-snug md:text-lg dark:text-gray-400">
           {stateValidation.description}
         </Markdown>
         <HorizontalSeparator />
@@ -54,7 +54,7 @@ function Category({ category }: CategoryProps) {
   return (
     <div>
       <span className="text-lg font-bold md:text-xl">{category.title}</span>
-      <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+      <Markdown className="text-gray-850 mt-2 leading-snug md:text-lg dark:text-gray-400">
         {category.description}
       </Markdown>
       {risks && <RiskList risks={risks} />}

@@ -12,13 +12,13 @@ export function Footer({ className, innerContainerClassName }: Props) {
   return (
     <footer
       className={cn(
-        'border-t border-divider px-4 pb-6 pt-4 dark:border-zinc-700 md:border-t-0 md:px-12 md:pb-10',
+        'border-divider border-t px-4 pb-6 pt-4 md:border-t-0 md:px-12 md:pb-10 dark:border-zinc-700',
         className,
       )}
     >
       <div
         className={cn(
-          'mx-auto flex max-w-[1216px] flex-col items-center gap-2 text-secondary md:h-6 md:flex-row md:justify-between',
+          'text-secondary mx-auto flex max-w-[1216px] flex-col items-center gap-2 md:h-6 md:flex-row md:justify-between',
           innerContainerClassName,
         )}
       >
@@ -29,7 +29,7 @@ export function Footer({ className, innerContainerClassName }: Props) {
           <CustomLink
             href="/terms-of-service"
             variant="plain"
-            className="text-xs font-medium text-secondary"
+            className="text-secondary text-xs font-medium"
           >
             Terms of Service
           </CustomLink>

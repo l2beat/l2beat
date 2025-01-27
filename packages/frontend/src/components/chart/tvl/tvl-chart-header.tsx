@@ -53,7 +53,7 @@ export function TvlChartHeader({
         {loading ? (
           <Skeleton className="my-[3px] h-3.5 w-32 lg:my-1 lg:h-4" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs font-medium text-secondary lg:text-base">
+          <p className="text-secondary whitespace-nowrap text-right text-xs font-medium lg:text-base">
             {changeOverTime} / {tvlRangeToReadable(range)}
           </p>
         )}

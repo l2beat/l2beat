@@ -23,12 +23,12 @@ export function PermissionedEntityEntry({
       icon={<BulletIcon className="size-5" />}
       body={
         <>
-          <div className="flex flex-col flex-wrap gap-x-2 leading-[1.15]!">
+          <div className="leading-[1.15]! flex flex-col flex-wrap gap-x-2">
             <CustomLink key={entity.href} href={entity.href}>
               {entity.name}
             </CustomLink>
             {entity.key && (
-              <div className="mt-1 flex items-center justify-center gap-1 text-gray-850 dark:text-gray-400">
+              <div className="text-gray-850 mt-1 flex items-center justify-center gap-1 dark:text-gray-400">
                 <strong className="text-primary">Key:</strong>{' '}
                 {formatKey(entity.key)}{' '}
                 <CopyButton toCopy={entity.key} iconClassName="size-3.5" />

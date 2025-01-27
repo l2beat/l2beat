@@ -11,7 +11,7 @@ export function StarknetIcon(props: SvgIconProps) {
     >
       <g id="surface1">
         <path
-          className="fill-[rgb(4.705882%,4.705882%,30.980392%)] stroke-[rgb(92.54902%,47.45098%,41.960784%)] stroke-4 dark:fill-current dark:stroke-current"
+          className="stroke-4 fill-[rgb(4.705882%,4.705882%,30.980392%)] stroke-[rgb(92.54902%,47.45098%,41.960784%)] dark:fill-current dark:stroke-current"
           d="M 2.005859 79 C 2.005859 121.534505 36.465495 155.994141 79 155.994141 C 121.534505 155.994141 155.994141 121.534505 155.994141 79 C 155.994141 36.465495 121.534505 2.005859 79 2.005859 C 36.465495 2.005859 2.005859 36.465495 2.005859 79 Z M 2.005859 79 "
           transform="matrix(0.151899,0,0,0.151899,0,0)"
         />

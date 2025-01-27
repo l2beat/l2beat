@@ -9,7 +9,7 @@ interface Props {
 export function GlossaryItem(props: Props) {
   return (
     <section className="mt-12 first:mt-0" id={props.entry.id}>
-      <div className="group flex items-center gap-2 pb-4 text-gray-850 dark:text-white">
+      <div className="text-gray-850 group flex items-center gap-2 pb-4 dark:text-white">
         <a
           href={`#${props.entry.id}`}
           className="peer flex items-center gap-2 text-2xl font-bold no-underline"
@@ -21,12 +21,12 @@ export function GlossaryItem(props: Props) {
         </a>
         <CopyButton
           toCopy={`https://l2beat.com/glossary#${props.entry.id}`}
-          className="md:hidden md:group-hover:block md:group-hover:animate-in md:group-hover:fade-in-0"
+          className="md:group-hover:animate-in md:group-hover:fade-in-0 md:hidden md:group-hover:block"
           iconClassName="size-5"
         />
       </div>
 
-      <p className="text-lg text-gray-850 dark:text-white">
+      <p className="text-gray-850 text-lg dark:text-white">
         {props.entry.data.definition}
       </p>
     </section>

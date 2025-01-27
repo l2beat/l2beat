@@ -43,7 +43,7 @@ export function CopyButton({
       >
         {copied ? (
           <SatisfiedIcon
-            className={cn('fill-green-700 dark:fill-green-450', iconClassName)}
+            className={cn('dark:fill-green-450 fill-green-700', iconClassName)}
           />
         ) : (
           <CopyIcon className={cn('fill-current', iconClassName)} />

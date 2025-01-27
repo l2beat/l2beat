@@ -18,7 +18,7 @@ export function EthereumDaEntry({ entry }: { entry: DaSummaryEthereumEntry }) {
   return (
     <Link href={entry.href ?? ''} className="group">
       <div className="mb-3 overflow-auto max-md:-mr-4">
-        <div className="relative flex min-w-[940px] items-center justify-between gap-3 rounded-lg bg-blue-300 px-4 py-1 transition-colors duration-200 group-hover:bg-blue-400 dark:bg-blue-950 dark:group-hover:bg-blue-900 max-md:mr-4 md:py-3">
+        <div className="relative flex min-w-[940px] items-center justify-between gap-3 rounded-lg bg-blue-300 px-4 py-1 transition-colors duration-200 group-hover:bg-blue-400 max-md:mr-4 md:py-3 dark:bg-blue-950 dark:group-hover:bg-blue-900">
           <Tooltip>
             <TooltipTrigger>
               <InfoIcon variant="blue" />
@@ -74,7 +74,7 @@ export function EthereumDaEntry({ entry }: { entry: DaSummaryEthereumEntry }) {
 
 function PropertyLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="flex items-end text-[13px] font-semibold uppercase leading-none text-secondary">
+    <span className="text-secondary flex items-end text-[13px] font-semibold uppercase leading-none">
       {children}
     </span>
   )

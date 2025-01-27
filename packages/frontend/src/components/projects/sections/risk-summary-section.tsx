@@ -81,7 +81,7 @@ export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
     <div className={cn(i > 0 && 'mt-4 md:mt-6')} key={i}>
       <h3 className="font-bold text-red-300 md:text-lg">{group.name}</h3>
       <ol
-        className="list-inside list-decimal p-1.5 text-gray-850 dark:text-gray-400"
+        className="text-gray-850 list-inside list-decimal p-1.5 dark:text-gray-400"
         start={group.start}
       >
         {group.items.map((item, i) => (

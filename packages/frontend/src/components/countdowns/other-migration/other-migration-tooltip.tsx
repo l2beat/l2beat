@@ -21,7 +21,7 @@ export function OtherMigrationTooltip({
         <StopwatchIcon className="size-3.5 md:size-4" />
       </TooltipTrigger>
       <TooltipContent className="space-y-2">
-        <p className="text-lg font-bold leading-none text-primary">
+        <p className="text-primary text-lg font-bold leading-none">
           Recategorisation
         </p>
         <p className="text-[13px]">The project will be moved to Others in:</p>
@@ -31,7 +31,7 @@ export function OtherMigrationTooltip({
           className="mx-auto w-full"
           withBackground
         />
-        <p className="mt-4! text-base font-bold leading-none text-primary">
+        <p className="mt-4! text-primary text-base font-bold leading-none">
           Reasons
         </p>
         <p className="text-[13px]">
@@ -45,8 +45,8 @@ export function OtherMigrationTooltip({
               key={reason.label}
               color="red"
               body={reason.shortDescription}
-              className="px-4 py-2 text-xs font-bold text-primary"
-              icon={<CloseIcon className="mt-1 size-3 fill-negative" />}
+              className="text-primary px-4 py-2 text-xs font-bold"
+              icon={<CloseIcon className="fill-negative mt-1 size-3" />}
             />
           )
         })}

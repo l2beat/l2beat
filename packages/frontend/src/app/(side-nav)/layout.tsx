@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </>
       }
     >
-      <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-6 lg:pl-0 lg:pr-3">
+      <div className="max-w-(--breakpoint-lg) mx-auto min-h-screen md:px-6 lg:pl-0 lg:pr-3">
         {children}
       </div>
       <Footer

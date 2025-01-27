@@ -32,7 +32,7 @@ export async function NavLayout({
       title: 'Scaling',
       match: 'scaling',
       icon: (
-        <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+        <ScalingIcon className="group-data-[active=true]:stroke-brand transition-colors duration-300" />
       ),
       links: [
         {
@@ -87,7 +87,7 @@ export async function NavLayout({
       title: 'Bridges',
       match: 'bridges',
       icon: (
-        <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+        <BridgesIcon className="group-data-[active=true]:stroke-brand transition-colors duration-300" />
       ),
       links: [
         {
@@ -112,7 +112,7 @@ export async function NavLayout({
       title: 'Data Availability',
       match: 'data-availability',
       icon: (
-        <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
+        <DataAvailabilityIcon className="group-data-[active=true]:fill-brand transition-colors duration-300" />
       ),
       links: [
         {
@@ -132,7 +132,7 @@ export async function NavLayout({
       match: 'zk-catalog',
       href: '/zk-catalog',
       icon: (
-        <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+        <ZkCatalogIcon className="group-data-[active=true]:stroke-brand transition-colors duration-300" />
       ),
     },
   ])

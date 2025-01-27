@@ -51,7 +51,7 @@ export function ActivityChartHeader({
         </div>
         <div className="flex flex-col items-end">
           {stats !== undefined ? (
-            <p className="text-right font-bold group-data-interactivity-disabled/chart:pointer-events-none group-data-interactivity-disabled/chart:opacity-0">
+            <p className="group-data-interactivity-disabled/chart:pointer-events-none group-data-interactivity-disabled/chart:opacity-0 text-right font-bold">
               <span className="text-xl md:text-2xl">
                 {`${formatActivityCount(countPerSecond(stats[metric].latestProjectsTxCount))} ${isTps ? 'TPS' : 'UOPS'}`}
               </span>
@@ -60,7 +60,7 @@ export function ActivityChartHeader({
             <Skeleton className="my-[5px] h-5 w-28 md:my-1.5 md:h-6 md:w-[200px] lg:w-[243px]" />
           )}
           {hideScalingFactor ? null : stats !== undefined ? (
-            <div className="flex items-center gap-1.5 text-right text-secondary group-data-interactivity-disabled/chart:pointer-events-none group-data-interactivity-disabled/chart:opacity-0 lg:w-auto">
+            <div className="text-secondary group-data-interactivity-disabled/chart:pointer-events-none group-data-interactivity-disabled/chart:opacity-0 flex items-center gap-1.5 text-right lg:w-auto">
               <div>
                 <span className="max-md:hidden">Scaling factor: </span>
                 {stats[metric].scalingFactor.toFixed(2)}x

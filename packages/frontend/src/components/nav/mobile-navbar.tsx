@@ -22,7 +22,7 @@ export function MobileNavbar({
   const { isScalingMainPage } = useRecategorisationPreviewContext()
   return (
     <div className={cn('lg:hidden', className)}>
-      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-b border-divider bg-header-primary px-3.5">
+      <div className="border-divider bg-header-primary relative flex h-16 flex-row items-stretch justify-between gap-8 border-b px-3.5">
         {/* Left side */}
         <div className="flex items-center gap-3">
           <div className="py-4">
@@ -43,7 +43,7 @@ export function MobileNavbar({
       </div>
       <MobileNavTabs groups={groups} />
       {isScalingMainPage && (
-        <div className="flex h-10 items-center border-b border-divider bg-header-primary px-4 py-1 md:hidden">
+        <div className="border-divider bg-header-primary flex h-10 items-center border-b px-4 py-1 md:hidden">
           <RecategorisationPreviewSwitch className="w-full justify-between font-medium" />
         </div>
       )}

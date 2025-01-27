@@ -52,7 +52,7 @@ const RadioGroupItem = ({
       ref={ref}
       className={cn(
         'h-6 rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-        'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
+        'focus-visible:outline-hidden focus-visible:ring-brand focus-visible:ring-2 focus-visible:ring-offset-1',
         'data-[state=checked]:group-data-[variant=highlighted]/radio-group:bg-linear-to-r data-[state=checked]:group-data-[variant=highlighted]/radio-group:from-purple-100 data-[state=checked]:group-data-[variant=highlighted]/radio-group:to-pink-100 data-[state=checked]:group-data-[variant=highlighted]/radio-group:text-white',
         'data-[state=checked]:bg-surface-tertiary data-[state=checked]:primary-card:bg-pure-white dark:data-[state=checked]:primary-card:bg-black',
         className,

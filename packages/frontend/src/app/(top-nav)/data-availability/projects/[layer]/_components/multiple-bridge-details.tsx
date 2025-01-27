@@ -35,29 +35,29 @@ export function MultipleBridgeDetails({ project }: Props) {
     <div className="flex flex-row items-end gap-10 pt-4 md:py-0">
       {/* Left side (table with title and banner) */}
       <div className="flex flex-1 flex-col gap-4">
-        <div className="whitespace-pre text-xs uppercase text-secondary">
+        <div className="text-secondary whitespace-pre text-xs uppercase">
           Select a bridge
         </div>
-        <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-medium text-blue-700 dark:text-blue-700 md:flex lg:px-6">
+        <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 text-xs font-medium text-blue-700 md:flex lg:px-6 dark:text-blue-700">
           <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
           Please select one of the available DA bridges to view its risks and
           detailed analysis.
         </div>
-        <div className="flex flex-col rounded-lg bg-header-secondary lg:h-[278px]">
-          <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-secondary px-4 py-2 text-xs font-semibold uppercase text-secondary md:flex md:border-b">
+        <div className="bg-header-secondary flex flex-col rounded-lg lg:h-[278px]">
+          <div className="border-divider bg-surface-secondary text-secondary hidden flex-row gap-4 rounded-t-lg px-4 py-2 text-xs font-semibold uppercase md:flex md:border-b">
             <div className="w-12"></div>
             <div className="flex-1">DA Bridge</div>
             <div className="flex-1 text-center">DA Risks</div>
             <div className="flex-1 pr-12 text-right">TVS</div>
             <div className="flex-[1.5] lg:flex-1">Used by</div>
           </div>
-          <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg max-md:bg-header-secondary md:gap-0 md:rounded-t-none">
+          <div className="max-md:bg-header-secondary flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg md:gap-0 md:rounded-t-none">
             {project.bridges.map((bridge, index) => (
               <label
                 key={bridge.id}
                 htmlFor={bridge.id}
                 className={cn(
-                  'flex min-h-[56px] cursor-pointer flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                  'border-divider bg-surface-secondary flex min-h-[56px] cursor-pointer flex-row gap-4 rounded-lg px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
                   index === project.bridges.length - 1 && 'md:border-b-0',
                   // Hide 3rd and further bridges on mobile (will be shown in a drawer)
                   index > 2 && 'max-md:hidden',
@@ -75,7 +75,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                   }}
                 />
 
-                <div className="flex flex-1 items-center text-sm font-bold text-primary">
+                <div className="text-primary flex flex-1 items-center text-sm font-bold">
                   {bridge.name}
                 </div>
                 <div className="flex flex-1 items-center justify-center">
@@ -84,7 +84,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                     hasNoBridge={bridge.type === 'NoBridge'}
                   />
                 </div>
-                <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
+                <div className="text-primary flex flex-1 items-center justify-end pr-1 text-sm font-bold md:pr-12">
                   {formatCurrency(bridge.tvs, 'usd')}
                 </div>
                 <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
@@ -173,7 +173,7 @@ export function MultipleBridgeDetails({ project }: Props) {
 
       {/* Right side (Grissini details) */}
       <div className="hidden w-full max-w-[264px] flex-col space-y-4 pt-3 lg:flex">
-        <div className="whitespace-pre text-xs text-secondary">
+        <div className="text-secondary whitespace-pre text-xs">
           {project.selectedBridge.name} risks
         </div>
 
@@ -195,12 +195,12 @@ function RadioButton({ className, ...props }: React.ComponentProps<'input'>) {
         name="bridge"
         className={cn(
           'peer relative col-start-1 row-start-1 aspect-square size-5 cursor-pointer',
-          'appearance-none rounded-full border-2 border-divider bg-pure-white checked:border-brand dark:bg-pure-black',
+          'border-divider bg-pure-white checked:border-brand dark:bg-pure-black appearance-none rounded-full border-2',
           className,
         )}
         {...props}
       />
-      <div className="z-2 col-start-1 row-start-1 hidden aspect-square size-3 rounded-full bg-brand peer-checked:block " />
+      <div className="z-2 bg-brand col-start-1 row-start-1 hidden aspect-square size-3 rounded-full peer-checked:block " />
     </div>
   )
 }

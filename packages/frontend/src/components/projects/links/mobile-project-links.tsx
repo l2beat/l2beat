@@ -20,7 +20,7 @@ export function MobileProjectLinks({
         <AccordionTrigger className="py-4">
           <span className="font-bold">
             Links:{' '}
-            <span className="ml-2 font-medium text-secondary">
+            <span className="text-secondary ml-2 font-medium">
               Website, Docs, etc.
             </span>
           </span>
@@ -30,12 +30,12 @@ export function MobileProjectLinks({
             <tbody>
               {projectLinks.map(({ name, links }, i) => (
                 <tr
-                  className="border-t border-divider first:border-none"
+                  className="border-divider border-t first:border-none"
                   key={i}
                 >
                   <th
                     className={cn(
-                      'w-[110px] py-3 align-top font-medium text-secondary',
+                      'text-secondary w-[110px] py-3 align-top font-medium',
                       i === 0 && 'pt-0',
                     )}
                   >

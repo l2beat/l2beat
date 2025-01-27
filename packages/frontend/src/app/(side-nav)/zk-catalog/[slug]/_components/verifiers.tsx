@@ -25,7 +25,7 @@ export function Verifiers(props: Props) {
     <Accordion type="multiple" asChild>
       <table className="w-full">
         <thead>
-          <tr className="border-b border-divider align-bottom text-secondary">
+          <tr className="border-divider text-secondary border-b align-bottom">
             <th className="px-4 py-2 text-start text-xs font-medium uppercase">
               Name
             </th>
@@ -48,7 +48,7 @@ export function Verifiers(props: Props) {
             asChild
           >
             <tbody
-              className="border-b border-divider transition-colors last:border-none"
+              className="border-divider border-b transition-colors last:border-none"
               key={item.contractAddress.toString()}
             >
               <AccordionHeader asChild>
@@ -97,7 +97,7 @@ export function Verifiers(props: Props) {
                       </p>
                     ) : null}
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="text-secondary mb-2 text-xs font-medium">
                         Verifier
                       </p>
                       <EtherscanLink
@@ -106,13 +106,13 @@ export function Verifiers(props: Props) {
                       />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="text-secondary mb-2 text-xs font-medium">
                         Last used
                       </p>
                       <LastUsedCell days={item.lastUsedDaysAgo} />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="text-secondary mb-2 text-xs font-medium">
                         Description
                       </p>
                       <Markdown className="text-xs">
@@ -129,7 +129,7 @@ export function Verifiers(props: Props) {
                     className="mt-1 hidden w-[90%] space-y-5 px-4 pb-5 md:table-cell"
                   >
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="text-secondary mb-2 text-xs font-medium">
                         Description
                       </p>
                       <Markdown className="text-xs font-medium text-zinc-900/80 dark:text-white/80">

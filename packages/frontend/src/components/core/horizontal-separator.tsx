@@ -4,5 +4,5 @@ export interface SeparatorProps {
   className?: string
 }
 export function HorizontalSeparator({ className }: SeparatorProps) {
-  return <hr className={cn('w-full border-divider md:border-t', className)} />
+  return <hr className={cn('border-divider w-full md:border-t', className)} />
 }

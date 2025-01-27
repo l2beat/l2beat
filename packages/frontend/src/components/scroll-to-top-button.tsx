@@ -35,11 +35,11 @@ export function ScrollToTopButton() {
     <button
       onClick={scrollToTop}
       className={cn(
-        'fixed -bottom-12 right-8 z-999 size-12 rounded-lg bg-brand transition-[bottom,background-color] ease-out hover:bg-fuchsia-700 dark:hover:bg-purple-450',
+        'z-999 bg-brand dark:hover:bg-purple-450 fixed -bottom-12 right-8 size-12 rounded-lg transition-[bottom,background-color] ease-out hover:bg-fuchsia-700',
         isVisible && 'bottom-8',
       )}
     >
-      <ChevronIcon className="mx-auto rotate-180 fill-primary-invert" />
+      <ChevronIcon className="fill-primary-invert mx-auto rotate-180" />
     </button>
   )
 }

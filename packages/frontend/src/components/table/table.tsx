@@ -28,7 +28,7 @@ const TableHeader = ({
 }: React.HTMLAttributes<HTMLTableSectionElement>) => (
   <thead
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-zinc-500 dark:text-n-zinc-300',
+      'group/header dark:text-n-zinc-300 whitespace-pre py-2 align-bottom text-xs font-medium uppercase text-zinc-500',
       className,
     )}
     {...props}
@@ -58,7 +58,7 @@ const TableRow = ({
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
     className={cn(
-      'group/row border-b border-b-divider hover:shadow-xs',
+      'group/row border-b-divider hover:shadow-xs border-b',
       className,
     )}
     {...props}

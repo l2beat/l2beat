@@ -68,7 +68,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
           </div>
           <div className="flex flex-col lg:hidden">
             <div>
-              <div className="-mx-4 border-y border-divider px-4 md:hidden">
+              <div className="border-divider -mx-4 border-y px-4 md:hidden">
                 <MobileProjectLinks projectLinks={project.header.links} />
               </div>
             </div>

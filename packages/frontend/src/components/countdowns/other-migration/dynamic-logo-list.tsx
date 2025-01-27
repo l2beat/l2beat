@@ -65,7 +65,7 @@ export function DynamicLogoList({ projects }: Props) {
           </Tooltip>
         ))}
         {visibleCount < projects.length && (
-          <div className="flex-none text-2xs text-secondary">
+          <div className="text-2xs text-secondary flex-none">
             +{projects.length - visibleCount} more
           </div>
         )}

@@ -65,7 +65,7 @@ export default async function Page(props: Props) {
       >
         <main>
           {publicationEntry.description && (
-            <p className="mb-12 font-roboto-serif text-xl font-light leading-[1.6] opacity-80 ">
+            <p className="font-roboto-serif mb-12 text-xl font-light leading-[1.6] opacity-80 ">
               {publicationEntry.description}
             </p>
           )}

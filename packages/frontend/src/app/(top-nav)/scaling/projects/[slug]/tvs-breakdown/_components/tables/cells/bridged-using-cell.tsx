@@ -44,10 +44,10 @@ function SingleBridge({ bridge }: { bridge: TokenBridge }) {
         className="flex items-center justify-start gap-1"
         href={`/bridges/projects/${bridge.slug}`}
       >
-        <span className="text-xs font-medium text-link underline">
+        <span className="text-link text-xs font-medium underline">
           {bridge.name}
         </span>
-        <ArrowRightIcon className="inline-block fill-link transition-transform" />
+        <ArrowRightIcon className="fill-link inline-block transition-transform" />
       </a>
     )
   }

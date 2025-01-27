@@ -32,7 +32,7 @@ export default async function Page() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className="text-base font-medium text-gray-850 transition hover:text-brand dark:text-white dark:opacity-80 dark:hover:opacity-100"
+                className="text-gray-850 hover:text-brand text-base font-medium transition dark:text-white dark:opacity-80 dark:hover:opacity-100"
               >
                 {item.question}
               </a>
@@ -47,11 +47,11 @@ export default async function Page() {
                 <section className="mt-12" id={item.id} key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    className="mb-4 block text-2xl font-bold text-gray-850 no-underline dark:text-white"
+                    className="text-gray-850 mb-4 block text-2xl font-bold no-underline dark:text-white"
                   >
                     {item.question}
                   </a>
-                  <Markdown className="text-lg text-gray-850 dark:text-white">
+                  <Markdown className="text-gray-850 text-lg dark:text-white">
                     {answer}
                   </Markdown>
                 </section>

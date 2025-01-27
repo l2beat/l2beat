@@ -27,7 +27,7 @@ export function BridgesProjectStats({ project }: Props) {
   )
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5">
+    <div className="md:bg-header-secondary grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:px-6 md:py-5">
       <ProjectStat
         title="Total value secured"
         tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
@@ -80,7 +80,7 @@ export function BridgesProjectStats({ project }: Props) {
         value={
           <SentimentText
             sentiment={project.header.destination.sentiment}
-            className="text-lg font-medium leading-none! md:text-xl md:font-bold"
+            className="leading-none! text-lg font-medium md:text-xl md:font-bold"
           >
             {project.header.destination.value}
           </SentimentText>
@@ -92,7 +92,7 @@ export function BridgesProjectStats({ project }: Props) {
           project.header.validatedBy ? (
             <SentimentText
               sentiment={project.header.validatedBy.sentiment}
-              className="text-lg font-medium leading-none! md:text-xl md:font-bold"
+              className="leading-none! text-lg font-medium md:text-xl md:font-bold"
             >
               {project.header.validatedBy.value}
             </SentimentText>
@@ -122,7 +122,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-secondary">{props.title}</span>
+        <span className="text-secondary text-xs">{props.title}</span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
@@ -133,7 +133,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium leading-none! md:text-xl md:font-bold">
+      <span className="leading-none! text-lg font-medium md:text-xl md:font-bold">
         {props.value}
       </span>
     </li>

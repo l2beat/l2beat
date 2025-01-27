@@ -21,7 +21,7 @@ export function TopNavbar({
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
 
   return (
-    <div className="hidden h-[4.25rem] border-b border-divider bg-header-primary text-base lg:block">
+    <div className="border-divider bg-header-primary hidden h-[4.25rem] border-b text-base lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">

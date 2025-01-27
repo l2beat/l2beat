@@ -87,7 +87,7 @@ export function ChartHover() {
         ref={contentRef}
         className={cn(
           tooltipContentVariants({ fitContent: true }),
-          'absolute text-2xs md:text-xs',
+          'text-2xs absolute md:text-xs',
           'pointer-events-none select-none',
           'transition-duration-50 transition-[bottom]',
         )}

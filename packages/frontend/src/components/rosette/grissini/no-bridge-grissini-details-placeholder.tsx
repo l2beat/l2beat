@@ -14,7 +14,7 @@ export function NoBridgeGrissiniDetailsPlaceholder({
   return (
     <div
       className={cn(
-        'flex h-[278px] w-[264px] flex-col items-center justify-center gap-3 rounded-lg bg-header-secondary p-4 text-center',
+        'bg-header-secondary flex h-[278px] w-[264px] flex-col items-center justify-center gap-3 rounded-lg p-4 text-center',
         className,
       )}
     >
@@ -49,7 +49,7 @@ export function InlinedNoBridgeGrissiniDetailsPlaceholder({
   return (
     <div
       className={cn(
-        'flex flex-row items-stretch rounded-sm bg-header-secondary md:h-[5.125rem]',
+        'bg-header-secondary flex flex-row items-stretch rounded-sm md:h-[5.125rem]',
         className,
       )}
     >

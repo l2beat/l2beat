@@ -42,7 +42,7 @@ export function VerifiedCountWithDetails(props: Props) {
   return (
     <div className="flex items-center gap-1.5 leading-none">
       <span>{props.verifiers.length}</span>
-      <div className="select-none text-base font-medium text-secondary">
+      <div className="text-secondary select-none text-base font-medium">
         (
         <div className="inline-flex items-center gap-1">
           {successfullyVerifiedCount > 0 ? (

@@ -32,9 +32,9 @@ const Checkbox = ({
         id={id}
         ref={ref}
         className={cn(
-          'peer size-5 shrink-0 rounded-sm bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
-          'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
-          'data-[state=unchecked]:border-2 data-[state=unchecked]:border-surface-tertiary',
+          'bg-pure-white peer size-5 shrink-0 rounded-sm disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
+          'focus-visible:outline-hidden focus-visible:ring-brand focus-visible:ring-2 focus-visible:ring-offset-1',
+          'data-[state=unchecked]:border-surface-tertiary data-[state=unchecked]:border-2',
         )}
         {...props}
         onCheckedChange={(checked) => {
@@ -47,7 +47,7 @@ const Checkbox = ({
           })
         }}
       >
-        <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded-sm bg-brand text-current">
+        <CheckboxPrimitive.Indicator className="bg-brand flex items-center justify-center rounded-sm text-current">
           <CheckIcon
             className={cn(
               'size-5 stroke-[1.8px]',

@@ -24,7 +24,7 @@ export function CustomSystemInfo() {
 function Info({ children }: { children: React.ReactNode }) {
   return (
     <div className="mb-2 flex flex-row">
-      <span className="text-[11px] leading-snug text-zinc-500 dark:text-secondary md:text-[13px] md:leading-tight">
+      <span className="dark:text-secondary text-[11px] leading-snug text-zinc-500 md:text-[13px] md:leading-tight">
         {children}
       </span>
     </div>

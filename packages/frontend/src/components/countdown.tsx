@@ -32,7 +32,7 @@ export function Countdown({
       className={cn(
         'flex w-max items-center justify-center gap-x-1',
         withBackground &&
-          'rounded-lg border border-divider bg-surface-secondary p-2',
+          'border-divider bg-surface-secondary rounded-lg border p-2',
         className,
       )}
     >
@@ -84,7 +84,7 @@ function TimePart({
   return (
     <div
       className={cn(
-        'rounded-sm bg-brand px-3 py-2 text-center font-bold text-primary-invert',
+        'bg-brand text-primary-invert rounded-sm px-3 py-2 text-center font-bold',
         size === 'lg' && 'text-[28px]',
         size === 'md' && 'text-2xl leading-none',
         size === 'sm' && 'text-[18px]',

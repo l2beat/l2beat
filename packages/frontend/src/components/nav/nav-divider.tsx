@@ -12,7 +12,7 @@ export function NavDivider({
   return (
     <div
       className={cn(
-        'bg-gray-300 transition-colors duration-300 ease-out dark:bg-gray-850',
+        'dark:bg-gray-850 bg-gray-300 transition-colors duration-300 ease-out',
         orientation === 'horizontal' && 'h-px w-full',
         orientation === 'vertical' && 'h-full w-px',
         className,

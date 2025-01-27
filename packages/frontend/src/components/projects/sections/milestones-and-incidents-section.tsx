@@ -76,7 +76,7 @@ function MilestonesBase(props: {
             <div key={i} className="relative pb-7">
               <div
                 className={cn(
-                  'absolute left-[-1.445rem] top-3 h-full w-[1.7px] bg-linear-to-b dark:w-px',
+                  'bg-linear-to-b absolute left-[-1.445rem] top-3 h-full w-[1.7px] dark:w-px',
                   milestone.type === 'general' && [
                     'from-green-400 dark:from-green-500',
                     milestone.next?.type === 'general' &&

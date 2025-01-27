@@ -81,9 +81,9 @@
   --color-yellow-700: #cb9800;
   --color-yellow-800: #382d11;
   --color-yellow-900: #684e00;
-
+  --color-yellow-250: #ffec44;
   --color-n-yellow-700: #ab8000;
-
+  --color-yellow-500: #e5c227;
   --color-orange-400: #ff8b36;
   --color-orange-500: #ff7d1f;
   --color-orange-600: #f94a24;
@@ -148,6 +148,332 @@
   --color-sky-550: #2670ff;
   --color-sky-600: #2083c1;
 
+  --color-fuchsia-700: #860cb0;
+
+  --color-n-cyan-600: #1c8ba4;
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-invert: hsl(var(--primary-invert));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-negative: hsl(var(--negative));
+  --color-brand: hsl(var(--brand));
+  --color-background: hsl(var(--background));
+  --color-background-reading: hsl(var(--background-reading));
+  --color-surface-primary: hsl(var(--surface-primary));
+  --color-surface-secondary: hsl(var(--surface-secondary));
+  --color-surface-tertiary: hsl(var(--surface-tertiary));
+  --color-header-secondary: hsl(var(--header-secondary));
+  --color-header-primary: hsl(var(--header-primary));
+  --color-icon-secondary: hsl(var(--icon-secondary));
+  --color-overlay: hsl(var(--overlay));
+  --color-divider: hsl(var(--divider));
+  --color-indicator-rollups: hsl(var(--indicator-rollups));
+  --color-indicator-validiums-optimiums: hsl(
+    var(--indicator-validiums-optimiums)
+  );
+  --color-indicator-others: hsl(var(--indicator-others));
+  --color-indicator-ethereum: hsl(var(--indicator-ethereum));
+  --color-positive: hsl(var(--positive));
+  --color-link-stroke: hsl(var(--link-stroke));
+  --color-link: hsl(var(--link));
+
+  --breakpoint-*: initial;
+  --breakpoint-xs: 400px;
+  --breakpoint-sm: 550px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1920px;
+
+  --z-index-*: initial;
+  --z-index-1: 1;
+  --z-index-10: 10;
+  --z-index-20: 20;
+  --z-index-25: 25;
+  --z-index-30: 30;
+  --z-index-40: 40;
+  --z-index-50: 50;
+  --z-index-60: 60;
+  --z-index-100: 100;
+  --z-index-110: 110;
+  --z-index-999: 999;
+
+  --shadow-popover: 0px 4px 12px 0px rgba(0, 0, 0, 0.55);
+
+  --animate-beat: beat 5s ease-in-out infinite forwards;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-collapsible-down: collapsible-down 0.3s ease-out;
+  --animate-collapsible-up: collapsible-up 0.3s ease-out;
+
+  --font-sans: var(--font-roboto), Roboto, Arial, sans-serif;
+  --font-roboto-serif: var(--font-roboto-serif), Roboto Serif, Roboto, Arial;
+  --font-roboto-serif-ext: var(--font-roboto-serif-ext),
+    var(--font-roboto-serif), Roboto Serif, Roboto, Arial;
+  --font-lora: Lora, serif;
+
+  --spacing-2\/3: 66.666666%;
+
+  --transition-property-height: height;
+  --transition-property-max-height: max-height;
+
+  @keyframes beat {
+    0% {
+      transform: scale(1, 1);
+    }
+    80% {
+      transform: scale(1, 1);
+    }
+    85% {
+      transform: scale(1.05, 1.05);
+    }
+    90% {
+      transform: scale(1, 1);
+    }
+    95% {
+      transform: scale(1.05, 1.05);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes collapsible-down {
+    from {
+      height: 0;
+      opacity: 0%;
+    }
+    to {
+      height: var(--radix-collapsible-content-height);
+      opacity: 100%;
+    }
+  }
+  @keyframes collapsible-up {
+    from {
+      height: var(--radix-collapsible-content-height);
+      opacity: 100%;
+    }
+    to {
+      height: 0;
+      opacity: 0%;
+    }
+  }
+}
+
+@utility transition-duration-50 {
+  transition-duration: 50ms !important;
+}
+
+@utility scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+@utility fade-out-to-left {
+  /* Masks for overflow wrapper */
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+}
+  --color-yellow-800: #382d11;
+@utility fade-out-to-right {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+}
+
+@utility fade-out-horizontal {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 30px calc(100% - 30px),
+    transparent
+  ) !important;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 30px calc(100% - 30px),
+    transparent
+  ) !important;
+}
+
+@utility chart-fade-out-to-bottom {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    transparent 100%
+  );
+}
+
+@utility scrollbar-hide {
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* For IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@utility custom-scrollbar {
+  & ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  & ::-webkit-scrollbar-track {
+    @apply rounded-full bg-gray-200;
+  }
+
+  .dark & ::-webkit-scrollbar-track {
+    @apply rounded-full bg-zinc-800;
+  }
+
+  & ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gray-50;
+  }
+
+  .dark & ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-zinc-500;
+  }
+}
+
+@utility dark {
+  & .custom-scrollbar ::-webkit-scrollbar-track {
+    @apply rounded-full bg-zinc-800;
+  }
+
+  & .custom-scrollbar ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-zinc-500;
+  }
+}
+
+@layer base {
+  :root {
+    --primary: 260deg 7.69% 7.65%;
+    --primary-invert: 0deg 0% 98%;
+    --secondary: 222deg 8.21% 40.6%;
+    --negative: 0 100% 42%;
+    --brand: 285deg 62.7% 52.7%;
+    --background: 230deg 13.6% 91.4%;
+    --background-reading: 0deg 0% 98%;
+    --surface-primary: 0deg 0% 98%;
+    --surface-secondary: 230deg 13.6% 91.4%;
+    --surface-tertiary: 223deg 15.9% 82.7%;
+    --header-primary: 0deg 0% 100%;
+    --header-secondary: 230deg 21.4% 94.5%;
+    --icon-secondary: 222deg 8.21% 40.6%;
+    --overlay: 231deg 30.4% 13.5% / 60%;
+    --divider: 223deg 15.9% 82.7%;
+    --indicator-rollups: 321deg 84.3% 60%;
+    --indicator-validiums-optimiums: 180deg 50.2% 42.5%;
+    --indicator-others: 44.9deg 100% 33.5%;
+    --indicator-ethereum: 223deg 69% 50.6%;
+    --positive: 124deg 100% 22.7%;
+    --link-stroke: 212deg 100% 86.5%;
+    --link: 223deg 69% 50.6%;
+  }
+  --color-purple-700: #4a133c;
+  .dark {
+    --primary: 0deg 0% 98%;
+    --primary-invert: 260deg 7.69% 7.65%;
+    --secondary: 223deg 8.04% 56.1%;
+    --negative: 0 100% 50%;
+    --brand: 284deg 87.1% 75.7%;
+    --background: 0deg 0% 0%;
+    --background-reading: 0deg 0% 0%;
+    --surface-primary: 225deg 14.8% 10.6%;
+    --surface-secondary: 222deg 8.06% 24.3%;
+    --surface-tertiary: 220deg 7.89% 29.8%;
+    --header-primary: 225deg 14.8% 10.6%;
+    --header-secondary: 222deg 16% 15.9%;
+    --icon-secondary: 222deg 8.21% 40.6%;
+    --overlay: 0deg 0% 0% / 60%;
+    --divider: 226deg 14.3% 28.8%;
+    --indicator-rollups: 284deg 87.1% 75.7%;
+    --indicator-validiums-optimiums: 190deg 73.6% 55.5%;
+    --indicator-others: 54.2deg 70.9% 56.9%;
+    --indicator-ethereum: 212deg 100% 66.3%;
+    --positive: 145deg 81.2% 43.7%;
+    --link-stroke: 217deg 56.3% 18.8%;
+    --link: 212deg 100% 66.3%;
+  }
+}
+
+@layer base {
+  :root {
+    --header-height: 4rem;
+  }
+
+  :root:has(.header-height-glossary) {
+    --header-height: 7rem;
+  }
+  --color-red-350: #f94a24;
+  @media (min-width: 750px) {
+    :root {
+      --header-height: 2rem !important;
+    }
+    :root:has(.header-height-glossary) {
+      --header-height: 9rem !important;
+    }
+  }
+  --color-red-950: #323232;
+  html {
+    scroll-padding-top: var(--header-height);
+  }
+  --color-blue-300: #cbdff9;
+  body {
+    @apply bg-background text-base text-primary md:text-lg font-sans selection:bg-brand/30 dark:selection:bg-brand/50;
+  }
+  --color-sky-500: #0074fd;
+  body:has(.reading) {
+    @apply bg-background-reading;
+  }
+}
+  --color-sky-600: #2083c1;
   --color-fuchsia-700: #860cb0;
 
   --color-n-cyan-600: #1c8ba4;

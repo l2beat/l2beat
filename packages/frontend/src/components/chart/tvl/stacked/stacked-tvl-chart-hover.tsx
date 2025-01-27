@@ -36,22 +36,22 @@ export function StackedTvlChartHover(props: Props) {
     },
   ]
   return (
-    <div className="flex w-36 flex-col gap-1 xs:w-52!">
+    <div className="xs:w-52! flex w-36 flex-col gap-1">
       <div>
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',
         })}
       </div>
       <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50 xs:hidden">
+        <span className="xs:hidden text-sm text-gray-700 dark:text-gray-50">
           Total
         </span>
-        <span className="hidden text-sm text-gray-700 dark:text-gray-50 xs:inline">
+        <span className="xs:inline hidden text-sm text-gray-700 dark:text-gray-50">
           Total value secured
         </span>
         {total}
       </div>
-      <hr className="w-full border-gray-200 dark:border-gray-650 md:border-t" />
+      <hr className="dark:border-gray-650 w-full border-gray-200 md:border-t" />
       <div>
         {values.map(
           (v, i) =>

@@ -19,7 +19,7 @@ interface Props {
 export function BridgesProjectSummary({ project }: Props) {
   return (
     <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
-      <section id="summary" className="w-full max-md:bg-header-primary">
+      <section id="summary" className="max-md:bg-header-primary w-full">
         <div className="w-full space-y-4 md:space-y-6">
           <ProjectHeader title={project.name} slug={project.slug} />
           <div className="space-y-2">
@@ -43,7 +43,7 @@ export function BridgesProjectSummary({ project }: Props) {
               <AboutSection description={project.header.description} />
             </div>
           )}
-          <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:my-6! md:hidden" />
+          <HorizontalSeparator className="md:my-6! my-4 max-md:-mx-4 max-md:w-screen md:hidden" />
 
           <div className="max-md:hidden">
             <DesktopProjectLinks projectLinks={project.header.links} />

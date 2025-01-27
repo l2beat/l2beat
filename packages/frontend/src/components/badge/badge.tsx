@@ -11,7 +11,7 @@ const badgeVariants = cva('rounded-sm text-center font-medium', {
   variants: {
     type: {
       error: 'bg-negative/20 text-negative',
-      gray: 'bg-surface-tertiary font-medium text-secondary',
+      gray: 'bg-surface-tertiary text-secondary font-medium',
       warning: 'bg-yellow-500 text-black',
       brightYellow: 'bg-yellow-200 text-purple-700',
       pink: 'bg-pink-900 text-white',

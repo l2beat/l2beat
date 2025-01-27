@@ -103,7 +103,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
                 longMonthName: true,
               })}
             </span>
-            <div className="mt-2 text-primary">
+            <div className="text-primary mt-2">
               <AnomalyTypeBadge type={anomaly.type} />
               <span className="ml-2.5 inline-flex gap-1">
                 Duration:

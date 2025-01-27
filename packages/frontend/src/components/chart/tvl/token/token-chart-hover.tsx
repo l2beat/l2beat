@@ -54,7 +54,7 @@ export function TokenChartHover({
           mode: 'datetime',
         })}
       </div>
-      <hr className="w-full border-gray-200 dark:border-gray-650 md:border-t" />
+      <hr className="dark:border-gray-650 w-full border-gray-200 md:border-t" />
       {unit === 'usd' ? (
         <>
           {usdHtml}

@@ -91,7 +91,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={props.diagram} />
-          <figcaption className="text-xs text-secondary">
+          <figcaption className="text-secondary text-xs">
             {props.diagram.caption}
           </figcaption>
         </figure>

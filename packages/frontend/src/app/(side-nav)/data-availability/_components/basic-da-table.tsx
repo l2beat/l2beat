@@ -104,7 +104,7 @@ export function BasicDaTable<T extends BasicEntry>({
                     <th
                       colSpan={header.colSpan}
                       className={cn(
-                        'font-medium tracking-[-0.13px] text-primary',
+                        'text-primary font-medium tracking-[-0.13px]',
                         !header.isPlaceholder &&
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
@@ -174,7 +174,7 @@ export function BasicDaTable<T extends BasicEntry>({
         <TableHeaderRow>
           <th
             colSpan={columnLength}
-            className="mx-0.5 h-0.5 rounded-full bg-surface-tertiary"
+            className="bg-surface-tertiary mx-0.5 h-0.5 rounded-full"
           />
         </TableHeaderRow>
       </TableHeader>

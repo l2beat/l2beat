@@ -76,7 +76,7 @@ export function BasicTable<T extends CommonProjectEntry>(
                     <th
                       colSpan={header.colSpan}
                       className={cn(
-                        'font-medium tracking-[-0.13px] text-primary',
+                        'text-primary font-medium tracking-[-0.13px]',
                         !header.isPlaceholder &&
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
@@ -152,7 +152,7 @@ export function BasicTable<T extends CommonProjectEntry>(
           })}
         </TableHeaderRow>
         <TableHeaderRow>
-          <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
+          <th colSpan={100} className="bg-divider mx-0.5 h-0.5 rounded-full" />
         </TableHeaderRow>
       </TableHeader>
       <TableBody>

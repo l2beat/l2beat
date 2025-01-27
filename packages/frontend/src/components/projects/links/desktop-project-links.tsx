@@ -45,7 +45,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
           className={cn(
             navigationMenuTriggerStyle(),
             'bg-header-secondary',
-            'ring-inset ring-brand focus:ring-2',
+            'ring-brand ring-inset focus:ring-2',
             'flex flex-row items-center gap-1.5',
           )}
         >
@@ -63,7 +63,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="bg-header-secondary ring-inset ring-brand focus:ring-2">
+      <NavigationMenuTrigger className="bg-header-secondary ring-brand ring-inset focus:ring-2">
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>

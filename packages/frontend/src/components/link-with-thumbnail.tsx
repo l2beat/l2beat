@@ -23,7 +23,7 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group flex gap-6 rounded-md bg-surface-primary transition-all hover:bg-surface-secondary',
+        'bg-surface-primary hover:bg-surface-secondary group flex gap-6 rounded-md transition-all',
         orientation === 'vertical' && 'max-w-96 flex-col',
         props.className,
       )}
@@ -62,7 +62,7 @@ export function LinkWithThumbnail({
           <div className="hidden md:block">
             <p
               className={cn(
-                'mt-1.5 text-xs text-opacity-80',
+                'mt-1.5 text-xs opacity-80',
                 orientation === 'horizontal' && 'line-clamp-1 pr-2',
                 orientation === 'vertical' && 'line-clamp-3',
               )}
@@ -71,7 +71,7 @@ export function LinkWithThumbnail({
             </p>
           </div>
         )}
-        <p className="flex flex-wrap items-center gap-1 text-sm font-medium text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
+        <p className="text-link group-hover:text-blue-550 flex flex-wrap items-center gap-1 text-sm font-medium underline transition-colors md:mt-3">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>

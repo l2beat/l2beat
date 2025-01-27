@@ -31,7 +31,7 @@ export function MainPageHeader({ children, description, className }: Props) {
           {children}
         </h1>
         {description && (
-          <p className="mt-0.5 text-xs text-secondary">{description}</p>
+          <p className="text-secondary mt-0.5 text-xs">{description}</p>
         )}
       </div>
       <div className="flex items-center gap-5">

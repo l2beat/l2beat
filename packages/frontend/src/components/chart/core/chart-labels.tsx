@@ -43,7 +43,7 @@ function ChartLabel({
       {!isLoading && children ? (
         <span
           className={cn(
-            'absolute bottom-0 left-1 pb-0.5 text-sm text-primary opacity-50 dark:opacity-70',
+            'text-primary absolute bottom-0 left-1 pb-0.5 text-sm opacity-50 dark:opacity-70',
             className,
           )}
         >

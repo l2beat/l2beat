@@ -73,7 +73,7 @@ export function ContractEntry({
       icon={icon}
       body={
         <>
-          <div className="flex flex-wrap items-center gap-x-2 leading-[1.15]!">
+          <div className="leading-[1.15]! flex flex-wrap items-center gap-x-2">
             <strong id={contract.name}>{contract.name}</strong>{' '}
             {contract.addresses.map((address, i) => (
               <HighlightableLink
@@ -102,12 +102,12 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+            <Markdown className="text-gray-850 mt-2 leading-snug dark:text-gray-400">
               {contract.description}
             </Markdown>
           )}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
-            <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
+            <div className="text-gray-850 mt-2 flex flex-wrap dark:text-gray-400">
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((name) => (
@@ -119,7 +119,7 @@ export function ContractEntry({
             </div>
           )}
           {contract.upgradeDelay && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
+            <p className="text-gray-850 mt-2 dark:text-gray-400">
               <strong className="text-primary">Upgrade delay:</strong>{' '}
               {contract.upgradeDelay}
             </p>

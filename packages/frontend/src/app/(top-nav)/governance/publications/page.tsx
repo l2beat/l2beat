@@ -74,7 +74,7 @@ function PublicationCard({
       }
       description={publication.description ?? publication.excerpt}
       orientation="vertical"
-      className="justify-self-center hover:bg-surface-tertiary"
+      className="hover:bg-surface-tertiary justify-self-center"
     />
   )
 }

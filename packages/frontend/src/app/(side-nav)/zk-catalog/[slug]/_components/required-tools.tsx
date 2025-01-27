@@ -10,7 +10,7 @@ export function RequiredTools(props: Props) {
   return (
     <table className="w-full">
       <thead>
-        <tr className="border-b border-divider align-bottom text-xs font-medium uppercase text-secondary">
+        <tr className="border-divider text-secondary border-b align-bottom text-xs font-medium uppercase">
           <th className="px-4 py-2 text-start">Tool name</th>
           <th className="py-2 pr-4 text-start">Version</th>
           <th className="py-2 pr-4 text-start">Tool docs</th>
@@ -19,7 +19,7 @@ export function RequiredTools(props: Props) {
       <tbody>
         {props.items.map((item) => (
           <tr
-            className="h-14 border-b border-divider last:border-none"
+            className="border-divider h-14 border-b last:border-none"
             key={item.name}
           >
             <td className="text-balance px-4 text-base font-medium md:text-lg">

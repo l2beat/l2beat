@@ -46,7 +46,7 @@ export function ChartTimeRangeControls<T extends string>({
   if (showSelect) {
     return (
       <Select value={value} onValueChange={setValue}>
-        <SelectTrigger className={cn('z-0 h-8 bg-surface-secondary')}>
+        <SelectTrigger className={cn('bg-surface-secondary z-0 h-8')}>
           <SelectValue />
         </SelectTrigger>
         <SelectContent className="bg-surface-secondary">

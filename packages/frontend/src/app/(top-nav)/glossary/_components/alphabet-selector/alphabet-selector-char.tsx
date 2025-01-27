@@ -22,7 +22,7 @@ export function AlphabetSelectorChar({ char, href, selected, ref }: CharProps) {
           'border-divider bg-pure-white dark:border-divider dark:bg-zinc-900',
           selected && 'border-brand! bg-[#FF5FFB66]!',
           href && !selected && 'hover:bg-gray-100 dark:hover:bg-zinc-800',
-          !href && 'cursor-not-allowed text-secondary/50',
+          !href && 'text-secondary/50 cursor-not-allowed',
         )}
       >
         {char}

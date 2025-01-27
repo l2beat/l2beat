@@ -27,7 +27,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
-        <PrimaryValueCell className="font-bold leading-none!">
+        <PrimaryValueCell className="leading-none! font-bold">
           {project.shortName ?? project.name}
         </PrimaryValueCell>
         {project.statuses?.verificationWarning === true && (
@@ -61,7 +61,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         {project.statuses?.yellowWarning && (
           <Tooltip>
             <TooltipTrigger>
-              <ShieldIcon className="relative -top-px size-3.5 fill-yellow-700 dark:fill-yellow-300 md:size-4" />
+              <ShieldIcon className="relative -top-px size-3.5 fill-yellow-700 md:size-4 dark:fill-yellow-300" />
             </TooltipTrigger>
             <TooltipContent>
               <Markdown inline ignoreGlossary>
@@ -82,7 +82,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
           )}
       </div>
       {project.nameSecondLine && (
-        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
+        <span className="text-secondary block text-[0.8125rem] font-medium leading-[0.9375rem]">
           {project.nameSecondLine}
         </span>
       )}

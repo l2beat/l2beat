@@ -30,8 +30,8 @@ function ExplorerButton() {
       href="https://uops.l2beat.com/"
       target="_blank"
       className={cn(
-        'flex w-fit items-center gap-1 rounded-lg bg-linear-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-semibold text-white max-md:ml-4',
-        'ring-brand ring-offset-1 ring-offset-background focus:outline-hidden focus:ring-2',
+        'bg-linear-to-r flex w-fit items-center gap-1 rounded-lg from-purple-100 to-pink-100 px-2 py-1 text-sm font-semibold text-white max-md:ml-4',
+        'ring-brand ring-offset-background focus:outline-hidden ring-offset-1 focus:ring-2',
       )}
       onClick={() => {
         track('uopsExplorerSelected')

@@ -52,7 +52,7 @@ export function RecategorisedActivityChartHover(props: Props) {
           </span>
         </div>
       </div>
-      <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
+      <hr className="dark:border-gray-650 my-1 w-full border-gray-200 md:border-t" />
       {values.map((v) => (
         <div
           key={v.title}
@@ -82,7 +82,7 @@ export function RecategorisedActivityChartHover(props: Props) {
           </span>
         </div>
       </div>
-      <hr className="my-1 w-full border-gray-200 dark:border-gray-650 md:border-t" />
+      <hr className="dark:border-gray-650 my-1 w-full border-gray-200 md:border-t" />
       {values.map((v) => (
         <div
           key={v.title}

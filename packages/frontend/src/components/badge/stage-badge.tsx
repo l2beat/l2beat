@@ -18,7 +18,7 @@ export function StageBadge({ stage, className }: StageBadgeProps) {
   return (
     <div
       className={cn(
-        'inline-flex h-[22px] w-[66px] items-center justify-center rounded-sm text-center text-xs font-medium uppercase leading-none!',
+        'leading-none! inline-flex h-[22px] w-[66px] items-center justify-center rounded-sm text-center text-xs font-medium uppercase',
         getClassNames(stage),
         className,
       )}

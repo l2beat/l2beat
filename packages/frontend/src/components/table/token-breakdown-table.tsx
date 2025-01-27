@@ -35,7 +35,7 @@ export function TokenTable<T>({ table }: Props<T>) {
               key={header.id}
               colSpan={header.colSpan}
               className={cn(
-                'whitespace-pre align-middle text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 md:first:pl-6 md:last:pr-6',
+                'whitespace-pre align-middle text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:first:pl-6 md:last:pr-6 dark:text-gray-50',
                 header.column.columnDef.meta?.headClassName,
               )}
               align={header.column.columnDef.meta?.align}
@@ -56,7 +56,7 @@ export function TokenTable<T>({ table }: Props<T>) {
           <TableRow
             key={row.id}
             className={cn(
-              'border-b border-b-black/10 hover:bg-black/5 hover:shadow-xs dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
+              'hover:shadow-xs border-b border-b-black/10 hover:bg-black/5 md:border-b-0 dark:border-b-zinc-700 dark:hover:bg-white/5',
               (row.getIsExpanded() || row.getParentRow()?.getIsExpanded()) &&
                 'bg-[#CB980029]/20 hover:bg-black/[0.1] dark:hover:bg-white/[0.1]',
             )}

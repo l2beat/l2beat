@@ -57,12 +57,12 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
   ]
 
   return (
-    <div className="md:flex md:flex-col md:gap-3 md:rounded-lg md:bg-header-secondary md:px-6 md:py-4">
+    <div className="md:bg-header-secondary md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
       <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
           Value secured
         </span>
-        <span className="hidden text-lg font-bold text-secondary md:block md:text-xs md:font-normal">
+        <span className="text-secondary hidden text-lg font-bold md:block md:text-xs md:font-normal">
           TVS
         </span>
 
@@ -97,7 +97,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
         native={params.usage.native}
         className="my-3 h-1 w-full md:my-0"
       />
-      <div className="flex h-1/2 flex-wrap gap-3 @container md:gap-0">
+      <div className="@container flex h-1/2 flex-wrap gap-3 md:gap-0">
         {tvlStats.map((s, i) => (
           <div
             key={i}
@@ -105,7 +105,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           >
             <div className="flex items-center gap-1">
               {s.icon}
-              <span className="text-xs leading-none text-secondary">
+              <span className="text-secondary text-xs leading-none">
                 <span className="inline md:hidden">{s.label}</span>
                 <span className="hidden md:inline">{s.shortLabel}</span>
               </span>
@@ -113,7 +113,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
             <span className="whitespace-nowrap text-base font-medium leading-none">
               {s.value}
               {params.breakdown.total > 0 && (
-                <span className="hidden w-[54px] text-right font-normal text-secondary @[210px]:inline-block">
+                <span className="text-secondary @[210px]:inline-block hidden w-[54px] text-right font-normal">
                   {` (${s.usage}%)`}
                 </span>
               )}

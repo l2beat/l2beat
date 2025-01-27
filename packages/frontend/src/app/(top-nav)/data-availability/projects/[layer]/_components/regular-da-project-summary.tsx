@@ -62,7 +62,7 @@ export function RegularDaProjectSummary({ project }: Props) {
             {hasMultipleBridges && (
               <div className="hidden lg:block">
                 <div className="flex flex-col gap-4 pt-3">
-                  <div className="whitespace-pre text-xs text-secondary">
+                  <div className="text-secondary whitespace-pre text-xs">
                     {project.name} risks
                   </div>
                   <GrissiniDetails
@@ -75,7 +75,7 @@ export function RegularDaProjectSummary({ project }: Props) {
 
           <div className="flex flex-col">
             <div>
-              <div className="-mx-4 border-y border-divider px-4 md:hidden">
+              <div className="border-divider -mx-4 border-y px-4 md:hidden">
                 <MobileProjectLinks projectLinks={project.header.links} />
               </div>
             </div>

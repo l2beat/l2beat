@@ -32,12 +32,12 @@ export function SingleGrissiniDetails({
         className="h-full shrink-0 max-md:w-1"
       />
       <div className="flex flex-1 flex-col justify-center gap-1 p-4">
-        <div className="text-3xs font-semibold uppercase md:text-2xs">
+        <div className="text-3xs md:text-2xs font-semibold uppercase">
           {name}
         </div>
         <div
           className={cn(
-            'text-sm font-bold leading-none! md:text-lg',
+            'leading-none! text-sm font-bold md:text-lg',
             sentimentToTextColor(sentiment, { vibrant: true }),
           )}
         >

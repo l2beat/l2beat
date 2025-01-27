@@ -34,7 +34,7 @@ export function MobileProjectNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="flex justify-center bg-header-primary"
+      className="bg-header-primary flex justify-center"
       childrenClassName="w-full"
     >
       <div className="flex items-center justify-between">
@@ -82,8 +82,8 @@ function Item({
       ref={ref}
       href={href}
       className={cn(
-        'flex h-10 w-full items-center justify-center whitespace-nowrap border-b border-divider px-4 text-center text-xs transition-colors',
-        selected && 'border-b border-current text-brand',
+        'border-divider flex h-10 w-full items-center justify-center whitespace-nowrap border-b px-4 text-center text-xs transition-colors',
+        selected && 'text-brand border-b border-current',
       )}
     >
       {children}

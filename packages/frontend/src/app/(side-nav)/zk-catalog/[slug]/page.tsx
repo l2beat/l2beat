@@ -96,7 +96,7 @@ export default async function Page(props: Props) {
           ]}
         />
       </MainPageHeader>
-      <div className="border-divider max-lg:pt-8 max-md:border-b max-md:bg-header-primary max-md:px-4 max-md:pb-6">
+      <div className="border-divider max-md:bg-header-primary max-lg:pt-8 max-md:border-b max-md:px-4 max-md:pb-6">
         <div className="flex flex-col gap-1 md:flex-row md:items-end md:gap-4 md:px-6">
           <ProjectHeader
             icon={projectDetails.icon}
@@ -139,7 +139,7 @@ function Summary(props: {
   details: ZkCatalogProjectDetails
 }) {
   return (
-    <div className="mt-6 flex grid-cols-3 flex-col gap-1 md:mt-8 md:grid md:rounded-xl md:bg-surface-primary md:p-6">
+    <div className="md:bg-surface-primary mt-6 flex grid-cols-3 flex-col gap-1 md:mt-8 md:grid md:rounded-xl md:p-6">
       <HeaderItem title="Number of verifiers">
         <VerifiedCountWithDetails verifiers={props.details.verifiers} />
       </HeaderItem>
@@ -170,7 +170,7 @@ function HeaderItem({
 }) {
   return (
     <div className="flex items-baseline justify-between md:block">
-      <h3 className="flex items-center gap-1.5 text-xs text-secondary md:mb-2">
+      <h3 className="text-secondary flex items-center gap-1.5 text-xs md:mb-2">
         {title}
         {tooltip ? (
           <Tooltip>

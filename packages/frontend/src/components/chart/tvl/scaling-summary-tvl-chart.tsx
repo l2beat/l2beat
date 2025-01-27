@@ -86,7 +86,7 @@ function Header({ total, unit, change, timeRange }: Props) {
         <div className="flex items-center gap-3">
           <span className="text-xl font-bold">Value Secured</span>
           <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
+            className="border-link-stroke text-link flex h-[28px] items-center justify-center gap-1 rounded-md border px-3 py-2 text-[13px] font-bold leading-none max-md:hidden"
             href="/scaling/tvs"
           >
             View details

@@ -23,7 +23,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
     <Component
       id={props.id}
       className={cn(
-        'bg-surface-primary p-4 primary-card md:mt-10 md:rounded-lg md:p-8',
+        'bg-surface-primary primary-card p-4 md:mt-10 md:rounded-lg md:p-8',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
@@ -72,7 +72,7 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       {props.sectionOrder && (
         <div
           className={cn(
-            'hidden size-10 items-center justify-center rounded-sm bg-surface-secondary px-3 text-[26px] font-bold tabular-nums text-secondary md:flex',
+            'bg-surface-secondary text-secondary hidden size-10 items-center justify-center rounded-sm px-3 text-[26px] font-bold tabular-nums md:flex',
             props.nested && 'h-8 w-11 text-xl',
           )}
         >

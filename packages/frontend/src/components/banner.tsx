@@ -24,7 +24,7 @@ export function Banner({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'relative flex w-full flex-col items-center justify-center gap-1 bg-linear-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white dark:text-white md:flex-row md:gap-3',
+        'bg-linear-to-r relative flex w-full flex-col items-center justify-center gap-1 from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white md:flex-row md:gap-3 dark:text-white',
         className,
       )}
     >

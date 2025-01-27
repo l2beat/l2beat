@@ -16,9 +16,9 @@ export const GlossarySideNavItem = ({ ref, entry, selected }: Props) => {
         data-role="glossary-side-nav-item"
         className={cn(
           'flex items-center gap-1 text-xs font-medium transition-colors duration-100',
-          'text-zinc-500 hover:text-zinc-700 dark:text-pure-white/80 dark:hover:text-pure-white',
+          'dark:text-pure-white/80 dark:hover:text-pure-white text-zinc-500 hover:text-zinc-700',
           selected &&
-            'text-brand hover:text-fuchsia-700 dark:hover:text-purple-450',
+            'text-brand dark:hover:text-purple-450 hover:text-fuchsia-700',
         )}
       >
         <span className="line-clamp-1">{entry.data.term}</span>

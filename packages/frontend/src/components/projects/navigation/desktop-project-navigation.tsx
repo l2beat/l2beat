@@ -233,9 +233,9 @@ function NavigationSubsectionEntry(props: {
         {/* Left side */}
         <div className="flex w-6 flex-col items-center">
           {props.selected && (
-            <div className="absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100" />
+            <div className="bg-linear-to-r absolute h-[18px] w-[5px] rounded-full from-purple-100 to-pink-100" />
           )}
-          <div className="h-full border-l border-divider" />
+          <div className="border-divider h-full border-l" />
         </div>
         {/* Right side */}
         <div

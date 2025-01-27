@@ -76,7 +76,7 @@ export default async function Page(props: Props) {
   return (
     <>
       {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 md:hidden">
+        <div className="z-100 sticky top-0 md:hidden">
           <MobileProjectNavigation sections={navigationSections} />
         </div>
       )}

@@ -29,7 +29,7 @@ export function OtherMigrationTabNotice({
   return (
     <div
       className={cn(
-        'space-y-2.5 rounded-lg border-2 border-brand p-5',
+        'border-brand space-y-2.5 rounded-lg border-2 p-5',
         className,
       )}
     >

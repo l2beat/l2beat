@@ -69,7 +69,7 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
         )}
         icon={
           value !== undefined ? (
-            <div className="inline-flex size-3 items-center justify-center rounded-xs bg-current">
+            <div className="rounded-xs inline-flex size-3 items-center justify-center bg-current">
               <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
             </div>
           ) : undefined
@@ -81,7 +81,7 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent
-        className={cn('flex flex-col primary-card:bg-surface-secondary')}
+        className={cn('primary-card:bg-surface-secondary flex flex-col')}
         align="start"
       >
         {options.map((option) => (

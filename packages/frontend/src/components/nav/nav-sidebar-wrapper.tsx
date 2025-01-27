@@ -41,12 +41,12 @@ export const NavSideBarWrapper = ({
   return (
     <>
       {open && (
-        <div className="fixed left-0 top-0 z-999 size-full bg-overlay max-sm:hidden lg:hidden" />
+        <div className="z-999 bg-overlay fixed left-0 top-0 size-full max-sm:hidden lg:hidden" />
       )}
       <div
         ref={ref}
         className={cn(
-          'custom-scrollbar absolute flex shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out max-lg:z-999 lg:static lg:mr-3 lg:transform-none',
+          'custom-scrollbar max-lg:z-999 absolute flex shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out lg:static lg:mr-3 lg:transform-none',
           sharedSizeClasses,
           open && 'translate-x-0 sm:translate-x-[calc(100%-300px)]',
           resizing && 'transition-none',
@@ -54,7 +54,7 @@ export const NavSideBarWrapper = ({
       >
         <div
           className={cn(
-            'flex flex-col gap-6 overflow-y-auto overflow-x-clip px-3.5 pt-4 transition-all duration-300 ease-out max-lg:bg-surface-primary sm:w-[300px] lg:fixed lg:px-5 lg:pt-[1.125rem]',
+            'max-lg:bg-surface-primary flex flex-col gap-6 overflow-y-auto overflow-x-clip px-3.5 pt-4 transition-all duration-300 ease-out sm:w-[300px] lg:fixed lg:px-5 lg:pt-[1.125rem]',
             sharedSizeClasses,
             resizing && 'transition-none',
           )}

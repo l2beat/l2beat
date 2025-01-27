@@ -15,10 +15,7 @@ export function TokenCanonicalValueCell({ usdValue, isDescendant }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger
-        className={cn(
-          'text-xs font-medium',
-          isDescendant && 'text-primary text-opacity-80',
-        )}
+        className={cn('text-xs font-medium', isDescendant && 'text-primary/80')}
       >
         ${formatNumberWithCommas(Number(usdValue))}
       </TooltipTrigger>

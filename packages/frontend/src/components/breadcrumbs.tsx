@@ -18,7 +18,7 @@ export function Breadcrumbs({ items, className }: Props) {
   return (
     <nav
       className={cn(
-        'flex select-none items-center gap-2 text-base font-medium text-secondary',
+        'text-secondary flex select-none items-center gap-2 text-base font-medium',
         className,
       )}
     >

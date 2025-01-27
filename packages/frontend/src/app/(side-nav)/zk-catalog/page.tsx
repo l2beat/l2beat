@@ -40,7 +40,7 @@ export default async function Page() {
   return (
     <>
       <MainPageHeader>ZK Catalog</MainPageHeader>
-      <p className="mx-6 text-xs text-secondary max-md:mt-6">
+      <p className="text-secondary mx-6 text-xs max-md:mt-6">
         ZK Catalog by L2BEAT is a community-driven resource offering detailed
         insights into the ZK technology utilized by various blockchain projects.
         It aims to enhance transparency and understanding of ZK tech
@@ -60,7 +60,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
             <AccordionHeader asChild>
               <AccordionTrigger
                 asChild
-                className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-divider bg-surface-primary px-6 py-4 md:flex-row"
+                className="border-divider bg-surface-primary group relative z-10 w-full cursor-pointer flex-col rounded-xl border px-6 py-4 md:flex-row"
               >
                 <div className="grid md:grid-cols-[1.5fr_1fr_1fr_1fr_130px_70px]">
                   <div className="mb-3 flex items-center gap-2 md:hidden">
@@ -113,7 +113,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                     className="self-center justify-self-center"
                   />
                   <div className="flex items-center justify-center">
-                    <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
+                    <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
                       <span className="text-base font-bold">Verifiers</span>
                       <ChevronIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />
                     </div>
@@ -122,10 +122,10 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                 </div>
               </AccordionTrigger>
             </AccordionHeader>
-            <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-divider bg-surface-primary pt-3 md:space-y-2 md:px-6 md:pb-6">
+            <AccordionContent className="border-divider bg-surface-primary relative -top-3 rounded-b-xl border border-t-0 pt-3 md:space-y-2 md:px-6 md:pb-6">
               {entry.shortDescription ? (
                 <div className="my-7 flex flex-col gap-0.5 px-5">
-                  <div className="text-2xs font-medium uppercase text-secondary">
+                  <div className="text-2xs text-secondary font-medium uppercase">
                     Description
                   </div>
                   <div className="text-sm font-medium">

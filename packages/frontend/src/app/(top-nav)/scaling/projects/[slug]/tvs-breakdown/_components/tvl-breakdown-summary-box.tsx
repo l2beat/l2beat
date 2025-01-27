@@ -25,7 +25,7 @@ type Props = {
 
 export function TvlBreakdownSummaryBox(props: Props) {
   return (
-    <div className="flex flex-col justify-between gap-[7px] py-5 md:flex-row md:gap-2 md:rounded-lg md:bg-surface-primary md:p-6">
+    <div className="md:bg-surface-primary flex flex-col justify-between gap-[7px] py-5 md:flex-row md:gap-2 md:rounded-lg md:p-6">
       <StatsItem
         title="Total value secured"
         tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
@@ -84,21 +84,21 @@ function StatsItem(props: StatsItemProps) {
       )}
     >
       <div className="flex items-center gap-1">
-        <span className="hidden text-xs font-medium text-secondary md:inline">
+        <span className="text-secondary hidden text-xs font-medium md:inline">
           {props.title}
         </span>
         <span
           className={cn(
-            'font-medium max-xs:hidden md:hidden',
-            props.big ? 'text-lg text-primary' : 'text-xs text-secondary',
+            'max-xs:hidden font-medium md:hidden',
+            props.big ? 'text-primary text-lg' : 'text-secondary text-xs',
           )}
         >
           {props.mobileTitle}
         </span>
         <span
           className={cn(
-            'font-medium xs:hidden',
-            props.big ? 'text-lg text-primary' : 'text-xs text-secondary',
+            'xs:hidden font-medium',
+            props.big ? 'text-primary text-lg' : 'text-secondary text-xs',
           )}
         >
           {props.smallMobileTitle}
@@ -110,7 +110,7 @@ function StatsItem(props: StatsItemProps) {
               className={cn(
                 'md:size-3.5',
                 props.big
-                  ? 'fill-black dark:fill-white md:fill-secondary!'
+                  ? 'md:fill-secondary! fill-black dark:fill-white'
                   : 'fill-secondary',
               )}
             />
@@ -122,7 +122,7 @@ function StatsItem(props: StatsItemProps) {
         <ValueWithPercentageChange
           change={props.change}
           className={cn(
-            'font-bold text-primary md:text-lg',
+            'text-primary font-bold md:text-lg',
             props.big ? 'text-lg' : 'text-base',
           )}
         >

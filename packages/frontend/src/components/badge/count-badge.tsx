@@ -4,7 +4,7 @@ interface Props {
 
 export function CountBadge({ children }: Props) {
   return (
-    <div className="rounded-full bg-brand px-2 py-0.5 text-2xs font-medium text-primary-invert">
+    <div className="bg-brand text-2xs text-primary-invert rounded-full px-2 py-0.5 font-medium">
       {children}
     </div>
   )
