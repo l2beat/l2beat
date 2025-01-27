@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21635833,
   "configHash": "0xe11ed7f0d9d30e7453bd2e5c94bedc50fb87eb26adac42d7dfda9fd01b41ca1b",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "BridgeMultisig",

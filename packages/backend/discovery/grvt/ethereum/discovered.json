@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21629172,
   "configHash": "0xc17359dda03f1eda182b4bffe4a7993bcfadd5f27f81ec5c9616759b9ddd1e25",
+  "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
       "name": "GrvtChainAdminMultisig",

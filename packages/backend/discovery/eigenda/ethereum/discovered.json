@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21628459,
   "configHash": "0x3dc8d71e572dc96094cd0d5578d13579543d11933f3b4a2d76a317d315aa2c8b",
+  "sharedModules": ["shared-eigenlayer"],
   "contracts": [
     {
       "name": "StakeRegistry",

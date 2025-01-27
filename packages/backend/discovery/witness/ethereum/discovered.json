@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20491473,
   "configHash": "0x271dae2021804d278c07a38d665fb6d6a92123fc674159d78c7580ec08dc83df",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "FflonkVerifier",

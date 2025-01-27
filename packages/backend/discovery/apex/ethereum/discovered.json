@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825348,
   "configHash": "0x3d1fdfc99f2044bbaa42f4026f6f57fdfd74dfa5caa83cdc851bdf4d95b3eb36",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "AggregationRouterV4",

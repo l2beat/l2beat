@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825361,
   "configHash": "0x6d81b488e8f62481738c976e0f1919fc2ae2309a0a49094a92ab83e119ffd897",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "StarkExchange",

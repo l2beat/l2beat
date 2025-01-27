@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825378,
   "configHash": "0xda8c7387c100cb2461cf5680dfd15bd075a42d7fb763a4c55b73ceeb97a6f380",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "Committee",

@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21686341,
   "configHash": "0xb9707df3aa255e90f3b4acd84a9ff8dffae09607c1c86bb89b01cbf7488a377b",
+  "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
       "name": "Verifier",
