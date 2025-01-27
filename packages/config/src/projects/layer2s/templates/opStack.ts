@@ -171,6 +171,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 }
 
 function opStackCommon(
+  type: (Layer2 | Layer3)['type'],
   templateVars: OpStackConfigCommon,
   explorerUrl?: string,
 ): Omit<ScalingProject, 'type' | 'display' | 'config'> & {
@@ -180,7 +181,7 @@ function opStackCommon(
   >
   config: Pick<
     ScalingProjectConfig,
-    'associatedTokens' | 'gasTokens' | 'transactionApi'
+    'associatedTokens' | 'gasTokens' | 'transactionApi' | 'escrows'
   >
 } {
   const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
@@ -191,6 +192,11 @@ function opStackCommon(
         templateVars.additionalDiscoveries,
       )
     : undefined
+
+  const optimismPortalTokens = [
+    'ETH',
+    ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
+  ]
 
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
@@ -236,6 +242,9 @@ function opStackCommon(
   const l2OutputOracle =
     templateVars.l2OutputOracle ??
     templateVars.discovery.getContract('L2OutputOracle')
+  const l1StandardBridgeEscrow =
+    templateVars.l1StandardBridgeEscrow ??
+    templateVars.discovery.getContract('L1StandardBridge').address
   const upgradeability = templateVars.upgradeability ?? {
     upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
@@ -279,6 +288,28 @@ function opStackCommon(
               assessCount: subtractOne,
             }
           : undefined),
+      escrows: [
+        templateVars.discovery.getEscrowDetails({
+          includeInTotal: type === 'layer2',
+          address: portal.address,
+          tokens: optimismPortalTokens,
+          description: `Main entry point for users depositing ${optimismPortalTokens.join(
+            ', ',
+          )}.`,
+          ...upgradeability,
+        }),
+        templateVars.discovery.getEscrowDetails({
+          includeInTotal: type === 'layer2',
+          address: l1StandardBridgeEscrow,
+          tokens: templateVars.l1StandardBridgeTokens ?? '*',
+          premintedTokens: templateVars.l1StandardBridgePremintedTokens,
+          excludedTokens: templateVars.nonTemplateExcludedTokens,
+          description:
+            'Main entry point for users depositing ERC20 token that do not require custom gateway.',
+          ...upgradeability,
+        }),
+        ...(templateVars.nonTemplateEscrows ?? []),
+      ],
     },
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
@@ -458,23 +489,10 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
   const sequencerAddress = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
   )
-  const optimismPortalTokens = [
-    'ETH',
-    ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
-  ]
 
-  const portal =
-    templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
   const l2OutputOracle =
     templateVars.l2OutputOracle ??
     templateVars.discovery.getContract('L2OutputOracle')
-  const l1StandardBridgeEscrow =
-    templateVars.l1StandardBridgeEscrow ??
-    templateVars.discovery.getContract('L1StandardBridge').address
-  const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
-  }
 
   const daProvider = getDAProvider(templateVars)
 
@@ -484,13 +502,13 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
 
-  const FINALIZATION_PERIOD_SECONDS: number =
+  const FINALIZATION_PERIOD_SECONDS =
     templateVars.discovery.getContractValue<number>(
-      'L2OutputOracle',
+      l2OutputOracle.address,
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-  const common = opStackCommon(templateVars, ethereum.explorerUrl)
+  const common = opStackCommon('layer2', templateVars, ethereum.explorerUrl)
   return {
     type: 'layer2',
     ...common,
@@ -530,26 +548,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     chainConfig: templateVars.chainConfig,
     config: {
       ...common.config,
-      escrows: [
-        templateVars.discovery.getEscrowDetails({
-          address: portal.address,
-          tokens: optimismPortalTokens,
-          description: `Main entry point for users depositing ${optimismPortalTokens.join(
-            ', ',
-          )}.`,
-          ...upgradeability,
-        }),
-        templateVars.discovery.getEscrowDetails({
-          address: l1StandardBridgeEscrow,
-          tokens: templateVars.l1StandardBridgeTokens ?? '*',
-          premintedTokens: templateVars.l1StandardBridgePremintedTokens,
-          excludedTokens: templateVars.nonTemplateExcludedTokens,
-          description:
-            'Main entry point for users depositing ERC20 token that do not require custom gateway.',
-          ...upgradeability,
-        }),
-        ...(templateVars.nonTemplateEscrows ?? []),
-      ],
       trackedTxs:
         daProvider !== undefined
           ? undefined
@@ -587,7 +585,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     dataAvailability: decideDA(
-      daProvider,
+      templateVars,
       addSentimentToDataAvailability({
         layers: [
           usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
@@ -609,24 +607,11 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     `Could not find base chain ${templateVars.hostChain} in layer2s`,
   )
 
-  const optimismPortalTokens = [
-    'ETH',
-    ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
-  ]
-
-  const daProvider = getDAProvider(templateVars)
-
-  const portal =
-    templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
-  const l1StandardBridgeEscrow =
-    templateVars.l1StandardBridgeEscrow ??
-    templateVars.discovery.getContract('L1StandardBridge').address
-  const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
-  }
-
-  const common = opStackCommon(templateVars, baseChain.chainConfig?.explorerUrl)
+  const common = opStackCommon(
+    'layer3',
+    templateVars,
+    baseChain.chainConfig?.explorerUrl,
+  )
 
   const getStackedRisks = () => {
     return {
@@ -661,31 +646,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
-    dataAvailability: decideDA(daProvider, baseChain.dataAvailability),
-    config: {
-      ...common.config,
-      escrows: [
-        templateVars.discovery.getEscrowDetails({
-          includeInTotal: false,
-          address: portal.address,
-          tokens: optimismPortalTokens,
-          description: `Main entry point for users depositing ${optimismPortalTokens.join(
-            ', ',
-          )}.`,
-          ...upgradeability,
-        }),
-        templateVars.discovery.getEscrowDetails({
-          includeInTotal: false,
-          address: l1StandardBridgeEscrow,
-          tokens: templateVars.l1StandardBridgeTokens ?? '*',
-          excludedTokens: templateVars.nonTemplateExcludedTokens,
-          description:
-            'Main entry point for users depositing ERC20 token that do not require custom gateway.',
-          ...upgradeability,
-        }),
-        ...(templateVars.nonTemplateEscrows ?? []),
-      ],
-    },
+    dataAvailability: decideDA(templateVars, baseChain.dataAvailability),
     stateDerivation: templateVars.stateDerivation,
   }
 }
@@ -799,9 +760,10 @@ function computedStage(
 }
 
 function decideDA(
-  daProvider: DAProvider | undefined,
+  templateVars: OpStackConfigCommon,
   nativeDA: ProjectDataAvailability | undefined,
 ): ProjectDataAvailability | undefined {
+  const daProvider = getDAProvider(templateVars)
   if (daProvider !== undefined) {
     return addSentimentToDataAvailability({
       layers: daProvider.fallback
