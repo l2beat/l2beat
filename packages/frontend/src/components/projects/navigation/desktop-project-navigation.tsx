@@ -209,7 +209,7 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
       className={cn(
         'flex size-6 shrink-0 items-center justify-center rounded-lg text-center text-xs font-bold',
         props.selected
-          ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-white'
+          ? 'bg-linear-to-r from-purple-100 to-pink-100 text-white'
           : 'bg-surface-tertiary',
       )}
     >
@@ -233,7 +233,7 @@ function NavigationSubsectionEntry(props: {
         {/* Left side */}
         <div className="flex w-6 flex-col items-center">
           {props.selected && (
-            <div className="absolute h-[18px] w-[5px] rounded-full bg-gradient-to-r from-purple-100 to-pink-100" />
+            <div className="absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100" />
           )}
           <div className="h-full border-l border-divider" />
         </div>

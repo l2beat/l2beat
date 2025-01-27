@@ -1,9 +1,395 @@
-@import "./markdown.css";
-@import "./article.css";
+@import './markdown.css' layer(base);
+@import './article.css' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --text-*: initial;
+  --text-3xs: 10px, 15px;
+  --text-2xs: 12px, 16px;
+  --text-xs: 14px, 20px;
+  --text-sm: 15px, 22px;
+  --text-base: 16px, 24px;
+  --text-lg: 18px, 28px;
+  --text-xl: 20px, 30px;
+  --text-2xl: 24px, 36px;
+  --text-3xl: 32px, 36px;
+  --text-4xl: 40px, 60px;
+  --text-5xl: 48px, 60px;
+  --text-6xl: 64px, 64px;
+
+  --font-weight-*: initial;
+  --font-weight-thin: 100;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  --color-*: initial;
+  --color-current: currentColor;
+  --color-transparent: transparent;
+  --color-brand-red: #f9347b;
+  --color-brand-red-dark: #bd114f;
+  --color-brand-black: #222222;
+  --color-pure-white: #ffffff;
+  --color-pure-black: #000000;
+  --color-white: #fafafa;
+
+  --color-neutral-700: #323539;
+  --color-neutral-800: #222125;
+  --color-neutral-900: #131215;
+
+  --color-zinc-100: #f3f3f3;
+  --color-zinc-300: #dbdbdb;
+  --color-zinc-400: #868b98;
+  --color-zinc-500: #5f6470;
+  --color-zinc-700: #393c43;
+  --color-zinc-800: #272a2f;
+  --color-zinc-900: #1d1e22;
+
+  --color-n-zinc-300: #d3d5d9;
+
+  --color-gray-50: #aeaeae;
+  --color-gray-100: #ededed;
+  --color-gray-200: #dfdfdf;
+  --color-gray-250: #d4d4d4;
+  --color-gray-300: #d3d3d3;
+  --color-gray-400: #d0ced1;
+  --color-gray-450: #b9b9b9;
+  --color-gray-500: #737373;
+  --color-gray-550: #888888;
+  --color-gray-600: #848484;
+  --color-gray-650: #5c5c5c;
+  --color-gray-700: #565656;
+  --color-gray-750: #424850;
+  --color-gray-800: #424242;
+  --color-gray-850: #333333;
+  --color-gray-900: #2f2f2f;
+  --color-gray-950: #111111;
+
+  --color-black: #1b1b1b;
+
+  --color-yellow-100: #ffdd28;
+  --color-yellow-200: #ffc107;
+  --color-yellow-250: #ffec44;
+  --color-yellow-300: #fdcf44;
+  --color-yellow-500: #e5c227;
+  --color-yellow-700: #cb9800;
+  --color-yellow-800: #382d11;
+  --color-yellow-900: #684e00;
+
+  --color-n-yellow-700: #ab8000;
+
+  --color-orange-400: #ff8b36;
+  --color-orange-500: #ff7d1f;
+  --color-orange-600: #f94a24;
+
+  --color-purple-50: #6c57bf;
+  --color-purple-100: #7e41cc;
+  --color-purple-300: #f1d6ff;
+  --color-purple-450: #c164e3;
+  --color-purple-500: #6a008e;
+  --color-purple-700: #4a133c;
+  --color-purple-800: #32102a;
+
+  --color-pink-100: #ff46c0;
+  --color-pink-200: #db8bf7;
+  --color-pink-800: #b94ddf;
+  --color-pink-900: #ab3bd2;
+
+  --color-n-pink-400: #fc49c2;
+
+  --color-green-200: #b0ffaa;
+  --color-green-300: #4eab58;
+  --color-green-400: #13e000;
+  --color-green-450: #50e35f;
+  --color-green-500: #5bff4d;
+  --color-green-600: #11cc00;
+  --color-green-700: #007408;
+  --color-green-800: #34762f;
+  --color-green-900: #125d19;
+
+  --color-red-100: #fdd9d9;
+  --color-red-200: #ee2c01;
+  --color-red-300: #fa3a3a;
+  --color-red-350: #f94a24;
+  --color-red-400: #ff0000;
+  --color-red-500: #c32806;
+  --color-red-550: #ed0000;
+  --color-red-600: #c71414;
+  --color-red-700: #d70000;
+  --color-red-800: #8d0a0a;
+  --color-red-900: #441111;
+  --color-red-950: #323232;
+
+  --color-blue-300: #cbdff9;
+  --color-blue-400: #badaff;
+  --color-blue-450: #96c0f7;
+  --color-blue-500: #53a2ff;
+  --color-blue-550: #1f87ff;
+  --color-blue-600: #2b5cd9;
+  --color-blue-700: #005dd7;
+  --color-blue-900: #112944;
+  --color-blue-950: #152a4b;
+
+  --color-slate-600: #525c6a;
+
+  --color-rose-500: #e33b4f;
+  --color-rose-700: #bb1b41;
+
+  --color-teal-400: #2ec4b6;
+  --color-teal-500: #27ac9f;
+
+  --color-sky-500: #0074fd;
+  --color-sky-550: #2670ff;
+  --color-sky-600: #2083c1;
+
+  --color-fuchsia-700: #860cb0;
+
+  --color-n-cyan-600: #1c8ba4;
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-invert: hsl(var(--primary-invert));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-negative: hsl(var(--negative));
+  --color-brand: hsl(var(--brand));
+  --color-background: hsl(var(--background));
+  --color-background-reading: hsl(var(--background-reading));
+  --color-surface-primary: hsl(var(--surface-primary));
+  --color-surface-secondary: hsl(var(--surface-secondary));
+  --color-surface-tertiary: hsl(var(--surface-tertiary));
+  --color-header-secondary: hsl(var(--header-secondary));
+  --color-header-primary: hsl(var(--header-primary));
+  --color-icon-secondary: hsl(var(--icon-secondary));
+  --color-overlay: hsl(var(--overlay));
+  --color-divider: hsl(var(--divider));
+  --color-indicator-rollups: hsl(var(--indicator-rollups));
+  --color-indicator-validiums-optimiums: hsl(
+    var(--indicator-validiums-optimiums)
+  );
+  --color-indicator-others: hsl(var(--indicator-others));
+  --color-indicator-ethereum: hsl(var(--indicator-ethereum));
+  --color-positive: hsl(var(--positive));
+  --color-link-stroke: hsl(var(--link-stroke));
+  --color-link: hsl(var(--link));
+
+  --breakpoint-*: initial;
+  --breakpoint-xs: 400px;
+  --breakpoint-sm: 550px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1920px;
+
+  --z-index-*: initial;
+  --z-index-1: 1;
+  --z-index-10: 10;
+  --z-index-20: 20;
+  --z-index-25: 25;
+  --z-index-30: 30;
+  --z-index-40: 40;
+  --z-index-50: 50;
+  --z-index-60: 60;
+  --z-index-100: 100;
+  --z-index-110: 110;
+  --z-index-999: 999;
+
+  --shadow-popover: 0px 4px 12px 0px rgba(0, 0, 0, 0.55);
+
+  --animate-beat: beat 5s ease-in-out infinite forwards;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-collapsible-down: collapsible-down 0.3s ease-out;
+  --animate-collapsible-up: collapsible-up 0.3s ease-out;
+
+  --font-sans: var(--font-roboto), Roboto, Arial, sans-serif;
+  --font-roboto-serif: var(--font-roboto-serif), Roboto Serif, Roboto, Arial;
+  --font-roboto-serif-ext: var(--font-roboto-serif-ext),
+    var(--font-roboto-serif), Roboto Serif, Roboto, Arial;
+  --font-lora: Lora, serif;
+
+  --spacing-2\/3: 66.666666%;
+
+  --transition-property-height: height;
+  --transition-property-max-height: max-height;
+
+  @keyframes beat {
+    0% {
+      transform: scale(1, 1);
+    }
+    80% {
+      transform: scale(1, 1);
+    }
+    85% {
+      transform: scale(1.05, 1.05);
+    }
+    90% {
+      transform: scale(1, 1);
+    }
+    95% {
+      transform: scale(1.05, 1.05);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes collapsible-down {
+    from {
+      height: 0;
+      opacity: 0%;
+    }
+    to {
+      height: var(--radix-collapsible-content-height);
+      opacity: 100%;
+    }
+  }
+  @keyframes collapsible-up {
+    from {
+      height: var(--radix-collapsible-content-height);
+      opacity: 100%;
+    }
+    to {
+      height: 0;
+      opacity: 0%;
+    }
+  }
+}
+
+@utility transition-duration-50 {
+  transition-duration: 50ms !important;
+}
+
+@utility scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+@utility fade-out-to-left {
+  /* Masks for overflow wrapper */
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+}
+
+@utility fade-out-to-right {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 0px,
+    black calc(100% - 30px),
+    transparent 100%
+  );
+}
+
+@utility fade-out-horizontal {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 30px calc(100% - 30px),
+    transparent
+  ) !important;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 30px calc(100% - 30px),
+    transparent
+  ) !important;
+}
+
+@utility chart-fade-out-to-bottom {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 0px,
+    transparent 100%
+  );
+}
+
+@utility scrollbar-hide {
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* For IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@utility custom-scrollbar {
+  & ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  & ::-webkit-scrollbar-track {
+    @apply rounded-full bg-gray-200;
+  }
+
+  .dark & ::-webkit-scrollbar-track {
+    @apply rounded-full bg-zinc-800;
+  }
+
+  & ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gray-50;
+  }
+
+  .dark & ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-zinc-500;
+  }
+}
+
+@utility dark {
+  & .custom-scrollbar ::-webkit-scrollbar-track {
+    @apply rounded-full bg-zinc-800;
+  }
+
+  & .custom-scrollbar ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-zinc-500;
+  }
+}
 
 @layer base {
   :root {
@@ -85,110 +471,5 @@
 
   body:has(.reading) {
     @apply bg-background-reading;
-  }
-}
-
-@layer utilities {
-  .transition-duration-50 {
-    transition-duration: 50ms !important;
-  }
-
-  .scrollbar-gutter-stable {
-    scrollbar-gutter: stable;
-  }
-
-  /* Masks for overflow wrapper */
-  .fade-out-to-left {
-    -webkit-mask-image: linear-gradient(
-      to left,
-      transparent 0,
-      black 0px,
-      black calc(100% - 30px),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to left,
-      transparent 0,
-      black 0px,
-      black calc(100% - 30px),
-      transparent 100%
-    );
-  }
-
-  .fade-out-to-right {
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0,
-      black 0px,
-      black calc(100% - 30px),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0,
-      black 0px,
-      black calc(100% - 30px),
-      transparent 100%
-    );
-  }
-  .fade-out-horizontal {
-    -webkit-mask-image: linear-gradient(
-      90deg,
-      transparent,
-      black 30px calc(100% - 30px),
-      transparent
-    ) !important;
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      black 30px calc(100% - 30px),
-      transparent
-    ) !important;
-  }
-
-  .chart-fade-out-to-bottom {
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      black 0px,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      black 0px,
-      transparent 100%
-    );
-  }
-
-  /* For Webkit-based browsers (Chrome, Safari and Opera) */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* For IE, Edge and Firefox */
-  .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-gray-200;
-  }
-
-  .dark .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-zinc-800;
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-50;
-  }
-
-  .dark .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-zinc-500;
   }
 }

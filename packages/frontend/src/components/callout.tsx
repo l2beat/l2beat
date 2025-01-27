@@ -10,7 +10,7 @@ const calloutVariants = cva('flex rounded-lg', {
       gray: 'bg-gray-500/20',
     },
     small: {
-      true: 'gap-2 rounded text-sm',
+      true: 'gap-2 rounded-sm text-sm',
       false: 'gap-3',
     },
   },

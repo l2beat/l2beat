@@ -15,9 +15,9 @@ export function HighlightableLink({ className, ...props }: CustomLinkProps) {
         current === props.href && [
           'relative z-10',
           'before:absolute before:-inset-x-1 before:-inset-y-0.5',
-          'before:-z-10 before:rounded before:border',
+          'before:-z-10 before:rounded-sm before:border',
           'before:border-dashed before:border-yellow-700 before:bg-yellow-250/50 before:content-[""]',
-          'before:dark:border-yellow-250 before:dark:bg-yellow-250/10',
+          'dark:before:border-yellow-250 dark:before:bg-yellow-250/10',
         ],
       )}
       onMouseEnter={() => setCurrent(props.href)}

@@ -143,7 +143,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                     <Image
                       src={project.iconUrl}
                       alt={`${project.name} logo`}
-                      className="rounded-sm"
+                      className="rounded-xs"
                       width={20}
                       height={20}
                     />
@@ -181,7 +181,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                         <Image
                           src={item.iconUrl}
                           alt={`${item.name} logo`}
-                          className="rounded-sm"
+                          className="rounded-xs"
                           width={20}
                           height={20}
                         />

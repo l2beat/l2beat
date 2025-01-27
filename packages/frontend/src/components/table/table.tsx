@@ -58,7 +58,7 @@ const TableRow = ({
 }: React.HTMLAttributes<HTMLTableRowElement>) => (
   <TableHeaderRow
     className={cn(
-      'group/row border-b border-b-divider hover:shadow-sm',
+      'group/row border-b border-b-divider hover:shadow-xs',
       className,
     )}
     {...props}

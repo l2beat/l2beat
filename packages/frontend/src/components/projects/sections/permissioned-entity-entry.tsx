@@ -23,7 +23,7 @@ export function PermissionedEntityEntry({
       icon={<BulletIcon className="size-5" />}
       body={
         <>
-          <div className="flex flex-col flex-wrap gap-x-2 !leading-[1.15]">
+          <div className="flex flex-col flex-wrap gap-x-2 leading-[1.15]!">
             <CustomLink key={entity.href} href={entity.href}>
               {entity.name}
             </CustomLink>

@@ -123,7 +123,7 @@ function ImplementationHasChangedContracts(props: {
 }) {
   return (
     <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
-      <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
+      <div className="flex w-full items-center rounded-sm bg-yellow-700/20 p-4">
         There are implementation changes and part of the information might be
         outdated.
       </div>

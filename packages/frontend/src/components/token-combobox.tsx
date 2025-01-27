@@ -155,7 +155,7 @@ function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
           </p>
         )}
       </CommandGroup>
-      <CommandSeparator className="[&:last-of-type]:hidden" />
+      <CommandSeparator className="last-of-type:hidden" />
     </>
   )
 }

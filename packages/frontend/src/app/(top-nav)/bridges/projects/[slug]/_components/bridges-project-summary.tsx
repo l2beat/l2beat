@@ -43,7 +43,7 @@ export function BridgesProjectSummary({ project }: Props) {
               <AboutSection description={project.header.description} />
             </div>
           )}
-          <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
+          <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:my-6! md:hidden" />
 
           <div className="max-md:hidden">
             <DesktopProjectLinks projectLinks={project.header.links} />

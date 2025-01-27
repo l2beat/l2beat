@@ -18,8 +18,8 @@ export function NavLink({ title, href, activeBehavior }: NavLinkProps) {
     <Link href={href}>
       <li
         className={cn(
-          'flex h-7 items-center gap-2.5 rounded px-2.5 py-1.5 text-primary transition-colors duration-300 ease-out hover:bg-surface-tertiary',
-          active && '!bg-brand text-white dark:text-black',
+          'flex h-7 items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-primary transition-colors duration-300 ease-out hover:bg-surface-tertiary',
+          active && 'bg-brand! text-white dark:text-black',
         )}
       >
         <span className="text-sm font-medium leading-none">{title}</span>

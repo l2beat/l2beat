@@ -28,14 +28,14 @@ export function TokenTable<T>({ table }: Props<T>) {
       <TableHeader>
         <TableHeaderRow
           key={headers.id}
-          className="!border-0 md:bg-surface-secondary"
+          className="border-0! md:bg-surface-secondary"
         >
           {headers.headers.map((header) => (
             <TableHead
               key={header.id}
               colSpan={header.colSpan}
               className={cn(
-                'whitespace-pre align-middle text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
+                'whitespace-pre align-middle text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 md:first:pl-6 md:last:pr-6',
                 header.column.columnDef.meta?.headClassName,
               )}
               align={header.column.columnDef.meta?.align}
@@ -56,7 +56,7 @@ export function TokenTable<T>({ table }: Props<T>) {
           <TableRow
             key={row.id}
             className={cn(
-              'border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
+              'border-b border-b-black/10 hover:bg-black/5 hover:shadow-xs dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
               (row.getIsExpanded() || row.getParentRow()?.getIsExpanded()) &&
                 'bg-[#CB980029]/20 hover:bg-black/[0.1] dark:hover:bg-white/[0.1]',
             )}
@@ -67,7 +67,7 @@ export function TokenTable<T>({ table }: Props<T>) {
                   key={cell.id}
                   align={cell.column.columnDef.meta?.align}
                   className={cn(
-                    'h-9 py-2 pr-2  first:pl-2 last:pr-2 md:h-10 first:md:pl-6 last:md:pr-6',
+                    'h-9 py-2 pr-2  first:pl-2 last:pr-2 md:h-10 md:first:pl-6 md:last:pr-6',
                     cell.column.columnDef.meta?.cellClassName,
                   )}
                 >

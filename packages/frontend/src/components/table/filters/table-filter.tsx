@@ -64,12 +64,12 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
     >
       <SelectTrigger
         className={cn(
-          'primary-card:bg-surface-secondary primary-card:data-[state=open]:hover:bg-surface-tertiary',
+          'primary-card:bg-surface-secondary hover:data-[state=open]:primary-card:bg-surface-tertiary',
           value !== undefined && 'text-brand',
         )}
         icon={
           value !== undefined ? (
-            <div className="inline-flex size-3 items-center justify-center rounded-sm bg-current">
+            <div className="inline-flex size-3 items-center justify-center rounded-xs bg-current">
               <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
             </div>
           ) : undefined
@@ -88,7 +88,7 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
           <SelectItem
             key={option}
             value={option}
-            className="primary-card:focus:bg-surface-tertiary"
+            className="focus:primary-card:bg-surface-tertiary"
           >
             {option}
           </SelectItem>

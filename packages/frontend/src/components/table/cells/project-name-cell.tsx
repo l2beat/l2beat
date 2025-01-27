@@ -27,7 +27,7 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
-        <PrimaryValueCell className="font-bold !leading-none">
+        <PrimaryValueCell className="font-bold leading-none!">
           {project.shortName ?? project.name}
         </PrimaryValueCell>
         {project.statuses?.verificationWarning === true && (

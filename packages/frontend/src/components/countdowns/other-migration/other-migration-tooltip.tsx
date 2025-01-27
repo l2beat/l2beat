@@ -31,7 +31,7 @@ export function OtherMigrationTooltip({
           className="mx-auto w-full"
           withBackground
         />
-        <p className="!mt-4 text-base font-bold leading-none text-primary">
+        <p className="mt-4! text-base font-bold leading-none text-primary">
           Reasons
         </p>
         <p className="text-[13px]">

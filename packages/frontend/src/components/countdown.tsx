@@ -84,7 +84,7 @@ function TimePart({
   return (
     <div
       className={cn(
-        'rounded bg-brand px-3 py-2 text-center font-bold text-primary-invert',
+        'rounded-sm bg-brand px-3 py-2 text-center font-bold text-primary-invert',
         size === 'lg' && 'text-[28px]',
         size === 'md' && 'text-2xl leading-none',
         size === 'sm' && 'text-[18px]',

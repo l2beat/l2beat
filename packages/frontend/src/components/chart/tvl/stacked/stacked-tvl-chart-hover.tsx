@@ -36,7 +36,7 @@ export function StackedTvlChartHover(props: Props) {
     },
   ]
   return (
-    <div className="flex w-36 flex-col gap-1 xs:!w-52">
+    <div className="flex w-36 flex-col gap-1 xs:w-52!">
       <div>
         {formatTimestamp(props.timestamp, {
           mode: 'datetime',
@@ -64,7 +64,7 @@ export function StackedTvlChartHover(props: Props) {
                   <div
                     role="img"
                     aria-label="Square icon"
-                    className={cn('size-3 rounded', v.className)}
+                    className={cn('size-3 rounded-sm', v.className)}
                   ></div>
                   <span>{v.title}</span>
                 </span>

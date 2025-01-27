@@ -89,7 +89,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
+      <span className="text-lg font-medium leading-none! md:text-xl md:font-bold">
         {props.value}
       </span>
     </li>

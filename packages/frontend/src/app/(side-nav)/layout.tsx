@@ -9,12 +9,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       logoLink="/scaling/summary"
       topChildren={
         <>
-          <RecategorisationPreviewBanner className="only:lg:rounded-b-xl only:xl:rounded-br-none" />
+          <RecategorisationPreviewBanner className="lg:only:rounded-b-xl xl:only:rounded-br-none" />
           <Banner className="lg:rounded-b-xl xl:rounded-br-none" />
         </>
       }
     >
-      <div className="mx-auto min-h-screen max-w-screen-lg md:px-6 lg:pl-0 lg:pr-3">
+      <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-6 lg:pl-0 lg:pr-3">
         {children}
       </div>
       <Footer

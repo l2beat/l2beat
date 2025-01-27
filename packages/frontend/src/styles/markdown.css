@@ -63,11 +63,11 @@
 }
 
 .mdc code {
-  @apply rounded bg-gray-100 px-1 font-mono text-sm dark:bg-zinc-700 break-words;
+  @apply rounded-sm bg-gray-100 px-1 font-mono text-sm dark:bg-zinc-700 break-words;
 }
 
 .mdc pre {
-  @apply overflow-auto rounded bg-gray-100 px-4 py-2 font-mono text-sm dark:bg-zinc-700;
+  @apply overflow-auto rounded-sm bg-gray-100 px-4 py-2 font-mono text-sm dark:bg-zinc-700;
 }
 
 .mdc pre code {

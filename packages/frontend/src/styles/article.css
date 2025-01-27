@@ -69,11 +69,11 @@
 }
 
 .article code {
-  @apply rounded bg-gray-100 px-1 font-mono text-sm dark:bg-zinc-900;
+  @apply rounded-sm bg-gray-100 px-1 font-mono text-sm dark:bg-zinc-900;
 }
 
 .article pre {
-  @apply overflow-auto rounded border-zinc-700 border bg-gray-100 px-4 py-2 font-mono text-sm md:text-base dark:bg-zinc-900;
+  @apply overflow-auto rounded-sm border-zinc-700 border bg-gray-100 px-4 py-2 font-mono text-sm md:text-base dark:bg-zinc-900;
 }
 
 .article pre code {

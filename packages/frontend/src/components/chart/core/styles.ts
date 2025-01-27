@@ -71,23 +71,23 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   },
   roundedPurpleSquare: {
     type: 'div',
-    className: 'size-4 bg-purple-100 rounded',
+    className: 'size-4 bg-purple-100 rounded-sm',
   },
   roundedBlueSquare: {
     type: 'div',
-    className: 'size-4 dark:bg-sky-500 bg-sky-550 rounded',
+    className: 'size-4 dark:bg-sky-500 bg-sky-550 rounded-sm',
   },
   roundedLightYellowSquare: {
     type: 'div',
-    className: 'size-4 dark:bg-yellow-100 bg-orange-400 rounded',
+    className: 'size-4 dark:bg-yellow-100 bg-orange-400 rounded-sm',
   },
   roundedYellowSquare: {
     type: 'div',
-    className: 'size-4 bg-yellow-200 rounded',
+    className: 'size-4 bg-yellow-200 rounded-sm',
   },
   roundedPinkSquare: {
     type: 'div',
-    className: 'size-4 bg-pink-100 rounded',
+    className: 'size-4 bg-pink-100 rounded-sm',
   },
   milestone: {
     type: 'div',

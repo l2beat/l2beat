@@ -42,7 +42,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  'group inline-flex w-max items-center justify-center rounded-md bg-surface-primary px-2 py-1.5 text-xs font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50',
+  'group inline-flex w-max items-center justify-center rounded-md bg-surface-primary px-2 py-1.5 text-xs font-medium transition-colors focus:outline-hidden disabled:pointer-events-none disabled:opacity-50',
 )
 
 const NavigationMenuTrigger = ({
@@ -80,7 +80,7 @@ const NavigationMenuContent = ({
       'absolute z-20 rounded-md p-2 shadow-lg',
       'mt-[5px] w-fit bg-surface-primary',
       'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90',
-      'data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion]:!zoom-in-100 data-[motion]:!zoom-out-100 data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52',
+      'data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-motion:zoom-in-100! data-motion:zoom-out-100! data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52',
       className,
     )}
     {...props}

@@ -49,7 +49,7 @@ export function InlinedNoBridgeGrissiniDetailsPlaceholder({
   return (
     <div
       className={cn(
-        'flex flex-row items-stretch rounded bg-header-secondary md:h-[5.125rem]',
+        'flex flex-row items-stretch rounded-sm bg-header-secondary md:h-[5.125rem]',
         className,
       )}
     >

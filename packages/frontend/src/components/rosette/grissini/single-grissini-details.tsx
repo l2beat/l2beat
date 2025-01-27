@@ -22,7 +22,7 @@ export function SingleGrissiniDetails({
   return (
     <div
       className={cn(
-        'flex h-12 flex-row items-stretch rounded md:h-[5.125rem]',
+        'flex h-12 flex-row items-stretch rounded-sm md:h-[5.125rem]',
         sentimentToTransparentBgColor(sentiment),
         className,
       )}
@@ -37,7 +37,7 @@ export function SingleGrissiniDetails({
         </div>
         <div
           className={cn(
-            'text-sm font-bold !leading-none md:text-lg',
+            'text-sm font-bold leading-none! md:text-lg',
             sentimentToTextColor(sentiment, { vibrant: true }),
           )}
         >

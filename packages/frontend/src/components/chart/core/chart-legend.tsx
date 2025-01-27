@@ -19,7 +19,7 @@ export function ChartLegend(props: ChartLegendProps) {
     >
       {props.elements.map((e) => (
         <div key={e.name} className="flex items-center gap-[3px]">
-          <div className={cn('size-2.5 rounded-sm', e.color)} />
+          <div className={cn('size-2.5 rounded-xs', e.color)} />
           <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">
             {e.name}
           </span>

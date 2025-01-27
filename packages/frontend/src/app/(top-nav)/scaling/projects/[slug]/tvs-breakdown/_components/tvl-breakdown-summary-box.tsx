@@ -110,7 +110,7 @@ function StatsItem(props: StatsItemProps) {
               className={cn(
                 'md:size-3.5',
                 props.big
-                  ? 'fill-black dark:fill-white md:!fill-secondary'
+                  ? 'fill-black dark:fill-white md:fill-secondary!'
                   : 'fill-secondary',
               )}
             />

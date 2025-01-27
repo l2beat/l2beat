@@ -18,12 +18,12 @@ export function EthereumDaEntry({ entry }: { entry: DaSummaryEthereumEntry }) {
   return (
     <Link href={entry.href ?? ''} className="group">
       <div className="mb-3 overflow-auto max-md:-mr-4">
-        <div className="relative flex min-w-[940px] items-center justify-between gap-3 rounded-lg bg-blue-300 px-4 py-1 transition-colors duration-200 group-hover:bg-blue-400 dark:bg-blue-950 group-hover:dark:bg-blue-900 max-md:mr-4 md:py-3">
+        <div className="relative flex min-w-[940px] items-center justify-between gap-3 rounded-lg bg-blue-300 px-4 py-1 transition-colors duration-200 group-hover:bg-blue-400 dark:bg-blue-950 dark:group-hover:bg-blue-900 max-md:mr-4 md:py-3">
           <Tooltip>
             <TooltipTrigger>
               <InfoIcon variant="blue" />
             </TooltipTrigger>
-            <TooltipContent className="z-[1000]">
+            <TooltipContent className="z-1000">
               From the rollup perspective, Ethereum&apos;s canonical chain
               cannot contain unavailable data commitments as full nodes
               self-verify the data availability of each block, discarding blocks

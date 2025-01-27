@@ -62,7 +62,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                 asChild
                 className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-divider bg-surface-primary px-6 py-4 md:flex-row"
               >
-                <div className="grid md:grid-cols-[1.5fr,1fr,1fr,1fr,130px,70px]">
+                <div className="grid md:grid-cols-[1.5fr_1fr_1fr_1fr_130px_70px]">
                   <div className="mb-3 flex items-center gap-2 md:hidden">
                     <Image
                       width={18}

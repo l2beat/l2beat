@@ -76,7 +76,7 @@ function MilestonesBase(props: {
             <div key={i} className="relative pb-7">
               <div
                 className={cn(
-                  'absolute left-[-1.445rem] top-3 h-full w-[1.7px] bg-gradient-to-b dark:w-px',
+                  'absolute left-[-1.445rem] top-3 h-full w-[1.7px] bg-linear-to-b dark:w-px',
                   milestone.type === 'general' && [
                     'from-green-400 dark:from-green-500',
                     milestone.next?.type === 'general' &&
@@ -101,7 +101,7 @@ function MilestonesBase(props: {
                 <div
                   className={cn(
                     'absolute left-[-1.445rem] top-3 h-full w-[1.7px] transition-opacity duration-300 dark:w-px',
-                    'bg-gradient-to-b from-transparent to-gray-100 dark:to-zinc-900',
+                    'bg-linear-to-b from-transparent to-gray-100 dark:to-zinc-900',
                     props.isOpen === true && 'opacity-0',
                   )}
                 />

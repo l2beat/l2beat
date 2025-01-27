@@ -32,9 +32,9 @@ export function getRowTypeClassNames(rowType: RowType) {
     case 'unverified':
       return 'bg-red-100/70 dark:bg-red-900/70 hover:bg-red-100/90 dark:hover:bg-red-900/90'
     case 'under-review':
-      return 'bg-yellow-200/10 hover:!bg-yellow-200/20'
+      return 'bg-yellow-200/10 hover:bg-yellow-200/20!'
     default:
-      return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05] hover:shadow-sm'
+      return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05] hover:shadow-xs'
   }
 }
 
@@ -45,8 +45,8 @@ export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
     case 'unverified':
       return 'bg-[#FEE4E4] dark:bg-[#371315] group-hover/row:bg-[#FDDDDD] dark:group-hover/row:bg-[#3F1112]'
     case 'under-review':
-      return 'bg-[#faf5e6] dark:bg-[#2F2A1D] group-hover/row:!bg-[#FBEFC9] dark:group-hover/row:!bg-[#453B1A]'
+      return 'bg-[#faf5e6] dark:bg-[#2F2A1D] group-hover/row:bg-[#FBEFC9]! dark:group-hover/row:bg-[#453B1A]!'
     default:
-      return 'bg-surface-primary group-hover/row:shadow-sm group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2E2F35]'
+      return 'bg-surface-primary group-hover/row:shadow-xs group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#2E2F35]'
   }
 }

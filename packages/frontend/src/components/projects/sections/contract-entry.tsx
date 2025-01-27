@@ -73,7 +73,7 @@ export function ContractEntry({
       icon={icon}
       body={
         <>
-          <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
+          <div className="flex flex-wrap items-center gap-x-2 leading-[1.15]!">
             <strong id={contract.name}>{contract.name}</strong>{' '}
             {contract.addresses.map((address, i) => (
               <HighlightableLink

@@ -207,7 +207,7 @@ export function BasicDaTable<T extends BasicEntry>({
                         cell.column.getIsPinned() &&
                           getRowTypeClassNamesWithoutOpacity(),
                         groupParams?.isFirstInGroup && 'pl-6',
-                        groupParams?.isLastInGroup && '!pr-6',
+                        groupParams?.isLastInGroup && 'pr-6!',
                         cell.column.getCanSort() && meta?.align === undefined
                           ? groupParams?.isFirstInGroup
                             ? 'pl-10'

@@ -113,7 +113,7 @@ export const columns = [
       )
     },
     meta: {
-      cellClassName: '!pr-4',
+      cellClassName: 'pr-4!',
     },
   }),
 ]

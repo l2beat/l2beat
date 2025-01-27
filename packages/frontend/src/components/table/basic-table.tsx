@@ -186,7 +186,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
           getRowTypeClassNames(rowType),
           row.getIsExpanded() &&
             props.renderSubComponent?.({ row }) &&
-            '!border-none',
+            'border-none!',
           className,
         )}
       >
@@ -212,7 +212,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                   cell.column.getIsPinned() &&
                     getRowTypeClassNamesWithoutOpacity(rowType),
                   groupParams?.isFirstInGroup && 'pl-6',
-                  groupParams?.isLastInGroup && '!pr-6',
+                  groupParams?.isLastInGroup && 'pr-6!',
                   cell.column.getCanSort() && meta?.align === undefined
                     ? groupParams?.isFirstInGroup
                       ? 'pl-10'

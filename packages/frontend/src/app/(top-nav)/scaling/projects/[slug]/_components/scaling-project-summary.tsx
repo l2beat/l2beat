@@ -52,7 +52,7 @@ export function ScalingProjectSummary({ project }: Props) {
                 )}
               </div>
             ) : null}
-            <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
+            <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:my-6! md:hidden" />
 
             <div className="max-md:hidden">
               <DesktopProjectLinks projectLinks={project.header.links} />
@@ -63,7 +63,7 @@ export function ScalingProjectSummary({ project }: Props) {
                 detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
                 isArchived={project.isArchived}
               />
-              <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
+              <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:my-6! md:hidden" />
               <ScalingProjectStats
                 project={project}
                 className="md:col-span-2"

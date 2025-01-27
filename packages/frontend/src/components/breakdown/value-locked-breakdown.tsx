@@ -77,7 +77,7 @@ export function ValueLockedBreakdownTooltipContent({
                     role="img"
                     aria-label="Square icon"
                     className={cn(
-                      'size-3 rounded bg-rose-500 dark:bg-rose-700',
+                      'size-3 rounded-sm bg-rose-500 dark:bg-rose-700',
                       v.className,
                     )}
                   ></div>

@@ -126,7 +126,7 @@ function AnomalyTypeBadge(props: {
   type: LivenessAnomaly['type']
 }) {
   return (
-    <span className="w-max rounded bg-orange-400 px-1.5 py-0.5 text-black">
+    <span className="w-max rounded-sm bg-orange-400 px-1.5 py-0.5 text-black">
       {typeToLabel(props.type)}
     </span>
   )

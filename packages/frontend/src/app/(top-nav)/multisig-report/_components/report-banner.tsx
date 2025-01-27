@@ -3,7 +3,7 @@ import multisigReportImage from './landscape.png'
 
 export function ReportBanner() {
   return (
-    <div className="mb-10 mt-8 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:my-12 md:grid md:grid-cols-2 md:bg-gradient-to-r">
+    <div className="mb-10 mt-8 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:my-12 md:grid md:grid-cols-2 md:bg-linear-to-r">
       <div className="mx-0 my-8 flex flex-col justify-center md:mx-12">
         <div className="mb-2 font-medium uppercase leading-5 text-gray-50 md:text-xl md:text-[#4F4F4F]">
           Just Released

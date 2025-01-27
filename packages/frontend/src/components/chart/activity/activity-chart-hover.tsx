@@ -67,7 +67,7 @@ export function ActivityChartHover(props: Props) {
       {props.showEthereum && (
         <div className="flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1">
-            <div className="relative inline-block size-3 rounded bg-indicator-ethereum"></div>
+            <div className="relative inline-block size-3 rounded-sm bg-indicator-ethereum"></div>
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">
@@ -110,7 +110,7 @@ export function ActivityChartHover(props: Props) {
       {props.showEthereum && (
         <div className="flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1">
-            <div className="relative inline-block size-3 rounded bg-indicator-ethereum"></div>
+            <div className="relative inline-block size-3 rounded-sm bg-indicator-ethereum"></div>
             <span>Ethereum</span>
           </div>
           <span className="whitespace-nowrap font-bold tabular-nums">

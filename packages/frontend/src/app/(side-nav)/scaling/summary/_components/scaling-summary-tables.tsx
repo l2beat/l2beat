@@ -67,7 +67,7 @@ export function ScalingSummaryTables(props: Props) {
 
   return (
     <>
-      <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
+      <HorizontalSeparator className="my-4 border-divider! max-md:hidden" />
       <ScalingSummaryFilters
         items={[
           ...entries.rollups,
