@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
 import { Badge } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
 import type { Layer2 } from './types'
@@ -36,7 +35,7 @@ export const rufus: Layer2 = underReviewL2({
     type: 'rpc',
     defaultUrl: 'https://rufus.calderachain.xyz/http',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   escrows: [

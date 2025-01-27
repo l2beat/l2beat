@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import type { Layer3 } from './types'
 
@@ -40,7 +38,7 @@ export const hook: Layer3 = underReviewL3({
     startBlock: 1,
     defaultUrl: 'https://hook.calderachain.xyz/http',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     // BRIDGE

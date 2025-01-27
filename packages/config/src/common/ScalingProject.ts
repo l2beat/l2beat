@@ -532,7 +532,9 @@ export interface ScalingProjectTechnologyChoice {
   isUnderReview?: boolean
 }
 
-export type AssessCount = (count: number, blockNumber: number) => number
+export type AdjustCount =
+  | { type: 'SubtractOne' }
+  | { type: 'SubtractOneSinceBlock'; blockNumber: number }
 
 export interface SimpleTransactionApi<T extends string> {
   type: T
@@ -544,7 +546,7 @@ export interface RpcTransactionApi {
   type: 'rpc'
   defaultUrl: string
   defaultCallsPerMinute?: number
-  assessCount?: AssessCount
+  adjustCount?: AdjustCount
   startBlock?: number
 }
 

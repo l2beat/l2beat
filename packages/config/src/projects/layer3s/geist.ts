@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
-import { subtractOne } from '../../common/assessCount'
+
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -50,7 +50,7 @@ export const geist: Layer3 = orbitStackL3({
     type: 'rpc',
     defaultUrl: 'https://geist-mainnet.g.alchemy.com/public',
     defaultCallsPerMinute: 600,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   bridge: discovery.getContract('ERC20Bridge'),

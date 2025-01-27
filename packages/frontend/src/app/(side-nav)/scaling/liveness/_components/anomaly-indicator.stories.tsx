@@ -6,100 +6,42 @@ const meta = {
   title: 'Components/AnomalyIndicator',
   component: AnomalyIndicator,
   args: {
-    anomalyEntries: [
+    anomalies: [
       {
-        isAnomaly: true,
-        anomalies: [
-          {
-            timestamp: 1696758992,
-            durationInSeconds: 120 * 60,
-            type: 'stateUpdates',
-          },
-        ],
+        timestamp: 1696758992,
+        durationInSeconds: 120 * 60,
+        type: 'stateUpdates',
       },
       {
-        isAnomaly: true,
-        anomalies: [
-          {
-            timestamp: 1697277392,
-            durationInSeconds: 20 * 60,
-            type: 'batchSubmissions',
-          },
-        ],
+        timestamp: 1697277392,
+        durationInSeconds: 20 * 60,
+        type: 'batchSubmissions',
       },
-      { isAnomaly: false },
       {
-        isAnomaly: true,
-        anomalies: [
-          {
-            timestamp: 1697363792,
-            durationInSeconds: 1440 * 60,
-            type: 'stateUpdates',
-          },
-        ],
+        timestamp: 1697363792,
+        durationInSeconds: 1440 * 60,
+        type: 'stateUpdates',
       },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
       {
-        isAnomaly: true,
-        anomalies: [
-          {
-            timestamp: 1697622992,
-            durationInSeconds: 180 * 60,
-            type: 'stateUpdates',
-          },
-        ],
+        timestamp: 1697622992,
+        durationInSeconds: 180 * 60,
+        type: 'stateUpdates',
       },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
       {
-        isAnomaly: true,
-        anomalies: [
-          {
-            timestamp: 1698054992,
-            durationInSeconds: 45 * 60,
-            type: 'batchSubmissions',
-          },
-        ],
+        timestamp: 1698054992,
+        durationInSeconds: 45 * 60,
+        type: 'batchSubmissions',
       },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
       {
-        isAnomaly: true,
-        anomalies: [
-          {
-            timestamp: 1698227792,
-            durationInSeconds: 15 * 60,
-            type: 'stateUpdates',
-          },
-        ],
+        timestamp: 1698227792,
+        durationInSeconds: 15 * 60,
+        type: 'stateUpdates',
       },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
       {
-        isAnomaly: true,
-        anomalies: [
-          {
-            timestamp: 1698663392,
-            durationInSeconds: 75 * 60,
-            type: 'stateUpdates',
-          },
-        ],
+        timestamp: 1698663392,
+        durationInSeconds: 75 * 60,
+        type: 'stateUpdates',
       },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
-      { isAnomaly: false },
     ],
   },
 } satisfies Meta<typeof AnomalyIndicator>

@@ -25,6 +25,7 @@ describe(BlockTxsCountService.name, () => {
         projectId: ProjectId('a'),
         provider: client,
         uopsAnalyzer: analyzer,
+        assessCount: (count) => count,
       })
 
       const result = await txsCountProvider.getTxsCount(1, 3)
