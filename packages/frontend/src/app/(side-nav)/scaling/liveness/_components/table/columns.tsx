@@ -84,7 +84,7 @@ export const columns = [
 
       return (
         <AnomalyIndicator
-          anomalyEntries={entry.anomalies}
+          anomalies={entry.anomalies}
           showComingSoon={showComingSoon}
         />
       )
