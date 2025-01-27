@@ -173,7 +173,8 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 function opStackCommon(
   type: (Layer2 | Layer3)['type'],
   templateVars: OpStackConfigCommon,
-  explorerUrl?: string,
+  explorerUrl: string | undefined,
+  incomingNativeDA?: ProjectDataAvailability,
 ): Omit<ScalingProject, 'type' | 'display' | 'config'> & {
   display: Pick<
     ScalingProjectDisplay,
@@ -237,6 +238,20 @@ function opStackCommon(
   }
   assert(daBadge !== undefined, 'DA badge must be defined')
 
+  const automaticBadges = templateVars.usingAltVm
+    ? [Badge.Stack.OPStack, daBadge]
+    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
+
+  const nativeDA =
+    incomingNativeDA ??
+    addSentimentToDataAvailability({
+      layers: [
+        usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+      ],
+      bridge: DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    })
+
   const portal =
     templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
   const l2OutputOracle =
@@ -249,9 +264,6 @@ function opStackCommon(
     upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
-  const automaticBadges = templateVars.usingAltVm
-    ? [Badge.Stack.OPStack, daBadge]
-    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
   // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
   // archi images defined locally in the project.ts take precedence over this one
@@ -481,6 +493,7 @@ function opStackCommon(
     stateDerivation: templateVars.stateDerivation,
     riskView: templateVars.riskView ?? getRiskView(templateVars, portal),
     stage: templateVars.stage ?? computedStage(templateVars, daProvider),
+    dataAvailability: decideDA(templateVars, nativeDA),
   }
 }
 
@@ -497,12 +510,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     templateVars.discovery.getContract('L2OutputOracle')
 
   const daProvider = getDAProvider(templateVars)
-
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValue<{
-      isSequencerSendingBlobTx: boolean
-    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
 
   const FINALIZATION_PERIOD_SECONDS =
     templateVars.discovery.getContractValue<number>(
@@ -585,16 +592,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ]),
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    dataAvailability: decideDA(
-      templateVars,
-      addSentimentToDataAvailability({
-        layers: [
-          usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-        ],
-        bridge: DA_BRIDGES.ENSHRINED,
-        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-      }),
-    ),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
@@ -611,6 +608,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
+    baseChain.dataAvailability,
   )
 
   const stackedRisk = {
@@ -644,12 +642,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
-    dataAvailability: decideDA(templateVars, baseChain.dataAvailability),
   }
-}
-
-function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
-  return DA === undefined ? RISK_VIEW.DATA_ON_CHAIN : DA.riskView
 }
 
 function getRiskView(
@@ -673,7 +666,9 @@ function getRiskView(
       secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
     },
     dataAvailability: {
-      ...riskViewDA(daProvider),
+      ...(daProvider === undefined
+        ? RISK_VIEW.DATA_ON_CHAIN
+        : daProvider.riskView),
       sources: [{ contract: portal.name, references: [] }],
     },
     exitWindow: {
@@ -681,9 +676,9 @@ function getRiskView(
       sources: [{ contract: portal.name, references: [] }],
     },
     sequencerFailure: {
+      // the value is inside the node config, but we have no reference to it
+      // so we assume it to be the same value as in other op stack chains
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-        // the value is inside the node config, but we have no reference to it
-        // so we assume it to be the same value as in other op stack chains
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
