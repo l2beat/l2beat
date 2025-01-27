@@ -143,7 +143,7 @@ export const celestia: BlockchainDaLayer = {
   },
   pruningWindow: 86400 * 30, // 30 days in seconds
   throughput: {
-    size: 2000, // 2 MB
+    size: 8000, // 8 MB
     frequency: 6, // 6 seconds
   },
   risks: {
