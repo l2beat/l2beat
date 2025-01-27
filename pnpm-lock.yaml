@@ -929,8 +929,8 @@ importers:
   packages/shared-pure:
     dependencies:
       '@mradomski/tinyerc55':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.1
+        version: 0.1.1
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
@@ -2596,8 +2596,8 @@ packages:
   '@mradomski/fast-solidity-parser@0.1.1':
     resolution: {integrity: sha512-BnX+UKswinYed/yFgH9zwYNNBvUXJu32vJkxwnkZuPcV/YR9TDzMgjAOhiq8Vj77wDcfHHhyA0/MdIMhkd92PQ==}
 
-  '@mradomski/tinyerc55@0.1.0':
-    resolution: {integrity: sha512-1Sxb0MaWQLQoUEGkJ73NygHnhEOjifxVbw1z3qkU1zfm5Ub0LHjtLl/Zj6HeixX9O5SjZZbS138TvIE6QiKVkw==}
+  '@mradomski/tinyerc55@0.1.1':
+    resolution: {integrity: sha512-cMsweutjiqWSazlBN5YgRWPe6Sy9Z/ZPQ8MyVqNsxsZodH5i0L74FydvIASIQFLYWKhk0mktRaJ/VDDf/+AFbg==}
 
   '@mrleebo/prisma-ast@0.7.0':
     resolution: {integrity: sha512-GTPkYf1meO2UXXIrz/SIDFWz+P4kXo2PTt36LYh/oNxV1PieYi7ZgenQk4IV0ut71Je3Z8ZoNZ8Tr7v2c1X1pg==}
@@ -11025,7 +11025,7 @@ snapshots:
 
   '@mradomski/fast-solidity-parser@0.1.1': {}
 
-  '@mradomski/tinyerc55@0.1.0': {}
+  '@mradomski/tinyerc55@0.1.1': {}
 
   '@mrleebo/prisma-ast@0.7.0':
     dependencies:
