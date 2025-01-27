@@ -283,7 +283,7 @@ function opStackCommon(
               startBlock: 1,
               defaultUrl: templateVars.rpcUrl,
               defaultCallsPerMinute: 1500,
-              assessCount: subtractOne,
+              adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
       escrows: [
