@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x94b2c7c427bbb850dac4e4bcbea018d366028aa6
+
+# Diff at Mon, 27 Jan 2025 13:32:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 21679920
+- current block number: 21716177
+
+## Description
+
+New usdc bridge admin transfer finalized.
+
+## Watched changes
+
+```diff
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) {
+    +++ description: None
+      values.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      values.pendingAdmin:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x5eb22ac8d74bc92d3dbf90a46549a36c36d4706c
 
 # Diff at Wed, 22 Jan 2025 12:22:26 GMT:
