@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 21717181,
-  "configHash": "0xb6d0a9ed1b7d1461ef9395e98c9eebd6d85be95f0f6b6aa09e2fa5d8f1b2e6c4",
+  "configHash": "0xe1ad04950d815b8f0d9e5f9fce1a35fdd8d9a9d5467f76fc0f54729456405409",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -163,12 +163,6 @@
       "sinceTimestamp": 1730797559,
       "values": {
         "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          }
-        },
         "owner": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
@@ -275,9 +269,8 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx",
-        "baseTokenGasPriceMultiplierNominator",
-        "baseTokenGasPriceMultiplierDenominator"
+        "priorityQueueFrontOperation",
+        "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1731379871,
       "values": {
@@ -431,6 +424,11 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "priorityQueueFrontOperation": {
+          "canonicalTxHash": "0xb80798498e4f4f491ae7faff6943a377d92b8de19c53479f36e37700b5c222aa",
+          "expirationTimestamp": 1737944999,
+          "layer2Tip": 0
+        },
         "txFilterer": [
           {
             "oldTransactionFilterer": "0x0000000000000000000000000000000000000000",
@@ -446,13 +444,12 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change"
+          "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
           "severity": "LOW",
-          "description": "Verifier parameters used for proving batches"
-        },
-        "daMode": { "description": "0 = rollup; 1 = Validium" }
+          "description": "Verifier parameters used for proving batches."
+        }
       },
       "derivedName": "DiamondProxy"
     },
@@ -823,7 +820,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
     "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
-    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
+    "shared-zk-stack/Diamond": "0x0b33cf6de9567de78818bb6a88d149b4e6e2909a396e25a43bc0527c98771ea3",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

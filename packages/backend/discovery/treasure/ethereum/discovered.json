@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 21717208,
-  "configHash": "0x0b34a57a3ca60194e9009d00d783c9524c6d41735853b7ee44a9aa9221b7369d",
+  "configHash": "0x69d65dfe49ca47499baf1a8e91813e3e64f98cabc2c5ef3eb14ea816c92b5c02",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -130,9 +130,8 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx",
-        "baseTokenGasPriceMultiplierNominator",
-        "baseTokenGasPriceMultiplierDenominator"
+        "priorityQueueFrontOperation",
+        "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1732199087,
       "values": {
@@ -286,6 +285,11 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "priorityQueueFrontOperation": {
+          "canonicalTxHash": "0xe5068578ffb5612cdfe2e99c7ee71413497b9c68ad0244e0f4ea4435d8345868",
+          "expirationTimestamp": 1737921623,
+          "layer2Tip": 0
+        },
         "txFilterer": [],
         "validators": ["0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
       },
@@ -296,13 +300,12 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change"
+          "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
           "severity": "LOW",
-          "description": "Verifier parameters used for proving batches"
-        },
-        "daMode": { "description": "0 = rollup; 1 = Validium" }
+          "description": "Verifier parameters used for proving batches."
+        }
       },
       "derivedName": "DiamondProxy"
     },
@@ -337,12 +340,6 @@
       "sinceTimestamp": 1731546443,
       "values": {
         "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          }
-        },
         "owner": "0x282370D1e925ee897CB29Cb3beC13aAe0743067C",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
@@ -604,7 +601,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
     "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
-    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
+    "shared-zk-stack/Diamond": "0x0b33cf6de9567de78818bb6a88d149b4e6e2909a396e25a43bc0527c98771ea3",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

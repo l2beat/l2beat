@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc8c469908f4b19ee242c35059293550a031c0cd8
+Generated with discovered.json: 0xbd2801998e8ba475245bc16296f94182fde67ac7
 
-# Diff at Mon, 27 Jan 2025 19:04:01 GMT:
+# Diff at Mon, 27 Jan 2025 19:25:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21686341
@@ -27,9 +27,21 @@ discovery. Values are for block 21686341 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce) {
     +++ description: None
       receivedPermissions:
++        [{"permission":"configure","from":"0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]
+    }
+```
+
+```diff
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      values.acAdmins:
++        ["0xfD7a03Cdb68E6488F950108A4d24f15519b87339","0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce","0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"]
+      directlyReceivedPermissions:
 +        [{"permission":"configure","from":"0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."}]
     }
 ```
@@ -37,12 +49,28 @@ discovery. Values are for block 21686341 (main branch discovery), not current.
 ```diff
     contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
     +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.description:
+-        "Protocol version, increments with each protocol change"
++        "Protocol version, increments with each protocol upgrade."
+      fieldMeta.getVerifierParams.description:
+-        "Verifier parameters used for proving batches"
++        "Verifier parameters used for proving batches."
       template:
 +        "shared-zk-stack/Diamond"
       description:
 +        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
       issuedPermissions:
-+        [{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"configure","to":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[]}]
++        [{"permission":"configure","to":"0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]},{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"configure","to":"0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]},{"permission":"configure","to":"0xfD7a03Cdb68E6488F950108A4d24f15519b87339","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]}]
+    }
+```
+
+```diff
+    contract TxFiltererOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]
     }
 ```
 

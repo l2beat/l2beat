@@ -37,68 +37,6 @@
           }
         }
       }
-    },
-    "ZeroNetworkZkEvmAdmin": {
-      "ignoreMethods": ["protocolVersionToUpgradeTimestamp"]
-    },
-    "ZeroNetworkZkEvm": {
-      "ignoreRelatives": ["getBaseToken"],
-      "ignoreMethods": [
-        "l2LogsRootHash",
-        "storedBlockHash",
-        "storedBatchHash",
-        "getName",
-        "priorityQueueFrontOperation"
-      ],
-      "ignoreInWatchMode": [
-        "getPriorityQueueSize",
-        "getTotalBlocksCommitted",
-        "getTotalBlocksExecuted",
-        "getTotalBlocksVerified",
-        "getTotalBatchesExecuted",
-        "getTotalBatchesVerified",
-        "getTotalBatchesCommitted",
-        "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx"
-      ],
-      "fields": {
-        "txFilterer": {
-          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
-          "severity": "HIGH",
-          "handler": {
-            "type": "event",
-            "select": ["oldTransactionFilterer", "newTransactionFilterer"],
-            "add": { "event": "NewTransactionFilterer" }
-          }
-        },
-        "validators": {
-          "handler": {
-            "type": "zksynceraValidators"
-          }
-        },
-        "getProtocolVersion": {
-          "description": "Protocol version, increments with each protocol change",
-          "severity": "MEDIUM"
-        },
-        "getVerifierParams": {
-          "description": "Verifier parameters used for proving batches",
-          "severity": "LOW"
-        },
-        "facets": {
-          "handler": {
-            "type": "eip2535Facets"
-          }
-        },
-        "daMode": {
-          "description": "0 = rollup; 1 = Validium",
-          "handler": {
-            "type": "storage",
-            "slot": 38,
-            "offset": 0,
-            "returnType": "uint8"
-          }
-        }
-      }
     }
   }
 }

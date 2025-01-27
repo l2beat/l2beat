@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "ethereum",
   "blockNumber": 21717100,
-  "configHash": "0xe13df395fea440201be56b0c706b442307d0f5f853c8b940320a19a02cc66509",
+  "configHash": "0x757151f9ef195eb1d78e9ac2f419812b756a7224a1b76be5728520ce5d4630fa",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -174,7 +174,7 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx",
+        "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1729268915,
@@ -339,6 +339,11 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "priorityQueueFrontOperation": {
+          "canonicalTxHash": "0x739c9c6fc58dff1a1a7c7d6523f9d7a24169585daa56081294258b01bf6a07f2",
+          "expirationTimestamp": 1737929579,
+          "layer2Tip": 0
+        },
         "txFilterer": [],
         "validators": ["0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
       },
@@ -349,13 +354,12 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change"
+          "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
           "severity": "LOW",
-          "description": "Verifier parameters used for proving batches"
-        },
-        "daMode": { "description": "0 = rollup; 1 = Validium" }
+          "description": "Verifier parameters used for proving batches."
+        }
       },
       "derivedName": "DiamondProxy"
     }
@@ -694,7 +698,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
     "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
-    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
+    "shared-zk-stack/Diamond": "0x0b33cf6de9567de78818bb6a88d149b4e6e2909a396e25a43bc0527c98771ea3",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

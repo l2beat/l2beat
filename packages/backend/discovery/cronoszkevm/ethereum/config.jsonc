@@ -52,64 +52,24 @@
               "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e": "FEE_ADMIN"
             }
           }
-        }
-      }
-    },
-    "CronosZkEvm": {
-      "ignoreRelatives": ["getBaseToken"],
-      // below is copypaste from zksyncera, pls modify when diamond is verified
-      "ignoreMethods": [
-        "l2LogsRootHash",
-        "storedBlockHash",
-        "storedBatchHash",
-        "getName"
-      ],
-      "ignoreInWatchMode": [
-        "getPriorityQueueSize",
-        "getTotalBlocksCommitted",
-        "getTotalBlocksExecuted",
-        "getTotalBlocksVerified",
-        "getTotalBatchesExecuted",
-        "getTotalBatchesVerified",
-        "getTotalBatchesCommitted",
-        "getTotalPriorityTxs",
-        "priorityQueueFrontOperation",
-        "getFirstUnprocessedPriorityTx"
-      ],
-      "fields": {
-        "txFilterer": {
-          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
-          "severity": "HIGH",
+        },
+        "acAdmins": {
           "handler": {
-            "type": "event",
-            "select": ["oldTransactionFilterer", "newTransactionFilterer"],
-            "add": { "event": "NewTransactionFilterer" }
-          }
-        },
-        "validators": {
-          "handler": {
-            "type": "zksynceraValidators"
-          }
-        },
-        "getProtocolVersion": {
-          "description": "Protocol version, increments with each protocol change",
-          "severity": "MEDIUM"
-        },
-        "getVerifierParams": {
-          "description": "Verifier parameters used for proving batches",
-          "severity": "LOW"
-        },
-        "facets": {
-          "handler": {
-            "type": "eip2535Facets"
-          }
-        },
-        "daMode": {
-          "handler": {
-            "type": "storage",
-            "slot": 38,
-            "offset": 0,
-            "returnType": "uint8"
+            "type": "accessControl",
+            "roleNames": {
+              "0xdf8b4c520ffe197c5343c6f5aec59570151ef9a492f2c624fd45ddde6135ec42": "ADMIN",
+              "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8": "ORACLE",
+              "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c": "UPGRADER",
+              "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e": "FEE_ADMIN"
+            },
+            "pickRoleMembers": "ADMIN"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "act"
+              }
+            ]
           }
         }
       }

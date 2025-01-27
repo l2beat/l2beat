@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 21717097,
-  "configHash": "0x0d844cc689775c8c1e8be7e39aed03a95732c59fa1da8d3f6fec7d72da7056cc",
+  "configHash": "0xf1664f172eb1be3356646e0466132b35b467838b53fab25f88dac13cc5b71e2d",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -41,7 +41,7 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx",
+        "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1729268843,
@@ -196,6 +196,11 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "priorityQueueFrontOperation": {
+          "canonicalTxHash": "0x89022ba2dbcc5a35d299778e66998661b1a6c2f32fc7433b2e5218b42562d2e8",
+          "expirationTimestamp": 1737920783,
+          "layer2Tip": 0
+        },
         "txFilterer": [],
         "validators": ["0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
       },
@@ -206,13 +211,12 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change"
+          "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
           "severity": "LOW",
-          "description": "Verifier parameters used for proving batches"
-        },
-        "daMode": { "description": "0 = rollup; 1 = Validium" }
+          "description": "Verifier parameters used for proving batches."
+        }
       },
       "derivedName": "DiamondProxy"
     },
@@ -290,12 +294,6 @@
       "sinceTimestamp": 1729079339,
       "values": {
         "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          }
-        },
         "owner": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
@@ -689,7 +687,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
     "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
-    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
+    "shared-zk-stack/Diamond": "0x0b33cf6de9567de78818bb6a88d149b4e6e2909a396e25a43bc0527c98771ea3",
     "shared-zk-stack/L1USDCBridge": "0x76f3122eede9ca9aa44a5309ed016ebdb226df16dffc395108138bc8a3fc74ab",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"

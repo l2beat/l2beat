@@ -641,7 +641,6 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0000000000000000000000000000000000000001" },
     {
       "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
       "receivedPermissions": [
@@ -1062,7 +1061,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
+    "shared-zk-stack/Diamond": "0x0b33cf6de9567de78818bb6a88d149b4e6e2909a396e25a43bc0527c98771ea3",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

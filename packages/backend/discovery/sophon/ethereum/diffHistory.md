@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x139e590b31bcb526ea34d1a9607b7feb4ce598a1
+Generated with discovered.json: 0x69d644a9a52ba22671329af419f338a52828bf73
 
-# Diff at Mon, 27 Jan 2025 19:04:03 GMT:
+# Diff at Mon, 27 Jan 2025 19:23:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21716177
@@ -19,6 +19,14 @@ discovery. Values are for block 21716177 (main branch discovery), not current.
 ```diff
     contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
     +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.description:
+-        "Protocol version, increments with each protocol change"
++        "Protocol version, increments with each protocol upgrade."
+      fieldMeta.getVerifierParams.description:
+-        "Verifier parameters used for proving batches"
++        "Verifier parameters used for proving batches."
+      fieldMeta.daMode:
+-        {"description":"0 = rollup; 1 = Validium"}
       template:
 +        "shared-zk-stack/Diamond"
       description:
@@ -41,6 +49,8 @@ discovery. Values are for block 21716177 (main branch discovery), not current.
 ```diff
     contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
     +++ description: None
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
       directlyReceivedPermissions:
 +        [{"permission":"configure","from":"0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."}]
     }

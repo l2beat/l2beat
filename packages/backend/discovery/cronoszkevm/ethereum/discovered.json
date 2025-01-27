@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 21717075,
-  "configHash": "0xd259bf356e781e71f0de2895373b730fd86975bfaafd5b9799b6e111ec804a0b",
+  "configHash": "0xc7495d40bace2a8f34900f868e5211914fc2e9d6c65fb4b3abbd0cf2a91d374d",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -28,6 +28,20 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1723609295,
       "values": {
@@ -97,7 +111,7 @@
       "sourceHashes": [
         "0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "configure",
           "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
@@ -107,6 +121,11 @@
       "sinceTimestamp": 1726967543,
       "values": {
         "$immutable": true,
+        "acAdmins": [
+          "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
+          "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
+          "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+        ],
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -168,15 +187,27 @@
       "issuedPermissions": [
         {
           "permission": "configure",
+          "to": "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        },
+        {
+          "permission": "configure",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "via": []
         },
         {
           "permission": "configure",
-          "to": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+          "to": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
           "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
-          "via": []
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        },
+        {
+          "permission": "configure",
+          "to": "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -383,11 +414,11 @@
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
-          "description": "Protocol version, increments with each protocol change"
+          "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
           "severity": "LOW",
-          "description": "Verifier parameters used for proving batches"
+          "description": "Verifier parameters used for proving batches."
         }
       },
       "derivedName": "DiamondProxy"
@@ -414,6 +445,20 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722375731,
       "values": {
@@ -462,7 +507,23 @@
     },
     { "address": "0xc7e3F37766627b5DAF734f5bb5e43Ae9327011D8" },
     { "address": "0xE9A03EB4C2262A7d01981cAD1f2c1FFa05CB64Fb" },
-    { "address": "0xfD7a03Cdb68E6488F950108A4d24f15519b87339" }
+    {
+      "address": "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"
+        }
+      ]
+    }
   ],
   "abis": {
     "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66": [
@@ -805,7 +866,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
+    "shared-zk-stack/Diamond": "0x0b33cf6de9567de78818bb6a88d149b4e6e2909a396e25a43bc0527c98771ea3",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

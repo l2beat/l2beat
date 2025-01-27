@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc66756fe2abd5350f6c130e271deaf18ae49ed50
+Generated with discovered.json: 0x544814888c56a24bde74e39b98746e623efd9cda
 
-# Diff at Mon, 27 Jan 2025 19:04:02 GMT:
+# Diff at Mon, 27 Jan 2025 19:23:06 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21629172
@@ -42,6 +42,8 @@ discovery. Values are for block 21629172 (main branch discovery), not current.
 ```diff
     contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
     +++ description: None
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
       directlyReceivedPermissions:
 +        [{"permission":"configure","from":"0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."}]
     }
@@ -60,6 +62,14 @@ discovery. Values are for block 21629172 (main branch discovery), not current.
 ```diff
     contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
     +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.description:
+-        "Protocol version, increments with each protocol change"
++        "Protocol version, increments with each protocol upgrade."
+      fieldMeta.getVerifierParams.description:
+-        "Verifier parameters used for proving batches"
++        "Verifier parameters used for proving batches."
+      fieldMeta.daMode:
+-        {"description":"0 = rollup; 1 = Validium"}
       template:
 +        "shared-zk-stack/Diamond"
       description:

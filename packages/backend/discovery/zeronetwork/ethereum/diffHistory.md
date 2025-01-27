@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6f3170126e4c2bee751de7fe478395dbb79cfad5
+Generated with discovered.json: 0xf120bd93dcba98aa39107798f6e49cbea8d290ac
 
-# Diff at Mon, 27 Jan 2025 19:04:28 GMT:
+# Diff at Mon, 27 Jan 2025 19:25:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21643075
@@ -47,6 +47,14 @@ discovery. Values are for block 21643075 (main branch discovery), not current.
 ```diff
     contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
     +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getProtocolVersion.description:
+-        "Protocol version, increments with each protocol change"
++        "Protocol version, increments with each protocol upgrade."
+      fieldMeta.getVerifierParams.description:
+-        "Verifier parameters used for proving batches"
++        "Verifier parameters used for proving batches."
+      fieldMeta.daMode:
+-        {"description":"0 = rollup; 1 = Validium"}
       template:
 +        "shared-zk-stack/Diamond"
       description:
