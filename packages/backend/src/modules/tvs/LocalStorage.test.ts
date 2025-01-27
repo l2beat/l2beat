@@ -31,16 +31,6 @@ describe(LocalStorage.name, () => {
       const amount = await storage.getAmount('token1', timestamp)
       expect(amount).toEqual(1000)
     })
-
-    it('throws when amount not found', async () => {
-      const storage = new LocalStorage(TEST_FILE_PATH)
-      const timestamp = UnixTime.now()
-      await expect(
-        storage.getAmount('nonexistent', timestamp),
-      ).toBeRejectedWith(
-        'Amount with id nonexistent-' + timestamp.toNumber() + ' not found',
-      )
-    })
   })
 
   describe('prices', () => {
@@ -60,14 +50,6 @@ describe(LocalStorage.name, () => {
       storage = new LocalStorage(TEST_FILE_PATH)
       const price = await storage.getPrice('token1', timestamp)
       expect(price).toEqual(1234.56)
-    })
-
-    it('throws when price not found', async () => {
-      const storage = new LocalStorage(TEST_FILE_PATH)
-      const timestamp = UnixTime.now()
-      await expect(storage.getPrice('nonexistent', timestamp)).toBeRejectedWith(
-        'Price with id nonexistent not found',
-      )
     })
   })
 

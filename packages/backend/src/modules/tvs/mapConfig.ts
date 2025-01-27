@@ -4,7 +4,7 @@ import type {
   BackendProjectEscrow,
 } from '@l2beat/backend-shared'
 import { type ChainConfig, tokenList } from '@l2beat/config'
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { tokenToTicker } from './providers/tickers'
 import {
@@ -116,6 +116,7 @@ function createToken(
   let amountFormula: AmountFormula
   let sinceTimestamp: UnixTime
   let untilTimestamp: UnixTime | undefined
+  let source: 'canonical' | 'external' | 'native'
 
   switch (legacyToken.supply) {
     case 'zero':
@@ -123,14 +124,15 @@ function createToken(
 
       amountFormula = {
         type: 'balanceOfEscrow',
-        address: legacyToken.address ?? EthereumAddress.ZERO,
-        chain: chain.name,
+        address: legacyToken.address ?? 'native',
+        chain: escrow.chain,
         escrowAddresses: [escrow.address],
         decimals: legacyToken.decimals,
       } as BalanceOfEscrowAmountFormula
 
       sinceTimestamp = escrow.sinceTimestamp
       untilTimestamp = escrow.untilTimestamp
+      source = escrow.source ?? legacyToken.source
       break
     case 'totalSupply':
       assert(
@@ -149,6 +151,7 @@ function createToken(
         chain.minTimestampForTvl,
         legacyToken.sinceTimestamp,
       )
+      source = legacyToken.source
       break
     case 'circulatingSupply':
       assert(
@@ -165,6 +168,7 @@ function createToken(
         chain.minTimestampForTvl,
         legacyToken.sinceTimestamp,
       )
+      source = legacyToken.source
       break
 
     default:
@@ -179,7 +183,7 @@ function createToken(
     sinceTimestamp,
     untilTimestamp,
     category: legacyToken.category,
-    source: legacyToken.source,
+    source: source,
     isAssociated:
       project.associatedTokens?.includes(legacyToken.symbol) ?? false,
   }

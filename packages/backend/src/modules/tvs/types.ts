@@ -27,7 +27,7 @@ export type AmountFormula =
 export interface BalanceOfEscrowAmountFormula {
   type: 'balanceOfEscrow'
   // token contract address
-  address: EthereumAddress
+  address: EthereumAddress | 'native'
   // token chain
   chain: string
   // escrow contract addresses
