@@ -49,7 +49,7 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { Badge, type BadgeId } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
@@ -69,6 +69,7 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
+  badge: Badge.DA.Celestia,
 }
 
 export const EIGENDA_DA_PROVIDER: DAProvider = {
@@ -76,6 +77,7 @@ export const EIGENDA_DA_PROVIDER: DAProvider = {
   riskView: RISK_VIEW.DATA_EIGENDA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
+  badge: Badge.DA.EigenDA,
 }
 
 export function DACHALLENGES_DA_PROVIDER(
@@ -93,6 +95,7 @@ export function DACHALLENGES_DA_PROVIDER(
       nodeSourceLink,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
+    badge: Badge.DA.DAC,
   }
 }
 
@@ -102,6 +105,7 @@ interface DAProvider {
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
   bridge: DataAvailabilityBridge
+  badge: BadgeId
 }
 
 interface OpStackConfigCommon {
@@ -203,19 +207,8 @@ function opStackCommon(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
 
-  // if usesBlobs is set to false at this point it means that it uses calldata
-  const postsToCelestia =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValue<{
-      isSomeTxsLengthEqualToCelestiaDAExample: boolean
-    }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider =
-    templateVars.daProvider ??
-    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
-
-  let daBadge: BadgeId | undefined = postsToCelestia
-    ? Badge.DA.Celestia
-    : undefined
+  const daProvider = getDAProvider(templateVars)
+  const postsToEthereum = daProvider === undefined
 
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -223,19 +216,11 @@ function opStackCommon(
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
 
-  if (daProvider === undefined) {
-    assert(
-      templateVars.isNodeAvailable !== undefined,
-      'isNodeAvailable must be defined if no DA provider is defined',
-    )
+  let daBadge: BadgeId | undefined = daProvider?.badge
+  if (postsToEthereum) {
     daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
   }
 
-  if (daBadge === undefined) {
-    daBadge = templateVars.additionalBadges?.find(
-      (b) => badges[b].type === 'DA',
-    )
-  }
   assert(daBadge !== undefined, 'DA badge must be defined')
 
   const automaticBadges = templateVars.usingAltVm
@@ -267,7 +252,7 @@ function opStackCommon(
 
   // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
   // archi images defined locally in the project.ts take precedence over this one
-  const architectureImage = `opstack-${daProvider !== undefined ? 'optimium' : 'rollup'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
+  const architectureImage = `opstack-${postsToEthereum ? 'rollup' : 'optimium'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
 
   return {
     isArchived: templateVars.isArchived,
@@ -280,7 +265,7 @@ function opStackCommon(
       provider: 'OP Stack',
       category:
         templateVars.display.category ??
-        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
+        (postsToEthereum ? 'Optimistic Rollup' : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -491,9 +476,10 @@ function opStackCommon(
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
-    riskView: templateVars.riskView ?? getRiskView(templateVars, portal),
-    stage: templateVars.stage ?? computedStage(templateVars, daProvider),
-    dataAvailability: decideDA(templateVars, nativeDA),
+    riskView:
+      templateVars.riskView ?? getRiskView(templateVars, daProvider, portal),
+    stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
+    dataAvailability: decideDA(daProvider, nativeDA),
   }
 }
 
@@ -509,8 +495,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     templateVars.l2OutputOracle ??
     templateVars.discovery.getContract('L2OutputOracle')
 
-  const daProvider = getDAProvider(templateVars)
-
   const FINALIZATION_PERIOD_SECONDS =
     templateVars.discovery.getContractValue<number>(
       l2OutputOracle.address,
@@ -525,72 +509,66 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       ...common.display,
       ...templateVars.display,
       warning: templateVars.display.warning,
-      liveness:
-        daProvider !== undefined
-          ? undefined
-          : {
-              warnings: {
-                stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-              },
-              explanation: `${
-                templateVars.display.name
-              } is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-                HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-              )} or until it gets published. The state root gets finalized ${formatSeconds(
-                FINALIZATION_PERIOD_SECONDS,
-              )} after it has been posted.`,
-            },
-      finality:
-        daProvider !== undefined
-          ? undefined
-          : {
-              warnings: {
-                timeToInclusion: {
-                  sentiment: 'neutral',
-                  value:
-                    "It's assumed that transaction data batches are submitted sequentially.",
-                },
-              },
-              finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-            },
+      liveness: ifPostsToEthereum(templateVars, {
+        warnings: {
+          stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+        },
+        explanation: `${
+          templateVars.display.name
+        } is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+          HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+        )} or until it gets published. The state root gets finalized ${formatSeconds(
+          FINALIZATION_PERIOD_SECONDS,
+        )} after it has been posted.`,
+      }),
+      finality: ifPostsToEthereum(templateVars, {
+        warnings: {
+          timeToInclusion: {
+            sentiment: 'neutral',
+            value:
+              "It's assumed that transaction data batches are submitted sequentially.",
+          },
+        },
+        finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+      }),
     },
     config: {
       ...common.config,
-      trackedTxs:
-        daProvider !== undefined
-          ? undefined
-          : (templateVars.nonTemplateTrackedTxs ?? [
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'batchSubmissions' },
-                  { type: 'l2costs', subtype: 'batchSubmissions' },
-                ],
-                query: {
-                  formula: 'transfer',
-                  from: sequencerAddress,
-                  to: sequencerInbox,
-                  sinceTimestamp: templateVars.genesisTimestamp,
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'stateUpdates' },
-                  { type: 'l2costs', subtype: 'stateUpdates' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: l2OutputOracle.address,
-                  selector: '0x9aaab648',
-                  functionSignature:
-                    'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-                  sinceTimestamp: new UnixTime(
-                    l2OutputOracle.sinceTimestamp ??
-                      templateVars.genesisTimestamp.toNumber(),
-                  ),
-                },
-              },
-            ]),
-      finality: daProvider !== undefined ? undefined : templateVars.finality,
+      trackedTxs: ifPostsToEthereum(
+        templateVars,
+        templateVars.nonTemplateTrackedTxs ?? [
+          {
+            uses: [
+              { type: 'liveness', subtype: 'batchSubmissions' },
+              { type: 'l2costs', subtype: 'batchSubmissions' },
+            ],
+            query: {
+              formula: 'transfer',
+              from: sequencerAddress,
+              to: sequencerInbox,
+              sinceTimestamp: templateVars.genesisTimestamp,
+            },
+          },
+          {
+            uses: [
+              { type: 'liveness', subtype: 'stateUpdates' },
+              { type: 'l2costs', subtype: 'stateUpdates' },
+            ],
+            query: {
+              formula: 'functionCall',
+              address: l2OutputOracle.address,
+              selector: '0x9aaab648',
+              functionSignature:
+                'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+              sinceTimestamp: new UnixTime(
+                l2OutputOracle.sinceTimestamp ??
+                  templateVars.genesisTimestamp.toNumber(),
+              ),
+            },
+          },
+        ],
+      ),
+      finality: ifPostsToEthereum(templateVars, templateVars.finality),
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
@@ -647,6 +625,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 
 function getRiskView(
   templateVars: OpStackConfigCommon,
+  daProvider: DAProvider | undefined,
   portal: ContractParameters,
 ): ScalingProjectRiskView {
   const FINALIZATION_PERIOD_SECONDS: number =
@@ -658,7 +637,6 @@ function getRiskView(
   const l2OutputOracle =
     templateVars.l2OutputOracle ??
     templateVars.discovery.getContract('L2OutputOracle')
-  const daProvider = getDAProvider(templateVars)
 
   return {
     stateValidation: {
@@ -693,9 +671,9 @@ function getRiskView(
 
 function computedStage(
   templateVars: OpStackConfigCommon,
-  daProvider: DAProvider | undefined,
+  postsToEthereum: boolean,
 ): StageConfig {
-  if (daProvider !== undefined || templateVars.isNodeAvailable === undefined) {
+  if (!postsToEthereum || templateVars.isNodeAvailable === undefined) {
     return { stage: 'NotApplicable' }
   }
 
@@ -732,10 +710,9 @@ function computedStage(
 }
 
 function decideDA(
-  templateVars: OpStackConfigCommon,
+  daProvider: DAProvider | undefined,
   nativeDA: ProjectDataAvailability | undefined,
 ): ProjectDataAvailability | undefined {
-  const daProvider = getDAProvider(templateVars)
   if (daProvider !== undefined) {
     return addSentimentToDataAvailability({
       layers: daProvider.fallback
@@ -784,4 +761,11 @@ function getDAProvider(
   }
 
   return daProvider
+}
+
+function ifPostsToEthereum<T>(
+  templateVars: OpStackConfigCommon,
+  value: T,
+): T | undefined {
+  return getDAProvider(templateVars) === undefined ? value : undefined
 }
