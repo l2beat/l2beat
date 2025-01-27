@@ -88,7 +88,6 @@ export interface TvlConfig {
   readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
-  readonly projectsExcludedFromApi: string[]
   readonly tvlCleanerEnabled: boolean
 }
 
@@ -149,7 +148,6 @@ export interface HealthConfig {
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
-  readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
   readonly projects: {
     id: ProjectId

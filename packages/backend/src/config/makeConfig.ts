@@ -140,9 +140,6 @@ export function makeConfig(
         ],
         600,
       ),
-      projectsExcludedFromAPI:
-        env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
-        [],
       projects: getProjectsWithActivity()
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({
