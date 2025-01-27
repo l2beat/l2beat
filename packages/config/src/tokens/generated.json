@@ -240,6 +240,20 @@
       "supply": "zero"
     },
     {
+      "name": "Animecoin",
+      "coingeckoId": "anime",
+      "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277",
+      "symbol": "ANIME",
+      "decimals": 18,
+      "deploymentTimestamp": 1736790131,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53575/large/anime.jpg?1736748703",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Ankr Network",
       "coingeckoId": "ankr",
       "address": "0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4",
@@ -7219,6 +7233,20 @@
       "chainId": 324,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "Fidelity ILF USD Fund Class G Acc",
+      "coingeckoId": "sygnum-fiusd-liquidity-fund",
+      "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
+      "symbol": "FIUSD",
+      "decimals": 2,
+      "deploymentTimestamp": 1708523359,
+      "coingeckoListingTimestamp": 1737417600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50749/large/FIUDS_200x200px_%281%29.png?1728956878",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Frax",
