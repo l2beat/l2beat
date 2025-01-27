@@ -1,5 +1,5 @@
 export * from './chains'
-export { PROJECT_COUNTDOWNS } from './common'
+export { CONTRACTS, HOMEPAGE_MILESTONES, PROJECT_COUNTDOWNS } from './common'
 export { ProjectDiscovery } from './discovery/ProjectDiscovery'
 export * from './projects'
 export * from './tokens/tokens'
