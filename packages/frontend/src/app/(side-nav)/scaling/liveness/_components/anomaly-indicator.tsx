@@ -11,6 +11,8 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { LivenessDurationCell } from './liveness-duration-cell'
 
+const SHOWN_ANOMALIES = 4
+
 interface Props {
   anomalies: LivenessAnomaly[]
   showComingSoon?: boolean
@@ -86,7 +88,7 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
     <>
       <span>Anomalies from last 30 days:</span>
       <div className="-mx-4 mt-2 list-disc">
-        {anomalies.slice(0, 4).map((anomaly) => {
+        {anomalies.slice(0, SHOWN_ANOMALIES).map((anomaly) => {
           const endDate = anomaly.timestamp + anomaly.durationInSeconds
           const endDateUnixTime = new UnixTime(endDate)
           const isLive = UnixTime.now().add(-4, 'hours').lte(endDateUnixTime)
@@ -146,7 +148,7 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
       </div>
       {anomalies.length > 4 && (
         <div className="-mx-4 border-t border-divider px-4 pt-2">
-          And {anomalies.length - 4} more
+          And {anomalies.length - SHOWN_ANOMALIES} more
         </div>
       )}
     </>
