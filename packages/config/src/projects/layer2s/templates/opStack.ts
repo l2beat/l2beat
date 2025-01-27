@@ -40,7 +40,6 @@ import {
   sumRisk,
 } from '../../../common'
 import type { ChainConfig } from '../../../common/ChainConfig'
-import { subtractOne } from '../../../common/assessCount'
 import {
   formatChallengePeriod,
   formatDelay,
@@ -538,7 +537,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               startBlock: 1,
               defaultUrl: templateVars.rpcUrl,
               defaultCallsPerMinute: 1500,
-              assessCount: subtractOne,
+              adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
       trackedTxs:
@@ -915,7 +914,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               startBlock: 1,
               defaultUrl: templateVars.rpcUrl,
               defaultCallsPerMinute: 1500,
-              assessCount: subtractOne,
+              adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
     },

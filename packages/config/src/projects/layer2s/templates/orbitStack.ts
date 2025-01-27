@@ -7,7 +7,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-
 import { unionBy } from 'lodash'
 import { ethereum } from '../../../chains/ethereum'
 import {
@@ -41,7 +40,6 @@ import {
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
-import { subtractOne } from '../../../common/assessCount'
 import {
   formatChallengePeriod,
   formatDelay,
@@ -824,7 +822,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               startBlock: 1,
               defaultUrl: templateVars.rpcUrl,
               defaultCallsPerMinute: 1500,
-              assessCount: subtractOne,
+              adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
     },
@@ -1066,7 +1064,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               startBlock: 1,
               defaultUrl: templateVars.rpcUrl,
               defaultCallsPerMinute: 1500,
-              assessCount: subtractOne,
+              adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,

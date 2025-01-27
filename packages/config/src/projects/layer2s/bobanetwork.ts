@@ -1,8 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
@@ -40,7 +38,7 @@ export const bobanetwork: Layer2 = opStackL2({
     type: 'rpc',
     defaultUrl: 'https://mainnet.boba.network/',
     startBlock: 1,
-    assessCount: subtractOneAfterBlockInclusive(1149019), // boba L2 bedrock upgrade block number
+    adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1149019 }, // boba L2 bedrock upgrade block number
   },
   // finality: {
   //   type: 'OPStack-blob',

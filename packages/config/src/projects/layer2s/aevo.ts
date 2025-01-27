@@ -1,8 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -62,7 +60,7 @@ export const aevo: Layer2 = opStackL2({
     defaultUrl: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
     startBlock: 1,
     defaultCallsPerMinute: 800,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
