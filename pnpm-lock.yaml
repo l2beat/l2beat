@@ -260,46 +260,31 @@ importers:
 
   packages/config:
     dependencies:
-      '@l2beat/backend-tools':
-        specifier: workspace:*
-        version: link:../backend-tools
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
       '@l2beat/discovery-types':
         specifier: workspace:*
         version: link:../discovery-types
-      '@l2beat/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
-      chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
-      cheerio:
-        specifier: ^1.0.0-rc.11
-        version: 1.0.0
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
-      jsonc-parser:
-        specifier: ^3.2.0
-        version: 3.3.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      node-fetch:
-        specifier: ^2.6.7
-        version: 2.7.0(encoding@0.1.13)
       zod:
         specifier: ^3.22.2
         version: 3.23.8
     devDependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
+      '@l2beat/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -309,6 +294,21 @@ importers:
       '@types/node-fetch':
         specifier: ^2.6.11
         version: 2.6.11
+      chalk:
+        specifier: ^4.1.2
+        version: 4.1.2
+      cheerio:
+        specifier: ^1.0.0-rc.11
+        version: 1.0.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
+      jsonc-parser:
+        specifier: ^3.2.0
+        version: 3.3.1
+      node-fetch:
+        specifier: ^2.6.7
+        version: 2.7.0(encoding@0.1.13)
       p-limit:
         specifier: ^6.1.0
         version: 6.1.0
