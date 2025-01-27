@@ -35,7 +35,7 @@ import type {
   ScalingProjectReference,
   ScalingProjectUpgradeability,
   SharedEscrow,
-} from '../common'
+} from '../types'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,

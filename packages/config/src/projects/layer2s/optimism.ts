@@ -21,7 +21,7 @@ import {
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'

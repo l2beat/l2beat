@@ -5,7 +5,6 @@ import type {
 } from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
-import type { ScalingProjectContract } from '../common'
 import {
   type Bridge,
   type DaBridge,
@@ -18,6 +17,7 @@ import {
   layer2s,
   layer3s,
 } from '../projects'
+import type { ScalingProjectContract } from '../types'
 import { getChainNames, getChainNamesForDA } from '../utils/chains'
 
 describe('verification status', () => {

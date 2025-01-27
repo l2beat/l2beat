@@ -1,11 +1,6 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-
-import {
-  CONTRACTS,
-  type ScalingProjectDisplay,
-  TECHNOLOGY,
-  UPCOMING_RISK_VIEW,
-} from '../../../common'
+import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
+import type { ScalingProjectDisplay } from '../../../types'
 import type { BadgeId } from '../../badges'
 import type { Layer3 } from '../../layer3s'
 import type { Layer2, Layer2Display } from '../types'

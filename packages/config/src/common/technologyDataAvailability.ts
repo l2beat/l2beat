@@ -1,7 +1,7 @@
 import type {
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
-} from './ScalingProject'
+} from '../types'
 
 const ON_CHAIN_CALLDATA: ScalingProjectTechnologyChoice = {
   name: 'All data required for proofs is published onchain',

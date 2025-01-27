@@ -16,24 +16,8 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  type KnowledgeNugget,
-  type Milestone,
   OPERATOR,
   RISK_VIEW,
-  type ReasonForBeingInOther,
-  type ScalingProjectContract,
-  type ScalingProjectDisplay,
-  type ScalingProjectEscrow,
-  type ScalingProjectPermission,
-  type ScalingProjectPurpose,
-  type ScalingProjectRisk,
-  type ScalingProjectRiskView,
-  type ScalingProjectStateDerivation,
-  type ScalingProjectStateValidation,
-  type ScalingProjectStateValidationCategory,
-  type ScalingProjectTechnology,
-  type ScalingProjectTechnologyChoice,
-  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   pickWorseRisk,
@@ -44,7 +28,27 @@ import {
   formatDelay,
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { ChainConfig } from '../../../types'
+import type {
+  Milestone,
+  ScalingProjectContract,
+  ScalingProjectDisplay,
+  ScalingProjectEscrow,
+  ScalingProjectPermission,
+  ScalingProjectPurpose,
+  ScalingProjectRisk,
+  ScalingProjectRiskView,
+  ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
+  ScalingProjectStateValidationCategory,
+  ScalingProjectTechnology,
+  ScalingProjectTechnologyChoice,
+  ScalingProjectTransactionApi,
+} from '../../../types'
+import type {
+  ChainConfig,
+  KnowledgeNugget,
+  ReasonForBeingInOther,
+} from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'

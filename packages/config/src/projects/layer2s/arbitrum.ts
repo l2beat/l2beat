@@ -7,7 +7,7 @@ import {
   RISK_VIEW,
   UPGRADE_MECHANISM,
 } from '../../common'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'

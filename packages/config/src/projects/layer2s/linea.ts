@@ -7,8 +7,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { Badge } from '../badges'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -20,14 +18,15 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  type ScalingProjectPermissionedAccount,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ScalingProjectPermissionedAccount } from '../../types'
+import { Badge } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'

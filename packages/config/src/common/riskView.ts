@@ -6,9 +6,10 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-
-import type { ScalingProjectRiskViewEntry } from './ScalingProject'
-import type { ScalingProjectRiskView } from './ScalingProject'
+import type {
+  ScalingProjectRiskView,
+  ScalingProjectRiskViewEntry,
+} from '../types'
 import { DATA_AVAILABILITY } from './dataAvailability'
 
 // State validation

@@ -11,12 +11,11 @@ import {
   type DaLayer,
   type Layer2,
   type Layer3,
-  type ScalingProjectContract,
-  type ScalingProjectPermission,
   bridges,
   layer2s,
   layer3s,
-} from '..'
+} from '../projects'
+import type { ScalingProjectContract, ScalingProjectPermission } from '../types'
 
 type CommonProject = Layer2 | Layer3 | Bridge
 
