@@ -1,42 +1,4 @@
-Generated with discovered.json: 0xd1a26c32dfbfcb90449d6e4e5c05e08a0477ec63
-
-# Diff at Tue, 21 Jan 2025 08:06:21 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@3a16743af72fb4c941689b26d336a59661143f06 block: 21585285
-- current block number: 21671560
-
-## Description
-
-discodrive!
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21585285 (main branch discovery), not current.
-
-```diff
-    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
-    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      template:
-+        "shared-zk-stack/Diamond"
-      description:
-+        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
-    }
-```
-
-```diff
-    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604) {
-    +++ description: Implements the ZK proof verification logic.
-      template:
-+        "shared-zk-stack/Verifier"
-      description:
-+        "Implements the ZK proof verification logic."
-    }
-```
-
-Generated with discovered.json: 0x7fa47e49914a45781a26b41a82abd6618d895ccd
+Generated with discovered.json: 0x9ccc58c9872fd26aaf70224eff95e611fe660852
 
 # Diff at Thu, 09 Jan 2025 06:58:54 GMT:
 

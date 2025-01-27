@@ -1,4 +1,34 @@
-Generated with discovered.json: 0xaecb72b56f4253812a7f9aa24d19de3d1e66a9e2
+Generated with discovered.json: 0xa22d730af5e1ef0045336b06c63ea3af81de8bf6
+
+# Diff at Mon, 27 Jan 2025 12:16:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 20491473
+- current block number: 21715800
+
+## Description
+
+Proxy somehow became unverified.
+
+More interestingly, this chain is dead, no batch commits for 40 days, archiving.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491473 (main branch discovery), not current.
+
+```diff
+    contract WitnessValidium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: None
+      sourceHashes:
+-        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+      unverified:
++        true
+    }
+```
+
+Generated with discovered.json: 0xf62412de983d39a423fea62956f99ee7593c1cb0
 
 # Diff at Mon, 20 Jan 2025 11:10:20 GMT:
 

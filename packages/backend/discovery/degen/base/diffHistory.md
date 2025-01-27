@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x7a5322a52e3bb3b5ea1ef63494edf05bd8eff233
+Generated with discovered.json: 0x6c53dc37c04560e441e33841b7872f63689aa38e
+
+# Diff at Fri, 24 Jan 2025 10:54:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fff69b1db37918a5360f1e3b59d2f37be25d166f block: 25417259
+- current block number: 25417259
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25417259 (main branch discovery), not current.
+
+```diff
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      name:
+-        "DegenMultisig"
++        "AlchemyMultisig2"
+    }
+```
+
+Generated with discovered.json: 0xf846322d66b8718cb0f1d3744ec1a34214dbe36b
 
 # Diff at Mon, 20 Jan 2025 11:10:37 GMT:
 

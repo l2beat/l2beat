@@ -1,3 +1,4 @@
+import { get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
@@ -9,8 +10,6 @@ import {
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
-
-import { get$Implementations } from '@l2beat/discovery-types'
 import { describe } from 'mocha'
 import { chains } from '../../chains'
 import {
@@ -19,7 +18,7 @@ import {
   type ScalingProjectRiskViewEntry,
   type ScalingProjectTechnologyChoice,
 } from '../../common'
-import type { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
+import type { ScalingProjectTechnology } from '../../common/ScalingProject'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
@@ -274,7 +273,7 @@ describe('layer2s', () => {
           if (transactionApi && transactionApi.type === 'rpc') {
             return {
               id: layer2.id,
-              assessCount: transactionApi.assessCount,
+              assessCount: transactionApi.adjustCount,
             }
           }
 

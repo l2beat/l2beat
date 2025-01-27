@@ -1,10 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('parallel')
 
@@ -13,8 +11,8 @@ export const parallel: Layer2 = orbitStackL2({
   isArchived: true,
   discovery,
   additionalBadges: [],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Parallel',
     slug: 'parallel',
     redWarning:
@@ -37,7 +35,6 @@ export const parallel: Layer2 = orbitStackL2({
         'https://t.me/parallelfi_community',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   trackedTxs: [
     {
@@ -133,7 +130,7 @@ export const parallel: Layer2 = orbitStackL2({
     type: 'rpc',
     defaultUrl: 'https://rpc.parallel.fi',
     defaultCallsPerMinute: 120,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   discoveryDrivenData: true,

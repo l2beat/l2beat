@@ -1,17 +1,21 @@
-import { CountedBlock, CountedOperation, CountedTransaction } from '@/types'
+import type {
+  CountedBlock,
+  CountedOperation,
+  CountedTransaction,
+} from '@/types'
 import {
   EIP712_TX_TYPE,
   EIP712_methods,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC4337_methods,
-  EVMTransaction,
+  type EVMTransaction,
   MULTICALLV3_methods,
   MULTICALL_V3,
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
 } from '@l2beat/shared'
-import { Block, UnixTime } from '@l2beat/shared-pure'
+import { type Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcCounter } from './RpcCounter'
 

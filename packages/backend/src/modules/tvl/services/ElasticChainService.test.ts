@@ -1,13 +1,13 @@
-import { AmountRecord } from '@l2beat/database'
-import { RpcClient } from '@l2beat/shared'
+import type { AmountRecord } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
-  Config,
+  type Config,
   ElasticChainService,
-  ElasticChainServiceDependencies,
+  type ElasticChainServiceDependencies,
   bridgeInterface,
   erc20Interface,
 } from './ElasticChainService'

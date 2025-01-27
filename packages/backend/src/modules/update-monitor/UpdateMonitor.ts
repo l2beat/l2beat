@@ -1,25 +1,25 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import {
-  ConfigReader,
-  DiscoveryConfig,
-  DiscoveryDiff,
+  type ConfigReader,
+  type DiscoveryConfig,
+  type DiscoveryDiff,
   diffDiscovery,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   assert,
-  ChainConverter,
+  type ChainConverter,
   UnixTime,
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
-import { Clock } from '../../tools/Clock'
+import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import { DiscoveryRunner } from './DiscoveryRunner'
-import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
+import type { DiscoveryRunner } from './DiscoveryRunner'
+import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'

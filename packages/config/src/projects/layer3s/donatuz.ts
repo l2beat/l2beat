@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL3 } from '../layer2s/templates/opStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('donatuz', 'base')
 
@@ -18,11 +18,11 @@ export const donatuz: Layer3 = opStackL3({
     Badge.RaaS.Conduit,
   ],
   additionalPurposes: ['Social'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Donatuz',
     slug: 'donatuz',
     description:
@@ -39,7 +39,6 @@ export const donatuz: Layer3 = opStackL3({
         'https://linkedin.com/company/donatuz/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1719319433),
   rpcUrl: 'https://rpc.donatuz.com',

@@ -1,8 +1,9 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 21671559,
-  "configHash": "0xa9a2fd10684da54738fc8efb892d5997a0f54fc96db3fd32710bde71d1631b7b",
+  "blockNumber": 21630311,
+  "configHash": "0x5efac1da459f0fa120737787953023f6c76cead01e8535293567aea8dac40602",
+  "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
       "name": "Verifier",

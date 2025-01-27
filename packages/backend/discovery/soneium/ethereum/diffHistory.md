@@ -1,3 +1,147 @@
+Generated with discovered.json: 0x97fbd426e27cf448b55bfdf7e5654b51dff899c3
+
+# Diff at Mon, 27 Jan 2025 12:04:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 21679918
+- current block number: 21715739
+
+## Description
+
+Soneium external bridge gov change.
+
+## Watched changes
+
+```diff
+    contract L1OpUSDCBridgeAdapter (0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb) {
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+      values.$admin:
+-        "0x448dAe9299366ff611678fdA2f3a386791C95d41"
++        "0xE7c9a9DddAb8a384c38D721DE64E4222Fe76DF75"
+      values.owner:
+-        "0x448dAe9299366ff611678fdA2f3a386791C95d41"
++        "0xE7c9a9DddAb8a384c38D721DE64E4222Fe76DF75"
+    }
+```
+
+Generated with discovered.json: 0x8730e527cd5a87ec57ec483c285c96d2fc30707a
+
+# Diff at Wed, 22 Jan 2025 12:20:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21637001
+- current block number: 21679918
+
+## Description
+
+MS member changes.
+
+## Watched changes
+
+```diff
+    contract SoneiumMultisig (0x509182eC226b3B71D36A3255A80EF0b1A9D43033) {
+    +++ description: None
+      values.$members.4:
+-        "0x48FF760E582c3740336656349684b4FD4c6ED88F"
++        "0xba1a565d2bF6D27F451a459308f423219478c5cB"
+      values.$members.3:
+-        "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb"
++        "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a"
+      values.$members.2:
+-        "0x83cC8195856b0463dEd5f052021009b7985FDa2C"
++        "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452"
+      values.$members.1:
+-        "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917"
++        "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B"
+      values.$members.0:
+-        "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C"
++        "0x94e9Ef16A9eF6C37164A7BCA6CFb03b52d23AF7E"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x0bf578323590845037f9bf560f3aed23eb097384
+
+# Diff at Tue, 21 Jan 2025 11:19:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@0da84acc479f34212f2c8133869a3eef33d46ecc block: 21637001
+- current block number: 21637001
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637001 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}]}]
+      issuedPermissions:
++        [{"permission":"configure","to":"0x24424336F04440b1c28685a38303aC33C9D14a25","description":"can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.","via":[]}]
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","description":"can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d."}]
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","description":"takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","condition":"the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1.via.0.condition:
++        "not revoked by the Security Council"
+      issuedPermissions.0.to:
+-        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+      issuedPermissions.0.via.2:
++        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}
+      issuedPermissions.0.via.1.address:
+-        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+      issuedPermissions.0.via.0.address:
+-        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+      issuedPermissions.0.via.0.condition:
++        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.0.via.1.condition:
++        "not revoked by the Security Council"
+      directlyReceivedPermissions.0.condition:
++        "not revoked by the Security Council"
+    }
+```
+
 Generated with discovered.json: 0x173647e6bffec7726d89f9bcd1b4fd7cd6f3c888
 
 # Diff at Mon, 20 Jan 2025 11:10:09 GMT:

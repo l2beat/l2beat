@@ -1,12 +1,12 @@
-import { ChainConfig } from '@l2beat/config'
+import type { ChainConfig } from '@l2beat/config'
 import {
   assert,
-  AggLayerNativeEtherWrapped,
+  type AggLayerNativeEtherWrapped,
   AssetId,
-  Token,
+  type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 
 export function getAggLayerNativeEtherWrappedEntry(
   chain: ChainConfig,

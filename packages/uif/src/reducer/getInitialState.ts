@@ -1,4 +1,4 @@
-import { IndexerState } from './types/IndexerState'
+import type { IndexerState } from './types/IndexerState'
 
 export function getInitialState(parentCount: number): IndexerState {
   return {

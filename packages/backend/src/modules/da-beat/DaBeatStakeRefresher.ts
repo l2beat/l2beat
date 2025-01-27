@@ -1,19 +1,14 @@
-import { Logger } from '@l2beat/backend-tools'
-import {
-  DaEconomicSecurityType,
-  daLayers,
-  ethereumDaLayer,
-} from '@l2beat/config'
+import type { Logger } from '@l2beat/backend-tools'
+import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
-import { assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
-import { DABeatConfig } from '../../config/Config'
-import { Peripherals } from '../../peripherals/Peripherals'
+import type { DABeatConfig } from '../../config/Config'
+import type { Peripherals } from '../../peripherals/Peripherals'
 import { QuickNodeClient } from '../../peripherals/quicknode/QuickNodeClient'
 import { TendermintClient } from '../../peripherals/tendermint/TendermintClient'
-import { Clock } from '../../tools/Clock'
+import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
+import type { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
 import { CelestiaStakeAnalyzer } from './stake-analyzers/CelestiaStakeAnalyzer'
 import { EthereumStakeAnalyzer } from './stake-analyzers/EthereumStakeAnalyzer'
 import { NearStakeAnalyzer } from './stake-analyzers/NearStakeAnalyzer'
@@ -22,10 +17,7 @@ import { AvailStakeAnalyzer } from './stake-analyzers/avail/AvailStakeAnalyzer'
 
 export class DaBeatStakeRefresher {
   private readonly refreshQueue: TaskQueue<void>
-  private readonly analyzers: Record<
-    DaEconomicSecurityType,
-    AbstractStakeAnalyzer
-  >
+  private readonly analyzers: Record<string, AbstractStakeAnalyzer>
   constructor(
     private readonly peripherals: Peripherals,
     private readonly config: DABeatConfig,
@@ -45,7 +37,7 @@ export class DaBeatStakeRefresher {
                   layer.kind === 'EthereumDaLayer' ||
                   layer.kind === 'PublicBlockchain',
               )
-              .map((layer) => layer.economicSecurity?.type),
+              .map((layer) => layer.economicSecurity?.name),
           ),
         ),
       ].map((type) => {
@@ -85,7 +77,7 @@ export class DaBeatStakeRefresher {
               ),
             ]
           default:
-            assertUnreachable(type)
+            throw new Error(`Unsupported economic security: ${type}`)
         }
       }),
     )

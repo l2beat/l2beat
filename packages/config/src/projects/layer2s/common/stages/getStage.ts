@@ -1,5 +1,5 @@
 import { createGetStage, isSatisfied } from './stage'
-import { ChecklistTemplate } from './types'
+import type { ChecklistTemplate } from './types'
 
 interface GetStageOptions {
   rollupNodeLink?: string

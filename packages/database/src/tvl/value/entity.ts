@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { Value } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { Value } from '../../kysely/generated/types'
 
 export interface ValueRecord {
   projectId: ProjectId

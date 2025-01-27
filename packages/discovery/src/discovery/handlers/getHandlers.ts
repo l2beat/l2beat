@@ -1,5 +1,5 @@
-import { ContractConfig } from '../config/ContractConfig'
-import { Handler } from './Handler'
+import type { ContractConfig } from '../config/ContractConfig'
+import type { Handler } from './Handler'
 import { getSystemHandlers } from './getSystemHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { getUserHandler } from './user'

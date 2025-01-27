@@ -1,4 +1,28 @@
-Generated with discovered.json: 0x5f8d2f9ec5f256e7445c08511fc0a42dee448ac1
+Generated with discovered.json: 0x3632f13c8b0cf95430098dde6c5c6e6d025a01d3
+
+# Diff at Mon, 27 Jan 2025 12:20:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 21635833
+- current block number: 21715743
+
+## Description
+
+MakerDAO Governance removed from disco, unused.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635833 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MakerDAO Governance (0x0a3f6849f78076aefaDf113F5BED87720274dDC0)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xb9503031051fa02f99e862e89799c59f17f066ff
 
 # Diff at Mon, 20 Jan 2025 11:10:12 GMT:
 

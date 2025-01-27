@@ -1,5 +1,5 @@
-import { BlockApi } from './BlockApi'
-import { IndexerApi } from './IndexerApi'
+import type { BlockApi } from './BlockApi'
+import type { IndexerApi } from './IndexerApi'
 
 export interface ChainApi {
   readonly name: string

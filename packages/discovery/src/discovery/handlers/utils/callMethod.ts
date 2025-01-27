@@ -1,8 +1,8 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { utils } from 'ethers'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { isIntNumeric } from '../../utils/normalizeDiffPath'
 import { toContractValue } from './toContractValue'
 

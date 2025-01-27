@@ -1,16 +1,16 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
-  ContractFieldSeverity,
-  ContractValue,
-  ContractValueType,
-  StackCategory,
+  type ContractFieldSeverity,
+  type ContractValue,
+  type ContractValueType,
+  type StackCategory,
   get$Admins,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import { uniqBy } from 'lodash'
-import { ContractConfig } from '../config/ContractConfig'
-import {
+import type { ContractConfig } from '../config/ContractConfig'
+import type {
   DiscoveryContractField,
   ExternalReference,
   PermissionConfiguration,
@@ -18,7 +18,7 @@ import {
 } from '../config/RawDiscoveryConfig'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
-import { AnalyzedContract } from './AddressAnalyzer'
+import type { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
 

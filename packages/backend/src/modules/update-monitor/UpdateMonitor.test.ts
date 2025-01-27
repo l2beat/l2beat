@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  type ConfigReader,
+  DiscoveryConfig,
+  type DiscoveryDiff,
+} from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,
@@ -13,11 +17,11 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Database, UpdateMonitorRecord } from '@l2beat/database'
-import { Clock } from '../../tools/Clock'
-import { DiscoveryRunner } from './DiscoveryRunner'
+import type { Database, UpdateMonitorRecord } from '@l2beat/database'
+import type { Clock } from '../../tools/Clock'
+import type { DiscoveryRunner } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'
-import { UpdateNotifier } from './UpdateNotifier'
+import type { UpdateNotifier } from './UpdateNotifier'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'

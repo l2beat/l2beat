@@ -41,11 +41,10 @@
       "fields": {
         "CrossChainContracts": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "CrossChainContractsSet",
-            "returnParams": ["l2ChainId", "spokePool"],
-            "groupBy": "l2ChainId",
-            "onlyValue": true
+            "type": "event",
+            "select": "spokePool",
+            "set": { "event": "CrossChainContractsSet" },
+            "groupBy": "l2ChainId"
           }
         },
         "Adapters": {
@@ -53,11 +52,10 @@
             "template": "acrossv3/adapter" // this template is used to ignore common relatives (like bridged and tokens) found in adapters
           },
           "handler": {
-            "type": "stateFromEvent",
-            "event": "CrossChainContractsSet",
-            "groupBy": "l2ChainId",
-            "onlyValue": true,
-            "returnParams": ["l2ChainId", "adapter"]
+            "type": "event",
+            "select": "adapter",
+            "set": { "event": "CrossChainContractsSet" },
+            "groupBy": "l2ChainId"
           }
         }
       },
@@ -68,10 +66,16 @@
       "fields": {
         "proposers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ProposerModified",
-            "valueKey": "proposer",
-            "flagKey": "enabled"
+            "type": "event",
+            "select": "proposer",
+            "add": {
+              "event": "ProposerModified",
+              "where": ["=", "#enabled", true]
+            },
+            "remove": {
+              "event": "ProposerModified",
+              "where": ["!=", "#enabled", true]
+            }
           }
         }
       }

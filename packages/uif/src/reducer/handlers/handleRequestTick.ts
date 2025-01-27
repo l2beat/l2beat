@@ -1,8 +1,8 @@
 import { assertRoot } from '../helpers/assertRoot'
 import { assertStatus } from '../helpers/assertStatus'
-import { RequestTickAction } from '../types/IndexerAction'
-import { IndexerReducerResult } from '../types/IndexerReducerResult'
-import { IndexerState } from '../types/IndexerState'
+import type { RequestTickAction } from '../types/IndexerAction'
+import type { IndexerReducerResult } from '../types/IndexerReducerResult'
+import type { IndexerState } from '../types/IndexerState'
 
 export function handleRequestTick(
   state: IndexerState,

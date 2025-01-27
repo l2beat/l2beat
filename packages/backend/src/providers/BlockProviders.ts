@@ -1,8 +1,8 @@
 import {
-  BlockClient,
-  BlockIndexerClient,
+  type BlockClient,
+  type BlockIndexerClient,
   BlockProvider,
-  StarkexClient,
+  type StarkexClient,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'

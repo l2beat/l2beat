@@ -4,8 +4,5 @@
   "name": "shape",
   "initialAddresses": [
     "0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B" // L1StandardBridge
-  ],
-  "names": {
-    "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "ShapeMultisig"
-  }
+  ]
 }

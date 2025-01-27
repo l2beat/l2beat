@@ -1,15 +1,15 @@
 import { createIndexerId } from '@l2beat/backend-shared'
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import {
   ChildIndexer,
-  Indexer,
-  IndexerOptions,
-  RetryStrategy,
+  type Indexer,
+  type IndexerOptions,
+  type RetryStrategy,
 } from '@l2beat/uif'
-import { IndexerService } from './IndexerService'
+import type { IndexerService } from './IndexerService'
 import { assertUniqueIndexerId } from './ids'
-import { IndexerTags } from './types'
+import type { IndexerTags } from './types'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {
   parents: Indexer[]

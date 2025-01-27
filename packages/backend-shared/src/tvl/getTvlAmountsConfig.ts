@@ -1,13 +1,13 @@
-import { ChainConfig, chains, tokenList } from '@l2beat/config'
+import { type ChainConfig, chains, tokenList } from '@l2beat/config'
 import {
   assert,
-  AmountConfigEntry,
+  type AmountConfigEntry,
   ChainConverter,
   ChainId,
-  Token,
+  type Token,
 } from '@l2beat/shared-pure'
 import { keyBy } from 'lodash'
-import { BackendProject, BackendProjectEscrow } from '../BackendProject'
+import type { BackendProject, BackendProjectEscrow } from '../BackendProject'
 import { chainToProject } from '../chainConverter'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'

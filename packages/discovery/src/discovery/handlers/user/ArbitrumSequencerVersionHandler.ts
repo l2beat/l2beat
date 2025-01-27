@@ -1,10 +1,15 @@
-import { assert, Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
+import {
+  assert,
+  Bytes,
+  type EthereumAddress,
+  Hash256,
+} from '@l2beat/shared-pure'
+import { type providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
-import { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumSequencerVersionDefinition = z.infer<
   typeof ArbitrumSequencerVersionDefinition

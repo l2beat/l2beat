@@ -18,7 +18,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -146,8 +146,8 @@ export const taiko: Layer2 = {
     mode: DA_MODES.TRANSACTION_DATA,
   }),
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Taiko',
     slug: 'taiko',
     provider: 'Taiko',
@@ -173,7 +173,6 @@ export const taiko: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/taiko',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       explanation:
         'Taiko is an Optimistic rollup that posts blocks of L2 transaction data directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly finalized after the challenge period has elapsed.',

@@ -1,10 +1,10 @@
-import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import type { Logger } from '@l2beat/backend-tools'
+import type { UnixTime } from '@l2beat/shared-pure'
 
-import { Database } from '@l2beat/database'
-import { Clock } from '../../../tools/Clock'
+import type { Database } from '@l2beat/database'
+import type { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { SyncOptimizer } from './SyncOptimizer'
+import type { SyncOptimizer } from './SyncOptimizer'
 
 export interface TvlRepositoryToClean {
   deleteHourlyUntil: (dateRange: {

@@ -55,11 +55,14 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "select": "operator",
+            "add": {
+              "event": "event LogOperatorAdded(address operator)"
+            },
+            "remove": {
+              "event": "event LogOperatorRemoved(address operator)"
+            }
           }
         },
         "escapeVerifier": {
@@ -97,11 +100,14 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "select": "operator",
+            "add": {
+              "event": "event LogOperatorAdded(address operator)"
+            },
+            "remove": {
+              "event": "event LogOperatorRemoved(address operator)"
+            }
           }
         },
         "escapeVerifier": {

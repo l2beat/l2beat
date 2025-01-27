@@ -1,5 +1,5 @@
 import { parseAbiItem } from 'viem'
-import { Method } from '../../types'
+import type { Method } from '../../types'
 import { defineMethod } from '../defineMethod'
 
 export const MULTICALLV3_methods: Method[] = [

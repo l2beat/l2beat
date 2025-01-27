@@ -7,13 +7,13 @@ interface Props {
 }
 
 export function DacMembersCell({ dacInfo }: Props) {
-  if (!dacInfo?.membersArePublic) {
+  if (!dacInfo) {
     return <NaBadge />
   }
   return (
     <TwoRowCell>
       <TwoRowCell.First className="leading-5">
-        {dacInfo.requiredMemebers}/{dacInfo.memberCount}
+        {dacInfo.requiredMembers}/{dacInfo.memberCount}
       </TwoRowCell.First>
       <TwoRowCell.Second>
         {dacInfo.membersArePublic ? 'Public' : 'Anonymous'}

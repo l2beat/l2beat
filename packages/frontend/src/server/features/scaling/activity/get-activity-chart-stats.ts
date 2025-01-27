@@ -7,14 +7,21 @@ export type ActivityChartStats = Awaited<
   ReturnType<typeof getCachedActivityChartStats>
 >
 
-export async function getActivityChartStats(filter: ActivityProjectFilter) {
-  return getCachedActivityChartStats(filter)
+export async function getActivityChartStats(
+  filter: ActivityProjectFilter,
+  previewRecategorisation: boolean,
+) {
+  return getCachedActivityChartStats(filter, previewRecategorisation)
 }
 
 export const getCachedActivityChartStats = cache(
-  async (filter: ActivityProjectFilter) => {
+  async (filter: ActivityProjectFilter, previewRecategorisation: boolean) => {
     // We should use the last 7 days but 30d is probably cached already so it's faster
-    const { data: chartData } = await getActivityChart(filter, '30d')
+    const { data: chartData } = await getActivityChart(
+      filter,
+      '30d',
+      previewRecategorisation,
+    )
 
     const latestData = chartData.at(-1)
     if (!latestData) {

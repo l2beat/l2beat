@@ -15,10 +15,10 @@
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
-    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
-    sentiment: "bad"
-    value: "Cannot withdraw"
+    definingMetric: 0
+    description: "Anyone can be a Proposer and propose new roots to the L1 bridge."
+    sentiment: "good"
+    value: "Self propose"
   }
   sequencerFailure: {
     definingMetric: 43200
@@ -29,8 +29,8 @@
   }
   stateValidation: {
     definingMetric: Infinity
-    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed."
-    sentiment: "bad"
+    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve."
+    sentiment: "good"
     value: "Fraud proofs (INT)"
   }
 }

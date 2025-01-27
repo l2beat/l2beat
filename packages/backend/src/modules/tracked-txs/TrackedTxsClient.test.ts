@@ -2,10 +2,10 @@ import { readFileSync } from 'fs'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { TrackedTxsClient } from './TrackedTxsClient'
 
-import {
+import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharedBridgeConfig,
@@ -18,7 +18,7 @@ import {
   sharedBridgeCommitBatchesSelector,
   sharedBridgeCommitBatchesSignature,
 } from '../../test/sharedBridge'
-import { Configuration } from '../../tools/uif/multi/types'
+import type { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,

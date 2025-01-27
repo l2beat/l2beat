@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 21579380,
+  "blockNumber": 21679341,
   "configHash": "0x234f21c317f24b881b0c8f184d2dfea1f8594fb7c8acc94611fa0ac963ab8d00",
   "contracts": [
     {
@@ -77,14 +77,14 @@
         "$members": [
           "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
           "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
-          "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0"
+          "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
         ],
         "$threshold": 2,
         "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -445,10 +445,10 @@
       ]
     },
     { "address": "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5" },
-    { "address": "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0" },
     { "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6" },
     { "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6" },
     { "address": "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b" },
+    { "address": "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf" },
     { "address": "0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B" },
     { "address": "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893" },
     { "address": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC" },

@@ -17,7 +17,7 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
@@ -139,7 +139,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

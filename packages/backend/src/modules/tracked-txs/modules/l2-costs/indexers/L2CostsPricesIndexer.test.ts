@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
   ETHEREUM_COINGECKO_ID,
   L2CostsPricesIndexer,
-  L2CostsPricesIndexerDeps,
+  type L2CostsPricesIndexerDeps,
 } from './L2CostsPricesIndexer'
 
 const NOW = new UnixTime(1714662000)

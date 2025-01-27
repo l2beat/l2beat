@@ -3,10 +3,10 @@
 DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createPriceId" FUNCTION
 */
 
-import { AssetId } from './AssetId'
-import { CoingeckoId } from './CoingeckoId'
-import { EthereumAddress } from './EthereumAddress'
-import { UnixTime } from './UnixTime'
+import type { AssetId } from './AssetId'
+import type { CoingeckoId } from './CoingeckoId'
+import type { EthereumAddress } from './EthereumAddress'
+import type { UnixTime } from './UnixTime'
 
 export type PriceConfigEntry = CoingeckoPriceConfigEntry
 

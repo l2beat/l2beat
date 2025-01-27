@@ -6,9 +6,9 @@ import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
-import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { type CostsUnit } from '~/server/features/scaling/costs/types'
+import type { CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
+import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
 import {
   type CostsMetric,
@@ -16,7 +16,7 @@ import {
 } from '../costs-metric-context'
 import { useCostsTimeRangeContext } from '../costs-time-range-context'
 import { useCostsUnitContext } from '../costs-unit-context'
-import { type ScalingCostsTableEntry, scalingCostsColumns } from './columns'
+import { type ScalingCostsTableEntry, getScalingCostsColumns } from './columns'
 
 interface Props {
   entries: ScalingCostsEntry[]
@@ -38,7 +38,7 @@ export function ScalingCostsTable({ entries, rollups }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: scalingCostsColumns,
+    columns: getScalingCostsColumns(metric),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -106,7 +106,7 @@ function calculateDataByType(
 
   return entries.map((e) => {
     if (e.data?.type === 'not-available') return e
-    if (!e.data?.txCount)
+    if (!e.data?.uopsCount)
       return {
         ...e,
         data: {
@@ -118,11 +118,11 @@ function calculateDataByType(
       ...e,
       data: {
         ...e.data,
-        total: e.data.total / e.data.txCount,
-        blobs: e.data.blobs ? e.data.blobs / e.data.txCount : undefined,
-        compute: e.data.compute / e.data.txCount,
-        calldata: e.data.calldata / e.data.txCount,
-        overhead: e.data.overhead / e.data.txCount,
+        total: e.data.total / e.data.uopsCount,
+        blobs: e.data.blobs ? e.data.blobs / e.data.uopsCount : undefined,
+        compute: e.data.compute / e.data.uopsCount,
+        calldata: e.data.calldata / e.data.uopsCount,
+        overhead: e.data.overhead / e.data.uopsCount,
       },
     }
   })

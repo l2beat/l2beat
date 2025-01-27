@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { Price } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { Price } from '../../kysely/generated/types'
 
 export interface PriceRecord {
   configId: string

@@ -5,7 +5,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('karak')
 
@@ -14,11 +14,11 @@ export const karak: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'K2',
     slug: 'k2',
     description: 'K2 is a general-purpose Optimium.',
@@ -33,7 +33,6 @@ export const karak: Layer2 = opStackL2({
         'https://t.me/Karak_Network',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.karak.network/',
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction

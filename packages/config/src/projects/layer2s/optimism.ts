@@ -1,14 +1,13 @@
 import {
+  type ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
+import {
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -22,7 +21,6 @@ import {
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ESCROW } from '../../common/escrow'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
@@ -33,7 +31,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -137,7 +135,7 @@ export const optimism: Layer2 = {
   ],
   display: {
     name: 'OP Mainnet',
-    slug: 'optimism',
+    slug: 'op-mainnet',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
@@ -164,7 +162,6 @@ export const optimism: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/optimism',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -236,7 +233,7 @@ export const optimism: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://mainnet.optimism.io/',
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(105235064),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 105235064 },
     },
     finality: {
       type: 'OPStack',
@@ -503,7 +500,7 @@ export const optimism: Layer2 = {
           oracleChallengePeriod,
         )} right before the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
           permissionlessGameMaxClockExtension,
-        )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
+        )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).`,
         references: [
           {
             text: 'Fraud Proof Wars: OPFP',

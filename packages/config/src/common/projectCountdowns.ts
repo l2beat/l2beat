@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { Layer2, Layer3 } from '../projects'
+import type { Layer2, Layer3 } from '../projects'
 
 export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 
@@ -9,13 +9,13 @@ export const PROJECT_COUNTDOWNS = {
     getContext: (project: Layer2 | Layer3) => {
       if (
         project.display.category === 'Other' ||
-        !project.display.reasonsForBeingOther ||
-        project.display.reasonsForBeingOther.length === 0
+        !project.reasonsForBeingOther ||
+        project.reasonsForBeingOther.length === 0
       ) {
         return undefined
       }
       return {
-        reasonsForBeingOther: project.display.reasonsForBeingOther,
+        reasonsForBeingOther: project.reasonsForBeingOther,
       }
     },
   },

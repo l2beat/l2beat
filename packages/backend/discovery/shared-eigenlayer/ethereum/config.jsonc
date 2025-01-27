@@ -108,10 +108,16 @@
       "fields": {
         "Minters": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "IsMinterModified",
-            "valueKey": "minterAddress",
-            "flagKey": "newStatus"
+            "type": "event",
+            "select": "minterAddress",
+            "add": {
+              "event": "IsMinterModified",
+              "where": ["=", "#newStatus", true]
+            },
+            "remove": {
+              "event": "IsMinterModified",
+              "where": ["!=", "#newStatus", true]
+            }
           }
         },
         "transferRestrictionsDisabledAfter": {
@@ -143,9 +149,9 @@
       "fields": {
         "avs": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "OperatorAVSRegistrationStatusUpdated",
-            "valueKey": "avs"
+            "type": "event",
+            "select": "avs",
+            "add": { "event": "OperatorAVSRegistrationStatusUpdated" }
           }
         }
       },
@@ -156,10 +162,16 @@
       "fields": {
         "pausers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "PauserStatusChanged",
-            "valueKey": "pauser",
-            "flagKey": "canPause"
+            "type": "event",
+            "select": "pauser",
+            "add": {
+              "event": "PauserStatusChanged",
+              "where": ["=", "#canPause", true]
+            },
+            "remove": {
+              "event": "PauserStatusChanged",
+              "where": ["!=", "#canPause", true]
+            }
           }
         }
       }

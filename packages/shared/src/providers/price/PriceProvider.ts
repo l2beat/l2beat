@@ -1,10 +1,9 @@
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { CoingeckoQueryService, QueryResultPoint } from '../../services'
+import { type CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 
 export class PriceProvider {
   constructor(private readonly client: CoingeckoQueryService) {}
 
-  // TODO: operate on ticker
   async getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,

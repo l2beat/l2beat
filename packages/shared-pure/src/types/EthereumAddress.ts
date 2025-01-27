@@ -1,3 +1,4 @@
+import { validateAddress } from '@mradomski/tinyerc55'
 import { constants, utils } from 'ethers'
 
 export type EthereumAddress = string & {
@@ -5,11 +6,12 @@ export type EthereumAddress = string & {
 }
 
 export function EthereumAddress(value: string): EthereumAddress {
-  try {
-    return utils.getAddress(value) as unknown as EthereumAddress
-  } catch {
+  const result = validateAddress(value)
+  if (!result.valid) {
     throw new TypeError('Invalid EthereumAddress')
   }
+
+  return result.address as unknown as EthereumAddress
 }
 
 EthereumAddress.ZERO = EthereumAddress(constants.AddressZero)

@@ -1,7 +1,7 @@
-import { Chain } from '@/chains'
-import { Block } from '@l2beat/shared-pure'
+import type { Chain } from '@/chains'
+import type { Block } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { BlockClient } from './BlockClient'
+import type { BlockClient } from './BlockClient'
 
 // TODO: To be replaced by BlockProvider from @l2beat/shared
 export class StarknetClient implements BlockClient {

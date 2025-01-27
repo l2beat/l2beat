@@ -1,5 +1,5 @@
 import { mockObject } from 'earl'
-import { Configuration, RemovalConfiguration } from '../types'
+import type { Configuration, RemovalConfiguration } from '../types'
 
 export function actual<T>(
   id: string,

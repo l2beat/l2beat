@@ -1,5 +1,9 @@
+'use client'
+
 import { type ReactNode } from 'react'
 import { cn } from '~/utils/cn'
+import { useRecategorisationPreviewContext } from './recategorisation-preview/recategorisation-preview-provider'
+import { RecategorisationPreviewSwitch } from './recategorisation-preview/recategorisation-preview-switch'
 import { SearchBarButton } from './search-bar/search-bar-button'
 
 interface Props {
@@ -9,6 +13,7 @@ interface Props {
 }
 
 export function MainPageHeader({ children, description, className }: Props) {
+  const { isScalingMainPage } = useRecategorisationPreviewContext()
   return (
     <header
       className={cn(
@@ -29,7 +34,10 @@ export function MainPageHeader({ children, description, className }: Props) {
           <p className="mt-0.5 text-xs text-secondary">{description}</p>
         )}
       </div>
-      <SearchBarButton />
+      <div className="flex items-center gap-5">
+        {isScalingMainPage && <RecategorisationPreviewSwitch />}
+        <SearchBarButton />
+      </div>
     </header>
   )
 }

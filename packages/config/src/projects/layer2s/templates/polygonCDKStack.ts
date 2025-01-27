@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -10,38 +10,40 @@ import {
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  ChainConfig,
+  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  type DataAvailabilityBridge,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ScalingProjectContract,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectStateDerivation,
+  type ScalingProjectStateValidation,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { Badge, BadgeId, badges } from '../../badges'
+import { Badge, type BadgeId, badges } from '../../badges'
+import type { DacDaLayer } from '../../da-beat/types'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 import {
   explorerContractSourceReference,
   explorerReferences,
@@ -60,6 +62,7 @@ export interface DAProvider {
 export interface PolygonCDKStackConfig {
   createdAt: UnixTime
   daProvider?: DAProvider
+  dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
@@ -82,6 +85,8 @@ export interface PolygonCDKStackConfig {
   additionalBadges?: BadgeId[]
   additionalPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
+  isArchived?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -160,6 +165,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     type: 'layer2',
     createdAt: templateVars.createdAt,
     id: ProjectId(templateVars.discovery.projectName),
+    isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
@@ -592,6 +598,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
       templateVars.additionalBadges ?? [],
     ),
+    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

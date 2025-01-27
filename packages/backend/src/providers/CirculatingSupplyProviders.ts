@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   CirculatingSupplyProvider,
-  CoingeckoClient,
+  type CoingeckoClient,
   CoingeckoQueryService,
 } from '@l2beat/shared'
 

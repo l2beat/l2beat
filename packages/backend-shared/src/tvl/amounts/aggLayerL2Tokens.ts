@@ -1,12 +1,12 @@
-import { ChainConfig } from '@l2beat/config'
+import type { ChainConfig } from '@l2beat/config'
 import {
   assert,
-  AggLayerL2Token,
+  type AggLayerL2Token,
   AssetId,
-  Token,
+  type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getAggLayerL2TokenEntry(

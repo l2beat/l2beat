@@ -49,8 +49,8 @@ export const scalingSummaryColumns = [
   columnHelper.accessor(
     (e) => {
       if (
-        e.stage?.stage === 'NotApplicable' ||
-        e.stage?.stage === 'UnderReview'
+        e.stage.stage === 'NotApplicable' ||
+        e.stage.stage === 'UnderReview'
       ) {
         return undefined
       }

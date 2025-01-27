@@ -8,9 +8,9 @@ import {
   stringAsInt,
 } from '@l2beat/shared-pure'
 
-import { ContractSource } from './IEtherscanClient'
+import type { ContractSource } from './IEtherscanClient'
 
-import { HttpClient } from '@l2beat/shared'
+import type { HttpClient } from '@l2beat/shared'
 import { z } from 'zod'
 import {
   ContractCreatorAndCreationTxHashResult,
@@ -19,7 +19,7 @@ import {
   TransactionListResult,
   tryParseEtherscanResponse,
 } from './EtherscanModels'
-import {
+import type {
   EtherscanUnsupportedMethods,
   IEtherscanClient,
 } from './IEtherscanClient'

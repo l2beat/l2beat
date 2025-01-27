@@ -1,4 +1,4 @@
-import { Blob } from '@l2beat/shared'
+import type { Blob } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 

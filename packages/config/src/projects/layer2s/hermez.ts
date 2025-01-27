@@ -11,7 +11,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const upgradeDelay = 604800
 const discovery = new ProjectDiscovery('hermez')

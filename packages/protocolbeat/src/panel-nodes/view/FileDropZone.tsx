@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { useStore } from '../store/store'
 import { discoveryToNodes } from '../store/utils/discoveryToNodes'
 import { encodeProjectId, parseDiscovery } from '../store/utils/parseDiscovery'

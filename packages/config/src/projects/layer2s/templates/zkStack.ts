@@ -1,10 +1,10 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
   EthereumAddress,
   ProjectId,
-  UnixTime,
+  type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -13,37 +13,38 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  type DataAvailabilityBridge,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ReasonForBeingInOther,
+  type ScalingProjectContract,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRiskView,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
-import { ChainConfig } from '../../../common/ChainConfig'
+import type { ChainConfig } from '../../../common/ChainConfig'
 import { formatExecutionDelay } from '../../../common/formatDelays'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { Badge, BadgeId, badges } from '../../badges'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { StageConfig } from '../common/stages/types'
-import {
-  type Layer2,
-  type Layer2Display,
+import type { StageConfig } from '../common/stages/types'
+import type {
+  Layer2,
+  Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
@@ -61,10 +62,7 @@ export interface ZkStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  validatorsEvents: {
-    added: string
-    removed: string
-  }
+  validatorsKey: string
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
@@ -100,6 +98,7 @@ export interface ZkStackConfigCommon {
   gasTokens?: string[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export type Upgradeability = {
@@ -739,6 +738,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
     ],
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

@@ -1,5 +1,5 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
@@ -18,18 +18,18 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('soneium')
 
@@ -134,6 +134,7 @@ export const soneium: Layer2 = {
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Soneium',
     slug: 'soneium',
@@ -155,7 +156,6 @@ export const soneium: Layer2 = {
         'https://discord.gg/rWWPBHug9w',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -191,7 +191,7 @@ export const soneium: Layer2 = {
       defaultUrl: 'https://rpc.soneium.org/',
       defaultCallsPerMinute: 2000,
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(1),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
     finality: {
       type: 'OPStack',

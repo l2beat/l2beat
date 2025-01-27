@@ -20,9 +20,11 @@ export default async function Page() {
     api.activity.chart.prefetch({
       range: '1y',
       filter: { type: 'rollups' },
+      previewRecategorisation: false,
     }),
     api.activity.chartStats.prefetch({
       filter: { type: 'rollups' },
+      previewRecategorisation: false,
     }),
   ])
 

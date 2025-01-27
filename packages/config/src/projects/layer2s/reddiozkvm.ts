@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../common'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const reddiozkvm: Layer2 = {
   isUpcoming: true,
@@ -16,7 +16,7 @@ export const reddiozkvm: Layer2 = {
     purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
 
-    provider: 'Starknet',
+    provider: 'SN Stack',
     links: {
       websites: ['https://reddio.com'],
       apps: [],

@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
-import { StateUpdateMode } from '@l2beat/config'
+import type { StateUpdateMode } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
+import type { ChildIndexer } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Database, FinalityRecord } from '@l2beat/database'
+import type { Database, FinalityRecord } from '@l2beat/database'
 import { FinalityIndexer } from './FinalityIndexer'
-import { BaseAnalyzer, Batch } from './analyzers/types/BaseAnalyzer'
-import { FinalityConfig } from './types/FinalityConfig'
+import type { BaseAnalyzer, Batch } from './analyzers/types/BaseAnalyzer'
+import type { FinalityConfig } from './types/FinalityConfig'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
 

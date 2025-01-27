@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 export const mxc: Layer3 = upcomingL3({
   id: ProjectId('mxc'),

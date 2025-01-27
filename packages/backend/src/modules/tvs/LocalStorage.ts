@@ -1,15 +1,15 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
-import { UnixTime } from '@l2beat/shared-pure'
-import { DataStorage } from './DataStorage'
+import type { UnixTime } from '@l2beat/shared-pure'
+import type { DataStorage } from './DataStorage'
 
 interface LocalStorageJSON {
   prices: Record<string, number>
-  amounts: Record<string, bigint>
+  amounts: Record<string, number>
 }
 
 export class LocalStorage implements DataStorage {
   private prices: Map<string, number>
-  private amounts: Map<string, bigint>
+  private amounts: Map<string, number>
 
   constructor(private readonly filePath: string) {
     const { amounts, prices } = this.readLocalFile()
@@ -27,12 +27,8 @@ export class LocalStorage implements DataStorage {
     return await Promise.resolve()
   }
 
-  async getPrice(id: string, timestamp: UnixTime): Promise<number> {
+  async getPrice(id: string, timestamp: UnixTime): Promise<number | undefined> {
     const price = this.prices.get(key(id, timestamp))
-
-    if (!price) {
-      throw new Error(`Price with id ${id} not found`)
-    }
 
     return await Promise.resolve(price)
   }
@@ -40,19 +36,18 @@ export class LocalStorage implements DataStorage {
   async writeAmount(
     id: string,
     timestamp: UnixTime,
-    amount: bigint,
+    amount: number,
   ): Promise<void> {
     this.amounts.set(key(id, timestamp), amount)
     this.saveToFile()
     return await Promise.resolve()
   }
 
-  async getAmount(id: string, timestamp: UnixTime): Promise<bigint> {
+  async getAmount(
+    id: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined> {
     const amount = this.amounts.get(key(id, timestamp))
-
-    if (!amount) {
-      throw new Error(`Amount with id ${key(id, timestamp)} not found`)
-    }
 
     return await Promise.resolve(amount)
   }
@@ -67,7 +62,7 @@ export class LocalStorage implements DataStorage {
           Object.entries(data.prices).map(([k, v]) => [k, Number(v)]),
         ),
         amounts: new Map(
-          Object.entries(data.amounts).map(([k, v]) => [k, BigInt(v)]),
+          Object.entries(data.amounts).map(([k, v]) => [k, Number(v)]),
         ),
       }
     } else {

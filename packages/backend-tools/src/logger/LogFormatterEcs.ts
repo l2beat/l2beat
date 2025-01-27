@@ -1,4 +1,4 @@
-import { LogEntry, LogFormatter } from './types'
+import type { LogEntry, LogFormatter } from './types'
 import { toJSON } from './utils'
 
 const MAX_LENGTH = 1000

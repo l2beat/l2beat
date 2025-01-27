@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 21671557,
-  "configHash": "0x71ba57451e4cbcf6dc6be1276e95abbc38e2c7b59d6cf33eae6fed5bd0dc6a93",
+  "blockNumber": 21715649,
+  "configHash": "0x4a9d0ec78c6aecfb1a349149c0e551cf686e769516628798c388cff80028153e",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -203,6 +203,11 @@
             "chainId": 61166,
             "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
+          },
+          {
+            "chainId": 1345,
+            "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0x49664fFe2c2335c28631629606E26a6971aEf261"
           }
         ],
         "CronosDiamond": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
@@ -340,7 +345,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 172,
+        "nonce": 175,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -441,48 +446,37 @@
       "values": {
         "$immutable": true,
         "abstractThirdBatchTS": 1730348459,
-        "cronosValidatorsAdded": [
-          "0xACBD581D1BedB2F71d2F5F01f881586e0623d591",
-          "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14",
+        "cronosValidators": [
           "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122",
           "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"
-        ],
-        "cronosValidatorsRemoved": [
-          "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14",
-          "0xACBD581D1BedB2F71d2F5F01f881586e0623d591"
         ],
         "executionDelay": 75600,
         "executionDelay_fmt": "21h",
         "getName": "ValidatorTimelock",
-        "grvtValidatorsAdded": [
+        "grvtValidators": [
           "0x58D14960E0a2be353eDdE61ad719196A2b816522",
           "0x0b114d4675Cb79507e68F2616c93e124122c6ef0"
         ],
-        "grvtValidatorsRemoved": [],
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
-        "sophonValidatorsAdded": [
+        "sophonValidators": [
           "0x4cc87B0A504047967CeD9A955431B3229237e7de",
           "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
         ],
-        "sophonValidatorsRemoved": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "treasureValidatorsAdded": [
+        "treasureValidators": [
           "0x2572835e02b59078711aa0800490e80975e4169d",
           "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
         ],
-        "treasureValidatorsRemoved": [],
-        "zeronetworkValidatorsAdded": [
+        "zeronetworkValidators": [
           "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
           "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"
         ],
-        "zeronetworkValidatorsRemoved": [],
-        "zksyncValidatorsAdded": [
+        "zksyncValidators": [
           "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
           "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
-        ],
-        "zksyncValidatorsRemoved": []
+        ]
       },
       "fieldMeta": {
         "abstractThirdBatchTS": {
@@ -940,7 +934,9 @@
         "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "genesisUpgrade": "0x6e2BC597F1e83F9fC7c1f69157F2C12476873971",
-        "getAllHyperchainChainIDs": [324, 388, 50104, 543210, 2741, 325, 61166],
+        "getAllHyperchainChainIDs": [
+          324, 388, 50104, 543210, 2741, 325, 61166, 1345
+        ],
         "getAllHyperchains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
           "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
@@ -948,7 +944,8 @@
           "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
           "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
           "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
-          "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+          "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
+          "0x89f90748A9a36C30A324481133fa198f4E16A824"
         ],
         "getChainAdmin": [],
         "getSemverProtocolVersion": [0, 25, 0],
@@ -1283,7 +1280,6 @@
     { "address": "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001" },
     { "address": "0xa5D0084A766203b463b3164DFc49D91509C12daB" },
     { "address": "0xaaAdAa000867fb883089B7e528d7eA96937b777f" },
-    { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
     { "address": "0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c" },
     { "address": "0xB1072fD3a5EA72B42e063e5A61963d00eeF655DF" },
     { "address": "0xB2Be7F1957Fe3C3Be912e8C736d7e6e8459d386c" },
@@ -1304,7 +1300,6 @@
     { "address": "0xdF28907A6A272fa06333a197d7F0379A0f8f00aa" },
     { "address": "0xDFbD13B78010BF2110a168FA59b682c8a6D96564" },
     { "address": "0xDfe6610c2357a0BfECF788e52697554aF5F35174" },
-    { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
     { "address": "0xe968FB773e54f77350A427B057FDB44e6592E338" },
     { "address": "0xEE8fAC9051243379dAAA02c24e07D29F22d73b4E" },
     { "address": "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f" },
@@ -1855,15 +1850,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/BridgeHub": "0xf611a21a1781cd824c32fbff58efef26ae2d4b19bd9fadbd1aee02eb9244b702",
-    "shared-zk-stack/ChainAdmin": "0xcf954f5bde98df6e8779de1023f3d794f7a8061cbf3e9ff3d504ebea92752a42",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0x41fe293001ef4770af9803cf6f7ddcaf4a89f7da1d3c8d70e105158b2d5f9f24",
-    "shared-zk-stack/GenesisUpgrade": "0xb39c7d1ef63b417f98ce9c6295d4122650e52a2c89a6c6b0d83368da9a10e8e1",
-    "shared-zk-stack/Guardians": "0xff62451f1375a4f160a6675f8b84428df5ae4521aa2afcc2b29a4140df5d8ea9",
-    "shared-zk-stack/L1SharedBridge": "0x8baba04d589e8304005e4aa3a75043de951cce243c20910011085e034b0350a8",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0x4ee79bfb718949b4b06361be9985aaaba225f1f3904c482e883596c9ae396a9d",
-    "shared-zk-stack/SecurityCouncil": "0x08cccbae3b937ef2685aba95dde429460b4a8e19a6e953fc0885b48d6b3dcd69",
-    "shared-zk-stack/StateTransitionManager": "0xccf595344724babb71eecb4a2564c2f529c8afb5e720c169685b39ee47fc66f0",
-    "shared-zk-stack/ValidatorTimelock": "0xf61817ee1a269a8e715da0ecc8911bf31056c2a701822ed82e8a18c0843417d7"
+    "shared-zk-stack/ChainAdmin": "0xe6614b7403c8cc85697cb20734a4ccf07b7d844086e1ac5cd931c671594f7ec1"
   }
 }

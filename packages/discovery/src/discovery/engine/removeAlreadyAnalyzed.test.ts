@@ -1,7 +1,7 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import {
+import type {
   AddressesWithTemplates,
   Analysis,
   AnalyzedContract,

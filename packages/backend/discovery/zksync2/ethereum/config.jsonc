@@ -68,13 +68,13 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "BlocksRevert",
-            "returnParams": [
+            "type": "event",
+            "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
               "totalBlocksExecuted"
-            ]
+            ],
+            "add": { "event": "BlocksRevert" }
           }
         },
         // the 3 following allow us to get an array of validators without creating a new handler
@@ -88,16 +88,16 @@
         },
         "validatorsAdded": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator"
+            "type": "event",
+            "select": "_addedValidator",
+            "add": { "event": "ValidatorAdded" }
           }
         },
         "validatorsRemoved": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator"
+            "type": "event",
+            "select": "_removedValidator",
+            "add": { "event": "ValidatorRemoved" }
           }
         }
       }

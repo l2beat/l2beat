@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21630127,
   "configHash": "0xceb4cee1478e471326f07e709db9d05e23b7736b3ed527306f8292bcc92cc522",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "daiBridge",

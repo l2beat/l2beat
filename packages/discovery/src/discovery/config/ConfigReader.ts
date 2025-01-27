@@ -1,18 +1,18 @@
 import { existsSync, readdirSync } from 'fs'
 import { readFileSync } from 'fs'
 import path from 'path'
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 
 import { assert, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { ZodError } from 'zod'
+import type { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { TemplateService } from '../analysis/TemplateService'
 import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { CommonAddressNames } from './DiscoveryConfig'
+import type { CommonAddressNames } from './DiscoveryConfig'
 import {
-  DiscoveryCustomType,
+  type DiscoveryCustomType,
   GlobalTypes,
   RawDiscoveryConfig,
 } from './RawDiscoveryConfig'

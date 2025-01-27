@@ -18,11 +18,11 @@ import {
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
 import { getLiveness } from './get-liveness'
-import { type LivenessDetails, type LivenessProject } from './types'
 import {
-  type AnomalyIndicatorEntry,
-  toAnomalyIndicatorEntries,
-} from './utils/get-anomaly-entries'
+  type LivenessAnomaly,
+  type LivenessDetails,
+  type LivenessProject,
+} from './types'
 import { getLivenessSyncWarning } from './utils/is-liveness-synced'
 
 export async function getScalingLivenessEntries() {
@@ -58,7 +58,7 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
   provider: ScalingProjectStack | undefined
   data: LivenessData
   explanation: string | undefined
-  anomalies: AnomalyIndicatorEntry[]
+  anomalies: LivenessAnomaly[]
   dataAvailabilityMode: DataAvailabilityMode | undefined
   tvlOrder: number
 }
@@ -82,7 +82,7 @@ function getScalingLivenessEntry(
     provider: project.scalingInfo.stack,
     data,
     explanation: project.livenessInfo?.explanation,
-    anomalies: toAnomalyIndicatorEntries(liveness.anomalies ?? []),
+    anomalies: liveness.anomalies,
     dataAvailabilityMode: project.scalingDa?.mode,
     tvlOrder: tvl ?? -1,
   }

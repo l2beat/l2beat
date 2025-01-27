@@ -4,15 +4,15 @@ import {
   EIP712_methods,
   ERC4337_methods,
   MULTICALLV3_methods,
-  Method,
-  Operation,
+  type Method,
+  type Operation,
   SAFE_methods,
   isEip712,
   isErc4337,
   isGnosisSafe,
   isMulticallv3,
 } from '@l2beat/shared'
-import { assert, Block, Transaction } from '@l2beat/shared-pure'
+import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 
 export class RpcUopsAnalyzer {
   calculateUops(rpcBlock: Block) {

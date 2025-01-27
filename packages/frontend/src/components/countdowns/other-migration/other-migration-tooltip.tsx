@@ -18,7 +18,7 @@ export function OtherMigrationTooltip({
   return (
     <Tooltip>
       <TooltipTrigger className="relative -top-px">
-        <StopwatchIcon />
+        <StopwatchIcon className="size-3.5 md:size-4" />
       </TooltipTrigger>
       <TooltipContent className="space-y-2">
         <p className="text-lg font-bold leading-none text-primary">

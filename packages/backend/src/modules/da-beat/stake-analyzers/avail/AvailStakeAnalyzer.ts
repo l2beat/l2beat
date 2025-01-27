@@ -1,5 +1,5 @@
 import { AbstractStakeAnalyzer } from '../AbstractStakeAnalyzer'
-import { AvailClient } from './AvailClient'
+import type { AvailClient } from './AvailClient'
 
 export class AvailStakeAnalyzer extends AbstractStakeAnalyzer {
   constructor(private readonly client: AvailClient) {

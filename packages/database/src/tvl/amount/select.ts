@@ -1,4 +1,4 @@
-import { Amount } from '../../kysely/generated/types'
+import type { Amount } from '../../kysely/generated/types'
 
 export const selectAmount = [
   'amount',

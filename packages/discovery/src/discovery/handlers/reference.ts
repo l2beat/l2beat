@@ -1,9 +1,9 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import * as z from 'zod'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { IProvider } from '../provider/IProvider'
-import { HandlerResult } from './Handler'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { IProvider } from '../provider/IProvider'
+import type { HandlerResult } from './Handler'
 
 const REFERENCE_REGEX = /^\{\{\s*[$a-z_][$.a-z\d_]*\s*\}\}$/i
 export const Reference = z.string().regex(REFERENCE_REGEX)

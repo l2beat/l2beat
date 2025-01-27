@@ -2,7 +2,7 @@ import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { IProvider } from '../provider/IProvider'
+import type { IProvider } from '../provider/IProvider'
 import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'
 
 describe(FunctionSelectorDecoder.name, () => {

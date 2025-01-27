@@ -23,7 +23,7 @@ import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -52,8 +52,8 @@ export const morph: Layer2 = {
   id: ProjectId('morph'),
   createdAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
     name: 'Morph',
     slug: 'morph',
     description:
@@ -74,7 +74,6 @@ export const morph: Layer2 = {
         'https://youtube.com/@morphofficiall2',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   stage: getStage({
     stage0: {

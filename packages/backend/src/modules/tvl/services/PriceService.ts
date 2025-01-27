@@ -1,17 +1,17 @@
-import { Logger } from '@l2beat/backend-tools'
-import { Database, PriceRecord } from '@l2beat/database'
+import type { Logger } from '@l2beat/backend-tools'
+import type { Database, PriceRecord } from '@l2beat/database'
 import {
   CoingeckoQueryService,
-  PriceProvider,
-  QueryResultPoint,
+  type PriceProvider,
+  type QueryResultPoint,
 } from '@l2beat/shared'
 import {
   assert,
-  CoingeckoId,
-  CoingeckoPriceConfigEntry,
+  type CoingeckoId,
+  type CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Configuration } from '../../../tools/uif/multi/types'
+import type { Configuration } from '../../../tools/uif/multi/types'
 
 export interface PriceServiceDependencies {
   readonly priceProvider: PriceProvider
@@ -20,7 +20,11 @@ export interface PriceServiceDependencies {
 }
 
 export class PriceService {
-  constructor(private readonly $: PriceServiceDependencies) {}
+  logger: Logger
+
+  constructor(private readonly $: PriceServiceDependencies) {
+    this.logger = this.$.logger.for(this)
+  }
 
   async getPrices(
     from: UnixTime,
@@ -96,8 +100,8 @@ export class PriceService {
       `Latest price not found for ${coingeckoId} @ ${latestHour.toNumber()}`,
     )
 
-    this.$.logger.error(
-      'DB fallback triggered: failed to fetch price from Coingecko',
+    this.logger.warn(
+      `${coingeckoId}: DB fallback triggered: failed to fetch price from Coingecko`,
       {
         coingeckoId,
         latestHour: latestHour.toNumber(),

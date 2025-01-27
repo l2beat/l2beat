@@ -1,6 +1,6 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { RootIndexer } from '@l2beat/uif'
-import { Clock } from '../../../tools/Clock'
+import type { Clock } from '../../../tools/Clock'
 
 export class DayTargetIndexer extends RootIndexer {
   constructor(

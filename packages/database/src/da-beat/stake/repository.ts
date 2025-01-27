@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { StakeRecord, toRecord, toRow } from './entity'
+import { type StakeRecord, toRecord, toRow } from './entity'
 import { selectStake } from './select'
 
 export class StakeRepository extends BaseRepository {

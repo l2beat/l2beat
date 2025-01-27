@@ -1,4 +1,4 @@
-import { ColumnId } from './columns'
+import type { ColumnId } from './columns'
 
 export type SortDirection = 'asc' | 'desc'
 

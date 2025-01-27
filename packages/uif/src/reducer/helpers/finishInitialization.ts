@@ -1,5 +1,5 @@
-import { IndexerReducerResult } from '../types/IndexerReducerResult'
-import { IndexerState } from '../types/IndexerState'
+import type { IndexerReducerResult } from '../types/IndexerReducerResult'
+import type { IndexerState } from '../types/IndexerState'
 
 export function finishInitialization(
   state: IndexerState,

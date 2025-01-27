@@ -1,5 +1,5 @@
 import { RateLimiter } from '@l2beat/backend-tools'
-import { providers } from 'ethers'
+import type { providers } from 'ethers'
 
 // TODO: This class doesn't belong here! It's not used in discovery
 export class RateLimitedProvider {

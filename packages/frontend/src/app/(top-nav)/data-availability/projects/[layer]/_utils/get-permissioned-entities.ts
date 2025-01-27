@@ -1,9 +1,17 @@
-import { type DaBridge } from '@l2beat/config'
-
-export function getPermissionedEntities(bridge: DaBridge) {
-  if (bridge.type !== 'DAC') {
-    return
+import {
+  type DaBridge,
+  type IntegratedDacBridge,
+  type NoDacBridge,
+} from '@l2beat/config'
+export function getPermissionedEntities(
+  bridge: DaBridge | IntegratedDacBridge | NoDacBridge,
+) {
+  if (
+    bridge.type === 'IntegratedDacBridge' ||
+    bridge.type === 'StandaloneDacBridge'
+  ) {
+    return bridge.knownMembers
   }
 
-  return bridge.knownMembers
+  return []
 }
