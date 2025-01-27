@@ -51,7 +51,7 @@ export const rss3: Layer2 = opStackL2({
       ],
     },
     bridge: DA_BRIDGES.NONE,
-    badge: Badge.DA.NearDA
+    badge: Badge.DA.NearDA,
   },
   associatedTokens: ['RSS3'],
   discovery,
