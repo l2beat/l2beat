@@ -25,6 +25,7 @@ import {
   type ReasonForBeingInOther,
   ScalingProject,
   type ScalingProjectCategory,
+  ScalingProjectConfig,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
   type ScalingProjectEscrow,
@@ -62,7 +63,6 @@ import type {
 } from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
-import { template } from 'lodash'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -181,6 +181,10 @@ function opStackCommon(
     ScalingProjectDisplay,
     'architectureImage' | 'purposes' | 'provider' | 'category' | 'warning'
   >
+  config: Pick<
+    ScalingProjectConfig,
+    'associatedTokens' | 'gasTokens' | 'transactionApi'
+  >
 } {
   const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
   const discoveryDrivenSections = templateVars.discoveryDrivenData
@@ -263,6 +267,21 @@ function opStackCommon(
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
+    },
+    config: {
+      associatedTokens: templateVars.associatedTokens,
+      gasTokens: templateVars.gasTokens,
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
@@ -526,8 +545,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     },
     chainConfig: templateVars.chainConfig,
     config: {
-      associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
+      ...common.config,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: portal.address,
@@ -548,17 +566,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
-          : undefined),
       trackedTxs:
         daProvider !== undefined
           ? undefined
@@ -697,8 +704,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     stage: templateVars.stage ?? computedStage(templateVars, daProvider),
     dataAvailability: decideDA(daProvider, baseChain.dataAvailability),
     config: {
-      associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
+      ...common.config,
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: false,
@@ -720,17 +726,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
-          : undefined),
     },
     stateDerivation: templateVars.stateDerivation,
   }
