@@ -396,7 +396,7 @@ export const badges = {
     },
     type: BadgeType.L3ParentChain,
   },
-  Optimism: {
+  OpMainnet: {
     display: {
       name: 'Built on top of OP Mainnet',
       description: 'The project has OP Mainnet as its host chain',

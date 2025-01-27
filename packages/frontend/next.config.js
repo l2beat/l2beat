@@ -75,13 +75,18 @@ const nextConfig = {
       // Renamed projects
       // TODO: Move once we migrate detail pages to Next.js
       {
-        source: '/scaling/projects/zksync',
-        destination: '/scaling/projects/zksync-lite',
+        source: '/scaling/projects/zksync/:path*',
+        destination: '/scaling/projects/zksync-lite/:path*',
         permanent: true,
       },
       {
-        source: '/scaling/projects/zksync2',
-        destination: '/scaling/projects/zksync-era',
+        source: '/scaling/projects/zksync2/:path*',
+        destination: '/scaling/projects/zksync-era/:path*',
+        permanent: true,
+      },
+      {
+        source: '/scaling/projects/optimism/:path*',
+        destination: '/scaling/projects/op-mainnet/:path*',
         permanent: true,
       },
       // Legacy pathnames
