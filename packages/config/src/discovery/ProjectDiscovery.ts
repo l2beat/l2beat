@@ -348,7 +348,7 @@ export class ProjectDiscovery {
     const contract = this.getContract(identifier)
     assert(
       isMultisigLike(contract),
-      `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
+      `Contract ${contract.name} is not a Multisig (${this.projectName})`,
     )
 
     const modules = toAddressArray(contract.values?.GnosisSafe_modules)
@@ -370,7 +370,7 @@ export class ProjectDiscovery {
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
-      `A Gnosis Safe with ${this.getMultisigStats(identifier)} threshold. ` +
+      `A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
         fullModulesDescription,
     ]
   }
