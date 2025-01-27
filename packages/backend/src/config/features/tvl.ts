@@ -52,8 +52,6 @@ export function getTvlConfig(
       100,
     ),
     projects,
-    projectsExcludedFromApi:
-      env.optionalString('TVL_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ?? [],
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
   }
 }
