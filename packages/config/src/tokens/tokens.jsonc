@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "ANIME",
+      "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277"
+    },
+    {
       "symbol": "LOKA",
       "address": "0x61E90A50137E1F645c9eF4a0d3A4f01477738406"
     },
@@ -4658,6 +4662,12 @@
     }
   ],
   "zksync2": [
+    {
+      "symbol": "FIUSD",
+      "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
+      "source": "native",
+      "supply": "totalSupply" // totalSupply < circulatingSupply and token is burn/minted to a single eoa
+    },
     {
       "symbol": "rsETH",
       "category": "ether",
