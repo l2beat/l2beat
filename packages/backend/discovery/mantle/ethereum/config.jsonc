@@ -200,37 +200,26 @@
         },
         "dataStorePermission": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "AddDataStoreRollupPermission",
-            "addKey": "pusher",
-            "removeEvent": "ChangeDataStoreRollupPermission",
-            "removeKey": "pusher"
-          },
-          "target": {
-            "permissions": [
-              {
-                "type": "configure",
-                "description": "can post data commitments to the DA bridge."
-              }
-            ]
+            "type": "event",
+            "select": "pusher",
+            "add": { "event": "AddDataStoreRollupPermission" },
+            "remove": { "event": "ChangeDataStoreRollupPermission" }
           }
         },
         "registerOperatorPermission": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "AddOperatorRegisterPermission",
-            "addKey": "operator",
-            "removeEvent": "ChangeOperatorRegisterPermission",
-            "removeKey": "operator"
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "AddOperatorRegisterPermission" },
+            "remove": { "event": "ChangeOperatorRegisterPermission" }
           }
         },
         "deregisterOperatorPermission": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "AddOperatorDeregisterPermission",
-            "addKey": "operator",
-            "removeEvent": "ChangeOperatorDeregisterPermission",
-            "removeKey": "operator"
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "AddOperatorDeregisterPermission" },
+            "remove": { "event": "ChangeOperatorDeregisterPermission" }
           }
         }
       }

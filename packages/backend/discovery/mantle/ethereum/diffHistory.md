@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x993207ede4029e31c664652a5019cc55852ce0a3
+
+# Diff at Mon, 27 Jan 2025 08:44:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@19f9c78c593bd40f9a0b28c3dce98eac1bd1d1b8 block: 21680644
+- current block number: 21680644
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680644 (main branch discovery), not current.
+
+```diff
+    contract EigenDataLayerChain (0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"configure","from":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","description":"can post data commitments to the DA bridge."}]
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      issuedPermissions.3:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.2:
+-        {"permission":"configure","to":"0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A","description":"can post data commitments to the DA bridge.","via":[]}
+      issuedPermissions.1.permission:
+-        "configure"
++        "upgrade"
+      issuedPermissions.1.to:
+-        "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
++        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      issuedPermissions.1.description:
+-        "can post data commitments to the DA bridge."
+      issuedPermissions.1.via.0:
++        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+    }
+```
+
 Generated with discovered.json: 0x69900d75b4626ceab1aff3d4b730ef346975432c
 
 # Diff at Wed, 22 Jan 2025 14:31:53 GMT:

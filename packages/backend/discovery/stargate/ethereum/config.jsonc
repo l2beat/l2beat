@@ -62,20 +62,38 @@
       "fields": {
         "stargateOracles": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "AppConfigUpdated",
-            // stargate bridge address, CONFIG_TYPE_ORACLE
-            "topics": ["0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97", "0x6"],
-            "valueKey": "newConfig"
+            "type": "event",
+            "select": "newConfig",
+            "add": {
+              "event": "AppConfigUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#userApplication",
+                  "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                ],
+                ["=", "#configType", 6]
+              ]
+            }
           }
         },
         "stargateRelayers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "AppConfigUpdated",
-            // stargate bridge address, CONFIG_TYPE_RELAYER
-            "topics": ["0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97", "0x3"],
-            "valueKey": "newConfig"
+            "type": "event",
+            "select": "newConfig",
+            "add": {
+              "event": "AppConfigUpdated",
+              "where": [
+                "and",
+                [
+                  "=",
+                  "#userApplication",
+                  "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                ],
+                ["=", "#configType", 3]
+              ]
+            }
           }
         },
         "stargateScrollConfig": {

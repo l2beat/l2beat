@@ -56,9 +56,9 @@
           "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
           "severity": "HIGH",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "NewTransactionFilterer",
-            "returnParams": ["oldTransactionFilterer", "newTransactionFilterer"]
+            "type": "event",
+            "select": ["oldTransactionFilterer", "newTransactionFilterer"],
+            "add": { "event": "NewTransactionFilterer" }
           }
         },
         "validators": {

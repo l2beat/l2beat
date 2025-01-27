@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 21686341,
-  "configHash": "0x2861e2302bf75f4253912622efc927cc5d9545c582c9dd54d5039423d5015b36",
+  "configHash": "0xb9707df3aa255e90f3b4acd84a9ff8dffae09607c1c86bb89b01cbf7488a377b",
   "contracts": [
     {
       "name": "Verifier",

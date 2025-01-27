@@ -38,10 +38,16 @@
       "fields": {
         "validators": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorStatusUpdate",
-            "valueKey": "validatorAddress",
-            "flagKey": "isActive"
+            "type": "event",
+            "select": "validatorAddress",
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["=", "#isActive", true]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!=", "#isActive", true]
+            }
           }
         }
       }
@@ -54,13 +60,13 @@
       "fields": {
         "revertedBlocks": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "BlocksRevert",
-            "returnParams": [
+            "type": "event",
+            "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
               "totalBlocksExecuted"
-            ]
+            ],
+            "add": { "event": "BlocksRevert" }
           }
         },
         // the 3 following allow us to get an array of validators without creating a new handler

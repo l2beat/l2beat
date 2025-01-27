@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21629810,
-  "configHash": "0x9d8d6342ced946f652bc1eca94ff4592af6ed153fdf07a896fcfb6c063133fd0",
+  "configHash": "0xaa0aa74ef8fd5b854c9bdc4faf84f21c2f051ce5ee9549d332769fbbf7617fda",
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",

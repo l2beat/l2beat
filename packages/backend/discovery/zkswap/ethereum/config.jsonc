@@ -24,10 +24,16 @@
       "fields": {
         "validators": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorStatusUpdate",
-            "valueKey": "validatorAddress",
-            "flagKey": "isActive"
+            "type": "event",
+            "select": "validatorAddress",
+            "add": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["=", "#isActive", true]
+            },
+            "remove": {
+              "event": "ValidatorStatusUpdate",
+              "where": ["!=", "#isActive", true]
+            }
           }
         }
       }

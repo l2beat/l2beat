@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 21686453,
-  "configHash": "0xab8ae6033252970eaecfa005b488b08c1327c912d8e2f7c5134cd1b67bd29f5e",
+  "configHash": "0xeeda102a0677ed5fe2e4f7bc4ea5d1f049a6a5e47d01563c912fa4383375aa5b",
   "contracts": [
     {
       "name": "Permit2",

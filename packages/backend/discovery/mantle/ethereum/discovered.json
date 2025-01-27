@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 21680644,
-  "configHash": "0x2b8562e8d74a94d41917fc393ba136cf2b1489333880ed325f00958ea779cdda",
+  "configHash": "0x9decc1a29ebdd2f3f4fbb8740088e8ca192060335c167a20465e2fb6043d8607",
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -701,13 +701,6 @@
           "via": []
         }
       ],
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "description": "can post data commitments to the DA bridge."
-        }
-      ],
       "ignoreInWatchMode": [
         "getL2ConfirmedBlockNumber",
         "getL2StoredBlockNumber",
@@ -1044,18 +1037,6 @@
           "permission": "configure",
           "to": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
           "description": "can register or change status of DA node operators.",
-          "via": []
-        },
-        {
-          "permission": "configure",
-          "to": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-          "description": "can post data commitments to the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "configure",
-          "to": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
-          "description": "can post data commitments to the DA bridge.",
           "via": []
         },
         {
@@ -1397,11 +1378,6 @@
     {
       "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
       "receivedPermissions": [
-        {
-          "permission": "configure",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "description": "can post data commitments to the DA bridge."
-        },
         {
           "permission": "sequence",
           "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
@@ -2411,7 +2387,7 @@
     "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
     "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
     "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
-    "opstack/L2OutputOracle": "0x691da8dacc65ccf4a86c0912d7d29cc900873c84fa82867e830699155c114f95",
+    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
     "opstack/OptimismPortal": "0x5b6ac4a1df6dfc8cbaf2c6fb761942c6e7acf219455ec64523721dadbd88ac72",
     "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30"
   }

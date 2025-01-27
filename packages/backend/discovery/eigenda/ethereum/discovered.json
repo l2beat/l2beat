@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 21628459,
-  "configHash": "0x24a314ae7e419a3a7920171b575d691458e35df7314b156f0e3494b071072df0",
+  "configHash": "0x3dc8d71e572dc96094cd0d5578d13579543d11933f3b4a2d76a317d315aa2c8b",
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -37,42 +37,32 @@
         ],
         "$upgradeCount": 2,
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-        "firstQuorumStrategies": [
-          "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
-          "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "0xAe60d8180437b5C34bB956822ac2710972584473",
-          "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
-        ],
-        "fourthQuorumStrategies": [],
         "MAX_WEIGHING_FUNCTION_LENGTH": 32,
+        "quorumStrategies": {
+          "0": [
+            "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
+            "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+            "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+            "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+            "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+            "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+            "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+            "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+            "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+            "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+            "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+            "0xAe60d8180437b5C34bB956822ac2710972584473",
+            "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
+          ],
+          "1": ["0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"],
+          "2": ["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"]
+        },
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-        "secondQuorumStrategies": [
-          "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
-        ],
-        "thirdQuorumStrategies": ["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"],
         "WEIGHTING_DIVISOR": "1000000000000000000"
       },
       "fieldMeta": {
-        "firstQuorumStrategies": {
+        "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH)."
-        },
-        "secondQuorumStrategies": {
-          "description": "The strategies for the second quorum (EIGEN)."
-        },
-        "thirdQuorumStrategies": {
-          "description": "The strategies for the third quorum."
-        },
-        "fourthQuorumStrategies": {
-          "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum."
         }
       },
       "derivedName": "StakeRegistry"
@@ -2021,7 +2011,7 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/EjectionManager": "0x8ceb5dda8b87f1f70640cb025eae396a7320f2ab6e2de45c469be35e31d4ae45",
+    "eigenlayer/EjectionManager": "0xfc5fa02a56ac63310f2311527b6cb70c9b7cab19d34be73c3602e368397d313d",
     "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"

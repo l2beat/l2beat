@@ -173,24 +173,24 @@
           "severity": "LOW",
           "type": "CODE_CHANGE",
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "PlugConnected",
-            "valueKey": "plug",
+            "type": "event",
+            "select": "plug",
+            "add": { "event": "PlugConnected" },
             "ignoreRelative": true
           }
         },
         "inboundSwitchboards": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "PlugConnected",
-            "valueKey": "inboundSwitchboard"
+            "type": "event",
+            "select": "inboundSwitchboard",
+            "add": { "event": "PlugConnected" }
           }
         },
         "outboundSwitchboards": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "PlugConnected",
-            "valueKey": "outboundSwitchboard"
+            "type": "event",
+            "select": "outboundSwitchboard",
+            "add": { "event": "PlugConnected" }
           }
         }
       }
