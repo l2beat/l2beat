@@ -2,7 +2,6 @@ import {
   assert,
   EthereumAddress,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common/escrow'
@@ -18,13 +17,6 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 )
 const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
-
-const executionDelayOldS = discovery.getContractValue<number>(
-  'ValidatorTimelockOld',
-  'executionDelay',
-)
-const executionDelayOld =
-  executionDelayOldS > 0 && formatSeconds(executionDelayOldS)
 
 const validatorsVTLold = () => {
   // get validators added in the constructor args
@@ -365,32 +357,6 @@ export const zksyncera: Layer2 = zkStackL2({
     minTimestamp: new UnixTime(1708556400),
     lag: 0,
   },
-  nonTemplatePermissions: [
-    {
-      name: 'ChainAdmin Owner',
-      accounts: [
-        discovery.getPermissionedAccount('EraChainAdminProxy', 'owner'),
-      ],
-      description:
-        'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
-    },
-  ],
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('ZKsync', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('EraChainAdminProxy', {
-      description:
-        'Intermediary governance contract that proxies the *Elastic Chain Operator* role for the shared contracts and the *ChainAdmin* role for ZKsync Era.',
-    }),
-    discovery.getContractDetails(
-      'ValidatorTimelockOld',
-      `Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by ${executionDelayOld}.`,
-    ),
-  ],
   milestones: [
     {
       name: 'Onchain Governance Launch',

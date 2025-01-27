@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa8ec3abbd07bae3903ef9e7aaef4b71e8fd48621
+Generated with discovered.json: 0xc66756fe2abd5350f6c130e271deaf18ae49ed50
 
-# Diff at Mon, 27 Jan 2025 16:54:15 GMT:
+# Diff at Mon, 27 Jan 2025 19:04:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21629172
@@ -15,6 +15,37 @@ discodrive!
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21629172 (main branch discovery), not current.
+
+```diff
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0xE17aeD2fC55f4A876315376ffA49FE6358113a65"}
+      receivedPermissions.1.from:
+-        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
++        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.from:
+-        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      receivedPermissions.0.description:
++        "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."
+      receivedPermissions.0.via:
++        [{"address":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"configure","from":"0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."}]
+    }
+```
 
 ```diff
     contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604) {
@@ -34,7 +65,7 @@ discovery. Values are for block 21629172 (main branch discovery), not current.
       description:
 +        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
       issuedPermissions:
-+        [{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
++        [{"permission":"configure","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]},{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
     }
 ```
 

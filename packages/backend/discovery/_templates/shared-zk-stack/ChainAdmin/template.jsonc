@@ -2,6 +2,15 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
   "fields": {
+    "owner": {
+      "target": {
+        "permissions": [
+          {
+            "type": "act"
+          }
+        ]
+      }
+    },
     "upgradeTimestamps": {
       "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",
       "handler": {

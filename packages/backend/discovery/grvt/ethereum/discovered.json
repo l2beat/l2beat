@@ -16,12 +16,24 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "configure",
+          "from": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "via": [{ "address": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D" }]
+        },
+        {
           "permission": "upgrade",
           "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
         },
         {
           "permission": "upgrade",
           "from": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -141,6 +153,13 @@
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."
+        }
+      ],
       "sinceTimestamp": 1730797559,
       "values": {
         "$immutable": true,
@@ -234,6 +253,12 @@
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "via": [{ "address": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D" }]
+        },
         {
           "permission": "configure",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
@@ -797,8 +822,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0xe6614b7403c8cc85697cb20734a4ccf07b7d844086e1ac5cd931c671594f7ec1",
-    "shared-zk-stack/Diamond": "0xabe30f034435f16cdde91d6ca11573c9ae120a706aa796a828dd9ba24eceb9d8",
+    "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
+    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

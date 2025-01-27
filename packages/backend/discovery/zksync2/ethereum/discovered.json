@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 21717502,
-  "configHash": "0x899c63bedf88b12b04fc7f3ed80bac06b9bb2995f1bae4613baa9724e7d267e7",
+  "configHash": "0x88bc6e414e19910a19f6fd03436d2dcb9a28d5067eac9503c46f1818fbd0fc4c",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -599,7 +599,7 @@
       "sourceHashes": [
         "0x2aff1337a5d8a9be27e6d384ec8a2efd746fb4b73195773c82f3e42e2210c8ed"
       ],
-      "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.",
+      "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -1062,7 +1062,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond": "0xabe30f034435f16cdde91d6ca11573c9ae120a706aa796a828dd9ba24eceb9d8",
+    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

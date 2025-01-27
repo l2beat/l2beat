@@ -7,5 +7,17 @@
     "protocolVersionIsActive",
     "upgradeCutHash"
   ],
-  "ignoreRelatives": ["getAllHyperchains", "validatorTimelock"] // ignore validatorTimelock because it needs chain-specific config
+  "ignoreRelatives": ["getAllHyperchains", "validatorTimelock"], // ignore validatorTimelock because it needs chain-specific config
+  "fields": {
+    "admin": {
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
+          }
+        ]
+      }
+    }
+  }
 }

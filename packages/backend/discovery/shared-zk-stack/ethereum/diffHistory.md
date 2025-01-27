@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xaf79f3835b9e56423ef5369f86fc40c6f745faba
+Generated with discovered.json: 0x77d9b7d88b834b23a5bc9c81bdfc4ed43dc012c5
 
-# Diff at Mon, 27 Jan 2025 18:32:18 GMT:
+# Diff at Mon, 27 Jan 2025 19:03:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21715649
@@ -17,15 +17,31 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21715649 (main branch discovery), not current.
 
 ```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      name:
+-        "EraChainAdminProxy"
++        "EraAdminProxy"
+      directlyReceivedPermissions:
++        [{"permission":"configure","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."},{"permission":"configure","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."},{"permission":"configure","from":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","description":"register new Elastic Chains in the shared bridge."}]
+    }
+```
+
+```diff
     contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
     +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29","via":[{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
       issuedPermissions.0.to:
 -        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-+        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
-      issuedPermissions.0.via.1:
-+        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       issuedPermissions.0.via.0:
-+        {"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}
++        {"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}
+      issuedPermissions.0.description:
++        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
       template:
 +        "shared-zk-stack/BridgeHub"
       description:
@@ -40,6 +56,10 @@ discovery. Values are for block 21715649 (main branch discovery), not current.
 -        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
       fieldMeta:
 -        {"getOwners":{"severity":"LOW","description":"Signers of the multisig","type":"PERMISSION"},"getThreshold":{"severity":"HIGH","description":"Should be 4/8 per official docs","type":"PERMISSION"}}
+      receivedPermissions:
++        [{"permission":"configure","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"configure","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"configure","from":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","description":"register new Elastic Chains in the shared bridge.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]
     }
 ```
 
@@ -108,13 +128,18 @@ discovery. Values are for block 21715649 (main branch discovery), not current.
 ```diff
     contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
     +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29","via":[{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
       issuedPermissions.0.to:
 -        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-+        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
-      issuedPermissions.0.via.1:
-+        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       issuedPermissions.0.via.0:
-+        {"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}
++        {"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}
+      issuedPermissions.0.description:
++        "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
       template:
 +        "shared-zk-stack/StateTransitionManager"
       description:
@@ -145,13 +170,18 @@ discovery. Values are for block 21715649 (main branch discovery), not current.
 ```diff
     contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
     +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29","via":[{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
       issuedPermissions.0.to:
 -        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-+        "0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29"
-      issuedPermissions.0.via.1:
-+        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       issuedPermissions.0.via.0:
-+        {"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}
++        {"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}
+      issuedPermissions.0.description:
++        "register new Elastic Chains in the shared bridge."
       template:
 +        "shared-zk-stack/L1SharedBridge"
       description:

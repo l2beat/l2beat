@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf24847035d3ac4a8a04b192680300febe970d45f
+Generated with discovered.json: 0xa96d2657c5403bf71a5ab1902f3c09efee9bab94
 
-# Diff at Mon, 27 Jan 2025 18:32:07 GMT:
+# Diff at Mon, 27 Jan 2025 19:04:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21630311
@@ -74,7 +74,7 @@ discovery. Values are for block 21630311 (main branch discovery), not current.
 
 ```diff
     contract ValidatorTimelockOld (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
-    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
       values.validatorsAdded:
 -        []
       values.validatorsRemoved:
@@ -84,7 +84,7 @@ discovery. Values are for block 21630311 (main branch discovery), not current.
       values.validatorsVTLold:
 +        []
       description:
-+        "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h."
++        "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times."
       issuedPermissions:
 +        [{"permission":"configure","to":"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61","description":"set addresses (validators) that can commit, prove, execute, revert batches through this contract.","via":[]}]
       receivedPermissions:

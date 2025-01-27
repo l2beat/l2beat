@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcbaa027550ffe962bd68f6e96630a44377c5f963
+Generated with discovered.json: 0xc8c469908f4b19ee242c35059293550a031c0cd8
 
-# Diff at Mon, 27 Jan 2025 16:33:02 GMT:
+# Diff at Mon, 27 Jan 2025 19:04:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21686341
@@ -27,6 +27,14 @@ discovery. Values are for block 21686341 (main branch discovery), not current.
 ```
 
 ```diff
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."}]
+    }
+```
+
+```diff
     contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
     +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
@@ -34,7 +42,7 @@ discovery. Values are for block 21686341 (main branch discovery), not current.
       description:
 +        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
       issuedPermissions:
-+        [{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
++        [{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"configure","to":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[]}]
     }
 ```
 

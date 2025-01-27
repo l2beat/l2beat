@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x96b6cb7c59375ded507f5600eb503bd951ac5682
+Generated with discovered.json: 0x139e590b31bcb526ea34d1a9607b7feb4ce598a1
 
-# Diff at Mon, 27 Jan 2025 16:37:24 GMT:
+# Diff at Mon, 27 Jan 2025 19:04:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21716177
@@ -24,7 +24,7 @@ discovery. Values are for block 21716177 (main branch discovery), not current.
       description:
 +        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
       issuedPermissions:
-+        [{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
++        [{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"configure","to":"0xe4644b6d106A18062344c0A853666bc0B8f052d1","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}]}]
     }
 ```
 
@@ -35,6 +35,24 @@ discovery. Values are for block 21716177 (main branch discovery), not current.
 +        "shared-zk-stack/Verifier"
       description:
 +        "Implements the ZK proof verification logic."
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"configure","from":"0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."}]
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3","description":"manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).","via":[{"address":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}]
     }
 ```
 

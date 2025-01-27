@@ -68,7 +68,7 @@
       }
     },
     "ValidatorTimelockOld": {
-      "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_formatted}}.",
+      "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_formatted}}. This contract is a remnant from pre Elastic Chain times.",
       "ignoreMethods": [
         "committedBlockTimestamp",
         "getCommittedBatchTimestamp"

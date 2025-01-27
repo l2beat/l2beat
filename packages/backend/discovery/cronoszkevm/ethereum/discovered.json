@@ -97,6 +97,13 @@
       "sourceHashes": [
         "0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"
       ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."
+        }
+      ],
       "sinceTimestamp": 1726967543,
       "values": {
         "$immutable": true,
@@ -163,6 +170,12 @@
           "permission": "configure",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
           "via": []
         }
       ],
@@ -792,7 +805,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/Diamond": "0xabe30f034435f16cdde91d6ca11573c9ae120a706aa796a828dd9ba24eceb9d8",
+    "shared-zk-stack/Diamond": "0x588ff25c75744d9367ce00e9b3954ed5295d5f65906cbcc59c91c3288bd6b5af",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

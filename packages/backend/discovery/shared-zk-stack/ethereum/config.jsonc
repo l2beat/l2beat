@@ -8,7 +8,7 @@
   "names": {
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock",
-    "0x2cf3bD6a9056b39999F3883955E183F655345063": "EraChainAdminProxy",
+    "0x2cf3bD6a9056b39999F3883955E183F655345063": "EraAdminProxy",
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZkFoundationMultisig",
     "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "ProtocolTimelockController(L2->L1)",
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub"
