@@ -18,6 +18,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
@@ -135,10 +136,12 @@ export const hashkey: Layer2 = {
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'HashKey Chain',
     slug: 'hashkey',
     purposes: ['Exchange'],
+    provider: 'OP Stack',
     description:
       "HashKey Chain is a regulatory-compliant, institutional-grade OP stack Layer 2 solution bridging traditional finance and Web3. It is powered by Hong Kong's premier virtual asset ecosystem.",
     category: 'Optimistic Rollup',
@@ -157,7 +160,6 @@ export const hashkey: Layer2 = {
         'https://discord.com/invite/ujaF7aKAEk',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -450,7 +452,7 @@ export const hashkey: Layer2 = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: 'a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.',
+        text: 'a contract receives a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
   },

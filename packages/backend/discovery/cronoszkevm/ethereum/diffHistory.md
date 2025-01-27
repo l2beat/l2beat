@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x5e8e0d515eadb4b77c41c006266778320ea52b99
+
+# Diff at Thu, 23 Jan 2025 09:37:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c34926fa70131af78b4ff8ff2873e9c9f24dfc80 block: 21678734
+- current block number: 21686341
+
+## Description
+
+Upgrade to v25 completed.
+
+## Watched changes
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        268
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        268
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xd3086b71c95ce83e7f3d30ab1890ada2334695a05b65715e56f42d96b22c8674"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x05741105616b1542773967c3b52b45948335239c
 
 # Diff at Wed, 22 Jan 2025 08:09:07 GMT:

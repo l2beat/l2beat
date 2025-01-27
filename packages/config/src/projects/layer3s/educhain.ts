@@ -19,11 +19,11 @@ export const educhain: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['Social'],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'EDU Chain',
     slug: 'edu-chain',
     description:
@@ -42,7 +42,6 @@ export const educhain: Layer3 = orbitStackL3({
         'https://medium.com/edu-chain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
   discoveryDrivenData: true,

@@ -77,16 +77,16 @@ export const lightlink: Layer2 = {
   id: ProjectId('lightlink'),
   createdAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
   badges: [Badge.VM.EVM, Badge.DA.Celestia],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'LightLink',
     slug: 'lightlink',
     description:
       'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
     category: 'Other',
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
@@ -101,7 +101,6 @@ export const lightlink: Layer2 = {
         'https://linkedin.com/company/lightlinkchain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   stage: {
     stage: 'NotApplicable',

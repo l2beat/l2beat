@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21628493,
   "configHash": "0x95215c58c4c6019694e41ef1dcd739b866744e9c8ac48521603f973baf351506",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "Verifier",

@@ -22,11 +22,10 @@
   "fields": {
     "tokenPools": {
       "handler": {
-        "type": "arrayFromTwoEvents",
-        "addEvent": "PoolAdded",
-        "addKey": "pool",
-        "removeEvent": "PoolRemoved",
-        "removeKey": "pool"
+        "type": "event",
+        "select": "pool",
+        "add": { "event": "PoolAdded" },
+        "remove": { "event": "PoolRemoved" }
       }
     },
     "linkToken": {

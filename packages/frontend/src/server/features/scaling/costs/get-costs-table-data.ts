@@ -1,9 +1,9 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
+import type { Layer2, Layer3 } from '@l2beat/config'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getCostsForProjects } from './get-costs-for-projects'
-import { type LatestCostsProjectResponse } from './types'
+import type { LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { isCostsSynced } from './utils/is-costs-synced'
 import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
@@ -35,7 +35,7 @@ export const getCachedCostsTableData = cache(
           projectId,
           {
             ...withTotal(costs),
-            txCount: projectsActivity[projectId],
+            uopsCount: projectsActivity[projectId],
             isSynced,
           },
         ]
@@ -54,13 +54,14 @@ async function getLatestActivityForProjects(
 ) {
   const db = getDb()
   const range = getFullySyncedCostsRange(timeRange)
-  const summedCounts = await db.activity.getSummedCountForProjectsAndTimeRange(
-    projects.map((p) => p.id),
-    range,
-  )
+  const summedCounts =
+    await db.activity.getSummedUopsCountForProjectsAndTimeRange(
+      projects.map((p) => p.id),
+      range,
+    )
 
   return Object.fromEntries(
-    summedCounts.map((record) => [record.projectId, record.count]),
+    summedCounts.map((record) => [record.projectId, record.uopsCount]),
   )
 }
 
@@ -102,7 +103,7 @@ function getMockCostsTableData(): CostsTableData {
         p.id,
         {
           isSynced: true,
-          txCount: 1500,
+          uopsCount: 1500,
           gas: {
             total: 1000000,
             overhead: 100000,

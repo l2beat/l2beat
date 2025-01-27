@@ -9,9 +9,7 @@ import {
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-  DacTransactionDataType,
-} from '../da-beat/types'
-import { DaChallengeMechanism } from '../da-beat/types/DaChallengeMechanism'
+} from '../da-beat/common'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -41,11 +39,11 @@ export const cyber: Layer2 = opStackL2({
     Badge.RaaS.AltLayer,
   ],
   additionalPurposes: ['Social'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Cyber',
     slug: 'cyber',
     architectureImage: 'opstack-dachallenge',
@@ -67,7 +65,6 @@ export const cyber: Layer2 = opStackL2({
         'https://cyber.co/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
@@ -108,7 +105,7 @@ export const cyber: Layer2 = opStackL2({
     },
     systemCategory: 'custom',
     fallback: DA_LAYERS.ETH_CALLDATA,
-    challengeMechanism: DaChallengeMechanism.DaChallenges,
+    challengeMechanism: 'DA Challenges',
     technology: {
       description: `
       ## Architecture
@@ -154,7 +151,7 @@ export const cyber: Layer2 = opStackL2({
       requiredMembers: 0,
       membersCount: 0,
       hideMembers: true,
-      transactionDataType: DacTransactionDataType.TransactionData,
+      transactionDataType: 'Transaction data',
       risks: {
         committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
         upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay

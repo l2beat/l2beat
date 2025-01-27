@@ -1,8 +1,13 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
+import {
+  CONTRACTS,
+  type ScalingProjectDisplay,
+  TECHNOLOGY,
+  UPCOMING_RISK_VIEW,
+} from '../../../common'
 import type { BadgeId } from '../../badges'
-import type { Layer3, Layer3Display } from '../../layer3s'
+import type { Layer3 } from '../../layer3s'
 import type { Layer2, Layer2Display } from '../types'
 
 export interface UpcomingConfigL2 {
@@ -15,7 +20,7 @@ export interface UpcomingConfigL2 {
 export interface UpcomingConfigL3 {
   id: string
   createdAt: UnixTime
-  display: Layer3Display
+  display: ScalingProjectDisplay
   hostChain: Layer3['hostChain']
   badges?: BadgeId[]
 }
@@ -53,6 +58,7 @@ export function upcomingL3(templateVars: UpcomingConfigL3): Layer3 {
     config: {
       escrows: [],
     },
+    stage: { stage: 'NotApplicable' },
     riskView: UPCOMING_RISK_VIEW,
     stackedRiskView: UPCOMING_RISK_VIEW,
     technology: TECHNOLOGY.UPCOMING,

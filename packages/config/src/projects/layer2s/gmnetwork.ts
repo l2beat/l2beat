@@ -9,9 +9,7 @@ import {
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-  DacTransactionDataType,
-} from '../da-beat/types'
-import { DaChallengeMechanism } from '../da-beat/types/DaChallengeMechanism'
+} from '../da-beat/common'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -40,11 +38,11 @@ export const gmnetwork: Layer2 = opStackL2({
     Badge.RaaS.AltLayer,
   ],
   additionalPurposes: ['AI'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'GM Network',
     slug: 'gmnetwork',
     architectureImage: 'opstack-dachallenge',
@@ -66,7 +64,6 @@ export const gmnetwork: Layer2 = opStackL2({
         'https://t.me/QuestN_Announcement',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
@@ -87,7 +84,7 @@ export const gmnetwork: Layer2 = opStackL2({
     },
     systemCategory: 'custom',
     fallback: DA_LAYERS.ETH_CALLDATA,
-    challengeMechanism: DaChallengeMechanism.DaChallenges,
+    challengeMechanism: 'DA Challenges',
     technology: {
       description: `
       ## Architecture
@@ -133,7 +130,7 @@ export const gmnetwork: Layer2 = opStackL2({
       requiredMembers: 0,
       membersCount: 0,
       hideMembers: true,
-      transactionDataType: DacTransactionDataType.TransactionData,
+      transactionDataType: 'Transaction data',
       risks: {
         committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
         upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay

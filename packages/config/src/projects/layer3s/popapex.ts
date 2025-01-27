@@ -23,11 +23,11 @@ export const popapex: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Proof of Play Apex',
     shortName: 'PoP Apex',
     slug: 'popapex',
@@ -48,7 +48,6 @@ export const popapex: Layer3 = orbitStackL3({
         'https://piratenation.medium.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   transactionApi: {
     type: 'rpc',

@@ -13,11 +13,11 @@ export const ebichain: Layer2 = orbitStackL2({
   createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Ebi Chain',
     slug: 'ebichain',
     headerWarning:
@@ -36,7 +36,6 @@ export const ebichain: Layer2 = orbitStackL2({
         'https://discord.com/invite/ebixyz',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.ebi.xyz',
   bridge: discovery.getContract('Bridge'),

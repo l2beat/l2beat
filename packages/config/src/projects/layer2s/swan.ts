@@ -12,8 +12,8 @@ export const swan: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.Infra.Superchain],
   additionalPurposes: ['AI', 'Storage'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Swan Chain',
     slug: 'swan',
     description:
@@ -35,7 +35,6 @@ export const swan: Layer2 = opStackL2({
         'https://swanchain.medium.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1718640220),
   // failing, needs different analyzer?

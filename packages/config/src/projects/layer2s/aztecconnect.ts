@@ -44,7 +44,6 @@ export const aztecconnect: Layer2 = {
         'https://discord.gg/UDtJr9u',
       ],
     },
-    activityDataSource: 'Explorer API',
   },
   config: {
     escrows: [

@@ -29,16 +29,16 @@ export const eclipse: Layer2 = {
   id: ProjectId('eclipse'),
   createdAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
   badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Eclipse',
     slug: 'eclipse',
     description:
       'Eclipse is a sidechain powered by the Solana Virtual Machine (SVM).',
     category: 'Other',
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],

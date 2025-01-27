@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 
-import { daEconomicSecurityMeta } from '@l2beat/config'
+import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { CoingeckoClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -35,9 +35,13 @@ export class DaBeatPricesRefresher {
   }
 
   private async refresh() {
-    const coingeckoIds = Object.values(daEconomicSecurityMeta).map(
-      ({ coingeckoId }) => coingeckoId,
-    )
+    const coingeckoIds = [
+      ...daLayers.filter((x) => x.kind === 'PublicBlockchain'),
+      ethereumDaLayer,
+    ]
+      .map((x) => x.economicSecurity?.token.coingeckoId)
+      .filter((x) => x !== undefined)
+
     assert(coingeckoIds.length <= 100, 'Too many ids')
     const result = z
       .array(

@@ -19,11 +19,11 @@ export const sanko: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['Gaming', 'Social'],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Sanko',
     slug: 'sanko',
     description:
@@ -44,7 +44,6 @@ export const sanko: Layer3 = orbitStackL3({
         'https://t.me/sankogamecorp',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'sanko',

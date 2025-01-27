@@ -12,8 +12,8 @@ export const ethernity: Layer2 = opStackL2({
   additionalBadges: [Badge.RaaS.Gelato, Badge.Infra.Superchain],
   additionalPurposes: ['AI'],
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Ethernity',
     slug: 'ethernity',
     redWarning:
@@ -38,7 +38,6 @@ export const ethernity: Layer2 = opStackL2({
         'https://discord.com/invite/EthernityChain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['ERN'],
   discoveryDrivenData: true,

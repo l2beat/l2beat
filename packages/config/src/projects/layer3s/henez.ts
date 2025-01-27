@@ -34,7 +34,6 @@ export const henez: Layer3 = underReviewL3({
         'https://t.me/HenezFinance',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://henez.calderachain.xyz/http',
   escrows: [

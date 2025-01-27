@@ -12,8 +12,8 @@ export const polynomial: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Exchange'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Polynomial',
     slug: 'polynomial',
     description:
@@ -29,7 +29,6 @@ export const polynomial: Layer2 = opStackL2({
         'https://discord.gg/Mr9XKU5W',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.polynomial.fi',
   finality: {

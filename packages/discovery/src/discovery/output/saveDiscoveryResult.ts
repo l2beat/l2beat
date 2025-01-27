@@ -45,13 +45,7 @@ async function saveDiscoveredJson(
   blockNumber: number,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
-  const project = toDiscoveryOutput(
-    config.name,
-    config.chain,
-    config.hash,
-    blockNumber,
-    results,
-  )
+  const project = toDiscoveryOutput(config, blockNumber, results)
   const json = await toPrettyJson(project)
   const discoveryFilename = options.discoveryFilename ?? 'discovered.json'
   await writeFile(posix.join(rootPath, discoveryFilename), json)

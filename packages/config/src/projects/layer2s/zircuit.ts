@@ -42,8 +42,8 @@ const upgradeability = {
 export const zircuit: Layer2 = opStackL2({
   createdAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Zircuit',
     slug: 'zircuit',
     description:
@@ -61,7 +61,6 @@ export const zircuit: Layer2 = opStackL2({
         'https://t.me/zircuitl2_bot',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     architectureImage: 'zircuit',
     warning:
       'Proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',

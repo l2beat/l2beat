@@ -13,8 +13,8 @@ export const parallel: Layer2 = orbitStackL2({
   isArchived: true,
   discovery,
   additionalBadges: [],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Parallel',
     slug: 'parallel',
     redWarning:
@@ -37,7 +37,6 @@ export const parallel: Layer2 = orbitStackL2({
         'https://t.me/parallelfi_community',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   trackedTxs: [
     {

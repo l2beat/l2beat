@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20325048,
   "configHash": "0x8c4ec9a89ad91e8b288f93a59283da5ca2019974864f0ab39fa4b9f53292b7e2",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "AstarVerifier",

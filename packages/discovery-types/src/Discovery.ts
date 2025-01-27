@@ -29,6 +29,7 @@ export interface DiscoveryOutput {
   eoas: EoaParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
+  sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
 }
 

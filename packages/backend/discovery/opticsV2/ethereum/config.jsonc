@@ -69,10 +69,16 @@
       "fields": {
         "watchers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "WatcherPermissionSet",
-            "valueKey": "watcher",
-            "flagKey": "access"
+            "type": "event",
+            "select": "watcher",
+            "add": {
+              "event": "WatcherPermissionSet",
+              "where": ["=", "#access", true]
+            },
+            "remove": {
+              "event": "WatcherPermissionSet",
+              "where": ["!=", "#access", true]
+            }
           }
         }
       }

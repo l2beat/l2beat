@@ -107,25 +107,37 @@
       "fields": {
         "sequencers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateSequencer",
-            "valueKey": "account",
-            "flagKey": "status"
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "UpdateSequencer",
+              "where": ["=", "#status", true]
+            },
+            "remove": {
+              "event": "UpdateSequencer",
+              "where": ["!=", "#status", true]
+            }
           }
         },
         "provers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateProver",
-            "valueKey": "account",
-            "flagKey": "status"
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "UpdateProver",
+              "where": ["=", "#status", true]
+            },
+            "remove": {
+              "event": "UpdateProver",
+              "where": ["!=", "#status", true]
+            }
           }
         },
         "revertedBatches": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RevertBatch",
-            "returnParams": ["batchIndex"]
+            "type": "event",
+            "select": "batchIndex",
+            "add": { "event": "RevertBatch" }
           }
         }
       }
@@ -136,9 +148,9 @@
       "fields": {
         "verifierVersions": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateVerifier",
-            "valueKey": "version"
+            "type": "event",
+            "select": "version",
+            "add": { "event": "UpdateVerifier" }
           }
         },
         "latestVerifier": {
@@ -224,10 +236,16 @@
       "fields": {
         "whitelisted": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "WhitelistStatusChanged",
-            "valueKey": "_account",
-            "flagKey": "_status"
+            "type": "event",
+            "select": "_account",
+            "add": {
+              "event": "WhitelistStatusChanged",
+              "where": ["=", "#_status", true]
+            },
+            "remove": {
+              "event": "WhitelistStatusChanged",
+              "where": ["!=", "#_status", true]
+            }
           }
         }
       }

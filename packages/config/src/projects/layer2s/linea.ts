@@ -102,6 +102,7 @@ export const linea: Layer2 = {
   type: 'layer2',
   id: ProjectId('linea'),
   createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Linea',
     slug: 'linea',
@@ -110,7 +111,6 @@ export const linea: Layer2 = {
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     links: {
       websites: ['https://linea.build/'],
       apps: ['https://bridge.linea.build/'],
@@ -131,7 +131,6 @@ export const linea: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/linea',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',

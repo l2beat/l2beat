@@ -88,8 +88,8 @@ export const kroma: Layer2 = {
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Kroma',
     slug: 'kroma',
     description:
@@ -115,7 +115,6 @@ export const kroma: Layer2 = {
         'https://medium.com/@kroma-network',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,

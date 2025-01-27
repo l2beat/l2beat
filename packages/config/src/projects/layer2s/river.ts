@@ -11,8 +11,8 @@ export const river: Layer2 = opStackL2({
   createdAt: new UnixTime(1729867724), // 2024-10-25T17:48:44Z
   additionalBadges: [Badge.RaaS.Caldera, Badge.Infra.Superchain],
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'River',
     slug: 'river',
     description:
@@ -25,7 +25,6 @@ export const river: Layer2 = opStackL2({
       repositories: [],
       socialMedia: ['https://x.com/buildonriver'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.rpc.river.build',

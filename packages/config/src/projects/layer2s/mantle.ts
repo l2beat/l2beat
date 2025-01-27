@@ -10,10 +10,9 @@ import {
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaUpgradeabilityRisk,
-  type DacDaLayer,
-} from '../da-beat/types'
-import { DaRelayerFailureRisk } from '../da-beat/types/DaRelayerFailureRisk'
-import { DacTransactionDataType } from '../da-beat/types/DacTransactionDataType'
+} from '../da-beat/common'
+import { DaRelayerFailureRisk } from '../da-beat/common/DaRelayerFailureRisk'
+import type { DacDaLayer } from '../da-beat/types'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -51,6 +50,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
   type: 'DaLayer',
   kind: 'DAC',
   systemCategory: 'custom',
+  challengeMechanism: 'None',
   technology: {
     description: `
       ## Architecture
@@ -78,7 +78,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
       The confirmDataStore() function verify the signatures and if the quorum is reached, the data is considered available.
         `,
     },
-    transactionDataType: DacTransactionDataType.TransactionData,
+    transactionDataType: 'Transaction data',
     requiredMembers: threshold,
     membersCount: committeeMembers,
     risks: {
@@ -136,11 +136,11 @@ export const mantle: Layer2 = opStackL2({
   associatedTokens: ['MNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Mantle',
     slug: 'mantle',
     architectureImage: 'mantle',
@@ -159,7 +159,6 @@ export const mantle: Layer2 = opStackL2({
         'https://t.me/mantlenetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.mantle.xyz',
   genesisTimestamp: new UnixTime(1688428800),

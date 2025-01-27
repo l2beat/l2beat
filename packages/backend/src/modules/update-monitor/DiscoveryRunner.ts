@@ -52,13 +52,7 @@ export class DiscoveryRunner {
 
     setDiscoveryMetrics(this.allProviders.getStats(config.chain), config.chain)
 
-    const discovery = toDiscoveryOutput(
-      config.name,
-      config.chain,
-      config.hash,
-      blockNumber,
-      result,
-    )
+    const discovery = toDiscoveryOutput(config, blockNumber, result)
 
     const flatSources = flattenDiscoveredSources(result, DiscoveryLogger.SILENT)
 

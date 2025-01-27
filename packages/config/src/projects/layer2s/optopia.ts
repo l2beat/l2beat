@@ -10,8 +10,8 @@ export const optopia: Layer2 = opStackL2({
   createdAt: new UnixTime(1722451042), // 2024-07-31T18:37:22Z
   discovery,
   additionalPurposes: ['AI'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Optopia',
     slug: 'optopia',
     description:
@@ -28,7 +28,6 @@ export const optopia: Layer2 = opStackL2({
         'https://mirror.xyz/0x384F32e132501C9C3361C0495841715585164d33',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['OPAI'],
   genesisTimestamp: new UnixTime(1715333977),

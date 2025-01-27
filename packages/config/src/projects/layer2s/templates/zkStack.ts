@@ -22,6 +22,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   type ScalingProjectContract,
   type ScalingProjectEscrow,
   type ScalingProjectPermission,
@@ -61,10 +62,7 @@ export interface ZkStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  validatorsEvents: {
-    added: string
-    removed: string
-  }
+  validatorsKey: string
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
@@ -100,6 +98,7 @@ export interface ZkStackConfigCommon {
   gasTokens?: string[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export type Upgradeability = {
@@ -252,40 +251,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       templateVars.diamondContract.name,
       'getSemverProtocolVersion',
     )[1] === 25
-
-  /**
-   * Fetches Validators from ValidatorTimelock events:
-   * It is more complicated to accommodate the case in which
-   * a validator is added and removed more than once.
-   */
-  const validators = () => {
-    const validatorsAdded = discovery.getContractValue<string[]>(
-      'ValidatorTimelock',
-      templateVars.validatorsEvents.added,
-    )
-    const validatorsRemoved = discovery.getContractValue<string[]>(
-      'ValidatorTimelock',
-      templateVars.validatorsEvents.removed,
-    )
-
-    // Create a map to track the net state of each validator (added or removed)
-    const validatorStates = new Map<string, number>()
-
-    // Increment for added validators
-    validatorsAdded.forEach((validator) => {
-      validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-    })
-
-    // Decrement for removed validators
-    validatorsRemoved.forEach((validator) => {
-      validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-    })
-
-    // Filter validators that have a net positive state (added more times than removed)
-    return Array.from(validatorStates.entries())
-      .filter(([_, state]) => state > 0)
-      .map(([validator, _]) => validator)
-  }
 
   return {
     type: 'layer2',
@@ -726,9 +691,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
       {
         name: 'ValidatorTimelock Validators',
-        accounts: validators().map((v) =>
-          discovery.formatPermissionedAccount(v),
-        ),
+        accounts: discovery
+          .getContractValue<string[]>(
+            'ValidatorTimelock',
+            templateVars.validatorsKey,
+          )
+          .map((v) => discovery.formatPermissionedAccount(v)),
         fromRole: true,
         description:
           'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
@@ -1030,6 +998,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
     ],
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

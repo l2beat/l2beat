@@ -1,12 +1,7 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import {
-  type DaBridge,
-  DaUpgradeabilityRisk,
-  type DacDaLayer,
-  type IntegratedDacBridge,
-} from '../types'
-import type { DaTechnology } from '../types/DaTechnology'
-import { DacTransactionDataType } from '../types/DacTransactionDataType'
+import { DaUpgradeabilityRisk } from '../common'
+import type { DaBridge, DacDaLayer, IntegratedDacBridge } from '../types'
+import type { DaTechnology } from '../types'
 import { DAC, type DacTemplateVars } from './dac-template'
 
 type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
@@ -85,7 +80,7 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     bridge: {
       ...template.bridge,
       technology: anytrustBridgeTechnology,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+      transactionDataType: 'Transaction data (compressed)',
       membersCount,
       requiredMembers: requiredSignatures,
     },

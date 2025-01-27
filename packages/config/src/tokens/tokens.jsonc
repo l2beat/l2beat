@@ -1,6 +1,18 @@
 {
   "ethereum": [
     {
+      "symbol": "ANIME",
+      "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277"
+    },
+    {
+      "symbol": "LOKA",
+      "address": "0x61E90A50137E1F645c9eF4a0d3A4f01477738406"
+    },
+    {
+      "symbol": "GHST",
+      "address": "0x3F382DbD960E3a9bbCeaE22651E88158d2791550"
+    },
+    {
       "symbol": "HSK",
       "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a"
     },
@@ -3195,6 +3207,12 @@
   ],
   "base": [
     {
+      "symbol": "GHST",
+      "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -4644,6 +4662,12 @@
     }
   ],
   "zksync2": [
+    {
+      "symbol": "FIUSD",
+      "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
+      "source": "native",
+      "supply": "totalSupply" // totalSupply < circulatingSupply and token is burn/minted to a single eoa
+    },
     {
       "symbol": "rsETH",
       "category": "ether",

@@ -12,8 +12,9 @@ export const thebinaryholdings: Layer2 = opStackL2({
   discovery,
   associatedTokens: ['BNRY'],
   additionalBadges: [Badge.Infra.Superchain],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  isArchived: true, // operator inactive, might still be pre official launch
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'The Binary Holdings',
     slug: 'thebinaryholdings',
     shortName: 'Binary',
@@ -33,7 +34,6 @@ export const thebinaryholdings: Layer2 = opStackL2({
         'https://discord.gg/wCXJmTBGr2',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.zero.thebinaryholdings.com',
   genesisTimestamp: new UnixTime(1719397465),

@@ -1,5 +1,5 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { StageBadge } from '~/components/badge/stage-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -12,7 +12,7 @@ import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
-import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
@@ -35,7 +35,7 @@ export function ScalingProjectStats({ project, className }: Props) {
         value={<TokenBreakdownStat tokenTvl={project.header.tvl?.tokens} />}
       />
       <ProjectStat
-        title="Daily UOPS"
+        title="Past day UOPS"
         tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
         value={
           project.header.activity ? (

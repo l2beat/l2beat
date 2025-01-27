@@ -15,15 +15,12 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 export const grvt: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: 'grvtValidatorsAdded',
-    removed: 'grvtValidatorsRemoved',
-  },
+  validatorsKey: 'grvtValidators',
   additionalBadges: [Badge.DA.CustomDA],
   createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'GRVT',
     slug: 'grvt',
     tvlWarning: {

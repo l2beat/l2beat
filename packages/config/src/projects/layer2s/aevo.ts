@@ -17,11 +17,11 @@ export const aevo: Layer2 = opStackL2({
   associatedTokens: ['AEVO'],
   discovery,
   additionalPurposes: ['Exchange'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Aevo',
     slug: 'aevo',
     description:
@@ -38,7 +38,6 @@ export const aevo: Layer2 = opStackL2({
         'https://t.me/aevoupdates',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'aevo',

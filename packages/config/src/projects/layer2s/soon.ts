@@ -12,11 +12,11 @@ export const soon: Layer2 = opStackL2({
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
   additionalBadges: [Badge.DA.EigenDA, Badge.VM.SolanaVM],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',
     slug: 'soon',
@@ -34,7 +34,6 @@ export const soon: Layer2 = opStackL2({
         'https://medium.com/@soon_SVM',
       ],
     },
-    // no activityDataSource due to SVM
   },
   usingAltVm: true,
   nonTemplateTechnology: {

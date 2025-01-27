@@ -18,11 +18,11 @@ export const stack: Layer3 = opStackL3({
   ],
   additionalPurposes: ['Social'],
   hostChain: ProjectId('base'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Stack',
     slug: 'stack',
     description:
@@ -40,7 +40,6 @@ export const stack: Layer3 = opStackL3({
         'https://stack.mirror.xyz/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.stack.so',
   genesisTimestamp: new UnixTime(1709683711),

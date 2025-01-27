@@ -14,11 +14,11 @@ export const inevm: Layer3 = orbitStackL3({
   additionalPurposes: ['Interoperability'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'inEVM',
     slug: 'inevm',
     description:
@@ -31,7 +31,6 @@ export const inevm: Layer3 = orbitStackL3({
       repositories: [],
       socialMedia: ['https://x.com/injective'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

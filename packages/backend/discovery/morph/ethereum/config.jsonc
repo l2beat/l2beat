@@ -77,9 +77,9 @@
       "fields": {
         "gateways": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "SetETHGateway",
-            "valueKey": "newEthGateway"
+            "type": "event",
+            "select": "newEthGateway",
+            "add": { "event": "SetETHGateway" }
           }
         }
       }
@@ -90,9 +90,9 @@
       "fields": {
         "verifierVersions": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateVerifier",
-            "valueKey": "version"
+            "type": "event",
+            "select": "version",
+            "add": { "event": "UpdateVerifier" }
           }
         },
         "latestVerifier": {
@@ -149,10 +149,16 @@
       "fields": {
         "challengers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "UpdateChallenger",
-            "valueKey": "account",
-            "flagKey": "status"
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "UpdateChallenger",
+              "where": ["=", "#status", true]
+            },
+            "remove": {
+              "event": "UpdateChallenger",
+              "where": ["!=", "#status", true]
+            }
           },
           "target": {
             "permissions": [{ "type": "challenge" }]

@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21665594,
   "configHash": "0x5fe03ef944f620355c5cb07ebd60481d7b318a35bf013a954856a9dd5d02b06e",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "XLayerValidiumDAC",

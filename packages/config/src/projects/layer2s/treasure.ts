@@ -16,15 +16,12 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const treasure: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: 'treasureValidatorsAdded',
-    removed: 'treasureValidatorsRemoved',
-  },
+  validatorsKey: 'treasureValidators',
   additionalBadges: [Badge.DA.CustomDA],
   createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'Treasure',
     slug: 'treasure',
     tvlWarning: {
@@ -47,7 +44,6 @@ export const treasure: Layer2 = zkStackL2({
         'https://t.me/playontreasure',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['MAGIC'],
   rpcUrl: 'https://rpc.treasure.lol',

@@ -22,11 +22,11 @@ export const b3: Layer3 = opStackL3({
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'B3',
     slug: 'b3',
     architectureImage: 'B3',
@@ -44,7 +44,6 @@ export const b3: Layer3 = opStackL3({
         'https://warpcast.com/b3dotfun',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'b3',

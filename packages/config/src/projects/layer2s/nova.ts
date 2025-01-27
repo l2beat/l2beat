@@ -4,13 +4,12 @@ import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { DAC } from '../da-beat/templates/dac-template'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-  DacTransactionDataType,
-} from '../da-beat/types'
+} from '../da-beat/common'
+import { DAC } from '../da-beat/templates/dac-template'
 import {
   WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
@@ -147,7 +146,6 @@ export const nova: Layer2 = orbitStackL2({
         'https://discord.gg/Arbitrum',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'nova',
@@ -433,7 +431,7 @@ export const nova: Layer2 = orbitStackL2({
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignatures,
       membersCount: membersCount,
-      transactionDataType: DacTransactionDataType.TransactionDataCompressed,
+      transactionDataType: 'Transaction data (compressed)',
       knownMembers: [
         {
           external: true,

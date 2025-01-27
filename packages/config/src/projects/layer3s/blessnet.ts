@@ -13,11 +13,11 @@ export const blessnet: Layer3 = orbitStackL3({
   additionalPurposes: ['Interoperability'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Blessnet',
     slug: 'blessnet',
     description:
@@ -33,7 +33,6 @@ export const blessnet: Layer3 = orbitStackL3({
       repositories: ['https://github.com/bless-net'],
       socialMedia: ['https://x.com/blessdotnet'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // nonTemplateEscrows: [ // not deployed
   //   discovery.getEscrowDetails({

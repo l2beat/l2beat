@@ -14,11 +14,11 @@ export const hypr: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [Badge.DA.Celestia],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Hypr',
     slug: 'hypr',
     description: 'Hypr is a blockchain focused on scaling ZK gaming.',
@@ -33,7 +33,6 @@ export const hypr: Layer2 = opStackL2({
         'https://t.me/hyprnetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1705509623),
   isNodeAvailable: 'UnderReview',

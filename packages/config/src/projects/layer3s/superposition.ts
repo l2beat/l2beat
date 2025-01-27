@@ -24,7 +24,6 @@ export const superposition: Layer3 = underReviewL3({
       repositories: [],
       socialMedia: ['https://x.com/Superpositionso'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.superposition.so',
   escrows: [

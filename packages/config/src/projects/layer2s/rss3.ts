@@ -56,11 +56,11 @@ export const rss3: Layer2 = opStackL2({
   associatedTokens: ['RSS3'],
   discovery,
   additionalPurposes: ['AI', 'Information'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     shortName: 'RSS3 VSL',
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
@@ -83,7 +83,6 @@ export const rss3: Layer2 = opStackL2({
         'https://t.me/rss3_en',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {

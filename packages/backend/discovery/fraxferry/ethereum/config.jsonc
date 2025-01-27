@@ -151,10 +151,16 @@
       "fields": {
         "crewmembers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event SetCrewmember(address indexed crewmember,bool set)",
-            "valueKey": "crewmember",
-            "flagKey": "set"
+            "type": "event",
+            "select": "crewmember",
+            "add": {
+              "event": "event SetCrewmember(address indexed crewmember,bool set)",
+              "where": ["=", "#set", true]
+            },
+            "remove": {
+              "event": "event SetCrewmember(address indexed crewmember,bool set)",
+              "where": ["!=", "#set", true]
+            }
           }
         }
       },

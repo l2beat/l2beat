@@ -22,11 +22,11 @@ export const degen: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['Social'],
   gasTokens: ['DEGEN'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Degen Chain',
     slug: 'degen',
     description:
@@ -42,7 +42,6 @@ export const degen: Layer3 = orbitStackL3({
         'https://warpcast.com/~/channel/degen',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   blockNumberOpcodeTimeSeconds: 2, // block.number opcode on Base (Degen host chain) counts Base L2 block numbers that have 2 seconds block time (different to OP stack host chains that count the L1 blocks)
   transactionApi: {

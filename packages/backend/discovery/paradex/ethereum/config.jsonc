@@ -35,11 +35,10 @@
         // Responsible for updating the state
         "operators": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "LogOperatorAdded" },
+            "remove": { "event": "LogOperatorRemoved" }
           }
         },
         "governors": {

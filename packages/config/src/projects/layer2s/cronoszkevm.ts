@@ -18,13 +18,10 @@ export const cronoszkevm: Layer2 = zkStackL2({
   createdAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: 'cronosValidatorsAdded',
-    removed: 'cronosValidatorsRemoved',
-  },
+  validatorsKey: 'cronosValidators',
   additionalBadges: [Badge.DA.CustomDA],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
     description:
@@ -40,7 +37,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
         'https://discord.com/invite/cronos',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['zkCRO'],
   rpcUrl: 'https://mainnet.zkevm.cronos.org',

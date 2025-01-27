@@ -16,7 +16,6 @@
   "blast.png": "cfc545586964963182cc9d6ddc87338d",
   "bob.png": "89c727e1eacb2c5e12fac9736613a9a9",
   "bobanetwork.png": "736fb3d9db36b53de99c6cc1a275c086",
-  "canto.png": "5b856f5ac5221ae1aa1e85f376bd0cdb",
   "canvasconnect.png": "001ff21c7b547c919557b2f050c30806",
   "capx.png": "4a1c578e8be5447c2652aae4ad0d6a2f",
   "cartesi-honeypot.png": "28150fda8074b187db853fb64c8dec61",
@@ -75,7 +74,7 @@
   "omnichain.png": "f6f5b23457ee31bcc988f1283bdb0a8c",
   "opticsv1.png": "3ba9ef66b1332e7101940129c128128c",
   "opticsv2.png": "3ba9ef66b1332e7101940129c128128c",
-  "optimism.png": "1d9dbc1467cf50da0ede561babcfcd7b",
+  "op-mainnet.png": "1d9dbc1467cf50da0ede561babcfcd7b",
   "orb3.png": "52f582cfefd2176a5a7d9c63157bcd9c",
   "orbit.png": "ec0a3d11cf3e9e89450d6ffdffb07d3d",
   "orbiter.png": "beb784b78e76d1143bd6761087cec914",
@@ -312,5 +311,9 @@
   "huddle01.png": "7b5bd54af945052e6c10edff27cf46ce",
   "henez.png": "fee57ee0cb8d1915ed2069227258618a",
   "xrone.png": "fdde68b2c122ec58e9c3b902646dd09d",
-  "onchain.png": "25627f0663091e8a7d08ace56a2ffa4b"
+  "onchain.png": "25627f0663091e8a7d08ace56a2ffa4b",
+  "rufus.png": "340e64168a78958112024cdf757f0e0d",
+  "bitlazer.png": "84d55155218fe3821b407db6f09dbc2e",
+  "arenaz.png": "0e9278a736a7f897ca992bbcb10cd8c4",
+  "optimism.png": "4a6ad22b2b9724d793cca478a3016e9c"
 }

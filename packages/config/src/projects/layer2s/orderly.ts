@@ -19,11 +19,11 @@ export const orderly: Layer2 = opStackL2({
   ],
   additionalPurposes: ['Exchange'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Orderly Network',
     shortName: 'Orderly',
     slug: 'orderly',
@@ -46,7 +46,6 @@ export const orderly: Layer2 = opStackL2({
         'https://t.me/OrderlyNetworkAnnouncements',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     {

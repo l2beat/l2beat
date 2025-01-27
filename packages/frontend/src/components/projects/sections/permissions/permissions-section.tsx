@@ -1,3 +1,4 @@
+import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import {
   ContractEntry,
   type TechnologyContract,
@@ -5,11 +6,14 @@ import {
 } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
-import { type ProjectSectionProps } from '../types'
+import type { ProjectSectionProps } from '../types'
 
 export interface PermissionsSectionProps extends ProjectSectionProps {
   permissions: TechnologyContract[]
   nativePermissions: Record<string, TechnologyContract[]>
+  daSolution?: DaSolutionWith<{
+    permissions: TechnologyContract[]
+  }>
   permissionedEntities?: { name: string; href: string; key?: string }[]
 }
 
@@ -17,6 +21,7 @@ export function PermissionsSection({
   permissions,
   nativePermissions,
   permissionedEntities,
+  daSolution,
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
@@ -64,6 +69,21 @@ export function PermissionsSection({
             )
           })}
       </div>
+      {daSolution?.permissions && (
+        <h3 className="mt-4 font-bold">
+          The project uses {daSolution.layerName} with the{' '}
+          {daSolution.bridgeName} DA Bridge that consist of the following
+          permissions on the {daSolution.hostChain}:
+        </h3>
+      )}
+      {daSolution?.permissions?.map((permission) => (
+        <ContractEntry
+          key={technologyContractKey(permission)}
+          contract={permission}
+          className="my-4"
+          type="permission"
+        />
+      ))}
     </ProjectSection>
   )
 }

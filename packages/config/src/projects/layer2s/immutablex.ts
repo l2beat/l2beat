@@ -31,11 +31,11 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
-} from '../da-beat/types'
+} from '../da-beat/common'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
 import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -77,8 +77,8 @@ export const immutablex: Layer2 = {
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
     name: 'Immutable X',
     slug: 'immutablex',
     description:
@@ -99,7 +99,6 @@ export const immutablex: Layer2 = {
         'https://twitter.com/Immutable',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',

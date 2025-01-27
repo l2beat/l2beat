@@ -17,11 +17,11 @@ export const ham: Layer3 = opStackL3({
     Badge.RaaS.Caldera,
   ],
   additionalPurposes: ['Social'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Ham',
     slug: 'ham',
     description:
@@ -46,7 +46,6 @@ export const ham: Layer3 = opStackL3({
         'https://t.me/+B93fbhulpb5iYWYx',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1716590734),
   isNodeAvailable: true,

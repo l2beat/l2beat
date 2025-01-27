@@ -112,6 +112,14 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
+  CelestiaBlobstream: {
+    display: {
+      name: 'Celestia with Blobstream',
+      description:
+        'This project utilizes Celestia and has Blobstream enabled, facilitating the bridging of data availability commitments between Celestia and Ethereum.',
+    },
+    type: BadgeType.DA,
+  },
   EigenDA: {
     display: {
       name: 'EigenDA',
@@ -388,7 +396,7 @@ export const badges = {
     },
     type: BadgeType.L3ParentChain,
   },
-  Optimism: {
+  OpMainnet: {
     display: {
       name: 'Built on top of OP Mainnet',
       description: 'The project has OP Mainnet as its host chain',

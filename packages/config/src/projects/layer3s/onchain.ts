@@ -34,7 +34,6 @@ export const onchain: Layer3 = underReviewL3({
         'https://t.me/onchaincoin_portal',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.onchainpoints.xyz',
   escrows: [
