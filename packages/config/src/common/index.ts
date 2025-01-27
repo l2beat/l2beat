@@ -1,4 +1,3 @@
-export * from './ChainConfig'
 export * from './constants'
 export * from './contracts'
 export * from './projectCountdowns'

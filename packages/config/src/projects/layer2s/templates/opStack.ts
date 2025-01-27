@@ -39,13 +39,13 @@ import {
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
-import type { ChainConfig } from '../../../common/ChainConfig'
 import {
   formatChallengePeriod,
   formatDelay,
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
+import type { ChainConfig } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'

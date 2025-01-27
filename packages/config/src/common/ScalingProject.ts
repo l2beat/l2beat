@@ -15,7 +15,7 @@ import type {
   StageConfig,
   WarningWithSentiment,
 } from '../projects'
-import type { ChainConfig } from './ChainConfig'
+import type { ChainConfig } from '../types'
 import type { KnowledgeNugget } from './KnowledgeNugget'
 import type { Milestone } from './Milestone'
 import type { ReasonForBeingInOther } from './ReasonForBeingInOther'

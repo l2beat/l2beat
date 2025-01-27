@@ -11,7 +11,6 @@ import { unionBy } from 'lodash'
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -45,6 +44,7 @@ import {
   formatDelay,
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { ChainConfig } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'
