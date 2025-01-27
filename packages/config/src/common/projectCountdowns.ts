@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2, Layer3 } from '../projects'
+import type { Layer2 } from '../projects/layer2s'
+import type { Layer3 } from '../projects/layer3s'
 
 export const PROJECT_COUNTDOWNS = {
   otherMigration: {

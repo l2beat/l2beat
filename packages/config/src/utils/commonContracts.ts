@@ -6,15 +6,10 @@ import {
 } from '@l2beat/discovery-types'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import {
-  type Bridge,
-  type DaLayer,
-  type Layer2,
-  type Layer3,
-  bridges,
-  layer2s,
-  layer3s,
-} from '../projects'
+import { type Bridge, bridges } from '../projects/bridges'
+import type { DaLayer } from '../projects/da-beat'
+import { type Layer2, layer2s } from '../projects/layer2s'
+import { type Layer3, layer3s } from '../projects/layer3s'
 import type { ScalingProjectContract, ScalingProjectPermission } from '../types'
 
 type CommonProject = Layer2 | Layer3 | Bridge

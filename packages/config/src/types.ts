@@ -10,13 +10,10 @@ import type {
 } from '@l2beat/shared-pure'
 import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './common'
 import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
-import type {
-  BadgeId,
-  DacDaLayer,
-  ProofVerification,
-  StageConfig,
-  WarningWithSentiment,
-} from './projects'
+import type { BadgeId } from './projects/badges'
+import type { DacDaLayer } from './projects/da-beat'
+import type { StageConfig, WarningWithSentiment } from './projects/layer2s'
+import type { ProofVerification } from './projects/types'
 
 export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 export type ReasonForBeingInOther =
