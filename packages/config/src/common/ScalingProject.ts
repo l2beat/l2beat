@@ -11,6 +11,7 @@ import type {
 import type {
   BadgeId,
   DacDaLayer,
+  ProjectDaTrackingConfig,
   ProofVerification,
   StageConfig,
   WarningWithSentiment,
@@ -95,6 +96,8 @@ export interface ScalingProjectConfig {
   escrows: ScalingProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: ScalingProjectTransactionApi
+  /** Data availability tracking config */
+  daTracking?: ProjectDaTrackingConfig
 }
 
 export interface ProjectExternalAssets {

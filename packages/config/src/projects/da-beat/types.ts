@@ -26,6 +26,8 @@ export type BlockchainDaLayer = CommonDaLayer & {
   dataAvailabilitySampling?: DataAvailabilitySampling
   /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
+  /** Data availability tracking config */
+  daTracking?: DaLayerTrackingConfig
 }
 
 export type EthereumDaLayer = CommonDaLayer & {
@@ -309,3 +311,29 @@ export interface DaEconomicSecurity {
     coingeckoId: string
   }
 }
+
+// General da-layer tracking
+export type DaLayerTrackingConfig = 'ethereum' | 'celestia' | 'avail'
+
+// Per-project da-layer tracking
+export interface EthereumDaTrackingConfig {
+  type: 'ethereum'
+  inbox: string
+  sequencers?: string[]
+}
+
+export interface CelestiaDaTrackingConfig {
+  type: 'celestia'
+  namespace: string
+  signers?: string[]
+}
+
+export interface AvailDaTrackingConfig {
+  type: 'avail'
+  appId: string
+}
+
+export type ProjectDaTrackingConfig =
+  | EthereumDaTrackingConfig
+  | CelestiaDaTrackingConfig
+  | AvailDaTrackingConfig
