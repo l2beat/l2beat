@@ -8,7 +8,10 @@ Generated with discovered.json: 0x3e5a2212bc44b5caf4d1e6fa73e3839d42a7b2e1
 
 ## Description
 
-This is a SystemConfig upgrade (adding gasToken support) for two Superchain eco chains that use superchain governance.
+This is a SystemConfig upgrade (v2.3.0, adding gasToken support) for five Superchain eco chains that use superchain governance.
+- op mainnet
+- metal
+- zora
 - arena-z
 - mode
 
