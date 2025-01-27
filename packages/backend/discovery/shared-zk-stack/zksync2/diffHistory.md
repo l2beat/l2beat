@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4f5c74e5e4ed8db60e1de92ff86377dbb4502f02
+
+# Diff at Mon, 27 Jan 2025 13:17:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 54131125
+- current block number: 54670089
+
+## Description
+
+[GAP-1](https://vote.zknation.io/dao/proposal/13823050748058617424077595486689751986818771098977300222700522842013613046754?govId=eip155:324:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb) ZKsync Token Program Priorities 2025 Endorsement queued in timelock (voting finished in favor).
+
+## Watched changes
+
+```diff
+    contract ZkGovOpsGovernor (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb) {
+    +++ description: None
+      values.proposalQueuedCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0x079e02fd625cb6f100f843470a2c5144657c22dd
 
 # Diff at Mon, 20 Jan 2025 12:14:12 GMT:

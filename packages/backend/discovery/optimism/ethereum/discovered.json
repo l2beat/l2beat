@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 21667015,
+  "blockNumber": 21715623,
   "configHash": "0xea876441a700c4e4b5c986c3a6f78982b3653b116b8a11115638cc77b025e225",
   "contracts": [
     {
@@ -185,7 +185,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
+        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -211,7 +211,7 @@
       "sinceTimestamp": 1685377403,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-        "$implementation": "0xF56D96B2535B932656d3c04Ebf51baBff241D886",
+        "$implementation": "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375",
         "$pastUpgrades": [
           [
             "2023-06-06T15:58:47.000Z",
@@ -247,15 +247,36 @@
             "2024-06-10T16:42:59.000Z",
             "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61",
             ["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]
+          ],
+          [
+            "2025-01-24T14:41:35.000Z",
+            "0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-01-24T14:41:35.000Z",
+            "0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350",
+            ["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 9,
+        "basefeeScalar": 5227,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
         "batchInbox": "0xFF00000000000000000000000000000000000010",
+        "blobbasefeeScalar": 1014213,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+        "eip1559Denominator": 0,
+        "eip1559Elasticity": 0,
         "gasLimit": 60000000,
+        "gasPayingToken": {
+          "addr_": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+          "decimals_": 18
+        },
+        "gasPayingTokenName": "Ether",
+        "gasPayingTokenSymbol": "ETH",
+        "isCustomGasToken": false,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -288,7 +309,7 @@
         "startBlock": 17422444,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xAAAA45d9549EDA09E70937013520214382Ffc4A2",
-        "version": "2.2.0",
+        "version": "2.3.0",
         "VERSION": 0
       },
       "fieldMeta": {
@@ -318,7 +339,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "9d 17h",
+        "timeSinceLastL2beatInteraction": "2d 21h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -393,7 +414,7 @@
         ],
         "$upgradeCount": 10,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292775603",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292776650",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -564,7 +585,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 52,
+        "nonce": 54,
         "VERSION": "1.3.0"
       }
     },
@@ -732,7 +753,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1025,7 +1046,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1279,7 +1300,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 98,
+        "nonce": 100,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1391,7 +1412,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 21667006
+          "prevBlockNum": 21715591
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1458,7 +1479,7 @@
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "isL2beatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe",
@@ -1547,7 +1568,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 5386,
+        "gameCount": 5548,
         "gameImpls": [
           "0x27B81db41F586016694632193b99E45b1a27B8f8",
           "0x91a661891248d8C4916FB4a1508492a5e2CBcb87",
@@ -2266,6 +2287,57 @@
       "function sendMultiSigToken(address toAddress, uint256 value, address tokenContractAddress, uint256 expireTime, uint256 sequenceId, bytes signature)",
       "function signers(address) view returns (bool)"
     ],
+    "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": [
+      "constructor()",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BATCH_INBOX_SLOT() view returns (bytes32)",
+      "function DISPUTE_GAME_FACTORY_SLOT() view returns (bytes32)",
+      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
+      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
+      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
+      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
+      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
+      "function START_BLOCK_SLOT() view returns (bytes32)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batchInbox() view returns (address addr_)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function disputeGameFactory() view returns (address addr_)",
+      "function eip1559Denominator() view returns (uint32)",
+      "function eip1559Elasticity() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function gasPayingToken() view returns (address addr_, uint8 decimals_)",
+      "function gasPayingTokenName() view returns (string name_)",
+      "function gasPayingTokenSymbol() view returns (string symbol_)",
+      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address disputeGameFactory, address optimismPortal, address optimismMintableERC20Factory, address gasPayingToken) _addresses)",
+      "function isCustomGasToken() view returns (bool)",
+      "function l1CrossDomainMessenger() view returns (address addr_)",
+      "function l1ERC721Bridge() view returns (address addr_)",
+      "function l1StandardBridge() view returns (address addr_)",
+      "function maximumGasLimit() pure returns (uint64)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function optimismMintableERC20Factory() view returns (address addr_)",
+      "function optimismPortal() view returns (address addr_)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigEcotone(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function startBlock() view returns (uint256 startBlock_)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address addr_)",
+      "function version() pure returns (string)"
+    ],
     "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d": [
       "constructor()",
       "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
@@ -2502,47 +2574,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0xF56D96B2535B932656d3c04Ebf51baBff241D886": [
-      "constructor()",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function BATCH_INBOX_SLOT() view returns (bytes32)",
-      "function DISPUTE_GAME_FACTORY_SLOT() view returns (bytes32)",
-      "function L1_CROSS_DOMAIN_MESSENGER_SLOT() view returns (bytes32)",
-      "function L1_ERC_721_BRIDGE_SLOT() view returns (bytes32)",
-      "function L1_STANDARD_BRIDGE_SLOT() view returns (bytes32)",
-      "function OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT() view returns (bytes32)",
-      "function OPTIMISM_PORTAL_SLOT() view returns (bytes32)",
-      "function START_BLOCK_SLOT() view returns (bytes32)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function batchInbox() view returns (address addr_)",
-      "function batcherHash() view returns (bytes32)",
-      "function disputeGameFactory() view returns (address addr_)",
-      "function gasLimit() view returns (uint64)",
-      "function initialize(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config, address _batchInbox, tuple(address l1CrossDomainMessenger, address l1ERC721Bridge, address l1StandardBridge, address disputeGameFactory, address optimismPortal, address optimismMintableERC20Factory) _addresses)",
-      "function l1CrossDomainMessenger() view returns (address addr_)",
-      "function l1ERC721Bridge() view returns (address addr_)",
-      "function l1StandardBridge() view returns (address addr_)",
-      "function maximumGasLimit() pure returns (uint64)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function optimismMintableERC20Factory() view returns (address addr_)",
-      "function optimismPortal() view returns (address addr_)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function startBlock() view returns (uint256 startBlock_)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address addr_)",
-      "function version() view returns (string)"
     ]
   },
   "usedTemplates": {

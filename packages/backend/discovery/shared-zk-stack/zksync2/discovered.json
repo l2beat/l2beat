@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 54131125,
+  "blockNumber": 54670089,
   "configHash": "0xca6cf546c630f648adbbf422e467f0beb24279f0df191259625f45da7d852f7b",
   "contracts": [
     {
@@ -22,7 +22,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737375234,
+        "clock": 1737983832,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -151,7 +151,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737375234,
+        "clock": 1737983832,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -168,7 +168,7 @@
         "lateQuorumVoteExtension": 604800,
         "name": "ZkGovOpsGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 0,
+        "proposalQueuedCount": 1,
         "proposalThreshold": "21000000000000000000000000",
         "state": [],
         "timelock": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
@@ -254,7 +254,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1737375234,
+        "clock": 1737983832,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -295,7 +295,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737375234,
+        "clock": 1737983832,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",

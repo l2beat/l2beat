@@ -1,7 +1,7 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 21679920,
+  "blockNumber": 21716177,
   "configHash": "0x70ff044e340894fa64468e6c90090d30f3a9e7f2b2deb9c0b460b487bd10dede",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
@@ -152,7 +152,7 @@
         "getBaseToken": "0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 2204,
+        "getFirstUnprocessedPriorityTx": 2343,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
@@ -165,13 +165,13 @@
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 9914,
-        "getTotalBatchesExecuted": 9752,
-        "getTotalBatchesVerified": 9905,
-        "getTotalBlocksCommitted": 9914,
-        "getTotalBlocksExecuted": 9752,
-        "getTotalBlocksVerified": 9905,
-        "getTotalPriorityTxs": 2224,
+        "getTotalBatchesCommitted": 11752,
+        "getTotalBatchesExecuted": 11362,
+        "getTotalBatchesVerified": 11733,
+        "getTotalBlocksCommitted": 11752,
+        "getTotalBlocksExecuted": 11362,
+        "getTotalBlocksVerified": 11733,
+        "getTotalPriorityTxs": 2363,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -297,12 +297,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "admin": "0x0000000000000000000000000000000000000000",
+        "admin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "L1_USDC_TOKEN": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "paused": false,
-        "pendingAdmin": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+        "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       }
     }
