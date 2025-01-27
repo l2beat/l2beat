@@ -2,7 +2,7 @@
   "name": "transporter",
   "chain": "ethereum",
   "blockNumber": 21387870,
-  "configHash": "0x14c79194c71d47265a9c65c71355062cbea0a7a60e2cf4d4531350eaba9baf7c",
+  "configHash": "0xb46bc7804e2a2c73a87e6a1b6a77f64235a208a0f591ee86977dd5d772ef56cb",
   "contracts": [
     {
       "name": "CommitStore",
@@ -18259,15 +18259,15 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "transporter/CommitStoreV1": "0xd75293261783840120d33cf40ea7cb9a8391a9544614066e1b109391624facca",
-    "transporter/ManyChainMultiSig": "0xd420005fec6c7ed116556a77ecb7d6b4eadeacd367e3bee473ca908e54a1a9b2",
-    "transporter/OffRampV1": "0xe5666deffe02d58fdffb9ad4f6d3cfafb6040feaf3e5c43e439e1f209e104bcf",
-    "transporter/OfframpV2": "0xd2ee60622bb9c2a40504fdc78927c65d6b083cbe99b080c0eb53dcfe6079d8df",
-    "transporter/OnRampV1": "0x061325afbee3a7866fe9adc9413a161053f1b4ff42f993a5ab73cadf607522f8",
-    "transporter/OnRampV3": "0x109e8fc34bb9e38ce30d45ce42a4a7aefb4ae881fc39394d2d9bd284e370f94a",
-    "transporter/PriceRegistry": "0x9c75f4fc2eef32dfabd4130ed50dc7540945124bd16fa7b71a437b00001eca19",
-    "transporter/RouterV1_0_0": "0x6961598c7277a0d3692438de7bad9c08bd511a62599a9c4b27e6a06a599ef823",
-    "transporter/RouterV1_2_0": "0x19a2737ac25685728904a70aacb66e3801a02ddb72bfbb28e68984410939eced"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "transporter/CommitStoreV1": "0x4c0d96144ed2c8362d696071df1c0ab35336b47a78b04ffadc9b5eaacea4943d",
+    "transporter/ManyChainMultiSig": "0xd58454966b51afbf43b8bde434f33a19689c80032e2092537ccf40e5ad94b83e",
+    "transporter/OffRampV1": "0x9cbad79a2c3dfd37857fd56daa6838b98ec72697d578a685373d824fa0f3be75",
+    "transporter/OfframpV2": "0xa8a56edf25ae7daf80088127db6804d714409c5f2b26fe826d750e3754b4a779",
+    "transporter/OnRampV1": "0xb2450f429ef20fea8ecacd34690a04c6165b9cddcd129a2673d1fc24c822b96c",
+    "transporter/OnRampV3": "0xfd8cbbce285a809bc03f61c85f68f96e106e49e91c8ef707db094ff4c91d346d",
+    "transporter/PriceRegistry": "0x42b2926eb09081653c52800110295b54f7b6b6bfe461d77fe470cd93d30fbb2e",
+    "transporter/RouterV1_0_0": "0x620694ceba7642aab3ce0469d1c8295ec8e8ad82ad24430b62dd4be3ea181aae",
+    "transporter/RouterV1_2_0": "0xbe0b31966b903f95ecc5b684dc5bf8e0ae04b2321aba4ab57c95dd74b2978c22"
   }
 }

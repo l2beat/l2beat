@@ -1,5 +1,7 @@
-import { ScalingProjectRisk } from './ScalingProjectRisk'
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type {
+  ScalingProjectRisk,
+  ScalingProjectTechnologyChoice,
+} from './ScalingProject'
 
 const ON_CHAIN_CALLDATA: ScalingProjectTechnologyChoice = {
   name: 'All data required for proofs is published onchain',
@@ -192,6 +194,38 @@ function AVAIL_OFF_CHAIN(
   }
 }
 
+function EIGENDA_OFF_CHAIN(
+  isUsingServiceManager: boolean,
+): ScalingProjectTechnologyChoice {
+  const additionalDescription = isUsingServiceManager
+    ? ' The ServiceManager bridge is used to verify attestations from the EigenDA operator set that the data is indeed available.'
+    : ' Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.'
+  return {
+    name: 'Data is posted to EigenDA',
+    description:
+      `Transactions roots are posted onchain and the full data is posted on EigenDA. ` +
+      additionalDescription,
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the sequencer posts an unavailable transaction root.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the data is not available on the external provider.',
+        isCritical: true,
+      },
+    ],
+    references: [
+      {
+        text: 'EigenDA Docs - Overview',
+        href: 'https://docs.eigenda.xyz/overview',
+      },
+    ],
+  }
+}
+
 function DACHALLENGES_OFF_CHAIN(
   daChallengeWindow: string,
   daResolveWindow: string,
@@ -246,5 +280,6 @@ export const TECHNOLOGY_DATA_AVAILABILITY = {
   PLASMA_OFF_CHAIN,
   CELESTIA_OFF_CHAIN,
   AVAIL_OFF_CHAIN,
+  EIGENDA_OFF_CHAIN,
   DACHALLENGES_OFF_CHAIN,
 }

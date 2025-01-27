@@ -1,4 +1,56 @@
-Generated with discovered.json: 0xb8f3f471605dadb5bbd518e70db4e7f55794ad71
+Generated with discovered.json: 0x599c3f9863b349bcb1b4f6673cf7c004ba0cb3fb
+
+# Diff at Mon, 20 Jan 2025 11:09:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21378535
+- current block number: 21378535
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21378535 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"
+      issuedPermissions.0.to:
++        "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e"
+      receivedPermissions.0.target:
+-        "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
+      receivedPermissions.0.from:
++        "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
+      receivedPermissions.0.from:
++        "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
+    }
+```
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
+      issuedPermissions.0.to:
++        "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
+    }
+```
+
+Generated with discovered.json: 0xa1c2b30baa6572d1b7ef73edfabc2975dc34424d
 
 # Diff at Wed, 11 Dec 2024 10:02:19 GMT:
 

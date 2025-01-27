@@ -24,20 +24,18 @@
       "fields": {
         "strategies": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "AddStrategy",
-            "addKey": "strategy",
-            "removeEvent": "RemoveStrategy",
-            "removeKey": "strategy"
+            "type": "event",
+            "select": "strategy",
+            "add": { "event": "AddStrategy" },
+            "remove": { "event": "RemoveStrategy" }
           }
         },
         "activeStrategiesIndex": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "SetActiveStrategy",
-            "returnParams": ["asset", "index"],
-            "groupBy": "asset",
-            "onlyValue": true
+            "type": "event",
+            "select": "index",
+            "set": { "event": "SetActiveStrategy" },
+            "groupBy": "asset"
           }
         }
       }

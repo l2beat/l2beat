@@ -22,6 +22,7 @@ export default async function Page() {
     },
     range: '1y',
     excludeAssociatedTokens: false,
+    previewRecategorisation: false,
   })
 
   return (

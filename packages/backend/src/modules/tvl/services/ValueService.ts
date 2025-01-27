@@ -1,10 +1,10 @@
-import { AmountId, PriceId } from '@l2beat/config'
-import { Database, ValueRecord } from '@l2beat/database'
+import type { AmountId, PriceId } from '@l2beat/backend-shared'
+import type { Database, ValueRecord } from '@l2beat/database'
 import {
   assert,
-  AmountConfigEntry,
-  AssetId,
-  ProjectId,
+  type AmountConfigEntry,
+  type AssetId,
+  type ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'

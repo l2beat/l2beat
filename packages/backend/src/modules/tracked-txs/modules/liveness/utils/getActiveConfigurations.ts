@@ -1,6 +1,9 @@
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxConfigEntry, TrackedTxLivenessConfig } from '@l2beat/shared'
-import { SavedConfiguration } from '@l2beat/shared-pure'
+import type { BackendProject } from '@l2beat/backend-shared'
+import type {
+  TrackedTxConfigEntry,
+  TrackedTxLivenessConfig,
+} from '@l2beat/shared'
+import type { SavedConfiguration } from '@l2beat/shared-pure'
 import { getSyncedUntil } from '../../../utils/getSyncedUntil'
 
 export function getActiveConfigurations(

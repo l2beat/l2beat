@@ -1,4 +1,4 @@
-import { Activity } from '../kysely/generated/types'
+import type { Activity } from '../kysely/generated/types'
 
 export const selectActivity = [
   'projectId',

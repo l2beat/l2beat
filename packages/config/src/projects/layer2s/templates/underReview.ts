@@ -1,16 +1,16 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
-  ChainConfig,
-  ScalingProjectEscrow,
-  ScalingProjectTransactionApi,
+  type ChainConfig,
+  type ScalingProjectDisplay,
+  type ScalingProjectEscrow,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY,
   UNDER_REVIEW_RISK_VIEW,
 } from '../../../common'
-import { BadgeId } from '../../badges'
-import { type Layer3, type Layer3Display } from '../../layer3s'
-import { type Layer2, type Layer2Display } from '../types'
+import type { BadgeId } from '../../badges'
+import type { Layer3 } from '../../layer3s'
+import type { Layer2, Layer2Display } from '../types'
 
 interface UnderReviewConfigCommon {
   id: string
@@ -29,7 +29,7 @@ export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
 }
 
 export interface UnderReviewConfigL3 extends UnderReviewConfigCommon {
-  display: Layer3Display
+  display: ScalingProjectDisplay
   hostChain: Layer3['hostChain']
   associatedTokens?: string[]
 }

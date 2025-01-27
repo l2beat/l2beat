@@ -1,8 +1,8 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 21465483,
-  "configHash": "0xcfafca102a8fef0c60f0d35d20956b99c39d79582a1d98d1f869dddfa3a2538e",
+  "blockNumber": 21630210,
+  "configHash": "0xc0195befba728254c9bd8364b126e5ac0c9c6525b272d4064ebd6f1f3719109d",
   "contracts": [
     {
       "name": "Treasurer",
@@ -27,7 +27,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+          "to": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
           "via": []
         }
       ],
@@ -136,13 +136,13 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "21089409141780021",
-        "poolBalance": "582040088000000000000",
+        "plannerFee": "21439546260685026",
+        "poolBalance": "546109275000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 730872,
+        "treasuryFee": 729667,
         "tvl": "6000203720000000000000"
       }
     },
@@ -203,7 +203,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 862,
+        "nonce": 869,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -330,14 +330,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "317977570484968615",
-        "poolBalance": "6196905540000000000000",
+        "plannerFee": "394970336516717107",
+        "poolBalance": "9019346419000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 3951414,
-        "tvl": "10997174490000000000000"
+        "treasuryFee": 4944233,
+        "tvl": "13635706440000000000000"
       }
     },
     {
@@ -395,14 +395,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "280116752578998275",
-        "poolBalance": 1556985680170,
+        "plannerFee": "299801296378214353",
+        "poolBalance": 4109434697358,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 65461908165,
-        "tvl": 9391323759672
+        "treasuryFee": 69187570130,
+        "tvl": 13649146271907
       }
     },
     {
@@ -412,7 +412,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+          "from": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
         }
       ],
       "sinceTimestamp": 1687808651,
@@ -427,7 +427,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+          "from": "0x173272739Bd7Aa6e4e214714048a9fE699453059"
         }
       ],
       "sinceTimestamp": 1706307875,
@@ -451,7 +451,7 @@
         "paused": false,
         "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 1,
-        "signerSize": 2,
+        "signerSize": 3,
         "vid": 101,
         "workerFeeLib": "0xa7b5189bcA84Cd304D8553977c7C614329750d99"
       },
@@ -517,14 +517,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "246172541634984359",
-        "poolBalance": 9571583947044,
+        "plannerFee": "268216821565469033",
+        "poolBalance": 16224158343234,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 46651047491,
-        "tvl": 12698236787571
+        "treasuryFee": 54403811668,
+        "tvl": 18690058351895
       }
     },
     {
@@ -567,7 +567,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
+          "to": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5",
           "via": []
         }
       ],
@@ -620,7 +620,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 200,
+        "nonce": 206,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1855,6 +1855,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

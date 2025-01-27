@@ -23,14 +23,14 @@
   }
   sequencerFailure: {
     definingMetric: 345600
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 4d delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 4d delay on this operation."
     secondLine: "4d delay"
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: 1
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
+    definingMetric: 2
+    description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"

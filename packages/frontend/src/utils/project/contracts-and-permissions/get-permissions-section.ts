@@ -1,21 +1,22 @@
-import {
-  type Bridge,
-  type DaLayer,
-  type Layer2,
-  type Layer3,
-  type ScalingProjectPermission,
-  type ScalingProjectPermissionedAccount,
+import type {
+  Bridge,
+  DaLayer,
+  Layer2,
+  Layer3,
+  ScalingProjectPermission,
+  ScalingProjectPermissionedAccount,
 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { type PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
+import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import {
-  type TechnologyContract,
-  type TechnologyContractAddress,
+import type {
+  TechnologyContract,
+  TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
-import { type UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
-import { type ProjectSectionProps } from '../../../components/projects/sections/types'
+import type { UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
+import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
@@ -27,6 +28,7 @@ type ProjectParams = {
     | Record<string, ScalingProjectPermission[]>
     | 'UnderReview'
     | undefined
+  daSolution?: DaSolution
   isUnderReview: boolean
 } & (
   | { type: (Layer2 | Bridge | DaLayer)['type'] }
@@ -45,7 +47,9 @@ export function getPermissionsSection(
   if (
     projectParams.permissions.length === 0 &&
     (!projectParams.nativePermissions ||
-      projectParams.nativePermissions.length === 0)
+      projectParams.nativePermissions.length === 0) &&
+    (!projectParams.daSolution?.permissions ||
+      projectParams.daSolution?.permissions.length === 0)
   ) {
     return undefined
   }
@@ -66,7 +70,11 @@ export function getPermissionsSection(
     }
   }
 
-  if (!projectParams.permissions && !projectParams.nativePermissions) {
+  if (
+    !projectParams.permissions &&
+    !projectParams.nativePermissions &&
+    !projectParams.daSolution?.permissions
+  ) {
     return undefined
   }
 
@@ -96,6 +104,21 @@ export function getPermissionsSection(
         },
       ),
     ),
+    daSolution: projectParams.daSolution
+      ? {
+          layerName: projectParams.daSolution.layerName,
+          bridgeName: projectParams.daSolution.bridgeName,
+          hostChain: slugToDisplayName(projectParams.daSolution.hostChain),
+          permissions:
+            projectParams.daSolution.permissions?.flatMap((permission) =>
+              toTechnologyContract(
+                projectParams,
+                permission,
+                contractsVerificationStatuses,
+              ),
+            ) ?? [],
+        }
+      : undefined,
   }
 }
 
@@ -103,8 +126,12 @@ function resolvePermissionedName(
   rootName: string,
   account: ScalingProjectPermissionedAccount,
   permissions: ProjectParams['permissions'],
-): string {
-  let name = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
+): {
+  name: string
+  redirectToName: boolean
+} {
+  const initialName = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
+  let name = initialName
 
   if (permissions !== undefined && permissions !== 'UnderReview') {
     const matchingPermissions = permissions.filter(
@@ -129,7 +156,7 @@ function resolvePermissionedName(
     }
   }
 
-  return name
+  return { name, redirectToName: name !== initialName }
 }
 
 function toTechnologyContract(
@@ -143,18 +170,17 @@ function toTechnologyContract(
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
       const address = account.address.toString()
-      const name = resolvePermissionedName(
+      const permissionedName = resolvePermissionedName(
         permission.name,
         account,
         projectParams.permissions,
       )
       return {
-        name,
+        name: permissionedName.name,
         address,
-        href:
-          permission.fromRole === true
-            ? `#${name}`
-            : `${etherscanUrl}/address/${address}#code`,
+        href: permissionedName.redirectToName
+          ? `#${permissionedName.name}`
+          : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
         verificationStatus: toVerificationStatus(
           verificationStatusForChain[address],
@@ -180,14 +206,14 @@ function toTechnologyContract(
       : permission.name
 
   const participants = permission.participants?.map((account) => {
-    const name = resolvePermissionedName(
+    const permissionedName = resolvePermissionedName(
       permission.name,
       account,
       projectParams.permissions,
     )
 
     return {
-      name,
+      name: permissionedName.name,
       href: `${etherscanUrl}/address/${account.address.toString()}#code`,
       verificationStatus: toVerificationStatus(
         verificationStatusForChain[account.address.toString()],

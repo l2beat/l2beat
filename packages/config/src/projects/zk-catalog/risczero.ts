@@ -4,10 +4,10 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../project/Project'
+import type { BaseProject } from '../project/BaseProject'
 import { PROOFS } from './common/proofSystems'
 
-export const risczero: Project = {
+export const risczero: BaseProject = {
   id: ProjectId('riskzero'),
   slug: 'risczero',
   name: 'RISC Zero',

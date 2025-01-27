@@ -1,4 +1,4 @@
-import { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
+import type { ContractValue, ProxyDetails } from '@l2beat/discovery-types'
 import {
   assert,
   Bytes,
@@ -6,12 +6,12 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BigNumber, providers, utils } from 'ethers'
+import { BigNumber, type providers, utils } from 'ethers'
 
-import { Semver, parseSemver } from '../../../utils/semver'
-import { IProvider } from '../../provider/IProvider'
+import { type Semver, parseSemver } from '../../../utils/semver'
+import type { IProvider } from '../../provider/IProvider'
 
-import { DateAddresses } from '../pastUpgrades'
+import type { DateAddresses } from '../pastUpgrades'
 import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implementation-slot")

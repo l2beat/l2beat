@@ -25,8 +25,8 @@
     "test": "./scripts/run_tests.sh",
     "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
-    "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
+    "starkware-multiplier": "ts-node --transpile-only scripts/starkwareMultiplier.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "restore-tvl": "pnpm --filter ../database restore-tvl",
@@ -34,10 +34,9 @@
     "dev": "pnpm build:dependencies && pnpm start:dev"
   },
   "dependencies": {
-    "@bugsnag/js": "^7.22.3",
-    "@bugsnag/plugin-koa": "^7.19.0",
     "@google-cloud/bigquery": "^7.3.0",
     "@koa/router": "^12.0.0",
+    "@l2beat/backend-shared": "workspace:*",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",

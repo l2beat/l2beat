@@ -1,14 +1,13 @@
 import {
   type BlockchainDaLayer,
-  type DacBridge,
-  type DacDaLayer,
+  type DaServiceDaLayer,
   type EnshrinedBridge,
   type EthereumDaLayer,
   type NoDaBridge,
   type OnChainDaBridge,
+  type StandaloneDacBridge,
 } from '@l2beat/config'
 import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { mapBridgeRisksToRosetteValues } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type ProjectDetailsSection } from '~/components/projects/sections/types'
 import { type RosetteValue } from '~/components/rosette/types'
 import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -20,12 +19,13 @@ import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-se
 import { getPermissionedEntities } from './get-permissioned-entities'
 
 type RegularDetailsParams = {
-  daLayer: BlockchainDaLayer | DacDaLayer
-  daBridge: OnChainDaBridge | DacBridge | NoDaBridge
+  daLayer: BlockchainDaLayer | DaServiceDaLayer
+  daBridge: OnChainDaBridge | StandaloneDacBridge | NoDaBridge
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
-  evaluatedGrissiniValues: RosetteValue[]
+  layerGrissiniValues: RosetteValue[]
+  bridgeGrissiniValues: RosetteValue[]
 }
 
 export function getRegularDaProjectSections({
@@ -34,36 +34,36 @@ export function getRegularDaProjectSections({
   isVerified,
   contractsVerificationStatuses,
   projectsChangeReport,
-  evaluatedGrissiniValues,
+  layerGrissiniValues,
+  bridgeGrissiniValues,
 }: RegularDetailsParams) {
-  const relatedScalingProject =
-    daBridge.type === 'DAC' && daBridge.usedIn.length === 1
-      ? daBridge.usedIn[0]
-      : undefined
+  const permissionsSection =
+    daBridge.type === 'NoBridge'
+      ? undefined
+      : getMultichainPermissionsSection(
+          {
+            id: daLayer.id,
+            bridge: daBridge,
+            isUnderReview: !!daLayer.isUnderReview,
+            permissions: daBridge.permissions,
+          },
+          contractsVerificationStatuses,
+        )
 
-  const permissionsSection = getMultichainPermissionsSection(
-    {
-      id: daLayer.id,
-      bridge: daBridge,
-      isUnderReview: !!daLayer.isUnderReview,
-      permissions: daBridge.permissions,
-      dacUsedIn: relatedScalingProject,
-    },
-    contractsVerificationStatuses,
-  )
-
-  const contractsSection = getMultiChainContractsSection(
-    {
-      id: daBridge.id,
-      isVerified,
-      slug: daBridge.display.slug,
-      contracts: daBridge.contracts,
-      isUnderReview: daLayer.isUnderReview,
-      dacUsedIn: relatedScalingProject,
-    },
-    contractsVerificationStatuses,
-    projectsChangeReport,
-  )
+  const contractsSection =
+    daBridge.type === 'NoBridge'
+      ? undefined
+      : getMultiChainContractsSection(
+          {
+            id: daBridge.id,
+            isVerified,
+            slug: daBridge.display.slug,
+            contracts: daBridge.contracts,
+            isUnderReview: daLayer.isUnderReview,
+          },
+          contractsVerificationStatuses,
+          projectsChangeReport,
+        )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
@@ -85,7 +85,7 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: evaluatedGrissiniValues,
+      grissiniValues: layerGrissiniValues,
     },
   })
 
@@ -115,7 +115,7 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: mapBridgeRisksToRosetteValues(daBridge.risks),
+      grissiniValues: bridgeGrissiniValues,
       hideRisks: daBridge.type === 'NoBridge',
     },
   })

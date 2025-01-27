@@ -2,7 +2,7 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0x5e96356951399b192fc4411a5c7173bc75fd8bea6ed1e6a5f9c9ac68ee432d7f",
+  "configHash": "0xaac3e79946c053c04990ed4ccd9523f48843176f844a2c3a6277ab0b42b5d419",
   "contracts": [
     {
       "name": "EthereumL1Messenger",
@@ -72,31 +72,26 @@
         "$immutable": true,
         "chains": {
           "1": {
-            "chainId": 1,
             "finalityPeriod": 1,
             "transferCost": 7585098244874649,
             "targetWeightPPM": 285180
           },
           "10": {
-            "chainId": 10,
             "finalityPeriod": 604800,
             "transferCost": 232163216204169,
             "targetWeightPPM": 483793
           },
           "1101": {
-            "chainId": 1101,
             "finalityPeriod": 3600,
             "transferCost": 1014461390000000,
             "targetWeightPPM": 292426
           },
           "8453": {
-            "chainId": 8453,
             "finalityPeriod": 604800,
             "transferCost": 262966764014000,
             "targetWeightPPM": 402806
           },
           "42161": {
-            "chainId": 42161,
             "finalityPeriod": 691200,
             "transferCost": 173566246000000,
             "targetWeightPPM": 460481

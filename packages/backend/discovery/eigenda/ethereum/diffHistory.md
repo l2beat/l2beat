@@ -1,3 +1,392 @@
+Generated with discovered.json: 0xfdecefca0505b39cd2ee474098d469339feb25d1
+
+# Diff at Mon, 27 Jan 2025 08:44:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@19f9c78c593bd40f9a0b28c3dce98eac1bd1d1b8 block: 21628459
+- current block number: 21628459
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628459 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
+      values.firstQuorumStrategies:
+-        ["0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0xAe60d8180437b5C34bB956822ac2710972584473","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"]
+      values.fourthQuorumStrategies:
+-        []
+      values.secondQuorumStrategies:
+-        ["0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"]
+      values.thirdQuorumStrategies:
+-        ["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"]
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies:
++        {"0":["0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0","0x93c4b944D05dfe6df7645A86cd2206016c51564D","0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2","0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc","0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d","0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff","0xa4C637e0F704745D182e4D38cAb7E7485321d059","0x57ba429517c3473B6d34CA9aCd56c0e735b94c02","0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6","0x7CA911E83dabf90C90dD3De5411a10F1A6112184","0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6","0xAe60d8180437b5C34bB956822ac2710972584473","0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"],"1":["0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"],"2":["0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"]}
+      fieldMeta.firstQuorumStrategies:
+-        {"description":"The strategies for the first quorum (ETH)."}
+      fieldMeta.secondQuorumStrategies:
+-        {"description":"The strategies for the second quorum (EIGEN)."}
+      fieldMeta.thirdQuorumStrategies:
+-        {"description":"The strategies for the third quorum."}
+      fieldMeta.fourthQuorumStrategies:
+-        {"description":"The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum."}
+      fieldMeta.quorumStrategies:
++        {"description":"The strategies for the first quorum (ETH)."}
+    }
+```
+
+Generated with discovered.json: 0xa2e445bc97704b68ef3ecdfb0a26c867f3d17027
+
+# Diff at Mon, 20 Jan 2025 11:09:28 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21628459
+- current block number: 21628459
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628459 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      receivedPermissions.5.target:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      receivedPermissions.5.from:
++        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      receivedPermissions.4.target:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      receivedPermissions.4.from:
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      receivedPermissions.3.target:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      receivedPermissions.3.from:
++        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      receivedPermissions.2.target:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      receivedPermissions.2.from:
++        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      receivedPermissions.1.target:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      receivedPermissions.1.from:
++        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      receivedPermissions.0.target:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      receivedPermissions.0.from:
++        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.0.to:
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+    }
+```
+
+Generated with discovered.json: 0x0003140ad2de71134c5740bd0893c03f6e7f1093
+
+# Diff at Mon, 20 Jan 2025 09:24:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21628459
+- current block number: 21628459
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628459 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      fieldMeta.quorumCount.type:
++        "RISK_PARAMETER"
+      fieldMeta.ejectionCooldown.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBase (0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      fieldMeta.BLOCK_STALE_MEASURE.type:
++        "RISK_PARAMETER"
+      fieldMeta.quorumAdversaryThresholdPercentages.type:
++        "RISK_PARAMETER"
+      fieldMeta.quorumConfirmationThresholdPercentages.type:
++        "RISK_PARAMETER"
+      fieldMeta.batchConfirmers.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract EigenStrategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+```diff
+    contract StrategyBaseTVLLimits (0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      fieldMeta.getTVLLimits.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxPerDeposit.type:
++        "RISK_PARAMETER"
+      fieldMeta.maxTotalDeposits.type:
++        "RISK_PARAMETER"
+    }
+```
+
+Generated with discovered.json: 0x1ee0c66e32c739049ac33e9c2ad09d167841a33d
+
+# Diff at Wed, 15 Jan 2025 07:42:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21365898
+- current block number: 21628459
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21365898 (main branch discovery), not current.
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x266d513bb55e652a9011ddefc4f87da60c466b71
 
 # Diff at Mon, 09 Dec 2024 15:40:04 GMT:

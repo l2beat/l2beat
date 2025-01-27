@@ -13,7 +13,7 @@ import {
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 
 interface Props {
   tokenTvl:
@@ -33,7 +33,7 @@ export function TokenBreakdownStat({ tokenTvl }: Props) {
       ? 'warning'
       : 'neutral'
 
-  if (!tokenTvl?.breakdown) {
+  if (!tokenTvl?.breakdown || tokenTvl?.breakdown.total === 0) {
     return tokenWarnings.length === 0 ? (
       <NoDataBadge />
     ) : (

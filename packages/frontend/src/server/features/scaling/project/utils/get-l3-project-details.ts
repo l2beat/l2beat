@@ -1,9 +1,9 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { Layer2, Layer3 } from '@l2beat/config'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
-import { type RosetteValue } from '~/components/rosette/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { RosetteValue } from '~/components/rosette/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
   isTvlChartDataEmpty,
@@ -13,11 +13,13 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
+import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
+import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
   project: Layer3
@@ -29,12 +31,14 @@ interface Params {
   hostChain?: Layer2
   hostChainRosetteValues?: RosetteValue[]
   combinedRosetteValues?: RosetteValue[]
+  daSolution?: DaSolution
 }
 
 export async function getL3ProjectDetails({
   project,
   hostChain,
   isVerified,
+  daSolution,
   rosetteValues,
   isHostChainVerified,
   combinedRosetteValues,
@@ -51,6 +55,7 @@ export async function getL3ProjectDetails({
           isUnderReview: !!project.isUnderReview,
           permissions: project.permissions,
           nativePermissions: project.nativePermissions,
+          daSolution,
         },
         contractsVerificationStatuses,
       )
@@ -67,6 +72,7 @@ export async function getL3ProjectDetails({
       isUnderReview: project.isUnderReview,
       escrows: project.config.escrows,
       architectureImage: project.display.architectureImage,
+      daSolution,
     },
     contractsVerificationStatuses,
     projectsChangeReport,
@@ -80,26 +86,27 @@ export async function getL3ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
+  const dataAvailabilitySection = getDataAvailabilitySection(project)
 
   await Promise.all([
     api.tvl.chart.prefetch({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart.prefetch({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
   ])
   const [tvlChartData, activityChartData, tokens] = await Promise.all([
     api.tvl.chart({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
     api.activity.chart({
-      range: '30d',
+      range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     getTokensForProject(project),
@@ -261,6 +268,18 @@ export async function getL3ProjectDetails({
         title: 'Technology',
         ...technologySection,
         hostChainWarning,
+      },
+    })
+  }
+
+  if (dataAvailabilitySection) {
+    items.push({
+      type: 'Group',
+      props: {
+        id: 'da-layer',
+        title: 'Data availability',
+        items: dataAvailabilitySection,
+        description: project.dataAvailabilitySolution?.display?.description,
       },
     })
   }

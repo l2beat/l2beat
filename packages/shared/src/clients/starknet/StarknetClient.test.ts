@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Block, Transaction, UnixTime } from '@l2beat/shared-pure'
+import { type Block, type Transaction, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { HttpClient } from '../http/HttpClient'
+import type { HttpClient } from '../http/HttpClient'
 import { StarknetClient } from './StarknetClient'
-import {
+import type {
   StarknetErrorResponse,
   StarknetGetBlockResponse,
   StarknetGetBlockWithTxsResponse,

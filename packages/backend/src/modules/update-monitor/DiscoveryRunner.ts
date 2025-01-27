@@ -1,18 +1,17 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import {
-  AllProviders,
-  ConfigReader,
-  DiscoveryConfig,
-  DiscoveryEngine,
+  type AllProviders,
+  type DiscoveryConfig,
+  type DiscoveryEngine,
   DiscoveryLogger,
   flattenDiscoveredSources,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
-  AllProviderStats,
+  type AllProviderStats,
   ProviderMeasurement,
-  ProviderStats,
+  type ProviderStats,
 } from '@l2beat/discovery/dist/discovery/provider/Stats'
 import { assert } from '@l2beat/shared-pure'
 import { isError } from 'lodash'
@@ -20,7 +19,6 @@ import { Gauge } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger
-  injectInitialAddresses: boolean
   maxRetries?: number
   retryDelayMs?: number
 }
@@ -38,30 +36,11 @@ export class DiscoveryRunner {
   constructor(
     private readonly allProviders: AllProviders,
     private readonly discoveryEngine: DiscoveryEngine,
-    private readonly configReader: ConfigReader,
     readonly chain: string,
   ) {}
 
   async getBlockNumber(): Promise<number> {
     return await this.allProviders.getLatestBlockNumber(this.chain)
-  }
-
-  async run(
-    projectConfig: DiscoveryConfig,
-    blockNumber: number,
-    options: DiscoveryRunnerOptions,
-  ): Promise<DiscoveryRunResult> {
-    const config = options.injectInitialAddresses
-      ? await this.updateInitialAddresses(projectConfig)
-      : projectConfig
-
-    return await this.discoverWithRetry(
-      config,
-      blockNumber,
-      options.logger,
-      options.maxRetries,
-      options.retryDelayMs,
-    )
   }
 
   private async discover(
@@ -73,13 +52,7 @@ export class DiscoveryRunner {
 
     setDiscoveryMetrics(this.allProviders.getStats(config.chain), config.chain)
 
-    const discovery = toDiscoveryOutput(
-      config.name,
-      config.chain,
-      config.hash,
-      blockNumber,
-      result,
-    )
+    const discovery = toDiscoveryOutput(config, blockNumber, result)
 
     const flatSources = flattenDiscoveredSources(result, DiscoveryLogger.SILENT)
 
@@ -124,23 +97,6 @@ export class DiscoveryRunner {
     }
 
     return result
-  }
-
-  // There was a case connected with Amarok (better described in L2B-1521)
-  // the problem was with stack too deep in the discovery caused by misconfigured new contract
-  // that had a lot of relatives (e.g. Uniswap, DAI)
-  // unfortunately, it resulted in not discovering important contracts because they cannot be put on the stack
-  // this function ensures that initial addresses are taken from discovered.json
-  // so this way we will always discover "known" contracts
-  async updateInitialAddresses(config: DiscoveryConfig) {
-    const discovery = this.configReader.readDiscovery(config.name, this.chain)
-    const initialAddresses = discovery.contracts.map((c) => c.address)
-    return new DiscoveryConfig({
-      ...config.raw,
-      initialAddresses,
-      maxAddresses: (config.raw.maxAddresses ?? 200) * 3,
-      maxDepth: (config.raw.maxDepth ?? 6) * 3,
-    })
   }
 }
 

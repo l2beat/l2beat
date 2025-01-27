@@ -1,41 +1,41 @@
-import {
-  ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
   ProjectId,
-  UnixTime,
+  type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { unionBy } from 'lodash'
+import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  ChainConfig,
+  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRisk,
-  ScalingProjectRiskView,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectStateValidationCategory,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ReasonForBeingInOther,
+  type ScalingProjectContract,
+  type ScalingProjectDisplay,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRisk,
+  type ScalingProjectRiskView,
+  type ScalingProjectStateDerivation,
+  type ScalingProjectStateValidation,
+  type ScalingProjectStateValidationCategory,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   pickWorseRisk,
@@ -46,22 +46,22 @@ import {
   formatChallengePeriod,
   formatDelay,
 } from '../../../common/formatDelays'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { Badge, BadgeId, badges } from '../../badges'
-import { Layer3, Layer3Display } from '../../layer3s/types'
-import { StageConfig } from '../common'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { Badge, type BadgeId, badges } from '../../badges'
+import type { DacDaLayer } from '../../da-beat/types'
+import type { Layer3 } from '../../layer3s/types'
+import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import {
+import type {
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { mergeBadges } from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
-const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
@@ -149,11 +149,14 @@ interface OrbitStackConfigCommon {
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
+  dataAvailabilitySolution?: DacDaLayer
+  hasAtLeastFiveExternalChallengers?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  display: Omit<Layer3Display, 'provider' | 'category' | 'purposes'> & {
-    category?: Layer3Display['category']
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectDisplay['category']
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
   hostChain: ProjectId
@@ -314,7 +317,7 @@ const wmrValidForBlobstream = [
 
 function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
-  explorerLinkFormat: string,
+  explorerUrl: string | undefined,
   blockNumberOpcodeTimeSeconds: number,
 ): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
   const nativeContractRisks = templateVars.nonTemplateContractRisks ?? [
@@ -460,13 +463,12 @@ function orbitStackCommon(
                   text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
                   href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
                 },
-                {
-                  text: 'SequencerInbox.sol - Etherscan source code, addSequencerL2BatchFromOrigin function',
-                  href: getCodeLink(
-                    templateVars.sequencerInbox,
-                    explorerLinkFormat,
-                  ),
-                },
+                ...explorerReferences(explorerUrl, [
+                  {
+                    text: 'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                    address: safeGetImplementation(templateVars.sequencerInbox),
+                  },
+                ]),
               ],
             },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
@@ -487,10 +489,12 @@ function orbitStackCommon(
             selfSequencingDelaySeconds,
           )} in which a Sequencer has failed to include a transaction that was directly posted to the smart contract, it can be forcefully included by anyone on the host chain, which finalizes its ordering.`,
         references: [
-          {
-            text: 'SequencerInbox.sol - Etherscan source code, forceInclusion function',
-            href: getCodeLink(templateVars.sequencerInbox, explorerLinkFormat),
-          },
+          ...explorerReferences(explorerUrl, [
+            {
+              text: 'SequencerInbox.sol - source code, forceInclusion function',
+              address: safeGetImplementation(templateVars.sequencerInbox),
+            },
+          ]),
           {
             text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
             href: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
@@ -561,6 +565,8 @@ function orbitStackCommon(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
       templateVars.additionalBadges ?? [],
     ),
+    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 
@@ -623,6 +629,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
         nOfChallengers,
+        templateVars.hasAtLeastFiveExternalChallengers ?? false,
         challengePeriodSeconds,
       ),
       secondLine: formatChallengePeriod(challengePeriodSeconds),
@@ -704,15 +711,17 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   return {
     type: 'layer3',
     ...orbitStackCommon(
       templateVars,
-      getExplorerLinkFormat(templateVars.hostChain),
+      baseChain.chainConfig?.explorerUrl,
       blockNumberOpcodeTimeSeconds,
     ),
     hostChain: templateVars.hostChain,
@@ -873,11 +882,20 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -887,16 +905,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ) ??
     false
 
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
-    'RollupProxy',
-    'wasmModuleRoot',
-  )
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
-
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL, 12),
+    ...orbitStackCommon(templateVars, ethereum.explorerUrl, 12),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
@@ -994,6 +1005,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
+          templateVars.hasAtLeastFiveExternalChallengers ?? false,
           challengePeriodSeconds,
         ),
         secondLine: formatChallengePeriod(challengePeriodSeconds),
@@ -1061,42 +1073,4 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       finality: templateVars.finality,
     },
   }
-}
-
-function getExplorerLinkFormat(hostChain: ProjectId): string {
-  if (hostChain === ProjectId('ethereum')) {
-    return ETHEREUM_EXPLORER_URL
-  } else if (hostChain === ProjectId('arbitrum')) {
-    return 'https://arbiscan.io/address/{0}#code'
-  } else if (hostChain === ProjectId('base')) {
-    return 'https://basescan.org/address/{0}#code'
-  } else if (hostChain === ProjectId('nova')) {
-    return 'https://nova.arbiscan.io/address/{0}#code'
-  }
-
-  assert(false, `Host chain ${hostChain.toString()} is not supported`)
-}
-
-function getCodeLink(
-  contract: ContractParameters,
-  explorerUrlFormat: string,
-  implementationIndex?: number,
-): string {
-  return explorerUrlFormat.replace(
-    '{0}',
-    safeGetImplementation(contract, implementationIndex),
-  )
-}
-
-function safeGetImplementation(
-  contract: ContractParameters,
-  implementationIndex?: number,
-): string {
-  const implementation = get$Implementations(contract.values)[
-    implementationIndex ?? 0
-  ]
-  if (!implementation) {
-    throw new Error(`No implementation found for ${contract.name}`)
-  }
-  return implementation.toString()
 }

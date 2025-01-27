@@ -2,7 +2,8 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0xeb144afd373363daf78a82904d2479db0a01d112bec1aa14c3a7c6d3f57970f1",
+  "configHash": "0x52fd208c42da4bb6c8289925e32c4fc4d9a65cbf653f16bf3398570f09b7c047",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "Committee",
@@ -72,7 +73,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
+          "to": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
           "via": []
         }
       ],
@@ -163,7 +164,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C"
         }
       ]
     },

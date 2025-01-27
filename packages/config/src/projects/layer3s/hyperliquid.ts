@@ -14,7 +14,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 
@@ -59,6 +59,10 @@ export const hyperliquid: Layer3 = {
   hostChain: ProjectId('arbitrum'),
   createdAt: new UnixTime(1734956888), // 2024-12-23T13:28:48Z
   badges: [Badge.VM.AppChain, Badge.DA.CustomDA],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Hyperliquid',
     slug: 'hyperliquid',
@@ -66,10 +70,6 @@ export const hyperliquid: Layer3 = {
       'Hyperliquid is a performant exchange on Arbitrum, utilizing a custom consensus algorithm called HyperBFT.',
     purposes: ['Exchange'],
     category: 'Other',
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     links: {
       websites: ['https://hyperfoundation.org/'],
       explorers: ['https://app.hyperliquid.xyz/explorer'],
@@ -107,6 +107,7 @@ export const hyperliquid: Layer3 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
+  stage: { stage: 'NotApplicable' },
   stackedRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,

@@ -3,7 +3,7 @@ import { expect } from 'earl'
 
 import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../test/database'
-import { LivenessRecord } from './entity'
+import type { LivenessRecord } from './entity'
 import { LivenessRepository } from './repository'
 
 describeDatabase(LivenessRepository.name, (db) => {

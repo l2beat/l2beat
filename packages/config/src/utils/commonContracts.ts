@@ -1,29 +1,24 @@
 import { ConfigReader } from '@l2beat/discovery'
 import {
-  ContractValue,
-  DiscoveryOutput,
+  type ContractValue,
+  type DiscoveryOutput,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { hashJson } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  Hash256,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
-  Bridge,
-  DaLayer,
-  Layer2,
-  Layer3,
-  Project,
-  ScalingProjectContract,
-  ScalingProjectPermission,
+  type Bridge,
+  type DaLayer,
+  type Layer2,
+  type Layer3,
+  type ScalingProjectContract,
+  type ScalingProjectPermission,
   bridges,
   layer2s,
   layer3s,
 } from '..'
+
+type CommonProject = Layer2 | Layer3 | Bridge
 
 type Params =
   | {
@@ -55,25 +50,31 @@ export function getCommonContractsIn(project: Params) {
   return {}
 }
 
-const memo = new Map<Hash256, Record<string, ReferenceInfo[]>>()
+const memo = new Map<string, Record<string, ReferenceInfo[]>>()
 
 function findCommonContractsMemoized(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  projects: Pick<
+    CommonProject,
+    'id' | 'contracts' | 'permissions' | 'display'
+  >[],
   hostChain: string = 'ethereum',
 ) {
-  const hash = hashJson(hostChain + JSON.stringify(projects.map((p) => p.id)))
-  if (memo.has(hash)) {
-    const result = memo.get(hash)
+  const key = hostChain + JSON.stringify(projects.map((p) => p.id))
+  if (memo.has(key)) {
+    const result = memo.get(key)
     assert(result !== undefined)
     return result
   }
   const result = findCommonContracts(projects, hostChain)
-  memo.set(hash, result)
+  memo.set(key, result)
   return result
 }
 
 function findCommonContracts(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  projects: Pick<
+    CommonProject,
+    'id' | 'contracts' | 'permissions' | 'display'
+  >[],
   hostChain: string,
 ) {
   const configReader = new ConfigReader('../backend')
@@ -153,7 +154,10 @@ type ReferenceInfo = {
 }
 
 function pickOutReferencedEntries(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  projects: Pick<
+    CommonProject,
+    'id' | 'contracts' | 'permissions' | 'display'
+  >[],
   commonContracts: Record<string, ProjectId[]>,
 ): Record<string, ReferenceInfo[]> {
   const result: Record<string, ReferenceInfo[]> = {}
@@ -197,7 +201,7 @@ function pickOutReferencedEntries(
 }
 
 function projectContainsAddressAsContract(
-  project: Pick<Project, 'contracts'>,
+  project: Pick<CommonProject, 'contracts'>,
   address: string,
 ): ScalingProjectContract | undefined {
   if (project.contracts === undefined) {
@@ -220,7 +224,7 @@ function projectContainsAddressAsContract(
 }
 
 function getPermissionContainingAddress(
-  project: Pick<Project, 'permissions'>,
+  project: Pick<CommonProject, 'permissions'>,
   address: string,
 ): ScalingProjectPermission | undefined {
   if (

@@ -1,4 +1,4 @@
-import { ApiAddressType } from '../../api/types'
+import type { ApiAddressType } from '../../api/types'
 
 export interface State {
   readonly projectId: string

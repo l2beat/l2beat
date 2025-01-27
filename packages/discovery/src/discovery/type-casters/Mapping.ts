@@ -1,7 +1,7 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { ArgType, BaseTypeCaster } from './BaseTypeCaster'
+import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 
 const Validator = z.record(
   z.string(),

@@ -1,3 +1,291 @@
+Generated with discovered.json: 0x03ce454263b879adcccdffed2a026efa99929eb7
+
+# Diff at Mon, 20 Jan 2025 11:10:28 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 295612328
+- current block number: 295612328
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 295612328 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      directlyReceivedPermissions.0.from:
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      directlyReceivedPermissions.3.target:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      directlyReceivedPermissions.3.from:
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      directlyReceivedPermissions.2.target:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      directlyReceivedPermissions.2.from:
++        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      directlyReceivedPermissions.1.target:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      directlyReceivedPermissions.1.from:
++        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      directlyReceivedPermissions.0.target:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      directlyReceivedPermissions.0.from:
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      directlyReceivedPermissions.2.target:
+-        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
+      directlyReceivedPermissions.2.from:
++        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
+      directlyReceivedPermissions.1.target:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      directlyReceivedPermissions.1.from:
++        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      directlyReceivedPermissions.0.target:
+-        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+      directlyReceivedPermissions.0.from:
++        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      directlyReceivedPermissions.7.target:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      directlyReceivedPermissions.7.from:
++        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      directlyReceivedPermissions.6.target:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      directlyReceivedPermissions.6.from:
++        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      directlyReceivedPermissions.5.target:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      directlyReceivedPermissions.5.from:
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      directlyReceivedPermissions.4.target:
+-        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+      directlyReceivedPermissions.4.from:
++        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+      directlyReceivedPermissions.3.target:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      directlyReceivedPermissions.3.from:
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      directlyReceivedPermissions.2.target:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
+      directlyReceivedPermissions.2.from:
++        "0x912CE59144191C1204E64559FE8253a0e49E6548"
+      directlyReceivedPermissions.1.target:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      directlyReceivedPermissions.1.from:
++        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      directlyReceivedPermissions.0.target:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      directlyReceivedPermissions.0.from:
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+Generated with discovered.json: 0x60ff5325afd5d04d0e25a627980a82dc19d7bb39
+
+# Diff at Wed, 15 Jan 2025 07:51:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 293266550
+- current block number: 295612328
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 293266550 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x75e39748f7cfc23b825f00304b15eee6f36c3a98
 
 # Diff at Wed, 08 Jan 2025 12:09:34 GMT:

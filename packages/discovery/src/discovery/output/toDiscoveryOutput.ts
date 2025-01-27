@@ -1,11 +1,12 @@
-import {
+import type {
   ContractParameters,
   DiscoveryOutput,
   EoaParameters,
 } from '@l2beat/discovery-types'
-import { Hash256 } from '@l2beat/shared-pure'
+import type { Hash256 } from '@l2beat/shared-pure'
 
-import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import type { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import {
   transformToIssued,
@@ -14,20 +15,19 @@ import {
 import { neuterErrors } from './errors'
 
 export function toDiscoveryOutput(
-  name: string,
-  chain: string,
-  configHash: Hash256,
+  config: DiscoveryConfig,
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
-  return {
-    name,
-    chain,
+  return withoutUndefinedKeys({
+    name: config.name,
+    chain: config.chain,
     blockNumber,
-    configHash,
+    configHash: config.hash,
+    sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
-  }
+  })
 }
 
 function collectUsedTemplatesWithHashes(

@@ -1,7 +1,7 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 
-import { Config } from '../../config'
-import { ApplicationModule } from '../ApplicationModule'
+import type { Config } from '../../config'
+import type { ApplicationModule } from '../ApplicationModule'
 import { LzOAppsController } from './api/LzOappsController'
 import { createLzOAppsRouter } from './api/LzOappsRouter'
 

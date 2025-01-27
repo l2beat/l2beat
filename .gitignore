@@ -25,3 +25,5 @@ dist
 
 # l2b
 cache/
+packages/backend/src/modules/tvs/local-data-test.json
+packages/backend/src/modules/tvs/local-data.json

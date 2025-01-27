@@ -1,4 +1,4 @@
-import { assert, Block, Transaction } from '@l2beat/shared-pure'
+import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import { isArray } from 'lodash'
 
 export class StarknetUopsAnalyzer {

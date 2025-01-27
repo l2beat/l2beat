@@ -1,5 +1,5 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
@@ -18,6 +18,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
@@ -30,7 +31,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('swell')
 
@@ -136,6 +137,7 @@ export const swell: Layer2 = {
     Badge.Infra.Superchain,
     Badge.RaaS.AltLayer,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Swellchain',
     slug: 'swell',
@@ -156,7 +158,6 @@ export const swell: Layer2 = {
         'https://swellnetwork.io/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -176,6 +177,7 @@ export const swell: Layer2 = {
     minTimestampForTvl: new UnixTime(1732696703),
   },
   config: {
+    associatedTokens: ['SWELL'],
     escrows: [
       discovery.getEscrowDetails({
         // OptimismPortal

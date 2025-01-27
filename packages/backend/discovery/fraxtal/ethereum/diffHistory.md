@@ -1,4 +1,366 @@
-Generated with discovered.json: 0xab2d9213f9f8f2774847817aadc257fab4844154
+Generated with discovered.json: 0x9394150e4a7b8235f3bc38e8c95c4a718638bc79
+
+# Diff at Mon, 20 Jan 2025 11:09:31 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21543769
+- current block number: 21543769
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543769 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintablePermitERC20Factory (0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA) {
+    +++ description: None
+      directlyReceivedPermissions.7.target:
+-        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+      directlyReceivedPermissions.7.from:
++        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+      directlyReceivedPermissions.6.target:
+-        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      directlyReceivedPermissions.6.from:
++        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      directlyReceivedPermissions.5.target:
+-        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      directlyReceivedPermissions.5.from:
++        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      directlyReceivedPermissions.4.target:
+-        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      directlyReceivedPermissions.4.from:
++        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      directlyReceivedPermissions.3.target:
+-        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+      directlyReceivedPermissions.3.from:
++        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+      directlyReceivedPermissions.2.target:
+-        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      directlyReceivedPermissions.2.from:
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      directlyReceivedPermissions.1.target:
+-        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      directlyReceivedPermissions.1.from:
++        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      directlyReceivedPermissions.0.target:
+-        "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"
+      directlyReceivedPermissions.0.from:
++        "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"
+    }
+```
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.1.target:
+-        "0x6017f75108f251a488B045A7ce2a7C15b179d1f2"
+      issuedPermissions.1.to:
++        "0x6017f75108f251a488B045A7ce2a7C15b179d1f2"
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+    }
+```
+
+```diff
+    contract EtherRouter (0x5acAf61d339dd123e60ba450Ea38fbC49445007C) {
+    +++ description: ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.
+      issuedPermissions.0.target:
+-        "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
+      issuedPermissions.0.to:
++        "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
+      issuedPermissions.0.description:
++        "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
+    }
+```
+
+```diff
+    contract frxETH (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+      issuedPermissions.2.target:
+-        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      issuedPermissions.2.to:
++        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      issuedPermissions.2.description:
++        "can mint frxETH tokens."
+      issuedPermissions.1.target:
+-        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      issuedPermissions.1.via.0.description:
+-        "can add and remove frxETH minters and set a new timelock address."
+      issuedPermissions.1.to:
++        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      issuedPermissions.1.description:
++        "can add and remove frxETH minters and set a new timelock address."
+      issuedPermissions.0.target:
+-        "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
+      issuedPermissions.0.to:
++        "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
+      issuedPermissions.0.description:
++        "can mint frxETH tokens."
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.1.target:
+-        "0xFb90465f3064fF63FC460F01A6307eC73d64bc50"
+      issuedPermissions.1.to:
++        "0xFb90465f3064fF63FC460F01A6307eC73d64bc50"
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+    }
+```
+
+```diff
+    contract FraxEtherMinter (0x7Bc6bad540453360F744666D625fec0ee1320cA3) {
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+      issuedPermissions.0.target:
+-        "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
+      issuedPermissions.0.to:
++        "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
+      issuedPermissions.0.description:
++        "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
+      receivedPermissions.0.target:
+-        "0x5E8422345238F34275888049021821E8E08CAa1f"
+      receivedPermissions.0.from:
++        "0x5E8422345238F34275888049021821E8E08CAa1f"
+    }
+```
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
+      receivedPermissions.1.from:
++        "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
+      receivedPermissions.0.target:
+-        "0x5acAf61d339dd123e60ba450Ea38fbC49445007C"
+      receivedPermissions.0.from:
++        "0x5acAf61d339dd123e60ba450Ea38fbC49445007C"
+    }
+```
+
+```diff
+    contract Timelock (0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA) {
+    +++ description: Allows for time-delayed execution of transactions. Current delay is 2d.
+      directlyReceivedPermissions.1.target:
+-        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      directlyReceivedPermissions.1.from:
++        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      directlyReceivedPermissions.0.target:
+-        "0x5E8422345238F34275888049021821E8E08CAa1f"
+      directlyReceivedPermissions.0.from:
++        "0x5E8422345238F34275888049021821E8E08CAa1f"
+    }
+```
+
+```diff
+    contract AddressManager (0x8c5D64d10394cFa070066e70Ec19E67398b4dABE) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "set and change address mappings."
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xe0d7755252873c4eF5788f7f45764E0e17610508"
+    }
+```
+
+```diff
+    contract FraxtalTimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      receivedPermissions.1.from:
++        "0xbAFA44EFE7901E04E39Dad13167D089C559c1138"
+      receivedPermissions.0.target:
+-        "0x5E8422345238F34275888049021821E8E08CAa1f"
+      receivedPermissions.0.from:
++        "0x5E8422345238F34275888049021821E8E08CAa1f"
+      directlyReceivedPermissions.0.target:
+-        "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA"
+      directlyReceivedPermissions.0.from:
++        "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA"
+    }
+```
+
+```diff
+    contract frxETHMinter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138) {
+    +++ description: Accepts user-supplied ETH and converts it to frxETH.
+      issuedPermissions.0.target:
+-        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      issuedPermissions.0.via.0.description:
+-        "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+      issuedPermissions.0.to:
++        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      issuedPermissions.0.description:
++        "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+      receivedPermissions.0.target:
+-        "0x5E8422345238F34275888049021821E8E08CAa1f"
+      receivedPermissions.0.from:
++        "0x5E8422345238F34275888049021821E8E08CAa1f"
+    }
+```
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      receivedPermissions.11.target:
+-        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+      receivedPermissions.11.from:
++        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+      receivedPermissions.10.target:
+-        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      receivedPermissions.10.from:
++        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      receivedPermissions.9.target:
+-        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      receivedPermissions.9.from:
++        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      receivedPermissions.8.target:
+-        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      receivedPermissions.8.from:
++        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      receivedPermissions.7.target:
+-        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+      receivedPermissions.7.from:
++        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+      receivedPermissions.6.target:
+-        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      receivedPermissions.6.from:
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      receivedPermissions.5.target:
+-        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      receivedPermissions.5.from:
++        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      receivedPermissions.4.target:
+-        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      receivedPermissions.4.from:
++        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      receivedPermissions.3.target:
+-        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      receivedPermissions.3.from:
++        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      receivedPermissions.2.target:
+-        "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"
+      receivedPermissions.2.from:
++        "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"
+      receivedPermissions.1.target:
+-        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      receivedPermissions.1.from:
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      receivedPermissions.0.target:
+-        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      receivedPermissions.0.from:
++        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      directlyReceivedPermissions.0.target:
+-        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
+      directlyReceivedPermissions.0.from:
++        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
+    }
+```
+
+Generated with discovered.json: 0xfcf3630c0adc3bdae170b0ee842b10e4bbe10de4
 
 # Diff at Wed, 08 Jan 2025 09:01:05 GMT:
 

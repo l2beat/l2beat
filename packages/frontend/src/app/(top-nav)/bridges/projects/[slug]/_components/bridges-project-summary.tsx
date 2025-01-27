@@ -1,4 +1,3 @@
-import { BridgesMvpWarning } from '~/app/(side-nav)/bridges/_components/bridges-mvp-warning'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { ArchivedBar } from '~/components/projects/archived-bar'
@@ -20,9 +19,7 @@ interface Props {
 export function BridgesProjectSummary({ project }: Props) {
   return (
     <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
-      <section id="summary" className="max-md:bg-header-primary max-md:px-4">
-        <BridgesMvpWarning />
-
+      <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="w-full space-y-4 md:space-y-6">
           <ProjectHeader title={project.name} slug={project.slug} />
           <div className="space-y-2">

@@ -3,8 +3,8 @@ import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('treasure')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -16,15 +16,12 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const treasure: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: 'treasureValidatorsAdded',
-    removed: 'treasureValidatorsRemoved',
-  },
+  validatorsKey: 'treasureValidators',
   additionalBadges: [Badge.DA.CustomDA],
   createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'Treasure',
     slug: 'treasure',
     tvlWarning: {
@@ -47,7 +44,6 @@ export const treasure: Layer2 = zkStackL2({
         'https://t.me/playontreasure',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['MAGIC'],
   rpcUrl: 'https://rpc.treasure.lol',

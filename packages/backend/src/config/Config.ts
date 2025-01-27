@@ -1,19 +1,18 @@
-import { DiscoveryChainConfig } from '@l2beat/discovery'
-import {
+import type { BackendProject } from '@l2beat/backend-shared'
+import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type {
   AmountConfigEntry,
   ChainId,
   PriceConfigEntry,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { BackendProject } from '@l2beat/config'
-import { ChainConverter } from '@l2beat/shared-pure'
-import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
-import { MulticallConfigEntry } from '../peripherals/multicall/types'
-import { ResolvedFeatureFlag } from './FeatureFlags'
-import { ChainApi } from './chain/ChainApi'
-import { FinalityProjectConfig } from './features/finality'
+import type { ChainConverter } from '@l2beat/shared-pure'
+import type { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
+import type { MulticallConfigEntry } from '../peripherals/multicall/types'
+import type { ResolvedFeatureFlag } from './FeatureFlags'
+import type { ChainApi } from './chain/ChainApi'
+import type { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -89,7 +88,6 @@ export interface TvlConfig {
   readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
-  readonly projectsExcludedFromApi: string[]
   readonly tvlCleanerEnabled: boolean
 }
 
@@ -150,7 +148,6 @@ export interface HealthConfig {
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
-  readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
   readonly projects: {
     id: ProjectId

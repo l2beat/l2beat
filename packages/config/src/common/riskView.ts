@@ -1,14 +1,14 @@
 import {
   assert,
-  ProjectId,
-  Sentiment,
-  WarningValueWithSentiment,
+  type ProjectId,
+  type Sentiment,
+  type WarningValueWithSentiment,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
-import { ScalingProjectRiskView } from './ScalingProjectRiskView'
+import type { ScalingProjectRiskViewEntry } from './ScalingProject'
+import type { ScalingProjectRiskView } from './ScalingProject'
 import { DATA_AVAILABILITY } from './dataAvailability'
 
 // State validation
@@ -104,6 +104,7 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
 
 export function STATE_ARBITRUM_FRAUD_PROOFS(
   nOfChallengers: number,
+  hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
 ): ScalingProjectRiskViewEntry {
   const challengePeriod = challengeWindowSeconds
@@ -125,11 +126,16 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
       'Interactive proofs (INT) require multiple transactions over time to resolve. ' +
       'The challenge protocol can be subject to delay attacks.'
     sentiment = 'bad'
-  } else {
+  } else if (hasAtLeastFiveExternalChallengers) {
     descriptionBase =
-      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. ` +
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. At least 5 Challengers are external to the Operator. ` +
       'Interactive proofs (INT) require multiple transactions over time to resolve.'
     sentiment = 'warning'
+  } else {
+    descriptionBase =
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. There are fewer than 5 Challengers external to the Operator among these. ` +
+      'Interactive proofs (INT) require multiple transactions over time to resolve.'
+    sentiment = 'bad'
   }
 
   return {
@@ -249,6 +255,21 @@ export function DATA_AVAIL(
   }
 }
 
+export function DATA_EIGENDA(
+  isUsingServiceManager: boolean,
+): ScalingProjectRiskViewEntry {
+  const additional = isUsingServiceManager
+    ? ' Sequencer transaction data roots are checked against the ServiceManager DA bridge data roots, signed off by EigenDA operators.'
+    : ' Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain.'
+  return {
+    value: 'External',
+    description:
+      `Proof construction and state derivation fully rely on data that is posted on EigenDA.` +
+      additional,
+    sentiment: 'bad',
+  }
+}
+
 export const DATA_POS: ScalingProjectRiskViewEntry = {
   value: 'PoS network',
   description:
@@ -342,7 +363,7 @@ export function SEQUENCER_SELF_SEQUENCE(
     delay !== undefined
       ? delay === 0
         ? ' There is no delay on this operation.'
-        : ` There is a ${formatSeconds(delay)} delay on this operation.`
+        : ` There can be up to a ${formatSeconds(delay)} delay on this operation.`
       : ''
   return {
     value: 'Self sequence',
@@ -669,6 +690,7 @@ export const RISK_VIEW = {
   DATA_EXTERNAL_CHALLENGES,
   DATA_CELESTIA,
   DATA_AVAIL,
+  DATA_EIGENDA,
   DATA_POS,
 
   // validatedBy

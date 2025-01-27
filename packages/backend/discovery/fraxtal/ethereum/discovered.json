@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 21543769,
-  "configHash": "0x451e9bb21873be4af6fd2255c02f3573dd24a5d75b03780ed06c8ef9a53d2990",
+  "configHash": "0x13105e904f8a45813114bc7a5dfbf81c8a7e0a2226bb9238b8ba308df78e1818",
   "contracts": [
     {
       "name": "OptimismMintablePermitERC20Factory",
@@ -18,13 +18,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -113,37 +108,37 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
           "description": "set and change address mappings."
         },
         {
           "permission": "upgrade",
-          "target": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+          "from": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
         },
         {
           "permission": "upgrade",
-          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
         },
         {
           "permission": "upgrade",
-          "target": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "from": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
-          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
         },
         {
           "permission": "upgrade",
-          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
         },
         {
           "permission": "upgrade",
-          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
         },
         {
           "permission": "upgrade",
-          "target": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+          "from": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -167,23 +162,19 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
+          "to": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
@@ -270,14 +261,9 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0,
-              "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -309,18 +295,13 @@
       "issuedPermissions": [
         {
           "permission": "guard",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "ignoreInWatchMode": ["params"],
@@ -377,7 +358,8 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
           "via": []
         }
       ],
@@ -407,23 +389,25 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "to": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "can mint frxETH tokens.",
           "via": []
         },
         {
           "permission": "configure",
-          "target": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "description": "can add and remove frxETH minters and set a new timelock address.",
           "via": [
             {
               "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-              "delay": 172800,
-              "description": "can add and remove frxETH minters and set a new timelock address."
+              "delay": 172800
             }
           ]
         },
         {
           "permission": "configure",
-          "target": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "to": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can mint frxETH tokens.",
           "via": []
         }
       ],
@@ -460,18 +444,13 @@
       "issuedPermissions": [
         {
           "permission": "guard",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -516,23 +495,18 @@
       "issuedPermissions": [
         {
           "permission": "challenge",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": []
         },
         {
           "permission": "propose",
-          "target": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
+          "to": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -605,14 +579,15 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
           "via": []
         }
       ],
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can mint frxETH tokens."
         }
       ],
@@ -640,12 +615,12 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+          "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
           "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
         },
         {
           "permission": "configure",
-          "target": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
           "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
         }
       ],
@@ -685,12 +660,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can add and remove frxETH minters and set a new timelock address."
         },
         {
           "permission": "configure",
-          "target": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
           "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
         }
       ],
@@ -717,14 +692,9 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0,
-              "description": "set and change address mappings."
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -746,13 +716,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-          "via": [
-            {
-              "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-              "delay": 0
-            }
-          ]
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -831,7 +796,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can add and remove frxETH minters and set a new timelock address.",
           "via": [
             {
@@ -842,7 +807,7 @@
         },
         {
           "permission": "configure",
-          "target": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
           "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
           "via": [
             {
@@ -855,7 +820,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+          "from": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
           "delay": 172800
         }
       ],
@@ -893,12 +858,12 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
           "via": [
             {
               "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-              "delay": 172800,
-              "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+              "delay": 172800
             }
           ]
         }
@@ -906,7 +871,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can mint frxETH tokens."
         }
       ],
@@ -941,68 +906,68 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
         },
         {
           "permission": "configure",
-          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         },
         {
           "permission": "configure",
-          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "guard",
-          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
         },
         {
           "permission": "guard",
-          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
         },
         {
           "permission": "upgrade",
-          "target": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "from": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "from": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "from": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
+          "from": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1034,7 +999,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can mint frxETH tokens."
         }
       ]
@@ -1048,7 +1013,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
         }
       ]
     },
@@ -1064,7 +1029,7 @@
       "receivedPermissions": [
         {
           "permission": "propose",
-          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
         }
       ]
     },
@@ -1709,21 +1674,21 @@
     ]
   },
   "usedTemplates": {
-    "fraxtal/EtherRouter": "0x399bbff76f1e1ba031678f7751531085b8173da3d865a6b395bfbce9d22d578e",
-    "fraxtal/FraxEtherMinter": "0xa168d81665971700b92633f2e29117b929e05f4d2da059e00bf47f53189c9405",
-    "fraxtal/frxETH": "0xe5482b6c32a0742121bc11ad168d5b887a7553531f6f04145597db129a8b0a8d",
-    "fraxtal/FrxEthMinter": "0xb3496e9ff1bb9694e50fc29dd6bddc7340da994d9679cc0e51dd2e3dad9a74fd",
-    "fraxtal/Timelock": "0xfb84a150b2dede291d087c46dac44d27f03fb609f506a60ed3ffe2b92651ea35",
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "opstack/AddressManager": "0x10c898265c0f6d0de6612e994bd41456f435196949f9bc6069e03da9aa8bb9ba",
-    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
-    "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
-    "opstack/L1StandardBridge": "0x7646e8d311af4d3b67dc674e167b6f42a20accc7ae822efd2d49ad8ab877f7bf",
-    "opstack/L2OutputOracle": "0x2da233df369518b2564031e603ae272763f51cec1bc780ab0a814e46046b47a2",
-    "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
-    "opstack/OptimismPortal": "0x5fb419891d613086f39879ae360e765fdb6d154ef5ea5b2f5f98a4443a1b4839",
-    "opstack/SuperchainConfigFake": "0x49e6353b6089be214c9fc1f021124f840323a29f519b5240594dd16c3a775ca8",
-    "opstack/SystemConfig": "0x9b851394b558222bf283e4f132348dd3607cfbba09857db7aa5e3873aee7f6e3"
+    "fraxtal/EtherRouter": "0x7b6c91e1071611642eefbbba4f6d5357f9b6848bcfdc1b736c8d8bcb9f712b8c",
+    "fraxtal/FraxEtherMinter": "0x454a614bfb7a96963845a9cabdf489cc9e88f4a48f2d146a33db28e13661da79",
+    "fraxtal/frxETH": "0x68c16b2ff2f69d92a6e308ec0462423b804fcb9a2bcc2a643305ce2933ac1a0e",
+    "fraxtal/FrxEthMinter": "0xa4592674459ce53f29acc3e31a17ecdadd0856970f6ccef1ff7932af64742720",
+    "fraxtal/Timelock": "0x81d27ef2f7b90e335a4813e15bf980292ab5d81050367038fba575c922fc60d6",
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
+    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
+    "opstack/L1ERC721Bridge": "0x597905c209b546f9d70c98674823b68e0a156ca904d559323057dc4987b98132",
+    "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
+    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
+    "opstack/OptimismMintableERC20Factory": "0x64cb1472d54c0965d50a3c62611a8f94c2d2e391d563c34811ec883332ea32bc",
+    "opstack/OptimismPortal": "0x5b6ac4a1df6dfc8cbaf2c6fb761942c6e7acf219455ec64523721dadbd88ac72",
+    "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9",
+    "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30"
   }
 }

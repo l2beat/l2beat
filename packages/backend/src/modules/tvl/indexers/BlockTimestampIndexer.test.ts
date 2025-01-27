@@ -2,12 +2,12 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { mockDatabase } from '../../../test/database'
-import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { BlockTimestampProvider } from '../services/BlockTimestampProvider'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
 
 describe(BlockTimestampIndexer.name, () => {

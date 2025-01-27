@@ -1,4 +1,4 @@
-import { DiscoveryCache } from './DiscoveryCache'
+import type { DiscoveryCache } from './DiscoveryCache'
 
 export class NoCache implements DiscoveryCache {
   // biome-ignore lint/suspicious/useAwait: <explanation>

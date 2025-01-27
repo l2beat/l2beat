@@ -1,4 +1,4 @@
-import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'

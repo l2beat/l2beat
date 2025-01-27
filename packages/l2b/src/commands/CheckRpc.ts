@@ -1,6 +1,6 @@
-import { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
+import type { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
 import { command, option, positional } from 'cmd-ts'
-import { Configuration, findRateLimit } from '../implementations/checkrpc'
+import { type Configuration, findRateLimit } from '../implementations/checkrpc'
 import { HttpUrl, LogLevelValue, PositiveRpcBoundNumber } from './types'
 
 export const CheckRpc = command({

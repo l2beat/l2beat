@@ -1,4 +1,4 @@
-import { AssessCount } from './ScalingProjectTransactionApi'
+import type { AssessCount } from './ScalingProject'
 
 export const subtractOne: AssessCount = (count) => count - 1
 

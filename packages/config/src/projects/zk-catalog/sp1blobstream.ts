@@ -4,10 +4,10 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../project/Project'
+import type { BaseProject } from '../project/BaseProject'
 import { PROOFS } from './common/proofSystems'
 
-export const sp1blobstream: Project = {
+export const sp1blobstream: BaseProject = {
   id: ProjectId('sp1blobstream'),
   slug: 'SP1Blobstream', // TODO: lowercase + redirect
   name: 'SP1Blobstream',

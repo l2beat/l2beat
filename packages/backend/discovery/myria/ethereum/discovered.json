@@ -2,7 +2,8 @@
   "name": "myria",
   "chain": "ethereum",
   "blockNumber": 19825378,
-  "configHash": "0x84d196c4fe19887c26a5c3ca981864854bfca64e0bb7b5f40d427063aadf9189",
+  "configHash": "0xda8c7387c100cb2461cf5680dfd15bd075a42d7fb763a4c55b73ceeb97a6f380",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "Committee",
@@ -46,7 +47,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
+          "to": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
           "via": []
         }
       ],
@@ -187,7 +188,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"
+          "from": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"
         }
       ]
     },

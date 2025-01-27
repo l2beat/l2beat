@@ -1,21 +1,21 @@
+import { createAmountId } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { createAmountId } from '@l2beat/config'
-import { AmountRecord, Database } from '@l2beat/database'
+import type { AmountRecord, Database } from '@l2beat/database'
 import {
   CoingeckoId,
   EthereumAddress,
-  PremintedEntry,
+  type PremintedEntry,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { AmountService } from '../services/AmountService'
-import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { AmountService } from '../services/AmountService'
+import type { CirculatingSupplyService } from '../services/CirculatingSupplyService'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 import { PremintedIndexer } from './PremintedIndexer'
-import { PremintedIndexerDeps } from './types'
+import type { PremintedIndexerDeps } from './types'
 
 const TOKEN = mockObject<PremintedEntry>({
   chain: 'chain',

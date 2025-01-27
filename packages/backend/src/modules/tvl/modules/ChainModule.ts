@@ -1,20 +1,20 @@
-import { ConfigMapping, createAmountId } from '@l2beat/config'
+import { type ConfigMapping, createAmountId } from '@l2beat/backend-shared'
 import {
   assert,
-  EscrowEntry,
+  type EscrowEntry,
   ProjectId,
-  TotalSupplyEntry,
+  type TotalSupplyEntry,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
+import type { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
+import type { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { ChainAmountConfig } from '../indexers/types'
+import type { ChainAmountConfig } from '../indexers/types'
 import { AmountService } from '../services/AmountService'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface ChainModule {
   start: () => Promise<void> | void

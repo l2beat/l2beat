@@ -4,8 +4,9 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('popboss', 'arbitrum')
 
@@ -22,11 +23,11 @@ export const popboss: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Proof of Play Boss',
     shortName: 'PoP Boss',
     slug: 'popboss',
@@ -47,7 +48,6 @@ export const popboss: Layer3 = orbitStackL3({
         'https://piratenation.medium.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   transactionApi: {
     type: 'rpc',
@@ -57,4 +57,10 @@ export const popboss: Layer3 = orbitStackL3({
     assessCount: subtractOne,
   },
   discoveryDrivenData: true,
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

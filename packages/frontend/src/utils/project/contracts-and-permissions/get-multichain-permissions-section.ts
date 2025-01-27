@@ -1,9 +1,9 @@
 import {
+  type UsedInProject as ConfigUsedInProject,
   type DaBridge,
   type ScalingProjectPermission,
   type ScalingProjectPermissionedAccount,
 } from '@l2beat/config'
-import { type UsedInProject as ConfigUsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import { type MultichainPermissionsSectionProps } from '~/components/projects/sections/permissions/multichain-permissions-section'

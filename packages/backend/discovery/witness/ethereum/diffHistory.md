@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x8c26e562e74768b384f3fa356cec9577737ff38c
+Generated with discovered.json: 0xf62412de983d39a423fea62956f99ee7593c1cb0
+
+# Diff at Mon, 20 Jan 2025 11:10:20 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20491473
+- current block number: 20491473
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491473 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
+      directlyReceivedPermissions.0.from:
++        "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
+    }
+```
+
+```diff
+    contract WitnessValidiumDAC (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+Generated with discovered.json: 0xabc32f3951e6bd9a2e3f05ec1b7c75f304ff3f33
 
 # Diff at Mon, 21 Oct 2024 11:11:58 GMT:
 

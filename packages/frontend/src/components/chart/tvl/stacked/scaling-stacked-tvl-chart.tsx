@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import {
@@ -11,6 +11,7 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
 import { Checkbox } from '~/components/core/checkbox'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { type TvlProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
@@ -32,6 +33,7 @@ interface Props {
 }
 
 export function ScalingStackedTvlChart({ milestones, entries, tab }: Props) {
+  const { checked } = useRecategorisationPreviewContext()
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
@@ -57,6 +59,7 @@ export function ScalingStackedTvlChart({ milestones, entries, tab }: Props) {
     range: timeRange,
     excludeAssociatedTokens,
     filter,
+    previewRecategorisation: checked,
   })
 
   const { columns, chartRange, valuesStyle, change, total } =
@@ -90,6 +93,7 @@ export function ScalingStackedTvlChart({ milestones, entries, tab }: Props) {
         <ChartControlsWrapper>
           <TvlChartUnitControls unit={unit} setUnit={setUnit}>
             <Checkbox
+              name="excludeAssociatedTokens"
               checked={excludeAssociatedTokens}
               onCheckedChange={(checked) =>
                 setExcludeAssociatedTokens(!!checked)

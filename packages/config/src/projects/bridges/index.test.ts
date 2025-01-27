@@ -5,14 +5,14 @@ import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import {
   NUGGETS,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnologyChoice,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectTechnologyChoice,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens'
+import { tokenList } from '../../tokens/tokens'
 import { getReferencedAddresses } from '../layer2s/index.test'
-import { BridgeTechnology, bridges } from './index'
+import { type BridgeTechnology, bridges } from './index'
 
 describe('bridges', () => {
   describe('links', () => {

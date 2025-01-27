@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lambda')
 
@@ -11,8 +11,8 @@ export const lambda: Layer2 = opStackL2({
   createdAt: new UnixTime(1718703383), // 2024-06-18T09:36:23Z
   discovery,
   additionalPurposes: ['Storage'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Lambda Chain',
     slug: 'lambda',
     redWarning:
@@ -31,7 +31,6 @@ export const lambda: Layer2 = opStackL2({
         'https://t.me/HelloLambda',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['LAMB'],
   rpcUrl: 'https://nrpc.lambda.im',

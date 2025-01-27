@@ -1,5 +1,5 @@
-import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { BigNumber, utils } from 'ethers'
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { type BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'

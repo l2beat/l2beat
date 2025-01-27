@@ -1,8 +1,14 @@
 import { assert } from '@l2beat/shared-pure'
 
-import { TrackedTxConfigEntry, TrackedTxTransferConfig } from '@l2beat/shared'
-import { Configuration } from '../../../tools/uif/multi/types'
-import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
+import type {
+  TrackedTxConfigEntry,
+  TrackedTxTransferConfig,
+} from '@l2beat/shared'
+import type { Configuration } from '../../../tools/uif/multi/types'
+import type {
+  BigQueryTransferResult,
+  TrackedTxTransferResult,
+} from '../types/model'
 
 export function transformTransfersQueryResult(
   configs: Configuration<

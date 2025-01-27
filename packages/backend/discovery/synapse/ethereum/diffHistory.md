@@ -1,4 +1,52 @@
-Generated with discovered.json: 0x53cfa8d8f19627de2e57940dcbc0cc6b31b2ec93
+Generated with discovered.json: 0x441dc0769256621f3a0a015d692bac7fded1dd4a
+
+# Diff at Mon, 20 Jan 2025 11:10:15 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21387773
+- current block number: 21387773
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
+      issuedPermissions.0.to:
++        "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x2796317b0fF8538F253012862c06787Adfb8cEb6"
+      receivedPermissions.0.from:
++        "0x2796317b0fF8538F253012862c06787Adfb8cEb6"
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      directlyReceivedPermissions.0.from:
++        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+    }
+```
+
+Generated with discovered.json: 0xab88fa47af9c7ed244ccbc4c60d4c5a9b23479f8
 
 # Diff at Thu, 12 Dec 2024 16:59:31 GMT:
 

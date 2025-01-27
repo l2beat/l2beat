@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { bridges, tokenList } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 

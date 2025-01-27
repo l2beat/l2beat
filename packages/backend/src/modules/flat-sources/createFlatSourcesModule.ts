@@ -1,9 +1,9 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { ChainConverter } from '@l2beat/shared-pure'
 
-import { Config } from '../../config'
-import { Peripherals } from '../../peripherals/Peripherals'
-import { ApplicationModule } from '../ApplicationModule'
+import type { Config } from '../../config'
+import type { Peripherals } from '../../peripherals/Peripherals'
+import type { ApplicationModule } from '../ApplicationModule'
 import { FlatSourcesController } from './api/FlatSourcesController'
 import { createFlatSourcesRouter } from './api/createFlatSourcesRouter'
 

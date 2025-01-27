@@ -19,10 +19,10 @@ import {
   type ScalingProjectRiskViewEntry,
   type ScalingProjectTechnologyChoice,
 } from '../../common'
-import type { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
+import type { ScalingProjectTechnology } from '../../common/ScalingProject'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
-import { tokenList } from '../../tokens'
+import { tokenList } from '../../tokens/tokens'
 import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {

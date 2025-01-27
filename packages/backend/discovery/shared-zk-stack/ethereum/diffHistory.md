@@ -1,4 +1,158 @@
-Generated with discovered.json: 0x00183df4bddf13131c46824ba2b1eee2fdc79f44
+Generated with discovered.json: 0x5fd268f6b8cd64ea74979363d5fc9b7bc1f7fbf5
+
+# Diff at Mon, 27 Jan 2025 08:45:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@19f9c78c593bd40f9a0b28c3dce98eac1bd1d1b8 block: 21630370
+- current block number: 21630370
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.cronosValidatorsAdded:
+-        ["0xACBD581D1BedB2F71d2F5F01f881586e0623d591","0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14","0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122","0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"]
+      values.cronosValidatorsRemoved:
+-        ["0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14","0xACBD581D1BedB2F71d2F5F01f881586e0623d591"]
+      values.grvtValidatorsAdded:
+-        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
+-        []
+      values.sophonValidatorsAdded:
+-        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.sophonValidatorsRemoved:
+-        []
+      values.treasureValidatorsAdded:
+-        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.treasureValidatorsRemoved:
+-        []
+      values.zeronetworkValidatorsAdded:
+-        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zeronetworkValidatorsRemoved:
+-        []
+      values.zksyncValidatorsAdded:
+-        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+      values.zksyncValidatorsRemoved:
+-        []
+      values.cronosValidators:
++        ["0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122","0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"]
+      values.grvtValidators:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.sophonValidators:
++        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.treasureValidators:
++        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.zeronetworkValidators:
++        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zksyncValidators:
++        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+    }
+```
+
+Generated with discovered.json: 0xddf66763fd2f8f422ceeeff1382e701e28511520
+
+# Diff at Mon, 20 Jan 2025 11:10:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630370
+- current block number: 21630370
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.from:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.1.target:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.1.from:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.0.target:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.0.from:
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+Generated with discovered.json: 0x9689f25484248ef4dcada49eedef9676e5c7572e
+
+# Diff at Mon, 20 Jan 2025 09:25:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21630370
+- current block number: 21630370
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      fieldMeta.getOwners.type:
++        "PERMISSION"
+      fieldMeta.getThreshold.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0x089edefbfba6e10c0a05b5f4799e7ef7af5a1815
 
 # Diff at Fri, 10 Jan 2025 11:44:13 GMT:
 

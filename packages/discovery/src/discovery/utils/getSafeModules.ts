@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { IProvider } from '../provider/IProvider'
+import type { IProvider } from '../provider/IProvider'
 
 export async function getModules(
   provider: IProvider,

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { BlockClient, RpcClient } from '../../clients'
+import type { BlockClient, RpcClient } from '../../clients'
 import { BlockProvider } from './BlockProvider'
 
 describe(BlockProvider.name, () => {

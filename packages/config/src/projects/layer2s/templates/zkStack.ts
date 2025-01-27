@@ -1,10 +1,10 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
   EthereumAddress,
   ProjectId,
-  UnixTime,
+  type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
@@ -13,37 +13,38 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  type DataAvailabilityBridge,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
-  KnowledgeNugget,
-  Milestone,
+  type KnowledgeNugget,
+  type Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  type ReasonForBeingInOther,
+  type ScalingProjectContract,
+  type ScalingProjectEscrow,
+  type ScalingProjectPermission,
+  type ScalingProjectPurpose,
+  type ScalingProjectRiskView,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectTechnology,
+  type ScalingProjectTechnologyChoice,
+  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
-import { ChainConfig } from '../../../common/ChainConfig'
+import type { ChainConfig } from '../../../common/ChainConfig'
 import { formatExecutionDelay } from '../../../common/formatDelays'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { Badge, BadgeId, badges } from '../../badges'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { StageConfig } from '../common/stages/types'
-import {
-  type Layer2,
-  type Layer2Display,
+import type { StageConfig } from '../common/stages/types'
+import type {
+  Layer2,
+  Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
@@ -61,10 +62,7 @@ export interface ZkStackConfigCommon {
   createdAt: UnixTime
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  validatorsEvents: {
-    added: string
-    removed: string
-  }
+  validatorsKey: string
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
@@ -100,6 +98,7 @@ export interface ZkStackConfigCommon {
   gasTokens?: string[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export type Upgradeability = {
@@ -247,39 +246,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
   }
 
-  /**
-   * Fetches Validators from ValidatorTimelock events:
-   * It is more complicated to accommodate the case in which
-   * a validator is added and removed more than once.
-   */
-  const validators = () => {
-    const validatorsAdded = discovery.getContractValue<string[]>(
-      'ValidatorTimelock',
-      templateVars.validatorsEvents.added,
-    )
-    const validatorsRemoved = discovery.getContractValue<string[]>(
-      'ValidatorTimelock',
-      templateVars.validatorsEvents.removed,
-    )
-
-    // Create a map to track the net state of each validator (added or removed)
-    const validatorStates = new Map<string, number>()
-
-    // Increment for added validators
-    validatorsAdded.forEach((validator) => {
-      validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-    })
-
-    // Decrement for removed validators
-    validatorsRemoved.forEach((validator) => {
-      validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-    })
-
-    // Filter validators that have a net positive state (added more times than removed)
-    return Array.from(validatorStates.entries())
-      .filter(([_, state]) => state > 0)
-      .map(([validator, _]) => validator)
-  }
+  const upgradedToV25 =
+    discovery.getContractValue<number[]>(
+      templateVars.diamondContract.name,
+      'getSemverProtocolVersion',
+    )[1] === 25
 
   return {
     type: 'layer2',
@@ -364,27 +335,49 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         secondLine: formatExecutionDelay(executionDelayS),
-        sources: [
-          {
-            contract: 'ValidatorTimelock',
-            references: [
-              'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169',
+        sources: upgradedToV25
+          ? [
+              {
+                contract: 'ValidatorTimelock',
+                references: [
+                  'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169',
+                ],
+              },
+              {
+                contract: templateVars.diamondContract.name,
+                references: [
+                  'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529',
+                  'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F10#L26',
+                ],
+              },
+              {
+                contract: 'Verifier',
+                references: [
+                  'https://etherscan.io/address/0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66#code#F1#L343',
+                ],
+              },
+            ]
+          : [
+              {
+                contract: 'ValidatorTimelock',
+                references: [
+                  'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169',
+                ],
+              },
+              {
+                contract: templateVars.diamondContract.name,
+                references: [
+                  'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448',
+                  'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23',
+                ],
+              },
+              {
+                contract: 'Verifier',
+                references: [
+                  'https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F1#L343',
+                ],
+              },
             ],
-          },
-          {
-            contract: templateVars.diamondContract.name,
-            references: [
-              'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448',
-              'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23',
-            ],
-          },
-          {
-            contract: 'Verifier',
-            references: [
-              'https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F1#L343',
-            ],
-          },
-        ],
       },
       dataAvailability:
         (templateVars.nonTemplateRiskView?.dataAvailability ??
@@ -401,11 +394,17 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                 },
                 {
                   contract: templateVars.diamondContract.name,
-                  references: [
-                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
-                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L52', // validiumMode
-                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
-                  ],
+                  references: upgradedToV25
+                    ? [
+                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L267',
+                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L57', // validiumMode
+                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F12#L121',
+                      ]
+                    : [
+                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
+                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L52', // validiumMode
+                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
+                      ],
                 },
               ],
             }
@@ -421,10 +420,15 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                 },
                 {
                   contract: templateVars.diamondContract.name,
-                  references: [
-                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
-                    'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
-                  ],
+                  references: upgradedToV25
+                    ? [
+                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529',
+                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F12#L121',
+                      ]
+                    : [
+                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
+                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
+                      ],
                 },
               ],
             },
@@ -433,10 +437,15 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         sources: [
           {
             contract: templateVars.diamondContract.name,
-            references: [
-              'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
-              'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128', // executeUpgrade() onlyStateTransitionManager
-            ],
+            references: upgradedToV25
+              ? [
+                  'https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L130', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
+                  'https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L148', // executeUpgrade() onlyStateTransitionManager
+                ]
+              : [
+                  'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
+                  'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128', // executeUpgrade() onlyStateTransitionManager
+                ],
           },
         ],
       },
@@ -445,10 +454,15 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         sources: [
           {
             contract: templateVars.diamondContract.name,
-            references: [
-              'https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53',
-              'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
-            ],
+            references: upgradedToV25
+              ? [
+                  'https://etherscan.io/address/0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L57',
+                  'https://etherscan.io/address/0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96',
+                ]
+              : [
+                  'https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53',
+                  'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
+                ],
           },
         ],
       },
@@ -457,9 +471,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         sources: [
           {
             contract: templateVars.diamondContract.name,
-            references: [
-              'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219',
-            ],
+            references: upgradedToV25
+              ? [
+                  'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L270',
+                ]
+              : [
+                  'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219',
+                ],
           },
         ],
       },
@@ -673,9 +691,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
       {
         name: 'ValidatorTimelock Validators',
-        accounts: validators().map((v) =>
-          discovery.formatPermissionedAccount(v),
-        ),
+        accounts: discovery
+          .getContractValue<string[]>(
+            'ValidatorTimelock',
+            templateVars.validatorsKey,
+          )
+          .map((v) => discovery.formatPermissionedAccount(v)),
         fromRole: true,
         description:
           'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
@@ -938,7 +959,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
             verified: 'no',
             contractAddress: EthereumAddress(
-              '0x70F3FBf8a427155185Ec90BED8a3434203de9604',
+              '0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66',
             ),
             chainId: ChainId.ETHEREUM,
             subVerifiers: [
@@ -977,6 +998,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
     ],
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

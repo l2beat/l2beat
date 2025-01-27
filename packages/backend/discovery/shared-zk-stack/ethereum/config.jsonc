@@ -98,13 +98,9 @@
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "NewChain",
-            "returnParams": [
-              "chainId",
-              "stateTransitionManager",
-              "chainGovernance"
-            ],
+            "type": "event",
+            "select": ["chainId", "stateTransitionManager", "chainGovernance"],
+            "add": { "event": "NewChain" },
             "ignoreRelative": true
           }
         },
@@ -204,112 +200,88 @@
         "getCommittedBatchTimestamp"
       ],
       "fields": {
-        "zksyncValidatorsAdded": {
+        "zksyncValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "324"
+            "type": "event",
+            "select": "validator",
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 324]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 324]
+            }
           }
         },
-        "zksyncValidatorsRemoved": {
+        "cronosValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "324"
+            "type": "event",
+            "select": "validator",
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 388]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 388]
+            }
           }
         },
-        "cronosValidatorsAdded": {
+        "zeronetworkValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "388"
+            "type": "event",
+            "select": "validator",
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 543210]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 543210]
+            }
           }
         },
-        "cronosValidatorsRemoved": {
+        "sophonValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "388"
+            "type": "event",
+            "select": "validator",
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 50104]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 50104]
+            }
           }
         },
-        "zeronetworkValidatorsAdded": {
+        "treasureValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "543210"
+            "type": "event",
+            "select": "validator",
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            }
           }
         },
-        "zeronetworkValidatorsRemoved": {
+        "grvtValidators": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "543210"
-          }
-        },
-        "sophonValidatorsAdded": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "50104"
-          }
-        },
-        "sophonValidatorsRemoved": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "50104"
-          }
-        },
-        "treasureValidatorsAdded": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "61166"
-          }
-        },
-        "treasureValidatorsRemoved": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "61166"
-          }
-        },
-        "grvtValidatorsAdded": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-            "arg": "_chainId",
-            "argValue": "325"
-          }
-        },
-        "grvtValidatorsRemoved": {
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-            "arg": "_chainId",
-            "argValue": "325"
+            "type": "event",
+            "select": "validator",
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 325]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 325]
+            }
           }
         },
         "abstractThirdBatchTS": {
@@ -323,13 +295,13 @@
         },
         "revertedBlocks": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "BlocksRevert",
-            "returnParams": [
+            "type": "event",
+            "select": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
               "totalBlocksExecuted"
-            ]
+            ],
+            "add": { "event": "BlocksRevert" }
           }
         }
       }

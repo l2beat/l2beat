@@ -1,4 +1,4 @@
-import { ChainId } from '../types/ChainId'
+import type { ChainId } from '../types/ChainId'
 
 export class ChainConverter {
   private readonly nameToId = new Map<string, ChainId>()

@@ -4,10 +4,10 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../project/Project'
+import type { BaseProject } from '../project/BaseProject'
 import { PROOFS } from './common/proofSystems'
 
-export const nebraupa: Project = {
+export const nebraupa: BaseProject = {
   id: ProjectId('nebra-upa'),
   slug: 'nebra-upa',
   name: 'Nebra UPA',

@@ -194,3 +194,9 @@ function getCalloutProps(
     icon: <BulletIcon className="size-5" />,
   }
 }
+
+export function technologyContractKey(contract: TechnologyContract) {
+  return `${contract.name}-${contract.chain}-${contract.addresses
+    .map((a) => a.address)
+    .join('-')}`
+}

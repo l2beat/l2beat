@@ -1,19 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ChainConfig, OnchainVerifier } from '@l2beat/config'
+import type { ChainConfig, OnchainVerifier } from '@l2beat/config'
 import {
-  BlockscoutInternalTransaction,
+  type BlockscoutInternalTransaction,
   BlockscoutV2Client,
 } from '@l2beat/shared'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
-import { Peripherals } from '../../peripherals/Peripherals'
+import type { Peripherals } from '../../peripherals/Peripherals'
 
-import { Database } from '@l2beat/database'
-import { Clock } from '../../tools/Clock'
+import type { Database } from '@l2beat/database'
+import type { Clock } from '../../tools/Clock'
 import {
   VerifiersStatusRefresher,
-  VerifiersStatusRefresherDeps,
+  type VerifiersStatusRefresherDeps,
 } from './VerifiersStatusRefresher'
 
 const zkVerifierAddress = EthereumAddress.random()

@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { useRef, useState } from 'react'
 import { get4ByteSignatures } from './api/FourByte'
-import { getOpenChainSignatures } from './api/OpenChain'
 import { SimpleValue } from './components/SimpleValue'
 import { ValueHeading } from './components/ValueHeading'
-import { Value } from './decode/DecodedResult'
+import type { Value } from './decode/DecodedResult'
 import { decode } from './decode/decode'
 
 interface DecodedProps {
@@ -17,36 +16,26 @@ export function Decoded(props: DecodedProps) {
 
   const selector = props.encoded.slice(0, 10)
 
-  const q1 = useQuery({
-    enabled: isValidSelector(selector),
-    queryKey: ['openchain', selector],
-    queryFn: () => getOpenChainSignatures(selector),
-  })
-
-  const q2 = useQuery({
+  const query = useQuery({
     enabled: isValidSelector(selector),
     queryKey: ['4byte', selector],
     queryFn: () => get4ByteSignatures(selector),
   })
 
-  if (q1.isLoading || q2.isLoading) {
+  if (query.isLoading) {
     return <div>Loading...</div>
   }
 
   const signatures = []
-  if (q1.data) {
-    signatures.push(...q1.data.map((x) => `function ${x}`))
-  }
-  if (q2.data) {
-    signatures.push(...q2.data.map((x) => `function ${x}`))
+  if (query.data) {
+    signatures.push(...query.data.map((x) => `function ${x}`))
   }
   const decoded = customAbi
     ? decode(props.encoded, [customAbi])
     : decode(props.encoded, signatures)
 
-  const error = q1.error ?? q2.error
-  if (error) {
-    return <div>Error: {error.message}</div>
+  if (query.error) {
+    return <div>Error: {query.error.message}</div>
   }
 
   const name =

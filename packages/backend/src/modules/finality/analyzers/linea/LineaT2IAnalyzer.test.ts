@@ -3,9 +3,9 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { readFileSync } from 'fs'
 import path from 'path'
-import { Database } from '@l2beat/database'
-import { BlobProvider, RpcClient } from '@l2beat/shared'
-import { L2Block } from '../types/BaseAnalyzer'
+import type { Database } from '@l2beat/database'
+import type { BlobProvider, RpcClient } from '@l2beat/shared'
+import type { L2Block } from '../types/BaseAnalyzer'
 import { LineaT2IAnalyzer, blobFnName, lineaIface } from './LineaT2IAnalyzer'
 
 describe(LineaT2IAnalyzer.name, () => {

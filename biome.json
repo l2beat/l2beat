@@ -67,7 +67,8 @@
         "noNamespace": "error",
         "noNonNullAssertion": "error",
         "useAsConstAssertion": "error",
-        "useLiteralEnumMembers": "error"
+        "useLiteralEnumMembers": "error",
+        "useImportType": "error"
       },
       "performance": {
         "noAccumulatingSpread": "error",

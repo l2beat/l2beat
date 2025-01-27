@@ -1,6 +1,6 @@
-import { ActivityRecord } from '@l2beat/database'
-import { StarkexClient } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ActivityRecord } from '@l2beat/database'
+import type { StarkexClient } from '@l2beat/shared'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 export class StarkexTxsCountService {

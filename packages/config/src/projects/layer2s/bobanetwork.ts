@@ -5,15 +5,15 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
   createdAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Boba Network',
     shortName: 'Boba',
     slug: 'bobanetwork',
@@ -34,7 +34,6 @@ export const bobanetwork: Layer2 = opStackL2({
         'https://discord.com/invite/Hvu3zpFwWd',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.boba.network/',
   transactionApi: {

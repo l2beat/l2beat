@@ -1,16 +1,16 @@
-import type { Chain, ChainId } from './chains'
+import type { Chain } from './chains'
 
 export type UserOperationsApiRequest = {
-  chainId: ChainId
+  chainId: string
   blockNumber: number
 }
 
 export type LatestBlockApiRequest = {
-  chainId: ChainId
+  chainId: string
 }
 
 export type StatsApiRequest = {
-  chainId: ChainId
+  chainId: string
   count: number
   lastFetched?: number
 }

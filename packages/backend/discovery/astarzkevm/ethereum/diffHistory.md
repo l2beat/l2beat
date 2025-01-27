@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x1b524a34a4111aef11046d81df2527fb3fcf9089
+Generated with discovered.json: 0xab3c0a75e7c9774b5a715df68694eec9ad18adf9
+
+# Diff at Mon, 20 Jan 2025 11:09:17 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"
+      directlyReceivedPermissions.0.from:
++        "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E"
+    }
+```
+
+```diff
+    contract LocalAdmin (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"
+      receivedPermissions.0.from:
++        "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"
+      directlyReceivedPermissions.0.target:
+-        "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"
+      directlyReceivedPermissions.0.from:
++        "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"
+    }
+```
+
+Generated with discovered.json: 0x4316b8e7dda31822b759eec5f03347c158b38855
 
 # Diff at Mon, 21 Oct 2024 11:04:26 GMT:
 

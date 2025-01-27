@@ -2,7 +2,7 @@
   "name": "opticsV1",
   "chain": "ethereum",
   "blockNumber": 19532023,
-  "configHash": "0xf4d522e6a76c655c0c448063299964cc131f8af0b7e12d3b1a91e5de9f315683",
+  "configHash": "0x038d92e912707149a107e6b61e5b2d41b778699a9d7a947c930cf2f04a0197a1",
   "contracts": [
     {
       "name": "ReplicaUpgradeBeacon",
@@ -83,7 +83,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
+          "to": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
           "via": []
         }
       ],
@@ -168,7 +168,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
+          "to": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
           "via": []
         }
       ],
@@ -204,7 +204,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
+          "to": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
           "via": []
         }
       ],
@@ -255,19 +255,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42303634F37956687fB7ff2c6146AC842481A052"
+          "from": "0x42303634F37956687fB7ff2c6146AC842481A052"
         },
         {
           "permission": "upgrade",
-          "target": "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47"
+          "from": "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47"
         },
         {
           "permission": "upgrade",
-          "target": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b"
+          "from": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b"
         },
         {
           "permission": "upgrade",
-          "target": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97"
+          "from": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97"
         }
       ],
       "sinceTimestamp": 1631138008,
@@ -330,7 +330,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
+          "to": "0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B",
           "via": []
         }
       ],
@@ -639,6 +639,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }
