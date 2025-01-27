@@ -274,6 +274,7 @@ function opStackCommon(
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
+    chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
       gasTokens: templateVars.gasTokens,
@@ -477,6 +478,7 @@ function opStackCommon(
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    stateDerivation: templateVars.stateDerivation,
     riskView: templateVars.riskView ?? getRiskView(templateVars, portal),
     stage: templateVars.stage ?? computedStage(templateVars, daProvider),
   }
@@ -545,7 +547,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
             },
     },
-    chainConfig: templateVars.chainConfig,
     config: {
       ...common.config,
       trackedTxs:
@@ -594,7 +595,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
       }),
     ),
-    stateDerivation: templateVars.stateDerivation,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
@@ -647,7 +647,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
     dataAvailability: decideDA(templateVars, baseChain.dataAvailability),
-    stateDerivation: templateVars.stateDerivation,
   }
 }
 
