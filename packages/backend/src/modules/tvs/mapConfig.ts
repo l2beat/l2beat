@@ -116,6 +116,7 @@ function createToken(
   let amountFormula: AmountFormula
   let sinceTimestamp: UnixTime
   let untilTimestamp: UnixTime | undefined
+  let source: 'canonical' | 'external' | 'native'
 
   switch (legacyToken.supply) {
     case 'zero':
@@ -131,6 +132,7 @@ function createToken(
 
       sinceTimestamp = escrow.sinceTimestamp
       untilTimestamp = escrow.untilTimestamp
+      source = escrow.source ?? legacyToken.source
       break
     case 'totalSupply':
       assert(
@@ -149,6 +151,7 @@ function createToken(
         chain.minTimestampForTvl,
         legacyToken.sinceTimestamp,
       )
+      source = legacyToken.source
       break
     case 'circulatingSupply':
       assert(
@@ -165,6 +168,7 @@ function createToken(
         chain.minTimestampForTvl,
         legacyToken.sinceTimestamp,
       )
+      source = legacyToken.source
       break
 
     default:
@@ -179,7 +183,7 @@ function createToken(
     sinceTimestamp,
     untilTimestamp,
     category: legacyToken.category,
-    source: legacyToken.source,
+    source: source,
     isAssociated:
       project.associatedTokens?.includes(legacyToken.symbol) ?? false,
   }
