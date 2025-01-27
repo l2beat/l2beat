@@ -97,7 +97,7 @@ export function ContractsSection(props: ContractsSectionProps) {
         </figure>
       )}
       {props.contracts.length > 0 && (
-        <>
+        <div className="mt-8">
           <ChainNameHeader>{props.chainName}</ChainNameHeader>
           <div className="my-4">
             {unchangedContracts.map((contract) => (
@@ -116,13 +116,13 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             )}
           </div>
-        </>
+        </div>
       )}
       {Object.keys(paritionedNativeContracts).length > 0 &&
         Object.entries(paritionedNativeContracts).map(
           ([chainName, [changedContracts, unchangedContracts]]) => {
             return (
-              <div key={chainName}>
+              <div key={chainName} className="mt-8">
                 <ChainNameHeader>{chainName}</ChainNameHeader>
                 <div className="my-4">
                   {unchangedContracts.map((contract) => (

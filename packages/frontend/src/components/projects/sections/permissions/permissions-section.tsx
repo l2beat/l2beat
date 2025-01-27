@@ -35,10 +35,10 @@ export function PermissionsSection({
       {permissionedEntities?.map((entity, i) => (
         <PermissionedEntityEntry key={i} entity={entity} className="my-2" />
       ))}
-      <div className="my-4">
+      <div>
         {Object.entries(permissionsByChain).map(([chain, permissions]) => {
           return (
-            <div key={chain}>
+            <div key={chain} className="mt-8">
               <div className="flex items-baseline gap-3">
                 <h3 className="whitespace-pre text-2xl font-bold">{chain}</h3>
                 <div className="w-full border-b-2 border-divider" />
