@@ -29,8 +29,8 @@ describe(mapConfig.name, () => {
       ticker: 'ETH',
       amount: {
         type: 'balanceOfEscrow',
-        address: EthereumAddress.ZERO,
-        chain: 'arbitrum',
+        address: 'native',
+        chain: 'ethereum',
         escrowAddresses: [
           '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
           '0xcEe284F754E854890e311e3280b767F80797180d',
@@ -56,7 +56,7 @@ describe(mapConfig.name, () => {
       amount: {
         type: 'balanceOfEscrow',
         address: EthereumAddress('0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1'),
-        chain: 'arbitrum',
+        chain: 'ethereum',
         escrowAddresses: [
           '0xcEe284F754E854890e311e3280b767F80797180d',
           '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
@@ -66,7 +66,7 @@ describe(mapConfig.name, () => {
       sinceTimestamp: new UnixTime(1623784100),
       untilTimestamp: undefined,
       category: 'other',
-      source: 'canonical',
+      source: 'external',
       isAssociated: true,
     })
 

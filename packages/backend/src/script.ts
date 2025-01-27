@@ -1,3 +1,5 @@
+import { writeFileSync } from 'fs'
+import path from 'path'
 import { layer2ToBackendProject } from '@l2beat/backend-shared'
 import { Logger, getEnv } from '@l2beat/backend-tools'
 import { layer2s } from '@l2beat/config'
@@ -15,8 +17,6 @@ import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
-import path from 'path'
-import { writeFileSync } from 'fs'
 
 main().catch((e: unknown) => {
   console.error(e)
@@ -90,7 +90,12 @@ async function main() {
   let external = 0
   let native = 0
 
-  const tokenBreakdown: { ticker: string, source: string, amount: number, value: number }[] = []
+  const tokenBreakdown: {
+    ticker: string
+    source: string
+    amount: number
+    value: number
+  }[] = []
 
   for (const token of tokens) {
     const tokenConfig = config.tokens.find((t) => t.id === token.tokenId)
@@ -126,7 +131,10 @@ async function main() {
   logger.info(`Native: $${toBillionsString(native)}B`)
 
   // dump token breakdown to file
-  writeFileSync(path.join(__dirname, 'token-breakdown.json'), JSON.stringify(tokenBreakdown, null, 2))
+  writeFileSync(
+    path.join(__dirname, 'token-breakdown.json'),
+    JSON.stringify(tokenBreakdown, null, 2),
+  )
 }
 
 function toBillionsString(value: number) {
