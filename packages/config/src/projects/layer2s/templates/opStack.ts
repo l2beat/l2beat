@@ -61,6 +61,7 @@ import type {
 } from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import { template } from 'lodash'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -613,43 +614,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           }),
     riskView:
       templateVars.riskView ?? getRiskView(templateVars, portal, daProvider),
-    stage:
-      templateVars.stage === undefined
-        ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
-          ? {
-              stage: 'NotApplicable',
-            }
-          : getStage(
-              {
-                stage0: {
-                  callsItselfRollup: true,
-                  stateRootsPostedToL1: true,
-                  dataAvailabilityOnL1: true,
-                  rollupNodeSourceAvailable: templateVars.isNodeAvailable,
-                },
-                stage1: {
-                  stateVerificationOnL1: false,
-                  fraudProofSystemAtLeast5Outsiders: null,
-                  usersHave7DaysToExit: false,
-                  usersCanExitWithoutCooperation: false,
-                  securityCouncilProperlySetUp:
-                    templateVars.hasProperSecurityCouncil ?? null,
-                },
-                stage2: {
-                  proofSystemOverriddenOnlyInCaseOfABug: null,
-                  fraudProofSystemIsPermissionless: null,
-                  delayWith30DExitWindow: false,
-                },
-              },
-              {
-                rollupNodeLink:
-                  templateVars.isNodeAvailable === true
-                    ? (templateVars.nodeSourceLink ??
-                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
-                    : '',
-              },
-            )
-        : templateVars.stage,
+    stage: templateVars.stage ?? computedStage(templateVars, daProvider),
     stateDerivation: templateVars.stateDerivation,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
@@ -736,43 +701,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
     riskView,
-    stage:
-      templateVars.stage === undefined
-        ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
-          ? {
-              stage: 'NotApplicable',
-            }
-          : getStage(
-              {
-                stage0: {
-                  callsItselfRollup: true,
-                  stateRootsPostedToL1: true,
-                  dataAvailabilityOnL1: true,
-                  rollupNodeSourceAvailable: templateVars.isNodeAvailable,
-                },
-                stage1: {
-                  stateVerificationOnL1: false,
-                  fraudProofSystemAtLeast5Outsiders: null,
-                  usersHave7DaysToExit: false,
-                  usersCanExitWithoutCooperation: false,
-                  securityCouncilProperlySetUp:
-                    templateVars.hasProperSecurityCouncil ?? null,
-                },
-                stage2: {
-                  proofSystemOverriddenOnlyInCaseOfABug: null,
-                  fraudProofSystemIsPermissionless: null,
-                  delayWith30DExitWindow: false,
-                },
-              },
-              {
-                rollupNodeLink:
-                  templateVars.isNodeAvailable === true
-                    ? (templateVars.nodeSourceLink ??
-                      'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
-                    : '',
-              },
-            )
-        : templateVars.stage,
+    stage: templateVars.stage ?? computedStage(templateVars, daProvider),
     dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
@@ -889,6 +818,46 @@ function getRiskView(
       ],
     },
   }
+}
+
+function computedStage(
+  templateVars: OpStackConfigCommon,
+  daProvider: DAProvider | undefined,
+): StageConfig {
+  return daProvider !== undefined || templateVars.isNodeAvailable === undefined
+    ? {
+        stage: 'NotApplicable',
+      }
+    : getStage(
+        {
+          stage0: {
+            callsItselfRollup: true,
+            stateRootsPostedToL1: true,
+            dataAvailabilityOnL1: true,
+            rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+          },
+          stage1: {
+            stateVerificationOnL1: false,
+            fraudProofSystemAtLeast5Outsiders: null,
+            usersHave7DaysToExit: false,
+            usersCanExitWithoutCooperation: false,
+            securityCouncilProperlySetUp:
+              templateVars.hasProperSecurityCouncil ?? null,
+          },
+          stage2: {
+            proofSystemOverriddenOnlyInCaseOfABug: null,
+            fraudProofSystemIsPermissionless: null,
+            delayWith30DExitWindow: false,
+          },
+        },
+        {
+          rollupNodeLink:
+            templateVars.isNodeAvailable === true
+              ? (templateVars.nodeSourceLink ??
+                'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+              : '',
+        },
+      )
 }
 
 function technologyDA(
