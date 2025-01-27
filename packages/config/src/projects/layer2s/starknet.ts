@@ -1021,19 +1021,6 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         'Allowed to post state updates. When the operator is down the state cannot be updated.',
     },
     {
-      name: 'MakerDAO Governance',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x0a3f6849f78076aefaDf113F5BED87720274dDC0',
-          ),
-          type: 'Contract',
-        },
-      ],
-      description:
-        'In DAI bridge it can set max deposit per bridge and per user. In DAI escrow it can approve token transfers.',
-    },
-    {
       name: 'StarkGate ETH owner',
       accounts: getProxyGovernance(discovery, ESCROW_ETH_ADDRESS),
       description:
