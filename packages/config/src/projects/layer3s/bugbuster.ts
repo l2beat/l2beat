@@ -29,7 +29,7 @@ export const bugbuster: Layer3 = {
     Badge.VM.AppChain,
     Badge.VM.CartesiVM,
     Badge.DA.EthereumCalldata,
-    Badge.L3ParentChain.Optimism,
+    Badge.L3ParentChain.OpMainnet,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
