@@ -185,10 +185,11 @@ function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {
 
   while (dayInLoop.lte(now)) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
-      const unixTimestamp = new UnixTime(a.timestamp)
-      return dayInLoop.inInclusiveRange(
-        unixTimestamp.toStartOf('day'),
-        unixTimestamp.add(a.durationInSeconds, 'seconds').toEndOf('day'),
+      const startDate = new UnixTime(a.timestamp)
+      const endDate = startDate.add(a.durationInSeconds, 'seconds')
+      return (
+        dayInLoop.gte(startDate.toStartOf('day')) &&
+        dayInLoop.lte(endDate.toEndOf('day'))
       )
     })
 
