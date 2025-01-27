@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc86057dbca2ac0dcb4886d84f930ed8d8e312d92
+Generated with discovered.json: 0xaa4e9dc207bc75f0cd3031a8eb0f73fec4be520a
 
-# Diff at Mon, 27 Jan 2025 16:56:38 GMT:
+# Diff at Mon, 27 Jan 2025 17:34:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 54670089
-- current block number: 54682636
+- current block number: 54684343
 
 ## Description
 
@@ -14,7 +14,7 @@ discodrive!
 
 ```diff
     contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
-    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that go through Ethereum Layer 1 and can target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
       values.proposalQueuedCount:
 -        3
 +        4
@@ -29,17 +29,19 @@ discovery. Values are for block 54670089 (main branch discovery), not current.
 
 ```diff
     contract ZkTokenGovernor (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
-    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
       values.currentQuorum_MTokens:
 +        "630"
       values.proposalThreshold_MTokens:
 +        "21"
       description:
-+        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed."
++        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed."
       issuedPermissions:
 +        [{"permission":"configure","to":"0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","via":[]},{"permission":"configure","to":"0xe788e09324F8bb3cc64f009973693f751C33b999","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","via":[]}]
       receivedPermissions:
-+        [{"permission":"configure","from":"0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6","description":"propose transactions."}]
++        [{"permission":"configure","from":"0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6","description":"propose transactions."},{"permission":"configure","from":"0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.","via":[{"address":"0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6","delay":259200}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6","delay":259200}]
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":24}}]
     }
@@ -47,7 +49,7 @@ discovery. Values are for block 54670089 (main branch discovery), not current.
 
 ```diff
     contract ProtocolTimelockController (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8) {
-    +++ description: Timelock contract that can send L2->L1 transactions that start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s.
+    +++ description: Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s.
       values.Canceller:
 +        ["0x76705327e682F2d96943280D99464Ab61219e34f"]
       values.Executor:
@@ -59,7 +61,7 @@ discovery. Values are for block 54670089 (main branch discovery), not current.
       template:
 +        "shared-zk-stack/TimelockController"
       description:
-+        "Timelock contract that can send L2->L1 transactions that start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s."
++        "Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s."
       issuedPermissions:
 +        [{"permission":"configure","to":"0x76705327e682F2d96943280D99464Ab61219e34f","description":"propose transactions.","via":[]}]
     }
@@ -82,7 +84,7 @@ discovery. Values are for block 54670089 (main branch discovery), not current.
 +        "Timelock contract allowing the queueing of transactions with a minimum delay of 3d."
       issuedPermissions:
 +        [{"permission":"configure","to":"0x10560f8B7eE37571AD7E3702EEb12Bc422036E89","description":"propose transactions.","via":[]}]
-      receivedPermissions:
+      directlyReceivedPermissions:
 +        [{"permission":"configure","from":"0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."}]
     }
 ```
@@ -100,6 +102,8 @@ discovery. Values are for block 54670089 (main branch discovery), not current.
 +        [{"permission":"configure","to":"0xe788e09324F8bb3cc64f009973693f751C33b999","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","via":[]}]
       receivedPermissions:
 +        [{"permission":"configure","from":"0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19","delay":259200}]
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":24}}]
     }
@@ -117,9 +121,12 @@ discovery. Values are for block 54670089 (main branch discovery), not current.
 +        "configure"
       issuedPermissions.0.to:
 -        "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
++        "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"
+      issuedPermissions.0.via.0.address:
+-        "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
 +        "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
-      issuedPermissions.0.via.0:
--        {"address":"0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"}
+      issuedPermissions.0.via.0.delay:
++        259200
       issuedPermissions.0.description:
 +        "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."
       values.DefaultAdmin:
@@ -135,15 +142,17 @@ discovery. Values are for block 54670089 (main branch discovery), not current.
 
 ```diff
     contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
-    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that go through Ethereum Layer 1 and can target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
       values.currentQuorum_MTokens:
 +        "630"
       values.proposalThreshold_MTokens:
 +        "21"
       description:
-+        "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that go through Ethereum Layer 1 and can target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
++        "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
       receivedPermissions:
 +        [{"permission":"configure","from":"0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"}]
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":24}}]
     }

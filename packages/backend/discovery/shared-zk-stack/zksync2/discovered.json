@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 54682636,
-  "configHash": "0xe854591192b328a108c288786d3d7f4b78201956fc30da906f91d6c2581e35a1",
+  "blockNumber": 54684343,
+  "configHash": "0x5619e16ce2539a01ccbab55b8fd891009ff9b7311986811f48107bf109b50531",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -11,7 +11,7 @@
       "sourceHashes": [
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
-      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -31,6 +31,24 @@
           "permission": "configure",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "propose transactions."
+        },
+        {
+          "permission": "configure",
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
+          "via": [
+            {
+              "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+              "delay": 259200
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "delay": 259200
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -44,7 +62,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737996981,
+        "clock": 1737998764,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -85,7 +103,7 @@
       "sourceHashes": [
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
-      "description": "Timelock contract that can send L2->L1 transactions that start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s.",
+      "description": "Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -148,7 +166,7 @@
           "via": []
         }
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "configure",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
@@ -216,6 +234,13 @@
           "description": "propose transactions."
         }
       ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "delay": 259200
+        }
+      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1723145514,
       "values": {
@@ -227,7 +252,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737996981,
+        "clock": 1737998764,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -272,9 +297,14 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "to": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
-          "via": []
+          "via": [
+            {
+              "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+              "delay": 259200
+            }
+          ]
         },
         {
           "permission": "configure",
@@ -347,7 +377,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1737996981,
+        "clock": 1737998764,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -379,12 +409,18 @@
       "sourceHashes": [
         "0x82c5a05996248ee29f451f121ff0f973a3b17f7c7a8ed31878d30c5eaa51b245"
       ],
-      "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that go through Ethereum Layer 1 and can target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
+      "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
           "permission": "configure",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "propose transactions."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -398,7 +434,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1737996981,
+        "clock": 1737998764,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -961,7 +997,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "shared-zk-stack/TimelockController": "0xd6ff9b243c3dad668503509205492add43ffb5864a1103af0325f614c0f60c70",
+    "shared-zk-stack/TimelockController": "0xe4789cd9831cec2e02f8b7bc5fb276c17acc1e2b76b4825e6b87553e33ee577c",
     "shared-zk-stack/ZkGovernor": "0x5ee2a860061a926f971766161f91f72966530aff59dd15dc6f83bf23b163137d",
     "shared-zk-stack/ZkToken": "0xaa46dbafa3e45e838e6a94305e96f1ede699f8195ad6b7626091d38c3b9e7083"
   }

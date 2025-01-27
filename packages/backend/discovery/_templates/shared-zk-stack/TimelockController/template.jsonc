@@ -26,10 +26,6 @@
             "type": "configure",
             "description": "propose transactions."
           }
-          // {
-          //   "type": "act",
-          //   "delay": "{{getMinDelay}}",
-          // }
         ]
       }
     },
@@ -57,6 +53,10 @@
           {
             "type": "configure",
             "description": "execute transactions that are ready."
+          },
+          {
+            "type": "act", // this should be limited to a party that is proposer, executor and canceller at the same time but in practice this is currently always a single party
+            "delay": "{{getMinDelay}}"
           }
         ]
       }

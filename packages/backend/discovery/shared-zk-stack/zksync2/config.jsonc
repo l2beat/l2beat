@@ -24,10 +24,10 @@
   "overrides": {
     // some config overrides to be more specific (templates are used for the rest)
     "ZkProtocolGovernor": {
-      "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that go through Ethereum Layer 1 and can target all L1 and L2 contracts. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed."
+      "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed."
     },
     "ZkTokenGovernor": {
-      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal (for delegates) and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal (for delegates) and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",
       "fields": {
         "PROPOSE_GUARDIAN": {
           "target": {
@@ -67,7 +67,7 @@
       }
     },
     "ProtocolTimelockController": {
-      "description": "Timelock contract that can send L2->L1 transactions that start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of {{getMinDelay_formatted}}."
+      "description": "Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of {{getMinDelay_formatted}}."
     }
   }
 }
