@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x71d31ae9ca5c502b8fa73ea32e9e8e3566324b4b
+
+# Diff at Mon, 27 Jan 2025 16:38:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21643075
+- current block number: 21717100
+
+## Description
+
+discodrive!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21643075 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      template:
++        "shared-zk-stack/Verifier"
+      description:
++        "Implements the ZK proof verification logic."
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
++        "shared-zk-stack/Diamond"
+      description:
++        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.
+```
+
 Generated with discovered.json: 0x096276bf47fe0662e7b13e891c951db44428de7c
 
 # Diff at Fri, 17 Jan 2025 08:39:46 GMT:

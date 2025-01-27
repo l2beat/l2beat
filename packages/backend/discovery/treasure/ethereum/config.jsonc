@@ -12,6 +12,32 @@
     "bleppo": "shared-zk-stack"
   },
   "overrides": {
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+      // local override over the template to fetch the validators from the shared contract
+      "fields": {
+        "validatorsVTL": {
+          "handler": {
+            "type": "event",
+            "select": ["validator"],
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            }
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "validateZkStack"
+              }
+            ]
+          }
+        }
+      }
+    },
     "TreasureZkEvmAdmin": {
       "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
       "fields": {

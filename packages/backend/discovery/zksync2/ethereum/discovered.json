@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 21630311,
-  "configHash": "0x5efac1da459f0fa120737787953023f6c76cead01e8535293567aea8dac40602",
+  "blockNumber": 21716973,
+  "configHash": "0xf1951743e6e8fb01b891199f28ec8773d15f13500e0ce339bd3c58a282aeb1bc",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -58,6 +58,12 @@
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "via": []
+        },
         {
           "permission": "configure",
           "to": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
@@ -383,26 +389,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3267551,
+        "getFirstUnprocessedPriorityTx": 3267936,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 59,
+        "getPriorityQueueSize": 57,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 496327,
-        "getTotalBatchesExecuted": 496284,
-        "getTotalBatchesVerified": 496325,
-        "getTotalBlocksCommitted": 496327,
-        "getTotalBlocksExecuted": 496284,
-        "getTotalBlocksVerified": 496325,
-        "getTotalPriorityTxs": 3267610,
+        "getTotalBatchesCommitted": 496521,
+        "getTotalBatchesExecuted": 496487,
+        "getTotalBatchesVerified": 496518,
+        "getTotalBlocksCommitted": 496521,
+        "getTotalBlocksExecuted": 496487,
+        "getTotalBlocksVerified": 496518,
+        "getTotalPriorityTxs": 3267993,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -411,8 +417,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xc959599946ca66ddb01a89833e19b0f8f219cccf21c62ae3f7f4ce0756bce9f2",
-          "expirationTimestamp": 1737363407,
+          "canonicalTxHash": "0xcf2607ca42a108bd42e7b5065cd80ee779daccc6910f8761dafe4b416ce3aa00",
+          "expirationTimestamp": 1737911663,
           "layer2Tip": 0
         },
         "txFilterer": [],
@@ -545,6 +551,49 @@
       "derivedName": "L1ERC20Bridge"
     },
     {
+      "name": "ValidatorTimelock",
+      "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+      "template": "shared-zk-stack/ValidatorTimelock",
+      "sourceHashes": [
+        "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
+      ],
+      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.",
+      "issuedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+          "via": []
+        },
+        {
+          "permission": "validateZkStack",
+          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+        }
+      ],
+      "sinceTimestamp": 1717520615,
+      "values": {
+        "$immutable": true,
+        "executionDelay": 75600,
+        "executionDelay_fmt": "21h",
+        "getName": "ValidatorTimelock",
+        "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "revertedBlocks": [],
+        "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "validatorsVTL": [
+          "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+          "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+        ]
+      }
+    },
+    {
       "name": "ValidatorTimelockOld",
       "address": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
       "sourceHashes": [
@@ -594,8 +643,24 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0000000000000000000000000000000000000001" },
-    { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
-    { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" }
+    {
+      "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    },
+    {
+      "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
+    }
   ],
   "abis": {
     "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66": [
@@ -696,6 +761,42 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
+      "constructor(address _initialOwner, uint32 _executionDelay, uint256 _eraChainId)",
+      "error AddressAlreadyValidator(uint256 _chainId)",
+      "error ValidatorDoesNotExist(uint256 _chainId)",
+      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
+      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
+      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
+      "event NewExecutionDelay(uint256 _newExecutionDelay)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ValidatorAdded(uint256 indexed _chainId, address _addedValidator)",
+      "event ValidatorRemoved(uint256 indexed _chainId, address _removedValidator)",
+      "function acceptOwnership()",
+      "function addValidator(uint256 _chainId, address _newValidator)",
+      "function commitBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), tuple(uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)",
+      "function commitBatchesSharedBridge(uint256 _chainId, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), tuple(uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)",
+      "function executeBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)",
+      "function executeBatchesSharedBridge(uint256 _chainId, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)",
+      "function executionDelay() view returns (uint32)",
+      "function getCommittedBatchTimestamp(uint256 _chainId, uint256 _l2BatchNumber) view returns (uint256)",
+      "function getName() view returns (string)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proveBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof))",
+      "function proveBatchesSharedBridge(uint256 _chainId, tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof))",
+      "function removeValidator(uint256 _chainId, address _validator)",
+      "function renounceOwnership()",
+      "function revertBatches(uint256)",
+      "function revertBatchesSharedBridge(uint256 _chainId, uint256)",
+      "function setExecutionDelay(uint32 _executionDelay)",
+      "function setStateTransitionManager(address _stateTransitionManager)",
+      "function stateTransitionManager() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
     "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9": [
       "error InvalidSelector(bytes4 func)",
@@ -962,7 +1063,8 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond": "0xc2521baad2fb4a4d35636dc70206ace92f4f4c5f1673e0d84d34b5048aa136e3",
+    "shared-zk-stack/Diamond": "0xabe30f034435f16cdde91d6ca11573c9ae120a706aa796a828dd9ba24eceb9d8",
+    "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_fmt}}.",
+  "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_fmt}}.",
   "ignoreMethods": ["committedBlockTimestamp", "getCommittedBatchTimestamp"],
   "fields": {
     "executionDelay_fmt": {
@@ -11,139 +11,15 @@
       },
       "returnType": "(FormatSeconds)"
     },
-    "zksyncValidatorsAdded": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorAdded",
-        "valueKey": "_addedValidator",
-        "arg": "_chainId",
-        "argValue": "324"
-      },
-      "target": {
-        "permissions": [
-          {
-            "type": "validateZkStack" // TEMPORARY because this affects all zk stack chains
-          }
-        ]
-      }
-    },
-    "zksyncValidatorsRemoved": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorRemoved",
-        "valueKey": "_removedValidator",
-        "arg": "_chainId",
-        "argValue": "324"
-      }
-    },
-    "cronosValidatorsAdded": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorAdded",
-        "valueKey": "_addedValidator",
-        "arg": "_chainId",
-        "argValue": "388"
-      }
-    },
-    "cronosValidatorsRemoved": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorRemoved",
-        "valueKey": "_removedValidator",
-        "arg": "_chainId",
-        "argValue": "388"
-      }
-    },
-    "zeronetworkValidatorsAdded": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorAdded",
-        "valueKey": "_addedValidator",
-        "arg": "_chainId",
-        "argValue": "543210"
-      }
-    },
-    "zeronetworkValidatorsRemoved": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorRemoved",
-        "valueKey": "_removedValidator",
-        "arg": "_chainId",
-        "argValue": "543210"
-      }
-    },
-    "sophonValidatorsAdded": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorAdded",
-        "valueKey": "_addedValidator",
-        "arg": "_chainId",
-        "argValue": "50104"
-      }
-    },
-    "sophonValidatorsRemoved": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorRemoved",
-        "valueKey": "_removedValidator",
-        "arg": "_chainId",
-        "argValue": "50104"
-      }
-    },
-    "treasureValidatorsAdded": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorAdded",
-        "valueKey": "_addedValidator",
-        "arg": "_chainId",
-        "argValue": "61166"
-      }
-    },
-    "treasureValidatorsRemoved": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorRemoved",
-        "valueKey": "_removedValidator",
-        "arg": "_chainId",
-        "argValue": "61166"
-      }
-    },
-    "grvtValidatorsAdded": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorAdded",
-        "valueKey": "_addedValidator",
-        "arg": "_chainId",
-        "argValue": "325"
-      }
-    },
-    "grvtValidatorsRemoved": {
-      "handler": {
-        "type": "arrayFromOneEventWithArg",
-        "event": "ValidatorRemoved",
-        "valueKey": "_removedValidator",
-        "arg": "_chainId",
-        "argValue": "325"
-      }
-    },
-    "abstractThirdBatchTS": {
-      "description": "If non-zero, the third batch has been posted (launch monitor).",
-      "severity": "MEDIUM",
-      "handler": {
-        "type": "call",
-        "method": "getCommittedBatchTimestamp",
-        "args": [2741, 3]
-      }
-    },
     "revertedBlocks": {
       "handler": {
-        "type": "stateFromEvent",
-        "event": "BlocksRevert",
-        "returnParams": [
+        "type": "event",
+        "select": [
           "totalBlocksCommitted",
           "totalBlocksVerified",
           "totalBlocksExecuted"
-        ]
+        ],
+        "add": { "event": "BlocksRevert" }
       }
     }
   }

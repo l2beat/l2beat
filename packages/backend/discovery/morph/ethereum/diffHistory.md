@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x37afcf2efbe9a4192e28623d51a6d684b5ab4366
+
+# Diff at Mon, 27 Jan 2025 15:02:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21678881
+- current block number: 21716626
+
+## Description
+
+new templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21678881 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      template:
++        "global/ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x7479eba0469174faed82a2293c6ad1775a6ad1ef
 
 # Diff at Wed, 22 Jan 2025 10:04:06 GMT:
@@ -219,7 +245,7 @@ discovery. Values are for block 21667783 (main branch discovery), not current.
 
 Generated with discovered.json: 0x72f1722fef77263dbdc89f0ae4a67e13359d4916
 
-# Diff at Tue, 21 Jan 2025 08:14:27 GMT:
+# Diff at Mon, 20 Jan 2025 19:26:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3a16743af72fb4c941689b26d336a59661143f06 block: 21465401
@@ -295,20 +321,6 @@ Some Challengers are apparently run by bitget / bitget wallet.
  .../L1MessageQueueWithGasPriceOracle.sol           |  75 ++------------
  .../MorphRollup/Rollup.sol                         | 108 +++------------------
  3 files changed, 23 insertions(+), 231 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21465401 (main branch discovery), not current.
-
-```diff
-    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
-    +++ description: None
-      template:
-+        "global/ProxyAdmin"
-    }
 ```
 
 Generated with discovered.json: 0x4b1155ee8d29fc6ba304940cc3148b73d7aa5d5e

@@ -7,5 +7,5 @@
     "protocolVersionIsActive",
     "upgradeCutHash"
   ],
-  "ignoreRelatives": ["getAllHyperchains"]
+  "ignoreRelatives": ["getAllHyperchains", "validatorTimelock"] // ignore validatorTimelock because it needs chain-specific config
 }

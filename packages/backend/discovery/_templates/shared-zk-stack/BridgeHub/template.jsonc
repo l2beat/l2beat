@@ -7,13 +7,9 @@
     "chainsCreated": {
       "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.",
       "handler": {
-        "type": "stateFromEvent",
-        "event": "NewChain",
-        "returnParams": [
-          "chainId",
-          "stateTransitionManager",
-          "chainGovernance"
-        ],
+        "type": "event",
+        "select": ["chainId", "stateTransitionManager", "chainGovernance"],
+        "add": { "event": "NewChain" },
         "ignoreRelative": true
       }
     },
