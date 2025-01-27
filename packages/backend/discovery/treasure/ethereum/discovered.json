@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21585285,
   "configHash": "0xe86eefbfd9fd6ebe3b8959529e759963b9b19a4a4d584b775ad63dc521b2afe1",
+  "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
       "name": "TreasureChainAdminMultisig",

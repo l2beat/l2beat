@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825381,
   "configHash": "0x94773065d0f1386ec8c6c632e5c85c118e13e5372c3ce6ce016a1b3d1e364b7d",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "OrderRegistry",

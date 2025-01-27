@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 21679920,
   "configHash": "0x70ff044e340894fa64468e6c90090d30f3a9e7f2b2deb9c0b460b487bd10dede",
+  "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
       "name": "SophonZkEvm",
