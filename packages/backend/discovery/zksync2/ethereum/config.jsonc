@@ -79,7 +79,7 @@
             "permissions": [
               {
                 "type": "configure",
-                "description": "set addresses (validators) that can commit, prove, exeute, revert batches through this contract." // {{$$.address}} does not work
+                "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract." // {{$$.address}} does not work
               }
             ]
           }
@@ -103,27 +103,34 @@
             "add": { "event": "BlocksRevert" }
           }
         },
-        // the 3 following allow us to get an array of validators without creating a new handler
-        // construnctorArgs._validators u validatorsAdded n validatorsRemoved
-        // where u is the union of the 2 sets and n is intersection
+        // the 2 following allow us to get an array of validators without creating a new handler
+        // construnctorArgs._validators u validatorsVTLold
+        // where u is the union of the 2 sets
         "constructorArgs": {
+          // these validators are by default the same as the ones in the new timelock, but we fetch them to be sure
           "handler": {
             "type": "constructorArgs",
             "nameArgs": true
           }
         },
-        "validatorsAdded": {
+        "validatorsVTLold": {
+          // should be empty, as the valis were added in the constructor and this VTL is unused
           "handler": {
             "type": "event",
-            "select": "_addedValidator",
-            "add": { "event": "ValidatorAdded" }
-          }
-        },
-        "validatorsRemoved": {
-          "handler": {
-            "type": "event",
-            "select": "_removedValidator",
-            "add": { "event": "ValidatorRemoved" }
+            "select": ["validator"],
+            "add": {
+              "event": "event ValidatorAdded(address validator)"
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(address validator)"
+            }
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "validateZkStack"
+              }
+            ]
           }
         }
       }

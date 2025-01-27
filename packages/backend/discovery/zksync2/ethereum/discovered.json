@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 21716973,
-  "configHash": "0xf1951743e6e8fb01b891199f28ec8773d15f13500e0ce339bd3c58a282aeb1bc",
+  "blockNumber": 21717502,
+  "configHash": "0x899c63bedf88b12b04fc7f3ed80bac06b9bb2995f1bae4613baa9724e7d267e7",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -30,7 +30,7 @@
         {
           "permission": "configure",
           "from": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "set addresses (validators) that can commit, prove, exeute, revert batches through this contract."
+          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract."
         }
       ],
       "sinceTimestamp": 1701258227,
@@ -389,26 +389,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3267936,
+        "getFirstUnprocessedPriorityTx": 3267941,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 57,
+        "getPriorityQueueSize": 53,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 496521,
-        "getTotalBatchesExecuted": 496487,
-        "getTotalBatchesVerified": 496518,
-        "getTotalBlocksCommitted": 496521,
-        "getTotalBlocksExecuted": 496487,
-        "getTotalBlocksVerified": 496518,
-        "getTotalPriorityTxs": 3267993,
+        "getTotalBatchesCommitted": 496524,
+        "getTotalBatchesExecuted": 496489,
+        "getTotalBatchesVerified": 496521,
+        "getTotalBlocksCommitted": 496524,
+        "getTotalBlocksExecuted": 496489,
+        "getTotalBlocksVerified": 496521,
+        "getTotalPriorityTxs": 3267994,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -417,8 +417,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xcf2607ca42a108bd42e7b5065cd80ee779daccc6910f8761dafe4b416ce3aa00",
-          "expirationTimestamp": 1737911663,
+          "canonicalTxHash": "0xcdc30009111831c38e0f1e7e1941b13792047d246e2eb1d64931da74365b35af",
+          "expirationTimestamp": 1737916571,
           "layer2Tip": 0
         },
         "txFilterer": [],
@@ -604,7 +604,7 @@
         {
           "permission": "configure",
           "to": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-          "description": "set addresses (validators) that can commit, prove, exeute, revert batches through this contract.",
+          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract.",
           "via": []
         }
       ],
@@ -633,8 +633,7 @@
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
-        "validatorsAdded": [],
-        "validatorsRemoved": [],
+        "validatorsVTLold": [],
         "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
       "derivedName": "ValidatorTimelock"

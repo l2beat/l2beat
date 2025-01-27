@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -21,39 +26,37 @@ const executionDelayOldS = discovery.getContractValue<number>(
 const executionDelayOld =
   executionDelayOldS > 0 && formatSeconds(executionDelayOldS)
 
-const validatorsOld = () => {
-  // old validatorTL accepted validators in constructor
+const validatorsVTLold = () => {
+  // get validators added in the constructor args
   const constructorArgsValis = discovery.getContractValue<{
     _validators: string[]
   }>('ValidatorTimelockOld', 'constructorArgs')
-
-  const validatorsAdded = discovery
-    .getContractValue<string[]>('ValidatorTimelockOld', 'validatorsAdded')
+  // add the validators from events
+  const allValis = discovery
+    .getContractValue<string[]>('ValidatorTimelockOld', 'validatorsVTLold')
     .concat(constructorArgsValis._validators)
-
-  const validatorsRemoved = discovery.getContractValue<string[]>(
-    'ValidatorTimelockOld',
-    'validatorsRemoved',
-  )
-
-  // Create a map to track the net state of each validator (added or removed)
-  const validatorStates = new Map<string, number>()
-
-  // Increment for added validators
-  validatorsAdded.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-  })
-
-  // Decrement for removed validators
-  validatorsRemoved.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-  })
-
-  // Filter validators that have a net positive state (added more times than removed)
-  return Array.from(validatorStates.entries())
-    .filter(([_, state]) => state > 0)
-    .map(([validator, _]) => validator)
+  // dedup
+  return [...new Set(allValis)]
 }
+
+const validatorsVTLnew = discovery.getPermissionsByRole('validateZkStack')
+// Extract addresses from new validators and convert to lowercase for comparison
+const newValidatorAddresses = validatorsVTLnew.map((v) =>
+  v.address.toLowerCase(),
+)
+const oldValidators = validatorsVTLold()
+
+// Check if all old validators exist in new validators array
+const missingValidators = oldValidators.filter(
+  (oldValidator) => !newValidatorAddresses.includes(oldValidator.toLowerCase()),
+)
+
+assert(
+  missingValidators.length === 0,
+  `Some validators from old timelock are missing in new timelock: ${missingValidators.join(
+    ', ',
+  )}`,
+)
 
 export const zksyncera: Layer2 = zkStackL2({
   createdAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
@@ -370,15 +373,6 @@ export const zksyncera: Layer2 = zkStackL2({
       ],
       description:
         'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
-    },
-    {
-      name: 'ValidatorTimelockOld Validators',
-      accounts: validatorsOld().map((v) =>
-        discovery.formatPermissionedAccount(v),
-      ),
-      fromRole: true,
-      description:
-        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the currently unused ValidatorTimelockOld.',
     },
   ],
   nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
