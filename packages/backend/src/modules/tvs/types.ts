@@ -30,8 +30,8 @@ export interface BalanceOfEscrowAmountFormula {
   address: EthereumAddress | 'native'
   // token chain
   chain: string
-  // escrow contract addresses
-  escrowAddresses: string[]
+  // escrow contract address
+  escrowAddress: EthereumAddress
   // decimals
   decimals: number
 }
@@ -71,8 +71,12 @@ export type AmountConfig =
 
 // token deployed to single chain
 export interface Token {
-  id: string // chain:address, will be used to index token value in the table
-  ticker: string // arbitrary set by us, there are symbol duplicates e.g. GAME
+  // unique identifier
+  id: TokenId
+  // arbitrary set by us, there are symbol duplicates e.g. GAME
+  ticker: string
+  symbol: string
+  name: string
   amount: AmountFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
@@ -122,4 +126,36 @@ export interface TokenValue {
   value: number
   valueForProject: number
   valueForTotal: number
+}
+
+export interface TokenBreakdown {
+  total: number
+  source: {
+    canonical: number
+    external: number
+    native: number
+  }
+  category: {
+    ether: number
+    stablecoin: number
+    other: number
+  }
+}
+
+export type TokenId = string & {
+  _TokenIdBrand: string
+}
+
+export function TokenId(value: string) {
+  return value as unknown as TokenId
+}
+
+TokenId.create = function (
+  chain: string,
+  address: EthereumAddress | 'native',
+  escrowAddress?: EthereumAddress,
+) {
+  return TokenId(
+    `${chain}-${(address).toString()}${escrowAddress ? `-${escrowAddress}` : ''}`,
+  )
 }

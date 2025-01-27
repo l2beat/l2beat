@@ -17,6 +17,7 @@ import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
+import type { TokenBreakdown } from './modules/tvs/types'
 
 main().catch((e: unknown) => {
   console.error(e)
@@ -79,18 +80,33 @@ async function main() {
 
   const config = mapConfig(backendProject, arbitrum.chainConfig)
 
-  const timestamp = new UnixTime(1737723600) //UnixTime.now().toStartOf('hour')
+  // dump config
+  writeFileSync(
+    path.join(__dirname, 'token-config.json'),
+    JSON.stringify(config, null, 2),
+  )
+
+  const timestamp = new UnixTime(1737972000) //UnixTime.now().toStartOf('hour')
   const tvs = await localExecutor.run(config, [timestamp])
 
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')
 
-  let total = 0
-  let canonical = 0
-  let external = 0
-  let native = 0
+  const tokenBreakdown: TokenBreakdown = {
+    total: 0,
+    source: {
+      canonical: 0,
+      external: 0,
+      native: 0,
+    },
+    category: {
+      ether: 0,
+      stablecoin: 0,
+      other: 0,
+    },
+  }
 
-  const tokenBreakdown: {
+  const individualTokens: {
     ticker: string
     source: string
     amount: number
@@ -101,9 +117,9 @@ async function main() {
     const tokenConfig = config.tokens.find((t) => t.id === token.tokenId)
     assert(tokenConfig, `Token config not found ${token.tokenId}`)
 
-    total += token.valueForTotal
+    tokenBreakdown.total += token.valueForTotal
 
-    tokenBreakdown.push({
+    individualTokens.push({
       ticker: tokenConfig.ticker,
       source: tokenConfig.source,
       amount: token.amount,
@@ -112,28 +128,50 @@ async function main() {
 
     switch (tokenConfig.source) {
       case 'canonical':
-        canonical += token.value
+        tokenBreakdown.source.canonical += token.value
         break
       case 'external':
-        external += token.value
+        tokenBreakdown.source.external += token.value
         break
       case 'native':
-        native += token.value
+        tokenBreakdown.source.native += token.value
+        break
+      default:
+        throw new Error(`Unknown source ${tokenConfig.source}`)
+    }
+
+    switch (tokenConfig.category) {
+      case 'ether':
+        tokenBreakdown.category.ether += token.value
+        break
+      case 'stablecoin':
+        tokenBreakdown.category.stablecoin += token.value
+        break
+      case 'other':
+        tokenBreakdown.category.other += token.value
         break
       default:
         throw new Error(`Unknown source ${tokenConfig.source}`)
     }
   }
 
-  logger.info(`Total: $${toBillionsString(total)}B`)
-  logger.info(`Canonical: $${toBillionsString(canonical)}B`)
-  logger.info(`External: $${toBillionsString(external)}B`)
-  logger.info(`Native: $${toBillionsString(native)}B`)
+  logger.info(
+    JSON.stringify(
+      tokenBreakdown,
+      (_, v) => {
+        if (typeof v === 'number') {
+          return `$${toBillionsString(v)}B`
+        }
+        return v
+      },
+      2,
+    ),
+  )
 
-  // dump token breakdown to file
+  // dump individualTokens to file
   writeFileSync(
     path.join(__dirname, 'token-breakdown.json'),
-    JSON.stringify(tokenBreakdown, null, 2),
+    JSON.stringify(individualTokens, null, 2),
   )
 }
 
