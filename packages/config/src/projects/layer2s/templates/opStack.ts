@@ -22,6 +22,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   type ReasonForBeingInOther,
+  ScalingProject,
   type ScalingProjectCategory,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
@@ -151,6 +152,9 @@ interface OpStackConfigCommon {
   gasTokens?: string[]
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectCategory
+  }
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -160,9 +164,6 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 }
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
-  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ScalingProjectCategory
-  }
   stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
 }
@@ -170,7 +171,15 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
 function opStackCommon(
   templateVars: OpStackConfigCommon,
   explorerUrl?: string,
-): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+): Omit<
+  ScalingProject,
+  'type' | 'display' | 'config' | 'stage' | 'riskView'
+> & {
+  display: Pick<
+    ScalingProjectDisplay,
+    'architectureImage' | 'purposes' | 'provider' | 'category' | 'warning'
+  >
+} {
   const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
   const discoveryDrivenSections = templateVars.discoveryDrivenData
     ? generateDiscoveryDrivenSections(
@@ -232,11 +241,27 @@ function opStackCommon(
     ? [Badge.Stack.OPStack, daBadge]
     : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
+  // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
+  // archi images defined locally in the project.ts take precedence over this one
+  const architectureImage = `opstack-${daProvider !== undefined ? 'optimium' : 'rollup'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
+
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
+    display: {
+      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      architectureImage: templateVars.architectureImage ?? architectureImage,
+      provider: 'OP Stack',
+      category:
+        templateVars.display.category ??
+        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
+      warning:
+        templateVars.display.warning === undefined
+          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
+          : templateVars.display.warning,
+    },
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
@@ -460,21 +485,13 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-  // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
-  // archi images defined locally in the project.ts take precedence over this one
-  const architectureImage = `opstack-${daProvider !== undefined ? 'optimium' : 'rollup'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
-
+  const common = opStackCommon(templateVars, ethereum.explorerUrl)
   return {
     type: 'layer2',
-    ...opStackCommon(templateVars, ethereum.explorerUrl),
+    ...common,
     display: {
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage: templateVars.architectureImage ?? architectureImage,
+      ...common.display,
       ...templateVars.display,
-      provider: 'OP Stack',
-      category:
-        templateVars.display.category ??
-        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
       warning: templateVars.display.warning,
       liveness:
         daProvider !== undefined
@@ -594,7 +611,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             bridge: DA_BRIDGES.ENSHRINED,
             mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }),
-    riskView: templateVars.riskView ?? getRiskView(templateVars, portal, daProvider),
+    riskView:
+      templateVars.riskView ?? getRiskView(templateVars, portal, daProvider),
     stage:
       templateVars.stage === undefined
         ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
@@ -707,28 +725,14 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     }
   }
 
-  const architectureImage = templateVars.discovery.hasContract(
-    'SuperchainConfig',
-  )
-    ? 'bedrock-superchain'
-    : 'opstack'
-
+  const common = opStackCommon(templateVars, baseChain.chainConfig?.explorerUrl)
   return {
     type: 'layer3',
-    ...opStackCommon(templateVars, baseChain.chainConfig?.explorerUrl),
+    ...common,
     hostChain: templateVars.hostChain,
     display: {
-      architectureImage,
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      ...common.display,
       ...templateVars.display,
-      provider: 'OP Stack',
-      category:
-        templateVars.display.category ??
-        (daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup'),
-      warning:
-        templateVars.display.warning === undefined
-          ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
-          : templateVars.display.warning,
     },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
     riskView,
