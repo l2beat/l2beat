@@ -22,6 +22,7 @@ import {
   type Milestone,
   OPERATOR,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
   type ScalingProjectEscrow,
@@ -47,7 +48,7 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types/DaLayer'
+import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'
 import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
@@ -150,6 +151,7 @@ interface OrbitStackConfigCommon {
   gasTokens?: string[]
   dataAvailabilitySolution?: DacDaLayer
   hasAtLeastFiveExternalChallengers?: boolean
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -564,6 +566,7 @@ function orbitStackCommon(
       templateVars.additionalBadges ?? [],
     ),
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 
@@ -708,9 +711,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   return {
     type: 'layer3',
@@ -877,11 +882,20 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : postsToExternalDA
-      ? 'orbit-optimium'
-      : 'orbit-rollup'
+    : isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream'
+      : postsToExternalDA
+        ? 'orbit-optimium'
+        : 'orbit-rollup'
 
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -890,13 +904,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       'postsBlobs',
     ) ??
     false
-
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
-    'RollupProxy',
-    'wasmModuleRoot',
-  )
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
 
   return {
     type: 'layer2',

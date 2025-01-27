@@ -23,7 +23,6 @@ import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
-import { DacTransactionDataType } from '../da-beat/types'
 import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -108,11 +107,11 @@ export const zkfair: Layer2 = {
   id: ProjectId('zkfair'),
   createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'ZKFair',
     slug: 'zkfair',
     purposes: ['Universal'],
@@ -408,7 +407,7 @@ export const zkfair: Layer2 = {
       createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: DacTransactionDataType.StateDiffs,
+      transactionDataType: 'State diffs',
     },
   }),
 }

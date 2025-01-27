@@ -31,8 +31,8 @@ export const bugbuster: Layer3 = {
     Badge.DA.EthereumCalldata,
     Badge.L3ParentChain.Optimism,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Bug Buster',
     slug: 'bugbuster',
     description:

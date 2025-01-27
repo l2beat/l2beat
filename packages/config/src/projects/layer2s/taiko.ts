@@ -146,8 +146,8 @@ export const taiko: Layer2 = {
     mode: DA_MODES.TRANSACTION_DATA,
   }),
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Taiko',
     slug: 'taiko',
     provider: 'Taiko',

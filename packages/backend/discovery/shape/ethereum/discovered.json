@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 21080599,
-  "configHash": "0xc5c2c9fad9453cd1bd0f46efeafffe247a12e2f45c80ff075b8804aad25926fb",
+  "configHash": "0x76afd95386b272bb094f8dbf9f4f3be11851dcb523de7b615fdbeabada6b3c70",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -281,7 +281,7 @@
       }
     },
     {
-      "name": "ShapeMultisig",
+      "name": "AlchemyMultisig1",
       "address": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
       "template": "GnosisSafe",
       "sourceHashes": [

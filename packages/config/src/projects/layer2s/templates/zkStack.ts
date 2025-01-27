@@ -22,6 +22,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  type ReasonForBeingInOther,
   type ScalingProjectContract,
   type ScalingProjectEscrow,
   type ScalingProjectPermission,
@@ -97,6 +98,7 @@ export interface ZkStackConfigCommon {
   gasTokens?: string[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
 export type Upgradeability = {
@@ -996,6 +998,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
     ],
+    reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
 

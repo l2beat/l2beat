@@ -12,8 +12,9 @@ export const thebinaryholdings: Layer2 = opStackL2({
   discovery,
   associatedTokens: ['BNRY'],
   additionalBadges: [Badge.Infra.Superchain],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  isArchived: true, // operator inactive, might still be pre official launch
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'The Binary Holdings',
     slug: 'thebinaryholdings',
     shortName: 'Binary',

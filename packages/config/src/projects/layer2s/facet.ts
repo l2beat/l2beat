@@ -17,8 +17,8 @@ export const facet: Layer2 = opStackL2({
   createdAt: new UnixTime(1735889012), // 2025-01-03T01:36:52Z
   discovery,
   additionalBadges: [Badge.Other.BasedSequencing],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Facet',
     slug: 'facet',
     description:

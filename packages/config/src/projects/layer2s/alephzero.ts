@@ -13,11 +13,11 @@ export const alephzero: Layer2 = orbitStackL2({
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Aleph Zero EVM',
     slug: 'aleph-zero',
     description:

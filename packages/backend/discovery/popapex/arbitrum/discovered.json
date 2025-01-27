@@ -1,7 +1,7 @@
 {
   "name": "popapex",
   "chain": "arbitrum",
-  "blockNumber": 296027251,
+  "blockNumber": 298723571,
   "configHash": "0x52b302037bc325071b519dd352f27c4fecc5f3259edfefd6294fa0893fe4be8a",
   "contracts": [
     {
@@ -47,11 +47,11 @@
           "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
         ],
         "allowedOutboxList": ["0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"],
-        "delayedMessageCount": 49496,
+        "delayedMessageCount": 50157,
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerInbox": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
-        "sequencerMessageCount": 48374,
-        "sequencerReportedSubMessageCount": 86873457
+        "sequencerMessageCount": 49024,
+        "sequencerReportedSubMessageCount": 89412892
       }
     },
     {
@@ -98,14 +98,14 @@
       }
     },
     {
-      "name": "OneStepProver0",
-      "address": "0x1135265fE014D3FA32B3507E325642B92aFFeAEb",
-      "template": "orbitstack/OneStepProver0",
+      "name": "OneStepProverHostIo",
+      "address": "0x33c1514Bf90e202d242C299b37C60f908aa206D4",
+      "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
-        "0x20330713abbbcf0219ef7d1c0aa3a6ede1b421f14c9d21b25c973e54fb75f5df"
+        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "sinceTimestamp": 1700037168,
+      "sinceTimestamp": 1724148192,
       "values": { "$immutable": true }
     },
     {
@@ -136,7 +136,7 @@
         {
           "permission": "configure",
           "from": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
@@ -176,24 +176,24 @@
       }
     },
     {
-      "name": "OneStepProverMath",
-      "address": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1",
-      "template": "orbitstack/OneStepProverMath",
+      "name": "OneStepProver0",
+      "address": "0x54E0923782b701044444De5d8c3A45aC890b0881",
+      "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0xb2555ede3dfe7d6df28bd96d12a0113b658c213c7ce4e34fa539df7497bc51a1"
+        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "sinceTimestamp": 1700037242,
+      "sinceTimestamp": 1724148167,
       "values": { "$immutable": true }
     },
     {
       "name": "RollupProxy",
       "address": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
-      "template": "orbitstack/RollupProxy",
+      "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
-        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e",
-        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
+        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
+        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
@@ -201,7 +201,7 @@
         {
           "permission": "configure",
           "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }]
         },
         {
@@ -225,8 +225,8 @@
       "values": {
         "$admin": "0x3d0b021E1d2A8747411E3724d5165716B35448f3",
         "$implementation": [
-          "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
-          "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
+          "0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446",
+          "0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"
         ],
         "$pastUpgrades": [
           [
@@ -236,10 +236,19 @@
               "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
               "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
             ]
+          ],
+          [
+            "2025-01-23T20:27:56.000Z",
+            "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",
+            [
+              "0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446",
+              "0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"
+            ]
           ]
         ],
-        "$upgradeCount": 1,
-        "arbOsFromWmRoot": "ArbOS v10.2 wasmModuleRoot",
+        "$upgradeCount": 2,
+        "anyTrustFastConfirmer": "0x0000000000000000000000000000000000000000",
+        "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
         "chainId": 70700,
@@ -248,12 +257,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2361,
+        "firstUnresolvedNode": 2377,
         "inbox": "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
         "isERC20Enabled": false,
         "lastStakeBlock": 19278432,
-        "latestConfirmed": 2360,
-        "latestNodeCreated": 2372,
+        "latestConfirmed": 2376,
+        "latestNodeCreated": 2387,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
@@ -271,7 +280,7 @@
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17",
+        "wasmModuleRoot": "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -350,7 +359,7 @@
         {
           "permission": "configure",
           "from": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x3d0b021E1d2A8747411E3724d5165716B35448f3" }]
         },
         {
@@ -442,7 +451,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 9 (33%)",
-        "nonce": 48,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -484,40 +493,12 @@
       }
     },
     {
-      "name": "OneStepProverHostIo",
-      "address": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
-      "template": "orbitstack/OneStepProverHostIo",
-      "sourceHashes": [
-        "0x0a8f8db8198082757cc8145891c633c20ed4313dab05beab40618258e534a1e8"
-      ],
-      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "sinceTimestamp": 1700037277,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "OneStepProofEntry",
-      "address": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
-      "template": "orbitstack/OneStepProofEntry",
-      "sourceHashes": [
-        "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc"
-      ],
-      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "sinceTimestamp": 1700037315,
-      "values": {
-        "$immutable": true,
-        "prover0": "0x1135265fE014D3FA32B3507E325642B92aFFeAEb",
-        "proverHostIo": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
-        "proverMath": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1",
-        "proverMem": "0xDf94F0474F205D086dbc2e66D69a856FCf520622"
-      }
-    },
-    {
       "name": "SequencerInbox",
       "address": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x08792f333db7e8a060c38033f92e3fc10c30e2648c56fc49c7460ee1c94343a0"
+        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
@@ -541,18 +522,25 @@
       "sinceTimestamp": 1708543048,
       "values": {
         "$admin": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
-        "$implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
+        "$implementation": "0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa",
         "$pastUpgrades": [
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
             ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+          ],
+          [
+            "2025-01-23T20:27:56.000Z",
+            "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",
+            ["0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"]
           ]
         ],
-        "$upgradeCount": 1,
-        "batchCount": 48374,
+        "$upgradeCount": 2,
+        "batchCount": 49024,
+        "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"],
         "bridge": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
+        "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
           "requiredSignatures": 1,
           "membersCount": 1,
@@ -560,8 +548,11 @@
             "YBhPN6Tq6nXoJS041bPwKYcDeU1Y84s1URBM4MJHKup49TzNB/23scWwhETSvpAl1RnMwh0S/Z+LZ8UGFWlLYmquyJi5weYTsMF6rChTnuZnqY4I1zQZPemy5hK0sIJDlQaqb/llv/8ujT5q3p4DhBLXZ3eIUMcXs4j7F+QMNZyO87mbTnrulLiPfZbAno1SKg8k2Q76fbNPQs76GK4aseCPeA5hPguvjijDIqDVK5Ffz/PhQ6nap8K6UlApBm+CMBIOmAP9IdMyAVs+wirhgMvR88+JVhoMW9kU3F90bWks78tHYqASrw/lXBFI8TgiGhlvvsmUJAC3dyzjccjMyO0M05JjmM1i8bkAdYuCWRF0KV63rABVXUAFGtKAzrLPpw=="
           ]
         },
+        "DAS_MESSAGE_HEADER_FLAG": "0x80",
         "DATA_AUTHENTICATED_FLAG": "0x40",
+        "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
+        "isUsingFeeToken": false,
         "keySetUpdates": 1,
         "maxDataSize": 104857,
         "maxTimeVariation": {
@@ -571,10 +562,13 @@
           "futureSeconds": 3600
         },
         "postsBlobs": false,
+        "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 49495
+        "totalDelayedMessagesRead": 50156,
+        "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
+        "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
         "maxTimeVariation": {
@@ -588,7 +582,7 @@
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x7e1cd1e10119e118ffaa576ddbe1c0f9810a0859a4bf2f65a4ff596c0ed4183d"
+        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
@@ -605,17 +599,27 @@
       "sinceTimestamp": 1708543048,
       "values": {
         "$admin": "0xCC6f49cff395c4d160C61112522700dcB007c41d",
-        "$implementation": "0x09824fe72BFF474d16D9c2774432E381BBD60662",
+        "$implementation": "0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED",
         "$pastUpgrades": [
           [
             "2024-02-21T19:17:28.000Z",
             "0x2b3afe91774ac66b00b40909ee92830313aea5687731aa8ba10f0dfc47af7046",
             ["0x09824fe72BFF474d16D9c2774432E381BBD60662"]
+          ],
+          [
+            "2025-01-23T20:27:56.000Z",
+            "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",
+            ["0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"]
+          ],
+          [
+            "2025-01-23T20:27:56.000Z",
+            "0x56b66d94dbb3f279ed32b857ad068fd5a3091613410bcbefce338883af855e17",
+            ["0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "bridge": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
-        "osp": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
+        "osp": "0xD89d54007079071cBA859127318b9F34eeB78049",
         "resultReceiver": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerInbox": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
         "totalChallengesCreated": 0
@@ -705,19 +709,61 @@
       }
     },
     {
-      "name": "OneStepProverMemory",
-      "address": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
-      "template": "orbitstack/OneStepProverMemory",
+      "name": "OneStepProofEntry",
+      "address": "0xD89d54007079071cBA859127318b9F34eeB78049",
+      "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61"
+        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "sinceTimestamp": 1700037203,
+      "sinceTimestamp": 1724148200,
+      "values": {
+        "$immutable": true,
+        "prover0": "0x54E0923782b701044444De5d8c3A45aC890b0881",
+        "proverHostIo": "0x33c1514Bf90e202d242C299b37C60f908aa206D4",
+        "proverMath": "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4",
+        "proverMem": "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881"
+      }
+    },
+    {
+      "name": "OneStepProverMath",
+      "address": "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4",
+      "template": "orbitstack/OneStepProverMath",
+      "sourceHashes": [
+        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
+      ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "sinceTimestamp": 1724148184,
+      "values": { "$immutable": true }
+    },
+    {
+      "name": "OneStepProverMemory",
+      "address": "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881",
+      "template": "orbitstack/OneStepProverMemory",
+      "sourceHashes": [
+        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
+      ],
+      "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "sinceTimestamp": 1724148175,
       "values": { "$immutable": true }
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
+          "description": "Add/remove batchPosters (Sequencers)."
+        },
+        {
+          "permission": "fastconfirm",
+          "from": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        }
+      ]
+    },
     {
       "address": "0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03",
       "receivedPermissions": [
@@ -760,30 +806,127 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x09824fe72BFF474d16D9c2774432E381BBD60662": [
-      "event Bisected(uint64 indexed challengeIndex, bytes32 indexed challengeRoot, uint256 challengedSegmentStart, uint256 challengedSegmentLength, bytes32[] chainHashes)",
-      "event ChallengeEnded(uint64 indexed challengeIndex, uint8 kind)",
-      "event ExecutionChallengeBegun(uint64 indexed challengeIndex, uint256 blockSteps)",
-      "event InitiatedChallenge(uint64 indexed challengeIndex, tuple(bytes32[2] bytes32Vals, uint64[2] u64Vals) startState, tuple(bytes32[2] bytes32Vals, uint64[2] u64Vals) endState)",
-      "event OneStepProofCompleted(uint64 indexed challengeIndex)",
-      "function bisectExecution(uint64 challengeIndex, tuple(uint256 oldSegmentsStart, uint256 oldSegmentsLength, bytes32[] oldSegments, uint256 challengePosition) selection, bytes32[] newSegments)",
-      "function bridge() view returns (address)",
-      "function challengeExecution(uint64 challengeIndex, tuple(uint256 oldSegmentsStart, uint256 oldSegmentsLength, bytes32[] oldSegments, uint256 challengePosition) selection, uint8[2] machineStatuses, bytes32[2] globalStateHashes, uint256 numSteps)",
-      "function challengeInfo(uint64 challengeIndex) view returns (tuple(tuple(address addr, uint256 timeLeft) current, tuple(address addr, uint256 timeLeft) next, uint256 lastMoveTimestamp, bytes32 wasmModuleRoot, bytes32 challengeStateHash, uint64 maxInboxMessages, uint8 mode))",
-      "function challenges(uint256) view returns (tuple(address addr, uint256 timeLeft) current, tuple(address addr, uint256 timeLeft) next, uint256 lastMoveTimestamp, bytes32 wasmModuleRoot, bytes32 challengeStateHash, uint64 maxInboxMessages, uint8 mode)",
-      "function clearChallenge(uint64 challengeIndex)",
-      "function createChallenge(bytes32 wasmModuleRoot_, uint8[2] startAndEndMachineStatuses_, tuple(bytes32[2] bytes32Vals, uint64[2] u64Vals)[2] startAndEndGlobalStates_, uint64 numBlocks, address asserter_, address challenger_, uint256 asserterTimeLeft_, uint256 challengerTimeLeft_) returns (uint64)",
-      "function currentResponder(uint64 challengeIndex) view returns (address)",
-      "function initialize(address resultReceiver_, address sequencerInbox_, address bridge_, address osp_)",
-      "function isTimedOut(uint64 challengeIndex) view returns (bool)",
-      "function oneStepProveExecution(uint64 challengeIndex, tuple(uint256 oldSegmentsStart, uint256 oldSegmentsLength, bytes32[] oldSegments, uint256 challengePosition) selection, bytes proof)",
-      "function osp() view returns (address)",
-      "function resultReceiver() view returns (address)",
-      "function sequencerInbox() view returns (address)",
-      "function timeout(uint64 challengeIndex)",
-      "function totalChallengesCreated() view returns (uint64)"
+    "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A": [
+    "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": [
+      "error AlreadyInit()",
+      "error AlreadySpent(uint256 index)",
+      "error BadPostUpgradeInit()",
+      "error BridgeCallFailed()",
+      "error HadZeroInit()",
+      "error MerkleProofTooLong(uint256 actualLength, uint256 maxProofLength)",
+      "error NotOwner(address sender, address owner)",
+      "error NotRollup(address sender, address rollup)",
+      "error PathNotMinimal(uint256 index, uint256 maxIndex)",
+      "error ProofTooLong(uint256 proofLength)",
+      "error RollupNotChanged()",
+      "error SimulationOnlyEntrypoint()",
+      "error UnknownRoot(bytes32 root)",
+      "event OutBoxTransactionExecuted(address indexed to, address indexed l2Sender, uint256 indexed zero, uint256 transactionIndex)",
+      "event SendRootUpdated(bytes32 indexed outputRoot, bytes32 indexed l2BlockHash)",
+      "function OUTBOX_VERSION() view returns (uint128)",
+      "function bridge() view returns (address)",
+      "function calculateItemHash(address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data) pure returns (bytes32)",
+      "function calculateMerkleRoot(bytes32[] proof, uint256 path, bytes32 item) pure returns (bytes32)",
+      "function executeTransaction(bytes32[] proof, uint256 index, address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data)",
+      "function executeTransactionSimulation(uint256 index, address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data)",
+      "function initialize(address _bridge)",
+      "function isSpent(uint256 index) view returns (bool)",
+      "function l2ToL1BatchNum() pure returns (uint256)",
+      "function l2ToL1Block() view returns (uint256)",
+      "function l2ToL1EthBlock() view returns (uint256)",
+      "function l2ToL1OutputId() view returns (bytes32)",
+      "function l2ToL1Sender() view returns (address)",
+      "function l2ToL1Timestamp() view returns (uint256)",
+      "function postUpgradeInit()",
+      "function rollup() view returns (address)",
+      "function roots(bytes32) view returns (bytes32)",
+      "function spent(uint256) view returns (bytes32)",
+      "function updateRollupAddress()",
+      "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
+    ],
+    "0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa": [
+      "constructor(uint256 _maxDataSize, address reader4844_, bool _isUsingFeeToken)",
+      "error AlreadyInit()",
+      "error AlreadyValidDASKeyset(bytes32)",
+      "error BadMaxTimeVariation()",
+      "error BadPostUpgradeInit()",
+      "error BadSequencerNumber(uint256 stored, uint256 received)",
+      "error DataBlobsNotSupported()",
+      "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
+      "error DelayedBackwards()",
+      "error DelayedTooFar()",
+      "error Deprecated()",
+      "error ForceIncludeBlockTooSoon()",
+      "error ForceIncludeTimeTooSoon()",
+      "error HadZeroInit()",
+      "error IncorrectMessagePreimage()",
+      "error InitParamZero(string name)",
+      "error InvalidHeaderFlag(bytes1)",
+      "error MissingDataHashes()",
+      "error NativeTokenMismatch()",
+      "error NoSuchKeyset(bytes32)",
+      "error NotBatchPoster()",
+      "error NotBatchPosterManager(address)",
+      "error NotForked()",
+      "error NotOrigin()",
+      "error NotOwner(address sender, address owner)",
+      "error RollupNotChanged()",
+      "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
+      "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
+      "event InvalidateKeyset(bytes32 indexed keysetHash)",
+      "event OwnerFunctionCalled(uint256 indexed id)",
+      "event SequencerBatchData(uint256 indexed batchSequenceNumber, bytes data)",
+      "event SequencerBatchDelivered(uint256 indexed batchSequenceNumber, bytes32 indexed beforeAcc, bytes32 indexed afterAcc, bytes32 delayedAcc, uint256 afterDelayedMessagesRead, tuple(uint64 minTimestamp, uint64 maxTimestamp, uint64 minBlockNumber, uint64 maxBlockNumber) timeBounds, uint8 dataLocation)",
+      "event SetValidKeyset(bytes32 indexed keysetHash, bytes keysetBytes)",
+      "function BROTLI_MESSAGE_HEADER_FLAG() view returns (bytes1)",
+      "function DAS_MESSAGE_HEADER_FLAG() view returns (bytes1)",
+      "function DATA_AUTHENTICATED_FLAG() view returns (bytes1)",
+      "function DATA_BLOB_HEADER_FLAG() view returns (bytes1)",
+      "function HEADER_LENGTH() view returns (uint256)",
+      "function TREE_DAS_MESSAGE_HEADER_FLAG() view returns (bytes1)",
+      "function ZERO_HEAVY_MESSAGE_HEADER_FLAG() view returns (bytes1)",
+      "function addSequencerL2Batch(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)",
+      "function addSequencerL2BatchFromBlobs(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)",
+      "function addSequencerL2BatchFromOrigin(uint256, bytes, uint256, address) pure",
+      "function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)",
+      "function batchCount() view returns (uint256)",
+      "function batchPosterManager() view returns (address)",
+      "function bridge() view returns (address)",
+      "function dasKeySetInfo(bytes32) view returns (bool isValidKeyset, uint64 creationBlock)",
+      "function forceInclusion(uint256 _totalDelayedMessagesRead, uint8 kind, uint64[2] l1BlockAndTime, uint256 baseFeeL1, address sender, bytes32 messageDataHash)",
+      "function getKeysetCreationBlock(bytes32 ksHash) view returns (uint256)",
+      "function inboxAccs(uint256 index) view returns (bytes32)",
+      "function initialize(address bridge_, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) maxTimeVariation_)",
+      "function invalidateKeysetHash(bytes32 ksHash)",
+      "function isBatchPoster(address) view returns (bool)",
+      "function isSequencer(address) view returns (bool)",
+      "function isUsingFeeToken() view returns (bool)",
+      "function isValidKeysetHash(bytes32 ksHash) view returns (bool)",
+      "function maxDataSize() view returns (uint256)",
+      "function maxTimeVariation() view returns (uint256, uint256, uint256, uint256)",
+      "function postUpgradeInit()",
+      "function reader4844() view returns (address)",
+      "function removeDelayAfterFork()",
+      "function rollup() view returns (address)",
+      "function setBatchPosterManager(address newBatchPosterManager)",
+      "function setIsBatchPoster(address addr, bool isBatchPoster_)",
+      "function setIsSequencer(address addr, bool isSequencer_)",
+      "function setMaxTimeVariation(tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) maxTimeVariation_)",
+      "function setValidKeyset(bytes keysetBytes)",
+      "function totalDelayedMessagesRead() view returns (uint256)",
+      "function updateRollupAddress()"
+    ],
+    "0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event NodeConfirmed(uint64 indexed nodeNum, bytes32 blockHash, bytes32 sendRoot)",
@@ -801,6 +944,7 @@
       "function _stakerMap(address) view returns (uint256 amountStaked, uint64 index, uint64 latestStakedNode, uint64 currentChallenge, bool isStaked)",
       "function addToDeposit(address stakerAddress) payable",
       "function amountStaked(address staker) view returns (uint256)",
+      "function anyTrustFastConfirmer() view returns (address)",
       "function baseStake() view returns (uint256)",
       "function bridge() view returns (address)",
       "function chainId() view returns (uint256)",
@@ -814,6 +958,7 @@
       "function currentChallenge(address staker) view returns (uint64)",
       "function currentRequiredStake() view returns (uint256)",
       "function extraChallengeTimeBlocks() view returns (uint64)",
+      "function fastConfirmNextNode(bytes32 blockHash, bytes32 sendRoot, bytes32 nodeHash)",
       "function firstUnresolvedNode() view returns (uint64)",
       "function getNode(uint64 nodeNum) view returns (tuple(bytes32 stateHash, bytes32 challengeHash, bytes32 confirmData, uint64 prevNum, uint64 deadlineBlock, uint64 noChildConfirmedBeforeBlock, uint64 stakerCount, uint64 childStakerCount, uint64 firstChildBlock, uint64 latestChildNumber, uint64 createdAtBlock, bytes32 nodeHash))",
       "function getNodeCreationBlockForLogLookup(uint64 nodeNum) view returns (uint256)",
@@ -867,109 +1012,8 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
-    "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x1135265fE014D3FA32B3507E325642B92aFFeAEb": [
-      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
-    ],
-    "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": [
-      "error AlreadyInit()",
-      "error AlreadySpent(uint256 index)",
-      "error BadPostUpgradeInit()",
-      "error BridgeCallFailed()",
-      "error HadZeroInit()",
-      "error MerkleProofTooLong(uint256 actualLength, uint256 maxProofLength)",
-      "error NotOwner(address sender, address owner)",
-      "error NotRollup(address sender, address rollup)",
-      "error PathNotMinimal(uint256 index, uint256 maxIndex)",
-      "error ProofTooLong(uint256 proofLength)",
-      "error RollupNotChanged()",
-      "error SimulationOnlyEntrypoint()",
-      "error UnknownRoot(bytes32 root)",
-      "event OutBoxTransactionExecuted(address indexed to, address indexed l2Sender, uint256 indexed zero, uint256 transactionIndex)",
-      "event SendRootUpdated(bytes32 indexed outputRoot, bytes32 indexed l2BlockHash)",
-      "function OUTBOX_VERSION() view returns (uint128)",
-      "function bridge() view returns (address)",
-      "function calculateItemHash(address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data) pure returns (bytes32)",
-      "function calculateMerkleRoot(bytes32[] proof, uint256 path, bytes32 item) pure returns (bytes32)",
-      "function executeTransaction(bytes32[] proof, uint256 index, address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data)",
-      "function executeTransactionSimulation(uint256 index, address l2Sender, address to, uint256 l2Block, uint256 l1Block, uint256 l2Timestamp, uint256 value, bytes data)",
-      "function initialize(address _bridge)",
-      "function isSpent(uint256 index) view returns (bool)",
-      "function l2ToL1BatchNum() pure returns (uint256)",
-      "function l2ToL1Block() view returns (uint256)",
-      "function l2ToL1EthBlock() view returns (uint256)",
-      "function l2ToL1OutputId() view returns (bytes32)",
-      "function l2ToL1Sender() view returns (address)",
-      "function l2ToL1Timestamp() view returns (uint256)",
-      "function postUpgradeInit()",
-      "function rollup() view returns (address)",
-      "function roots(bytes32) view returns (bytes32)",
-      "function spent(uint256) view returns (bytes32)",
-      "function updateRollupAddress()",
-      "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
-    ],
-    "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": [
-      "constructor(uint256 _maxDataSize)",
-      "error AlreadyInit()",
-      "error AlreadyValidDASKeyset(bytes32)",
-      "error BadSequencerNumber(uint256 stored, uint256 received)",
-      "error DataNotAuthenticated()",
-      "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
-      "error DelayedBackwards()",
-      "error DelayedTooFar()",
-      "error ForceIncludeBlockTooSoon()",
-      "error ForceIncludeTimeTooSoon()",
-      "error HadZeroInit()",
-      "error IncorrectMessagePreimage()",
-      "error NoSuchKeyset(bytes32)",
-      "error NotBatchPoster()",
-      "error NotForked()",
-      "error NotOrigin()",
-      "error NotOwner(address sender, address owner)",
-      "error RollupNotChanged()",
-      "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
-      "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
-      "event InvalidateKeyset(bytes32 indexed keysetHash)",
-      "event OwnerFunctionCalled(uint256 indexed id)",
-      "event SequencerBatchData(uint256 indexed batchSequenceNumber, bytes data)",
-      "event SequencerBatchDelivered(uint256 indexed batchSequenceNumber, bytes32 indexed beforeAcc, bytes32 indexed afterAcc, bytes32 delayedAcc, uint256 afterDelayedMessagesRead, tuple(uint64 minTimestamp, uint64 maxTimestamp, uint64 minBlockNumber, uint64 maxBlockNumber) timeBounds, uint8 dataLocation)",
-      "event SetValidKeyset(bytes32 indexed keysetHash, bytes keysetBytes)",
-      "function DATA_AUTHENTICATED_FLAG() view returns (bytes1)",
-      "function HEADER_LENGTH() view returns (uint256)",
-      "function addSequencerL2Batch(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)",
-      "function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder)",
-      "function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)",
-      "function batchCount() view returns (uint256)",
-      "function bridge() view returns (address)",
-      "function dasKeySetInfo(bytes32) view returns (bool isValidKeyset, uint64 creationBlock)",
-      "function forceInclusion(uint256 _totalDelayedMessagesRead, uint8 kind, uint64[2] l1BlockAndTime, uint256 baseFeeL1, address sender, bytes32 messageDataHash)",
-      "function getKeysetCreationBlock(bytes32 ksHash) view returns (uint256)",
-      "function inboxAccs(uint256 index) view returns (bytes32)",
-      "function initialize(address bridge_, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) maxTimeVariation_)",
-      "function invalidateKeysetHash(bytes32 ksHash)",
-      "function isBatchPoster(address) view returns (bool)",
-      "function isSequencer(address) view returns (bool)",
-      "function isValidKeysetHash(bytes32 ksHash) view returns (bool)",
-      "function maxDataSize() view returns (uint256)",
-      "function maxTimeVariation() view returns (uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)",
-      "function removeDelayAfterFork()",
-      "function rollup() view returns (address)",
-      "function setIsBatchPoster(address addr, bool isBatchPoster_)",
-      "function setIsSequencer(address addr, bool isSequencer_)",
-      "function setMaxTimeVariation(tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) maxTimeVariation_)",
-      "function setValidKeyset(bytes keysetBytes)",
-      "function totalDelayedMessagesRead() view returns (uint256)",
-      "function updateRollupAddress()"
+    "0x33c1514Bf90e202d242C299b37C60f908aa206D4": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
     "0x3d0b021E1d2A8747411E3724d5165716B35448f3": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1032,8 +1076,35 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1": [
-      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
+    "0x54E0923782b701044444De5d8c3A45aC890b0881": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
+    "0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED": [
+      "error NotOwner(address sender, address owner)",
+      "event Bisected(uint64 indexed challengeIndex, bytes32 indexed challengeRoot, uint256 challengedSegmentStart, uint256 challengedSegmentLength, bytes32[] chainHashes)",
+      "event ChallengeEnded(uint64 indexed challengeIndex, uint8 kind)",
+      "event ExecutionChallengeBegun(uint64 indexed challengeIndex, uint256 blockSteps)",
+      "event InitiatedChallenge(uint64 indexed challengeIndex, tuple(bytes32[2] bytes32Vals, uint64[2] u64Vals) startState, tuple(bytes32[2] bytes32Vals, uint64[2] u64Vals) endState)",
+      "event OneStepProofCompleted(uint64 indexed challengeIndex)",
+      "function bisectExecution(uint64 challengeIndex, tuple(uint256 oldSegmentsStart, uint256 oldSegmentsLength, bytes32[] oldSegments, uint256 challengePosition) selection, bytes32[] newSegments)",
+      "function bridge() view returns (address)",
+      "function challengeExecution(uint64 challengeIndex, tuple(uint256 oldSegmentsStart, uint256 oldSegmentsLength, bytes32[] oldSegments, uint256 challengePosition) selection, uint8[2] machineStatuses, bytes32[2] globalStateHashes, uint256 numSteps)",
+      "function challengeInfo(uint64 challengeIndex) view returns (tuple(tuple(address addr, uint256 timeLeft) current, tuple(address addr, uint256 timeLeft) next, uint256 lastMoveTimestamp, bytes32 wasmModuleRoot, bytes32 challengeStateHash, uint64 maxInboxMessages, uint8 mode))",
+      "function challenges(uint256) view returns (tuple(address addr, uint256 timeLeft) current, tuple(address addr, uint256 timeLeft) next, uint256 lastMoveTimestamp, bytes32 wasmModuleRoot, bytes32 challengeStateHash, uint64 maxInboxMessages, uint8 mode)",
+      "function clearChallenge(uint64 challengeIndex)",
+      "function createChallenge(bytes32 wasmModuleRoot_, uint8[2] startAndEndMachineStatuses_, tuple(bytes32[2] bytes32Vals, uint64[2] u64Vals)[2] startAndEndGlobalStates_, uint64 numBlocks, address asserter_, address challenger_, uint256 asserterTimeLeft_, uint256 challengerTimeLeft_) returns (uint64)",
+      "function currentResponder(uint64 challengeIndex) view returns (address)",
+      "function getOsp(bytes32 wasmModuleRoot) view returns (address)",
+      "function initialize(address resultReceiver_, address sequencerInbox_, address bridge_, address osp_)",
+      "function isTimedOut(uint64 challengeIndex) view returns (bool)",
+      "function oneStepProveExecution(uint64 challengeIndex, tuple(uint256 oldSegmentsStart, uint256 oldSegmentsLength, bytes32[] oldSegments, uint256 challengePosition) selection, bytes proof)",
+      "function osp() view returns (address)",
+      "function ospCond(bytes32) view returns (address)",
+      "function postUpgradeInit(address osp_, bytes32 condRoot, address condOsp)",
+      "function resultReceiver() view returns (address)",
+      "function sequencerInbox() view returns (address)",
+      "function timeout(uint64 challengeIndex)",
+      "function totalChallengesCreated() view returns (uint64)"
     ],
     "0x65AD139061B3f6DDb16170a07b925337ddf42407": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1090,9 +1161,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x89AF7C4C2198c426cFe6E86de0680A0850503e06": [
-      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
-    ],
     "0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA": [
       "constructor(uint256 _maxDataSize)",
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
@@ -1140,14 +1208,6 @@
       "function setAllowListEnabled(bool _allowListEnabled)",
       "function unpause()",
       "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)"
-    ],
-    "0x99a2A31300816C1FA3f40818AC9280fe7271F878": [
-      "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
-      "function proveOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, uint256 machineStep, bytes32 beforeHash, bytes proof) view returns (bytes32 afterHash)",
-      "function prover0() view returns (address)",
-      "function proverHostIo() view returns (address)",
-      "function proverMath() view returns (address)",
-      "function proverMem() view returns (address)"
     ],
     "0xa58F38102579dAE7C584850780dDA55744f67DF1": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1231,10 +1291,17 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xDf94F0474F205D086dbc2e66D69a856FCf520622": [
-      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
+    "0xD89d54007079071cBA859127318b9F34eeB78049": [
+      "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
+      "function getEndMachineHash(uint8 status, bytes32 globalStateHash) pure returns (bytes32)",
+      "function getStartMachineHash(bytes32 globalStateHash, bytes32 wasmModuleRoot) pure returns (bytes32)",
+      "function proveOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, uint256 machineStep, bytes32 beforeHash, bytes proof) view returns (bytes32 afterHash)",
+      "function prover0() view returns (address)",
+      "function proverHostIo() view returns (address)",
+      "function proverMath() view returns (address)",
+      "function proverMem() view returns (address)"
     ],
-    "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754": [
+    "0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event NodeConfirmed(uint64 indexed nodeNum, bytes32 blockHash, bytes32 sendRoot)",
@@ -1251,6 +1318,7 @@
       "event UserWithdrawableFundsUpdated(address indexed user, uint256 initialBalance, uint256 finalBalance)",
       "function _stakerMap(address) view returns (uint256 amountStaked, uint64 index, uint64 latestStakedNode, uint64 currentChallenge, bool isStaked)",
       "function amountStaked(address staker) view returns (uint256)",
+      "function anyTrustFastConfirmer() view returns (address)",
       "function baseStake() view returns (uint256)",
       "function bridge() view returns (address)",
       "function chainId() view returns (uint256)",
@@ -1290,6 +1358,7 @@
       "function rollupDeploymentBlock() view returns (uint256)",
       "function rollupEventInbox() view returns (address)",
       "function sequencerInbox() view returns (address)",
+      "function setAnyTrustFastConfirmer(address _anyTrustFastConfirmer)",
       "function setBaseStake(uint256 newBaseStake)",
       "function setConfirmPeriodBlocks(uint64 newConfirmPeriod)",
       "function setDelayedInbox(address _inbox, bool _enabled)",
@@ -1321,6 +1390,9 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
+    "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
     "0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C": [
       "constructor()",
       "error AlreadyInit()",
@@ -1334,6 +1406,9 @@
       "function rollup() view returns (address)",
       "function rollupInitialized(uint256 chainId, string chainConfig)",
       "function updateRollupAddress()"
+    ],
+    "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881": [
+      "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ]
   },
   "usedTemplates": {
@@ -1349,7 +1424,7 @@
     "orbitstack/OneStepProverMemory": "0x973dd6c2b5696917108d9ebedc29886dc0d44797c5a8d07b19cb00e9d0e22cdc",
     "orbitstack/Outbox": "0x313c4d684275d134c39273e2203cd22456797f13c7d9679d8273b2913b97701b",
     "orbitstack/RollupEventInbox": "0x86d307e9f7696ba92a3e1288a07fef7fb8ea4ba3d376375a0fa61024c268c4a4",
-    "orbitstack/RollupProxy": "0x54a8ed08cd6251e3666709d719dd3adeb7355319b6280bba89770746b6237ddd",
+    "orbitstack/RollupProxy_fastConfirm": "0x19d5e40f64048910ca708ebf7b8b9120866b9da318a6c772f8eee4a5c1757b22",
     "orbitstack/SequencerInbox": "0xfdccd4dc31a4dbdaad883381fcb1e291b76c65f37aa2ca3a4a69ee9e5b5adae3",
     "orbitstack/UpgradeExecutor": "0xaf0a15f64126e4be843d5576606ecddde8c85282213f6e84f322ec91c1b2938a",
     "orbitstack/ValidatorUtils": "0x5e8ffb9a8b9fa57243aaef25fcc9414f9f2ccf362e21ce679a293fbd50c5ade8"

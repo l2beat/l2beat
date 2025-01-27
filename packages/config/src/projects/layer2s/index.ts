@@ -10,6 +10,7 @@ import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { arcology } from './arcology'
+import { arenaz } from './arenaz'
 import { arithmic } from './arithmic'
 import { astarzkevm } from './astarzkevm'
 import { automata } from './automata'
@@ -23,7 +24,6 @@ import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
 import { camp } from './camp'
-import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
@@ -141,6 +141,7 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { river } from './river'
 import { rss3 } from './rss3'
+import { rufus } from './rufus'
 import { scroll } from './scroll'
 import { shape } from './shape'
 import { silicon } from './silicon'
@@ -206,6 +207,7 @@ export const layer2s: Layer2[] = [
   apex,
   arbitrum,
   arcology,
+  arenaz,
   arithmic,
   astarzkevm,
   alienx,
@@ -220,7 +222,6 @@ export const layer2s: Layer2[] = [
   bob,
   bobanetwork,
   camp,
-  canto,
   capx,
   celo,
   cyber,
@@ -338,6 +339,7 @@ export const layer2s: Layer2[] = [
   rise,
   river,
   rss3,
+  rufus,
   scroll,
   silicon,
   singularityfinance,

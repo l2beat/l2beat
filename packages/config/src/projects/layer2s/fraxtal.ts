@@ -10,7 +10,7 @@ import {
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
-} from '../da-beat/types'
+} from '../da-beat/common'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -58,11 +58,11 @@ export const fraxtal: Layer2 = opStackL2({
   },
   associatedTokens: ['FXS', 'FPIS'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Fraxtal',
     slug: 'fraxtal',
     description:
@@ -107,6 +107,7 @@ export const fraxtal: Layer2 = opStackL2({
         'FraxtalDA is a custom data availability solution built by the Fraxtal team.',
     },
     systemCategory: 'custom',
+    challengeMechanism: 'None',
     technology: {
       description: `
       ## Architecture
