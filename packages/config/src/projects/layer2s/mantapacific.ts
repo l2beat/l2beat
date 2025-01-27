@@ -1,9 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { NUGGETS } from '../../common'
-
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -46,7 +43,7 @@ export const mantapacific: Layer2 = opStackL2({
     defaultUrl: 'https://pacific-rpc.manta.network/http',
     defaultCallsPerMinute: 1500,
     startBlock: 1,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   associatedTokens: ['MANTA'],
   chainConfig: {

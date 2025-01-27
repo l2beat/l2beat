@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -56,7 +55,7 @@ export const mint: Layer2 = opStackL2({
     defaultUrl: 'https://rpc.mintchain.io',
     startBlock: 1,
     defaultCallsPerMinute: 800,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   isNodeAvailable: true,
   genesisTimestamp: new UnixTime(1715608931),

@@ -1,7 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -54,7 +52,7 @@ export const popboss: Layer3 = orbitStackL3({
     startBlock: 1,
     defaultUrl: 'https://rpc.boss.proofofplay.com',
     defaultCallsPerMinute: 3000,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   discoveryDrivenData: true,
   dataAvailabilitySolution: AnytrustDAC({

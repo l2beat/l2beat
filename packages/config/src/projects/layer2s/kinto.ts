@@ -1,6 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
@@ -67,7 +65,7 @@ export const kinto: Layer2 = orbitStackL2({
     type: 'rpc',
     defaultUrl: 'https://rpc.kinto-rpc.com',
     defaultCallsPerMinute: 600,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   stage: getStage(

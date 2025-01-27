@@ -1,4 +1,3 @@
-import type { AssessCount } from '@l2beat/config'
 import type { ActivityRecord } from '@l2beat/database'
 import type { BlockProvider } from '@l2beat/shared'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
@@ -11,7 +10,7 @@ interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
   uopsAnalyzer?: RpcUopsAnalyzer | StarknetUopsAnalyzer
-  assessCount?: AssessCount
+  assessCount: (count: number, blockNumber: number) => number
 }
 
 export class BlockTxsCountService {
@@ -22,12 +21,12 @@ export class BlockTxsCountService {
       const block = await this.$.provider.getBlockWithTransactions(blockNumber)
 
       const txs = block.transactions.length
-      const txsCount = this.$.assessCount?.(txs, blockNumber) ?? txs
+      const txsCount = this.$.assessCount(txs, blockNumber)
 
       let uopsCount: number | null = null
       if (this.$.uopsAnalyzer) {
         const uops = this.$.uopsAnalyzer.calculateUops(block)
-        uopsCount = this.$.assessCount?.(uops, blockNumber) ?? uops
+        uopsCount = this.$.assessCount(uops, blockNumber)
       }
 
       return {
