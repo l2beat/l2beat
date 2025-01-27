@@ -12,6 +12,7 @@ import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
 import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
+import SmoothScrollController from '~/controllers/smooth-scroll-controller'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -56,6 +57,7 @@ export default async function RootLayout({
                 >
                   <SearchBarContextProvider projects={searchBarProjects}>
                     <RecategorisationPreviewContextProvider>
+                      <SmoothScrollController />
                       {children}
                     </RecategorisationPreviewContextProvider>
                   </SearchBarContextProvider>
