@@ -674,21 +674,11 @@ function getRiskView(
     },
     dataAvailability: {
       ...riskViewDA(daProvider),
-      sources: [
-        {
-          contract: portal.name,
-          references: [],
-        },
-      ],
+      sources: [{ contract: portal.name, references: [] }],
     },
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
-      sources: [
-        {
-          contract: portal.name,
-          references: [],
-        },
-      ],
+      sources: [{ contract: portal.name, references: [] }],
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
@@ -697,21 +687,11 @@ function getRiskView(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
-      sources: [
-        {
-          contract: portal.name,
-          references: [],
-        },
-      ],
+      sources: [{ contract: portal.name, references: [] }],
     },
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: l2OutputOracle.name,
-          references: [],
-        },
-      ],
+      sources: [{ contract: l2OutputOracle.name, references: [] }],
     },
   }
 }
@@ -720,40 +700,40 @@ function computedStage(
   templateVars: OpStackConfigCommon,
   daProvider: DAProvider | undefined,
 ): StageConfig {
-  return daProvider !== undefined || templateVars.isNodeAvailable === undefined
-    ? {
-        stage: 'NotApplicable',
-      }
-    : getStage(
-        {
-          stage0: {
-            callsItselfRollup: true,
-            stateRootsPostedToL1: true,
-            dataAvailabilityOnL1: true,
-            rollupNodeSourceAvailable: templateVars.isNodeAvailable,
-          },
-          stage1: {
-            stateVerificationOnL1: false,
-            fraudProofSystemAtLeast5Outsiders: null,
-            usersHave7DaysToExit: false,
-            usersCanExitWithoutCooperation: false,
-            securityCouncilProperlySetUp:
-              templateVars.hasProperSecurityCouncil ?? null,
-          },
-          stage2: {
-            proofSystemOverriddenOnlyInCaseOfABug: null,
-            fraudProofSystemIsPermissionless: null,
-            delayWith30DExitWindow: false,
-          },
-        },
-        {
-          rollupNodeLink:
-            templateVars.isNodeAvailable === true
-              ? (templateVars.nodeSourceLink ??
-                'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
-              : '',
-        },
-      )
+  if (daProvider !== undefined || templateVars.isNodeAvailable === undefined) {
+    return { stage: 'NotApplicable' }
+  }
+
+  return getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp:
+          templateVars.hasProperSecurityCouncil ?? null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink:
+        templateVars.isNodeAvailable === true
+          ? (templateVars.nodeSourceLink ??
+            'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+          : '',
+    },
+  )
 }
 
 function decideDA(
