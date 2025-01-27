@@ -32,7 +32,7 @@ export function getCommonScalingEntry({
   changes,
   syncWarning,
 }: {
-  project: Project<'scalingInfo' | 'statuses', 'countdowns'>
+  project: Project<'scalingInfo' | 'statuses'>
   changes: ProjectChanges | undefined
   syncWarning?: string
 }): CommonScalingEntry {
@@ -59,7 +59,9 @@ export function getCommonScalingEntry({
         implementationChanged: !!changes?.implementationChanged,
       }),
       syncWarning,
-      countdowns: project.countdowns,
+      countdowns: {
+        otherMigration: project.statuses.otherMigration,
+      },
     },
     tab: project.scalingInfo.isOther
       ? 'Others'

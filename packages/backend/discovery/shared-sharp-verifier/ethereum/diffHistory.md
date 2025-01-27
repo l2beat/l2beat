@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x59d2b5208b59c2a1317161c7b04ed9ab24315cd6
+Generated with discovered.json: 0x86b7f5eccc2fbf64361de2c400b1d3111682921d
+
+# Diff at Mon, 20 Jan 2025 11:10:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20842982
+- current block number: 20842982
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842982 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierGovernorMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+      receivedPermissions.0.from:
++        "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+    }
+```
+
+```diff
+    contract SHARPVerifierProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+      issuedPermissions.1.to:
++        "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+      issuedPermissions.0.target:
+-        "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
+      issuedPermissions.0.to:
++        "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
+    }
+```
+
+Generated with discovered.json: 0x92de448ebe52681a228f7ddc64c08037654355c2
 
 # Diff at Mon, 21 Oct 2024 11:10:09 GMT:
 

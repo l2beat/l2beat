@@ -123,7 +123,7 @@ The tvl feature is configured via the following environment variables:
 
 ### `tracked-txs` feature
 
-The tracked-txx feature is configured via the following environment variables:
+The tracked-txs feature is configured via the following environment variables:
 
 - `BIGQUERY_CLIENT_EMAIL` - BigQuery credentials
 - `BIGQUERY_PRIVATE_KEY` - BigQuery credentials
@@ -151,8 +151,6 @@ The activity feature is configured via the following environment variables:
 
 - `STARKEX_API_KEY`
 - `STARKEX_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
-- `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - Optional. Space separated list of project ids to exclude
-  from the API.
 
 **Feature flags:**
 

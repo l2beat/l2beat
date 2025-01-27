@@ -2,7 +2,7 @@
   "name": "degate",
   "chain": "ethereum",
   "blockNumber": 18939731,
-  "configHash": "0xe7964a56f8c2d7cf3e173d8b4c64a2af9ebe4e63b994caf821eb3a5fb8ef5af9",
+  "configHash": "0xc885f0532592b8f0906d6ace7901083850f6b2062932c3ad58f09cced9a7c745",
   "contracts": [
     {
       "name": "BlockVerifier",
@@ -173,7 +173,7 @@
         "loopringV3": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
         "owner": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "shutdownTriggered": [{ "timestamp": 1695894359 }],
+        "shutdownTriggered": [1695894359],
         "state": {
           "maxAgeDepositUntilWithdrawable": 1296000,
           "DOMAIN_SEPARATOR": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",

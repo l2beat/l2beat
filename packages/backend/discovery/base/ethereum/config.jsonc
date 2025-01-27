@@ -7,15 +7,6 @@
     "0x3154Cf16ccdb4C6d922629664174b904d80F2C35", //L1StandardBridge
     "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3"
   ],
-  "types": {
-    "DisputeGameMap": {
-      "typeCaster": "Mapping",
-      "arg": {
-        "0": "FaultDisputeGame",
-        "1": "PermissionedDisputeGame"
-      }
-    }
-  },
   "names": {
     "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "BaseMultisig1",
     "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "BaseMultisig2",

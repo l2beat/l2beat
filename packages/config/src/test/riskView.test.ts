@@ -1,6 +1,6 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { MochaTestContext } from 'earl/dist/cjs/validators/snapshots/TestContext'
+import type { MochaTestContext } from 'earl/dist/cjs/validators/snapshots/TestContext'
 import { layer2s } from '../projects'
 import { layer3s } from '../projects'
 

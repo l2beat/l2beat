@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
@@ -44,7 +44,6 @@ export const aztecconnect: Layer2 = {
         'https://discord.gg/UDtJr9u',
       ],
     },
-    activityDataSource: 'Explorer API',
   },
   config: {
     escrows: [

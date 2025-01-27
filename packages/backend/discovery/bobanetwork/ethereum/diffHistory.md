@@ -1,4 +1,248 @@
-Generated with discovered.json: 0xdd0f14e2fb8f6c148c2f265bb9711d06f3a38a89
+Generated with discovered.json: 0x09d403c97439cf7c88c78fc87013de7a973f9b2e
+
+# Diff at Mon, 20 Jan 2025 11:09:20 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21428646
+- current block number: 21428646
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428646 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.1.target:
+-        "0xe1B64045351B0B6e9821F19b39f81bc4711D2230"
+      issuedPermissions.1.to:
++        "0xe1B64045351B0B6e9821F19b39f81bc4711D2230"
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+    }
+```
+
+```diff
+    contract BobaMultisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      receivedPermissions.11.target:
+-        "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
+      receivedPermissions.11.from:
++        "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
+      receivedPermissions.10.target:
+-        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      receivedPermissions.10.from:
++        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      receivedPermissions.9.target:
+-        "0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
+      receivedPermissions.9.from:
++        "0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
+      receivedPermissions.8.target:
+-        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      receivedPermissions.8.from:
++        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      receivedPermissions.7.target:
+-        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      receivedPermissions.7.from:
++        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      receivedPermissions.6.target:
+-        "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3"
+      receivedPermissions.6.from:
++        "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3"
+      receivedPermissions.5.target:
+-        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      receivedPermissions.5.from:
++        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      receivedPermissions.4.target:
+-        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      receivedPermissions.4.from:
++        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      receivedPermissions.3.target:
+-        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      receivedPermissions.3.from:
++        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      receivedPermissions.2.target:
+-        "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      receivedPermissions.2.from:
++        "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      receivedPermissions.1.target:
+-        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      receivedPermissions.1.from:
++        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      receivedPermissions.0.target:
+-        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      receivedPermissions.0.from:
++        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      directlyReceivedPermissions.0.target:
+-        "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"
+      directlyReceivedPermissions.0.from:
++        "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc) {
+    +++ description: None
+      directlyReceivedPermissions.7.target:
+-        "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
+      directlyReceivedPermissions.7.from:
++        "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
+      directlyReceivedPermissions.6.target:
+-        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      directlyReceivedPermissions.6.from:
++        "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741"
+      directlyReceivedPermissions.5.target:
+-        "0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
+      directlyReceivedPermissions.5.from:
++        "0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
+      directlyReceivedPermissions.4.target:
+-        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      directlyReceivedPermissions.4.from:
++        "0x996ffD627901f10C80A7d4B72A12316D2e77c076"
+      directlyReceivedPermissions.3.target:
+-        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      directlyReceivedPermissions.3.from:
++        "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      directlyReceivedPermissions.2.target:
+-        "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3"
+      directlyReceivedPermissions.2.from:
++        "0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3"
+      directlyReceivedPermissions.1.target:
+-        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      directlyReceivedPermissions.1.from:
++        "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      directlyReceivedPermissions.0.target:
+-        "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+      directlyReceivedPermissions.0.from:
++        "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "set and change address mappings."
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x996ffD627901f10C80A7d4B72A12316D2e77c076) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.1.target:
+-        "0xbfBAB4363034A930687B9320599a69DfBf1D21d0"
+      issuedPermissions.1.to:
++        "0xbfBAB4363034A930687B9320599a69DfBf1D21d0"
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.to:
++        "0x56121a8612474C3eB65D69a3b871f284705b9bC4"
+      issuedPermissions.0.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+Generated with discovered.json: 0xdd2edcc5527ce5186ae888579067d386f7b6aaac
 
 # Diff at Wed, 08 Jan 2025 08:59:31 GMT:
 

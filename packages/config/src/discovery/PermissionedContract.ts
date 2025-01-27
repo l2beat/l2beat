@@ -1,7 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
-  StackPermissionsTag,
+  type StackPermissionsTag,
   StackPermissionsTagDescriptions,
 } from './StackTemplateTypes'
 import { stringFormat } from './values/templateUtils'

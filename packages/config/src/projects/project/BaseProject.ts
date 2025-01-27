@@ -1,26 +1,27 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  ProjectCountdowns,
   ProjectDataAvailability,
   ScalingProjectCategory,
-  ScalingProjectDisplay,
   ScalingProjectRiskView,
   ScalingProjectStack,
 } from '../../common'
-import { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
-import {
+import type { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+import type { BridgeDisplay, BridgeRiskView } from '../bridges'
+import type {
+  EnshrinedBridge,
+  NoDaBridge,
+  OnChainDaBridge,
+  StandaloneDacBridge,
+} from '../da-beat'
+import type {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
   ProjectLivenessInfo,
   StageConfig,
   WarningWithSentiment,
 } from '../layer2s'
-import {
-  DacBridge,
-  EnshrinedBridge,
-  NoDaBridge,
-  OnChainDaBridge,
-} from '../other'
-import { ProofVerification } from '../types'
+import type { ProofVerification } from '../types'
 
 export interface BaseProject {
   id: ProjectId
@@ -30,6 +31,8 @@ export interface BaseProject {
   addedAt: UnixTime
   // data
   statuses?: ProjectStatuses
+  bridgeInfo?: ProjectBridgeInfo
+  bridgeRisks?: BridgeRiskView
   scalingInfo?: ProjectScalingInfo
   scalingStage?: StageConfig | undefined
   scalingRisks?: ProjectScalingRisks
@@ -41,15 +44,17 @@ export interface BaseProject {
   /** Display information for the costs feature. If present costs is enabled for this project. */
   costsInfo?: ProjectCostsInfo
   // trackedTxsConfig
-  /** Display information for the activity feature. If present activity is enabled for this project. */
-  activityInfo?: ProjectActivityInfo
-  // activityConfig
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
-  daBridges?: (OnChainDaBridge | EnshrinedBridge | NoDaBridge | DacBridge)[]
+  daBridges?: (
+    | OnChainDaBridge
+    | EnshrinedBridge
+    | NoDaBridge
+    | StandaloneDacBridge
+  )[]
   countdowns?: ProjectCountdowns
   // tags
   isBridge?: true
@@ -58,6 +63,7 @@ export interface BaseProject {
   isDaLayer?: true
   isUpcoming?: true
   isArchived?: true
+  hasActivity?: true
 }
 
 export interface ProjectStatuses {
@@ -65,6 +71,18 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   isUnderReview: boolean
   isUnverified: boolean
+  // countdowns
+  otherMigration?: {
+    expiresAt: number
+    pretendingToBe: ScalingProjectCategory
+    reasons: ReasonForBeingInOther[]
+  }
+}
+
+export interface ProjectBridgeInfo {
+  category: BridgeDisplay['category']
+  destination: string[]
+  validatedBy: string
 }
 
 export interface ProjectScalingInfo {
@@ -106,16 +124,4 @@ export interface ProjectTvlInfo {
 
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
-}
-
-export interface ProjectActivityInfo {
-  dataSource?: ScalingProjectDisplay['activityDataSource']
-}
-
-export interface ProjectCountdowns {
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ScalingProjectCategory
-    reasons: ReasonForBeingInOther[]
-  }
 }

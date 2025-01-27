@@ -1,9 +1,9 @@
-import { Logger } from '@l2beat/backend-tools'
-import { OnchainVerifier, ProjectService, chains } from '@l2beat/config'
-import { Config } from '../../config'
-import { Peripherals } from '../../peripherals/Peripherals'
-import { Clock } from '../../tools/Clock'
-import { ApplicationModule } from '../ApplicationModule'
+import type { Logger } from '@l2beat/backend-tools'
+import { type OnchainVerifier, ProjectService, chains } from '@l2beat/config'
+import type { Config } from '../../config'
+import type { Peripherals } from '../../peripherals/Peripherals'
+import type { Clock } from '../../tools/Clock'
+import type { ApplicationModule } from '../ApplicationModule'
 import { VerifiersStatusRefresher } from './VerifiersStatusRefresher'
 
 export function createVerifiersModule(

@@ -127,7 +127,7 @@ describe('discovery config.jsonc', () => {
           it(`${c.name} on ${c.chain}`, () => {
             for (const key of Object.keys(c.raw.overrides ?? {})) {
               if (!EthereumAddress.check(key)) {
-                expect(() => c.overrides.get(key)).not.toThrow()
+                expect(() => c.for(key)).not.toThrow()
               }
             }
           })
@@ -154,11 +154,11 @@ describe('discovery config.jsonc', () => {
     describe('all accessControl fields keys are accessControl', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
+          const discovery = configReader.readDiscovery(c.name, c.chain)
           it(`${c.name}:${c.chain}`, () => {
-            for (const override of c.overrides) {
-              for (const [key, value] of Object.entries(
-                override.fields ?? {},
-              )) {
+            for (const contract of discovery.contracts) {
+              const fields = c.for(contract.address).fields
+              for (const [key, value] of Object.entries(fields)) {
                 if (
                   value.handler?.type === 'accessControl' &&
                   value.handler.pickRoleMembers === undefined

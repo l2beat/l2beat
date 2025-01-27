@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 21628418,
-  "configHash": "0xb9392cfb41000903a5c16cc7f46897a52eae57d0210f3eabe5f4622f63fa99bd",
+  "configHash": "0x97c380ea0700d180c1f4bbf59cc373b4fac36eca1c4d173e680660c8a65c7dbc",
   "contracts": [
     {
       "name": "Outbox",
@@ -17,16 +17,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -64,7 +58,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
+          "from": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"
         }
       ],
       "sinceTimestamp": 1661962059,
@@ -166,31 +160,28 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
+          "to": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
+          "description": "Add/remove batchPosters (Sequencers).",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+          "to": "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "via": []
         },
         {
           "permission": "sequence",
-          "target": "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
+          "to": "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -290,7 +281,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
+          "from": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"
         }
       ],
       "sinceTimestamp": 1661964258,
@@ -312,44 +303,38 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+          "from": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
         },
         {
           "permission": "act",
-          "target": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+          "from": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
         },
         {
           "permission": "act",
-          "target": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+          "from": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
         },
         {
           "permission": "act",
-          "target": "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
+          "from": "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         },
         {
           "permission": "configure",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
         {
           "permission": "upgrade",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
         }
       ],
       "sinceTimestamp": 1678968515,
@@ -400,7 +385,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
+          "from": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"
         }
       ],
       "sinceTimestamp": 1662368855,
@@ -422,16 +407,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -504,7 +483,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
+          "from": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"
         }
       ],
       "sinceTimestamp": 1665084515,
@@ -524,35 +503,35 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+          "from": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
         },
         {
           "permission": "upgrade",
-          "target": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
+          "from": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
         },
         {
           "permission": "upgrade",
-          "target": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+          "from": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
         },
         {
           "permission": "upgrade",
-          "target": "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
+          "from": "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
         },
         {
           "permission": "upgrade",
-          "target": "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
+          "from": "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
         },
         {
           "permission": "upgrade",
-          "target": "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+          "from": "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         },
         {
           "permission": "upgrade",
-          "target": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+          "from": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
         },
         {
           "permission": "upgrade",
-          "target": "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
+          "from": "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
         }
       ],
       "sinceTimestamp": 1661457944,
@@ -573,11 +552,11 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+          "from": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
         },
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
         }
       ],
       "sinceTimestamp": 1678968395,
@@ -598,19 +577,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x194DAFaB3B9B24B181a63F81eE42b322Cd0Db6E5",
-          "via": [
-            {
-              "address": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3",
-              "delay": 0
-            }
-          ]
+          "to": "0x194DAFaB3B9B24B181a63F81eE42b322Cd0Db6E5",
+          "via": [{ "address": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
@@ -642,16 +616,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -696,93 +664,97 @@
       "issuedPermissions": [
         {
           "permission": "configure",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0,
-              "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-            }
-          ]
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            }
-          ]
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
           "permission": "validate",
-          "target": "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
+          "to": "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
+          "to": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78",
+          "to": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0x610Aa279989F440820e14248BD3879B148717974",
+          "to": "0x610Aa279989F440820e14248BD3879B148717974",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104",
+          "to": "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398",
+          "to": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0",
+          "to": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5",
+          "to": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
+          "to": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0",
+          "to": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
+          "to": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
+          "to": "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b",
+          "to": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         },
         {
           "permission": "validate",
-          "target": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5",
+          "to": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         }
       ],
@@ -939,16 +911,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -1010,16 +976,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
           ]
         }
       ],
@@ -1089,19 +1049,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE89eACE17073663D9c6337Cc2Ca25bc28e5fc82E",
-          "via": [
-            {
-              "address": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766",
-              "delay": 0
-            }
-          ]
+          "to": "0xE89eACE17073663D9c6337Cc2Ca25bc28e5fc82E",
+          "via": [{ "address": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
@@ -1126,16 +1081,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -1176,19 +1125,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
-          "via": [
-            {
-              "address": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6",
-              "delay": 0
-            }
-          ]
+          "to": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
+          "via": [{ "address": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
@@ -1220,16 +1164,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -1284,19 +1222,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
-          "via": [
-            {
-              "address": "0x0ea6999172c1B4563695F76A52de73c848587b17",
-              "delay": 0
-            }
-          ]
+          "to": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
+          "via": [{ "address": "0x0ea6999172c1B4563695F76A52de73c848587b17" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
@@ -1337,15 +1270,15 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+          "from": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
         },
         {
           "permission": "upgrade",
-          "target": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
+          "from": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
         },
         {
           "permission": "upgrade",
-          "target": "0xcEe284F754E854890e311e3280b767F80797180d"
+          "from": "0xcEe284F754E854890e311e3280b767F80797180d"
         }
       ],
       "sinceTimestamp": 1623784062,
@@ -1416,16 +1349,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
           ]
         }
       ],
@@ -1490,7 +1417,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
+          "from": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"
         }
       ],
       "sinceTimestamp": 1659013011,
@@ -1510,19 +1437,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xd3132d052C9045D7cB0236586C9E2276e654343D",
-          "via": [
-            {
-              "address": "0x509E3CDc218d163DB9A03678107b72e00163b061",
-              "delay": 0
-            }
-          ]
+          "to": "0xd3132d052C9045D7cB0236586C9E2276e654343D",
+          "via": [{ "address": "0x509E3CDc218d163DB9A03678107b72e00163b061" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
@@ -1553,23 +1475,23 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0",
+          "from": "0x7CF3d537733F6Ba4183A833c9B021265716cE9d0",
           "via": [{ "address": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5",
+          "from": "0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5",
           "via": [{ "address": "0x0ea6999172c1B4563695F76A52de73c848587b17" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x0ea6999172c1B4563695F76A52de73c848587b17"
+          "from": "0x0ea6999172c1B4563695F76A52de73c848587b17"
         },
         {
           "permission": "act",
-          "target": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6"
+          "from": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1619,7 +1541,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
+          "from": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"
         }
       ],
       "sinceTimestamp": 1664352371,
@@ -1642,16 +1564,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" }
           ]
         }
       ],
@@ -1733,7 +1649,7 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "from": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
           "description": "Add/remove batchPosters (Sequencers)."
         }
       ],
@@ -1805,16 +1721,10 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
           ]
         }
       ],
@@ -1859,29 +1769,23 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
-            {
-              "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-              "delay": 0
-            },
-            {
-              "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
-              "delay": 0
-            }
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
           ]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "configure",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+          "from": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1889,7 +1793,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "from": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1897,7 +1801,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+          "from": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
           "via": [
             { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1905,7 +1809,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+          "from": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1913,7 +1817,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
+          "from": "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1921,12 +1825,12 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
           "permission": "upgrade",
-          "target": "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+          "from": "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1934,7 +1838,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+          "from": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
           "via": [
             { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1942,7 +1846,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
+          "from": "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1950,7 +1854,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "from": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1958,7 +1862,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "from": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
           "via": [
             { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1966,7 +1870,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xcEe284F754E854890e311e3280b767F80797180d",
+          "from": "0xcEe284F754E854890e311e3280b767F80797180d",
           "via": [
             { "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1974,7 +1878,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
+          "from": "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
           "via": [
             { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1982,7 +1886,7 @@
         },
         {
           "permission": "upgrade",
-          "target": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
             { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
@@ -1992,7 +1896,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+          "from": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
         }
       ],
       "sinceTimestamp": 1678968515,
@@ -3560,7 +3464,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+          "from": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -3603,19 +3507,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xcd6BeDC12de2bF49afDE86cc91031d207318F207",
-          "via": [
-            {
-              "address": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c",
-              "delay": 0
-            }
-          ]
+          "to": "0xcd6BeDC12de2bF49afDE86cc91031d207318F207",
+          "via": [{ "address": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c" }]
         }
       ],
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ],
@@ -3646,7 +3545,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "from": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
@@ -3656,7 +3555,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -3666,14 +3565,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78",
+          "from": "0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78",
           "via": [{ "address": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3"
+          "from": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3"
         }
       ]
     },
@@ -3690,7 +3589,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -3704,7 +3603,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -3715,7 +3614,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -3731,7 +3630,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -3741,7 +3640,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -3751,7 +3650,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "target": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "from": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
@@ -3761,14 +3660,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b",
+          "from": "0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b",
           "via": [{ "address": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c"
+          "from": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c"
         }
       ]
     },
@@ -3777,14 +3676,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0",
+          "from": "0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0",
           "via": [{ "address": "0x509E3CDc218d163DB9A03678107b72e00163b061" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x509E3CDc218d163DB9A03678107b72e00163b061"
+          "from": "0x509E3CDc218d163DB9A03678107b72e00163b061"
         }
       ]
     },
@@ -3793,7 +3692,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -3804,14 +3703,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398",
+          "from": "0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398",
           "via": [{ "address": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766"
+          "from": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766"
         }
       ]
     },
@@ -3820,7 +3719,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "target": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+          "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
@@ -5003,24 +4902,24 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359",
-    "orbitstack/Bridge": "0xbf3086cfe461b5cddc0ca0473fd46a2d3d521ef3860d13221d24c902c0013175",
-    "orbitstack/ChallengeManager": "0xc4fbc82c5001579bb1f880d92a3510cda3dc4a65e284fc300363ce048c2fb6d7",
-    "orbitstack/CustomGateway": "0xc4bb8ded0b7cd317b76ac6cfa0b521e1f8f3093f9f4dfd8634bc43c08592fa80",
-    "orbitstack/ERC20Gateway": "0xf1eafb4b453c67c3928c43ad270e71102bda129c494c4cf3d132be60695af7f9",
-    "orbitstack/GatewayRouter": "0x97cee29343dc6f8ca1922c4809fd47d7538dc7c66fff651958aea58575094575",
-    "orbitstack/Inbox": "0x1938bb9de2d7f328ae3e83f2dd9f5d3c5575b599fc097cf9308bac4d5bb3e89e",
-    "orbitstack/OneStepProofEntry": "0xf3bff5da86f9bbb5f9ac93a0f2239f0769d051b67a44be2e52c322799e3b8d4f",
-    "orbitstack/OneStepProver0": "0x80f18705038deef096683a89d16549bf343ada57cac1f2750df2f06fbbaed5ca",
-    "orbitstack/OneStepProverHostIo": "0xacacb7603847a3f0212fdf80c653040278214c00451f763907e270d1f19efec0",
-    "orbitstack/OneStepProverMath": "0x8dd8aebb517eb6eaf15437ddbb90dff66f2b14d9d6b5390dd87fbdab15168188",
-    "orbitstack/OneStepProverMemory": "0x9783e1f5d836162f6bf9df066ef7bff18da19c56314fe858f6feba71c350ced7",
-    "orbitstack/Outbox": "0xbe3b84a344052ad51b5b58cecda95b249b73ff1da035383bf02f29a785eb0c68",
-    "orbitstack/RollupEventInbox": "0x0608b35e1df8a51677a6392869e50b60a1ff7137f71f40bddf83143a5ef640c1",
-    "orbitstack/RollupProxy": "0x9ffbe36f064536f2a8ffb61a54a779561f7ddde93379da6475d263ca36e3c6db",
-    "orbitstack/SequencerInbox": "0x5cd19865dbaedc22bb0571435a45b9ec44f18388ca4c83dc971fb6c0be1bdf22",
-    "orbitstack/UpgradeExecutor": "0xa8c2617950ce46d982abd852226ebcc1aacaf9c8c7daeda793b53a790eced777",
-    "orbitstack/ValidatorUtils": "0x1345b7ce8347b1c8e9609c7b5a42e7494c8447ed73249c9494da50911d9a1e4a"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
+    "orbitstack/Bridge": "0x02984ca06256841587f09fd5671a658acdc704f6b3a98579811309921a1063f5",
+    "orbitstack/ChallengeManager": "0x511c91d2d0c30ba36cfdc45e36511cd5e286868b62513aed4ac0004a9a4ac4b2",
+    "orbitstack/CustomGateway": "0x228360f1f04618230d970739e23132148f687799cb5295817e8bb1df7ace8237",
+    "orbitstack/ERC20Gateway": "0x1902aa5e8c940ebb1f40a3cdb36925575c7c13e97f2b4bc5cf73a3a4e41197a8",
+    "orbitstack/GatewayRouter": "0x57e66cd5765c08d76b31b366167343f1a22e10db8384e1de79c8b3b786352006",
+    "orbitstack/Inbox": "0x1a37f67487d4a0e7a64586c6a12a57a7c4c9bbda928b5bbf9d34e06009923ffe",
+    "orbitstack/OneStepProofEntry": "0x95d627339856b26a15c61f0b4e7dbe6728675622517166c789b5a9f1a9951894",
+    "orbitstack/OneStepProver0": "0x6853e4950af75701e2dbcdbf2c47045d4d4ae24c37b90202dc94c97cd6569b1d",
+    "orbitstack/OneStepProverHostIo": "0x80d870cc4304c0d427dba6afa06fd3be64b345938cbe57fc2d12cc4bf059ea4a",
+    "orbitstack/OneStepProverMath": "0x382bfd15b161d0a0588281b1810b215f6bce5e128c3650eeb73f0ec859357dff",
+    "orbitstack/OneStepProverMemory": "0x973dd6c2b5696917108d9ebedc29886dc0d44797c5a8d07b19cb00e9d0e22cdc",
+    "orbitstack/Outbox": "0x313c4d684275d134c39273e2203cd22456797f13c7d9679d8273b2913b97701b",
+    "orbitstack/RollupEventInbox": "0x86d307e9f7696ba92a3e1288a07fef7fb8ea4ba3d376375a0fa61024c268c4a4",
+    "orbitstack/RollupProxy": "0x54a8ed08cd6251e3666709d719dd3adeb7355319b6280bba89770746b6237ddd",
+    "orbitstack/SequencerInbox": "0xfdccd4dc31a4dbdaad883381fcb1e291b76c65f37aa2ca3a4a69ee9e5b5adae3",
+    "orbitstack/UpgradeExecutor": "0xaf0a15f64126e4be843d5576606ecddde8c85282213f6e84f322ec91c1b2938a",
+    "orbitstack/ValidatorUtils": "0x5e8ffb9a8b9fa57243aaef25fcc9414f9f2ccf362e21ce679a293fbd50c5ade8"
   }
 }

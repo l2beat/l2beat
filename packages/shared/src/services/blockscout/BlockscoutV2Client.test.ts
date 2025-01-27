@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { HttpClient } from '../../clients'
+import type { HttpClient } from '../../clients'
 import { BlockscoutV2Client } from './BlockscoutV2Client'
 
 const API_URL = 'https://example.com/api'
@@ -9,7 +9,7 @@ const NOW = UnixTime.now()
 const responseMock = {
   items: [
     {
-      block: 19917670,
+      block_number: 19917670,
       block_index: 260,
       created_contract: null,
       error: null,

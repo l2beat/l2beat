@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import {
   useScalingFilter,
@@ -14,6 +14,7 @@ import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -48,6 +49,7 @@ export function ActivityChart({
   hideScalingFactor,
   type,
 }: Props) {
+  const { checked } = useRecategorisationPreviewContext()
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
   const includeFilter = useScalingFilter()
@@ -73,10 +75,12 @@ export function ActivityChart({
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: chartFilter,
+    previewRecategorisation: checked,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: chartFilter,
+    previewRecategorisation: checked,
   })
 
   const { columns, valuesStyle, chartRange, formatYAxisLabel } =
@@ -171,6 +175,7 @@ function Controls({
       <div className="flex gap-1">
         {isClient ? (
           <RadioGroup
+            name="activityChartScale"
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >
@@ -182,6 +187,7 @@ function Controls({
         )}
         {isClient ? (
           <Checkbox
+            name="showMainnetActivity"
             checked={showMainnet}
             onCheckedChange={(state) => setShowMainnet(!!state)}
           >

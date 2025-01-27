@@ -18,6 +18,7 @@ import { CostsTimeRange, rangeToResolution } from './utils/range'
 export const CostsChartParams = z.object({
   range: CostsTimeRange,
   filter: CostsProjectsFilter,
+  previewRecategorisation: z.boolean().default(false),
 })
 export type CostsChartParams = z.infer<typeof CostsChartParams>
 
@@ -37,9 +38,13 @@ export function getCostsChart(
 export type CostsChartData = Awaited<ReturnType<typeof getCachedCostsChartData>>
 
 export const getCachedCostsChartData = cache(
-  async ({ range: timeRange, filter }: CostsChartParams) => {
+  async ({
+    range: timeRange,
+    filter,
+    previewRecategorisation,
+  }: CostsChartParams) => {
     const db = getDb()
-    const projects = getCostsProjects(filter)
+    const projects = getCostsProjects(filter, previewRecategorisation)
     if (projects.length === 0) {
       return []
     }

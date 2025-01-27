@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xe15be907157809bfa1a5dfa59607cca6f9d81d47
+Generated with discovered.json: 0x1a75e9f7f3318c6229fc07e7a68578b1ef54baaa
+
+# Diff at Mon, 20 Jan 2025 11:10:45 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 9010064
+- current block number: 9010064
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9010064 (main branch discovery), not current.
+
+```diff
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
+      receivedPermissions.0.from:
++        "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec"
+      issuedPermissions.0.to:
++        "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec"
+    }
+```
+
+```diff
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391"
+      issuedPermissions.0.to:
++        "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391"
+    }
+```
+
+```diff
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"
+      receivedPermissions.0.from:
++        "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"
+    }
+```
+
+Generated with discovered.json: 0x83ea202607da95d7e69fe9398b6a8f17c9080388
 
 # Diff at Mon, 21 Oct 2024 11:25:22 GMT:
 

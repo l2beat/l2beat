@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import { Response } from 'node-fetch'
+import type { Response } from 'node-fetch'
 
 export interface ProgressEvent {
   total: number

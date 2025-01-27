@@ -2,7 +2,7 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { UpdateNotifierRecord } from './entity'
+import type { UpdateNotifierRecord } from './entity'
 import { UpdateNotifierRepository } from './repository'
 
 const PROJECT1 = 'project1'

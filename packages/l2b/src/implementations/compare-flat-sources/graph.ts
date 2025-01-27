@@ -1,6 +1,6 @@
 import { execSync } from 'child_process'
 import { writeFileSync } from 'fs'
-import graphvizObject from 'graphviz-wasm'
+import type graphvizObject from 'graphviz-wasm'
 
 export async function generateAndOpenGraph(
   matrix: Record<string, Record<string, number>>,

@@ -1,8 +1,11 @@
-import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
-import { ChainId } from '@l2beat/shared-pure'
-
-import { BackendProject } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import type { BackendProject } from '@l2beat/backend-shared'
+import type { Database } from '@l2beat/database'
+import type {
+  ConfigReader,
+  DiscoveryConfig,
+  DiscoveryDiff,
+} from '@l2beat/discovery'
+import type { ChainId } from '@l2beat/shared-pure'
 import { getDiff } from './utils/getDiff'
 
 export interface DashboardProject {

@@ -2,7 +2,8 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21629810,
-  "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
+  "configHash": "0xaa0aa74ef8fd5b854c9bdc4faf84f21c2f051ce5ee9549d332769fbbf7617fda",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
@@ -16,7 +17,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -52,7 +53,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
           "via": []
         }
       ],
@@ -130,7 +131,8 @@
       "fieldMeta": {
         "maxTotalBalance": {
           "severity": "MEDIUM",
-          "description": "Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)"
+          "description": "Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)",
+          "type": "RISK_PARAMETER"
         }
       },
       "derivedName": "StarknetERC20Bridge"
@@ -146,12 +148,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+          "to": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
           "via": []
         }
       ],
@@ -218,7 +220,8 @@
       "fieldMeta": {
         "programHash": {
           "severity": "HIGH",
-          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated."
+          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+          "type": "CODE_CHANGE"
         }
       },
       "derivedName": "Starknet"
@@ -232,7 +235,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
         }
       ]
     },
@@ -245,7 +248,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
         }
       ]
     },
@@ -496,6 +499,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { IconClose } from '../icons/IconClose'
 import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
-import { PANEL_IDS, PanelId, useMultiViewStore } from './store'
+import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
 
 export function PanelHeader(props: { id: PanelId }) {
   const isFullScreen = useMultiViewStore(

@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+import { ErrorState } from '../common/ErrorState'
+import { LoadingState } from '../common/LoadingState'
 import { Table } from './Table'
 import { fetchData } from './src/fetchData'
-import { DiscoLupeProject } from './src/model'
+import type { DiscoLupeProject } from './src/model'
 
 export interface Props {
   projects: DiscoLupeProject[]
@@ -14,11 +16,11 @@ export function DiscoLupe() {
   })
 
   if (result.isPending) {
-    return <div>Loading...</div>
+    return <LoadingState />
   }
 
   if (result.isError) {
-    return <div>{`Error... ${result.error}`}</div>
+    return <ErrorState />
   }
 
   return (

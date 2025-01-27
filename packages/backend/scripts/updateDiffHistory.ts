@@ -8,13 +8,13 @@ import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import {
   ConfigReader,
-  DiscoveryDiff,
+  type DiscoveryDiff,
   diffDiscovery,
   discover,
   discoveryDiffToMarkdown,
   getChainConfig,
 } from '@l2beat/discovery'
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 

@@ -22,17 +22,20 @@ const UNIT = 'usd'
 export default async function Page() {
   const [entries] = await Promise.all([
     getScalingSummaryEntries(),
-    api.tvl.recategorizedChart.prefetch({
+    api.tvl.recategorisedChart.prefetch({
       range: TIME_RANGE,
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
+      previewRecategorisation: false,
     }),
-    api.activity.recategorizedChart.prefetch({
+    api.activity.recategorisedChart.prefetch({
       range: TIME_RANGE,
       filter: { type: 'all' },
+      previewRecategorisation: false,
     }),
     api.activity.chartStats.prefetch({
       filter: { type: 'all' },
+      previewRecategorisation: false,
     }),
   ])
 

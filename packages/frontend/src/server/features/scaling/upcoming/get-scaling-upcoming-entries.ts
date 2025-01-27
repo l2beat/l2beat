@@ -13,33 +13,31 @@ import {
 export async function getScalingUpcomingEntries() {
   const projects = await ProjectService.STATIC.getProjects({
     select: ['statuses', 'scalingInfo'],
-    optional: ['countdowns'],
     where: ['isScaling', 'isUpcoming'],
   })
 
   const entries = projects
-    .sort((a, b) => b.addedAt.toNumber() - a.addedAt.toNumber())
     .map((project) => getScalingUpcomingEntry(project))
+    .sort((a, b) => b.initialOrder - a.initialOrder)
 
   return groupByTabs(entries)
 }
 
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
+  initialOrder: number
   category: ScalingProjectCategory
   provider: ScalingProjectStack | undefined
   purposes: string[]
 }
 
 function getScalingUpcomingEntry(
-  project: Project<'scalingInfo' | 'statuses', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses'>,
 ): ScalingUpcomingEntry {
   return {
-    ...getCommonScalingEntry({
-      project,
-      changes: undefined,
-    }),
+    ...getCommonScalingEntry({ project, changes: undefined }),
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
     purposes: project.scalingInfo.purposes,
+    initialOrder: project.addedAt.toNumber(),
   }
 }

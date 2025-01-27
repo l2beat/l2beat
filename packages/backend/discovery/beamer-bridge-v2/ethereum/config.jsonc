@@ -27,14 +27,9 @@
       "fields": {
         "chains": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "ChainUpdated",
-            "returnParams": [
-              "chainId",
-              "finalityPeriod",
-              "transferCost",
-              "targetWeightPPM"
-            ],
+            "type": "event",
+            "select": ["finalityPeriod", "transferCost", "targetWeightPPM"],
+            "set": { "event": "ChainUpdated" },
             "groupBy": "chainId"
           }
         }
@@ -45,11 +40,10 @@
       "fields": {
         "liquidityProviders": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "LpAdded",
-            "addKey": "lp",
-            "removeEvent": "LpRemoved",
-            "removeKey": "lp"
+            "type": "event",
+            "select": "lp",
+            "add": { "event": "LpAdded" },
+            "remove": { "event": "LpRemoved" }
           }
         }
       }

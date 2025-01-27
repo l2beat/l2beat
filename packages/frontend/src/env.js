@@ -41,9 +41,6 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default('false'),
-    NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS: featureFlag.default(
-      process.env.NODE_ENV === 'development' ? 'true' : 'false',
-    ),
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
@@ -71,8 +68,6 @@ export const env = createEnv({
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
-    NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_INTERNAL_TOOLS,
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,

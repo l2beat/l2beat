@@ -22,7 +22,8 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
 const upgradeDelay = discovery.getContractValue<number>(
@@ -51,6 +52,16 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
 const forceBatchTimeout = discovery.getContractValue<number>(
   'ZKFairValidium',
   'forceBatchTimeout',
+)
+
+const membersCountDAC = discovery.getContractValue<number>(
+  'ZKFairValidiumDAC',
+  'getAmountOfMembers',
+)
+
+const requiredSignaturesDAC = discovery.getContractValue<number>(
+  'ZKFairValidiumDAC',
+  'requiredAmountOfSignatures',
 )
 
 const exitWindowRisk = {
@@ -96,11 +107,11 @@ export const zkfair: Layer2 = {
   id: ProjectId('zkfair'),
   createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'ZKFair',
     slug: 'zkfair',
     purposes: ['Universal'],
@@ -117,7 +128,6 @@ export const zkfair: Layer2 = {
       repositories: ['https://github.com/ZKFair'],
       socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -392,4 +402,12 @@ export const zkfair: Layer2 = {
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'State diffs',
+    },
+  }),
 }

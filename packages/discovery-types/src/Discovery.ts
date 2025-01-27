@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { EthereumAddress } from './EthereumAddress'
-import { Hash256 } from './Hash256'
+import type { EthereumAddress } from './EthereumAddress'
+import type { Hash256 } from './Hash256'
 
 export type StackCategory = z.infer<typeof StackCategory>
 export const StackCategory = z.enum([
@@ -29,6 +29,7 @@ export interface DiscoveryOutput {
   eoas: EoaParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
+  sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
 }
 
@@ -40,6 +41,7 @@ export interface DiscoveryCustomType {
 export interface FieldMeta {
   description?: string
   severity?: ContractFieldSeverity
+  type?: ContractValueType[] | ContractValueType
 }
 
 export type PermissionType =
@@ -57,14 +59,22 @@ export type PermissionType =
 export interface ResolvedPermissionPath {
   address: EthereumAddress
   delay?: number
+  condition?: string
 }
 
-export interface ResolvedPermission {
+export interface ResolvedPermissionDetails {
   permission: PermissionType
-  target: EthereumAddress
   delay?: number
   description?: string
+  condition?: string
   via?: ResolvedPermissionPath[]
+}
+
+export type IssuedPermission = ResolvedPermissionDetails & {
+  to: EthereumAddress
+}
+export type ReceivedPermission = ResolvedPermissionDetails & {
+  from: EthereumAddress
 }
 
 export type ExternalReference = {
@@ -73,9 +83,9 @@ export type ExternalReference = {
 }
 
 export interface Meta {
-  issuedPermissions?: ResolvedPermission[]
-  receivedPermissions?: ResolvedPermission[]
-  directlyReceivedPermissions?: ResolvedPermission[]
+  issuedPermissions?: IssuedPermission[]
+  receivedPermissions?: ReceivedPermission[]
+  directlyReceivedPermissions?: ReceivedPermission[]
   categories?: StackCategory[]
   types?: ContractValueType[]
   description?: string

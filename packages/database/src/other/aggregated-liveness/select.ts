@@ -1,4 +1,4 @@
-import { AggregatedLiveness } from '../../kysely/generated/types'
+import type { AggregatedLiveness } from '../../kysely/generated/types'
 
 export const selectAggregatedLiveness = [
   'projectId',

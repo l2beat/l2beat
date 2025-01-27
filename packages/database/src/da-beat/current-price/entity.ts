@@ -1,5 +1,5 @@
-import { Insertable, Selectable } from 'kysely'
-import { CurrentPrice } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { CurrentPrice } from '../../kysely/generated/types'
 
 export interface CurrentPriceRecord {
   coingeckoId: string

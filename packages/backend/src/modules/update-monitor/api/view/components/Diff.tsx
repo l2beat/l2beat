@@ -1,10 +1,8 @@
-import { FieldDiff } from '@l2beat/discovery'
-import { DiscoveryContractField } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
+import type { FieldDiff } from '@l2beat/discovery'
 import { default as React } from 'react'
 
 interface DiffProps {
   diff: FieldDiff
-  field: DiscoveryContractField | undefined
 }
 
 export function Diff(props: DiffProps) {
@@ -15,19 +13,19 @@ export function Diff(props: DiffProps) {
       <div style={{ lineHeight: '1.35' }}>
         {props.diff.key} <br />
         <div style={grayedOutStyle}>
-          {props.field?.type ? (
+          {props.diff.type ? (
             <>
-              {`+++ type: ${props.field.type.toString()}`} <br />
+              {`+++ type: ${props.diff.type.toString()}`} <br />
             </>
           ) : null}
-          {props.field?.severity ? (
+          {props.diff.severity ? (
             <>
-              {`+++ severity: ${props.field.severity}`} <br />
+              {`+++ severity: ${props.diff.severity}`} <br />
             </>
           ) : null}
-          {props.field?.description ? (
+          {props.diff.description ? (
             <>
-              {`+++ description: ${props.field.description}`} <br />
+              {`+++ description: ${props.diff.description}`} <br />
             </>
           ) : null}
         </div>

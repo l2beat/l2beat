@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "celo",
   "blockNumber": 26689586,
-  "configHash": "0xc45aafc3097c83c24c68a6693ab3890e124dae53f2abe2d96a9898cb07900e34",
+  "configHash": "0xfebed2d924c386368c8e58ec2bfba56c8249b810c61b36d893f9bc28d0942bd5",
   "contracts": [
     {
       "name": "OpticsV2Governor",
@@ -55,7 +55,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
+          "from": "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"
         }
       ],
       "values": {
@@ -103,7 +103,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
+          "to": "0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee",
           "via": []
         }
       ],
@@ -269,6 +269,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -2,10 +2,13 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { ContractValue, get$Implementations } from '@l2beat/discovery-types'
-import { IProvider } from '../../provider/IProvider'
+import {
+  type ContractValue,
+  get$Implementations,
+} from '@l2beat/discovery-types'
+import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
-import { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type PolygonCDKScheduledTransactionsHandlerDefinition = z.infer<

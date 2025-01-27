@@ -1,20 +1,20 @@
-import { ConfigMapping, createAmountId } from '@l2beat/config'
+import { type ConfigMapping, createAmountId } from '@l2beat/backend-shared'
 import {
   assert,
-  ElasticChainEther,
-  ElasticChainL2Token,
+  type ElasticChainEther,
+  type ElasticChainL2Token,
   ProjectId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
+import type { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
-import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import type { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
+import type { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ElasticChainIndexer } from '../indexers/ElasticChainIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { ElasticChainAmountConfig } from '../indexers/types'
+import type { ElasticChainAmountConfig } from '../indexers/types'
 import { ElasticChainService } from '../services/ElasticChainService'
-import { TvlDependencies } from './TvlDependencies'
+import type { TvlDependencies } from './TvlDependencies'
 
 interface ElasticChainModule {
   start: () => Promise<void> | void

@@ -1,12 +1,21 @@
-import { Logger } from '@l2beat/backend-tools'
-import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { Logger } from '@l2beat/backend-tools'
+import {
+  assert,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+} from '@l2beat/shared-pure'
 
 import zlib from 'zlib'
-import { Database } from '@l2beat/database'
-import { Blob, BlobProvider, EVMTransaction, RpcClient } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type {
+  Blob,
+  BlobProvider,
+  EVMTransaction,
+  RpcClient,
+} from '@l2beat/shared'
 import { utils } from 'ethers'
 import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
-import { RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
+import { type RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { blobsToData } from './blobsToData'

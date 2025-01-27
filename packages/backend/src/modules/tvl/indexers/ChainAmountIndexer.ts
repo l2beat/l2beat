@@ -1,12 +1,12 @@
-import { INDEXER_NAMES } from '@l2beat/config'
+import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
-import {
+import type {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { ChainAmountConfig, ChainAmountIndexerDeps } from './types'
+import type { ChainAmountConfig, ChainAmountIndexerDeps } from './types'
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {

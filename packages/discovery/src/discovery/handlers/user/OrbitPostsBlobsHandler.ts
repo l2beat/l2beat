@@ -1,10 +1,10 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import { type providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
-import { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type OrbitPostsBlobsDefinition = z.infer<
   typeof OrbitPostsBlobsDefinition

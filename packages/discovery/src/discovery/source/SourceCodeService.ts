@@ -1,9 +1,9 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
 import { flatteningHash, sha2_256bit } from '../../flatten/utils'
-import { ContractSource } from '../../utils/IEtherscanClient'
-import { IProvider } from '../provider/IProvider'
+import type { ContractSource } from '../../utils/IEtherscanClient'
+import type { IProvider } from '../provider/IProvider'
 import { deduplicateAbi } from './deduplicateAbi'
 import { getLegacyDerivedName } from './getDerivedName'
 import { skipIgnoredFunctions } from './skipIgnoredFunctions'

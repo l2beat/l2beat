@@ -2,7 +2,8 @@
   "name": "witness",
   "chain": "ethereum",
   "blockNumber": 20491473,
-  "configHash": "0x5a18dc94a699ce771faca7fc8fd756e0d22f96fe60d5e177d853ca3c8c90f379",
+  "configHash": "0x271dae2021804d278c07a38d665fb6d6a92123fc674159d78c7580ec08dc83df",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -79,7 +80,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
+          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
         }
       ],
       "sinceTimestamp": 1718630195,
@@ -99,13 +100,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-          "via": [
-            {
-              "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
-              "delay": 0
-            }
-          ]
+          "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+          "via": [{ "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }]
         }
       ],
       "sinceTimestamp": 1718630207,
@@ -148,14 +144,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "via": [{ "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"
+          "from": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"
         }
       ]
     },
@@ -339,6 +335,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

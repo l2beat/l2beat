@@ -16,7 +16,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -35,16 +35,16 @@ export const immutablezkevm: Layer2 = {
   id: ProjectId('immutablezkevm'),
   createdAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Immutable zkEVM',
     slug: 'immutablezkevm',
     description:
       'Immutable zkEVM is a sidechain focused on gaming and powered by Polygon stack. It plans to eventually transition to a ZK Rollup.',
     category: 'Other',
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],

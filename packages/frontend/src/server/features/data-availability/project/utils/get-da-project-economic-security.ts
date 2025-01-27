@@ -1,5 +1,4 @@
-import { type DaLayer } from '@l2beat/config'
-import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
+import type { DaLayer } from '@l2beat/config'
 import { round } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -28,18 +27,13 @@ export async function getDaProjectEconomicSecurity(daLayer: DaLayer) {
     return undefined
   }
 
-  const type = daLayer.economicSecurity.type
-
-  const stake = await db.stake.findById(type)
+  const stake = await db.stake.findById(daLayer.economicSecurity.name)
   if (!stake) {
     return { id: daLayer.id, status: 'StakeNotSynced' as const }
   }
 
-  const meta = daEconomicSecurityMeta[type]
-  const coingeckoId = meta?.coingeckoId
-  const currentPrice = coingeckoId
-    ? await db.currentPrice.findByCoingeckoId(coingeckoId)
-    : undefined
+  const coingeckoId = daLayer.economicSecurity.token.coingeckoId
+  const currentPrice = await db.currentPrice.findByCoingeckoId(coingeckoId)
   if (!currentPrice) {
     return { id: daLayer.id, status: 'CurrentPriceNotSynced' as const }
   }
@@ -52,7 +46,7 @@ export async function getDaProjectEconomicSecurity(daLayer: DaLayer) {
         (stake.thresholdStake * BigInt(round(currentPrice.priceUsd * 100))) /
           100n,
       ) /
-      10 ** meta.decimals,
+      10 ** daLayer.economicSecurity.token.decimals,
   }
 }
 

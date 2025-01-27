@@ -2,7 +2,7 @@ import { readdirSync } from 'fs'
 import path from 'path'
 import { assert } from '@l2beat/shared-pure'
 import {
-  Type,
+  type Type,
   command,
   number,
   option,
@@ -14,8 +14,8 @@ import { readConfig } from '../config/readConfig'
 import {
   DIFFING_MODES,
   DISPLAY_MODES,
-  DiffingMode,
-  DisplayMode,
+  type DiffingMode,
+  type DisplayMode,
   powerdiff,
 } from '../implementations/powerdiff'
 import { Directory } from './types'

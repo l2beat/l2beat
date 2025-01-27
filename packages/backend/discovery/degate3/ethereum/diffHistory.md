@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x29e736789907b252ae40de83fcafe0098877c62a
+Generated with discovered.json: 0x8438dffd77a351d65ffe914b9ff6342c6dcc10bb
+
+# Diff at Mon, 20 Jan 2025 11:09:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21394291
+- current block number: 21394291
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21394291 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x9C07A72177c5A05410cA338823e790876E79D73B"
+      receivedPermissions.0.from:
++        "0x9C07A72177c5A05410cA338823e790876E79D73B"
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xf2991507952d9594E71A44A54fb19f3109D213A5"
+      issuedPermissions.0.to:
++        "0xf2991507952d9594E71A44A54fb19f3109D213A5"
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d"
+      issuedPermissions.0.to:
++        "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d"
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x54D7aE423Edb07282645e740C046B9373970a168"
+      receivedPermissions.0.from:
++        "0x54D7aE423Edb07282645e740C046B9373970a168"
+    }
+```
+
+Generated with discovered.json: 0x2f5ff9403f5b0ceba03cfcc60518cca1105fba5f
 
 # Diff at Fri, 13 Dec 2024 14:49:01 GMT:
 

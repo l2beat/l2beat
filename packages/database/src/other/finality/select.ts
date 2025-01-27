@@ -1,4 +1,4 @@
-import { Finality } from '../../kysely/generated/types'
+import type { Finality } from '../../kysely/generated/types'
 
 export const selectFinality = [
   'averageStateUpdate',

@@ -1,4 +1,182 @@
-Generated with discovered.json: 0x74f47ec6a3c97a5b8c864a863be7f2284e8f319b
+Generated with discovered.json: 0x72516bc727c7c6f1a4b40a5e8bc54fa05c8c22a8
+
+# Diff at Mon, 20 Jan 2025 11:09:42 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21434844
+- current block number: 21434844
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      issuedPermissions.1.target:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.1.via.2.delay:
+-        0
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.0.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+    }
+```
+
+```diff
+    contract USDCBridgeProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x504A330327A089d8364C4ab3811Ee26976d388ce"
+      receivedPermissions.0.from:
++        "0x504A330327A089d8364C4ab3811Ee26976d388ce"
+    }
+```
+
+```diff
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x41fAD3Df1B07B647D120D055259E474fE8046eb5"
+      issuedPermissions.0.to:
++        "0x41fAD3Df1B07B647D120D055259E474fE8046eb5"
+    }
+```
+
+```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.2.from:
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.1.target:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.from:
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.0.from:
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      directlyReceivedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      directlyReceivedPermissions.0.from:
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      issuedPermissions.3.target:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.3.via.2.delay:
+-        0
+      issuedPermissions.3.via.1.delay:
+-        0
+      issuedPermissions.3.via.0.delay:
+-        0
+      issuedPermissions.3.to:
++        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.2.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.2.via.1.delay:
+-        0
+      issuedPermissions.2.via.0.delay:
+-        0
+      issuedPermissions.2.to:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.1.target:
+-        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      issuedPermissions.1.to:
++        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      issuedPermissions.0.target:
+-        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+      issuedPermissions.0.to:
++        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A Timelock with currently 0s minimum delay.
+      issuedPermissions.1.target:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.via.0.description:
+-        "propose transactions in the Timelock."
+      issuedPermissions.1.to:
++        "0xF24f1DC519d88246809B660eb56D94048575d083"
+      issuedPermissions.1.description:
++        "propose transactions in the Timelock."
+      issuedPermissions.0.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.to:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.0.description:
++        "propose transactions in the Timelock."
+      directlyReceivedPermissions.0.target:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      directlyReceivedPermissions.0.from:
++        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions.2.target:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.2.from:
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.1.target:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.from:
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.0.target:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.0.from:
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      directlyReceivedPermissions.0.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      directlyReceivedPermissions.0.from:
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions.1.target:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      directlyReceivedPermissions.1.from:
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      directlyReceivedPermissions.0.target:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      directlyReceivedPermissions.0.from:
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+    }
+```
+
+Generated with discovered.json: 0x6fdf9898969d773a717bb79403088b72fdecd3d6
 
 # Diff at Thu, 19 Dec 2024 06:41:43 GMT:
 

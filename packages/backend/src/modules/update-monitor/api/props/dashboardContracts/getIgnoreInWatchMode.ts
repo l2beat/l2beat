@@ -1,11 +1,11 @@
-import { DiscoveryConfig } from '@l2beat/discovery'
+import type { DiscoveryConfig } from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
-import { ethers } from 'ethers'
+import type { ethers } from 'ethers'
 
-import { DashboardContractField, getValues } from '../utils/getValues'
+import { type DashboardContractField, getValues } from '../utils/getValues'
 import { getDescription } from './getDescription'
 import { getFieldName } from './getFieldName'
 

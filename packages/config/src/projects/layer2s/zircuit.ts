@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { ScalingProjectTechnologyChoice } from '../../common'
+import type { ScalingProjectTechnologyChoice } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ESCROW } from '../../common/escrow'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zircuit')
 
@@ -42,8 +42,8 @@ const upgradeability = {
 export const zircuit: Layer2 = opStackL2({
   createdAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Zircuit',
     slug: 'zircuit',
     description:
@@ -61,7 +61,6 @@ export const zircuit: Layer2 = opStackL2({
         'https://t.me/zircuitl2_bot',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     architectureImage: 'zircuit',
     warning:
       'Proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',

@@ -72,6 +72,20 @@
       "supply": "zero"
     },
     {
+      "name": "Aavegotchi GHST Token",
+      "coingeckoId": "aavegotchi",
+      "address": "0x3F382DbD960E3a9bbCeaE22651E88158d2791550",
+      "symbol": "GHST",
+      "decimals": 18,
+      "deploymentTimestamp": 1599986900,
+      "coingeckoListingTimestamp": 1600041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12467/large/GHST.png?1696512286",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Across Protocol Token",
       "coingeckoId": "across-protocol",
       "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
@@ -221,6 +235,20 @@
       "coingeckoListingTimestamp": 1721174400,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39170/large/A8_Token-04_200x200.png?1720798300",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Animecoin",
+      "coingeckoId": "anime",
+      "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277",
+      "symbol": "ANIME",
+      "decimals": 18,
+      "deploymentTimestamp": 1736790131,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53575/large/anime.jpg?1736748703",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2537,6 +2565,20 @@
       "supply": "zero"
     },
     {
+      "name": "HashKey Platform Token",
+      "coingeckoId": "hashkey-ecopoints",
+      "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a",
+      "symbol": "HSK",
+      "decimals": 18,
+      "deploymentTimestamp": 1719663791,
+      "coingeckoListingTimestamp": 1732579200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29779/large/HSKlogo.jpg?1719445510",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Hegic",
       "coingeckoId": "hegic",
       "address": "0x584bC13c7D411c00c01A62e8019472dE68768430",
@@ -2826,6 +2868,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/4703/large/lambda_200.png?1696505268",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "League of Kingdoms Arena",
+      "coingeckoId": "league-of-kingdoms",
+      "address": "0x61E90A50137E1F645c9eF4a0d3A4f01477738406",
+      "symbol": "LOKA",
+      "decimals": 18,
+      "deploymentTimestamp": 1641359360,
+      "coingeckoListingTimestamp": 1642636800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22572/large/loka_64pix.png?1696521891",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -7179,6 +7235,20 @@
       "supply": "zero"
     },
     {
+      "name": "Fidelity ILF USD Fund Class G Acc",
+      "coingeckoId": "sygnum-fiusd-liquidity-fund",
+      "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
+      "symbol": "FIUSD",
+      "decimals": 2,
+      "deploymentTimestamp": 1708523359,
+      "coingeckoListingTimestamp": 1737417600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50749/large/FIUDS_200x200px_%281%29.png?1728956878",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Frax",
       "coingeckoId": "frax",
       "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
@@ -7838,6 +7908,28 @@
       }
     },
     {
+      "name": "Astar Token",
+      "coingeckoId": "astar",
+      "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
+      "symbol": "ASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1734968141,
+      "coingeckoListingTimestamp": 1642377600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22617/large/astr.png?1696521933",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "ENA",
       "coingeckoId": "ethena",
       "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
@@ -8478,6 +8570,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Aavegotchi GHST Token",
+      "coingeckoId": "aavegotchi",
+      "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
+      "symbol": "GHST",
+      "decimals": 18,
+      "deploymentTimestamp": 1712052491,
+      "coingeckoListingTimestamp": 1600041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12467/large/GHST.png?1696512286",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "Aerodrome",
@@ -11689,6 +11795,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1716417748,
       "coingeckoListingTimestamp": 1720483200,
+      "untilTimestamp": 1736409600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38625/large/image_%281%29.png?1718168417",
       "chainId": 111188,
@@ -12052,6 +12159,182 @@
         "bridges": [
           {
             "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bridged USDC (Corn)",
+      "coingeckoId": "usd-coin",
+      "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1733450235,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ether.fi BTC",
+      "coingeckoId": "ether-fi-staked-btc",
+      "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+      "symbol": "eBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1733771467,
+      "coingeckoListingTimestamp": 1727654400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lombard Staked Bitcoin",
+      "coingeckoId": "lombard-staked-btc",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "symbol": "LBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1733245117,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lorenzo stBTC",
+      "coingeckoId": "lorenzo-stbtc",
+      "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
+      "symbol": "stBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1734072451,
+      "coingeckoListingTimestamp": 1729641600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Solv BTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1734006126,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolvBTC Babylon",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "symbol": "SolvBTC.BBN",
+      "decimals": 18,
+      "deploymentTimestamp": 1734006360,
+      "coingeckoListingTimestamp": 1722556800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x85aDfA60dDf86b67E6fD493Bd2c774b2eD772D14",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1733425962,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Ether",
+      "coingeckoId": "ethereum",
+      "address": "0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1733432431,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }

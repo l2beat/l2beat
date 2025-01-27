@@ -1,6 +1,6 @@
 import { formatSI } from '@l2beat/shared'
 import { assert, formatAsAsciiTable } from '@l2beat/shared-pure'
-import { DiscoveryLogger } from '../DiscoveryLogger'
+import type { DiscoveryLogger } from '../DiscoveryLogger'
 
 export const ProviderMeasurement = {
   CALL: 0,

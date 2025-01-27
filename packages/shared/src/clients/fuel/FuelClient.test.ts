@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Block } from '@l2beat/shared-pure'
+import type { Block } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { HttpClient } from '../http/HttpClient'
+import type { HttpClient } from '../http/HttpClient'
 import { FuelClient } from './FuelClient'
 import { tai64ToUnix } from './tai64ToUnix'
-import {
+import type {
   FuelBlockResponse,
   FuelError,
   FuelLatestBlockNumberResponse,

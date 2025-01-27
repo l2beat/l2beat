@@ -15,7 +15,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
@@ -29,10 +29,10 @@ export const bugbuster: Layer3 = {
     Badge.VM.AppChain,
     Badge.VM.CartesiVM,
     Badge.DA.EthereumCalldata,
-    Badge.L3ParentChain.Optimism,
+    Badge.L3ParentChain.OpMainnet,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Bug Buster',
     slug: 'bugbuster',
     description:
@@ -57,7 +57,6 @@ export const bugbuster: Layer3 = {
         'https://optimism.cartesiscan.io/applications/0x3ff5c7383f614256053c3f6b86a47ba974937299',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [

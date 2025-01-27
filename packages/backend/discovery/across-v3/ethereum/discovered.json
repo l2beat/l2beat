@@ -2,7 +2,7 @@
   "name": "across-v3",
   "chain": "ethereum",
   "blockNumber": 21628877,
-  "configHash": "0xce74d802b6d4db4c6f2c867544cb1ff36e8d14bd6386ad250dacf886489f399d",
+  "configHash": "0x0eccd0dc7c815e665ee55270d185bab69a005d29ae8eaefad59f92e254bab254",
   "contracts": [
     {
       "name": "Zora_Adapter",
@@ -236,7 +236,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "to": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
           "via": []
         }
       ],
@@ -472,7 +472,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xB524735356985D2f267FA010D681f061DfF03715"
+          "from": "0xB524735356985D2f267FA010D681f061DfF03715"
         }
       ],
       "sinceTimestamp": 1683067175,
@@ -643,7 +643,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+          "from": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
         }
       ],
       "ignoreInWatchMode": ["rootBundleProposal"],
@@ -1695,7 +1695,7 @@
     ]
   },
   "usedTemplates": {
-    "acrossv3/adapter": "0x5915a5572732202c863a04a4327383bbaae42001e024cba52977c5e4b7a89059",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "acrossv3/adapter": "0x722ec1ddbac29cba90c5e6706af614ab59d193db130e076d2911c1cdb55da605",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

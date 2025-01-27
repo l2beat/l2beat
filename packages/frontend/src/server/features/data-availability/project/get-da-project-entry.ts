@@ -3,15 +3,15 @@ import {
   type DaBridge,
   type DaLayer,
   type DaLayerThroughput,
-  type DacBridge,
-  type DacDaLayer,
+  type DaServiceDaLayer,
   type EthereumDaLayer,
   type NoDaBridge,
   type OnChainDaBridge,
+  type StandaloneDacBridge,
   isDaBridgeVerified,
 } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { type UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -76,7 +76,6 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     economicSecurity: EconomicSecurityData | undefined
     durationStorage: number | undefined
     throughput: DaLayerThroughput | undefined
-    numberOfOperators: number | undefined
     usedIn: UsedInProject[]
   }
   sections: ProjectDetailsSection[]
@@ -118,8 +117,8 @@ export async function getCommonDaProjectPageEntry(
 }
 
 export async function getDaProjectEntry(
-  daLayer: BlockchainDaLayer | DacDaLayer,
-  daBridge: OnChainDaBridge | DacBridge | NoDaBridge,
+  daLayer: BlockchainDaLayer | DaServiceDaLayer,
+  daBridge: OnChainDaBridge | StandaloneDacBridge | NoDaBridge,
 ): Promise<DaProjectPageEntry> {
   const common = await getCommonDaProjectPageEntry(daLayer, daBridge)
 
@@ -192,7 +191,6 @@ export async function getDaProjectEntry(
         daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
       throughput:
         daLayer.kind === 'PublicBlockchain' ? daLayer.throughput : undefined,
-      numberOfOperators: daLayer.numberOfOperators,
       usedIn: daLayer.bridges
         .flatMap((bridge) => bridge.usedIn)
         .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),

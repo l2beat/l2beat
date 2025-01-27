@@ -1,8 +1,8 @@
 import {
-  type Bridge,
   type BridgeDisplay,
   type BridgeRiskView,
-  bridges,
+  type Project,
+  ProjectService,
 } from '@l2beat/config'
 import { type ValueWithSentiment } from '@l2beat/shared-pure'
 import {
@@ -10,56 +10,65 @@ import {
   getProjectsChangeReport,
 } from '../projects-change-report/get-projects-change-report'
 import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
-import {
-  type ProjectsLatestTvlUsd,
-  getProjectsLatestTvlUsd,
-} from '../scaling/tvl/utils/get-latest-tvl-usd'
+import { getProjectsLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
 import {
   type CommonBridgesEntry,
   getCommonBridgesEntry,
 } from './get-common-bridges-entry'
-import { getDestination } from './get-destination'
 
 export async function getBridgeRiskEntries() {
-  const [tvl, projectsChangeReport] = await Promise.all([
+  const [tvl, projectsChangeReport, projects] = await Promise.all([
     getProjectsLatestTvlUsd(),
     getProjectsChangeReport(),
+    ProjectService.STATIC.getProjects({
+      select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
+      where: ['isBridge'],
+      whereNot: ['isUpcoming', 'isArchived'],
+    }),
   ])
 
-  return bridges
-    .filter((project) => !project.isUpcoming && !project.isArchived)
+  return projects
     .map((project) =>
       getBridgesRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl,
+        tvl[project.id],
       ),
     )
-    .filter((entry) => entry !== undefined)
     .sort(compareTvl)
 }
 
 export interface BridgesRiskEntry extends CommonBridgesEntry {
   type: BridgeDisplay['category']
   destination: ValueWithSentiment<string>
-  tvlOrder: number
   riskView: BridgeRiskView
+  tvlOrder: number
 }
 
 function getBridgesRiskEntry(
-  bridge: Bridge,
+  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks'>,
   changes: ProjectChanges,
-  tvl: ProjectsLatestTvlUsd,
+  tvl: number | undefined,
 ) {
   return {
-    ...getCommonBridgesEntry({ bridge, changes }),
-    type: bridge.display.category,
-    destination: getDestination(
-      bridge.type === 'bridge'
-        ? bridge.technology.destination
-        : [bridge.display.name],
-    ),
-    tvlOrder: tvl[bridge.id] ?? 0,
-    riskView: bridge.riskView,
+    ...getCommonBridgesEntry({ project, changes }),
+    type: project.bridgeInfo.category,
+    destination: getDestination(project.bridgeInfo.destination),
+    riskView: project.bridgeRisks,
+    tvlOrder: tvl ?? -1,
+  }
+}
+
+function getDestination(destinations: string[]): ValueWithSentiment<string> {
+  if (destinations.length === 0) {
+    throw new Error('Invalid destination')
+  }
+  if (destinations.length === 1) {
+    return { value: destinations[0]!, sentiment: 'neutral' }
+  }
+  return {
+    value: 'Various',
+    description: destinations.join(',\n'),
+    sentiment: 'neutral',
   }
 }

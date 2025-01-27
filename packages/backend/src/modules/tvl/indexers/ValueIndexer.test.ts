@@ -1,6 +1,6 @@
+import { createAmountId, createPriceId } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
-import { createAmountId, createPriceId } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import {
   AssetId,
   EthereumAddress,
@@ -8,13 +8,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { ValueService } from '../services/ValueService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { ValueService } from '../services/ValueService'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 import { MOCKS_FOR_TVL } from '../utils/test/mocks'
 import { ValueIndexer } from './ValueIndexer'
-import { ValueIndexerDeps } from './types'
+import type { ValueIndexerDeps } from './types'
 
 const { priceConfiguration, amountConfiguration, valueRecord } = MOCKS_FOR_TVL
 

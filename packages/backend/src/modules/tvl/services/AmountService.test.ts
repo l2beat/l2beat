@@ -1,19 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  AmountConfigBase,
+  type AmountConfigBase,
   AssetId,
   Bytes,
-  EscrowEntry,
+  type EscrowEntry,
   EthereumAddress,
   ProjectId,
-  TotalSupplyEntry,
+  type TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { RpcClient } from '@l2beat/shared'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { ChainAmountConfig } from '../indexers/types'
+import type { RpcClient } from '@l2beat/shared'
+import type { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import type { ChainAmountConfig } from '../indexers/types'
 import {
   AmountService,
   encodeErc20BalanceQuery,

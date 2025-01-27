@@ -164,7 +164,7 @@ function mapAggregatedLivenessRecords(
 function mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
   return records.map((a) => ({
     // TODO: validate if it makes sense to pass the end of anomaly rather than the start
-    timestamp: a.timestamp.toNumber() + a.duration,
+    timestamp: a.timestamp.toNumber(),
     durationInSeconds: a.duration,
     type: a.subtype,
   }))

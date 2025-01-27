@@ -135,11 +135,13 @@
       "fieldMeta": {
         "rollupProviders": {
           "severity": "LOW",
-          "description": "Can call the ProcessRollup function"
+          "description": "Can call the ProcessRollup function",
+          "type": "PERMISSION"
         },
         "verifier": {
           "severity": "LOW",
-          "description": "Address of the ZK verifier."
+          "description": "Address of the ZK verifier.",
+          "type": "PERMISSION"
         }
       }
     },
@@ -320,9 +322,9 @@
     ]
   },
   "usedTemplates": {
-    "aztecv1/AztecFeeDistributor": "0xedc7c3f140ccb6ec916f9d50a54715eb762103b891dbb0d10f4b7f83a5fdee7d",
-    "aztecv1/RollupProcessor": "0x294ae2b8c724fa3b8d10e1a3a987a34f6157a2eee3a32b15068043041408dcda",
-    "aztecv1/TurboVerifier": "0x4901c8820d2fb46564d8a361a7af5abb2f60cc6a7b7431ee60f3b92015333138",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "aztecv1/AztecFeeDistributor": "0x665ad46ab3a80550bd30e674e25a6dad4614c65e2533d80813ffcbadc5e97c7d",
+    "aztecv1/RollupProcessor": "0x19ec9a89602a787cd6c11c61e4bb251c12c36113429d57bc8112e14ea56225a1",
+    "aztecv1/TurboVerifier": "0xd2e0334db1e4d807266fd35ca09d3061271f1d3b4931090aac72541599f7f5b5",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

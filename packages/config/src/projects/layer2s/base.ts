@@ -1,5 +1,5 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
@@ -22,7 +22,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ESCROW } from '../../common/escrow'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -30,7 +29,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('base')
 
@@ -158,12 +157,11 @@ export const base: Layer2 = {
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
-      explanation: `OP Mainnet is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+      explanation: `Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets confirmed ${formatSeconds(
         maxClockDuration,
@@ -203,7 +201,7 @@ export const base: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://developer-access-mainnet.base.org',
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(1),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
     finality: {
       type: 'OPStack',

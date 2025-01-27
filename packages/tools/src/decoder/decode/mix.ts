@@ -1,5 +1,5 @@
-import { AbiParameter } from 'viem'
-import { Value } from './DecodedResult'
+import type { AbiParameter } from 'viem'
+import type { Value } from './DecodedResult'
 
 export function mix(
   items: readonly AbiParameter[],

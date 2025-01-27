@@ -1,18 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
-import { AmountRecord, Database } from '@l2beat/database'
-import { TotalSupplyEntry, UnixTime } from '@l2beat/shared-pure'
+import type { AmountRecord, Database } from '@l2beat/database'
+import { type TotalSupplyEntry, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
-import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import {
+import type {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { AmountService } from '../services/AmountService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { AmountService } from '../services/AmountService'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 import { ChainAmountIndexer } from './ChainAmountIndexer'
-import { ChainAmountConfig } from './types'
+import type { ChainAmountConfig } from './types'
 
 describe(ChainAmountIndexer.name, () => {
   beforeEach(() => {

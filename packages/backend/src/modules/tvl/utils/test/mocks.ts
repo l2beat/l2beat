@@ -1,11 +1,11 @@
-import { AmountRecord, PriceRecord, ValueRecord } from '@l2beat/database'
+import type { AmountRecord, PriceRecord, ValueRecord } from '@l2beat/database'
 import {
   AssetId,
   CoingeckoId,
-  CoingeckoPriceConfigEntry,
+  type CoingeckoPriceConfigEntry,
   EthereumAddress,
   ProjectId,
-  TotalSupplyEntry,
+  type TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { mockObject } from 'earl'

@@ -22,6 +22,7 @@ export function LivenessTimeRangeControls({
 
   return (
     <RadioGroup
+      name="livenessTimeRange"
       value={timeRange}
       onValueChange={setTimeRange}
       className={className}

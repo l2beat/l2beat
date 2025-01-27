@@ -1,14 +1,18 @@
-import { Logger } from '@l2beat/backend-tools'
-import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { Logger } from '@l2beat/backend-tools'
+import {
+  assert,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+} from '@l2beat/shared-pure'
 
-import { Database } from '@l2beat/database'
-import { BlobProvider, EVMTransaction, RpcClient } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type { BlobProvider, EVMTransaction, RpcClient } from '@l2beat/shared'
 import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
-import { SpanBatchDecoderOpts, decodeBatch } from './decodeBatch'
+import { type SpanBatchDecoderOpts, decodeBatch } from './decodeBatch'
 import { getFrames } from './getFrames'
 import { getBatchFromChannel } from './utils'
 

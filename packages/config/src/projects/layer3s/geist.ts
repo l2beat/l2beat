@@ -1,29 +1,69 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { upcomingL3 } from '../layer2s/templates/upcoming'
-import { Layer3 } from './types'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 
-export const geist: Layer3 = upcomingL3({
-  id: 'geist',
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import type { Layer3 } from './types'
+
+const discovery = new ProjectDiscovery('geist', 'base')
+
+export const geist: Layer3 = orbitStackL3({
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: ProjectId('base'),
+  additionalPurposes: ['Gaming', 'NFT'],
+  additionalBadges: [
+    Badge.DA.DAC,
+    Badge.L3ParentChain.Base,
+    Badge.RaaS.Alchemy,
+  ],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Geist',
     slug: 'geist',
     description:
-      'Geist is an upcoming Layer 3 on Base, built on the Orbit stack. It is focused on creating a better gaming and metaverse experience.',
-    purposes: ['Gaming'],
+      'Geist is an Orbit stack Optimium on Base. It is focused on creating a better gaming and metaverse experience around the AavegotchiDAO and the GHST governance token.',
     category: 'Optimium',
-    provider: 'Arbitrum',
     links: {
-      websites: ['https://playongeist.com/'],
-      apps: [],
+      websites: ['https://playongeist.com/', 'https://dapp.aavegotchi.com/'],
+      apps: [
+        'https://bridge.arbitrum.io/?destinationChain=geist-mainnet&sourceChain=base',
+        'https://dapp.aavegotchi.com/migrate?type=migrateTokens&fromChain=137&toChain=63157',
+      ],
       documentation: ['https://docs.playongeist.com/'],
-      explorers: [],
+      explorers: ['https://geist-mainnet.explorer.alchemy.com/'],
       repositories: [],
       socialMedia: [
+        'https://x.com/PlayOnGeist',
         'https://x.com/aavegotchi',
-        'https://dapp.aavegotchi.com/?utm_source=geist',
+        'https://discord.gg/Aavegotchi',
       ],
     },
   },
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://geist-mainnet.g.alchemy.com/public',
+    defaultCallsPerMinute: 600,
+    adjustCount: { type: 'SubtractOne' },
+    startBlock: 1,
+  },
+  bridge: discovery.getContract('ERC20Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  associatedTokens: ['GHST'],
+  gasTokens: ['GHST'],
+  discovery,
+  discoveryDrivenData: true,
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1737711018), // 2025-01-24T09:30:18+00:00
+    },
+    discovery,
+  }),
 })

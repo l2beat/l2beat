@@ -79,6 +79,10 @@
     scroll-padding-top: var(--header-height);
   }
 
+  html:has(.smooth-scroll) {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-base text-primary md:text-lg font-sans selection:bg-brand/30 dark:selection:bg-brand/50;
   }

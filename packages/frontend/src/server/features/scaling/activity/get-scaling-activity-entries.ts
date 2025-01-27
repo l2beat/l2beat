@@ -1,8 +1,4 @@
-import {
-  type Project,
-  ProjectService,
-  type ScalingProjectDisplay,
-} from '@l2beat/config'
+import { type Project, ProjectService } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -23,8 +19,7 @@ import { getActivitySyncWarning } from './utils/is-activity-synced'
 
 export async function getScalingActivityEntries() {
   const unfilteredProjects = await ProjectService.STATIC.getProjects({
-    select: ['statuses', 'scalingInfo', 'activityInfo'],
-    optional: ['countdowns'],
+    select: ['statuses', 'scalingInfo', 'hasActivity'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -58,7 +53,6 @@ export async function getScalingActivityEntries() {
 }
 
 export interface ScalingActivityEntry extends CommonScalingEntry {
-  dataSource: ScalingProjectDisplay['activityDataSource']
   data:
     | {
         tps: ActivityData
@@ -80,7 +74,7 @@ interface ActivityData {
 }
 
 function getScalingProjectActivityEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'activityInfo', 'countdowns'>,
+  project: Project<'statuses' | 'scalingInfo'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
 ): ScalingActivityEntry {
@@ -88,13 +82,8 @@ function getScalingProjectActivityEntry(
     ? getActivitySyncWarning(data.syncedUntil)
     : undefined
   return {
-    ...getCommonScalingEntry({
-      project,
-      changes,
-      syncWarning,
-    }),
+    ...getCommonScalingEntry({ project, changes, syncWarning }),
     href: `/scaling/projects/${project.slug}#activity`,
-    dataSource: project.activityInfo.dataSource,
     data: data
       ? {
           tps: data.tps,
@@ -123,7 +112,6 @@ function getEthereumEntry(
     // Ethereum is always at the top so it is always stageOrder 3
     stageOrder: 3,
     filterable: undefined,
-    dataSource: 'Blockchain RPC',
     data: {
       tps: data.tps,
       uops: data.uops,

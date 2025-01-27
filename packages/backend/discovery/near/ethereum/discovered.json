@@ -2,7 +2,7 @@
   "name": "near",
   "chain": "ethereum",
   "blockNumber": 19531990,
-  "configHash": "0xd38ab6535bef2823166e2161419db849ad4c92dfc605738466766980f35f3aed",
+  "configHash": "0x139f90006199e28eb583648288b9103322327f9e7ef969b7230da9ea6b1716ec",
   "contracts": [
     {
       "name": "NearProver",
@@ -255,6 +255,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

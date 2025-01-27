@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0xfb6bc994436e70de3fffa0c12685cc2eccbf57bb251ab2757b2bfee894348a24",
+  "configHash": "0x2c2f84f5bedbda3c9120ca2da4fbf57f6c2b56dc37cff80bf62ec7ef2757af11",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -90,7 +90,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+          "from": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
         }
       ],
       "sinceTimestamp": 1693752671,
@@ -333,7 +333,8 @@
         },
         "watcherManager": {
           "severity": "MEDIUM",
-          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected."
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "RootManager"
@@ -423,17 +424,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
-          "via": [
-            {
-              "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-              "delay": 0
-            }
-          ]
+          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
+          "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
           "via": []
         }
       ],
@@ -494,7 +490,8 @@
       "fieldMeta": {
         "WATCHERS": {
           "severity": "LOW",
-          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors."
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "WatcherManager"
@@ -1022,7 +1019,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
+          "to": "0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9",
           "via": []
         }
       ],
@@ -1074,17 +1071,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
-          "via": [
-            {
-              "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
-              "delay": 0
-            }
-          ]
+          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
+          "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
           "via": []
         }
       ],
@@ -1220,19 +1212,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         },
         {
           "permission": "upgrade",
-          "target": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
           "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+          "from": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
         }
       ],
       "sinceTimestamp": 1603880884,
@@ -1298,11 +1290,11 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
         },
         {
           "permission": "upgrade",
-          "target": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1497,7 +1489,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
+          "from": "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
         }
       ]
     },
@@ -3475,8 +3467,8 @@
     ]
   },
   "usedTemplates": {
-    "amarok/Relayer": "0x63e51799ac3fb7cd705bce6f217f47d287e3479046939df47e1119cf0fe070af",
-    "amarok/RelayerProxyHub": "0x02ec2a805c99a0858133d5e1237846ac6f72cc06deb9b2371e9bb80d3110144c",
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "amarok/Relayer": "0x8420bd193754b39fbfe441219c96ff1b0081e61db93b859647b8f2d3607d7741",
+    "amarok/RelayerProxyHub": "0x9cb4edf0a1f069de9367fe2969edcadc5b8d97e21857dd7d3123f4ddf61b05c6",
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -1,4 +1,32 @@
-Generated with discovered.json: 0x5da05a16e349d5e7f2de90ab46b715c0fde6ad64
+Generated with discovered.json: 0x941a7677e2a50eb0c2b6ac2cb520237bb006735f
+
+# Diff at Mon, 20 Jan 2025 11:09:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 19825363
+- current block number: 19825363
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825363 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A"
+      issuedPermissions.0.to:
++        "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A"
+    }
+```
+
+Generated with discovered.json: 0xd3dd9f00138e8eb4fce73fc631d94bc530e94ae5
 
 # Diff at Mon, 21 Oct 2024 11:04:59 GMT:
 

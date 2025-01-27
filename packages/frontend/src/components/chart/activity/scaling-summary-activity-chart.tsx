@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Skeleton } from '~/components/core/skeleton'
 import { CustomLink } from '~/components/link/custom-link'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { ChevronIcon } from '~/icons/chevron'
 import { type ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
@@ -12,24 +13,27 @@ import { formatActivityCount } from '~/utils/number-format/format-activity-count
 import { Chart } from '../core/chart'
 import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
-import { RecategorizedActivityChartHover } from './recategorized-activity-chart-hover'
-import { useRecategorizedActivityChartRenderParams } from './use-recategorized-activity-chart-render-params'
+import { RecategorisedActivityChartHover } from './recategorised-activity-chart-hover'
+import { useRecategorisedActivityChartRenderParams } from './use-recategorised-activity-chart-render-params'
 
 interface Props {
   timeRange: ActivityTimeRange
 }
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
+  const { checked } = useRecategorisationPreviewContext()
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'all' },
+    previewRecategorisation: checked,
   })
-  const { data, isLoading } = api.activity.recategorizedChart.useQuery({
+  const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
+    previewRecategorisation: checked,
   })
 
   const { columns, valuesStyle, formatYAxisLabel } =
-    useRecategorizedActivityChartRenderParams({
+    useRecategorisedActivityChartRenderParams({
       chart: data,
       milestones: [],
     })
@@ -42,7 +46,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       range={timeRange}
       isLoading={isLoading}
       renderHoverContents={(data) => (
-        <RecategorizedActivityChartHover {...data} />
+        <RecategorisedActivityChartHover {...data} />
       )}
     >
       <section className="flex flex-col gap-4">

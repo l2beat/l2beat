@@ -1,4 +1,4 @@
-import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
+import { type UsedInProject } from '@l2beat/config'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
 import {
   ContractEntry,
@@ -25,7 +25,7 @@ export function MultichainPermissionsSection({
     <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
       {permissionedEntities && (
         <h3 className="mt-4 font-bold">
-          The Committee has the following members:
+          The committee has the following members:
         </h3>
       )}
       {permissionedEntities?.map((entity, i) => (

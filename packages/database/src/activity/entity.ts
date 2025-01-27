@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { Activity } from '../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { Activity } from '../kysely/generated/types'
 
 export interface ActivityRecord {
   projectId: ProjectId

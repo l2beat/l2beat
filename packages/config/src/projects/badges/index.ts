@@ -112,6 +112,14 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
+  CelestiaBlobstream: {
+    display: {
+      name: 'Celestia with Blobstream',
+      description:
+        'This project utilizes Celestia and has Blobstream enabled, facilitating the bridging of data availability commitments between Celestia and Ethereum.',
+    },
+    type: BadgeType.DA,
+  },
   EigenDA: {
     display: {
       name: 'EigenDA',
@@ -317,6 +325,13 @@ export const badges = {
     },
     type: BadgeType.Stack,
   },
+  SNStack: {
+    display: {
+      name: 'Built on the SN Stack',
+      description: 'The project is built on the SN Stack',
+    },
+    type: BadgeType.Stack,
+  },
   LoopringFork: {
     display: {
       name: 'Fork of Loopring',
@@ -381,7 +396,7 @@ export const badges = {
     },
     type: BadgeType.L3ParentChain,
   },
-  Optimism: {
+  OpMainnet: {
     display: {
       name: 'Built on top of OP Mainnet',
       description: 'The project has OP Mainnet as its host chain',

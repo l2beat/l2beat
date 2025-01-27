@@ -1,17 +1,19 @@
 import {
   type BackendProject,
-  type Bridge,
-  type Layer2,
-  type Layer3,
   bridgeToBackendProject,
-  bridges,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
   layer2ToBackendProject,
-  layer2s,
   layer3ToBackendProject,
-  layer3s,
   toBackendProject,
+} from '@l2beat/backend-shared'
+import {
+  type Bridge,
+  type Layer2,
+  type Layer3,
+  bridges,
+  layer2s,
+  layer3s,
 } from '@l2beat/config'
 import {
   assert,
@@ -78,6 +80,7 @@ const backendProjects = [
 
 export function getTvlProjects(
   filter: (p: Layer2 | Layer3 | Bridge) => boolean,
+  previewRecategorisation?: boolean,
 ): TvlProject[] {
   const filteredProjects = projects
     .filter((p) => filter(p))
@@ -120,7 +123,7 @@ export function getTvlProjects(
       type,
       slug,
       sources,
-      category: getCategory(project),
+      category: getCategory(project, previewRecategorisation),
     }
   })
 
@@ -129,12 +132,13 @@ export function getTvlProjects(
 
 function getCategory(
   p: Layer2 | Layer3 | Bridge,
+  previewRecategorisation?: boolean,
 ): 'rollups' | 'validiumsAndOptimiums' | 'others' | undefined {
   if (p.type === 'bridge') {
     return undefined
   }
 
-  if (isProjectOther(p)) {
+  if (isProjectOther(p, previewRecategorisation)) {
     return 'others'
   }
 

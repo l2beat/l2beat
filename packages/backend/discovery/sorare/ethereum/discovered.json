@@ -2,7 +2,8 @@
   "name": "sorare",
   "chain": "ethereum",
   "blockNumber": 19825381,
-  "configHash": "0x9d4f44fb464f4b174f5fc4dac5f0ace6b6fd0aeac99acb870a2ba5686cc52899",
+  "configHash": "0x94773065d0f1386ec8c6c632e5c85c118e13e5372c3ce6ce016a1b3d1e364b7d",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -68,7 +69,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF5C9F957705bea56a7e806943f98F7777B995826"
+          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -107,12 +108,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5918481F777dBe437De249492B90AffB4e655de4",
+          "to": "0x5918481F777dBe437De249492B90AffB4e655de4",
           "via": []
         },
         {
           "permission": "upgrade",
-          "target": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
+          "to": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
           "via": []
         }
       ],
@@ -335,7 +336,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF5C9F957705bea56a7e806943f98F7777B995826"
+          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826"
         }
       ]
     },
@@ -751,6 +752,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

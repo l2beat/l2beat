@@ -12,7 +12,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
 
@@ -55,7 +55,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ],
       rollupCodes: 'https://rollup.codes/polygon-zkevm',
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       explanation:
         'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
@@ -132,6 +131,21 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
         sinceTimestamp: new UnixTime(1710419699),
+        untilTimestamp: new UnixTime(1736943371),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x519E42c24163192Dca44CD3fBDCEBF6be9130987'),
+        selector: '0xb910e0f9',
+        functionSignature:
+          'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
+        sinceTimestamp: new UnixTime(1736943371),
       },
     },
   ],

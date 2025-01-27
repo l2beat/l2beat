@@ -2,7 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "blockNumber": 21365608,
-  "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
+  "configHash": "0x3b6ae574390d5de50b9e1eab7035ff78a1cd71b50b903c9af493b50a743d0f2c",
   "contracts": [
     {
       "name": "Multisig 1",
@@ -108,7 +108,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
           "via": []
         }
       ],
@@ -154,15 +154,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+          "from": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
         },
         {
           "permission": "upgrade",
-          "target": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+          "from": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
         },
         {
           "permission": "upgrade",
-          "target": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+          "from": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
         }
       ],
       "sinceTimestamp": 1592218707,
@@ -193,7 +193,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
           "via": []
         }
       ],
@@ -235,7 +235,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x38A43F4330f24fe920F943409709fc9A6084C939",
+          "to": "0x38A43F4330f24fe920F943409709fc9A6084C939",
           "via": []
         }
       ],
@@ -720,6 +720,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

@@ -2,7 +2,8 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21630127,
-  "configHash": "0x9f2a63feb17b6a63ff3e04a613e6e10404800c34a80bf98d0951ee464c231d4b",
+  "configHash": "0xceb4cee1478e471326f07e709db9d05e23b7736b3ed527306f8292bcc92cc522",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "daiBridge",
@@ -15,7 +16,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
           "via": []
         }
       ],
@@ -139,7 +140,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
           "via": []
         }
       ],
@@ -185,7 +186,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
           "via": []
         }
       ],
@@ -241,15 +242,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+          "from": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
         },
         {
           "permission": "upgrade",
-          "target": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+          "from": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
         },
         {
           "permission": "upgrade",
-          "target": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+          "from": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -641,6 +642,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

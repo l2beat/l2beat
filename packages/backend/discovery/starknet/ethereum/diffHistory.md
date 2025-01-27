@@ -1,3 +1,271 @@
+Generated with discovered.json: 0xb9503031051fa02f99e862e89799c59f17f066ff
+
+# Diff at Mon, 20 Jan 2025 11:10:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21635833
+- current block number: 21635833
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635833 (main branch discovery), not current.
+
+```diff
+    contract BridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.9.target:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.9.from:
++        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+      receivedPermissions.8.target:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.8.from:
++        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+      receivedPermissions.7.target:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.7.from:
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.6.target:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.6.from:
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.5.target:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.5.from:
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.4.target:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.4.from:
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.3.target:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.3.from:
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.2.target:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.2.from:
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.1.target:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.1.from:
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.0.target:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.0.from:
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+    }
+```
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      issuedPermissions.0.to:
++        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      issuedPermissions.0.to:
++        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract ProxyMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      receivedPermissions.0.from:
++        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae"
+      issuedPermissions.1.to:
++        "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae"
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions.1.target:
+-        "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263"
+      issuedPermissions.1.to:
++        "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263"
+      issuedPermissions.0.target:
+-        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
+      issuedPermissions.0.to:
++        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      issuedPermissions.0.to:
++        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      issuedPermissions.0.to:
++        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      issuedPermissions.0.to:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+      issuedPermissions.0.to:
++        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+Generated with discovered.json: 0x2628c3ddf425826024d28dd0149fd9690b0d27bd
+
+# Diff at Mon, 20 Jan 2025 09:25:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21635833
+- current block number: 21635833
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635833 (main branch discovery), not current.
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      fieldMeta.programHash.type:
++        "CODE_CHANGE"
+    }
+```
+
 Generated with discovered.json: 0xfc5f74026a824d06653c797febe62bc4319357fa
 
 # Diff at Thu, 16 Jan 2025 08:25:02 GMT:

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { Clock } from '../../../tools/Clock'
+import type { Clock } from '../../../tools/Clock'
 import { SyncOptimizer } from './SyncOptimizer'
 
 describe(SyncOptimizer.name, () => {

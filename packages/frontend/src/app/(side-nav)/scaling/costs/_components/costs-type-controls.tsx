@@ -13,13 +13,14 @@ export function CostsMetricControls<T extends string>({
 }: Props<T>) {
   return (
     <RadioGroup
+      name="costsMetric"
       value={value}
       onValueChange={onValueChange}
       variant="highlighted"
       className={className}
     >
       <RadioGroupItem value="total">TOTAL</RadioGroupItem>
-      <RadioGroupItem value="per-l2-tx">PER L2 TX</RadioGroupItem>
+      <RadioGroupItem value="per-l2-uop">PER L2 USER OP</RadioGroupItem>
     </RadioGroup>
   )
 }

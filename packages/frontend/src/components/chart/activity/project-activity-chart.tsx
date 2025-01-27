@@ -1,6 +1,6 @@
 'use client'
 
-import { type Milestone, type ScalingProjectCategory } from '@l2beat/config'
+import type { Milestone, ScalingProjectCategory } from '@l2beat/config'
 import { useState } from 'react'
 import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
@@ -109,6 +109,7 @@ export function ProjectActivityChart({
               projectChart
             />
             <Checkbox
+              name="showMainnetActivity"
               checked={showMainnet}
               onCheckedChange={(state) => setShowMainnet(!!state)}
             >
@@ -120,6 +121,7 @@ export function ProjectActivityChart({
             </Checkbox>
           </div>
           <RadioGroup
+            name="activityChartScale"
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >

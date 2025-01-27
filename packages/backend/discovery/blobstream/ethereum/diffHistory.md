@@ -1,3 +1,174 @@
+Generated with discovered.json: 0xa8d40a956a661141c7649225ed501b0b207338f6
+
+# Diff at Thu, 23 Jan 2025 09:36:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c34926fa70131af78b4ff8ff2873e9c9f24dfc80 block: 21635651
+- current block number: 21686332
+
+## Description
+
+blobstreamProgramVkey updated: The new key is not found anywhere yet, the old one was associated with v4.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00e30cadab0b8ad6a5f115c5131a14afce4ec4bbf8acf7c821951778a2d97660"
++        "0x00b6c8c78a73630fae80e45b2888a00d9ab0cc05a77cd7c027446a6ae2289928"
+    }
+```
+
+Generated with discovered.json: 0xfd8c7ecff1a061e92b4848378cee6b1205033e35
+
+# Diff at Mon, 20 Jan 2025 11:09:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21635651
+- current block number: 21635651
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635651 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      issuedPermissions.1.target:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      issuedPermissions.1.to:
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      issuedPermissions.1.description:
++        "can verify proofs for the header range [latestBlock, targetBlock] proof."
+      issuedPermissions.0.target:
+-        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+      issuedPermissions.0.to:
++        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+      issuedPermissions.0.description:
++        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      issuedPermissions.0.target:
+-        "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0"
+      issuedPermissions.0.to:
++        "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0"
+      issuedPermissions.0.description:
++        "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
+    }
+```
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      issuedPermissions.3.target:
+-        "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"
+      issuedPermissions.3.to:
++        "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"
+      issuedPermissions.2.target:
+-        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
+      issuedPermissions.2.to:
++        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
+      issuedPermissions.2.description:
++        "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+      issuedPermissions.1.target:
+-        "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"
+      issuedPermissions.1.to:
++        "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6"
+      issuedPermissions.1.description:
++        "can freeze the bridge contract and update the list of authorized relayers."
+      issuedPermissions.0.target:
+-        "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+      issuedPermissions.0.to:
++        "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+      issuedPermissions.0.description:
++        "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+      receivedPermissions.1.from:
++        "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+      receivedPermissions.0.target:
+-        "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+      receivedPermissions.0.from:
++        "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      receivedPermissions.0.from:
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+      receivedPermissions.0.from:
++        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      receivedPermissions.0.from:
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+Generated with discovered.json: 0xf53eab3132787e0bcb46a499a4cfb935af3baa3c
+
+# Diff at Mon, 20 Jan 2025 09:24:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21635651
+- current block number: 21635651
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635651 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      fieldMeta.headerRangeProvers.type:
++        "PERMISSION"
+      fieldMeta.nextHeaderProvers.type:
++        "PERMISSION"
+    }
+```
+
 Generated with discovered.json: 0x38336130d165bbbbafde106d7b0cc84281eaa0c3
 
 # Diff at Thu, 16 Jan 2025 12:09:49 GMT:

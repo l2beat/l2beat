@@ -1,4 +1,4 @@
-import { CliLogger } from '@l2beat/shared'
+import type { CliLogger } from '@l2beat/shared'
 import { computeComparisonBetweenProjects } from './common'
 import { printComparisonBetweenProjects } from './output'
 

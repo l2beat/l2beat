@@ -24,10 +24,6 @@ export function ExternallyBridgedTable(props: Props) {
     getCoreRowModel: getCoreRowModel(),
   })
 
-  if (props.tokens.length === 0) {
-    return null
-  }
-
   return (
     <div className="flex flex-col">
       <h2 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">

@@ -4,7 +4,7 @@ import { LogFormatterEcs } from './LogFormatterEcs'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { Logger } from './Logger'
-import { LogEntry } from './types'
+import type { LogEntry } from './types'
 
 describe(Logger.name, () => {
   it('calls correct transport', () => {

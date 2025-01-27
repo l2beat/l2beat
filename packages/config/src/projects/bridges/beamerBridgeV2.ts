@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('beamer-bridge-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())

@@ -22,29 +22,37 @@
         },
         "validatorSetUpdates": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "FinalizedValidatorSetUpdate",
-            "returnParams": [
-              "epoch",
-              "hotValidatorSetHash",
-              "coldValidatorSetHash"
-            ]
+            "type": "event",
+            "select": ["epoch", "hotValidatorSetHash", "coldValidatorSetHash"],
+            "add": { "event": "FinalizedValidatorSetUpdate" }
           }
         },
         "lockers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ModifiedLocker",
-            "valueKey": "locker",
-            "flagKey": "isLocker"
+            "type": "event",
+            "select": "locker",
+            "add": {
+              "event": "ModifiedLocker",
+              "where": ["=", "#isLocker", true]
+            },
+            "remove": {
+              "event": "ModifiedLocker",
+              "where": ["!=", "#isLocker", true]
+            }
           }
         },
         "finalizers": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ModifiedFinalizer",
-            "valueKey": "finalizer",
-            "flagKey": "isFinalizer"
+            "type": "event",
+            "select": "finalizer",
+            "add": {
+              "event": "ModifiedFinalizer",
+              "where": ["=", "#isFinalizer", true]
+            },
+            "remove": {
+              "event": "ModifiedFinalizer",
+              "where": ["!=", "#isFinalizer", true]
+            }
           }
         }
       }

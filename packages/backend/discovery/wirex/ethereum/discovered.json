@@ -2,7 +2,8 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 21628493,
-  "configHash": "0x382d1bf894200503aa610e56bdf4cb15223fefc0d808dc346efd74b02363a187",
+  "configHash": "0x95215c58c4c6019694e41ef1dcd739b866744e9c8ac48521603f973baf351506",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "Verifier",
@@ -25,7 +26,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
+          "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
         }
       ],
       "sinceTimestamp": 1720547171,
@@ -46,13 +47,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-          "via": [
-            {
-              "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
-              "delay": 0
-            }
-          ]
+          "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+          "via": [{ "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }]
         }
       ],
       "sinceTimestamp": 1720547183,
@@ -151,14 +147,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
           "via": [{ "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
+          "from": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
         }
       ]
     },
@@ -342,6 +338,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }
