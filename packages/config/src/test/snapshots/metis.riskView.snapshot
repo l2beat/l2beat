@@ -23,14 +23,6 @@
   sequencerFailure: {
     description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
     sentiment: "warning"
-    sources: [
-      {
-        contract: "CanonicalTransactionChain"
-        references: [
-          "https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code#F1#L212"
-        ]
-      }
-    ]
     value: "Enqueue via L1"
   }
   stateValidation: {

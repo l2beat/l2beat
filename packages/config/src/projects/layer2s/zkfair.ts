@@ -176,58 +176,19 @@ export const zkfair: Layer2 = {
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L820',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount,
-        requiredSignatures,
-      }),
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L587',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount,
+      requiredSignatures,
+    }),
     exitWindow: exitWindowRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
-    sequencerFailure: {
-      ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L247',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
       description:
         RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
         ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L639',
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L862',
-          ],
-        },
-      ],
     },
   },
   stage: {

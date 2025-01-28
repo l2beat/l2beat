@@ -50,17 +50,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'ExecutorFacet',
-          references: [
-            'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L58',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL,
     technology: {
       name: 'Data is not stored on chain',
       description:

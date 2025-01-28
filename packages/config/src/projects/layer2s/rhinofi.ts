@@ -146,26 +146,10 @@ export const rhinofi: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      sources: [
-        {
-          contract: 'StarkExchange',
-          references: [
-            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F34#L183',
-          ],
-        },
-        {
-          contract: 'Committee',
-          references: [
-            'https://etherscan.io/address/0x28780349A33eEE56bb92241bAAB8095449e24306#code#F1#L63',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,

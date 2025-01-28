@@ -5,14 +5,6 @@
     definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
     sentiment: "good"
-    sources: [
-      {
-        contract: "InputBox"
-        references: [
-          "https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30"
-        ]
-      }
-    ]
     value: "Onchain"
   }
   exitWindow: {

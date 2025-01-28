@@ -131,26 +131,10 @@ export const immutablex: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      sources: [
-        {
-          contract: 'StarkExchange',
-          references: [
-            'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L123',
-          ],
-        },
-        {
-          contract: 'Committee',
-          references: [
-            'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,

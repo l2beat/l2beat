@@ -484,29 +484,13 @@ export const arbitrum: Layer2 = orbitStackL2({
     },
   ],
   nonTemplateRiskView: {
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW_NITRO(
-        l2TimelockDelay,
-        selfSequencingDelay,
-        challengeWindowSeconds,
-        validatorAfkTime,
-        l1TimelockDelay,
-      ),
-      sources: [
-        {
-          contract: 'RollupProxy',
-          references: [
-            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43',
-          ],
-        },
-        {
-          contract: 'Outbox',
-          references: [
-            'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
-          ],
-        },
-      ],
-    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+      l2TimelockDelay,
+      selfSequencingDelay,
+      challengeWindowSeconds,
+      validatorAfkTime,
+      l1TimelockDelay,
+    ),
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',

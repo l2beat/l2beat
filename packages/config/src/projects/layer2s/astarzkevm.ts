@@ -45,20 +45,10 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     }),
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: membersCountDAC,
-        requiredSignatures: requiredSignaturesDAC,
-      }),
-      sources: [
-        {
-          contract: 'PolygonDataCommittee.sol',
-          references: [
-            'https://etherscan.io/address/0xF4e87685e323818E0aE35dCdFc3B65106002E456#code',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: membersCountDAC,
+      requiredSignatures: requiredSignaturesDAC,
+    }),
     technology: {
       name: 'Data is not stored on chain',
       description:

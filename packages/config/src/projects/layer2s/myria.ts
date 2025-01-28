@@ -123,26 +123,10 @@ export const myria: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      sources: [
-        {
-          contract: 'StarkExchange',
-          references: [
-            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F14#L188',
-          ],
-        },
-        {
-          contract: 'Committee',
-          references: [
-            'https://etherscan.io/address/0x1e601435E181423e7A8430813d7500012a6169cB#code#F1#L60',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,

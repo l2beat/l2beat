@@ -85,15 +85,6 @@ export const skaleIMA: Bridge = {
       description:
         'There are 16 randomly selected validator nodes of the destination chain, 11 of them needs to sign and verify messages',
       sentiment: 'warning',
-      sources: [
-        {
-          contract: 'MessageProxyForMainnet',
-          references: [
-            'https://etherscan.io/address/0x0AE92a5105111281151b980A0aD680b890bf1944#code#F1#L508',
-            'https://etherscan.io/tx/0xb463ae9bacd3b0ba41eea25bdb51b115858bd9997d631bc26ccbb8a4fc3774c7',
-          ],
-        },
-      ],
     },
     sourceUpgradeability: {
       value: 'Yes',

@@ -251,38 +251,10 @@ export const paradex: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'Paradex',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code',
-          ],
-        },
-      ],
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-      sources: [
-        {
-          contract: 'Paradex',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      sources: [
-        {
-          contract: 'Paradex',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code#F1#L253',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stage: getStage({

@@ -236,52 +236,12 @@ export const kroma: Layer2 = {
       sentiment: 'bad',
       secondLine: formatChallengePeriod(finalizationPeriod),
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'KromaPortal',
-          references: [
-            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430',
-          ],
-        },
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(timelockDefaultDelay, finalizationPeriod),
-      sources: [
-        {
-          contract: 'KromaPortal',
-          references: [
-            'https://etherscan.io/address/0x31F648572b67e60Ec6eb8E197E1848CC5F5558de',
-          ],
-        },
-      ],
-    },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-        HARDCODED.KROMA.SEQUENCING_WINDOW_SECONDS,
-      ),
-      sources: [
-        {
-          contract: 'KromaPortal',
-          references: [
-            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
-      sources: [
-        {
-          contract: 'L2OutputOracle',
-          references: [
-            'https://etherscan.io/address/0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b#code#F1#L197',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDefaultDelay, finalizationPeriod),
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+      HARDCODED.KROMA.SEQUENCING_WINDOW_SECONDS,
+    ),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
   },
   stage: getStage(
     {

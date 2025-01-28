@@ -46,17 +46,7 @@ export const grvt: Layer2 = zkStackL2({
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'ExecutorFacet',
-          references: [
-            'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL,
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -82,21 +72,6 @@ export const grvt: Layer2 = zkStackL2({
       description:
         'There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 to be whitelisted.',
       sentiment: 'bad',
-      sources: [
-        {
-          contract: 'GrvtZkEvm',
-          references: [
-            'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
-            'https://etherscan.io/address//0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96',
-          ],
-        },
-        {
-          contract: 'GRVTTransactionFilterer',
-          references: [
-            'https://etherscan.io/address/0x8319fede99061c6723c86d366a903e8fa3a0f541#code#F1#L29',
-          ],
-        },
-      ],
     },
   },
   nonTemplateTechnology: {

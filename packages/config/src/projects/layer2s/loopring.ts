@@ -169,40 +169,12 @@ export const loopring: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
-        forcedWithdrawalDelay,
-        forcedWithdrawalFee,
-        maxAgeDepositUntilWithdrawable,
-      ),
-      sources: [
-        {
-          contract: 'ExchangeV3',
-          references: [
-            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252',
-            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195',
-            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6090',
-          ],
-        },
-        {
-          contract: 'LoopringV3',
-          references: [
-            'https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
-      sources: [
-        {
-          contract: 'ExchangeV3',
-          references: [
-            'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
+      forcedWithdrawalDelay,
+      forcedWithdrawalFee,
+      maxAgeDepositUntilWithdrawable,
+    ),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
   },
   stage: getStage(
     {

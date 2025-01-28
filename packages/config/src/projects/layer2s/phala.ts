@@ -164,22 +164,8 @@ export const phala: Layer2 = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(SEQUENCING_WINDOW_SECONDS),
       secondLine: formatDelay(SEQUENCING_WINDOW_SECONDS),
-      sources: [
-        {
-          contract: portal.name,
-          references: [],
-        },
-      ],
     },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: l2OutputOracle.name,
-          references: [],
-        },
-      ],
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stage: getStage(
     {

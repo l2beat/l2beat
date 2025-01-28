@@ -18,36 +18,12 @@
     definingMetric: Infinity
     description: "Users are able to trustlessly exit by submitting a Merkle proof of funds."
     sentiment: "good"
-    sources: [
-      {
-        contract: "ExchangeV3"
-        references: [
-          "https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159"
-        ]
-      }
-    ]
     value: "Use escape hatch"
   }
   sequencerFailure: {
     definingMetric: 1296000
     description: "Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a 0.02 ETH fee. If the sequencer is down for more than 15d, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after 15d users can get their funds back."
     sentiment: "good"
-    sources: [
-      {
-        contract: "ExchangeV3"
-        references: [
-          "https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L7252"
-          "https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6195"
-          "https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L6090"
-        ]
-      }
-      {
-        contract: "LoopringV3"
-        references: [
-          "https://etherscan.io/address/0xe56D6ccab6551932C0356E4e8d5dAF0630920C71#code#L1825"
-        ]
-      }
-    ]
     value: "Force via L1"
   }
   stateValidation: {
