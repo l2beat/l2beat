@@ -1190,12 +1190,15 @@ export interface StageConfiguredMessage {
   type: 'underReview' | 'warning' | undefined
   text: string
 }
+
 interface StageUnderReview {
   stage: 'UnderReview'
 }
+
 interface StageNotApplicable {
   stage: 'NotApplicable'
 }
+
 export interface BaseProject {
   id: ProjectId
   slug: string
