@@ -5,6 +5,7 @@ import {
   type EthereumAddress,
   type json,
 } from '@l2beat/shared-pure'
+import { z } from 'zod'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
@@ -23,6 +24,7 @@ import {
   EVMTransactionResponse,
   Quantity,
   RPCError,
+  RpcResponse,
 } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -172,6 +174,48 @@ export class RpcClient extends ClientCore implements BlockClient {
     return Bytes.fromHex(callResult.data.result)
   }
 
+  async batchCall(
+    calls: {
+      params: CallParameters
+      blockNumber: number | 'latest'
+    }[],
+  ): Promise<Bytes[]> {
+    const params: [Record<string, string>, string][] = []
+
+    for (const call of calls) {
+      const encodedNumber =
+        call.blockNumber === 'latest'
+          ? 'latest'
+          : Quantity.encode(BigInt(call.blockNumber))
+
+      const callObject: Record<string, string> = {
+        to: call.params.to.toString(),
+      }
+      if (call.params.from) {
+        callObject.from = call.params.from.toString()
+      }
+      if (call.params.data) {
+        callObject.data = call.params.data.toString()
+      }
+
+      params.push([callObject, encodedNumber])
+    }
+
+    const method = 'eth_call'
+    const callResponse = await this.batchQuery(method, params)
+    const callResult = z.array(EVMCallResponse).safeParse(callResponse)
+
+    if (!callResult.success) {
+      this.$.logger.warn(
+        'Error during batch call',
+        JSON.stringify(callResponse),
+      )
+      throw new Error('Call response: Error during parsing')
+    }
+
+    return callResult.data.map((c) => Bytes.fromHex(c.result))
+  }
+
   async query(
     method: string,
     params: (string | number | boolean | Record<string, string>)[],
@@ -187,6 +231,34 @@ export class RpcClient extends ClientCore implements BlockClient {
       }),
       redirect: 'follow',
       timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+    })
+  }
+
+  async batchQuery(
+    method: string,
+    paramsBatch: (string | number | boolean | Record<string, string>)[][],
+  ) {
+    const queries = paramsBatch.map((q) => ({
+      method: method,
+      params: q,
+      id: this.$.generateId ? this.$.generateId() : generateId(),
+      jsonrpc: '2.0',
+    }))
+
+    const result = await this.fetch(this.$.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(queries),
+      redirect: 'follow',
+      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
+    })
+
+    const parsedResult = z.array(RpcResponse).parse(result)
+
+    return queries.map((q) => {
+      const r = parsedResult.find((p) => p.id === q.id)
+      assert(r, `Request with with ${q.id} not found`)
+      return r
     })
   }
 

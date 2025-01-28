@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 import type { HttpClient } from '../http/HttpClient'
 import { RpcClient } from './RpcClient'
@@ -300,6 +300,59 @@ describe(RpcClient.name, () => {
           id: 'unique-id',
           jsonrpc: '2.0',
         }),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        timeout: 5000,
+      })
+    })
+  })
+
+  describe(RpcClient.prototype.batchQuery.name, () => {
+    it('calls http client with correct params and returns data', async () => {
+      const queries = [
+        ['a', 1, true],
+        ['b', 2, true],
+        ['c', 3, false],
+      ]
+
+      // Response from RPC can have different order of results
+      const mockResponse = [
+        { id: '0x2', result: 'two' },
+        { id: '0x3', result: 'three' },
+        { id: '0x1', result: 'one' },
+      ]
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockResponse,
+      })
+
+      const rpc = mockClient({
+        http,
+        generateId: mockFn()
+          .returnsOnce('0x1')
+          .returnsOnce('0x2')
+          .returnsOnce('0x3'),
+      })
+
+      const result = await rpc.batchQuery('rpc_method', queries)
+
+      const expectedResult = [
+        { id: '0x1', result: 'one' },
+        { id: '0x2', result: 'two' },
+        { id: '0x3', result: 'three' },
+      ]
+
+      const expectedPayload = queries.map((params, index) => ({
+        method: 'rpc_method',
+        params,
+        id: `0x${index + 1}`,
+        jsonrpc: '2.0',
+      }))
+
+      expect(result).toEqual(expectedResult)
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+        body: JSON.stringify(expectedPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',
