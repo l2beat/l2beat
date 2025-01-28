@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21141582,
-  "configHash": "0xe9b990a207d092319d856ba4001da54785f05af09b1a91ecaeded08cfaf22da2",
+  "configHash": "0x96e06951ea8b541ad406ac601cc27f3be3f6dcfec7c257a51530b3d81233f6cb",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -2497,6 +2497,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

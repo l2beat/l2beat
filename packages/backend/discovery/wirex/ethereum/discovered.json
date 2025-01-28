@@ -2,7 +2,7 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 21628493,
-  "configHash": "0x95215c58c4c6019694e41ef1dcd739b866744e9c8ac48521603f973baf351506",
+  "configHash": "0x7aa58c585e61a425a5288a1925c35bf3fc0542c3218dc909e2ce949592e32010",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -338,6 +338,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

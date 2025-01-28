@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 21694441,
-  "configHash": "0xc7997d00605c74eb22cd58ce4bfee403017aef4f13ad867d54b412b27d8cc15c",
+  "configHash": "0xdfb8c527e7baccd729c8c218d8b58f0fe3499a40e515c5e01383d410f22ecc38",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -2127,24 +2127,24 @@
     ]
   },
   "usedTemplates": {
-    "circle/L1OpUSDCBridgeAdapter": "0xecc0be82fd86c444583a1243274c3c493d9b735e34ce73719d9d0ca8f656454b",
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "gnosisSafeModules/DeputyGuardianModule": "0x7ce78296046de0d94cbda05ffa1f3311f9c435f7a18e18d37cd3b7d74dd524cf",
-    "gnosisSafeModules/LivenessModule": "0xb959673ecf0e7d14b47985f2b9bf13d0c0da48abb41a72ae313bdad79e2c7adc",
-    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
-    "opstack/AnchorStateRegistry": "0xc49d0781313cac8ad221802fc1b8ac9224bef9757dc96c036f450e192b61b06f",
-    "opstack/DelayedWETH": "0xe73611b895c409ce46b367e3e18f887e7e5978a01f6f4bbb6e43ec21e3eaf7e4",
-    "opstack/DisputeGameFactory": "0x919dee82821399808dffe01d8fe33140c5421fc77375e96ef4adf93d2ab1e578",
-    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
-    "opstack/L1ERC721Bridge": "0x597905c209b546f9d70c98674823b68e0a156ca904d559323057dc4987b98132",
-    "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
-    "opstack/MIPS": "0xf864ac3fea78514d3b30e3049c38c5a3f76399f6e436bf16a2258cd0bbc8e523",
-    "opstack/OptimismMintableERC20Factory": "0x64cb1472d54c0965d50a3c62611a8f94c2d2e391d563c34811ec883332ea32bc",
-    "opstack/OptimismPortal2": "0xed5050da4c9a6cb7b21374a009fb0e56013844de684666e965970fc6b15dd0b6",
-    "opstack/PermissionedDisputeGame": "0x36a741a0ca843da26fc3abda9752ca8c7959bfb49243bf2d486505307ceb0eee",
-    "opstack/PreimageOracle": "0x2ae202df56f28d71967553e58704d1791626575b9429822ff6aed98a1623e84d",
-    "opstack/SuperchainConfig": "0xcd0f87f8e22f1ec91a0e265660ba0f14e8d1f03cc58cf6b5c3a4f522406b6b05",
-    "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30"
+    "circle/L1OpUSDCBridgeAdapter": "0x22759a15b1e9cda9e20f90038ea71e9c208b164e806d9d3ed2af65951954e105",
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "gnosisSafeModules/DeputyGuardianModule": "0xbf09136c280484ee64edb52bd001d64ccf893d29dfa459662549b59a778a6e18",
+    "gnosisSafeModules/LivenessModule": "0xc58c2c40e841e551d5c504d8c04a2a49545992688d6bb995d818060c212cac71",
+    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "opstack/AnchorStateRegistry": "0x5edafcbd7ee4adf7acb235602afad395d234f30cb9b817bdcf13429ac1c3c77a",
+    "opstack/DelayedWETH": "0xc8b5f9d249266af7ce4c098dfb30dd9861a2a456fc8f813f5fa87ccc04ecbf7f",
+    "opstack/DisputeGameFactory": "0x931d104775ede2a7c3b384440bf1d16297b60b2b2bce84c5a41a77a64aaa0e58",
+    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
+    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
+    "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
+    "opstack/OptimismPortal2": "0xf06d5be76d03c0009852bba8f6c70050884122e1a128de56acdc5c14955e88f6",
+    "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
+    "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",
+    "opstack/SuperchainConfig": "0xd96c933fe77c5607dbb0bd2707b6d12a547d27638fd38932e6bbe2c83c2c12ee",
+    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
   }
 }

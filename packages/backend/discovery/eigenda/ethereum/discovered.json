@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 21628459,
-  "configHash": "0x3dc8d71e572dc96094cd0d5578d13579543d11933f3b4a2d76a317d315aa2c8b",
+  "configHash": "0xd2876d805a1e8200ec99d5b99b17eaea63076bdfd505de50bf24e54e9d1adbeb",
   "sharedModules": ["shared-eigenlayer"],
   "contracts": [
     {
@@ -2012,9 +2012,9 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/EjectionManager": "0xfc5fa02a56ac63310f2311527b6cb70c9b7cab19d34be73c3602e368397d313d",
-    "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "eigenlayer/EjectionManager": "0xfb1f732abe906384ebd51a5e0e31ca65857c8168a12e7b48711e0a557501d891",
+    "eigenlayer/Strategy": "0x421f91e2b1f1a1ca56e8ee9e26d416ae472234abb80b6ee8fa801b0461569d25",
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

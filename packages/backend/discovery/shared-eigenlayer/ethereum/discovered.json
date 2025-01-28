@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21679901,
-  "configHash": "0x6b5526d4116ccbfe2faa92cafb369a80d2bf60b23fd5403cf9cb875a317b769d",
+  "configHash": "0x28c401f1928970b9bfb69eb896fa9e48a4211f05d75af59da7deb91c312fd019",
   "contracts": [
     {
       "name": "DepositContract",
@@ -2303,8 +2303,8 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "eigenlayer/Strategy": "0x421f91e2b1f1a1ca56e8ee9e26d416ae472234abb80b6ee8fa801b0461569d25",
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

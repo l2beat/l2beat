@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "optimism",
   "blockNumber": 121594324,
-  "configHash": "0x5576b64b5ecd8fb5dfd30d94568f710d242b7939cff2be1c6c5bf2736adf2fc4",
+  "configHash": "0xe3eac935e21be676429b6b5711bbb14f7abe9ff887fdfe166d08ed22463c2a78",
   "contracts": [
     {
       "name": "StargatePoolMigratable",

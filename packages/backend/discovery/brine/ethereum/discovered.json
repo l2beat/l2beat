@@ -2,7 +2,7 @@
   "name": "brine",
   "chain": "ethereum",
   "blockNumber": 19825361,
-  "configHash": "0x6d81b488e8f62481738c976e0f1919fc2ae2309a0a49094a92ab83e119ffd897",
+  "configHash": "0x6b05bc714981b381cbb2cf70e9a55cee2aca582b7ffc122948d8a8701174ae86",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {

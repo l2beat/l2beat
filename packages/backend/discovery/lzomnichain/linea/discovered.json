@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "linea",
   "blockNumber": 11108774,
-  "configHash": "0xc1bc94495719ca84d9449670d1e868beb80949aa59f2d334b50d8871ac9f24e2",
+  "configHash": "0x369b41e85296310c9fd0a844ed7f407d40f5a39d993e2c31308197ddcb4a36ae",
   "contracts": [
     {
       "name": "MPTValidator01",
@@ -1396,6 +1396,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }
