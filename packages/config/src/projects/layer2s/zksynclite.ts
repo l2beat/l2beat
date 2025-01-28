@@ -67,7 +67,7 @@ export const zksynclite: Layer2 = {
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments', 'Exchange', 'NFT'],
-    provider: 'ZKsync Lite',
+    stack: 'ZKsync Lite',
     category: 'ZK Rollup',
 
     links: {

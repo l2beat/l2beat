@@ -12,7 +12,7 @@ export const unichain: Layer2 = upcomingL2({
       'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
     purposes: ['Universal', 'Exchange'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://unichain.org/'],
       apps: ['https://unichain.org/bridge'],

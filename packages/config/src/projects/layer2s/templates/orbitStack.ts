@@ -734,7 +734,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      provider: 'Arbitrum',
+      stack: 'Arbitrum',
       category:
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
@@ -915,7 +915,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
-      provider: 'Arbitrum',
+      stack: 'Arbitrum',
       category,
       finality: {
         finalizationPeriod: challengePeriodSeconds,

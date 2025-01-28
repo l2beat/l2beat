@@ -183,7 +183,7 @@ function opStackCommon(
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
     ScalingProjectDisplay,
-    'architectureImage' | 'purposes' | 'provider' | 'category' | 'warning'
+    'architectureImage' | 'purposes' | 'stack' | 'category' | 'warning'
   >
 } {
   const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
@@ -259,7 +259,7 @@ function opStackCommon(
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       architectureImage: templateVars.architectureImage ?? architectureImage,
-      provider: 'OP Stack',
+      stack: 'OP Stack',
       category:
         templateVars.display.category ??
         (postsToEthereum ? 'Optimistic Rollup' : 'Optimium'),

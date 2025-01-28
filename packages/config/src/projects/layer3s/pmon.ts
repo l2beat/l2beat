@@ -16,7 +16,7 @@ export const pmon: Layer3 = underReviewL3({
   ],
   display: {
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     name: 'PMON Chain',
     slug: 'pmon',
     description:

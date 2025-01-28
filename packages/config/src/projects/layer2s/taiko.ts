@@ -150,7 +150,7 @@ export const taiko: Layer2 = {
   display: {
     name: 'Taiko',
     slug: 'taiko',
-    provider: 'Taiko',
+    stack: 'Taiko',
     // headerWarning: hasThreeTiers
     //   ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
     //   : undefined,

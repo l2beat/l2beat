@@ -12,7 +12,7 @@ export const pandasea: Layer2 = upcomingL2({
       'PandaSea.io is a Layer 2 Web3 platform focused on integrating social finance and sports engagement.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://pandasea.io/'],
       apps: [],

@@ -58,7 +58,7 @@ export const loopring: Layer2 = {
     description:
       'Loopring is a ZK Rollup exchange protocol for trading and payments.',
     purposes: ['NFT', 'Exchange'],
-    provider: 'Loopring',
+    stack: 'Loopring',
     category: 'ZK Rollup',
     links: {
       websites: ['https://loopring.org'],

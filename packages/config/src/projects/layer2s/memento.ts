@@ -12,7 +12,7 @@ export const memento: Layer2 = upcomingL2({
       'Memento ZKchain is a ZK Rollup dedicated to institutional DeFi and digital asset management, providing a secure, permissioned environment for digital investment funds and asset distribution.',
     purposes: ['Interoperability', 'Privacy', 'RWA'],
     category: 'ZK Rollup',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://mementoblockchain.com/'],
       apps: [],

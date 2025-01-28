@@ -11,7 +11,7 @@ export const moonveil: Layer2 = upcomingL2({
     description: 'Moonveil is a gaming chain utilizing Polygon CDK technology.',
     purposes: ['Gaming'],
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://moonveil.gg/'],
       apps: ['https://moonveil.gg/AstrArk/'],

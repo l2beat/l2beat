@@ -140,7 +140,7 @@ export const hashkey: Layer2 = {
     name: 'HashKey Chain',
     slug: 'hashkey',
     purposes: ['Exchange'],
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       "HashKey Chain is a regulatory-compliant, institutional-grade OP stack Layer 2 solution bridging traditional finance and Web3. It is powered by Hong Kong's premier virtual asset ecosystem.",
     category: 'Optimistic Rollup',

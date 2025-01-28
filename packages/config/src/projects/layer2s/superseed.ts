@@ -19,7 +19,7 @@ export const superseed: Layer2 = underReviewL2({
       'Superseed is an Optimistic Rollup utilizing the OP Stack, aiming to provide a CDP lending platform enshrined in the protocol and redistribution of Layer 2 fees to its users.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://superseed.xyz/'],
       apps: ['https://bridge.superseed.xyz/'],

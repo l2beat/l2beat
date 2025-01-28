@@ -20,7 +20,7 @@ export const layer2aWithDups: Layer2 = {
     slug: 'layer2a',
     description: '',
     purposes: ['Universal'],
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     category: 'Optimistic Rollup',
     links: {
       websites: [],

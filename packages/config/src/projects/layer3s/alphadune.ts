@@ -13,7 +13,7 @@ export const alphadune: Layer3 = upcomingL3({
       'Alpha Dune Network is an upcoming Layer 3 on Arbitrum, built on the Orbit stack and using Celestia for DA. It aims to be a meta progression layer for games that unlocks value for gamers and developers alike.',
     purposes: ['Universal', 'Gaming'],
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://alphadune.com/'],
       apps: [],

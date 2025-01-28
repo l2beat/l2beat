@@ -12,7 +12,7 @@ export const haust: Layer2 = upcomingL2({
       'Haust Network is a zkEVM Layer 2 blockchain built on the Polygon CDK, integrating with the AggLayer and Account Abstraction from the outset.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://haust.network/'],
       apps: [],

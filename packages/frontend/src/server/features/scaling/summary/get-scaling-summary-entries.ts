@@ -63,7 +63,7 @@ export async function getScalingSummaryEntries() {
 export interface ScalingSummaryEntry extends CommonScalingEntry {
   stage: StageConfig
   category: ScalingProjectCategory
-  provider: ScalingProjectStack | undefined
+  stack: ScalingProjectStack | undefined
   dataAvailability: ProjectDataAvailability | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvl: {
@@ -127,7 +127,7 @@ function getScalingSummaryEntry(
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
     category: project.scalingInfo.type,
-    provider: project.scalingInfo.stack,
+    stack: project.scalingInfo.stack,
     dataAvailability: project.scalingDa,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvl: {

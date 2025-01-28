@@ -31,7 +31,7 @@ export const layer2financezk: Layer2 = {
     description:
       'Celer’s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
     purposes: ['Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],

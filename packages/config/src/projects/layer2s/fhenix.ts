@@ -12,7 +12,7 @@ export const fhenix: Layer2 = upcomingL2({
       'Fhenix is Fully Homomorphic Encryption rollup, build on top of Arbitrum Stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://fhenix.io/'],
       apps: [],

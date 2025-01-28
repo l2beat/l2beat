@@ -12,7 +12,7 @@ export const zklighter: Layer2 = upcomingL2({
       'zkLighter is an efficient order book Validium on Ethereum - low cost, low latency, verifiable matching.',
     purposes: ['Universal', 'Exchange'],
     category: 'Validium',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://zk.lighter.xyz'],
       apps: [],

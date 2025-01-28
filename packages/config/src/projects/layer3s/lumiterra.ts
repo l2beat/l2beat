@@ -14,7 +14,7 @@ export const lumiterra: Layer3 = upcomingL3({
     description:
       'Lumiterra is a multiplayer open-world survival crafting game built on L3 Arbitrum Orbit chain.',
     purposes: ['Gaming'],
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://lumiterra.net/'],
       apps: ['https://bridge.layerlumi.com/?l2ChainId=94168'],

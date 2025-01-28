@@ -12,7 +12,7 @@ export const layerai: Layer2 = upcomingL2({
       'LayerAI is the dedicated blockchain network for data monetization within AI models. It functions as a sophisticated ecosystem strategically crafted to expedite the rise of the data economy. The LayerAI ecosystem empowers individuals to step into a transformative epoch where they can own, control, and capitalize on their most substantial digital asset – Data.',
     purposes: ['AI'],
     category: 'ZK Rollup',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://layerai.org/'],
       apps: ['https://kyotox.com/', 'https://layervpn.com/'],

@@ -12,7 +12,7 @@ export const funki: Layer2 = underReviewL2({
       'Funki chain is an OP Stack Optimium on Ethereum reimagining the blockchain experience as an interconnected world brimming with wonder, adventure, and fun.',
     purposes: ['Universal'],
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://funkichain.com'],
       apps: ['https://funkichain.com/bridge', 'https://swap.funkichain.com'],

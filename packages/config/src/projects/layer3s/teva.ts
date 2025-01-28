@@ -14,7 +14,7 @@ export const teva: Layer3 = underReviewL3({
     description:
       'Teva Chain is a L3 gaming hyperchain on ZKsync, powered by zkStack with custom DA.',
     purposes: ['Gaming'],
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://tevaera.com/tevachain'],
       apps: [''],

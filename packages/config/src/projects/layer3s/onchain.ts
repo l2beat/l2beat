@@ -18,7 +18,7 @@ export const onchain: Layer3 = underReviewL3({
     name: 'Onchain Chain',
     slug: 'onchain',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Onchain Chain is an Orbit stack L3 with AnyTrust DA powering the ONCHAIN score system that evaluates addresses connected to a farcaster profile based on their onchain activity.',
     purposes: ['Gaming', 'Social'],

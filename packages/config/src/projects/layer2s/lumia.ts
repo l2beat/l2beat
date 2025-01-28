@@ -14,7 +14,7 @@ export const lumia: Layer2 = upcomingL2({
       'Lumia is a modular L2 aiming at leveraging Polygon CDK, EigenDA, and AggLayer to achieve enhanced functionality in DeFi applications.',
     purposes: ['Universal', 'Restaking'],
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://lumia.org/'],
       apps: [],

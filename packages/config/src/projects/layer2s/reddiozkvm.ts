@@ -16,7 +16,7 @@ export const reddiozkvm: Layer2 = {
     purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
 
-    provider: 'SN Stack',
+    stack: 'SN Stack',
     links: {
       websites: ['https://reddio.com'],
       apps: [],

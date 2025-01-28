@@ -12,7 +12,7 @@ export const leaf: Layer2 = upcomingL2({
       'Leaf is an upcoming OP Stack L2 focused on DeFi and MEV protection.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://leafprotocol.com/'],
       apps: [],

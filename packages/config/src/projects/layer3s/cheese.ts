@@ -16,7 +16,7 @@ export const cheese: Layer3 = underReviewL3({
   ],
   display: {
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     name: 'CheeseChain',
     slug: 'cheese',
     description: 'CheeseChain is an Orbit stack Optimium using $CHEESE.',

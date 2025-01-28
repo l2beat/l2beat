@@ -14,7 +14,7 @@ export const ternoa: Layer2 = upcomingL2({
       'Ternoa is a modular Validium leveraging Polygon CDK, Avail, and AggLayer to achieve enhanced functionality.',
     purposes: ['Universal'],
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://ternoa.network/'],
       apps: [],

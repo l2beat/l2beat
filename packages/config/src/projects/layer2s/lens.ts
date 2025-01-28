@@ -12,7 +12,7 @@ export const lens: Layer2 = upcomingL2({
       "Lens Network is the main social networking hub for the entire user base of Lens Protocol, built using ZKsync's ZK Stack technology.",
     purposes: ['Social'],
     category: 'Validium',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://lens.xyz'],
       apps: ['https://lens.xyz/mint'],

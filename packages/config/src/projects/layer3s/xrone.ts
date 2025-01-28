@@ -18,7 +18,7 @@ export const xrone: Layer3 = underReviewL3({
     name: 'XR One',
     slug: 'xrone',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       "XR One is an Orbit stack L3 with AnyTrust DA built by DeMoN Labs and partnered with Saltwater Games. It is designed to power unique PvP and AI-enhanced applications that spark user's imaginations through mechanics that reward risk-takers.",
     purposes: ['Gaming'],

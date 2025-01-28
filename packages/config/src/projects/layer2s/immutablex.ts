@@ -84,7 +84,7 @@ export const immutablex: Layer2 = {
     description:
       'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
     purposes: ['NFT', 'Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://immutable.com/'],

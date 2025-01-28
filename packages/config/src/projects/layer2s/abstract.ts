@@ -12,7 +12,7 @@ export const abstract: Layer2 = upcomingL2({
       'Abstract is a ZK Rollup built on top of Ethereum, designed to securely power consumer-facing blockchain applications at scale with low fees and fast transaction speeds.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://abs.xyz/'],
       apps: ['https://portal.testnet.abs.xyz/bridge/'],

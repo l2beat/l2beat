@@ -12,7 +12,7 @@ export const koi: Layer2 = upcomingL2({
       'Koi Finance is a DEX, farming platform, and Bond platform built on zkRollup and zkSync.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://koi.finance/'],
       apps: ['https://dapp.koi.finance/'],

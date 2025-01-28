@@ -76,7 +76,7 @@ export const myria: Layer2 = {
     description:
       'Myria is an expansive blockchain gaming ecosystem, comprised of a blockchain gaming hub and Myriaverse metaverse.',
     purposes: ['NFT', 'Exchange', 'Gaming'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://myria.com/'],

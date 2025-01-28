@@ -12,7 +12,7 @@ export const camp: Layer2 = upcomingL2({
       'Camp is an Ethereum layer 2 designed for entertainment applications, based on the OP stack and utilizing Celestia for data availability.',
     purposes: ['Universal'],
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://campnetwork.xyz/'],
       apps: ['https://camp-testnet-bridge.vercel.app/'],

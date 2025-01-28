@@ -75,7 +75,7 @@ export const tanx: Layer2 = {
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
     category: 'Validium',
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     links: {
       websites: ['https://tanx.fi/'],
       apps: ['https://trade.tanx.fi/'],

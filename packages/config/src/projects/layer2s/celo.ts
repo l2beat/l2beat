@@ -12,7 +12,7 @@ export const celo: Layer2 = upcomingL2({
       'Celo announced a strategic move to integrate with the Ethereum ecosystem as an OP Stack L2.',
     purposes: ['Universal'],
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://celo.org/'],
       apps: [],

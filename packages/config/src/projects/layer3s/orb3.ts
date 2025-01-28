@@ -13,7 +13,7 @@ export const orb3: Layer3 = upcomingL3({
     description:
       'ORB3 is a GameFi-focused Ethereum L3 leveraging Arbitrum AnyTrust.',
     purposes: ['Gaming', 'NFT', 'Universal', 'Social'],
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://orb3.tech/'],
       apps: [

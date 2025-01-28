@@ -83,7 +83,7 @@ export const degate3: Layer2 = {
     description:
       'DeGate is a ZK Rollup enabling a decentralized order book exchange. DeGate smart contracts are forked from Loopring V3.',
     purposes: ['Exchange', 'NFT'],
-    provider: 'Loopring',
+    stack: 'Loopring',
     category: 'ZK Rollup',
 
     links: {

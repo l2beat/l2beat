@@ -12,7 +12,7 @@ export const happychain: Layer2 = upcomingL2({
       'HappyChain is an Ethereum L2 chain that brings free-to-play and zero-friction onboarding onchain.',
     purposes: ['Universal', 'Gaming'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://linktr.ee/happychaindevs'],
       apps: [],

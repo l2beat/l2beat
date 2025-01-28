@@ -1,7 +1,6 @@
 import type {
   EthereumAddress,
   ProjectId,
-  StringWithAutocomplete,
   UnixTime,
   ValueWithSentiment,
   WarningValueWithSentiment,
@@ -217,22 +216,8 @@ export type ScalingProjectDisplay = {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
-  /** Technology provider */
-  provider?: ScalingProjectStack
-  mainPermissions?: {
-    proposer: {
-      value: string
-      secondLine?: string
-    }
-    challenger: {
-      value: StringWithAutocomplete<'None'>
-      secondLine?: string
-    }
-    upgrader: {
-      value: string
-      secondLine?: string
-    }
-  }
+  /** Technological stack */
+  stack?: ScalingProjectStack
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string
   /** Warning for TVL */

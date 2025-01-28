@@ -12,7 +12,7 @@ export const fuse: Layer2 = upcomingL2({
       'Fuse announced a strategic move to integrate with the Ethereum ecosystem as a Polygon CDK L2.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://fuse.io/'],
       apps: ['https://fuse.io/network'],

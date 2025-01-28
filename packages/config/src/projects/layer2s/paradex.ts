@@ -79,7 +79,7 @@ export const paradex: Layer2 = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    provider: 'SN Stack',
+    stack: 'SN Stack',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],

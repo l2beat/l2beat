@@ -18,7 +18,7 @@ export const henez: Layer3 = underReviewL3({
     name: 'Henez',
     slug: 'henez',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Henez is an Orbit stack L3 with AnyTrust DA powering chain- and account-abstracted DeFi applications.',
     purposes: ['Universal'],

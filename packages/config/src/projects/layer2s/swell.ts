@@ -141,7 +141,7 @@ export const swell: Layer2 = {
     name: 'Swellchain',
     slug: 'swell',
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'Swellchain operates as a restaking-focused Layer 2 network built on the OP Stack. The network aims to extend Ethereum security through EigenLayer restaking while leveraging OP stack proven infrastructure for transaction processing and scalability.',
     purposes: ['Universal', 'Restaking'],

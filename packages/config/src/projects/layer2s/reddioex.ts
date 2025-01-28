@@ -74,7 +74,7 @@ export const reddioex: Layer2 = {
     description:
       'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs and SDKs to create digital assets and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://reddio.com/'],

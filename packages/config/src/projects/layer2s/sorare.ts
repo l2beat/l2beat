@@ -74,7 +74,7 @@ export const sorare: Layer2 = {
     description:
       'Sorare is a global fantasy football game where you can play with officially licensed digital cards.',
     purposes: ['NFT', 'Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://sorare.com/'],

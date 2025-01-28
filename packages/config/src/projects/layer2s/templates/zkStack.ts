@@ -278,7 +278,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
-      provider: 'ZK Stack',
+      stack: 'ZK Stack',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       liveness: {
         explanation: executionDelay

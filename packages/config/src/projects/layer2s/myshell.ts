@@ -12,7 +12,7 @@ export const myshell: Layer2 = upcomingL2({
       'MyShell announced new L2 aimed to connect users, creators, and open-source AI model researchers, powered by EigenDA and OP Stack.',
     purposes: ['AI'],
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://myshell.ai/'],
       apps: [],

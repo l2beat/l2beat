@@ -52,7 +52,7 @@ describe('layer2s', () => {
     describe('every escrow in new format resolves to discovery entry', () => {
       for (const layer2 of layer2s) {
         // NOTE(radomski): PolygonCDK projects have a shared escrow
-        if (layer2.display.provider === 'Polygon') continue
+        if (layer2.display.stack === 'Polygon') continue
 
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
@@ -264,8 +264,8 @@ describe('layer2s', () => {
     describe('all arbitrum and op stack chains have the assessCount defined', () => {
       const opAndArbL2sWithActivity = layer2s
         .filter((layer2) => {
-          const { provider } = layer2.display
-          return provider === 'Arbitrum' || provider === 'OP Stack'
+          const { stack } = layer2.display
+          return stack === 'Arbitrum' || stack === 'OP Stack'
         })
         .flatMap((layer2) => {
           const { transactionApi } = layer2.config

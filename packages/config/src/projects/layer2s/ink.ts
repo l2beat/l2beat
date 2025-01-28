@@ -143,7 +143,7 @@ export const ink: Layer2 = {
       'Ink is an Optimistic Rollup built with the OP Stack by Kraken exchange.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://inkonchain.com/en-US'],
       apps: [],

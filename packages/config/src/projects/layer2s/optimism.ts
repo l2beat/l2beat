@@ -138,7 +138,7 @@ export const optimism: Layer2 = {
     slug: 'op-mainnet',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
     purposes: ['Universal'],

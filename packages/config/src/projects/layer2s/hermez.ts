@@ -32,7 +32,7 @@ export const hermez: Layer2 = {
     category: 'ZK Rollup',
     // TODO: This is not correct. Research it.
 
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://hermez.io/'],
       apps: ['https://wallet.hermez.io/'],

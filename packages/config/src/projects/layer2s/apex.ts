@@ -129,7 +129,7 @@ export const apex: Layer2 = {
       two independent StarkEx instances, one for USDC and one for USDT, but that
       technical distinction is not visible to the user.`,
     purposes: ['Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://apex.exchange/'],

@@ -143,7 +143,7 @@ export const soneium: Layer2 = {
       'Soneium is an Optimistic rollup based on the OP Stack. It is built by Sony Block Solutions Labs and planned to stand as a versatile, general-purpose blockchain.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://soneium.org/en/'],
       apps: ['https://bridge.soneium.org/'],

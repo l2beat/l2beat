@@ -12,7 +12,7 @@ export const degenlayer: Layer2 = upcomingL2({
       'DegenLayer is a Memecoin-focused Ethereum Layer 2 blockchain designed to capitalize on the explosive growth of the memecoin market.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://degenlayer.wtf/'],
       apps: ['https://bridge-test.degenlayer.wtf/bridge/degenlayer'],

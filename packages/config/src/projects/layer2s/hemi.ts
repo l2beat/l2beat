@@ -12,7 +12,7 @@ export const hemi: Layer2 = upcomingL2({
       'Hemi is an OP Stack based L2 on Ethereum focusing on interoperability with the Bitcoin blockchain.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://hemi.xyz'],
       apps: ['https://app.hemi.xyz'],

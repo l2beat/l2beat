@@ -12,7 +12,7 @@ export const palm: Layer2 = upcomingL2({
       'The Palm network is a sidechain focused on NFTs that will transition from a Proof of Authority network to a ZK Rollup in 2024.',
     purposes: ['NFT'],
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://palm.network/'],
       apps: ['https://app.palm.io/bridge', 'https://uniswap-v3.scroll.io'],

@@ -18,7 +18,7 @@ export const huddle01: Layer3 = underReviewL3({
     name: 'Huddle01',
     slug: 'huddle01',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Huddle01 is an Orbit stack L3 powering the dRTC protocol, a decentralized Real Time Communication Network operating an algorithmic prosumer marketplace for real-time data.',
     purposes: ['Information'],

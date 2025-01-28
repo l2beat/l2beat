@@ -55,7 +55,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),
       reasonsForBeingOther: p.reasonsForBeingOther,
-      stack: p.display.provider,
+      stack: p.display.stack,
       raas: getRaas(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),

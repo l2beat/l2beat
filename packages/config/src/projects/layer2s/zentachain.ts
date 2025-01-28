@@ -12,7 +12,7 @@ export const zentachain: Layer2 = upcomingL2({
       'Zentachain is a privacy-focused IoT blockchain networking project that is focused on communication and data storage. Innovative and useful solutions are provided for issues of security and data ownership.',
     purposes: ['Universal', 'Privacy'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://zentachain.io/'],
       apps: ['https://sepolia-bridge.zentachain.io/'],

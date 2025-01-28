@@ -13,7 +13,7 @@ export const animechain: Layer3 = upcomingL3({
       'AnimeChain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It aims to provide the infrastructure to enable the global anime network to live onchain, governed by creators and participants.',
     purposes: ['Gaming', 'Universal'],
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://anime.xyz/'],
       apps: [],

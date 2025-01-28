@@ -247,7 +247,7 @@ export const starknet: Layer2 = {
   display: {
     name: 'Starknet',
     slug: 'starknet',
-    provider: 'SN Stack',
+    stack: 'SN Stack',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:

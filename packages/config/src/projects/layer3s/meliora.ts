@@ -13,7 +13,7 @@ export const meliora: Layer3 = upcomingL3({
       'Meliora is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is focused on the creation of an ecosystem of fixed-income/credit-based applications.',
     purposes: ['Universal'],
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://meliorachain.io/'],
       apps: [],

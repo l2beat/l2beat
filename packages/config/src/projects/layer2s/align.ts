@@ -12,7 +12,7 @@ export const align: Layer2 = upcomingL2({
       'Align Network is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It focuses on providing a decentralized identity and verification layer for social interactions.',
     purposes: ['Social'],
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://align.network/'],
       apps: [],

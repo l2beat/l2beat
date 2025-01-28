@@ -18,7 +18,7 @@ export const clique: Layer3 = underReviewL3({
     name: 'Clique',
     slug: 'clique',
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'Clique is an OP stack Optimium built on Base and using Celestia for DA. The project aims to provide an environment that meets the needs of both onchain gaming and AI technologies. The team is also building their own onchain game called Eternal Legacy.',
     purposes: ['AI', 'Gaming'],
