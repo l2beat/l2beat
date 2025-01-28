@@ -158,4 +158,29 @@ export const celestia: BlockchainDaLayer = {
       coingeckoId: 'celestia',
     },
   },
+  milestones: [
+    {
+      title: 'Mainnet launch',
+      url: 'https://blog.celestia.org/celestia-mainnet-is-live/',
+      date: '2023-10-31T14:00:00Z',
+      description: 'Celestia mainnet launches.',
+      type: 'general',
+    },
+    {
+      title: 'Ginger upgrade',
+      url: 'https://blog.celestia.org/celestia-mainnet-is-live/',
+      date: '2024-11-05T00:00:00Z',
+      description:
+        'Celestia Ginger upgrade cuts the block time in half from 12 to 6 seconds.',
+      type: 'general',
+    },
+    {
+      title: 'Block size increase to 8MB',
+      url: 'https://blog.celestia.org/celestia-mainnet-is-live/',
+      date: '2025-01-28T00:00:00Z',
+      description:
+        'Celestia onchain governance votes to increase the block size from 2MB to 8MB.',
+      type: 'general',
+    },
+  ],
 }
