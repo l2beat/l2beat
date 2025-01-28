@@ -74,7 +74,7 @@ export function getStageTextClassname(
     case 'Stage 2':
       return 'text-positive'
     case 'Stage 1':
-      return 'text-yellow-700'
+      return 'text-warning'
     case 'Stage 0':
       return 'text-negative'
     case 'UnderReview':

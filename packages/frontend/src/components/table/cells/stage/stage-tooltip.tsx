@@ -19,7 +19,7 @@ export interface StageTooltipProps {
 
 export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
-
+  const hasNotice = stageConfig.stage !== 'UnderReview' && !!stageConfig.notice
   return (
     <div className="flex max-w-[300px] flex-col py-1">
       <div
@@ -35,7 +35,7 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
           {getStageName(stageConfig.stage)}
         </div>
       </div>
-      {isAppchain && (
+      {isAppchain && hasNotice && (
         <div className="mt-2 font-medium">
           <span className={getStageTextClassname(stageConfig.stage)}>
             Appchain

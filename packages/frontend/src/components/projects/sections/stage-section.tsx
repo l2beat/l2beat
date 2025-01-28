@@ -91,7 +91,7 @@ export function StageSection({
         />
         <span> {type}</span>.
       </span>
-      {(isAppchain || notice) && (
+      {notice && (
         <div className="space-y-4 p-4 text-base">
           {isAppchain && (
             <p>
@@ -99,7 +99,7 @@ export function StageSection({
               <strong>application-specific</strong> might bring additional risk.
             </p>
           )}
-          {notice && <p>{notice}</p>}
+          <p>{notice}</p>
           {isAppchain && (
             <div>
               <div className="text-[13px] font-semibold uppercase leading-none text-secondary">

@@ -25,12 +25,12 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
   if (stageConfig.stage === 'NotApplicable' || isMobile) {
     return <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
   }
-
+  const hasNotice = stageConfig.stage !== 'UnderReview' && !!stageConfig.notice
   return (
     <Tooltip>
       <TooltipTrigger className="flex gap-1">
         <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
-        {isAppchain && (
+        {isAppchain && hasNotice && (
           <CircleQuestionMarkIcon
             className={cn(
               'mt-px size-5 fill-current',

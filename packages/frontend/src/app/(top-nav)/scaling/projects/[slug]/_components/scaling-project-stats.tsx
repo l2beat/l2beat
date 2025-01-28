@@ -28,6 +28,10 @@ interface Props {
 
 export function ScalingProjectStats({ project, className }: Props) {
   const isAppchain = project.capability === 'appchain'
+  const hasNotice =
+    project.stageConfig.stage !== 'UnderReview' &&
+    project.stageConfig.stage !== 'NotApplicable' &&
+    !!project.stageConfig.notice
   return (
     <div
       className={cn(
@@ -79,7 +83,7 @@ export function ScalingProjectStats({ project, className }: Props) {
                     isAppchain={isAppchain}
                   />
                 </a>
-                {isAppchain && (
+                {isAppchain && hasNotice && (
                   <CircleQuestionMarkIcon
                     className={cn(
                       'mt-0.5 inline-block size-5',
