@@ -826,8 +826,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             }
           : undefined),
     },
-    milestones: [],
-    knowledgeNuggets: [],
   }
 }
 
