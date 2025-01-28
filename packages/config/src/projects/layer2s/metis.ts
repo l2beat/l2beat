@@ -118,17 +118,7 @@ export const metis: Layer2 = {
     },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-      sources: [
-        {
-          contract: 'CanonicalTransactionChain',
-          references: [
-            'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code#F1#L212',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {

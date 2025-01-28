@@ -191,25 +191,9 @@ export const dydx: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
-          ],
-        },
-      ],
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
-          ],
-        },
-      ],
     },
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, 0),
@@ -222,26 +206,8 @@ export const dydx: Layer2 = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
       secondLine: formatDelay(freezeGracePeriod),
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
-          ],
-        },
-      ],
     },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
-          ],
-        },
-      ],
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   },
   technology: {
     stateCorrectness: {

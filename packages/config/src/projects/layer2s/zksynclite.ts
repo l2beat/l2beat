@@ -169,31 +169,8 @@ export const zksynclite: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'ZkSync',
-          references: [
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L575',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F16#L22',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F16#L36',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
-          ],
-        },
-      ],
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'ZkSync',
-          references: [
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L422',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, {
         upgradeDelay2: 0,
@@ -208,42 +185,9 @@ export const zksynclite: Layer2 = {
         value: 'The Security Council can upgrade with no delay.',
         sentiment: 'bad',
       },
-      sources: [
-        {
-          contract: 'Governance',
-          references: [
-            'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
-            'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L205',
-          ],
-        },
-      ],
     },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
-      sources: [
-        {
-          contract: 'ZkSync',
-          references: [
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
-      sources: [
-        {
-          contract: 'ZkSync',
-          references: [
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
-            'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
   stage: getStage(
     {

@@ -82,14 +82,6 @@ export const omni: Bridge = {
       value: 'Third Party',
       description: `${validatorsString} Validator MultiSig`,
       sentiment: 'bad',
-      sources: [
-        {
-          contract: 'ForeignAMB',
-          references: [
-            'https://etherscan.io/address/0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316#code#F14#L94',
-          ],
-        },
-      ],
     },
     sourceUpgradeability: {
       value: 'Yes',

@@ -480,8 +480,7 @@ function opStackCommon(
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
-    riskView:
-      templateVars.riskView ?? getRiskView(templateVars, daProvider, portal),
+    riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
     stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
     dataAvailability: decideDA(daProvider, nativeDA),
   }
@@ -630,7 +629,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 function getRiskView(
   templateVars: OpStackConfigCommon,
   daProvider: DAProvider | undefined,
-  portal: ContractParameters,
 ): ScalingProjectRiskView {
   const FINALIZATION_PERIOD_SECONDS: number =
     templateVars.discovery.getContractValue<number>(
@@ -638,25 +636,14 @@ function getRiskView(
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-  const l2OutputOracle =
-    templateVars.l2OutputOracle ??
-    templateVars.discovery.getContract('L2OutputOracle')
-
   return {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
     },
-    dataAvailability: {
-      ...(daProvider === undefined
-        ? RISK_VIEW.DATA_ON_CHAIN
-        : daProvider.riskView),
-      sources: [{ contract: portal.name, references: [] }],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
-      sources: [{ contract: portal.name, references: [] }],
-    },
+    dataAvailability:
+      daProvider === undefined ? RISK_VIEW.DATA_ON_CHAIN : daProvider.riskView,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
     sequencerFailure: {
       // the value is inside the node config, but we have no reference to it
       // so we assume it to be the same value as in other op stack chains
@@ -664,12 +651,8 @@ function getRiskView(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
-      sources: [{ contract: portal.name, references: [] }],
     },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [{ contract: l2OutputOracle.name, references: [] }],
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   }
 }
 

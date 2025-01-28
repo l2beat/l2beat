@@ -177,35 +177,7 @@ export const apex: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC(dacConfig),
-      sources: [
-        {
-          contract: 'StarkExchangeUSDC',
-          references: [
-            'https://etherscan.io/address/0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859#code#F36#L174',
-          ],
-        },
-        {
-          contract: 'StarkExchangeUSDT',
-          references: [
-            'https://etherscan.io/address/0x5BfbE850d18b73ed98FB830e0A5E9F4970Bb93dA#code#F36#L174',
-          ],
-        },
-        {
-          contract: 'CommitteeUSDC',
-          references: [
-            'https://etherscan.io/address/0x23cab3cf1aa7b929df5e9f3712aca3a6fb9494e4#code#F1#L84',
-          ],
-        },
-        {
-          contract: 'CommitteeUSDT',
-          references: [
-            'https://etherscan.io/address/0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800#code#F1#L84',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(dacConfig),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       minFreezeGracePeriod,

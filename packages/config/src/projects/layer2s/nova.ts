@@ -335,29 +335,13 @@ export const nova: Layer2 = orbitStackL2({
     }),
   ],
   nonTemplateRiskView: {
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW_NITRO(
-        l2TimelockDelay,
-        selfSequencingDelay,
-        challengeWindowSeconds,
-        validatorAfkTime,
-        l1TimelockDelay,
-      ),
-      sources: [
-        {
-          contract: 'RollupProxy',
-          references: [
-            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43',
-          ],
-        },
-        {
-          contract: 'Outbox',
-          references: [
-            'https://etherscan.io/address/0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f#code',
-          ],
-        },
-      ],
-    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+      l2TimelockDelay,
+      selfSequencingDelay,
+      challengeWindowSeconds,
+      validatorAfkTime,
+      l1TimelockDelay,
+    ),
   },
   nonTemplateTechnology: {
     otherConsiderations: [

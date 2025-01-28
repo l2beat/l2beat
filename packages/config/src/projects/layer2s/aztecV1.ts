@@ -144,59 +144,11 @@ export const aztecV1: Layer2 = {
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'RollupProcessor',
-          references: [
-            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
-          ],
-        },
-        {
-          contract: 'TurboVerifier',
-          references: [
-            'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'RollupProcessor',
-          references: [
-            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
-      sources: [
-        {
-          contract: 'RollupProcessor',
-          references: [
-            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
-            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
-      sources: [
-        {
-          contract: 'RollupProcessor',
-          references: [
-            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
-            'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   stateDerivation: {
     nodeSoftware:

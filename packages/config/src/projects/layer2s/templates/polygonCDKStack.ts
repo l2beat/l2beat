@@ -46,12 +46,7 @@ import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
 import { getStage } from '../common/stages/getStage'
 import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
-import {
-  explorerContractSourceReference,
-  explorerReferences,
-  mergeBadges,
-  safeGetImplementation,
-} from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
@@ -349,41 +344,19 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         secondLine: formatExecutionDelay(finalizationPeriod),
-        sources: explorerContractSourceReference(
-          explorerUrl,
-          rollupManagerContract,
-        ),
       },
-      dataAvailability: {
-        ...riskViewDA(daProvider),
-        sources: [
-          {
-            contract: templateVars.rollupModuleContract.name,
-            references: [],
-          },
-        ],
-      },
+      dataAvailability: riskViewDA(daProvider),
       exitWindow: exitWindowRisk,
       // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
-      sequencerFailure: {
-        ...SEQUENCER_NO_MECHANISM(templateVars.isForcedBatchDisallowed),
-        sources: [
-          {
-            contract: templateVars.rollupModuleContract.name,
-            references: [],
-          },
-        ],
-      },
+      sequencerFailure: SEQUENCER_NO_MECHANISM(
+        templateVars.isForcedBatchDisallowed,
+      ),
       proposerFailure: {
         ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
         description:
           RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
           ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
         secondLine: formatDelay(trustedAggregatorTimeout + pendingStateTimeout),
-        sources: explorerContractSourceReference(
-          explorerUrl,
-          rollupManagerContract,
-        ),
       },
     },
     stage:

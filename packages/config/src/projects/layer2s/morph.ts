@@ -153,56 +153,10 @@ export const morph: Layer2 = {
       sentiment: 'bad',
       secondLine: formatChallengePeriod(challengeWindow),
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'MorphRollup',
-          references: [
-            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
-          ],
-        },
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-      sources: [
-        {
-          contract: 'MorphRollup',
-          references: [
-            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
-          ],
-        },
-      ],
-    },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      sources: [
-        {
-          contract: 'L1MessageQueueWithGasPriceOracle',
-          references: [
-            'https://etherscan.io/address/0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA#code',
-          ],
-        },
-        {
-          contract: 'EnforcedTxGateway',
-          references: [
-            'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: 'MorphRollup',
-          references: [
-            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
     newCryptography: {

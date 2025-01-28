@@ -5,14 +5,6 @@
     definingMetric: Infinity
     description: "All of the data (SD = state diffs) needed for proof construction is published onchain."
     sentiment: "good"
-    sources: [
-      {
-        contract: "Starknet"
-        references: [
-          "https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code"
-        ]
-      }
-    ]
     value: "Onchain (SD)"
   }
   exitWindow: {
@@ -31,14 +23,6 @@
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "Starknet"
-        references: [
-          "https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code"
-        ]
-      }
-    ]
     value: "No mechanism"
   }
   stateValidation: {
@@ -46,14 +30,6 @@
     description: "STARKs are zero knowledge proofs that ensure state correctness."
     secondLine: undefined
     sentiment: "good"
-    sources: [
-      {
-        contract: "Starknet"
-        references: [
-          "https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code"
-        ]
-      }
-    ]
     value: "ZK proofs (ST)"
   }
 }

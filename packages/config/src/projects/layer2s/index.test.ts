@@ -1,4 +1,3 @@
-import { get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
@@ -19,7 +18,6 @@ import { tokenList } from '../../tokens/tokens'
 import type {
   ProjectTechnologyChoice,
   ReferenceLink,
-  ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
 } from '../../types'
 import { layer2s, milestonesLayer2s } from './index'
@@ -289,48 +287,6 @@ describe('layer2s', () => {
   })
 
   describe('references', () => {
-    describe('points to an existing implementation', () => {
-      for (const layer2 of layer2s) {
-        try {
-          const discovery = new ProjectDiscovery(layer2.id.toString())
-
-          for (const [riskName, riskEntry] of Object.entries(layer2.riskView)) {
-            const risk = riskEntry as ScalingProjectRiskViewEntry
-            if (risk.sources === undefined) continue
-
-            describe(`${layer2.id.toString()} : ${riskName}`, () => {
-              for (const sourceCodeReference of risk.sources ?? []) {
-                it(sourceCodeReference.contract, () => {
-                  const referencedAddresses = getReferencedAddresses(
-                    sourceCodeReference.references,
-                  )
-
-                  if (referencedAddresses.length > 0) {
-                    const contract = discovery.getContract(
-                      sourceCodeReference.contract,
-                    )
-
-                    const contractAddresses = [
-                      contract.address,
-                      ...get$Implementations(contract.values),
-                    ]
-
-                    expect(
-                      contractAddresses.some((a) =>
-                        referencedAddresses.includes(a),
-                      ),
-                    ).toEqual(true)
-                  }
-                })
-              }
-            })
-          }
-        } catch {
-          continue
-        }
-      }
-    })
-
     describe('permissions references are valid', () => {
       for (const layer2 of layer2s) {
         try {

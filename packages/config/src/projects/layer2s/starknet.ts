@@ -894,45 +894,12 @@ export const starknet: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'Starknet',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code',
-          ],
-        },
-        // we don't have a way to test against shared modules
-        // {
-        //   contract: 'GpsStatementVerifier',
-        //   references: [
-        //     'https://etherscan.io/address/0x6cb3ee90c50a38a0e4662bb7e7e6e40b91361bf6#code#F6#L153',
-        //   ],
-        // },
-      ],
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-      sources: [
-        {
-          contract: 'Starknet',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code',
-          ],
-        },
-      ],
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      sources: [
-        {
-          contract: 'Starknet',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stage: getStage(

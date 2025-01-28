@@ -149,28 +149,8 @@ export const termstructure: Layer2 = {
   },
   type: 'layer2',
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'Verifier',
-          references: [
-            'https://etherscan.io/address/0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'RollupFacet',
-          references: [
-            'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#writeContract',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, expirationPeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(expirationPeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,

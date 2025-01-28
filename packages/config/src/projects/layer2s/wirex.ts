@@ -76,20 +76,10 @@ export const wirex: Layer2 = polygonCDKStack({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     }),
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: membersCountDAC,
-        requiredSignatures: requiredSignaturesDAC,
-      }),
-      sources: [
-        {
-          contract: 'PolygonDataCommittee.sol',
-          references: [
-            'https://etherscan.io/address/0xAce9269EaC3419937093154dea0AD44C36Df6963#code',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: membersCountDAC,
+      requiredSignatures: requiredSignaturesDAC,
+    }),
     technology: {
       name: 'Data is not stored on chain',
       description:

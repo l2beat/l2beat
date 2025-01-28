@@ -122,33 +122,12 @@ export const degate2: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
-        forcedWithdrawalDelay,
-        forcedWithdrawalFee,
-        maxAgeDepositUntilWithdrawable,
-      ),
-      sources: [
-        {
-          contract: 'ExchangeV3',
-          references: [
-            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F23#L102',
-            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F35#L162',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
-      sources: [
-        {
-          contract: 'ExchangeV3',
-          references: [
-            'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L420',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
+      forcedWithdrawalDelay,
+      forcedWithdrawalFee,
+      maxAgeDepositUntilWithdrawable,
+    ),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
   },
   stage: getStage({
     stage0: {
