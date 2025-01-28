@@ -50,7 +50,6 @@ export const zksyncera: Layer2 = zkStackL2({
   createdAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
-  validatorsKey: 'zksyncValidators',
   additionalBadges: [Badge.Other.L3HostChain],
   display: {
     name: 'ZKsync Era',

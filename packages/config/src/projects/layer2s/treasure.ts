@@ -16,7 +16,6 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const treasure: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsKey: 'treasureValidators',
   additionalBadges: [Badge.DA.CustomDA],
   createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
