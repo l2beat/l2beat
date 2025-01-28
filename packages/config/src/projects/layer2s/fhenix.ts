@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const fhenix: Layer2 = upcomingL2({
   id: 'fhenix',
   capability: 'universal',
-  createdAt: new UnixTime(1719225560), // 2024-06-24T10:39:20Z
+  addedAt: new UnixTime(1719225560), // 2024-06-24T10:39:20Z
   display: {
     name: 'Fhenix',
     slug: 'fhenix',
@@ -13,7 +13,7 @@ export const fhenix: Layer2 = upcomingL2({
       'Fhenix is Fully Homomorphic Encryption rollup, build on top of Arbitrum Stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://fhenix.io/'],
       apps: [],

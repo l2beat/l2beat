@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const abstract: Layer2 = upcomingL2({
   id: 'abstract',
   capability: 'universal',
-  createdAt: new UnixTime(1724863689), // 2024-08-28T16:48:09Z
+  addedAt: new UnixTime(1724863689), // 2024-08-28T16:48:09Z
   display: {
     name: 'Abstract',
     slug: 'abstract',
@@ -13,7 +13,7 @@ export const abstract: Layer2 = upcomingL2({
       'Abstract is a ZK Rollup built on top of Ethereum, designed to securely power consumer-facing blockchain applications at scale with low fees and fast transaction speeds.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://abs.xyz/'],
       apps: ['https://portal.testnet.abs.xyz/bridge/'],

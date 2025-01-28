@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const memento: Layer2 = upcomingL2({
   id: 'memento',
   capability: 'universal',
-  createdAt: new UnixTime(1730879100), // 2024-11-6T07:45:00Z
+  addedAt: new UnixTime(1730879100), // 2024-11-6T07:45:00Z
   display: {
     name: 'Memento ZK Chain',
     slug: 'memento',
@@ -13,7 +13,7 @@ export const memento: Layer2 = upcomingL2({
       'Memento ZKchain is a ZK Rollup dedicated to institutional DeFi and digital asset management, providing a secure, permissioned environment for digital investment funds and asset distribution.',
     purposes: ['Interoperability', 'Privacy', 'RWA'],
     category: 'ZK Rollup',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://mementoblockchain.com/'],
       apps: [],

@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const ola: Layer2 = upcomingL2({
   id: 'ola',
   capability: 'universal',
-  createdAt: new UnixTime(1705060311), // 2024-01-12T11:51:51Z
+  addedAt: new UnixTime(1705060311), // 2024-01-12T11:51:51Z
   display: {
     name: 'Ola',
     slug: 'ola',

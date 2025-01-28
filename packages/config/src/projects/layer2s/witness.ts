@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const witness: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   discovery,
   additionalBadges: [Badge.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
@@ -74,8 +74,9 @@ export const witness: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium() function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          title:
+            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium() function',
+          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
@@ -118,8 +119,8 @@ export const witness: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'Witness Chain Mainnet Launch',
-      link: 'https://x.com/witnesschain/status/1808153753897652256',
+      title: 'Witness Chain Mainnet Launch',
+      url: 'https://x.com/witnesschain/status/1808153753897652256',
       date: '2024-07-02',
       description:
         'L2 Diligence proofs are now posted to Witness Chain Mainnet by Eigenlayer operators.',
@@ -166,7 +167,7 @@ export const witness: Layer2 = polygonCDKStack({
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

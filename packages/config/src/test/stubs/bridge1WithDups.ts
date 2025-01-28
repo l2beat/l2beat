@@ -4,7 +4,7 @@ import type { Bridge } from '../../projects/bridges'
 export const bridge1WithDups: Bridge = {
   type: 'bridge',
   id: ProjectId('bridge1'),
-  createdAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
+  addedAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
   display: {
     name: 'Bridge1',
     slug: 'bridge1',

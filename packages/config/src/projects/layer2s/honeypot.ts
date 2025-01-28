@@ -24,7 +24,7 @@ export const honeypot: Layer2 = {
   type: 'layer2',
   id: ProjectId('honeypot'),
   capability: 'appchain',
-  createdAt: new UnixTime(1683905088), // 2023-05-12T15:24:48Z
+  addedAt: new UnixTime(1683905088), // 2023-05-12T15:24:48Z
   badges: [
     Badge.VM.CartesiVM,
     Badge.VM.AppChain,
@@ -36,7 +36,7 @@ export const honeypot: Layer2 = {
     name: 'Honeypot (Cartesi)',
     shortName: 'Honeypot',
     slug: 'cartesi-honeypot',
-    provider: 'Cartesi Rollups',
+    stack: 'Cartesi Rollups',
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups. It provides a gamified battlefield to incentivize bug hunters to hack the application to obtain the funds locked in the rollup contract.',
     purposes: ['Bug bounty'],
@@ -160,8 +160,9 @@ export const honeypot: Layer2 = {
       ],
       references: [
         {
-          text: 'Authority.sol#L148 - Etherscan source code, submitClaim function',
-          href: 'https://etherscan.io/address/0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f#code#F1#L48',
+          title:
+            'Authority.sol#L148 - Etherscan source code, submitClaim function',
+          url: 'https://etherscan.io/address/0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f#code#F1#L48',
         },
       ],
     },
@@ -169,8 +170,8 @@ export const honeypot: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'InputBox.sol#30 - Etherscan source code, addInput function',
-          href: 'https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
+          title: 'InputBox.sol#30 - Etherscan source code, addInput function',
+          url: 'https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
         },
       ],
     },
@@ -232,15 +233,15 @@ export const honeypot: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Honeypot announcement',
-      link: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
+      title: 'Honeypot announcement',
+      url: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
       date: '2023-04-11T00:00:00Z',
       description: 'Honeypot first announced to the community.',
       type: 'general',
     },
     {
-      name: 'Honeypot launch',
-      link: 'https://x.com/cartesiproject/status/1706685141421047982',
+      title: 'Honeypot launch',
+      url: 'https://x.com/cartesiproject/status/1706685141421047982',
       date: '2023-09-26T00:00:00Z',
       description: 'Honeypot launched on mainnet.',
       type: 'general',

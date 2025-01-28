@@ -129,7 +129,7 @@ export const hashkey: Layer2 = {
   type: 'layer2',
   id: ProjectId('hashkey'),
   capability: 'universal',
-  createdAt: new UnixTime(1736518370), // 2025-01-10T17:09:00Z
+  addedAt: new UnixTime(1736518370), // 2025-01-10T17:09:00Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
@@ -141,7 +141,7 @@ export const hashkey: Layer2 = {
     name: 'HashKey Chain',
     slug: 'hashkey',
     purposes: ['Exchange'],
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       "HashKey Chain is a regulatory-compliant, institutional-grade OP stack Layer 2 solution bridging traditional finance and Web3. It is powered by Hong Kong's premier virtual asset ecosystem.",
     category: 'Optimistic Rollup',
@@ -283,14 +283,16 @@ export const hashkey: Layer2 = {
       ],
       references: [
         {
-          text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'DisputeGameFactory.sol - Etherscan source code, create() function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             disputeGameFactory,
           )}#code`,
         },
         {
-          text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
-          href: `https://etherscan.io/address/${permissionedDisputeGame.address}#code`,
+          title:
+            'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
+          url: `https://etherscan.io/address/${permissionedDisputeGame.address}#code`,
         },
       ],
     },
@@ -298,16 +300,17 @@ export const hashkey: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'Derivation: Batch submission - OP Mainnet specs',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+          title: 'Derivation: Batch submission - OP Mainnet specs',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
         },
         {
-          text: 'BatchInbox - Etherscan address',
-          href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
+          title: 'BatchInbox - Etherscan address',
+          url: `https://etherscan.io/address/${sequencerInbox.toString()}`,
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -318,12 +321,13 @@ export const hashkey: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'Sequencing Window - OP Mainnet Specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+          title: 'Sequencing Window - OP Mainnet Specs',
+          url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -342,14 +346,16 @@ export const hashkey: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
@@ -359,8 +365,8 @@ export const hashkey: Layer2 = {
         ...EXITS.FORCED('all-withdrawals'),
         references: [
           {
-            text: 'Forced withdrawal from an OP Stack blockchain',
-            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced withdrawal from an OP Stack blockchain',
+            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
           },
         ],
       },
@@ -373,8 +379,8 @@ export const hashkey: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -392,8 +398,8 @@ export const hashkey: Layer2 = {
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
         references: [
           {
-            text: 'OP stack specification: Fault Dispute Game',
-            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+            title: 'OP stack specification: Fault Dispute Game',
+            url: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
           },
         ],
       },
@@ -418,8 +424,8 @@ export const hashkey: Layer2 = {
         )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
         references: [
           {
-            text: 'Fraud Proof Wars: OPFP',
-            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+            title: 'Fraud Proof Wars: OPFP',
+            url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
           },
         ],
       },

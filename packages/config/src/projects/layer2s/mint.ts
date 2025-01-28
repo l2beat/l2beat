@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mint')
 
 export const mint: Layer2 = opStackL2({
-  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['NFT'],
@@ -62,8 +62,8 @@ export const mint: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mint Mainnet Launch',
-      link: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',
+      title: 'Mint Mainnet Launch',
+      url: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',
       date: '2024-05-14T00:00:00Z',
       description: 'Mint Mainnet is now live.',
       type: 'general',

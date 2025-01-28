@@ -63,7 +63,7 @@ export const myria: Layer2 = {
   type: 'layer2',
   id: ProjectId('myria'),
   capability: 'appchain',
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -77,7 +77,7 @@ export const myria: Layer2 = {
     description:
       'Myria is an expansive blockchain gaming ecosystem, comprised of a blockchain gaming hub and Myriaverse metaverse.',
     purposes: ['NFT', 'Exchange', 'Gaming'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://myria.com/'],
@@ -195,17 +195,17 @@ export const myria: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2022-08-26T00:00:00Z',
-      link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
+      url: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
       description:
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
       type: 'general',
     },
     {
-      name: 'MYRIA Token Airdrop',
+      title: 'MYRIA Token Airdrop',
       date: '2023-04-06T00:00:00Z',
-      link: 'https://medium.com/myria-official/the-myria-token-is-live-c8dd92b876cc',
+      url: 'https://medium.com/myria-official/the-myria-token-is-live-c8dd92b876cc',
       description: 'MYRIA token launches.',
       type: 'general',
     },
@@ -213,7 +213,7 @@ export const myria: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

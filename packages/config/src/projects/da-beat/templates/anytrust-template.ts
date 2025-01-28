@@ -9,7 +9,7 @@ type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
     technology?: IntegratedDacBridge['technology']
   } & Pick<
     IntegratedDacBridge,
-    'createdAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
+    'addedAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
   >
   discovery: ProjectDiscovery
 }
@@ -66,8 +66,8 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     `,
     references: [
       {
-        text: 'Inside AnyTrust - Arbitrum Docs',
-        href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-anytrust',
+        title: 'Inside AnyTrust - Arbitrum Docs',
+        url: 'https://docs.arbitrum.io/how-arbitrum-works/inside-anytrust',
       },
     ],
   }

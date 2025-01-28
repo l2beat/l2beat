@@ -62,7 +62,7 @@ export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
   capability: 'appchain',
-  createdAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
+  addedAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -76,7 +76,7 @@ export const tanx: Layer2 = {
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
     category: 'Validium',
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     links: {
       websites: ['https://tanx.fi/'],
       apps: ['https://trade.tanx.fi/'],
@@ -185,9 +185,9 @@ export const tanx: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2023-04-27T00:00:00.00Z',
-      link: 'https://tanx.fi/',
+      url: 'https://tanx.fi/',
       description: 'tanX is live on mainnet.',
       type: 'general',
     },
@@ -195,7 +195,7 @@ export const tanx: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

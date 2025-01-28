@@ -26,16 +26,16 @@ import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   Milestone,
+  ProjectEscrow,
+  ProjectTechnologyChoice,
   ScalingProjectCapability,
   ScalingProjectContract,
-  ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import type {
   ChainConfig,
@@ -58,13 +58,13 @@ export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
 
 export interface ZkStackConfigCommon {
+  addedAt: UnixTime
   capability?: ScalingProjectCapability
-  createdAt: UnixTime
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
   validatorsKey: string
@@ -79,7 +79,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgePremintedTokens?: string[]
   diamondContract: ContractParameters
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -89,7 +89,7 @@ export interface ZkStackConfigCommon {
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
-  nonTemplateEscrows?: (upgrades: Upgradeability) => ScalingProjectEscrow[]
+  nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -266,8 +266,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
+    addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
-    createdAt: templateVars.createdAt,
     badges: mergeBadges(
       [
         Badge.Stack.ZKStack,
@@ -281,7 +281,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
-      provider: 'ZK Stack',
+      stack: 'ZK Stack',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
@@ -547,8 +547,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         ],
         references: [
           {
-            text: "L1 - L2 interoperability - Developer's documentation",
-            href: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
+            title: "L1 - L2 interoperability - Developer's documentation",
+            url: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
           },
         ],
       },
@@ -557,8 +557,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           ...EXITS.REGULAR('zk', 'merkle proof'),
           references: [
             {
-              text: 'Withdrawing funds - ZKsync documentation',
-              href: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
+              title: 'Withdrawing funds - ZKsync documentation',
+              url: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
             },
           ],
         },
@@ -748,9 +748,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   }
 }
 
-function technologyDA(
-  DA: DAProvider | undefined,
-): ScalingProjectTechnologyChoice {
+function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

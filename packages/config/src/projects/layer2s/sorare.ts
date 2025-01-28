@@ -61,7 +61,7 @@ export const sorare: Layer2 = {
   type: 'layer2',
   id: ProjectId('sorare'),
   capability: 'appchain',
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -75,7 +75,7 @@ export const sorare: Layer2 = {
     description:
       'Sorare is a global fantasy football game where you can play with officially licensed digital cards.',
     purposes: ['NFT', 'Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://sorare.com/'],
@@ -191,9 +191,9 @@ export const sorare: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet launch',
+      title: 'Mainnet launch',
       date: '2021-07-26T00:00:00Z',
-      link: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
+      url: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       description:
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
       type: 'general',
@@ -202,7 +202,7 @@ export const sorare: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

@@ -5,7 +5,7 @@ import type { Layer3 } from './types'
 export const orb3: Layer3 = upcomingL3({
   id: 'orb3',
   capability: 'universal',
-  createdAt: new UnixTime(1710863171), // 2024-03-19T15:46:11Z
+  addedAt: new UnixTime(1710863171), // 2024-03-19T15:46:11Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'ORB3',
@@ -14,7 +14,7 @@ export const orb3: Layer3 = upcomingL3({
     description:
       'ORB3 is a GameFi-focused Ethereum L3 leveraging Arbitrum AnyTrust.',
     purposes: ['Gaming', 'NFT', 'Universal', 'Social'],
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://orb3.tech/'],
       apps: [

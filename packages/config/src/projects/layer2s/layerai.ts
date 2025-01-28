@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const layerai: Layer2 = upcomingL2({
   id: 'layerai',
   capability: 'universal',
-  createdAt: new UnixTime(1722861199), // 2024-08-05T12:33:19Z
+  addedAt: new UnixTime(1722861199), // 2024-08-05T12:33:19Z
   display: {
     name: 'LayerAI',
     slug: 'layerai',
@@ -13,7 +13,7 @@ export const layerai: Layer2 = upcomingL2({
       'LayerAI is the dedicated blockchain network for data monetization within AI models. It functions as a sophisticated ecosystem strategically crafted to expedite the rise of the data economy. The LayerAI ecosystem empowers individuals to step into a transformative epoch where they can own, control, and capitalize on their most substantial digital asset – Data.',
     purposes: ['AI'],
     category: 'ZK Rollup',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://layerai.org/'],
       apps: ['https://kyotox.com/', 'https://layervpn.com/'],

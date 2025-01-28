@@ -60,7 +60,7 @@ export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
   capability: 'appchain',
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
@@ -68,7 +68,7 @@ export const zksynclite: Layer2 = {
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments', 'Exchange', 'NFT'],
-    provider: 'ZKsync Lite',
+    stack: 'ZKsync Lite',
     category: 'ZK Rollup',
 
     links: {
@@ -275,12 +275,13 @@ export const zksynclite: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'Validity proofs - ZKsync FAQ',
-          href: 'https://zksync.io/faq/security.html#validity-proofs',
+          title: 'Validity proofs - ZKsync FAQ',
+          url: 'https://zksync.io/faq/security.html#validity-proofs',
         },
         {
-          text: 'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
-          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
+          title:
+            'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
+          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
         },
       ],
     },
@@ -288,12 +289,12 @@ export const zksynclite: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Cryptography used - ZKsync FAQ',
-          href: 'https://zksync.io/faq/security.html#cryptography-used',
+          title: 'Cryptography used - ZKsync FAQ',
+          url: 'https://zksync.io/faq/security.html#cryptography-used',
         },
         {
-          text: 'PlonkCore.sol#L1193 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
+          title: 'PlonkCore.sol#L1193 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F21#L1193',
         },
       ],
     },
@@ -301,13 +302,14 @@ export const zksynclite: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'Overview - ZKsync documentation',
-          href: 'https://zksync.io/dev/#overview',
+          title: 'Overview - ZKsync documentation',
+          url: 'https://zksync.io/dev/#overview',
         },
 
         {
-          text: 'ZkSync.sol#L44 - Etherscan source code, commitBlockInfo struct',
-          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
+          title:
+            'ZkSync.sol#L44 - Etherscan source code, commitBlockInfo struct',
+          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
         },
       ],
     },
@@ -315,12 +317,13 @@ export const zksynclite: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'How decentralized is ZKsync - ZKsync FAQ',
-          href: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
+          title: 'How decentralized is ZKsync - ZKsync FAQ',
+          url: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
         },
         {
-          text: 'ZkSync.sol#L422 - Etherscan source code, requireActiveValidator in commitBlock function',
-          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L427',
+          title:
+            'ZkSync.sol#L422 - Etherscan source code, requireActiveValidator in commitBlock function',
+          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L427',
         },
       ],
     },
@@ -328,16 +331,18 @@ export const zksynclite: Layer2 = {
       ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
-          text: 'Priority queue - ZKsync FAQ',
-          href: 'https://zksync.io/faq/security.html#priority-queue',
+          title: 'Priority queue - ZKsync FAQ',
+          url: 'https://zksync.io/faq/security.html#priority-queue',
         },
         {
-          text: 'ZkSync.sol#L977 - Etherscan source code, addPriorityRequest function',
-          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
+          title:
+            'ZkSync.sol#L977 - Etherscan source code, addPriorityRequest function',
+          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
         },
         {
-          text: 'ZkSync.sol#L600 - Etherscan source code, activateExodusMode function',
-          href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+          title:
+            'ZkSync.sol#L600 - Etherscan source code, activateExodusMode function',
+          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
         },
       ],
     },
@@ -346,8 +351,8 @@ export const zksynclite: Layer2 = {
         ...EXITS.REGULAR('zk', 'no proof'),
         references: [
           {
-            text: 'Withdrawing funds - ZKsync documentation',
-            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
+            title: 'Withdrawing funds - ZKsync documentation',
+            url: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
         ],
       },
@@ -355,16 +360,18 @@ export const zksynclite: Layer2 = {
         ...EXITS.FORCED(),
         references: [
           {
-            text: 'Withdrawing funds - ZKsync documentation',
-            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
+            title: 'Withdrawing funds - ZKsync documentation',
+            url: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
-            text: 'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
-            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
+            title:
+              'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
+            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
           },
           {
-            text: 'ZkSync.sol#L360 - Etherscan source code, requestFullExitNFT function',
-            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
+            title:
+              'ZkSync.sol#L360 - Etherscan source code, requestFullExitNFT function',
+            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
           },
         ],
       },
@@ -372,16 +379,17 @@ export const zksynclite: Layer2 = {
         ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
         references: [
           {
-            text: 'Withdrawing funds - ZKsync documentation',
-            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
+            title: 'Withdrawing funds - ZKsync documentation',
+            url: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
-            text: 'README.md - ZKsync Exit Tool',
-            href: 'https://github.com/matter-labs/zksync/tree/master/infrastructure/exit-tool',
+            title: 'README.md - ZKsync Exit Tool',
+            url: 'https://github.com/matter-labs/zksync/tree/master/infrastructure/exit-tool',
           },
           {
-            text: 'ZkSync.sol#L622 - Etherscan source code, performExodus function',
-            href: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
+            title:
+              'ZkSync.sol#L622 - Etherscan source code, performExodus function',
+            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
           },
         ],
       },
@@ -414,8 +422,8 @@ export const zksynclite: Layer2 = {
         upgradeDelay: 'No delay',
         references: [
           {
-            text: 'Governance.sol#L93 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
+            title: 'Governance.sol#L93 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
           },
         ],
       }),
@@ -425,8 +433,8 @@ export const zksynclite: Layer2 = {
         upgradeDelay: 'No delay',
         references: [
           {
-            text: 'Governance.sol#L205 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
+            title: 'Governance.sol#L205 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
           },
         ],
       }),
@@ -454,12 +462,12 @@ export const zksynclite: Layer2 = {
       description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
       references: [
         {
-          text: 'Security Council Members - Etherscan source code',
-          href: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+          title: 'Security Council Members - Etherscan source code',
+          url: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
         },
         {
-          text: 'Security Council 2.0 - Matter Labs blog post',
-          href: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
+          title: 'Security Council 2.0 - Matter Labs blog post',
+          url: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
         },
       ],
     },
@@ -480,16 +488,16 @@ export const zksynclite: Layer2 = {
   ],
   milestones: [
     {
-      name: 'ZKsync 1.0 launch',
-      link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
+      title: 'ZKsync 1.0 launch',
+      url: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       date: '2020-06-18T00:00:00Z',
       description:
         'ZKsync is live, bringing scalable payments to Ethereum using ZK Rollup technology.',
       type: 'general',
     },
     {
-      name: 'Rebranding',
-      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=ZKsync%201.0%20is%20now%20zkSync%20Lite',
+      title: 'Rebranding',
+      url: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=ZKsync%201.0%20is%20now%20zkSync%20Lite',
       date: '2023-02-16T00:00:00Z',
       description: 'ZKsync becomes ZKsync Lite.',
       type: 'general',

@@ -9,7 +9,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
 
 export const syndicateframe: Layer3 = opStackL3({
-  createdAt: new UnixTime(1711471599), // 2024-03-26T16:46:39Z
+  addedAt: new UnixTime(1711471599), // 2024-03-26T16:46:39Z
   discovery,
   additionalBadges: [Badge.L3ParentChain.Base, Badge.RaaS.Caldera],
   additionalPurposes: ['Social'],

@@ -60,7 +60,7 @@ export const reddioex: Layer2 = {
   type: 'layer2',
   id: ProjectId('reddioex'),
   capability: 'universal',
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -75,7 +75,7 @@ export const reddioex: Layer2 = {
     description:
       'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs and SDKs to create digital assets and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://reddio.com/'],
@@ -196,8 +196,8 @@ export const reddioex: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Reddio Announces Mainnet Launch',
-      link: 'https://blog.reddio.com/announces-layer2-zkrollup-mainnet-launch/',
+      title: 'Reddio Announces Mainnet Launch',
+      url: 'https://blog.reddio.com/announces-layer2-zkrollup-mainnet-launch/',
       date: '2022-09-29T00:00:00Z',
       description: 'Reddio announces its Validium Mainnet launch.',
       type: 'general',

@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('hychain', 'ethereum')
 
 export const hychain: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1710846977), // 2024-03-19T11:16:17Z
+  addedAt: new UnixTime(1710846977), // 2024-03-19T11:16:17Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Caldera],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
@@ -44,7 +44,7 @@ export const hychain: Layer2 = orbitStackL2({
   discoveryDrivenData: true,
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

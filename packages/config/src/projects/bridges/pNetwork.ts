@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('pNetwork')
 export const pNetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('pNetwork'),
-  createdAt: new UnixTime(1674472649), // 2023-01-23T11:17:29Z
+  addedAt: new UnixTime(1674472649), // 2023-01-23T11:17:29Z
   display: {
     name: 'pNetwork',
     slug: 'pnetwork',
@@ -175,40 +175,40 @@ export const pNetwork: Bridge = {
 
   milestones: [
     {
-      name: 'Mainnet Launch of pNetwork v2',
-      link: 'https://medium.com/pnetwork/ptokens-to-ptokens-bridge-now-live-8329dd93dd28',
+      title: 'Mainnet Launch of pNetwork v2',
+      url: 'https://medium.com/pnetwork/ptokens-to-ptokens-bridge-now-live-8329dd93dd28',
       date: '2022-10-18T00:00:00Z',
       description:
         'Whitelist got removed, there are no restrictions on who can transact with the network.',
       type: 'general',
     },
     {
-      name: 'pGALA token on BSC exploit',
-      link: 'https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497',
+      title: 'pGALA token on BSC exploit',
+      url: 'https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497',
       date: '2022-11-05T00:00:00Z',
       description:
         'Due to the misconfiguration of BSC the exploiter took over the control of pGALA tokens.',
       type: 'general',
     },
     {
-      name: 'pBTC token on BSC exploit',
-      link: 'https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f',
+      title: 'pBTC token on BSC exploit',
+      url: 'https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f',
       date: '2021-09-21T00:00:00Z',
       description:
         'Due to the bug in the validators code, unauthorized token transfers were processed on BTC.',
       type: 'general',
     },
     {
-      name: 'pNetwork rebranding',
-      link: 'https://medium.com/pnetwork/were-all-in-for-pnetwork-bdf511410cc9',
+      title: 'pNetwork rebranding',
+      url: 'https://medium.com/pnetwork/were-all-in-for-pnetwork-bdf511410cc9',
       date: '2020-09-16T00:00:00Z',
       description:
         'Provable Things, pTokens and Eidoo gets rebranded as pNetwork.',
       type: 'general',
     },
     {
-      name: 'pBTC launch on Ethereum',
-      link: 'https://www.coindesk.com/tech/2020/03/05/new-cross-chain-network-plans-to-bring-bitcoins-liquidity-to-the-defi-space/',
+      title: 'pBTC launch on Ethereum',
+      url: 'https://www.coindesk.com/tech/2020/03/05/new-cross-chain-network-plans-to-bring-bitcoins-liquidity-to-the-defi-space/',
       date: '2020-03-05T00:00:00Z',
       description: 'Launch of the first pToken, pBTC on Ethereum.',
       type: 'general',

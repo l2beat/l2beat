@@ -5,7 +5,7 @@ import type { Layer3 } from './types'
 export const anomaly: Layer3 = upcomingL3({
   id: 'anomaly',
   capability: 'universal',
-  createdAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
+  addedAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Anomaly Network',
@@ -14,7 +14,7 @@ export const anomaly: Layer3 = upcomingL3({
       'Anomaly Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It focuses on reimagining a decentralized AI gaming world and cultivates an ecosystem where boundless development results in players experiencing games that are as intelligent as they are thrilling.',
     purposes: ['Gaming', 'AI'],
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://anomalygames.ai/'],
       apps: [],

@@ -19,7 +19,7 @@ export const gluon: Layer2 = {
   type: 'layer2',
   id: ProjectId('gluon'),
   capability: 'universal',
-  createdAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
+  addedAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
   isArchived: true,
   display: {
     name: 'Gluon',

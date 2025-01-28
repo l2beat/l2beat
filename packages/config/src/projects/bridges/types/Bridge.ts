@@ -2,19 +2,19 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   KnowledgeNugget,
   Milestone,
+  ProjectEscrow,
+  ProjectTechnologyChoice,
   ScalingProjectContracts,
-  ScalingProjectEscrow,
   ScalingProjectLinks,
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
-  ScalingProjectTechnologyChoice,
 } from '../../../types'
 
 export interface Bridge {
   type: 'bridge'
   id: ProjectId
   /** Date of creation of the file (not the project) */
-  createdAt: UnixTime
+  addedAt: UnixTime
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean
@@ -43,7 +43,7 @@ export interface BridgeDisplay {
 
 export interface BridgeConfig {
   associatedTokens?: string[]
-  escrows: ScalingProjectEscrow[]
+  escrows: ProjectEscrow[]
 }
 
 export interface BridgeRiskView {
@@ -55,8 +55,8 @@ export interface BridgeRiskView {
 export interface BridgeTechnology {
   canonical?: boolean
   destination: string[]
-  principleOfOperation?: ScalingProjectTechnologyChoice
-  validation?: ScalingProjectTechnologyChoice
-  destinationToken?: ScalingProjectTechnologyChoice
+  principleOfOperation?: ProjectTechnologyChoice
+  validation?: ProjectTechnologyChoice
+  destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
 }

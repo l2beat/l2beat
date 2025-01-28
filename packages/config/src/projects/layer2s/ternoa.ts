@@ -6,7 +6,7 @@ import type { Layer2 } from './types'
 export const ternoa: Layer2 = upcomingL2({
   id: 'ternoa',
   capability: 'universal',
-  createdAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
+  addedAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
   badges: [Badge.Infra.AggLayer],
   display: {
     name: 'Ternoa',
@@ -15,7 +15,7 @@ export const ternoa: Layer2 = upcomingL2({
       'Ternoa is a modular Validium leveraging Polygon CDK, Avail, and AggLayer to achieve enhanced functionality.',
     purposes: ['Universal'],
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://ternoa.network/'],
       apps: [],

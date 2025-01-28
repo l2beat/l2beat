@@ -6,7 +6,7 @@ import type { Layer3 } from './types'
 export const clique: Layer3 = underReviewL3({
   id: 'clique',
   capability: 'universal',
-  createdAt: new UnixTime(1726595996), // 2024-09-17T17:59:56Z
+  addedAt: new UnixTime(1726595996), // 2024-09-17T17:59:56Z
   hostChain: ProjectId('base'),
   badges: [
     Badge.L3ParentChain.Base,
@@ -19,7 +19,7 @@ export const clique: Layer3 = underReviewL3({
     name: 'Clique',
     slug: 'clique',
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'Clique is an OP stack Optimium built on Base and using Celestia for DA. The project aims to provide an environment that meets the needs of both onchain gaming and AI technologies. The team is also building their own onchain game called Eternal Legacy.',
     purposes: ['AI', 'Gaming'],

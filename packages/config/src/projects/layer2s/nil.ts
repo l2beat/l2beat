@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const nil: Layer2 = upcomingL2({
   id: '=nil;',
   capability: 'universal',
-  createdAt: new UnixTime(1708529553), // 2024-02-21T15:32:33Z
+  addedAt: new UnixTime(1708529553), // 2024-02-21T15:32:33Z
   display: {
     name: '=nil;',
     slug: 'nil',

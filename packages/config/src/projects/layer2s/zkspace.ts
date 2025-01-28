@@ -38,7 +38,7 @@ export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
   capability: 'appchain',
-  createdAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
+  addedAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
@@ -50,7 +50,7 @@ export const zkspace: Layer2 = {
     description:
       'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
     purposes: ['NFT', 'Exchange', 'Payments'],
-    provider: 'ZKsync Lite',
+    stack: 'ZKsync Lite',
     category: 'ZK Rollup',
     links: {
       websites: ['https://zkbase.org/'],
@@ -204,8 +204,8 @@ export const zkspace: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'ZKSpace Whitepaper',
-          href: 'https://github.com/l2labs/zkspace-whitepaper',
+          title: 'ZKSpace Whitepaper',
+          url: 'https://github.com/l2labs/zkspace-whitepaper',
         },
       ],
     },
@@ -267,23 +267,23 @@ export const zkspace: Layer2 = {
   ],
   milestones: [
     {
-      name: 'ZKSpace Officially Upgrades to ZKBase',
-      link: 'https://zkbaseofficial.medium.com/zkbase-is-undergoing-a-brand-new-upgrade-and-setting-sail-again-in-2024-3d71418a10e1',
+      title: 'ZKSpace Officially Upgrades to ZKBase',
+      url: 'https://zkbaseofficial.medium.com/zkbase-is-undergoing-a-brand-new-upgrade-and-setting-sail-again-in-2024-3d71418a10e1',
       date: '2023-12-29T00:00:00Z',
       description: 'The ZKSpace team has rebranded to ZKBase.',
       type: 'general',
     },
     {
-      name: 'ZKSpace launched',
-      link: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
+      title: 'ZKSpace launched',
+      url: 'https://medium.com/zkswap/l2-labs-launches-all-in-one-layer2-platform-zkspace-featuring-zkswap-v3-0-nfts-payments-82dae7d9207c',
       date: '2021-12-20T00:00:00Z',
       description:
         'All-in-One Layer2 Platform ZKSpace, Featuring ZKSwap v3.0, NFTs, & Payments is launched.',
       type: 'general',
     },
     {
-      name: 'Token Deposit Campaign started',
-      link: 'https://medium.com/@zkspaceofficial/zkspace-releases-token-deposit-campaign-with-fascinating-zks-rewards-151e2492549e',
+      title: 'Token Deposit Campaign started',
+      url: 'https://medium.com/@zkspaceofficial/zkspace-releases-token-deposit-campaign-with-fascinating-zks-rewards-151e2492549e',
       date: '2022-02-21T00:00:00Z',
       description: 'Incentives program to onboard new users has started.',
       type: 'general',

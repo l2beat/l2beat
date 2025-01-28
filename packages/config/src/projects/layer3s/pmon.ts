@@ -7,7 +7,7 @@ export const pmon: Layer3 = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   id: ProjectId('pmon'),
   capability: 'universal',
-  createdAt: new UnixTime(1722587021), // 2024-08-02T08:23:41Z
+  addedAt: new UnixTime(1722587021), // 2024-08-02T08:23:41Z
   badges: [
     Badge.L3ParentChain.Arbitrum,
     Badge.DA.Celestia,
@@ -17,7 +17,7 @@ export const pmon: Layer3 = underReviewL3({
   ],
   display: {
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     name: 'PMON Chain',
     slug: 'pmon',
     description:

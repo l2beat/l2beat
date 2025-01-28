@@ -17,7 +17,7 @@ const mintLimiterThreshold = discovery.getContractValue<number>(
 export const satellite: Bridge = {
   type: 'bridge',
   id: ProjectId('satellite'),
-  createdAt: new UnixTime(1664183093), // 2022-09-26T09:04:53Z
+  addedAt: new UnixTime(1664183093), // 2022-09-26T09:04:53Z
   display: {
     name: 'Satellite (Axelar)',
     slug: 'satellite',

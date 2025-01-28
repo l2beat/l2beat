@@ -1,6 +1,7 @@
 import {
   CONTRACTS,
   type DaBridgeContracts,
+  type ReferenceLink,
   type ScalingProjectContract,
   type UsedInProject,
 } from '@l2beat/config'
@@ -19,7 +20,6 @@ import {
   type TechnologyContract,
   type TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
-import { type Reference } from '../../../components/projects/sections/reference-list'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
@@ -176,7 +176,7 @@ function makeTechnologyContract(
       addresses.map((a) => a.address).includes(changedAddress),
   )
 
-  const additionalReferences: Reference[] = []
+  const additionalReferences: ReferenceLink[] = []
   const mainAddresses = [getAddress({ address: item.address })]
   const implementationAddresses =
     item.upgradeability?.implementations.map((implementation) =>

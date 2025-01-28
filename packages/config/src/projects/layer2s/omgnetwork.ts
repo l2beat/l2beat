@@ -19,7 +19,7 @@ export const omgnetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
   capability: 'universal',
-  createdAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
+  addedAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
   isArchived: true,
   display: {
     name: 'OMG Network',

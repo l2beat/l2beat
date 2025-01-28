@@ -24,7 +24,7 @@ export const sophon: Layer2 = zkStackL2({
   discovery_ZKstackGovL2,
   validatorsKey: 'sophonValidators',
   additionalBadges: [Badge.DA.Avail],
-  createdAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
+  addedAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',
@@ -71,8 +71,8 @@ export const sophon: Layer2 = zkStackL2({
       ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
       references: [
         {
-          text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
         },
       ],
     },
@@ -120,15 +120,15 @@ export const sophon: Layer2 = zkStackL2({
   ],
   milestones: [
     {
-      name: 'Mainnet public launch',
-      link: 'https://x.com/sophon/status/1861771965284896996',
+      title: 'Mainnet public launch',
+      url: 'https://x.com/sophon/status/1861771965284896996',
       date: '2024-12-18T00:00:00Z',
       description: 'Sophon Mainnet is now open for all users.',
       type: 'general',
     },
     {
-      name: 'Mainnet private launch',
-      link: 'https://blog.sophon.xyz/the-road-to-mainnet/',
+      title: 'Mainnet private launch',
+      url: 'https://blog.sophon.xyz/the-road-to-mainnet/',
       date: '2024-09-22T00:00:00Z',
       description: 'Sophon launches their mainnet privately.',
       type: 'general',

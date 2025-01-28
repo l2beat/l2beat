@@ -9,7 +9,7 @@ import type { Layer3 } from '../layer3s'
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 export const winr: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   additionalBadges: [
     Badge.DA.DAC,
@@ -166,7 +166,7 @@ export const winr: Layer3 = orbitStackL3({
   discoveryDrivenData: true,
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

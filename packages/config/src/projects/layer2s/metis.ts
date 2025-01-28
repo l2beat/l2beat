@@ -30,7 +30,7 @@ export const metis: Layer2 = {
   type: 'layer2',
   id: ProjectId('metis'),
   capability: 'universal',
-  createdAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
+  addedAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.Fork.OVM],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -43,7 +43,7 @@ export const metis: Layer2 = {
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. Since April 2024 hashes of data blobs are posted to EOA similarly to OPStack chains. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     purposes: ['Universal'],
-    provider: 'OVM',
+    stack: 'OVM',
     category: 'Optimium',
     links: {
       websites: ['https://metis.io'],
@@ -145,8 +145,8 @@ export const metis: Layer2 = {
       ],
       references: [
         {
-          text: 'MVM_Verifier.sol#L133 - Metis source code',
-          href: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol#L133',
+          title: 'MVM_Verifier.sol#L133 - Metis source code',
+          url: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol#L133',
         },
       ],
     },
@@ -164,8 +164,8 @@ export const metis: Layer2 = {
       ],
       references: [
         {
-          text: 'The Tech Journey: Lower Gas Costs & Storage Layer on Metis',
-          href: 'https://metisdao.medium.com/the-tech-journey-lower-gas-costs-storage-layer-on-metis-867ddcf6d381',
+          title: 'The Tech Journey: Lower Gas Costs & Storage Layer on Metis',
+          url: 'https://metisdao.medium.com/the-tech-journey-lower-gas-costs-storage-layer-on-metis-867ddcf6d381',
         },
       ],
     },
@@ -176,8 +176,8 @@ export const metis: Layer2 = {
       risks: [FRONTRUNNING_RISK],
       references: [
         {
-          text: 'Decentralized Sequencer - Metis documentation',
-          href: 'https://docs.metis.io/dev/decentralized-sequencer/overview',
+          title: 'Decentralized Sequencer - Metis documentation',
+          url: 'https://docs.metis.io/dev/decentralized-sequencer/overview',
         },
       ],
     },
@@ -185,8 +185,8 @@ export const metis: Layer2 = {
       ...FORCE_TRANSACTIONS.ENQUEUE,
       references: [
         {
-          text: 'CanonicalTransactionChain - Etherscan source code',
-          href: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code',
+          title: 'CanonicalTransactionChain - Etherscan source code',
+          url: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code',
         },
       ],
     },
@@ -195,8 +195,8 @@ export const metis: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [
           {
-            text: 'Withdrawing from Metis - Metis documentation',
-            href: 'https://docs.metis.io/building-on-metis/metis-bridge#withdrawing-from-metis',
+            title: 'Withdrawing from Metis - Metis documentation',
+            url: 'https://docs.metis.io/building-on-metis/metis-bridge#withdrawing-from-metis',
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
@@ -216,8 +216,8 @@ export const metis: Layer2 = {
         ],
         references: [
           {
-            text: 'MVM repository - Metis source code',
-            href: 'https://github.com/MetisProtocol/mvm',
+            title: 'MVM repository - Metis source code',
+            url: 'https://github.com/MetisProtocol/mvm',
           },
         ],
       },
@@ -327,23 +327,23 @@ export const metis: Layer2 = {
   },
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
+      title: 'Mainnet launch',
+      url: 'https://metisdao.medium.com/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization-fa2d03394398',
       date: '2021-11-19T00:00:00Z',
       description:
         'Public launch of Metis Layer 2 Andromeda, based on the Optimism codebase.',
       type: 'general',
     },
     {
-      name: 'Data availability change',
-      link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
+      title: 'Data availability change',
+      url: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
       date: '2022-04-12T00:00:00Z',
       description: 'Update moving data to an off-chain committee.',
       type: 'general',
     },
     {
-      name: 'Data hashes posted to EOA',
-      link: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      title: 'Data hashes posted to EOA',
+      url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
       date: '2023-03-15T00:00:00Z',
       description:
         'Hashes to data blobs are now posted to EOA address instead of CanonicalTransactionChain contract.',

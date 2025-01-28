@@ -276,8 +276,8 @@ const meta = {
             description: 'Those are the participants of the SecurityCouncil.',
             references: [
               {
-                text: 'Security Council members - Arbitrum Foundation Docs',
-                href: 'https://docs.arbitrum.foundation/security-council-members',
+                title: 'Security Council members - Arbitrum Foundation Docs',
+                url: 'https://docs.arbitrum.foundation/security-council-members',
               },
             ],
             usedInProjects: undefined,

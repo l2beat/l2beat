@@ -112,8 +112,8 @@ const dacConfig =
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
+  addedAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
   capability: 'appchain',
-  createdAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -130,7 +130,7 @@ export const apex: Layer2 = {
       two independent StarkEx instances, one for USDC and one for USDT, but that
       technical distinction is not visible to the user.`,
     purposes: ['Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://apex.exchange/'],
@@ -310,17 +310,17 @@ export const apex: Layer2 = {
   ],
   milestones: [
     {
-      name: 'ApeX Pro public beta launched',
+      title: 'ApeX Pro public beta launched',
       date: '2022-11-21T00:00:00Z',
-      link: 'https://twitter.com/officialapexdex/status/1564917523401052162?s=21&t=c-SqpS1PL2KOns-2K7myJA',
+      url: 'https://twitter.com/officialapexdex/status/1564917523401052162?s=21&t=c-SqpS1PL2KOns-2K7myJA',
       description:
         'ApeX Pro beta is launched, with incentives program for users.',
       type: 'general',
     },
     {
-      name: 'ApeX Pro live on Mainnet',
+      title: 'ApeX Pro live on Mainnet',
       date: '2022-08-31T00:00:00Z',
-      link: 'https://twitter.com/officialapexdex/status/1594722304537288706?s=21&t=c-SqpS1PL2KOns-2K7myJA',
+      url: 'https://twitter.com/officialapexdex/status/1594722304537288706?s=21&t=c-SqpS1PL2KOns-2K7myJA',
       description:
         'ApeX Pro, a non-custodial decentralized exchange is now live on Mainnet.',
       type: 'general',
@@ -329,7 +329,7 @@ export const apex: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: dacConfig.requiredSignatures,
       membersCount: dacConfig.membersCount,
     },

@@ -1,5 +1,5 @@
 'use client'
-import type { UsedInProject } from '@l2beat/config'
+import type { ReferenceLink, UsedInProject } from '@l2beat/config'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
@@ -11,7 +11,6 @@ import {
 } from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
-import { type Reference } from '../reference-list'
 import { RiskList, type TechnologyRisk } from '../risk-list'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
@@ -23,7 +22,7 @@ export interface MultiChainContractsSectionProps {
   sectionOrder: string
   contracts: Record<string, TechnologyContract[]>
   risks: TechnologyRisk[]
-  references: Reference[]
+  references: ReferenceLink[]
   diagram?: DiagramParams
   isIncomplete?: boolean
   isUnderReview?: boolean
