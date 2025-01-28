@@ -8,23 +8,66 @@ import type {
   ValueWithSentiment,
   WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
-import type {
-  BadgeId,
-  DacDaLayer,
-  ProofVerification,
-  StageConfig,
-  WarningWithSentiment,
-} from '../projects'
-import type { ChainConfig } from './ChainConfig'
-import type { KnowledgeNugget } from './KnowledgeNugget'
-import type { Milestone } from './Milestone'
-import type { ReasonForBeingInOther } from './ReasonForBeingInOther'
-import type {
-  DA_BRIDGES,
-  DA_LAYERS,
-  DA_MODES,
-  ProjectDataAvailability,
-} from './dataAvailability'
+import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './common'
+import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
+import type { BadgeId } from './projects/badges'
+import type { DacDaLayer } from './projects/da-beat'
+import type { StageConfig, WarningWithSentiment } from './projects/layer2s'
+import type { ProofVerification } from './projects/types'
+
+export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
+export type ReasonForBeingInOther =
+  (typeof REASON_FOR_BEING_OTHER)[keyof typeof REASON_FOR_BEING_OTHER]
+
+export interface MulticallContractConfig {
+  address: EthereumAddress
+  sinceBlock: number
+  batchSize: number
+  version: '1' | '2' | '3' | 'optimism'
+  isNativeBalanceSupported?: boolean
+}
+
+export interface ChainConfig {
+  /**
+   * A lowercase a-z0-9 name of the chain. Used for uniquely identifying the
+   * chain in configuration.
+   */
+  name: string
+  chainId: number
+  explorerUrl?: string
+  explorerApi?: {
+    url: string
+    type: 'etherscan' | 'blockscout'
+    missingFeatures?: {
+      getContractCreation?: boolean
+    }
+  }
+  blockscoutV2ApiUrl?: string
+  /**
+   * Setting this value for a chain does not always equal to grabbing the
+   * timestamp of the first block. For example Optimism had block 0 on
+   * January 2021 but the block 1 on November 2021.
+   */
+  minTimestampForTvl?: UnixTime
+  multicallContracts?: MulticallContractConfig[]
+  coingeckoPlatform?: string
+}
+
+export interface KnowledgeNugget {
+  title: string
+  url: string
+  thumbnail?: string
+}
+
+export type MilestoneType = 'general' | 'incident'
+
+export interface Milestone {
+  name: string
+  link: string
+  date: string
+  description?: string
+  type: MilestoneType
+}
 
 /** Base interface for Layer2s and Layer3s. The hope is that Layer2 and Layer3 will dissapear and only this will remain. */
 export interface ScalingProject {
@@ -561,3 +604,9 @@ export type ScalingProjectTransactionApi =
   | SimpleTransactionApi<'fuel'>
   | RpcTransactionApi
   | StarkexTransactionApi
+
+export interface ProjectDataAvailability {
+  layer: ValueWithSentiment<string> & { secondLine?: string }
+  bridge: DataAvailabilityBridge
+  mode: DataAvailabilityMode
+}

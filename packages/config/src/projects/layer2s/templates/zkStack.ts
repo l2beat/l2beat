@@ -7,37 +7,40 @@ import {
   type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  type DataAvailabilityBridge,
-  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
-  type KnowledgeNugget,
-  type Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  type ReasonForBeingInOther,
-  type ScalingProjectContract,
-  type ScalingProjectEscrow,
-  type ScalingProjectPermission,
-  type ScalingProjectPurpose,
-  type ScalingProjectRiskView,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectTechnology,
-  type ScalingProjectTechnologyChoice,
-  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
-import type { ChainConfig } from '../../../common/ChainConfig'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type {
+  DataAvailabilityBridge,
+  DataAvailabilityLayer,
+  Milestone,
+  ScalingProjectContract,
+  ScalingProjectEscrow,
+  ScalingProjectPermission,
+  ScalingProjectPurpose,
+  ScalingProjectRiskView,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnology,
+  ScalingProjectTechnologyChoice,
+  ScalingProjectTransactionApi,
+} from '../../../types'
+import type {
+  ChainConfig,
+  KnowledgeNugget,
+  ReasonForBeingInOther,
+} from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'

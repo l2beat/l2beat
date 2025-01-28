@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import type { ChainConfig } from '../common/ChainConfig'
+import type { ChainConfig } from '../types'
 
 export const ethereum: ChainConfig = {
   name: 'ethereum',

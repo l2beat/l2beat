@@ -7,7 +7,7 @@ import {
 import { utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { addSentimentToDataAvailability } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'

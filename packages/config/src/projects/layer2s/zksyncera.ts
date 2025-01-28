@@ -1,6 +1,6 @@
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'

@@ -1,6 +1,6 @@
 import { Bytes, type Sentiment } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ScalingProjectRiskViewEntry } from './ScalingProject'
+import type { ScalingProjectRiskViewEntry } from '../types'
 import { pickWorseRisk, sumRisk } from './riskView'
 
 function createFakeRisk(

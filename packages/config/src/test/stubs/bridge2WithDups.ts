@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import type { Bridge } from '../../projects'
+import type { Bridge } from '../../projects/bridges'
 
 export const bridge2WithDups: Bridge = {
   type: 'bridge',

@@ -5,7 +5,7 @@ import type {
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
-} from '../../../common'
+} from '../../../types'
 import type {
   Layer2,
   Layer2Config,
