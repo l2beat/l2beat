@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('sollet')
 export const sollet: Bridge = {
   type: 'bridge',
   id: ProjectId('sollet'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Sollet',

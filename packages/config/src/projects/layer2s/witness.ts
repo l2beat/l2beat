@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const witness: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   discovery,
   additionalBadges: [Badge.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
@@ -166,7 +166,7 @@ export const witness: Layer2 = polygonCDKStack({
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

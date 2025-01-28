@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('portal')
 export const portal: Bridge = {
   type: 'bridge',
   id: ProjectId('portal'),
-  createdAt: new UnixTime(1665415357), // 2022-10-10T15:22:37Z
+  addedAt: new UnixTime(1665415357), // 2022-10-10T15:22:37Z
   display: {
     name: 'Portal (Wormhole)',
     slug: 'portal',

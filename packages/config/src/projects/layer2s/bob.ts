@@ -10,7 +10,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('bob')
 
 export const bob: Layer2 = opStackL2({
-  createdAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
+  addedAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
   additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Bitcoin DApps'],

@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const canto: Layer2 = upcomingL2({
   id: 'canto', // this project should be deleted, because the team is no longer builiding the L2.
-  createdAt: new UnixTime(1690815262), // '2023-07-31T14:54:22Z'
+  addedAt: new UnixTime(1690815262), // '2023-07-31T14:54:22Z'
   display: {
     name: 'Canto',
     slug: 'canto',

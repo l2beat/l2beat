@@ -30,7 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const gmnetwork: Layer2 = opStackL2({
-  createdAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
+  addedAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
   additionalBadges: [
     Badge.DA.CustomDA,
@@ -121,7 +121,7 @@ export const gmnetwork: Layer2 = opStackL2({
       ],
     },
     bridge: {
-      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
       type: 'IntegratedDacBridge',
       technology: {
         description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.

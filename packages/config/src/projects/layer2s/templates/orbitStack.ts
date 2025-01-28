@@ -109,7 +109,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
 ]
 
 interface OrbitStackConfigCommon {
-  createdAt: UnixTime
+  addedAt: UnixTime
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
@@ -418,7 +418,7 @@ function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
-    createdAt: templateVars.createdAt,
+    addetAt: templateVars.addedAt,
     isArchived: templateVars.isArchived ?? undefined,
     contracts: discoveryDrivenSections
       ? discoveryDrivenSections.contracts

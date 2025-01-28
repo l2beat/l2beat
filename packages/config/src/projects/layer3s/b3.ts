@@ -10,7 +10,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('b3', 'base')
 
 export const b3: Layer3 = opStackL3({
-  createdAt: new UnixTime(1722376845),
+  addedAt: new UnixTime(1722376845),
   hostChain: ProjectId('base'),
   additionalBadges: [
     Badge.DA.Celestia,

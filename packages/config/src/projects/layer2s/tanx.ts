@@ -61,7 +61,7 @@ const committee = getCommittee(discovery)
 export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
-  createdAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
+  addetAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -194,7 +194,7 @@ export const tanx: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

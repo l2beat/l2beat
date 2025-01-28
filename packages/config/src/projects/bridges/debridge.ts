@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('debridge')
 export const debridge: Bridge = {
   type: 'bridge',
   id: ProjectId('debridge'),
-  createdAt: new UnixTime(1673362295), // 2023-01-10T14:51:35Z
+  addedAt: new UnixTime(1673362295), // 2023-01-10T14:51:35Z
   display: {
     name: 'deBridge',
     slug: 'debridge',

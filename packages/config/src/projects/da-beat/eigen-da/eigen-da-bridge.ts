@@ -102,7 +102,7 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
-  createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
+  addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   type: 'StandaloneDacBridge',
   display: {
     name: 'ServiceManager',

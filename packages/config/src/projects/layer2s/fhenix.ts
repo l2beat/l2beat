@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const fhenix: Layer2 = upcomingL2({
   id: 'fhenix',
-  createdAt: new UnixTime(1719225560), // 2024-06-24T10:39:20Z
+  addedAt: new UnixTime(1719225560), // 2024-06-24T10:39:20Z
   display: {
     name: 'Fhenix',
     slug: 'fhenix',

@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('superlumio')
 
 export const superlumio: Layer2 = opStackL2({
-  createdAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
+  addedAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
   discovery,
   additionalBadges: [Badge.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],

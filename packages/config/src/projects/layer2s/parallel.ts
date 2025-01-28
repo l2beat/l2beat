@@ -7,7 +7,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
+  addedAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
   isArchived: true,
   discovery,
   additionalBadges: [],

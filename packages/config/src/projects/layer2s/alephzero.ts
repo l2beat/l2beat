@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('alephzero')
 
 export const alephzero: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
@@ -58,7 +58,7 @@ export const alephzero: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

@@ -112,7 +112,7 @@ interface DAProvider {
 interface OpStackConfigCommon {
   architectureImage?: string
   isArchived?: true
-  createdAt: UnixTime
+  addedAt: UnixTime
   daProvider?: DAProvider
   dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
@@ -254,7 +254,7 @@ function opStackCommon(
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
-    createdAt: templateVars.createdAt,
+    addetAt: templateVars.addedAt,
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],

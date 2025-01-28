@@ -12,7 +12,7 @@ import type { Layer2, Layer2Display } from '../types'
 
 interface UnderReviewConfigCommon {
   id: string
-  createdAt: UnixTime
+  addedAt: UnixTime
   rpcUrl?: string
   escrows?: ScalingProjectEscrow[]
   chainConfig?: ChainConfig
@@ -37,7 +37,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     isUnderReview: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
-    createdAt: templateVars.createdAt,
+    addetAt: templateVars.addedAt,
     isArchived: templateVars.isArchived ?? undefined,
     display: templateVars.display,
     stage: {
@@ -74,7 +74,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     type: 'layer3',
     isUnderReview: true,
     id: ProjectId(templateVars.id),
-    createdAt: templateVars.createdAt,
+    addetAt: templateVars.addedAt,
     isArchived: templateVars.isArchived ?? undefined,
     hostChain: templateVars.hostChain,
     display: {

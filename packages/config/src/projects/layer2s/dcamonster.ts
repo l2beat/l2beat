@@ -4,7 +4,7 @@ import { upcomingL2 } from '../layer2s/templates/upcoming'
 
 export const dcamonster: Layer2 = upcomingL2({
   id: 'dcamonster',
-  createdAt: new UnixTime(1712577740), // 2024-04-08T12:02:20Z
+  addedAt: new UnixTime(1712577740), // 2024-04-08T12:02:20Z
   display: {
     name: 'DCA.Monster',
     slug: 'dcamonster',

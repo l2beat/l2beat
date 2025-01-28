@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mantapacific')
 
 export const mantapacific: Layer2 = opStackL2({
-  createdAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
+  addedAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   reasonsForBeingOther: [

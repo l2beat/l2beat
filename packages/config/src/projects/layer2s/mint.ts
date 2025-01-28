@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mint')
 
 export const mint: Layer2 = opStackL2({
-  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['NFT'],

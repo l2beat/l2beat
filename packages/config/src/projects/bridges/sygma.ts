@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('sygma')
 export const sygma: Bridge = {
   type: 'bridge',
   id: ProjectId('sygma'),
-  createdAt: new UnixTime(1711107103), // 2024-03-22T11:31:43Z
+  addedAt: new UnixTime(1711107103), // 2024-03-22T11:31:43Z
   display: {
     name: 'Sygma',
     slug: 'sygma',

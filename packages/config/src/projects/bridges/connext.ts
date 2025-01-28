@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('connext')
 export const connext: Bridge = {
   type: 'bridge',
   id: ProjectId('connext'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Connext (Legacy)',

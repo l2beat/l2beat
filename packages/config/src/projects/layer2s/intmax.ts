@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const intmax: Layer2 = upcomingL2({
   id: 'intmax',
-  createdAt: new UnixTime(1722256071), // 2024-07-29T12:27:51Z
+  addedAt: new UnixTime(1722256071), // 2024-07-29T12:27:51Z
   display: {
     name: 'INTMAX',
     slug: 'intmax',

@@ -10,7 +10,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('degen', 'base')
 
 export const degen: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
+  addedAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
   hostChain: ProjectId('base'),
   discovery,
   additionalBadges: [
@@ -92,7 +92,7 @@ export const degen: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z,
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z,
     },
     discovery,
   }),

@@ -28,7 +28,7 @@ const upgradeDelayString = formatSeconds(
 )
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
   rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
   display: {

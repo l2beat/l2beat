@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('orbiter')
 export const orbiter: Bridge = {
   type: 'bridge',
   id: ProjectId('orbiter'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Orbiter',
     slug: 'orbiter',

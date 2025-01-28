@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 
 export const rufus: Layer2 = underReviewL2({
   id: 'rufus',
-  createdAt: new UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
+  addedAt: new UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
   badges: [Badge.RaaS.Caldera, Badge.DA.DAC, Badge.Stack.Orbit, Badge.VM.EVM],
   display: {
     name: 'Rufus',

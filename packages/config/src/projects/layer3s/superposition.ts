@@ -4,7 +4,7 @@ import type { Layer3 } from './types'
 
 export const superposition: Layer3 = underReviewL3({
   id: 'superposition',
-  createdAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
+  addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Superposition',

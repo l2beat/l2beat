@@ -60,7 +60,7 @@ const committee = getCommittee(discovery)
 export const sorare: Layer2 = {
   type: 'layer2',
   id: ProjectId('sorare'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addetAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -201,7 +201,7 @@ export const sorare: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

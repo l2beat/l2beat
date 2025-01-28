@@ -70,7 +70,7 @@ export interface ScalingProject {
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
   /** Date of creation of the file (not the project) */
-  createdAt: UnixTime
+  addetAt: UnixTime
   /** Is this project archived? */
   isArchived?: boolean
   /** Is this project an upcoming rollup? */

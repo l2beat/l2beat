@@ -20,7 +20,7 @@ const challengePeriod = formatSeconds(
 export const fraxferry: Bridge = {
   type: 'bridge',
   id: ProjectId('fraxferry'),
-  createdAt: new UnixTime(1712267205), // 2024-04-04T21:46:45Z
+  addedAt: new UnixTime(1712267205), // 2024-04-04T21:46:45Z
   display: {
     name: 'Frax Ferry',
     slug: 'fraxferry',

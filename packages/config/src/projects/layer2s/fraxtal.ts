@@ -17,7 +17,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
-  createdAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
+  addedAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
   additionalBadges: [Badge.Infra.Superchain],
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
@@ -140,7 +140,7 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
     bridge: {
-      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
       type: 'NoDacBridge',
       technology: {
         description: `The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.

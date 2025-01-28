@@ -10,7 +10,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 
 export const educhain: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
+  addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   discovery,
   additionalBadges: [
     Badge.DA.DAC,
@@ -78,7 +78,7 @@ export const educhain: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1737096804),
+      addedAt: new UnixTime(1737096804),
     },
     discovery,
   }),

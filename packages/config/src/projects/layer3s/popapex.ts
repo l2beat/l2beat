@@ -9,7 +9,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
 export const popapex: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1710836229), // 2024-03-19T08:17:09Z
+  addedAt: new UnixTime(1710836229), // 2024-03-19T08:17:09Z
   additionalBadges: [
     Badge.DA.DAC,
     Badge.L3ParentChain.Arbitrum,
@@ -67,7 +67,7 @@ export const popapex: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

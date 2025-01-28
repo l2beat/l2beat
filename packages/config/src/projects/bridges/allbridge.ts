@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('allbridge')
 export const allbridge: Bridge = {
   type: 'bridge',
   id: ProjectId('allbridge'),
-  createdAt: new UnixTime(1675164709), // 2023-01-31T11:31:49Z
+  addedAt: new UnixTime(1675164709), // 2023-01-31T11:31:49Z
   display: {
     name: 'Allbridge',
     slug: 'allbridge',

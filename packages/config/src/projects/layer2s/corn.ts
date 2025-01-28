@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('corn')
 
 export const corn: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1733880840),
+  addedAt: new UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   reasonsForBeingOther: [
@@ -109,7 +109,7 @@ export const corn: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1737096804),
+      addedAt: new UnixTime(1737096804),
     },
     discovery,
   }),

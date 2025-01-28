@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('alienx')
 
 export const alienx: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1719847684), // 2024-07-01T15:28:04Z
+  addedAt: new UnixTime(1719847684), // 2024-07-01T15:28:04Z
   additionalPurposes: ['Gaming', 'AI', 'NFT'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   reasonsForBeingOther: [
@@ -60,7 +60,7 @@ export const alienx: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

@@ -24,7 +24,7 @@ export const sophon: Layer2 = zkStackL2({
   discovery_ZKstackGovL2,
   validatorsKey: 'sophonValidators',
   additionalBadges: [Badge.DA.Avail],
-  createdAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
+  addedAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',

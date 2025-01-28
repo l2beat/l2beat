@@ -99,7 +99,7 @@ const maxTimeVariation = discovery.getContractValue<{
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 export const nova: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     Badge.VM.WasmVM,
     Badge.DA.DAC,
@@ -428,7 +428,7 @@ export const nova: Layer2 = orbitStackL2({
       },
     },
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignatures,
       membersCount: membersCount,
       transactionDataType: 'Transaction data (compressed)',

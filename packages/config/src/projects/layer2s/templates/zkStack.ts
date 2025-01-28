@@ -62,7 +62,7 @@ export interface DAProvider {
 }
 
 export interface ZkStackConfigCommon {
-  createdAt: UnixTime
+  addedAt: UnixTime
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
   validatorsKey: string
@@ -264,7 +264,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
-    createdAt: templateVars.createdAt,
+    addetAt: templateVars.addedAt,
     badges: mergeBadges(
       [
         Badge.Stack.ZKStack,

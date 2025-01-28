@@ -4,7 +4,7 @@ import type { Layer3 } from './types'
 
 export const unite: Layer3 = upcomingL3({
   id: 'unite',
-  createdAt: new UnixTime(1722863398), // 2024-08-05T13:09:58Z
+  addedAt: new UnixTime(1722863398), // 2024-08-05T13:09:58Z
   hostChain: ProjectId('base'),
   display: {
     name: 'Unite',

@@ -16,7 +16,7 @@ const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 export const beamerbridgev2: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
-  createdAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
+  addedAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
   display: {
     name: 'Beamer Bridge V2',
     slug: 'beamerbridgev2',

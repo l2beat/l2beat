@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const zklighter: Layer2 = upcomingL2({
   id: 'zklighter',
-  createdAt: new UnixTime(1711551933), // 2024-03-27T15:05:33Z
+  addedAt: new UnixTime(1711551933), // 2024-03-27T15:05:33Z
   display: {
     name: 'zkLighter',
     slug: 'zklighter',

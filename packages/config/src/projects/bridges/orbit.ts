@@ -16,7 +16,7 @@ const orbitMultisigThreshold = `${discovery.getContractValue<number>(
 export const orbit: Bridge = {
   type: 'bridge',
   id: ProjectId('orbit'),
-  createdAt: new UnixTime(1663234549), // 2022-09-15T09:35:49Z
+  addedAt: new UnixTime(1663234549), // 2022-09-15T09:35:49Z
   display: {
     name: 'Orbit Bridge',
     slug: 'orbit',

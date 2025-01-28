@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const myshell: Layer2 = upcomingL2({
   id: 'myshell',
-  createdAt: new UnixTime(1716981396), // 2024-05-29T11:16:36Z
+  addedAt: new UnixTime(1716981396), // 2024-05-29T11:16:36Z
   display: {
     name: 'MyShell L2',
     slug: 'myshell',

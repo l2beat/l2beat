@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('skale-ima')
 export const skaleIMA: Bridge = {
   type: 'bridge',
   id: ProjectId('skale-ima'),
-  createdAt: new UnixTime(1684437883), // 2023-05-18T19:24:43Z
+  addedAt: new UnixTime(1684437883), // 2023-05-18T19:24:43Z
   display: {
     name: 'SKALE IMA Bridge',
     slug: 'skale-ima',

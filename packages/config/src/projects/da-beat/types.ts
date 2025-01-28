@@ -243,7 +243,7 @@ type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */
   id: string
   /** Date of creation of the file (not the project) */
-  createdAt: UnixTime
+  addedAt: UnixTime
   display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean

@@ -39,7 +39,7 @@ const upgradeability = {
 }
 
 export const wirex: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
@@ -180,7 +180,7 @@ export const wirex: Layer2 = polygonCDKStack({
   knowledgeNuggets: [],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

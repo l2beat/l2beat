@@ -10,7 +10,7 @@ export const layer2finance: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('layer2finance'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addetAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
     name: 'Layer2.Finance',
     slug: 'layer2finance',

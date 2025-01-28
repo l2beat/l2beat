@@ -5,7 +5,7 @@ import type { Layer3 } from './types'
 
 export const huddle01: Layer3 = underReviewL3({
   id: 'huddle01',
-  createdAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
+  addedAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,

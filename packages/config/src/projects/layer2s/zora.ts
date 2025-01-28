@@ -10,7 +10,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('zora')
 
 export const zora: Layer2 = opStackL2({
-  createdAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
+  addedAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   additionalPurposes: ['NFT'],

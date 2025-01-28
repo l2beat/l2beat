@@ -87,7 +87,7 @@ export const eigenDA: DaServiceDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
+      addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
       layer: 'EigenDA',
       description:
         'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',

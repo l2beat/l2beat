@@ -64,7 +64,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
       `,
   },
   bridge: {
-    createdAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
+    addedAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
     type: 'IntegratedDacBridge',
     technology: {
       description: `
@@ -96,7 +96,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
 }
 
 export const mantle: Layer2 = opStackL2({
-  createdAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
+  addedAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
   daProvider: {
     layer: DA_LAYERS.MANTLE_DA,
     bridge: DA_BRIDGES.STAKED_OPERATORS({

@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const celo: Layer2 = upcomingL2({
   id: 'celo',
-  createdAt: new UnixTime(1718876598), // '2024-06-20T09:43:18Z'
+  addedAt: new UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   display: {
     name: 'Celo',
     slug: 'celo',

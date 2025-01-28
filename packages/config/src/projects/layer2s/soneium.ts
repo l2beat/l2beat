@@ -127,7 +127,7 @@ const permissionedGameMaxClockExtension =
 export const soneium: Layer2 = {
   type: 'layer2',
   id: ProjectId('soneium'),
-  createdAt: new UnixTime(1724842746),
+  addetAt: new UnixTime(1724842746),
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,

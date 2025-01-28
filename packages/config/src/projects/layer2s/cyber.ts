@@ -30,7 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const cyber: Layer2 = opStackL2({
-  createdAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
+  addedAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
   associatedTokens: ['CYBER'],
   discovery,
   additionalBadges: [
@@ -142,7 +142,7 @@ export const cyber: Layer2 = opStackL2({
       ],
     },
     bridge: {
-      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
       type: 'IntegratedDacBridge',
       technology: {
         description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.

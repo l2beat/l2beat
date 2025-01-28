@@ -17,7 +17,7 @@ const validation = {
 
 export const vector = {
   id: 'vector',
-  createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
+  addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
   type: 'OnChainBridge',
   display: {
     name: 'Vector',

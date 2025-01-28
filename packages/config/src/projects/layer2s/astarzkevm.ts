@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const astarzkevm: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -168,7 +168,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   knowledgeNuggets: [],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

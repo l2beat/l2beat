@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('fluence')
 
 export const fluence: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
+  addedAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   reasonsForBeingOther: [
@@ -60,7 +60,7 @@ export const fluence: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

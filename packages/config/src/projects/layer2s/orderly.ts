@@ -10,7 +10,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('orderly')
 
 export const orderly: Layer2 = opStackL2({
-  createdAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
+  addedAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [
     Badge.DA.Celestia,

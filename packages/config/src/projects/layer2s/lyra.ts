@@ -11,7 +11,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('lyra')
 
 export const lyra: Layer2 = opStackL2({
-  createdAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
+  addedAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [
     Badge.DA.Celestia,

@@ -132,7 +132,7 @@ export const near: BlockchainDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
+      addedAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
       layer: 'NearDA',
       technology: {
         description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,

@@ -75,7 +75,7 @@ const CHALLENGE_FEE = utils.formatEther(
 export const lightlink: Layer2 = {
   type: 'layer2',
   id: ProjectId('lightlink'),
-  createdAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
+  addetAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
   badges: [Badge.VM.EVM, Badge.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

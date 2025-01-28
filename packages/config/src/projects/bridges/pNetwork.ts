@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('pNetwork')
 export const pNetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('pNetwork'),
-  createdAt: new UnixTime(1674472649), // 2023-01-23T11:17:29Z
+  addedAt: new UnixTime(1674472649), // 2023-01-23T11:17:29Z
   display: {
     name: 'pNetwork',
     slug: 'pnetwork',

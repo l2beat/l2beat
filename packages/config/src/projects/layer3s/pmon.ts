@@ -6,7 +6,7 @@ import type { Layer3 } from '../layer3s'
 export const pmon: Layer3 = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   id: ProjectId('pmon'),
-  createdAt: new UnixTime(1722587021), // 2024-08-02T08:23:41Z
+  addedAt: new UnixTime(1722587021), // 2024-08-02T08:23:41Z
   badges: [
     Badge.L3ParentChain.Arbitrum,
     Badge.DA.Celestia,

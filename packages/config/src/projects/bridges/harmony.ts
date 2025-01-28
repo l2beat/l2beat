@@ -5,7 +5,7 @@ import type { Bridge } from './types'
 export const harmony: Bridge = {
   type: 'bridge',
   id: ProjectId('harmony'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Harmony',
     slug: 'harmony',

@@ -5,7 +5,7 @@ import type { Layer3 } from './types'
 
 export const xrone: Layer3 = underReviewL3({
   id: 'xrone',
-  createdAt: new UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
+  addedAt: new UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,

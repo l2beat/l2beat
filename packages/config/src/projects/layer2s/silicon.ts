@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const silicon: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
+  addedAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [Badge.DA.DAC],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
@@ -172,7 +172,7 @@ export const silicon: Layer2 = polygonCDKStack({
   knowledgeNuggets: [],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

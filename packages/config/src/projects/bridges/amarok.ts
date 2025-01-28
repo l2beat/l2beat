@@ -19,7 +19,7 @@ const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
 export const amarok: Bridge = {
   type: 'bridge',
   id: ProjectId('amarok'),
-  createdAt: new UnixTime(1680097524), // 2023-03-29T13:45:24Z
+  addedAt: new UnixTime(1680097524), // 2023-03-29T13:45:24Z
   display: {
     name: 'Connext',
     slug: 'connext',

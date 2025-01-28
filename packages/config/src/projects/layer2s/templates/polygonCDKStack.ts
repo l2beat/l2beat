@@ -61,7 +61,7 @@ export interface DAProvider {
 }
 
 export interface PolygonCDKStackConfig {
-  createdAt: UnixTime
+  addedAt: UnixTime
   daProvider?: DAProvider
   dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
@@ -164,7 +164,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 
   return {
     type: 'layer2',
-    createdAt: templateVars.createdAt,
+    addetAt: templateVars.addedAt,
     id: ProjectId(templateVars.discovery.projectName),
     isArchived: templateVars.isArchived,
     display: {

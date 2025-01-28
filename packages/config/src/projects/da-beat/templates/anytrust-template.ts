@@ -9,7 +9,7 @@ type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
     technology?: IntegratedDacBridge['technology']
   } & Pick<
     IntegratedDacBridge,
-    'createdAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
+    'addedAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
   >
   discovery: ProjectDiscovery
 }

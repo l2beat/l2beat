@@ -27,7 +27,7 @@ const withdrawalDelaySeconds = discovery.getContractValue<number>(
 export const eclipse: Layer2 = {
   type: 'layer2',
   id: ProjectId('eclipse'),
-  createdAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
+  addetAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
   badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

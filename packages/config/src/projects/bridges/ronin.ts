@@ -33,7 +33,7 @@ const pausable = {
 export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Ronin V3',
     slug: 'ronin',

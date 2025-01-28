@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const form: Layer2 = upcomingL2({
   id: 'form',
-  createdAt: new UnixTime(1717490033), // 2024-06-04T08:33:53Z
+  addedAt: new UnixTime(1717490033), // 2024-06-04T08:33:53Z
   display: {
     name: 'Form',
     slug: 'form',

@@ -8,7 +8,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
 export const rari: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
+  addedAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [
     Badge.DA.CelestiaBlobstream,
     Badge.L3ParentChain.Arbitrum,

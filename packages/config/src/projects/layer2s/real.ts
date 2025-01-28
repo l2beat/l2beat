@@ -11,7 +11,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('real')
 
 export const real: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
+  addedAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['RWA'],
@@ -106,7 +106,7 @@ export const real: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

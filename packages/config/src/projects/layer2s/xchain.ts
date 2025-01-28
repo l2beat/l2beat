@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('xchain')
 
 export const xchain: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
+  addedAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
   additionalBadges: [Badge.RaaS.Conduit, Badge.DA.DAC],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -62,7 +62,7 @@ export const xchain: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

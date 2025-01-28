@@ -14,7 +14,7 @@ export interface Bridge {
   type: 'bridge'
   id: ProjectId
   /** Date of creation of the file (not the project) */
-  createdAt: UnixTime
+  addedAt: UnixTime
   isArchived?: boolean
   isUpcoming?: boolean
   isUnderReview?: boolean

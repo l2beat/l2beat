@@ -112,7 +112,7 @@ const dacConfig =
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
-  createdAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
+  addetAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -328,7 +328,7 @@ export const apex: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: dacConfig.requiredSignatures,
       membersCount: dacConfig.membersCount,
     },

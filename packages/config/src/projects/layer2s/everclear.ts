@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
+  addedAt: new UnixTime(1717512064), // 2024-06-04T14:41:04Z
   additionalBadges: [Badge.RaaS.Gelato, Badge.DA.DAC],
   additionalPurposes: ['Interoperability'],
   reasonsForBeingOther: [
@@ -53,7 +53,7 @@ export const everclear: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

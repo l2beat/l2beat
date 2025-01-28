@@ -84,7 +84,7 @@ export const memo: BlockchainDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
+      addedAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
       layer: 'MEMO',
     }),
   ],

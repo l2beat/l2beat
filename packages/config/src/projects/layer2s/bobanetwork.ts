@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
-  createdAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
+  addedAt: new UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

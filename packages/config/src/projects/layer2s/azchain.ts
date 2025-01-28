@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const azchain: Layer2 = upcomingL2({
   id: 'azchain',
-  createdAt: new UnixTime(1727519160), // 2024-09-27T17:09:00Z
+  addedAt: new UnixTime(1727519160), // 2024-09-27T17:09:00Z
   display: {
     name: 'AZ Chain',
     slug: 'azchain',

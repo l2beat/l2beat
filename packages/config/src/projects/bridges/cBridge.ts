@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('cbridge')
 export const cBridge: Bridge = {
   type: 'bridge',
   id: ProjectId('cbridge'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'cBridge (Celer)',
     slug: 'cbridge',

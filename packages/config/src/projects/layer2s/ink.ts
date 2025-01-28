@@ -127,7 +127,7 @@ const permissionlessGameMaxClockExtension =
 export const ink: Layer2 = {
   type: 'layer2',
   id: ProjectId('ink'),
-  createdAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  addetAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,

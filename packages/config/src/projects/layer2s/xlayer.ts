@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const xlayer: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
+  addedAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.Infra.AggLayer],
   daProvider: {
@@ -186,7 +186,7 @@ export const xlayer: Layer2 = polygonCDKStack({
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

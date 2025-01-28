@@ -5,7 +5,7 @@ import type { Layer3 } from './types'
 
 export const dodochain: Layer3 = underReviewL3({
   id: 'dodochain',
-  createdAt: new UnixTime(1719224565), // 2024-06-24T10:22:45Z
+  addedAt: new UnixTime(1719224565), // 2024-06-24T10:22:45Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'DODOchain',

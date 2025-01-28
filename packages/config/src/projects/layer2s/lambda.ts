@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('lambda')
 
 export const lambda: Layer2 = opStackL2({
-  createdAt: new UnixTime(1718703383), // 2024-06-18T09:36:23Z
+  addedAt: new UnixTime(1718703383), // 2024-06-18T09:36:23Z
   discovery,
   additionalPurposes: ['Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],

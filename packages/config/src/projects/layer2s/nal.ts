@@ -4,7 +4,7 @@ import type { Layer2 } from './types'
 
 export const nal: Layer2 = underReviewL2({
   id: 'nal',
-  createdAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
+  addedAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
   display: {
     name: 'Nal',
     slug: 'nal',
