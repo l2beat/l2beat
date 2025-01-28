@@ -166,7 +166,7 @@ export async function getL2ProjectDetails({
       props: {
         id: 'milestones-and-incidents',
         title: 'Milestones & Incidents',
-        milestones: project.milestones,
+        milestones: sortedMilestones,
       },
     })
   }
