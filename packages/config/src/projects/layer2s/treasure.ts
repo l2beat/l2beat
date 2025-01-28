@@ -106,35 +106,6 @@ export const treasure: Layer2 = zkStackL2({
       ],
     },
   },
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('TreasureZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('TreasureZkEvmAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the Treasure zkEVM diamond contract.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'TreasureChainAdminMultisig',
-      'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the Treasure Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
-    ),
-    {
-      name: 'TreasureOracleEOA',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'TreasureZkEvmAdmin',
-          'tokenMultiplierSetter',
-        ),
-      ],
-      description:
-        'Can set the conversion factor for MAGIC deposits to Treasure.',
-    },
-  ],
   milestones: [
     {
       name: 'Mainnet launch',

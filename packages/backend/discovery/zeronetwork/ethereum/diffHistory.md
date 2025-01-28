@@ -1,3 +1,78 @@
+Generated with discovered.json: 0xb5ca29dad88100ce49e96c1ab3dc632f044ac65b
+
+# Diff at Tue, 28 Jan 2025 06:34:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21643075
+- current block number: 21717100
+
+## Description
+
+discodrive!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21643075 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66) {
+    +++ description: Implements the ZK proof verification logic.
+      template:
++        "shared-zk-stack/Verifier"
+      description:
++        "Implements the ZK proof verification logic."
+    }
+```
+
+```diff
+    contract ZeroNetworkChainAdminMultisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}]
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"configure","from":"0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."}]
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.txFilterer.description:
+-        "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
++        "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
+      fieldMeta.getProtocolVersion.description:
+-        "Protocol version, increments with each protocol change"
++        "Protocol version, increments with each protocol upgrade."
+      fieldMeta.getVerifierParams.description:
+-        "Verifier parameters used for proving batches"
++        "Verifier parameters used for proving batches."
+      fieldMeta.daMode:
+-        {"description":"0 = rollup; 1 = Validium"}
+      template:
++        "shared-zk-stack/Diamond"
+      description:
++        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}]},{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.
+```
+
 Generated with discovered.json: 0x096276bf47fe0662e7b13e891c951db44428de7c
 
 # Diff at Fri, 17 Jan 2025 08:39:46 GMT:

@@ -129,14 +129,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     'ProtocolTimelockController',
     'getMinDelay',
   )
-  const tokenTlMinDelayS = discovery_ZKstackGovL2.getContractValue<number>(
-    'TokenTimelockController',
-    'getMinDelay',
-  )
-  const govOpsTlMinDelayS = discovery_ZKstackGovL2.getContractValue<number>(
-    'GovOpsTimelockController',
-    'getMinDelay',
-  )
   const executionDelayS = discovery.getContractValue<number>(
     'ValidatorTimelock',
     'executionDelay',
@@ -184,7 +176,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
 
   const scMemberCount = discovery.getContractValue<string[]>(
     'SecurityCouncil',
-    'members',
+    '$members',
   ).length
   const scApprovalThreshold = discovery.getContractValue<number>(
     'SecurityCouncil',
@@ -196,7 +188,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   )
   const guardiansMemberCount = discovery.getContractValue<string[]>(
     'Guardians',
-    'members',
+    '$members',
   ).length
   const guardiansMainThreshold = discovery.getContractValue<number>(
     'Guardians',
@@ -211,27 +203,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       'ZkProtocolGovernor',
       'proposalThreshold',
     ) / 1000000000000000000000000n // result: M of tokens
-  const tokenStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValueBigInt(
-      'ZkTokenGovernor',
-      'proposalThreshold',
-    ) / 1000000000000000000000000n // result: M of tokens
-  const govOpsStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValueBigInt(
-      'ZkGovOpsGovernor',
-      'proposalThreshold',
-    ) / 1000000000000000000000000n // result: M of tokens
   const protocolQuorumM =
-    discovery_ZKstackGovL2.getContractValueBigInt(
-      'ZkProtocolGovernor',
-      'currentQuorum',
-    ) / 1000000000000000000000000n // result: M of tokens
-  const tokenQuorumM =
-    discovery_ZKstackGovL2.getContractValueBigInt(
-      'ZkProtocolGovernor',
-      'currentQuorum',
-    ) / 1000000000000000000000000n // result: M of tokens
-  const govOpsQuorumM =
     discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkProtocolGovernor',
       'currentQuorum',
@@ -251,6 +223,40 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       templateVars.diamondContract.name,
       'getSemverProtocolVersion',
     )[1] === 25
+
+  /**
+   * Fetches Validators from ValidatorTimelock events:
+   * It is more complicated to accommodate the case in which
+   * a validator is added and removed more than once.
+   */
+  // const validators = () => {
+  //   const validatorsAdded = discovery.getContractValue<string[]>(
+  //     'ValidatorTimelock',
+  //     templateVars.validatorsEvents.added,
+  //   )
+  //   const validatorsRemoved = discovery.getContractValue<string[]>(
+  //     'ValidatorTimelock',
+  //     templateVars.validatorsEvents.removed,
+  //   )
+
+  //   // Create a map to track the net state of each validator (added or removed)
+  //   const validatorStates = new Map<string, number>()
+
+  //   // Increment for added validators
+  //   validatorsAdded.forEach((validator) => {
+  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
+  //   })
+
+  //   // Decrement for removed validators
+  //   validatorsRemoved.forEach((validator) => {
+  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
+  //   })
+
+  //   // Filter validators that have a net positive state (added more times than removed)
+  //   return Array.from(validatorStates.entries())
+  //     .filter(([_, state]) => state > 0)
+  //     .map(([validator, _]) => validator)
+  // }
 
   return {
     type: 'layer2',
@@ -616,282 +622,16 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       return description
     })(),
     permissions: [
-      discovery.contractAsPermissioned(
-        discovery.getContract('SecurityCouncil'),
-        `One of the three signers of the EmergencyUpgradeBoard. Can freeze all ZK stack chains. Can approve governance proposals in the ProtocolUpgradeHandler. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
-      ),
-      {
-        name: 'SecurityCouncil members',
-        accounts: discovery.getPermissionedAccounts(
-          'SecurityCouncil',
-          'members',
-        ),
-        description: `Members of the SecurityCouncil. The members are mostly low-threshold multisigs themselves. `,
-        references: [
-          {
-            text: 'Security Council members - ZK Nation docs',
-            href: 'https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council',
-          },
-        ],
-      },
-      discovery.contractAsPermissioned(
-        discovery.getContract('Guardians'),
-        `Is one of the three signers of the EmergencyUpgradeBoard. Can extend the legal veto period and / or approve governance proposals in the ProtocolUpgradeHandler. Permissioned to cancel non-protocolUpgrade proposals on L2. The default threshold for the members of this contract is ${guardiansThresholdString} but is customized for certain actions.`,
-      ),
-      {
-        name: 'ZKsync Guardians',
-        accounts: discovery.getPermissionedAccounts('Guardians', 'members'),
-        description: `Members of the Guardians contract, usually 1/1 Gnosis multisigs themselves. `,
-        references: [
-          {
-            text: 'ZKsync Guardians - ZK Nation docs',
-            href: 'https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians',
-          },
-        ],
-      },
-      ...discovery.getMultisigPermission(
-        'ZkFoundationMultisig',
-        'Is one of the three signers of the EmergencyUpgradeBoard.',
-      ),
-      discovery.contractAsPermissioned(
-        discovery.getContract('ProtocolUpgradeHandler'),
-        'Owner and upgrade Admin of all shared ZK stack contracts. Can also upgrade the individual Hyperchain diamond contracts.',
-      ),
-      ...discovery.getMultisigPermission(
-        'Matter Labs Multisig',
-        'Has the *ChainAdmin* role in the ZKsync Era diamond and the *Elastic Chain Operator* role in the shared contracts.',
-      ),
-      {
-        name: 'Elastic Chain Operator',
-        accounts: [
-          discovery.getPermissionedAccount('EraChainAdminProxy', 'owner'),
-        ], // This Era contract has both ChainAdmin and Elastic Chain Operator roles
-        description:
-          'Can change the ValidatorTimelock in the StateTransitionManager, manage validators of the Hyperchain diamonds, revert batches and create new Hyperchains.',
-      },
-      {
-        name: 'ChainAdmin',
-        accounts: [
-          discovery.getPermissionedAccount(
-            templateVars.diamondContract.name,
-            'getAdmin',
-          ),
-        ],
-        description:
-          'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
-      },
-      {
-        name: 'Diamond Contract Validators',
-        accounts: discovery.getPermissionedAccounts(
-          templateVars.diamondContract.name,
-          'validators',
-        ),
-        fromRole: true,
-        description: `Addresses permissioned to call the functions to propose, execute and revert L2 batches in the ${templateVars.display.name} diamond. Usually these are addresses of proxying ValidatorTimelock contracts.`,
-      },
-      {
-        name: 'ValidatorTimelock Validators',
-        accounts: discovery
-          .getContractValue<string[]>(
-            'ValidatorTimelock',
-            templateVars.validatorsKey,
-          )
-          .map((v) => discovery.formatPermissionedAccount(v)),
-        fromRole: true,
-        description:
-          'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
-      },
+      ...discovery.getDiscoveredPermissions(),
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
     nativePermissions: {
-      zksync2: [
-        {
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D',
-              ),
-              type: 'EOA',
-            },
-          ],
-          chain: 'zksync2',
-          name: 'ZkFoundationMultisig L2 alias',
-          description:
-            'The Layer2 alias address through which the ZkFoundationMultisig can act.',
-        },
-        {
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0xe788e09324F8bb3cc64f009973693f751C33b999',
-              ),
-              type: 'EOA',
-            },
-          ],
-          chain: 'zksync2',
-          name: 'Guardians L2 alias',
-          description:
-            'The Layer2 alias address through which the Guardians contract can act.',
-        },
-        {
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8',
-              ),
-              type: 'EOA',
-            },
-          ],
-          chain: 'zksync2',
-          name: 'ProtocolUpgradeHandler L2 alias',
-          description:
-            'The Layer2 alias address through which the ProtocolUpgradeHandler contract can act.',
-        },
-        {
-          accounts: [
-            discovery_ZKstackGovL2.getPermissionedAccount(
-              'ZkTokenGovernor',
-              'VETO_GUARDIAN',
-            ),
-          ],
-          chain: 'zksync2',
-          name: 'Veto Guardian TokenGovernor',
-          description:
-            'This address can cancel proposals in the ZkTokenGovernor while they are pending (after having been proposed) or active (during the voting period).',
-        },
-        {
-          accounts: [
-            discovery_ZKstackGovL2.getPermissionedAccount(
-              'ZkTokenGovernor',
-              'PROPOSE_GUARDIAN',
-            ),
-          ],
-          chain: 'zksync2',
-          name: 'Propose Guardian TokenGovernor',
-          description: `This address can make direct proposals in the ZkTokenGovernor without owning ZK tokens${
-            discovery_ZKstackGovL2.getContractValue<boolean>(
-              'ZkTokenGovernor',
-              'isProposeGuarded',
-            )
-              ? '. This is the only address permissioned to make proposals'
-              : ''
-          }.`,
-        },
-        {
-          accounts: [
-            discovery_ZKstackGovL2.getPermissionedAccount(
-              'ZkTokenProxyAdmin',
-              'owner',
-            ),
-          ],
-          chain: 'zksync2',
-          name: 'ZK Token upgrade Admin',
-          description:
-            'Can upgrade the ZK token contract, affecting all holders of the ZK token.',
-        },
-        {
-          accounts: discovery_ZKstackGovL2.getAccessControlRolePermission(
-            'ZkToken',
-            'MINTER_ADMIN_ROLE',
-          ),
-          chain: 'zksync2',
-          name: 'ZK Token minter Admin',
-          description:
-            'Can add and remove minters from the ZK token contract and mint unlimited amounts.',
-        },
-        {
-          accounts: [
-            discovery_ZKstackGovL2.getPermissionedAccount(
-              'ZkGovOpsGovernor',
-              'VETO_GUARDIAN',
-            ),
-          ],
-          chain: 'zksync2',
-          name: 'Veto Guardian GovOpsGovernor',
-          description:
-            'This address can cancel proposals in the ZkGovOpsGovernor while they are pending (after having been proposed) or active (during the voting period).',
-        },
-      ],
+      zksync2: discovery_ZKstackGovL2.getDiscoveredPermissions(),
     },
     contracts: {
-      addresses: [
-        ...(templateVars.nonTemplateContracts !== undefined
-          ? templateVars.nonTemplateContracts(upgrades)
-          : []),
-
-        discovery.getContractDetails(
-          'ValidatorTimelock',
-          `Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by ${executionDelay}.`,
-        ),
-        discovery.getContractDetails('Verifier', {
-          description: 'Implements ZK proof verification logic.',
-        }),
-        discovery.getContractDetails(
-          'SecurityCouncil',
-          `Custom contract acting as a Multisig. The default threshold for the members of this contract is ${scThresholdString} but is customized for certain actions.`,
-        ),
-        discovery.getContractDetails(
-          'Guardians',
-          `Custom contract acting as a Multisig. The default threshold for the members of this contract is ${guardiansThresholdString} but is customized for certain actions.`,
-        ),
-        discovery.getContractDetails(
-          'ProtocolUpgradeHandler',
-          'The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard.',
-        ),
-        discovery.getContractDetails('L1SharedBridge', {
-          description:
-            'This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails('BridgeHub', {
-          description:
-            'Sits between the single shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails('StateTransitionManager', {
-          description:
-            'Defines L2 diamond contract creation and upgrade data, proof verification for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).',
-          ...upgrades,
-        }),
-      ],
+      addresses: discovery.getDiscoveredContracts(),
       nativeAddresses: {
-        zksync2: [
-          discovery_ZKstackGovL2.getContractDetails(
-            'ZkProtocolGovernor',
-            `Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that go through Ethereum Layer 1 and can target all L1 and L2 contracts. At least ${protocolStartProposalThresholdM}M ZK tokens are necessary to start a proposal and a ${protocolQuorumM}M quorum of voted tokens must be met to succeed. Can queue and execute proposals in the ProtocolTimelockController.`,
-          ),
-          discovery_ZKstackGovL2.getContractDetails(
-            'ProtocolTimelockController',
-            `Timelock contract that can send L2->L1 logs that start a proposal in the ProtocolUpgradeHandler on Ethereum. This timelock has ${
-              protTlMinDelayS > 0 ? formatSeconds(protTlMinDelayS) : 'no'
-            } minimum delay`,
-          ),
-          discovery_ZKstackGovL2.getContractDetails(
-            'ZkTokenGovernor',
-            `Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token. At least ${tokenStartProposalThresholdM}M ZK tokens are necessary to start a proposal (for delegates) and a ${tokenQuorumM}M quorum of voted tokens must be met to succeed. Can queue and execute proposals in the TokenTimelockController.`,
-          ),
-          discovery_ZKstackGovL2.getContractDetails(
-            'TokenTimelockController',
-            `This timelock contract has ${
-              tokenTlMinDelayS > 0 ? formatSeconds(tokenTlMinDelayS) : 'no'
-            } minimum delay`,
-          ),
-          discovery_ZKstackGovL2.getContractDetails(
-            'ZkGovOpsGovernor',
-            `Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least ${govOpsStartProposalThresholdM}M ZK tokens are necessary to start a proposal and a ${govOpsQuorumM}M quorum of voted tokens must be met to succeed. Can queue and execute proposals in the GovOpsTimelockController.`,
-          ),
-          discovery_ZKstackGovL2.getContractDetails(
-            'GovOpsTimelockController',
-            `This timelock contract has ${
-              govOpsTlMinDelayS > 0 ? formatSeconds(govOpsTlMinDelayS) : 'no'
-            } minimum delay`,
-          ),
-          discovery_ZKstackGovL2.getContractDetails('ZkToken', {
-            description:
-              'The ZK token contract on ZKsync Era. Used for voting in the ZK stack governance system.',
-            ...upgrades,
-          }),
-        ],
+        zksync2: discovery_ZKstackGovL2.getDiscoveredContracts(),
       },
       risks: [
         CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(

@@ -118,34 +118,6 @@ export const sophon: Layer2 = zkStackL2({
         'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
   ],
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('SophonZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('SophonZkEvmAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the Sophon zkEVM diamond contract.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'SophonChainAdminMultisig',
-      'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the Sophon Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
-    ),
-    {
-      name: 'SophOracleEOA',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'SophonZkEvmAdmin',
-          'tokenMultiplierSetter',
-        ),
-      ],
-      description: 'Can set the conversion factor for SOPH deposits to Sophon.',
-    },
-  ],
   milestones: [
     {
       name: 'Mainnet public launch',
