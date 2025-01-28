@@ -136,12 +136,12 @@ export function StageSection({
           return (
             <AccordionItem key={stage.stage} value={stage.stage}>
               <AccordionTrigger className="px-6 py-4 text-lg font-normal">
-                <div className="flex select-none items-center justify-start gap-3">
+                <div className="flex select-none items-center justify-start gap-3 max-md:text-base">
                   <StageBadge stage={stage.stage} isAppchain={false} />
                   {missing.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
-                      <div className="flex items-center gap-2">
-                        <SatisfiedIcon className="size-4 shrink-0" />
+                      <div className="flex items-center gap-2 font-bold">
+                        <SatisfiedIcon className="size-4 shrink-0 fill-positive" />
                         <span>{reqTextSatisfied(satisfied.length)}</span>
                       </div>
                       {underReview.length > 0 && (
@@ -152,11 +152,11 @@ export function StageSection({
                       )}
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 font-bold">
                       {stage.stage === 'Stage 0' ? (
-                        <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
+                        <RoundedWarningIcon className="size-4 shrink-0 fill-warning" />
                       ) : (
-                        <MissingIcon className="size-4 shrink-0" />
+                        <MissingIcon className="size-4 shrink-0 fill-negative" />
                       )}
                       <span>{reqTextMissing(missing.length)}</span>
                     </div>
@@ -164,11 +164,14 @@ export function StageSection({
                 </div>
               </AccordionTrigger>
               <AccordionContent className="text-lg">
-                <ul className="mx-6 space-y-2 pb-4 md:px-4 md:pb-6">
+                <ul className="mx-6 space-y-1 px-2 md:space-y-2">
                   {satisfied.map((req, i) => (
                     <li key={i} className="flex">
-                      <SatisfiedIcon className="relative top-0.5 size-4 shrink-0" />
-                      <Markdown className="ml-2 leading-none" inline>
+                      <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive" />
+                      <Markdown
+                        className="ml-2 leading-none max-md:text-base"
+                        inline
+                      >
                         {req.description}
                       </Markdown>
                     </li>
@@ -176,7 +179,10 @@ export function StageSection({
                   {underReview.map((req, i) => (
                     <li key={i} className="flex">
                       <UnderReviewIcon className="relative top-0.5 size-4 shrink-0" />
-                      <Markdown className="ml-2 leading-none" inline>
+                      <Markdown
+                        className="ml-2 leading-none max-md:text-base"
+                        inline
+                      >
                         {req.description}
                       </Markdown>
                     </li>
@@ -184,11 +190,14 @@ export function StageSection({
                   {missing.map((req, i) => (
                     <li key={i} className="flex">
                       {stage.stage === 'Stage 0' ? (
-                        <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
+                        <RoundedWarningIcon className="size-4 shrink-0 fill-warning" />
                       ) : (
-                        <MissingIcon className="relative top-0.5 size-4 shrink-0" />
+                        <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative" />
                       )}
-                      <Markdown className="ml-2 leading-none" inline>
+                      <Markdown
+                        className="ml-2 leading-none max-md:text-base"
+                        inline
+                      >
                         {req.description}
                       </Markdown>
                     </li>
