@@ -53,7 +53,7 @@ export const grvt: Layer2 = zkStackL2({
         {
           contract: 'ExecutorFacet',
           references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+            'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
           ],
         },
       ],
@@ -72,7 +72,7 @@ export const grvt: Layer2 = zkStackL2({
       references: [
         {
           text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          href: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
         },
       ],
     },
@@ -87,8 +87,8 @@ export const grvt: Layer2 = zkStackL2({
         {
           contract: 'GrvtZkEvm',
           references: [
-            'https://etherscan.io/address//0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L240',
-            'https://etherscan.io/address//0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
+            'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
+            'https://etherscan.io/address//0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96',
           ],
         },
         {
@@ -123,7 +123,7 @@ export const grvt: Layer2 = zkStackL2({
         },
         {
           text: 'Mailbox facet',
-          href: 'https://etherscan.io/address//0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L240',
+          href: 'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
         },
         {
           text: 'TransactionFilterer',
