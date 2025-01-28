@@ -1,6 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
-import { assert, EthereumAddress, type UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  type UnixTime,
+  assertUnreachable,
+} from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
@@ -36,38 +41,41 @@ export class DataFormulaExecutor {
       // TODO: save it in storage
       const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
 
-      for (const index in amounts) {
-        this.logger.info(`Processing amount ${index} of ${amounts.length}`)
-        const amount = amounts[index]
-
+      const promises = amounts.map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
           this.logger.info(`Cached value found for ${amount.id}`)
-          continue
+          return
         }
+
+        let value: number
 
         switch (amount.type) {
           case 'circulatingSupply': {
-            const v = await this.fetchCirculatingSupply(amount, timestamp)
-            await this.storage.writeAmount(amount.id, timestamp, v)
+            value = await this.fetchCirculatingSupply(amount, timestamp)
             break
           }
           case 'totalSupply': {
             const b = blockNumbers.get(amount.chain)
-            assert(b)
-            const v = await this.fetchTotalSupply(amount, b)
-            await this.storage.writeAmount(amount.id, timestamp, v)
+            assert(b, `Block number not found for chain ${amount.chain}`)
+            value = await this.fetchTotalSupply(amount, b)
             break
           }
           case 'balanceOfEscrow': {
             const b = blockNumbers.get(amount.chain)
-            assert(b)
-            const v = await this.fetchEscrowBalance(amount, b)
-            await this.storage.writeAmount(amount.id, timestamp, v)
+            assert(b, `Block number not found for chain ${amount.chain}`)
+            value = await this.fetchEscrowBalance(amount, b)
             break
           }
+          default: {
+            assertUnreachable(amount)
+          }
         }
-      }
+
+        await this.storage.writeAmount(amount.id, timestamp, value)
+      })
+
+      await Promise.all(promises)
 
       for (const index in prices) {
         this.logger.info(`Processing amount ${index} of ${prices.length}`)
@@ -187,6 +195,11 @@ export class DataFormulaExecutor {
     const result = new Map<string, number>()
 
     for (const chain of chains) {
+      const cached = await this.storage.getBlockNumber(chain, timestamp)
+      if (cached) {
+        result.set(chain, cached)
+        continue
+      }
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.info(

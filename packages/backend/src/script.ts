@@ -16,6 +16,7 @@ import { mapConfig } from './modules/tvs/mapConfig'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
+import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
 
 main().catch((e: unknown) => {
@@ -43,7 +44,7 @@ async function main() {
   )
 
   const chains = ['ethereum', 'arbitrum']
-  const rpcs = new Map<string, RpcClient>()
+  const rpcs = new Map<string, RpcClientPOC>()
   const blockProviders = new Map<string, BlockProvider>()
 
   for (const chain of chains) {
@@ -56,7 +57,7 @@ async function main() {
       sourceName: chain,
       callsPerMinute: 120,
     })
-    rpcs.set(chain, rpc)
+    rpcs.set(chain, new RpcClientPOC(rpc, logger))
     blockProviders.set(chain, new BlockProvider(chain, [rpc]))
   }
 

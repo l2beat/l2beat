@@ -5,4 +5,13 @@ export interface DataStorage {
   getPrice(id: string, timestamp: UnixTime): Promise<number | undefined>
   writeAmount(id: string, timestamp: UnixTime, amount: number): Promise<void>
   getAmount(id: string, timestamp: UnixTime): Promise<number | undefined>
+  writeBlockNumber(
+    chain: string,
+    timestamp: UnixTime,
+    blockNumber: number,
+  ): Promise<void>
+  getBlockNumber(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined>
 }
