@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import type { Logger } from '@l2beat/backend-tools'
 import type { CallParameters, RpcClient } from '@l2beat/shared'
-import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type {
   MulticallRequest,
@@ -108,11 +108,12 @@ export class RpcClientPOC {
     }
     const id = randomUUID()
     this.logger.debug(`Adding to multicall pool ${id}`)
+    assert(callParams.data)
     this.multicallPool.push({
       id,
       params: {
         address: callParams.to,
-        data: callParams.data!,
+        data: callParams.data,
       },
       blockNumber,
     })
