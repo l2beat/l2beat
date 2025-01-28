@@ -223,40 +223,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       'getSemverProtocolVersion',
     )[1] === 25
 
-  /**
-   * Fetches Validators from ValidatorTimelock events:
-   * It is more complicated to accommodate the case in which
-   * a validator is added and removed more than once.
-   */
-  // const validators = () => {
-  //   const validatorsAdded = discovery.getContractValue<string[]>(
-  //     'ValidatorTimelock',
-  //     templateVars.validatorsEvents.added,
-  //   )
-  //   const validatorsRemoved = discovery.getContractValue<string[]>(
-  //     'ValidatorTimelock',
-  //     templateVars.validatorsEvents.removed,
-  //   )
-
-  //   // Create a map to track the net state of each validator (added or removed)
-  //   const validatorStates = new Map<string, number>()
-
-  //   // Increment for added validators
-  //   validatorsAdded.forEach((validator) => {
-  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-  //   })
-
-  //   // Decrement for removed validators
-  //   validatorsRemoved.forEach((validator) => {
-  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-  //   })
-
-  //   // Filter validators that have a net positive state (added more times than removed)
-  //   return Array.from(validatorStates.entries())
-  //     .filter(([_, state]) => state > 0)
-  //     .map(([validator, _]) => validator)
-  // }
-
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),

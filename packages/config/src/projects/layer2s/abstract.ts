@@ -26,7 +26,7 @@ export const abstract: Layer2 = zkStackL2({
       ],
       documentation: ['https://docs.abs.xyz/'],
       explorers: ['https://abscan.org/'],
-      repositories: [],
+      repositories: ['https://github.com/Abstract-Foundation'],
       socialMedia: [
         'https://x.com/abstractchain',
         'https://discord.com/invite/abstractchain',
@@ -46,6 +46,7 @@ export const abstract: Layer2 = zkStackL2({
       type: 'etherscan',
     },
     minTimestampForTvl: genesisTimestamp,
+    coingeckoPlatform: 'abstract',
   },
   discovery,
   discovery_ZKstackGovL2,
@@ -53,7 +54,7 @@ export const abstract: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ETH', 'USDC', 'WBTC', 'USDT'], // just assuming here
+      tokens: ['ETH', 'WBTC', 'USDT'], // just assuming here, since USDC is stargate-routed
       description:
         'Shared bridge for depositing tokens to Abstract and other ZK stack chains.',
       sharedEscrow: {

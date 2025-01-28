@@ -5812,5 +5812,22 @@
         ]
       }
     }
+  ],
+  "abstract": [
+    {
+      "symbol": "USDC.e",
+      "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+      "source": "external",
+      "coingeckoId": "usd-coin", // the specific USDC.e for abstract has bad price history on CG
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    }
   ]
 }
