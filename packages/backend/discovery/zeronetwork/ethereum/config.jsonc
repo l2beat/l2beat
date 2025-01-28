@@ -12,64 +12,28 @@
     "BridgeHub": "shared-zk-stack"
   },
   "overrides": {
-    "ZeroNetworkZkEvmAdmin": {
-      "ignoreMethods": ["protocolVersionToUpgradeTimestamp"]
-    },
-    "ZeroNetworkZkEvm": {
-      "ignoreRelatives": ["getBaseToken"],
-      "ignoreMethods": [
-        "l2LogsRootHash",
-        "storedBlockHash",
-        "storedBatchHash",
-        "getName",
-        "priorityQueueFrontOperation"
-      ],
-      "ignoreInWatchMode": [
-        "getPriorityQueueSize",
-        "getTotalBlocksCommitted",
-        "getTotalBlocksExecuted",
-        "getTotalBlocksVerified",
-        "getTotalBatchesExecuted",
-        "getTotalBatchesVerified",
-        "getTotalBatchesCommitted",
-        "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx"
-      ],
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+      // local override over the template to fetch the validators from the shared contract
       "fields": {
-        "txFilterer": {
-          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
-          "severity": "HIGH",
+        "validatorsVTL": {
           "handler": {
             "type": "event",
-            "select": ["oldTransactionFilterer", "newTransactionFilterer"],
-            "add": { "event": "NewTransactionFilterer" }
-          }
-        },
-        "validators": {
-          "handler": {
-            "type": "zksynceraValidators"
-          }
-        },
-        "getProtocolVersion": {
-          "description": "Protocol version, increments with each protocol change",
-          "severity": "MEDIUM"
-        },
-        "getVerifierParams": {
-          "description": "Verifier parameters used for proving batches",
-          "severity": "LOW"
-        },
-        "facets": {
-          "handler": {
-            "type": "eip2535Facets"
-          }
-        },
-        "daMode": {
-          "description": "0 = rollup; 1 = Validium",
-          "handler": {
-            "type": "storage",
-            "slot": 38,
-            "offset": 0,
-            "returnType": "uint8"
+            "select": ["validator"],
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 543210]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 543210]
+            }
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "validateZkStack"
+              }
+            ]
           }
         }
       }

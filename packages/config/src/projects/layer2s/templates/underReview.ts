@@ -1,14 +1,12 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-import {
-  CONTRACTS,
-  type ChainConfig,
-  type ScalingProjectCapability,
-  type ScalingProjectDisplay,
-  type ScalingProjectEscrow,
-  type ScalingProjectTransactionApi,
-  TECHNOLOGY,
-  UNDER_REVIEW_RISK_VIEW,
-} from '../../../common'
+import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
+import type {
+  ScalingProjectCapability,
+  ScalingProjectDisplay,
+  ScalingProjectEscrow,
+  ScalingProjectTransactionApi,
+} from '../../../types'
+import type { ChainConfig } from '../../../types'
 import type { BadgeId } from '../../badges'
 import type { Layer3 } from '../../layer3s'
 import type { Layer2, Layer2Display } from '../types'

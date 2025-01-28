@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import { zkStackL2 } from './templates/zkStack'
 import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('grvt')
@@ -53,7 +53,7 @@ export const grvt: Layer2 = zkStackL2({
         {
           contract: 'ExecutorFacet',
           references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+            'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
           ],
         },
       ],
@@ -72,64 +72,11 @@ export const grvt: Layer2 = zkStackL2({
       references: [
         {
           text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          href: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
         },
       ],
     },
   },
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('GrvtZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('GrvtZkEvmAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the GRVT zkEVM diamond contract.',
-    }),
-    discovery.getContractDetails('GRVTBridgeProxy', {
-      description:
-        "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
-    }),
-    discovery.getContractDetails('GRVTTransactionFilterer', {
-      description:
-        'Referenced by the mailbox facet of the systems diamond contract, defining a whitelist that gets checked on every call of `requestL2Transaction()`. This prevents non-whitelisted addresses from depositing the gas token and from forcing transactions from L1.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'GrvtChainAdminMultisig',
-      'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the GRVT Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
-    ),
-    {
-      name: 'GrvtOracleEOA',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'GrvtZkEvmAdmin',
-          'tokenMultiplierSetter',
-        ),
-      ],
-      description: 'Can set the conversion factor for GBT deposits to GRVT.',
-    },
-    {
-      name: 'DepositApprover',
-      accounts: [
-        discovery.getPermissionedAccount('GRVTBridgeProxy', 'depositApprover'),
-      ],
-      description:
-        'Permissioned address that must approve each deposit to GRVT.',
-    },
-    {
-      name: 'L2 transaction sender role',
-      accounts: discovery.getAccessControlRolePermission(
-        'GRVTTransactionFilterer',
-        'L2_TX_SENDER_ROLE',
-      ),
-      description:
-        'Whitelisted addresses that are permissioned to deposit via the canonical shared bridge (gated by the GRVTTransactionFilterer).',
-    },
-  ],
   nonTemplateRiskView: {
     sequencerFailure: {
       value: 'No mechanism',
@@ -140,8 +87,8 @@ export const grvt: Layer2 = zkStackL2({
         {
           contract: 'GrvtZkEvm',
           references: [
-            'https://etherscan.io/address//0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L240',
-            'https://etherscan.io/address//0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
+            'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
+            'https://etherscan.io/address//0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96',
           ],
         },
         {
@@ -176,7 +123,7 @@ export const grvt: Layer2 = zkStackL2({
         },
         {
           text: 'Mailbox facet',
-          href: 'https://etherscan.io/address//0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L240',
+          href: 'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
         },
         {
           text: 'TransactionFilterer',

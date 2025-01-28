@@ -9,10 +9,10 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
-import { RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import type { Layer2 } from './types'

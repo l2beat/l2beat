@@ -12,11 +12,6 @@
     ]
     value: "External"
   }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
-  }
   exitWindow: {
     definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
@@ -62,11 +57,6 @@
     sentiment: "bad"
     value: "None"
   }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
-  }
 }
 
 // donatuz stackedRiskView didn't change 1
@@ -82,11 +72,6 @@
       }
     ]
     value: "External"
-  }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
   }
   exitWindow: {
     definingMetric: -604800
@@ -119,10 +104,5 @@
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

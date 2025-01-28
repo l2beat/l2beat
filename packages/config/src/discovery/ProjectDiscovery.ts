@@ -35,7 +35,7 @@ import type {
   ScalingProjectReference,
   ScalingProjectUpgradeability,
   SharedEscrow,
-} from '../common'
+} from '../types'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
@@ -343,7 +343,7 @@ export class ProjectDiscovery {
     const contract = this.getContract(identifier)
     assert(
       isMultisigLike(contract),
-      `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
+      `Contract ${contract.name} is not a Multisig (${this.projectName})`,
     )
 
     const modules = toAddressArray(contract.values?.GnosisSafe_modules)
@@ -365,7 +365,7 @@ export class ProjectDiscovery {
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
-      `A Gnosis Safe with ${this.getMultisigStats(identifier)} threshold. ` +
+      `A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
         fullModulesDescription,
     ]
   }
@@ -854,6 +854,7 @@ export class ProjectDiscovery {
       validate: 'A Validator',
       operateLinea: 'An Operator',
       fastconfirm: 'A FastConfirmer',
+      validateZkStack: 'A Validator',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -920,6 +921,7 @@ export class ProjectDiscovery {
       validate: 'Can act as a Validator',
       operateLinea: 'Can act as an Operator',
       fastconfirm: 'Can act as a FastConfirmer',
+      validateZkStack: 'Can act as a Validator',
     }
 
     return Object.entries(
@@ -1183,6 +1185,12 @@ const roleDescriptions: {
     name: 'AnyTrust FastConfirmer',
     description:
       'Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.',
+  },
+  validateZkStack: {
+    // ZK stack specific
+    name: 'Validator',
+    description:
+      'Actors permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.',
   },
 }
 

@@ -12,16 +12,16 @@ import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
 import { describe } from 'mocha'
 import { chains } from '../../chains'
-import {
-  NUGGETS,
-  type ScalingProjectReference,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectTechnologyChoice,
-} from '../../common'
-import type { ScalingProjectTechnology } from '../../common/ScalingProject'
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
+import type {
+  ScalingProjectReference,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnology,
+  ScalingProjectTechnologyChoice,
+} from '../../types'
 import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {

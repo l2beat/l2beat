@@ -10,7 +10,7 @@ import type {
   ScalingProject,
   ScalingProjectConfig,
   ScalingProjectDisplay,
-} from '../../../common'
+} from '../../../types'
 
 export interface Layer2 extends ScalingProject {
   type: 'layer2'

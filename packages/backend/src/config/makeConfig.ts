@@ -14,6 +14,7 @@ import {
   getChainActivityConfig,
   getProjectsWithActivity,
 } from './features/activity'
+import { getDaTrackingConfig } from './features/da'
 import { getFinalityConfigurations } from './features/finality'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
@@ -222,6 +223,7 @@ export function makeConfig(
         10000,
       ),
     },
+    da: flags.isEnabled('da') && getDaTrackingConfig(),
     // Must be last
     flags: flags.getResolved(),
   }

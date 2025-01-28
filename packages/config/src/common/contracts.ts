@@ -1,8 +1,5 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
-
-import type { ScalingProjectContracts } from './ScalingProject'
-import type { ScalingProjectRisk } from './ScalingProject'
-import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
+import type { ScalingProjectContracts, ScalingProjectRisk } from '../types'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
@@ -45,6 +42,8 @@ function UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
     ${who} in which case there is no delay.`,
   }
 }
+
+const DANGER_DELAY_THRESHOLD_SECONDS = 60 * 60 * 12
 
 function UPGRADE_WITH_DELAY_SECONDS_RISK(
   delaySeconds: number,
