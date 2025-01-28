@@ -174,6 +174,7 @@ const config: Config = {
       },
       secondary: 'hsl(var(--secondary))',
       positive: 'hsl(var(--positive))',
+      warning: 'hsl(var(--warning))',
       negative: 'hsl(var(--negative))',
       brand: 'hsl(var(--brand))',
       background: 'hsl(var(--background))',
