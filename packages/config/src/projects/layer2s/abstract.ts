@@ -13,7 +13,7 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 const bridge = discovery.getContract('L1SharedBridge')
 
 export const abstract: Layer2 = zkStackL2({
-  createdAt: new UnixTime(1724863689), // 2024-08-28T16:48:09Z
+  addedAt: new UnixTime(1724863689), // 2024-08-28T16:48:09Z
   display: {
     name: 'Abstract',
     slug: 'abstract',
@@ -115,8 +115,8 @@ export const abstract: Layer2 = zkStackL2({
   ],
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://x.com/AbstractChain/status/1883939915169423777',
+      title: 'Mainnet launch',
+      url: 'https://x.com/AbstractChain/status/1883939915169423777',
       date: '2025-01-27T00:00:00Z',
       description: 'Abstract launches their mainnet, opening for all users.',
       type: 'general',
