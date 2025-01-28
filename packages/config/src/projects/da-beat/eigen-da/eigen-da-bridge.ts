@@ -1,7 +1,18 @@
-import { UnixTime, type formatSeconds } from '@l2beat/shared-pure'
+import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import {
+  DaCommitteeSecurityRisk,
+  DaRelayerFailureRisk,
+  DaUpgradeabilityRisk,
+} from '../common'
+import type { DaBridge } from '../types'
 
 const discovery = new ProjectDiscovery('eigenda')
+
+const EIGENUpgradeDelay = discovery.getContractValue<number>(
+  'EIGEN Timelock',
+  'getMinDelay',
+)
 
 const quorumThresholds = discovery.getContractValue<string>(
   'EigenDAServiceManager',
@@ -81,34 +92,32 @@ export const eigenDAbridge = {
         .filter(
           (contract) => !contract.name.startsWith('StrategyBaseTVLLimits'),
         ),
-      }
     },
     risks: [
-{
-  category: 'Funds can be lost if', text
-  : 'the bridge (EigenDAServiceManager) contract receives a malicious code upgrade. There is no delay on code upgrades.',
-}
-,
-{
-  category: 'Funds can be lost if', text
-  : 'EigenLayer core contracts (DelegationManager, StrategyManager, EIGEN token) receive a malicious code upgrade. There is no delay on code upgrades.',
-}
-,
-{
-  category: 'Funds can be lost if', text
-  : 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
-}
-,
-{
-  category: 'Funds can be lost if', text
-  : 'the bridge accepts an incorrect or malicious data commitment provided by node operators.',
-}
-,
+      {
+        category: 'Funds can be lost if',
+        text: 'the bridge (EigenDAServiceManager) contract receives a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the bridge accepts an incorrect or malicious data commitment provided by node operators.',
+      },
     ],
   },
-  technology:
-{
-  description: `
+  technology: {
+    description: `
     ## Architecture
 
     ![EigenDA architecture once stored](/images/da-bridge-technology/eigenda/architecture1.png#center)
@@ -128,55 +137,45 @@ export const eigenDAbridge = {
     Ejectors can eject maximum ${ejectableStakePercent}% of the total stake in a ${formatSeconds(ejectionRateLimitWindow[0])} window for the ETH quorum, and the same stake percentage over a ${formatSeconds(ejectionRateLimitWindow[1])} window for the EIGEN quorum.
     An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown)}. 
   `,
-    references
-  : [
-  {
-    title: 'EigenDA Registry Coordinator - Etherscan', url
-    : 'https://etherscan.io/address/0xdcabf0be991d4609096cce316df08d091356e03f',
-  }
-  ,
-  {
-    title: 'EigenDA Service Manager - Etherscan', url
-    : 'https://etherscan.io/address/0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07',
-  }
-  ,
+    references: [
+      {
+        title: 'EigenDA Registry Coordinator - Etherscan',
+        url: 'https://etherscan.io/address/0xdcabf0be991d4609096cce316df08d091356e03f',
+      },
+      {
+        title: 'EigenDA Service Manager - Etherscan',
+        url: 'https://etherscan.io/address/0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07',
+      },
     ],
     risks: [
-  {
-    category: 'Funds can be lost if', text
-    : 'the relayer posts an invalid commitment and EigenDA operators do not make the data available for verification.',
-  }
-  ,
-  {
-    category: 'Funds can be frozen if', text
-    : 'excluding L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the bridge contract.',
-  }
-  ,
-  {
-    category: 'Funds can be frozen if', text
-    : 'the bridge (EigenDAServiceManager) contract is paused by the pausers.',
-  }
-  ,
+      {
+        category: 'Funds can be lost if',
+        text: 'the relayer posts an invalid commitment and EigenDA operators do not make the data available for verification.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'excluding L2-specific DA fallback - the permissioned relayers are unable to submit DA commitments to the bridge contract.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the bridge (EigenDAServiceManager) contract is paused by the pausers.',
+      },
     ],
-  permissions:
-{
+  },
+  permissions: {
     ethereum: discovery.getDiscoveredPermissions(),
-}
-,
+  },
   requiredMembers: 0, // currently 0 since threshold is not enforced
   membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
   transactionDataType: 'Transaction data',
-  usedIn: toUsedInProject([]),
-  risks:
-{
-  committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
-    'Permissioned',
-    undefined,
-    totalNumberOfRegisteredOperators,
-  ),
-    upgradeability
-  : DaUpgradeabilityRisk.LowOrNoDelay(0),
+  usedIn: [],
+  risks: {
+    committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
+      'Permissioned',
+      undefined,
+      totalNumberOfRegisteredOperators,
+    ),
+    upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
-}
-,
+  },
 } satisfies DaBridge
