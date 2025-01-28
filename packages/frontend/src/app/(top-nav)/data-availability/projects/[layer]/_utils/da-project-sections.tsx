@@ -85,7 +85,8 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: layerGrissiniValues,
+      layerGrissiniValues,
+      hideTitle: true,
     },
   })
 
@@ -115,8 +116,9 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: bridgeGrissiniValues,
+      bridgeGrissiniValues,
       hideRisks: daBridge.type === 'NoBridge',
+      hideTitle: true,
     },
   })
 
@@ -235,14 +237,16 @@ type EthereumDetailsParams = {
   daLayer: EthereumDaLayer
   daBridge: EnshrinedBridge
   isVerified: boolean
-  evaluatedGrissiniValues: RosetteValue[]
+  layerGrissiniValues: RosetteValue[]
+  bridgeGrissiniValues: RosetteValue[]
 }
 
 export function getEthereumDaProjectSections({
   daLayer,
   daBridge,
   isVerified,
-  evaluatedGrissiniValues,
+  layerGrissiniValues,
+  bridgeGrissiniValues,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
@@ -273,8 +277,10 @@ export function getEthereumDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: evaluatedGrissiniValues,
+      layerGrissiniValues,
+      bridgeGrissiniValues,
       description: daLayer.display.description,
+      hideTitle: true,
     },
   })
 
