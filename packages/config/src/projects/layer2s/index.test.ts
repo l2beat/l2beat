@@ -1,10 +1,10 @@
 import {
   assert,
-  assertUnreachable,
   ChainId,
   EthereumAddress,
-  notUndefined,
   UnixTime,
+  assertUnreachable,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
