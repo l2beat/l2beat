@@ -149,18 +149,8 @@ export class RpcClient extends ClientCore implements BlockClient {
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
     const method = 'eth_call'
-    const encodedNumber =
-      blockNumber === 'latest' ? 'latest' : Quantity.encode(BigInt(blockNumber))
-
-    const callObject: Record<string, string> = {
-      to: callParams.to.toString(),
-    }
-    if (callParams.from) {
-      callObject.from = callParams.from.toString()
-    }
-    if (callParams.data) {
-      callObject.data = callParams.data.toString()
-    }
+    const encodedNumber = encodeBlockNumber(blockNumber)
+    const callObject = buildCallObject(callParams)
 
     const params = [callObject, encodedNumber]
     const callResponse = await this.query(method, params)
@@ -180,28 +170,12 @@ export class RpcClient extends ClientCore implements BlockClient {
       blockNumber: number | 'latest'
     }[],
   ): Promise<Bytes[]> {
-    const params: [Record<string, string>, string][] = []
-
-    for (const call of calls) {
-      const encodedNumber =
-        call.blockNumber === 'latest'
-          ? 'latest'
-          : Quantity.encode(BigInt(call.blockNumber))
-
-      const callObject: Record<string, string> = {
-        to: call.params.to.toString(),
-      }
-      if (call.params.from) {
-        callObject.from = call.params.from.toString()
-      }
-      if (call.params.data) {
-        callObject.data = call.params.data.toString()
-      }
-
-      params.push([callObject, encodedNumber])
-    }
-
     const method = 'eth_call'
+    const params = calls.map((call) => [
+      buildCallObject(call.params),
+      encodeBlockNumber(call.blockNumber),
+    ])
+
     const callResponse = await this.batchQuery(method, params)
     const callResult = z.array(EVMCallResponse).safeParse(callResponse)
 
@@ -210,7 +184,7 @@ export class RpcClient extends ClientCore implements BlockClient {
         'Error during batch call',
         JSON.stringify(callResponse),
       )
-      throw new Error('Call response: Error during parsing')
+      throw new Error('BatchCall response: Error during parsing')
     }
 
     return callResult.data.map((c) => Bytes.fromHex(c.result))
@@ -282,4 +256,25 @@ export class RpcClient extends ClientCore implements BlockClient {
   get chain() {
     return this.$.sourceName
   }
+}
+
+function encodeBlockNumber(blockNumber: number | 'latest'): string {
+  return blockNumber === 'latest'
+    ? 'latest'
+    : Quantity.encode(BigInt(blockNumber))
+}
+
+function buildCallObject(callParams: CallParameters): Record<string, string> {
+  const callObject: Record<string, string> = {
+    to: callParams.to.toString(),
+  }
+
+  if (callParams.from) {
+    callObject.from = callParams.from.toString()
+  }
+  if (callParams.data) {
+    callObject.data = callParams.data.toString()
+  }
+
+  return callObject
 }

@@ -282,6 +282,107 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.batchCall.name, () => {
+    it('batches multiple calls correctly and returns results in order', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => [
+          { id: '0x1', result: '0x123abc' },
+          { id: '0x3', result: '0x789abc' },
+          { id: '0x2', result: '0x456def' },
+        ],
+      })
+
+      const rpc = mockClient({
+        http,
+        generateId: mockFn()
+          .returnsOnce('0x1')
+          .returnsOnce('0x2')
+          .returnsOnce('0x3'),
+      })
+
+      const calls = [
+        {
+          params: {
+            to: EthereumAddress('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
+            data: Bytes.fromHex('0x70a08231'),
+          },
+          blockNumber: 'latest' as const,
+        },
+        {
+          params: {
+            to: EthereumAddress('0x1234567890123456789012345678901234567890'),
+            data: Bytes.fromHex('0x'),
+          },
+          blockNumber: 12345678,
+        },
+        {
+          params: {
+            from: EthereumAddress('0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa'),
+            to: EthereumAddress('0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'),
+            data: Bytes.fromHex('0x123456'),
+          },
+          blockNumber: 'latest' as const,
+        },
+      ]
+
+      const result = await rpc.batchCall(calls)
+
+      // Expected results in the order of the input calls
+      expect(result).toEqual([
+        Bytes.fromHex('0x123abc'),
+        Bytes.fromHex('0x456def'),
+        Bytes.fromHex('0x789abc'),
+      ])
+
+      // Verify that the HTTP fetch was called with the correct batch request
+      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
+        body: JSON.stringify([
+          {
+            method: 'eth_call',
+            params: [
+              {
+                to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+                data: '0x70a08231',
+              },
+              'latest',
+            ],
+            id: '0x1',
+            jsonrpc: '2.0',
+          },
+          {
+            method: 'eth_call',
+            params: [
+              {
+                to: '0x1234567890123456789012345678901234567890',
+                data: '0x',
+              },
+              '0xbc614e', // Encoded block number 12345678
+            ],
+            id: '0x2',
+            jsonrpc: '2.0',
+          },
+          {
+            method: 'eth_call',
+            params: [
+              {
+                to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+                from: '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
+                data: '0x123456',
+              },
+              'latest',
+            ],
+            id: '0x3',
+            jsonrpc: '2.0',
+          },
+        ]),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        timeout: 5000,
+      })
+    })
+  })
+
   describe(RpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
       const http = mockObject<HttpClient>({
