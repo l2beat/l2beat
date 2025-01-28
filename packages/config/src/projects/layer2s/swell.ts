@@ -51,4 +51,14 @@ export const swell = opStackL2({
     // coingeckoPlatform: '',
     minTimestampForTvl: new UnixTime(1732696703),
   },
+  milestones: [
+    {
+      name: 'Mainnet full launch',
+      link: 'https://www.swellnetwork.io/post/swellchain',
+      date: '2024-12-19T00:00:00Z',
+      description: 'Swellchain mainnet launches publicly.',
+      type: 'general',
+    },
+  ],
+  hasProperSecurityCouncil: true,
 })
