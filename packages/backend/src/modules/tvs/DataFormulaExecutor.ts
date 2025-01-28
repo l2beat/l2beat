@@ -70,7 +70,7 @@ export class DataFormulaExecutor {
       }
 
       for (const index in prices) {
-        this.logger.info(`Processing amount ${index} of ${prices.length}`)
+        this.logger.info(`Processing price ${index} of ${prices.length}`)
         const price = prices[index]
 
         const cachedValue = await this.storage.getPrice(price.id, timestamp)

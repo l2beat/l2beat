@@ -128,7 +128,7 @@ export interface TokenValue {
   valueForTotal: number
 }
 
-export interface TokenBreakdown {
+export interface TvsBreakdown {
   total: number
   source: {
     canonical: number
