@@ -23,7 +23,7 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
   return (
     <div className="flex max-w-[300px] flex-col py-1">
       <div
-        className={cn('flex gap-2', isAppchain ? 'flex-col' : 'items-center')}
+        className={cn('flex gap-2', isAppchain ? 'flex-col' : 'items-baseline')}
       >
         <StageBadge
           stage={stageConfig.stage}
