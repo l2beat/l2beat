@@ -45,6 +45,7 @@ import type {
   ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
+  ScalingProjectRisk,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
@@ -69,6 +70,7 @@ import type {
 } from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import { satisfies } from 'earl/dist/cjs/matchers/custom/satisfies'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -198,15 +200,6 @@ function opStackCommon(
     | 'warning'
   >
 } {
-  const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
-    ? generateDiscoveryDrivenSections(
-        templateVars.discovery,
-        nativeContractRisks,
-        templateVars.additionalDiscoveries,
-      )
-    : undefined
-
   const optimismPortalTokens = [
     'ETH',
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
@@ -255,12 +248,31 @@ function opStackCommon(
 
   // archi images defined locally in the project.ts take precedence over this one
   const architectureImage = ['opstack', postsToEthereum ? 'rollup' : 'optimium']
-  if (templateVars.discovery.hasContract('SuperchainConfig')) {
+  const partOfSuperchain = isPartOfSuperchain(templateVars)
+  if (partOfSuperchain) {
     architectureImage.push('superchain')
+    automaticBadges.push(Badge.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
     architectureImage.push('opfp')
   }
+
+  const nativeContractRisks: ScalingProjectRisk[] = [
+    partOfSuperchain
+      ? ({
+          category: 'Funds can be stolen if',
+          text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
+        } satisfies ScalingProjectRisk)
+      : CONTRACTS.UPGRADE_NO_DELAY_RISK,
+  ]
+
+  const discoveryDrivenSections = templateVars.discoveryDrivenData
+    ? generateDiscoveryDrivenSections(
+        templateVars.discovery,
+        nativeContractRisks,
+        templateVars.additionalDiscoveries,
+      )
+    : undefined
 
   return {
     isArchived: templateVars.isArchived,
@@ -269,7 +281,8 @@ function opStackCommon(
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage: templateVars.architectureImage ?? architectureImage.join('-'),
+      architectureImage:
+        templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
         (templateVars.stateValidationImage ??
         fraudProofType === 'Permissionless')
@@ -1321,4 +1334,8 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   } else {
     throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
   }
+}
+
+function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
+  return templateVars.discovery.hasContract('SuperchainConfig')
 }
