@@ -63,4 +63,22 @@ export const soneium = opStackL2({
       },
     ],
   },
+  milestones: [
+    {
+      name: 'Soneium RPC providers censor IP-infringing tokens',
+      link: 'https://x.com/donnoh_eth/status/1879210463952818472',
+      date: '2025-01-14T00:00:00Z',
+      description:
+        'RPC providers blacklist certain tokens - can still be used by self-hosting or forcing txs from L1.',
+      type: 'incident',
+    },
+    {
+      name: 'Soneium Launch',
+      link: 'https://x.com/soneium/status/1878988222866350348',
+      date: '2025-01-14T00:00:00Z',
+      description: 'Soneium is live on Ethereum mainnet.',
+      type: 'general',
+    },
+  ],
+  hasProperSecurityCouncil: true,
 })
