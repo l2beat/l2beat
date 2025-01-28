@@ -17,7 +17,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import type { Layer3 } from './types'
@@ -97,7 +97,8 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
 export const zklinknova: Layer3 = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
-  createdAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
+  capability: 'universal',
+  addedAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
   hostChain: ProjectId('linea'),
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],

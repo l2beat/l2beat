@@ -33,7 +33,7 @@ const pausable = {
 export const omni: Bridge = {
   type: 'bridge',
   id: ProjectId('omni'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Omnibridge',
     slug: 'omni',
@@ -118,8 +118,8 @@ export const omni: Bridge = {
       description: `Incoming messages to Ethereum are managed by the Arbitrary Message Bridge (AMB), a trusted message relaying mechanism currently validated by a ${validatorsString} Validator MultiSig. The GovernanceMultisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts. For Omnibridge, messages are passed between "Mediator" contracts deployed on both chains. When user deposits a token to Mediator escrow on Ethereum, an AMB message is passed to Mediator on Gnosis chain, which mints a "representation token", optionally deploying a necessary token contract on Gnosis chain if this is the first time this token is transferred. Transfers from Gnosis chain to Ethereum use the same mechanism in the opposite direction but tokens on Gnosis are burned and tokens on Ethereum are released from escrow. Outgoing messages are verified on the Gnosis chain using a ZK Ethereum light client.`,
       references: [
         {
-          text: 'Omnibridge documentation',
-          href: 'https://docs.gnosischain.com/bridges/tokenbridge/omnibridge',
+          title: 'Omnibridge documentation',
+          url: 'https://docs.gnosischain.com/bridges/tokenbridge/omnibridge',
         },
       ],
       risks: [

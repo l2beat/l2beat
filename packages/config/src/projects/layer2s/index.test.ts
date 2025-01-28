@@ -12,16 +12,16 @@ import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
 import { describe } from 'mocha'
 import { chains } from '../../chains'
-import {
-  NUGGETS,
-  type ScalingProjectReference,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectTechnologyChoice,
-} from '../../common'
-import type { ScalingProjectTechnology } from '../../common/ScalingProject'
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
+import type {
+  ProjectTechnologyChoice,
+  ReferenceLink,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnology,
+} from '../../types'
 import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {
@@ -52,13 +52,13 @@ describe('layer2s', () => {
     describe('every escrow in new format resolves to discovery entry', () => {
       for (const layer2 of layer2s) {
         // NOTE(radomski): PolygonCDK projects have a shared escrow
-        if (layer2.display.provider === 'Polygon') continue
+        if (layer2.display.stack === 'Polygon') continue
 
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
           for (const escrow of layer2.config.escrows.filter(
-            (e) => e.newVersion && !e.isHistorical,
+            (e) => e.contract && !e.isHistorical,
           )) {
             it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
               // try to resolve escrow by address
@@ -264,8 +264,8 @@ describe('layer2s', () => {
     describe('all arbitrum and op stack chains have the assessCount defined', () => {
       const opAndArbL2sWithActivity = layer2s
         .filter((layer2) => {
-          const { provider } = layer2.display
-          return provider === 'Arbitrum' || provider === 'OP Stack'
+          const { stack } = layer2.display
+          return stack === 'Arbitrum' || stack === 'OP Stack'
         })
         .flatMap((layer2) => {
           const { transactionApi } = layer2.config
@@ -367,14 +367,14 @@ describe('layer2s', () => {
             }
             it(`${layer2.id.toString()} : ${key}`, () => {
               const choicesTyped = choicesAny as
-                | ScalingProjectTechnologyChoice
-                | ScalingProjectTechnologyChoice[]
+                | ProjectTechnologyChoice
+                | ProjectTechnologyChoice[]
 
               const choices = Array.isArray(choicesTyped)
                 ? choicesTyped
                 : [choicesTyped]
               const referencedAddresses = getReferencedAddresses(
-                choices.flatMap((c) => c.references).map((ref) => ref.href),
+                choices.flatMap((c) => c.references).map((ref) => ref.url),
               )
 
               const allAddresses = discovery
@@ -420,10 +420,7 @@ describe('layer2s', () => {
             }
           }
 
-          function checkChoice(
-            choice: ScalingProjectTechnologyChoice,
-            name: string,
-          ) {
+          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
             it(`${name}.name doesn't end with a dot`, () => {
               expect(choice.name.endsWith('.')).toEqual(false)
             })
@@ -460,14 +457,14 @@ describe('layer2s', () => {
             continue
           }
           for (const milestone of project.milestones) {
-            it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 50 characters`, () => {
-              expect(milestone.name.length).toBeLessThanOrEqual(50)
+            it(`Milestone: ${milestone.title} (${project.display.name}) name is no longer than 50 characters`, () => {
+              expect(milestone.title.length).toBeLessThanOrEqual(50)
             })
           }
         }
         for (const milestone of milestonesLayer2s) {
-          it(`Milestone: ${milestone.name} (main page) name is no longer than 50 characters`, () => {
-            expect(milestone.name.length).toBeLessThanOrEqual(50)
+          it(`Milestone: ${milestone.title} (main page) name is no longer than 50 characters`, () => {
+            expect(milestone.title.length).toBeLessThanOrEqual(50)
           })
         }
       })
@@ -483,7 +480,7 @@ describe('layer2s', () => {
             if (milestone.description === undefined) {
               continue
             }
-            it(`Milestone: ${milestone.name} (${project.display.name}) description ends with a dot`, () => {
+            it(`Milestone: ${milestone.title} (${project.display.name}) description ends with a dot`, () => {
               expect(milestone.description?.endsWith('.')).toEqual(true)
             })
           }
@@ -492,7 +489,7 @@ describe('layer2s', () => {
           if (milestone.description === undefined) {
             continue
           }
-          it(`Milestone: ${milestone.name} (main page) description ends with a dot`, () => {
+          it(`Milestone: ${milestone.title} (main page) description ends with a dot`, () => {
             expect(milestone.description?.endsWith('.')).toEqual(true)
           })
         }
@@ -506,7 +503,7 @@ describe('layer2s', () => {
             if (milestone.description === undefined) {
               continue
             }
-            it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 100 characters`, () => {
+            it(`Milestone: ${milestone.title} (${project.display.name}) description is no longer than 100 characters`, () => {
               expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(
                 100,
               )
@@ -517,7 +514,7 @@ describe('layer2s', () => {
           if (milestone.description === undefined) {
             continue
           }
-          it(`Milestone: ${milestone.name} (main page) description is no longer than 100 characters`, () => {
+          it(`Milestone: ${milestone.title} (main page) description is no longer than 100 characters`, () => {
             expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(100)
           })
         }
@@ -530,7 +527,7 @@ describe('layer2s', () => {
           continue
         }
         for (const milestone of project.milestones) {
-          it(`Milestone: ${milestone.name} (${project.display.name}) date is full day`, () => {
+          it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
               UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
             ).toEqual(true)
@@ -538,7 +535,7 @@ describe('layer2s', () => {
         }
       }
       for (const milestone of milestonesLayer2s) {
-        it(`Milestone: ${milestone.name} (main page) date is full day`, () => {
+        it(`Milestone: ${milestone.title} (main page) date is full day`, () => {
           expect(
             UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
           ).toEqual(true)
@@ -620,8 +617,8 @@ describe('layer2s', () => {
   })
 })
 
-function getAddressFromReferences(references: ScalingProjectReference[] = []) {
-  const addresses = references.map((r) => r.href)
+function getAddressFromReferences(references: ReferenceLink[] = []) {
+  const addresses = references.map((r) => r.url)
   return getReferencedAddresses(addresses)
 }
 

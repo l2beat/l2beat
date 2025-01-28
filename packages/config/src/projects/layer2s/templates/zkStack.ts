@@ -7,37 +7,41 @@ import {
   type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  type DataAvailabilityBridge,
-  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
-  type KnowledgeNugget,
-  type Milestone,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  type ReasonForBeingInOther,
-  type ScalingProjectContract,
-  type ScalingProjectEscrow,
-  type ScalingProjectPermission,
-  type ScalingProjectPurpose,
-  type ScalingProjectRiskView,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectTechnology,
-  type ScalingProjectTechnologyChoice,
-  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
-import type { ChainConfig } from '../../../common/ChainConfig'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type {
+  DataAvailabilityBridge,
+  DataAvailabilityLayer,
+  Milestone,
+  ProjectEscrow,
+  ProjectTechnologyChoice,
+  ScalingProjectCapability,
+  ScalingProjectContract,
+  ScalingProjectPermission,
+  ScalingProjectPurpose,
+  ScalingProjectRiskView,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnology,
+  TransactionApiConfig,
+} from '../../../types'
+import type {
+  ChainConfig,
+  KnowledgeNugget,
+  ReasonForBeingInOther,
+} from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
@@ -54,12 +58,13 @@ export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
 
 export interface ZkStackConfigCommon {
-  createdAt: UnixTime
+  addedAt: UnixTime
+  capability?: ScalingProjectCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
@@ -73,7 +78,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgePremintedTokens?: string[]
   diamondContract: ContractParameters
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -83,7 +88,7 @@ export interface ZkStackConfigCommon {
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
-  nonTemplateEscrows?: (upgrades: Upgradeability) => ScalingProjectEscrow[]
+  nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -226,7 +231,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
-    createdAt: templateVars.createdAt,
+    addedAt: templateVars.addedAt,
+    capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
         Badge.Stack.ZKStack,
@@ -240,7 +246,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
-      provider: 'ZK Stack',
+      stack: 'ZK Stack',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
@@ -506,8 +512,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         ],
         references: [
           {
-            text: "L1 - L2 interoperability - Developer's documentation",
-            href: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
+            title: "L1 - L2 interoperability - Developer's documentation",
+            url: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
           },
         ],
       },
@@ -516,8 +522,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           ...EXITS.REGULAR('zk', 'merkle proof'),
           references: [
             {
-              text: 'Withdrawing funds - ZKsync documentation',
-              href: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
+              title: 'Withdrawing funds - ZKsync documentation',
+              url: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
             },
           ],
         },
@@ -707,9 +713,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   }
 }
 
-function technologyDA(
-  DA: DAProvider | undefined,
-): ScalingProjectTechnologyChoice {
+function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

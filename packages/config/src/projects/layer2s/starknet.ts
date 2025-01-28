@@ -23,7 +23,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -243,11 +243,12 @@ const finalizationPeriod = 0
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
-  createdAt: new UnixTime(1642687633), // 2022-01-20T14:07:13Z
+  capability: 'universal',
+  addedAt: new UnixTime(1642687633), // 2022-01-20T14:07:13Z
   display: {
     name: 'Starknet',
     slug: 'starknet',
-    provider: 'SN Stack',
+    stack: 'SN Stack',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
@@ -964,8 +965,8 @@ export const starknet: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'What is Starknet',
-          href: 'https://starkware.co/starknet/',
+          title: 'What is Starknet',
+          url: 'https://starkware.co/starknet/',
         },
       ],
     },
@@ -981,8 +982,8 @@ export const starknet: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'Censorship resistance of Starknet - Forum Discussion',
-          href: 'https://community.starknet.io/t/censorship-resistance/196',
+          title: 'Censorship resistance of Starknet - Forum Discussion',
+          url: 'https://community.starknet.io/t/censorship-resistance/196',
         },
       ],
     },
@@ -1004,12 +1005,7 @@ export const starknet: Layer2 = {
         title: 'Proven Program',
         description:
           'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the proof system is implemented incorrectly.',
-          },
-        ],
+        risks: [],
       },
     ],
     proofVerification: {
@@ -1261,31 +1257,31 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
   ],
   milestones: [
     {
-      name: 'Starknet starts using blobs',
-      link: 'https://twitter.com/Starknet/status/1767915153700290839',
+      title: 'Starknet starts using blobs',
+      url: 'https://twitter.com/Starknet/status/1767915153700290839',
       date: '2024-03-13T00:00:00Z',
       description: 'Starknet starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Starknet Provisions',
-      link: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      title: 'Starknet Provisions',
+      url: 'https://www.starknet.io/en/content/starknet-provisions-program',
       date: '2024-02-14T00:00:00Z',
       description:
         'Starknet begins allocating $STRK to early contributors and users.',
       type: 'general',
     },
     {
-      name: 'Starknet Alpha',
-      link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
+      title: 'Starknet Alpha',
+      url: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: '2021-11-29T00:00:00Z',
       description:
         'Rollup is live on mainnet, enabling general computation using ZK Rollup technology.',
       type: 'general',
     },
     {
-      name: 'StarkGate Alpha',
-      link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
+      title: 'StarkGate Alpha',
+      url: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
       date: '2022-05-09T00:00:00Z',
       description:
         'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',

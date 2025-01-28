@@ -4,13 +4,14 @@ import type { Layer3 } from './types'
 
 export const mxc: Layer3 = upcomingL3({
   id: ProjectId('mxc'),
-  createdAt: new UnixTime(1710847645), // 2024-03-19T11:27:25Z
+  capability: 'universal',
+  addedAt: new UnixTime(1710847645), // 2024-03-19T11:27:25Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'MXC Moonchain zkEVM',
     shortName: 'MXC',
     slug: 'mxc',
-    provider: 'Taiko',
+    stack: 'Taiko',
     description:
       'The MXC Moonchain zkEVM is an IoT-centric L3 on Arbitrum forked from the Taiko codebase. The review of this chain is delayed, see https://github.com/l2beat/l2beat/issues/4560 for more information.',
     purposes: ['Universal', 'IoT'],

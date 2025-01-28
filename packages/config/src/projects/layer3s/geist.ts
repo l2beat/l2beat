@@ -10,7 +10,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('geist', 'base')
 
 export const geist: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: ProjectId('base'),
   additionalPurposes: ['Gaming', 'NFT'],
   additionalBadges: [
@@ -62,7 +62,7 @@ export const geist: Layer3 = orbitStackL3({
   discoveryDrivenData: true,
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1737711018), // 2025-01-24T09:30:18+00:00
+      addedAt: new UnixTime(1737711018), // 2025-01-24T09:30:18+00:00
     },
     discovery,
   }),

@@ -11,30 +11,13 @@ import { unionBy } from 'lodash'
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  type KnowledgeNugget,
-  type Milestone,
   OPERATOR,
   RISK_VIEW,
-  type ReasonForBeingInOther,
-  type ScalingProjectContract,
-  type ScalingProjectDisplay,
-  type ScalingProjectEscrow,
-  type ScalingProjectPermission,
-  type ScalingProjectPurpose,
-  type ScalingProjectRisk,
-  type ScalingProjectRiskView,
-  type ScalingProjectStateDerivation,
-  type ScalingProjectStateValidation,
-  type ScalingProjectStateValidationCategory,
-  type ScalingProjectTechnology,
-  type ScalingProjectTechnologyChoice,
-  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   pickWorseRisk,
@@ -45,6 +28,28 @@ import {
   formatDelay,
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type {
+  Milestone,
+  ProjectEscrow,
+  ProjectTechnologyChoice,
+  ScalingProjectCapability,
+  ScalingProjectContract,
+  ScalingProjectDisplay,
+  ScalingProjectPermission,
+  ScalingProjectPurpose,
+  ScalingProjectRisk,
+  ScalingProjectRiskView,
+  ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
+  ScalingProjectStateValidationCategory,
+  ScalingProjectTechnology,
+  TransactionApiConfig,
+} from '../../../types'
+import type {
+  ChainConfig,
+  KnowledgeNugget,
+  ReasonForBeingInOther,
+} from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
 import type { Layer3 } from '../../layer3s/types'
@@ -60,7 +65,7 @@ import type {
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
-const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
     description:
@@ -73,14 +78,14 @@ const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
     ],
     references: [
       {
-        text: 'Inside Arbitrum Nitro',
-        href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+        title: 'Inside Arbitrum Nitro',
+        url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
       },
     ],
   },
 ]
 
-export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible and Stylus smart contracts are supported',
     description:
@@ -93,27 +98,28 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
     ],
     references: [
       {
-        text: 'Inside Arbitrum Nitro',
-        href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+        title: 'Inside Arbitrum Nitro',
+        url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
       },
       {
-        text: 'A gentle introduction: Stylus',
-        href: 'https://docs.arbitrum.io/stylus/stylus-gentle-introduction',
+        title: 'A gentle introduction: Stylus',
+        url: 'https://docs.arbitrum.io/stylus/stylus-gentle-introduction',
       },
     ],
   },
 ]
 
 interface OrbitStackConfigCommon {
-  createdAt: UnixTime
+  addedAt: UnixTime
+  capability?: ScalingProjectCapability
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
-  nonTemplateEscrows?: ScalingProjectEscrow[]
-  overrideEscrows?: ScalingProjectEscrow[]
+  nonTemplateEscrows?: ProjectEscrow[]
+  overrideEscrows?: ProjectEscrow[]
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -125,11 +131,11 @@ interface OrbitStackConfigCommon {
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
-  additiveConsiderations?: ScalingProjectTechnologyChoice[]
+  additiveConsiderations?: ProjectTechnologyChoice[]
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
@@ -259,8 +265,8 @@ function defaultStateValidation(
       ],
       references: [
         {
-          text: 'How is fraud proven - Arbitrum documentation FAQ',
-          href: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+          title: 'How is fraud proven - Arbitrum documentation FAQ',
+          url: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
       ],
     },
@@ -271,8 +277,8 @@ function defaultStateValidation(
       )}, this implies that the protocol can be subject to [delay attacks](https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a), where a malicious actor can delay withdrawals as long as they are willing to pay the cost of losing their stakes. If the protocol is delayed attacked, the new stake requirement increases exponentially for each challenge period of delay. Challenges are played via a bisection game, where asserter and challenger play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determine the winner, who then gets half of the stake of the loser. As said before, a state root is rejected only when no one left is staked on it. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claim and then provide incorrect midpoints.`,
       references: [
         {
-          text: 'Fraud Proof Wars: Arbitrum Classic',
-          href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+          title: 'Fraud Proof Wars: Arbitrum Classic',
+          url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
         },
       ],
     },
@@ -295,8 +301,9 @@ function defaultStateValidation(
       ],
       references: [
         {
-          text: 'Fast withdrawals for AnyTrust chains - Arbitrum documentation',
-          href: 'https://docs.arbitrum.io/launch-orbit-chain/how-tos/fast-withdrawals#fast-withdrawals-for-anytrust-chains',
+          title:
+            'Fast withdrawals for AnyTrust chains - Arbitrum documentation',
+          url: 'https://docs.arbitrum.io/launch-orbit-chain/how-tos/fast-withdrawals#fast-withdrawals-for-anytrust-chains',
         },
       ],
     })
@@ -414,7 +421,8 @@ function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
-    createdAt: templateVars.createdAt,
+    addedAt: templateVars.addedAt,
+    capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
     contracts: discoveryDrivenSections
       ? discoveryDrivenSections.contracts
@@ -458,12 +466,14 @@ function orbitStackCommon(
                 : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
               references: [
                 {
-                  text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
-                  href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+                  title:
+                    'Sequencing followed by deterministic execution - Arbitrum documentation',
+                  url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
                 },
                 ...explorerReferences(explorerUrl, [
                   {
-                    text: 'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                    title:
+                      'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
                     address: safeGetImplementation(templateVars.sequencerInbox),
                   },
                 ]),
@@ -473,8 +483,8 @@ function orbitStackCommon(
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
-            text: 'Sequencer - Arbitrum documentation',
-            href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro#the-sequencer',
+            title: 'Sequencer - Arbitrum documentation',
+            url: 'https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro#the-sequencer',
           },
         ],
       },
@@ -489,13 +499,14 @@ function orbitStackCommon(
         references: [
           ...explorerReferences(explorerUrl, [
             {
-              text: 'SequencerInbox.sol - source code, forceInclusion function',
+              title:
+                'SequencerInbox.sol - source code, forceInclusion function',
               address: safeGetImplementation(templateVars.sequencerInbox),
             },
           ]),
           {
-            text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
-            href: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
+            title: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
+            url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
           },
         ],
       },
@@ -504,16 +515,16 @@ function orbitStackCommon(
           ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
             {
-              text: 'Transaction lifecycle - Arbitrum documentation',
-              href: 'https://developer.offchainlabs.com/tx-lifecycle',
+              title: 'Transaction lifecycle - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/tx-lifecycle',
             },
             {
-              text: 'L2 to L1 Messages - Arbitrum documentation',
-              href: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
+              title: 'L2 to L1 Messages - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
             },
             {
-              text: 'Mainnet for everyone - Arbitrum Blog',
-              href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
+              title: 'Mainnet for everyone - Arbitrum Blog',
+              url: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
             },
           ],
           risks: [],
@@ -525,8 +536,8 @@ function orbitStackCommon(
           risks: [],
           references: [
             {
-              text: 'Tradeable Bridge Exits - Arbitrum documentation',
-              href: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
+              title: 'Tradeable Bridge Exits - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
             },
           ],
         },
@@ -730,7 +741,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      provider: 'Arbitrum',
+      stack: 'Arbitrum',
       category:
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
@@ -826,8 +837,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             }
           : undefined),
     },
-    milestones: [],
-    knowledgeNuggets: [],
   }
 }
 
@@ -913,7 +922,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
-      provider: 'Arbitrum',
+      stack: 'Arbitrum',
       category,
       finality: {
         finalizationPeriod: challengePeriodSeconds,

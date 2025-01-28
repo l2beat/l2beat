@@ -16,7 +16,7 @@ const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 export const beamerbridgev2: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
-  createdAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
+  addedAt: new UnixTime(1688643599), // 2023-07-06T11:39:59Z
   display: {
     name: 'Beamer Bridge V2',
     slug: 'beamerbridgev2',
@@ -64,8 +64,8 @@ export const beamerbridgev2: Bridge = {
         'The user initiates transaction to contract on Rollup 1, locking fees and assets. An Agent sends assets to user on Rollup 2. At this stage, the user is done and receives their assets on target rollup. The agent initiates the claim on the rollup, and if no one challenges the claim, the agent can withdraw the assets after 24h.',
       references: [
         {
-          text: 'Beamer Bridge V2 Architecture',
-          href: 'https://docs.beamerbridge.com/',
+          title: 'Beamer Bridge V2 Architecture',
+          url: 'https://docs.beamerbridge.com/',
         },
       ],
       risks: [],
@@ -84,8 +84,8 @@ export const beamerbridgev2: Bridge = {
       ],
       references: [
         {
-          text: 'Beamer Bridge V2 Architecture',
-          href: 'https://docs.beamerbridge.com/',
+          title: 'Beamer Bridge V2 Architecture',
+          url: 'https://docs.beamerbridge.com/',
         },
       ],
     },

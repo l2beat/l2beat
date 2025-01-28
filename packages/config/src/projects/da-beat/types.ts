@@ -1,13 +1,15 @@
-import type { ProjectId, Sentiment, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
+  Milestone,
+  ProjectTechnologyChoice,
+  ReferenceLink,
   DataAvailabilityLayer as ScalingDaLayerOption,
   ScalingProjectContract,
   ScalingProjectLinks,
   ScalingProjectPermission,
-  ScalingProjectReference,
   ScalingProjectRisk,
-  ScalingProjectTechnologyChoice,
-} from '../../common'
+  Sentiment,
+} from '../../types'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 
@@ -26,6 +28,8 @@ export type BlockchainDaLayer = CommonDaLayer & {
   dataAvailabilitySampling?: DataAvailabilitySampling
   /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
+  /** Data availability tracking config */
+  daTracking?: DaLayerTrackingConfig
 }
 
 export type EthereumDaLayer = CommonDaLayer & {
@@ -85,7 +89,9 @@ export type CommonDaLayer = {
   /** The technology used by the data availability layer. */
   technology: DaTechnology
   /** Other considerations */
-  otherConsiderations?: ScalingProjectTechnologyChoice[]
+  otherConsiderations?: ProjectTechnologyChoice[]
+  /** Links to recent developments, milestones achieved by the project */
+  milestones?: Milestone[]
 }
 
 export interface DaLayerRisks {
@@ -143,7 +149,7 @@ export interface DaTechnology {
   /** List of risks associated with the technology */
   risks?: ScalingProjectRisk[] // scaling risks on purpose
   /** List of references put underneath the technology section */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
 }
 
 export type DaBridge =
@@ -241,7 +247,7 @@ type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */
   id: string
   /** Date of creation of the file (not the project) */
-  createdAt: UnixTime
+  addedAt: UnixTime
   display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean
@@ -250,7 +256,7 @@ type CommonDaBridge = {
   /** List of projects given bridge is being used in. */
   usedIn: UsedInProject[]
   /** Other considerations */
-  otherConsiderations?: ScalingProjectTechnologyChoice[]
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 
 interface DaBridgeDisplay {
@@ -280,7 +286,7 @@ export interface DaBridgeContracts {
   /** List of the contracts on each chain */
   addresses: Record<string, ScalingProjectContract[]>
   /** List of references backing up the claim */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
   /** The description and research is under review */
@@ -309,3 +315,29 @@ export interface DaEconomicSecurity {
     coingeckoId: string
   }
 }
+
+// General da-layer tracking
+export type DaLayerTrackingConfig = 'ethereum' | 'celestia' | 'avail'
+
+// Per-project da-layer tracking
+export interface EthereumDaTrackingConfig {
+  type: 'ethereum'
+  inbox: string
+  sequencers?: string[]
+}
+
+export interface CelestiaDaTrackingConfig {
+  type: 'celestia'
+  namespace: string
+  signers?: string[]
+}
+
+export interface AvailDaTrackingConfig {
+  type: 'avail'
+  appId: string
+}
+
+export type ProjectDaTrackingConfig =
+  | EthereumDaTrackingConfig
+  | CelestiaDaTrackingConfig
+  | AvailDaTrackingConfig

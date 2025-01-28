@@ -10,7 +10,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
@@ -22,7 +22,8 @@ const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 export const bugbuster: Layer3 = {
   type: 'layer3',
   id: ProjectId('bugbuster'),
-  createdAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  capability: 'appchain',
+  addedAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
   hostChain: ProjectId('optimism'),
   badges: [
     Badge.Stack.Cartesi,
@@ -39,7 +40,7 @@ export const bugbuster: Layer3 = {
       'Bug Buster is an open source bug bounty platform for web3, powered by Cartesi.',
     purposes: ['Bug bounty'],
     category: 'Optimistic Rollup',
-    provider: 'Cartesi Rollups',
+    stack: 'Cartesi Rollups',
     redWarning:
       'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     links: {
@@ -111,12 +112,14 @@ export const bugbuster: Layer3 = {
       ],
       references: [
         {
-          text: 'Authority.sol#L48 - Optimism Etherscan source code, submitClaim function',
-          href: 'https://optimistic.etherscan.io/address/0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35#code#F1#L48',
+          title:
+            'Authority.sol#L48 - Optimism Etherscan source code, submitClaim function',
+          url: 'https://optimistic.etherscan.io/address/0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35#code#F1#L48',
         },
         {
-          text: 'CartesiDApp.sol#L201 - Optimism Etherscan source code, migrateToConsensus function',
-          href: 'https://optimistic.etherscan.io/address/0x3ff5c7383f614256053c3f6b86a47ba974937299#code#F1#L201',
+          title:
+            'CartesiDApp.sol#L201 - Optimism Etherscan source code, migrateToConsensus function',
+          url: 'https://optimistic.etherscan.io/address/0x3ff5c7383f614256053c3f6b86a47ba974937299#code#F1#L201',
         },
       ],
     },
@@ -124,8 +127,9 @@ export const bugbuster: Layer3 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'InputBox.sol#30 - Optimism Etherscan source code, addInput function',
-          href: 'https://optimistic.etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
+          title:
+            'InputBox.sol#30 - Optimism Etherscan source code, addInput function',
+          url: 'https://optimistic.etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
         },
       ],
     },

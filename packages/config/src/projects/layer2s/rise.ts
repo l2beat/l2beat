@@ -4,7 +4,8 @@ import type { Layer2 } from './types'
 
 export const rise: Layer2 = upcomingL2({
   id: 'rise',
-  createdAt: new UnixTime(1713776957), // 2024-04-22T09:09:17Z
+  capability: 'universal',
+  addedAt: new UnixTime(1713776957), // 2024-04-22T09:09:17Z
   display: {
     name: 'RISE',
     slug: 'rise',
@@ -12,7 +13,7 @@ export const rise: Layer2 = upcomingL2({
       'RISE is a Parallel EVM Rollup that intends to unlock a new era of performance for Ethereum.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://riselabs.xyz/'],
       apps: [],

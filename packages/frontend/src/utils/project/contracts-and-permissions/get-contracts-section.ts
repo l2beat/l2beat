@@ -4,9 +4,10 @@ import {
   type DaLayer,
   type Layer2,
   type Layer3,
+  type ProjectEscrow,
+  type ReferenceLink,
   type ScalingProjectContract,
   type ScalingProjectContracts,
-  type ScalingProjectEscrow,
   layer2s,
 } from '@l2beat/config'
 import {
@@ -26,7 +27,6 @@ import type {
   TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
-import type { Reference } from '../../../components/projects/sections/reference-list'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
@@ -40,7 +40,7 @@ type ProjectParams = {
   architectureImage?: string
   contracts: ScalingProjectContracts
   daSolution?: DaSolution
-  escrows: ScalingProjectEscrow[] | undefined
+  escrows: ProjectEscrow[] | undefined
 } & (
   | {
       type: (Layer2 | Bridge | DaLayer)['type']
@@ -134,7 +134,7 @@ export function getContractsSection(
 
   const escrows =
     projectParams.escrows
-      ?.filter((escrow) => escrow.newVersion && !escrow.isHistorical)
+      ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
         const isUnverified = isEscrowUnverified(
@@ -285,7 +285,7 @@ function makeTechnologyContract(
       addresses.map((a) => a.address).includes(changedAddress),
   )
 
-  const additionalReferences: Reference[] = []
+  const additionalReferences: ReferenceLink[] = []
   const mainAddresses = [getAddress({ address: item.address })]
   const implementationAddresses =
     item.upgradeability?.implementations.map((implementation) =>
@@ -364,21 +364,19 @@ function isContractUnverified(
 }
 
 function isEscrowUnverified(
-  escrow: ScalingProjectEscrow,
+  escrow: ProjectEscrow,
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
-  const chain = escrow.newVersion
-    ? (escrow.contract.chain ?? 'ethereum')
-    : 'ethereum'
+  const chain = escrow.contract?.chain ?? 'ethereum'
   return (
     contractsVerificationStatuses[chain]?.[escrow.address.toString()] === false
   )
 }
 
 function escrowToProjectContract(
-  escrow: ScalingProjectEscrow,
+  escrow: ProjectEscrow,
 ): ScalingProjectContract {
-  assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
+  assert(escrow.contract, 'Old escrow format used') // old format misses upgradeability info
 
   const genericName =
     escrow.tokens === '*'
@@ -393,7 +391,7 @@ function escrowToProjectContract(
   }
 }
 
-function moreTokensFirst(a: ScalingProjectEscrow, b: ScalingProjectEscrow) {
+function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
   const aTokens = a.tokens === '*' ? Number.POSITIVE_INFINITY : a.tokens.length
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 

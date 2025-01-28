@@ -33,7 +33,7 @@ const pausable = {
 export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Ronin V3',
     slug: 'ronin',
@@ -105,8 +105,8 @@ export const ronin: Bridge = {
         'A Ronin Bridge service watches for events on Ethereum and transmits those events to a contract on Ronin chain (Axie Infinity chain). Designated group of weighted validators vote on the validity of those events, and when acknowledged, a "representation token" is minted on the Ronin chain. To withdraw tokens, user needs to deposit them to a contract on the Ronin chain, which will generate an event to be picked by the validators. When validators acknowledge the event, they generate signature, which can be submitted to the Ethereum bridge contract to finalize the withdrawal. Ronin V2 introduced multi-tier withdrawal limits dependent on the overall value of the transaction and the token used. The higher value of transaction, the more validators need to vote to approve withdrawal request. There is a separate group of actors called "governors" who are able to change thresholds, add/remove validators and update contracts. Each validator has a corresponding weighted governor account. There is also a daily withdrawal limit. If it\'s crossed, an address from a list of "Withdrawal unlockers" needs to participate in the transaction.',
       references: [
         {
-          text: 'Token withdrawals',
-          href: 'https://docs.roninchain.com/apps/ronin-bridge/withdraw-token',
+          title: 'Token withdrawals',
+          url: 'https://docs.roninchain.com/apps/ronin-bridge/withdraw-token',
         },
       ],
       risks: [
@@ -240,15 +240,15 @@ export const ronin: Bridge = {
   ],
   milestones: [
     {
-      name: 'Whitehat hack for $12M',
+      title: 'Whitehat hack for $12M',
       date: '2024-08-06T00:00:00Z',
-      link: 'https://x.com/Ronin_Network/status/1820804772917588339',
+      url: 'https://x.com/Ronin_Network/status/1820804772917588339',
       type: 'incident',
     },
     {
-      name: 'Ronin bridge hacked for ~$625M',
+      title: 'Ronin bridge hacked for ~$625M',
       date: '2022-03-23T00:00:00Z',
-      link: 'https://web.archive.org/web/20230518085104/https://blog.roninchain.com/p/back-to-building-ronin-security-breach',
+      url: 'https://web.archive.org/web/20230518085104/https://blog.roninchain.com/p/back-to-building-ronin-security-breach',
       type: 'incident',
     },
   ],

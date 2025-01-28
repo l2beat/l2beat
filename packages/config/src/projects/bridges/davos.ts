@@ -5,7 +5,7 @@ import type { Bridge } from './types'
 export const davos: Bridge = {
   type: 'bridge',
   id: ProjectId('davos'),
-  createdAt: new UnixTime(1710858245), // 2024-03-19T14:24:05Z
+  addedAt: new UnixTime(1710858245), // 2024-03-19T14:24:05Z
   isUnderReview: true,
   display: {
     name: 'Davos',

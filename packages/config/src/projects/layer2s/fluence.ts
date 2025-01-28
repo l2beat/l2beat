@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('fluence')
 
 export const fluence: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
+  addedAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   reasonsForBeingOther: [
@@ -51,8 +51,8 @@ export const fluence: Layer2 = orbitStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://blog.fluence.network/welcome-to-fluence-staking-stake-shape-the-cloudless-future/',
+      title: 'Mainnet launch',
+      url: 'https://blog.fluence.network/welcome-to-fluence-staking-stake-shape-the-cloudless-future/',
       date: '2024-09-20T00:00:00Z',
       description: 'Fluence launches FLT staking on Layer 2.',
       type: 'general',
@@ -60,7 +60,7 @@ export const fluence: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

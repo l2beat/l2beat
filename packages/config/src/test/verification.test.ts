@@ -5,19 +5,16 @@ import type {
 } from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
-import type { ScalingProjectContract } from '../common'
+import { type Bridge, bridges } from '../projects/bridges'
 import {
-  type Bridge,
   type DaBridge,
-  type Layer2,
-  type Layer3,
   type OnChainDaBridge,
   type StandaloneDacBridge,
-  bridges,
   daLayers,
-  layer2s,
-  layer3s,
-} from '../projects'
+} from '../projects/da-beat'
+import { type Layer2, layer2s } from '../projects/layer2s'
+import { type Layer3, layer3s } from '../projects/layer3s'
+import type { ScalingProjectContract } from '../types'
 import { getChainNames, getChainNamesForDA } from '../utils/chains'
 
 describe('verification status', () => {
@@ -201,13 +198,16 @@ function getUniqueContractsFromList(
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
-function getProjectContractsForChain(project: Project, chain: string) {
+function getProjectContractsForChain(
+  project: Project,
+  chain: string,
+): ScalingProjectContract[] {
   const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
     isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
-      if (!escrow.newVersion) {
+      if (!escrow.contract) {
         return []
       }
       return { address: escrow.address, ...escrow.contract }
@@ -225,8 +225,7 @@ function getDaBridgeContractsForChain(
 ): AddressOnChain[] {
   const contracts = [bridge]
     .filter(
-      (b): b is OnChainDaBridge | StandaloneDacBridge =>
-        b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
+      (b) => b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
     )
     .flatMap((b) => Object.values(b.contracts.addresses))
   const addresses = getUniqueContractsFromList(contracts.flat())

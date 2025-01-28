@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('corn')
 
 export const corn: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1733880840),
+  addedAt: new UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   reasonsForBeingOther: [
@@ -100,8 +100,8 @@ export const corn: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://blog.usecorn.com/corn-the-genesis-of-the-super-yield-network-f52170ffbe84',
+      title: 'Mainnet launch',
+      url: 'https://blog.usecorn.com/corn-the-genesis-of-the-super-yield-network-f52170ffbe84',
       date: '2024-08-22T00:00:00Z',
       description: 'Corn launches its super yield network.',
       type: 'general',
@@ -109,7 +109,7 @@ export const corn: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1737096804),
+      addedAt: new UnixTime(1737096804),
     },
     discovery,
   }),

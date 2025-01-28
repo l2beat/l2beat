@@ -52,7 +52,8 @@ export const degate2: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate2'),
-  createdAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  capability: 'universal',
+  addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
@@ -65,7 +66,7 @@ export const degate2: Layer2 = {
     description:
       'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purposes: ['Exchange'],
-    provider: 'Loopring',
+    stack: 'Loopring',
     category: 'ZK Rollup',
 
     links: {
@@ -177,8 +178,8 @@ export const degate2: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'Operator - DeGate design doc',
-          href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#operator',
+          title: 'Operator - DeGate design doc',
+          url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#operator',
         },
       ],
     },
@@ -186,8 +187,8 @@ export const degate2: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Operator - DeGate design doc',
-          href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#operator',
+          title: 'Operator - DeGate design doc',
+          url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#operator',
         },
       ],
     },
@@ -195,8 +196,8 @@ export const degate2: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'Introduction - DeGate design doc',
-          href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#design-features',
+          title: 'Introduction - DeGate design doc',
+          url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/DeGate%20Protocol%20Specification%20Document.md#design-features',
         },
       ],
     },
@@ -204,12 +205,12 @@ export const degate2: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ExchangeV3.sol#L341-L348 - DeGate source code',
-          href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L341',
+          title: 'ExchangeV3.sol#L341-L348 - DeGate source code',
+          url: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L341',
         },
         {
-          text: 'LoopringIOExchangeOwner.sol#L98-L101 - DeGate source code',
-          href: 'https://etherscan.io/address/0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215#code#F1#L98',
+          title: 'LoopringIOExchangeOwner.sol#L98-L101 - DeGate source code',
+          url: 'https://etherscan.io/address/0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215#code#F1#L98',
         },
       ],
     },
@@ -217,8 +218,8 @@ export const degate2: Layer2 = {
       ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
-          text: 'Forced Withdrawals - DeGate design doc',
-          href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#force-withdrawal',
+          title: 'Forced Withdrawals - DeGate design doc',
+          url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#force-withdrawal',
         },
       ],
     },
@@ -227,8 +228,8 @@ export const degate2: Layer2 = {
         ...EXITS.REGULAR('zk', 'no proof'),
         references: [
           {
-            text: 'Withdraw - DeGate design doc',
-            href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#normal-withdrawal',
+            title: 'Withdraw - DeGate design doc',
+            url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#normal-withdrawal',
           },
         ],
       },
@@ -236,12 +237,13 @@ export const degate2: Layer2 = {
         ...EXITS.FORCED(),
         references: [
           {
-            text: 'Forced Request Handling - DeGate design doc',
-            href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#force-withdrawal',
+            title: 'Forced Request Handling - DeGate design doc',
+            url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#force-withdrawal',
           },
           {
-            text: 'ExchangeV3.sol#L392 - DeGate source code, forceWithdraw function',
-            href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L392',
+            title:
+              'ExchangeV3.sol#L392 - DeGate source code, forceWithdraw function',
+            url: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L392',
           },
         ],
       },
@@ -253,13 +255,14 @@ export const degate2: Layer2 = {
         ),
         references: [
           {
-            text: 'Forced Request Handling - DeGate design doc',
-            href: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#exodus-mode',
+            title: 'Forced Request Handling - DeGate design doc',
+            url: 'https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#exodus-mode',
           },
 
           {
-            text: 'ExchangeV3.sol#L420 - DeGate source code, withdrawFromMerkleTree function',
-            href: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L420',
+            title:
+              'ExchangeV3.sol#L420 - DeGate source code, withdrawFromMerkleTree function',
+            url: 'https://etherscan.io/address/0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7#code#F1#L420',
           },
         ],
       },
@@ -330,8 +333,8 @@ export const degate2: Layer2 = {
   },
   milestones: [
     {
-      name: 'DeGate Redeploy',
-      link: 'https://medium.com/degate/degate-mainnet-beta-redeployment-update-a0f1a6b7350c',
+      title: 'DeGate Redeploy',
+      url: 'https://medium.com/degate/degate-mainnet-beta-redeployment-update-a0f1a6b7350c',
       date: '2023-09-14T00:00:00Z',
       description: 'DeGate redeploys the contracts to fix a bug.',
       type: 'general',

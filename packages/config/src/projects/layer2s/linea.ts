@@ -7,8 +7,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { Badge } from '../badges'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -20,14 +18,15 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   STATE_CORRECTNESS,
-  type ScalingProjectPermissionedAccount,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ScalingProjectPermissionedAccount } from '../../types'
+import { Badge } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
 import type { Layer2 } from './types'
@@ -101,7 +100,8 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
 export const linea: Layer2 = {
   type: 'layer2',
   id: ProjectId('linea'),
-  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  capability: 'universal',
+  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Linea',
@@ -459,8 +459,9 @@ export const linea: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'LineaRollup.sol - Etherscan source code, submitBlobs() function',
-          href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+          title:
+            'LineaRollup.sol - Etherscan source code, submitBlobs() function',
+          url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
         },
       ],
     },
@@ -478,8 +479,9 @@ export const linea: Layer2 = {
       ],
       references: [
         {
-          text: 'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+          title:
+            'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
+          url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
         },
       ],
     },
@@ -495,12 +497,14 @@ export const linea: Layer2 = {
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
-            text: 'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+            title:
+              'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
+            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
           },
           {
-            text: 'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
-            href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code#F1#L212',
+            title:
+              'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
+            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code#F1#L212',
           },
         ],
       },
@@ -553,8 +557,9 @@ export const linea: Layer2 = {
         })(),
         references: [
           {
-            text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+            title:
+              'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
+            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
           },
         ],
         ...upgradesTimelock,
@@ -594,10 +599,6 @@ export const linea: Layer2 = {
         title: 'ZK Circuits',
         description: 'The source code of the circuits is currently not public.',
         risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the proof system is implemented incorrectly.',
-          },
           {
             category: 'Funds can be stolen if',
             text: 'the prover is able to generate false proofs.',
@@ -657,32 +658,32 @@ export const linea: Layer2 = {
   },
   milestones: [
     {
-      name: 'Linea starts using blobs',
-      link: 'https://twitter.com/LineaBuild/status/1772711269159567483',
+      title: 'Linea starts using blobs',
+      url: 'https://twitter.com/LineaBuild/status/1772711269159567483',
       date: '2024-03-26T00:00:00Z',
       description: 'Linea starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Alpha v2 is released',
+      title: 'Alpha v2 is released',
       date: '2024-02-13',
       description: 'This release reduces L1 costs and fees for users.',
-      link: 'https://docs.linea.build/build-on-linea/linea-version#alpha-v2-release-notes',
+      url: 'https://docs.linea.build/build-on-linea/linea-version#alpha-v2-release-notes',
       type: 'general',
     },
     {
-      name: 'Open Testnet is Live',
+      title: 'Open Testnet is Live',
       date: '2023-03-28',
       description:
         'Linea has launched on the Goerli testnet, allowing users and developers to test the platform.',
-      link: 'https://linea.mirror.xyz/6G30hwV2wPs_wPv0VEgHYaIdghMkIQaad-OI_0br1hM',
+      url: 'https://linea.mirror.xyz/6G30hwV2wPs_wPv0VEgHYaIdghMkIQaad-OI_0br1hM',
       type: 'general',
     },
     {
-      name: 'Mainnet Alpha Launch',
+      title: 'Mainnet Alpha Launch',
       date: '2023-07-12',
       description: 'Linea has launched on the Ethereum mainnet.',
-      link: 'https://linea.mirror.xyz/7l9gKzYzKVOxEOnReavov467Ss_fsrkGzABvbRISPMY',
+      url: 'https://linea.mirror.xyz/7l9gKzYzKVOxEOnReavov467Ss_fsrkGzABvbRISPMY',
       type: 'general',
     },
   ],

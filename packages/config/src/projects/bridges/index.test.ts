@@ -3,14 +3,14 @@ import { expect } from 'earl'
 
 import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
-import {
-  NUGGETS,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectTechnologyChoice,
-} from '../../common'
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
+import type {
+  ProjectTechnologyChoice,
+  ScalingProjectRiskViewEntry,
+} from '../../types'
 import { getReferencedAddresses } from '../layer2s/index.test'
 import { type BridgeTechnology, bridges } from './index'
 
@@ -148,10 +148,7 @@ describe('bridges', () => {
           }
         }
 
-        function checkChoice(
-          choice: ScalingProjectTechnologyChoice,
-          name: string,
-        ) {
+        function checkChoice(choice: ProjectTechnologyChoice, name: string) {
           it(`${name}.name doesn't end with a dot`, () => {
             expect(choice.name.endsWith('.')).toEqual(false)
           })
@@ -182,8 +179,8 @@ describe('bridges', () => {
             continue
           }
           for (const milestone of project.milestones) {
-            it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 50 characters`, () => {
-              expect(milestone.name.length).toBeLessThanOrEqual(50)
+            it(`Milestone: ${milestone.title} (${project.display.name}) name is no longer than 50 characters`, () => {
+              expect(milestone.title.length).toBeLessThanOrEqual(50)
             })
           }
         }
@@ -200,7 +197,7 @@ describe('bridges', () => {
             if (milestone.description === undefined) {
               continue
             }
-            it(`Milestone: ${milestone.name} (${project.display.name}) description ends with a dot`, () => {
+            it(`Milestone: ${milestone.title} (${project.display.name}) description ends with a dot`, () => {
               expect(milestone.description?.endsWith('.')).toEqual(true)
             })
           }
@@ -215,7 +212,7 @@ describe('bridges', () => {
             if (milestone.description === undefined) {
               continue
             }
-            it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 100 characters`, () => {
+            it(`Milestone: ${milestone.title} (${project.display.name}) description is no longer than 100 characters`, () => {
               expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(
                 100,
               )
@@ -231,7 +228,7 @@ describe('bridges', () => {
           continue
         }
         for (const milestone of project.milestones) {
-          it(`Milestone: ${milestone.name} (${project.display.name}) date is full day`, () => {
+          it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
               UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
             ).toEqual(true)

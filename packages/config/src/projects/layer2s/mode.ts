@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
@@ -10,7 +10,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mode')
 
 export const mode: Layer2 = opStackL2({
-  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -41,30 +41,30 @@ export const mode: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
-      name: 'Mode extracts 4800 ETH from the bridge',
-      link: 'https://github.com/etherfi-protocol/postmortems',
+      title: 'Mode extracts 4800 ETH from the bridge',
+      url: 'https://github.com/etherfi-protocol/postmortems',
       date: '2024-08-01T00:00:00Z',
       description:
         "Mode rescues Etherfi's lost funds on L2 by extracting them from the L1 bridge via an upgrade.",
       type: 'incident',
     },
     {
-      name: 'Mode starts using blobs',
-      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      title: 'Mode starts using blobs',
+      url: 'https://twitter.com/Optimism/status/1768235284494450922',
       date: '2024-03-14T00:00:00Z',
       description: 'Mode starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Mode Network Mainnet Launch',
-      link: 'https://twitter.com/modenetwork/status/1752760726907760933',
+      title: 'Mode Network Mainnet Launch',
+      url: 'https://twitter.com/modenetwork/status/1752760726907760933',
       date: '2024-01-31T00:00:00Z',
       description: 'Mode Network is live on mainnet.',
       type: 'general',
     },
     {
-      name: 'MODE token airdrop',
-      link: 'https://mode.mirror.xyz/2Aom53lrot8KQ143u8lCfyYvTOkR7LJcIChoyP1Q4wI',
+      title: 'MODE token airdrop',
+      url: 'https://mode.mirror.xyz/2Aom53lrot8KQ143u8lCfyYvTOkR7LJcIChoyP1Q4wI',
       date: '2024-05-07T00:00:00Z',
       description: 'MODE token launched.',
       type: 'general',

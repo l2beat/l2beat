@@ -66,16 +66,16 @@ export const eigenDA: DaServiceDaLayer = {
   `,
     references: [
       {
-        text: 'EigenDA - Documentation',
-        href: 'https://docs.eigenda.xyz/overview',
+        title: 'EigenDA - Documentation',
+        url: 'https://docs.eigenda.xyz/overview',
       },
       {
-        text: 'EigenDA Disperser - Source Code',
-        href: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
+        title: 'EigenDA Disperser - Source Code',
+        url: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
       },
       {
-        text: 'EigenDA Rollup Utils - Source Code',
-        href: 'https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol',
+        title: 'EigenDA Rollup Utils - Source Code',
+        url: 'https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol',
       },
     ],
     risks: [
@@ -87,7 +87,7 @@ export const eigenDA: DaServiceDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
+      addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
       layer: 'EigenDA',
       description:
         'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',

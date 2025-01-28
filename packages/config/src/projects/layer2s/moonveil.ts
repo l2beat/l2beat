@@ -4,14 +4,15 @@ import type { Layer2 } from './types'
 
 export const moonveil: Layer2 = upcomingL2({
   id: 'moonveil',
-  createdAt: new UnixTime(1721918879), // 2024-07-25T14:47:59Z
+  capability: 'universal',
+  addedAt: new UnixTime(1721918879), // 2024-07-25T14:47:59Z
   display: {
     name: 'Moonveil',
     slug: 'moonveil',
     description: 'Moonveil is a gaming chain utilizing Polygon CDK technology.',
     purposes: ['Gaming'],
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://moonveil.gg/'],
       apps: ['https://moonveil.gg/AstrArk/'],

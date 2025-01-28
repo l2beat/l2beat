@@ -45,7 +45,7 @@ export async function getScalingDaEntries() {
 export interface ScalingDaEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
   dataAvailability: ProjectDataAvailability
-  provider: ScalingProjectStack | undefined
+  stack: ScalingProjectStack | undefined
   tvlOrder: number
 }
 
@@ -58,7 +58,7 @@ function getScalingDaEntry(
     ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
-    provider: project.scalingInfo.stack,
+    stack: project.scalingInfo.stack,
     tvlOrder: tvl ?? -1,
   }
 }

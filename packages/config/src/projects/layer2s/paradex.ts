@@ -18,7 +18,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
@@ -69,7 +69,8 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
-  createdAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
+  capability: 'universal',
+  addedAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,
@@ -79,7 +80,7 @@ export const paradex: Layer2 = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    provider: 'SN Stack',
+    stack: 'SN Stack',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
@@ -313,8 +314,8 @@ export const paradex: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'Censorship resistance of Starknet - Forum Discussion',
-          href: 'https://community.starknet.io/t/censorship-resistance/196',
+          title: 'Censorship resistance of Starknet - Forum Discussion',
+          url: 'https://community.starknet.io/t/censorship-resistance/196',
         },
       ],
     },
@@ -365,15 +366,15 @@ export const paradex: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Paradex starts using blobs',
-      link: 'https://twitter.com/tradeparadex/status/1768306190596153799',
+      title: 'Paradex starts using blobs',
+      url: 'https://twitter.com/tradeparadex/status/1768306190596153799',
       date: '2024-03-26T00:00:00Z',
       description: 'Paradex starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Open Beta Mainnet Launch',
-      link: 'https://twitter.com/tradeparadex',
+      title: 'Open Beta Mainnet Launch',
+      url: 'https://twitter.com/tradeparadex',
       date: '2023-10-01T00:00:00.00Z',
       description: 'Paradex launches Open Beta on Mainnet.',
       type: 'general',

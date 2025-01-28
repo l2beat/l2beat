@@ -5,7 +5,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const silicon: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
+  addedAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [Badge.DA.DAC],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
@@ -92,8 +92,9 @@ export const silicon: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          title:
+            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
@@ -161,8 +162,8 @@ export const silicon: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'Silicon Mainnet Launch',
-      link: 'https://x.com/0xSilicon/status/1828704079687917908',
+      title: 'Silicon Mainnet Launch',
+      url: 'https://x.com/0xSilicon/status/1828704079687917908',
       date: '2024-08-28',
       description:
         'Silicon Mainnet launches officially, integrated with Polygon AggLayer.',
@@ -172,7 +173,7 @@ export const silicon: Layer2 = polygonCDKStack({
   knowledgeNuggets: [],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

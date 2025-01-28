@@ -4,8 +4,8 @@ import {
   ProjectService,
   type ScalingProjectCategory,
   type ScalingProjectStack,
+  type WarningValueWithSentiment,
 } from '@l2beat/config'
-import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
@@ -58,7 +58,7 @@ export async function getScalingFinalityEntries() {
 
 export interface ScalingFinalityEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
-  provider: ScalingProjectStack | undefined
+  stack: ScalingProjectStack | undefined
   dataAvailabilityMode: DataAvailabilityMode | undefined
   data: {
     timeToInclusion: {
@@ -94,7 +94,7 @@ function getScalingFinalityEntry(
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
     category: project.scalingInfo.type,
-    provider: project.scalingInfo.stack,
+    stack: project.scalingInfo.stack,
     dataAvailabilityMode: project.scalingDa?.mode,
     data: {
       timeToInclusion: {

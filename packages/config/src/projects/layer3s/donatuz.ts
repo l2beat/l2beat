@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL3 } from '../layer2s/templates/opStack'
@@ -8,7 +8,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('donatuz', 'base')
 
 export const donatuz: Layer3 = opStackL3({
-  createdAt: new UnixTime(1726497628), // 2024-09-16T14:40:28Z
+  addedAt: new UnixTime(1726497628), // 2024-09-16T14:40:28Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
   hostChain: ProjectId('base'),

@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
-import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
-import { ESCROW } from '../../common/escrow'
+import { NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
@@ -99,7 +99,7 @@ const maxTimeVariation = discovery.getContractValue<{
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 export const nova: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     Badge.VM.WasmVM,
     Badge.DA.DAC,
@@ -181,8 +181,8 @@ export const nova: Layer2 = orbitStackL2({
       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
       [
         {
-          text: 'Security Council members - Arbitrum DAO Governance Docs',
-          href: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
+          title: 'Security Council members - Arbitrum DAO Governance Docs',
+          url: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
         },
       ],
     ),
@@ -371,25 +371,27 @@ export const nova: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      name: 'ArbOS 32 Emergency upgrade',
-      link: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
+      title: 'ArbOS 32 Emergency upgrade',
+      url: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
       date: '2024-09-25T00:00:00Z',
       description:
         'SecurityCouncil emergency upgrades to fix attack vectors related to Stylus resource pricing.',
       type: 'incident',
     },
     {
-      name: 'ArbOS 31 Bianca upgrade',
-      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      title: 'ArbOS 31 Bianca upgrade',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
       date: '2024-09-03T00:00:00Z',
       description:
         'Nova upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
       type: 'general',
     },
     {
-      ...MILESTONES.MAINNET_OPEN,
+      title: 'Mainnet for everyone',
+      description:
+        'Whitelist got removed, there are no restrictions on who can transact with the network.',
       date: '2022-08-09T00:00:00Z',
-      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
+      url: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
       type: 'general',
     },
   ],
@@ -428,7 +430,7 @@ export const nova: Layer2 = orbitStackL2({
       },
     },
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignatures,
       membersCount: membersCount,
       transactionDataType: 'Transaction data (compressed)',

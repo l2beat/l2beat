@@ -11,7 +11,7 @@ import {
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 import { chains } from '../chains'
-import { bridges } from '../projects'
+import { bridges } from '../projects/bridges'
 import { tokenList } from './tokens'
 
 // Github actions sets env as an empty string when secret is not set

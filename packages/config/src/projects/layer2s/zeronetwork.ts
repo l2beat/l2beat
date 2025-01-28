@@ -15,7 +15,7 @@ export const zeronetwork: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
   additionalBadges: [Badge.RaaS.Caldera],
-  createdAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
+  addedAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',
@@ -113,8 +113,8 @@ export const zeronetwork: Layer2 = zkStackL2({
   ],
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://zero.network/blog/zer-mainnet-welcome-to-a-world-without-gas-fees',
+      title: 'Mainnet launch',
+      url: 'https://zero.network/blog/zer-mainnet-welcome-to-a-world-without-gas-fees',
       date: '2024-11-12T00:00:00Z',
       description: 'ZERϴ launches their mainnet.',
       type: 'general',
