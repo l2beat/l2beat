@@ -8272,6 +8272,50 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1734639568,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT",
+      "coingeckoId": "tether",
+      "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1734648290,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
       "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
