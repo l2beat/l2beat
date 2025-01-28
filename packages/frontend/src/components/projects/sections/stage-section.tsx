@@ -26,6 +26,8 @@ export interface StageSectionProps extends ProjectSectionProps {
   name: string
   type: string
   stageConfig: UsableStageConfig
+  isAppchain: boolean
+  notice: string | undefined
 }
 
 export function StageSection({
@@ -33,6 +35,8 @@ export function StageSection({
   name,
   type,
   stageConfig,
+  isAppchain,
+  notice,
   ...sectionProps
 }: StageSectionProps) {
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
@@ -51,7 +55,11 @@ export function StageSection({
             className="relative -top-0.5 mr-2 inline-block"
           />
           {name} is currently
-          <StageBadge stage={stageConfig.stage} className="mx-1 md:mx-1.5" />
+          <StageBadge
+            stage={stageConfig.stage}
+            className="mx-1 md:mx-1.5"
+            isAppchain={isAppchain}
+          />
           for stage assignment.
         </div>
       </ProjectSection>
@@ -65,7 +73,7 @@ export function StageSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      <div className="mb-6 font-medium">
+      <span className="mb-4 inline-block w-full rounded bg-surface-secondary px-6 py-4 font-medium">
         <Image
           src={icon}
           alt={name}
@@ -73,9 +81,38 @@ export function StageSection({
           height={18}
           className="relative -top-0.5 mr-2 inline-block"
         />
-        {name} is a <StageBadge stage={stageConfig.stage} className="mx-1" />
-        <span className="lowercase"> {type}</span>.
-      </div>
+        {name} is a{' '}
+        <StageBadge
+          stage={stageConfig.stage}
+          className="relative -top-px inline-flex"
+          isAppchain={isAppchain}
+          appchainClassName="text-base md:text-lg inline"
+          inline
+        />
+        <span> {type}</span>.
+      </span>
+      {(isAppchain || notice) && (
+        <div className="space-y-4 p-4 text-base">
+          {isAppchain && (
+            <p>
+              Rollup operators cannot compromise the system, but being{' '}
+              <strong>application-specific</strong> might bring additional risk.
+            </p>
+          )}
+          {notice && <p>{notice}</p>}
+          {isAppchain && (
+            <div>
+              <div className="text-[13px] font-semibold uppercase leading-none text-secondary">
+                Note:
+              </div>
+              <div>
+                We&apos;re still in the process of formalizing how to properly
+                integrate appchains in the Stages framework.
+              </div>
+            </div>
+          )}
+        </div>
+      )}
       {stageConfig.message && (
         <WarningBar
           color="yellow"
@@ -97,14 +134,10 @@ export function StageSection({
           )
 
           return (
-            <AccordionItem
-              key={stage.stage}
-              value={stage.stage}
-              className="mb-4 rounded-lg bg-surface-secondary"
-            >
-              <AccordionTrigger className="p-4 text-lg font-normal">
+            <AccordionItem key={stage.stage} value={stage.stage}>
+              <AccordionTrigger className="px-6 py-4 text-lg font-normal">
                 <div className="flex select-none items-center justify-start gap-3">
-                  <StageBadge stage={stage.stage} />
+                  <StageBadge stage={stage.stage} isAppchain={false} />
                   {missing.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
                       <div className="flex items-center gap-2">
@@ -131,7 +164,7 @@ export function StageSection({
                 </div>
               </AccordionTrigger>
               <AccordionContent className="text-lg">
-                <ul className="mx-4 space-y-2 pb-4 md:px-4 md:pb-6">
+                <ul className="mx-6 space-y-2 pb-4 md:px-4 md:pb-6">
                   {satisfied.map((req, i) => (
                     <li key={i} className="flex">
                       <SatisfiedIcon className="relative top-0.5 size-4 shrink-0" />

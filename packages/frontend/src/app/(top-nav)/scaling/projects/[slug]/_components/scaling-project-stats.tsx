@@ -1,7 +1,10 @@
 import { pluralize } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { StageBadge } from '~/components/badge/stage-badge'
+import {
+  StageBadge,
+  getStageTextClassname,
+} from '~/components/badge/stage-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
@@ -23,6 +26,7 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
+  const isAppchain = project.capability === 'appchain'
   return (
     <div
       className={cn(
@@ -66,16 +70,31 @@ export function ScalingProjectStats({ project, className }: Props) {
         <ProjectStat
           title="Stage"
           value={
-            <span className="relative -top-0.5 flex items-center">
+            <span className="relative flex">
               <a href="#stage">
-                <StageBadge stage={project.stageConfig.stage} />
+                <StageBadge
+                  stage={project.stageConfig.stage}
+                  isAppchain={isAppchain}
+                />
               </a>
               <Tooltip>
-                <TooltipTrigger className="inline-block px-2">
-                  <InfoIcon className="size-4" variant="gray" />
+                <TooltipTrigger className="mt-1 inline-block h-4 px-2">
+                  <InfoIcon
+                    className={cn(
+                      'size-4',
+                      isAppchain && [
+                        'fill-current',
+                        getStageTextClassname(project.stageConfig.stage),
+                      ],
+                    )}
+                    variant={!isAppchain ? 'gray' : undefined}
+                  />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <StageTooltip stageConfig={project.stageConfig} />
+                  <StageTooltip
+                    stageConfig={project.stageConfig}
+                    isAppchain={isAppchain}
+                  />
                 </TooltipContent>
               </Tooltip>
             </span>

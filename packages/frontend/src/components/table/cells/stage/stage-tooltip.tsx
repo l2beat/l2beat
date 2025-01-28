@@ -1,27 +1,51 @@
 import { type Stage, type StageConfig } from '@l2beat/config'
-import { StageBadge } from '~/components/badge/stage-badge'
+import {
+  StageBadge,
+  getStageTextClassname,
+} from '~/components/badge/stage-badge'
 import { Callout } from '~/components/callout'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { WarningBar } from '~/components/warning-bar'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { UnderReviewIcon } from '~/icons/under-review'
+import { cn } from '~/utils/cn'
 
 export interface StageTooltipProps {
   stageConfig: StageConfig
+  isAppchain: boolean
 }
 
-export function StageTooltip({ stageConfig }: StageTooltipProps) {
+export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
 
   return (
-    <div className="flex max-w-[300px] flex-col gap-4 py-1">
-      <span>
-        <StageBadge stage={stageConfig.stage} className="font-medium" />
-        <span className="ml-2 inline-block font-medium">
+    <div className="flex max-w-[300px] flex-col py-1">
+      <div
+        className={cn('flex gap-2', isAppchain ? 'flex-col' : 'items-center')}
+      >
+        <StageBadge
+          stage={stageConfig.stage}
+          isAppchain={isAppchain}
+          className="font-medium"
+          inline
+        />
+        <div className="inline-block font-bold">
           {getStageName(stageConfig.stage)}
-        </span>
-      </span>
+        </div>
+      </div>
+      {isAppchain && (
+        <div className="mt-2 font-medium">
+          <span className={getStageTextClassname(stageConfig.stage)}>
+            Appchain
+          </span>
+          : This project brings additional app-specific considerations that are
+          not reflected in the stages framework.
+        </div>
+      )}
+      <HorizontalSeparator className="my-4" />
+
       {stageConfig.stage === 'UnderReview' ? (
         <>
           Projects under review might present uncompleted information & data.
@@ -39,6 +63,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
                   ? RoundedWarningIcon
                   : UnderReviewIcon
               }
+              className="mb-4"
               text={stageConfig.message.text}
               ignoreMarkdown
             />
@@ -69,7 +94,10 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
         color="blue"
         body="Please mind, stages do not reflect rollup security"
         icon={<InfoIcon className="size-4" variant="blue" />}
-        className="p-4 font-medium"
+        className={cn(
+          'p-4 font-medium',
+          stageConfig.stage !== 'Stage 2' && 'mt-4',
+        )}
       />
     </div>
   )

@@ -3,6 +3,7 @@ import {
   type ProjectDataAvailability,
   ProjectService,
   type ReasonForBeingInOther,
+  type ScalingProjectCapability,
   type ScalingProjectCategory,
   type ScalingProjectStack,
   type StageConfig,
@@ -61,6 +62,7 @@ export async function getScalingSummaryEntries() {
 }
 
 export interface ScalingSummaryEntry extends CommonScalingEntry {
+  capability: ScalingProjectCapability
   stage: StageConfig
   category: ScalingProjectCategory
   provider: ScalingProjectStack | undefined
@@ -126,6 +128,7 @@ function getScalingSummaryEntry(
       project.scalingInfo.isOther || !project.scalingStage
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
+    capability: project.scalingInfo.capability,
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
     dataAvailability: project.scalingDa,

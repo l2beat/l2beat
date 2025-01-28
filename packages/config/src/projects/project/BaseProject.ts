@@ -3,6 +3,7 @@ import type {
   ProjectCountdowns,
   ProjectDataAvailability,
   ReasonForBeingInOther,
+  ScalingProjectCapability,
   ScalingProjectCategory,
   ScalingProjectRiskView,
   ScalingProjectStack,
@@ -88,6 +89,7 @@ export interface ProjectBridgeInfo {
 export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
   type: ScalingProjectCategory
+  capability: ScalingProjectCapability
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
