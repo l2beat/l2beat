@@ -22,7 +22,7 @@ const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 export const bugbuster: Layer3 = {
   type: 'layer3',
   id: ProjectId('bugbuster'),
-  addetAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  addedAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
   hostChain: ProjectId('optimism'),
   badges: [
     Badge.Stack.Cartesi,

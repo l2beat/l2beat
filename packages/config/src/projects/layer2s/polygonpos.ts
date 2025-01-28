@@ -46,7 +46,7 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
 export const polygonpos: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
-  addetAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
+  addedAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

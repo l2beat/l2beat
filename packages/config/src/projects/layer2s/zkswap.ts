@@ -22,7 +22,7 @@ const discovery = new ProjectDiscovery('zkswap')
 export const zkswap: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkswap'),
-  addetAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {
     name: 'ZKSwap 1.0',

@@ -164,7 +164,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 
   return {
     type: 'layer2',
-    addetAt: templateVars.addedAt,
+    addedAt: templateVars.addedAt,
     id: ProjectId(templateVars.discovery.projectName),
     isArchived: templateVars.isArchived,
     display: {

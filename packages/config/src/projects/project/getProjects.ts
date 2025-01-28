@@ -27,7 +27,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     name: p.display.name,
     shortName: p.display.shortName,
     slug: p.display.slug,
-    addedAt: p.addetAt,
+    addedAt: p.addedAt,
     // data
     statuses: {
       yellowWarning: p.display.headerWarning,

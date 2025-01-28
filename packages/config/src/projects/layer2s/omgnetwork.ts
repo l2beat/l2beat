@@ -18,7 +18,7 @@ const upgradeDelay = 0
 export const omgnetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
-  addetAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
+  addedAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
   isArchived: true,
   display: {
     name: 'OMG Network',

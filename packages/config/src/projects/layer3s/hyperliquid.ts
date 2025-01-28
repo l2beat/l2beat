@@ -57,7 +57,7 @@ export const hyperliquid: Layer3 = {
   type: 'layer3',
   id: ProjectId('hyperliquid'),
   hostChain: ProjectId('arbitrum'),
-  addetAt: new UnixTime(1734956888), // 2024-12-23T13:28:48Z
+  addedAt: new UnixTime(1734956888), // 2024-12-23T13:28:48Z
   badges: [Badge.VM.AppChain, Badge.DA.CustomDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

@@ -25,7 +25,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
     isUpcoming: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
-    addetAt: templateVars.addedAt,
+    addedAt: templateVars.addedAt,
     display: templateVars.display,
     stage: {
       stage: 'NotApplicable',
@@ -45,7 +45,7 @@ export function upcomingL3(templateVars: UpcomingConfigL3): Layer3 {
     isUpcoming: true,
     type: 'layer3',
     id: ProjectId(templateVars.id),
-    addetAt: templateVars.addedAt,
+    addedAt: templateVars.addedAt,
     display: {
       ...templateVars.display,
     },

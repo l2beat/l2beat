@@ -17,7 +17,7 @@ import { isUnderReview } from './isUnderReview'
 describe(isUnderReview.name, () => {
   const mockProject: Layer2 = {
     type: 'layer2',
-    addetAt: new UnixTime(1234567890),
+    addedAt: new UnixTime(1234567890),
     id: ProjectId('project-id'),
     display: mockObject<Layer2Display>(),
     technology: mockObject<ScalingProjectTechnology>({

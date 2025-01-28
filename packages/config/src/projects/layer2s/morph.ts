@@ -50,7 +50,7 @@ const proofWindow = discovery.getContractValue<number>(
 export const morph: Layer2 = {
   type: 'layer2',
   id: ProjectId('morph'),
-  addetAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
+  addedAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {

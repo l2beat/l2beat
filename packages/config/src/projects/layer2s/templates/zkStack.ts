@@ -264,7 +264,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
-    addetAt: templateVars.addedAt,
+    addedAt: templateVars.addedAt,
     badges: mergeBadges(
       [
         Badge.Stack.ZKStack,

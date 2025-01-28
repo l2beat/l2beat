@@ -419,7 +419,7 @@ function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
-    addetAt: templateVars.addedAt,
+    addedAt: templateVars.addedAt,
     isArchived: templateVars.isArchived ?? undefined,
     contracts: discoveryDrivenSections
       ? discoveryDrivenSections.contracts

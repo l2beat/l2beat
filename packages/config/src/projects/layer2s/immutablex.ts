@@ -70,7 +70,7 @@ const requiredHonestMembersPercentage = (
 export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
-  addetAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,

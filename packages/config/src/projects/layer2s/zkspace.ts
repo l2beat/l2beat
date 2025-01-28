@@ -37,7 +37,7 @@ const upgradeability = {
 export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
-  addetAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
+  addedAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
