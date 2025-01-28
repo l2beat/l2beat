@@ -92,6 +92,7 @@ export class DataFormulaExecutor {
       )
       this.logger.info('This will take a minute ;-)')
       await Promise.all(promises)
+      this.logger.info('Data fetched')
     }
   }
 
