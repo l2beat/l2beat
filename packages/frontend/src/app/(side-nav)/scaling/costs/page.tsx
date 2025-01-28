@@ -19,11 +19,11 @@ export default async function Page() {
   const [entries] = await Promise.all([
     getScalingCostsEntries(),
     api.costs.chart.prefetch({
-      range: '1y',
+      range: '30d',
       filter: { type: 'rollups' },
       previewRecategorisation: false,
     }),
-    api.costs.table.prefetch({ range: '1y' }),
+    api.costs.table.prefetch({ range: '30d' }),
   ])
 
   return (

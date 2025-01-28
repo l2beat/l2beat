@@ -14,8 +14,8 @@ import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -60,7 +60,7 @@ export function ScalingCostsTabs(props: Props) {
   )
 
   const initialSort = {
-    id: '#',
+    id: 'total-cost',
     desc: false,
   }
 

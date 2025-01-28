@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState } from 'react'
-import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 
 type CostsTimeRangeContextValue = {
   range: CostsTimeRange
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function CostsTimeRangeContextProvider({ children }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('1y')
+  const [range, setRange] = useState<CostsTimeRange>('30d')
   return (
     <CostsTimeRangeContext.Provider
       value={{
