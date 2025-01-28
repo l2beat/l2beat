@@ -14,7 +14,6 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const zeronetwork: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsKey: 'zeronetworkValidators',
   additionalBadges: [Badge.RaaS.Caldera],
   addedAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {

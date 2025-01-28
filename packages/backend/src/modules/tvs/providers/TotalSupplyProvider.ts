@@ -1,6 +1,7 @@
 import type { RpcClient } from '@l2beat/shared'
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { bigIntToNumber } from '../bigIntToNumber'
 
 export const erc20Interface = new utils.Interface([
   'function totalSupply() view returns (uint256)',
@@ -25,6 +26,6 @@ export class TotalSupplyProvider {
       blockNumber,
     )
 
-    return Number(BigInt(response.toString()) / 10n ** BigInt(decimals))
+    return bigIntToNumber(response.toString(), decimals)
   }
 }
