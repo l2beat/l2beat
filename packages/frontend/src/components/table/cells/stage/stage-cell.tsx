@@ -23,7 +23,13 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
   const isMobile = useIsMobile()
 
   if (stageConfig.stage === 'NotApplicable' || isMobile) {
-    return <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
+    return (
+      <StageBadge
+        stage={stageConfig.stage}
+        isAppchain={isAppchain}
+        className="pb-[5px] pt-2"
+      />
+    )
   }
   const hasNotice = stageConfig.stage !== 'UnderReview' && !!stageConfig.notice
   return (
