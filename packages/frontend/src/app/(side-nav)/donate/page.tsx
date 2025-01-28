@@ -65,7 +65,7 @@ interface HeaderProps {
 
 function Header({ networks }: HeaderProps) {
   return (
-    <section className="bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
+    <section className="overflow-hidden bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
       <h1 className="mb-4 text-3xl font-bold md:hidden">Donate</h1>
       <div className="grid md:grid-cols-12">
         <div className="leading-normal md:col-span-7">
