@@ -26,18 +26,26 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."
+            "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
           }
         ]
       }
     },
     "txFilterer": {
-      "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
+      "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
       "severity": "HIGH",
       "handler": {
         "type": "event",
-        "select": ["oldTransactionFilterer", "newTransactionFilterer"],
+        "select": ["newTransactionFilterer"],
         "add": { "event": "NewTransactionFilterer" }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "whitelist or censor addresses that can send transactions from L1 to L2 (e.g. for withdrawals, queued transactions). This is enforced in the Mailbox Facet."
+          }
+        ]
       }
     },
     "validators": {

@@ -7,7 +7,8 @@
     "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm",
     "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4": "CronosZkEVMAdmin",
     "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": "CronosChainAdminMultisig",
-    "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": "TxFiltererOwnerMultisig"
+    "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": "TxFiltererOwnerMultisig",
+    "0xA8998F231a660Eca365B382943c71ad9b7619139": "TransactionFiltererDenyList"
   },
   "sharedModules": {
     "BridgeHub": "shared-zk-stack"
@@ -33,6 +34,20 @@
             "permissions": [
               {
                 "type": "validateZkStack"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "TransactionFiltererDenyList": {
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "manage the blacklist of addresses in the TransactionFilterer."
               }
             ]
           }
