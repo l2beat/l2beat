@@ -169,7 +169,7 @@ export const celestia: BlockchainDaLayer = {
     {
       title: 'Ginger upgrade',
       url: 'https://blog.celestia.org/ginger/',
-      date: '2024-11-05T00:00:00Z',
+      date: '2024-12-12T00:00:00Z',
       description:
         'Celestia Ginger upgrade cuts the block time in half from 12 to 6 seconds.',
       type: 'general',
