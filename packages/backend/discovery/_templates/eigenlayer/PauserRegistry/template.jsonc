@@ -6,8 +6,14 @@
       "handler": {
         "type": "event",
         "select": "pauser",
-        "event": "PauserStatusChanged",
-        "where": ["=", "#canPause", true]
+        "add": {
+          "event": "PauserStatusChanged",
+          "where": ["=", "#canPause", true]
+        },
+        "remove": {
+          "event": "PauserStatusChanged",
+          "where": ["!=", "#canPause", true]
+        }
       },
       "target": {
         "permissions": [

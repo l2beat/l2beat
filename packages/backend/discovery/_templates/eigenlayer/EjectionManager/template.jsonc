@@ -4,40 +4,40 @@
   "fields": {
     "ejectors": {
       "handler": {
-        "target": {
-          "permissions": [
-            {
-              "type": "configure",
-              "description": "can eject DA operators from a quorum."
-            }
-          ],
-          "type": "event",
-          "select": "ejector",
-          "add": {
-            "event": "EjectorUpdated",
-            "where": ["=", "#status", true]
-          },
-          "remove": {
-            "event": "EjectorUpdated",
-            "where": ["!=", "#status", true]
-          }
+        "type": "event",
+        "select": "ejector",
+        "add": {
+          "event": "EjectorUpdated",
+          "where": ["=", "#status", true]
         },
-        "ejectionRateLimitWindow": {
-          "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",
-          "handler": {
-            "type": "event",
-            "select": "rateLimitWindow",
-            "add": { "event": "QuorumEjectionParamsSet" }
-          }
-        },
-        "ejectableStakePercent": {
-          "description": "Max stake to be ejectable per time delta.",
-          "handler": {
-            "type": "event",
-            "select": "ejectableStakePercent",
-            "add": { "event": "QuorumEjectionParamsSet" }
-          }
+        "remove": {
+          "event": "EjectorUpdated",
+          "where": ["!=", "#status", true]
         }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "can eject DA operators from a quorum."
+          }
+        ]
+      }
+    },
+    "ejectionRateLimitWindow": {
+      "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",
+      "handler": {
+        "type": "event",
+        "select": "rateLimitWindow",
+        "add": { "event": "QuorumEjectionParamsSet" }
+      }
+    },
+    "ejectableStakePercent": {
+      "description": "Max stake to be ejectable per time delta.",
+      "handler": {
+        "type": "event",
+        "select": "ejectableStakePercent",
+        "add": { "event": "QuorumEjectionParamsSet" }
       }
     }
   }

@@ -5,8 +5,7 @@
       "handler": {
         "type": "event",
         "select": "avs",
-        "event": "OperatorAVSRegistrationStatusUpdated",
-        "where": ["=", "#status", true]
+        "add": { "event": "OperatorAVSRegistrationStatusUpdated" }
       }
     }
   },
