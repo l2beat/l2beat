@@ -168,7 +168,7 @@ export const celestia: BlockchainDaLayer = {
     },
     {
       title: 'Ginger upgrade',
-      url: 'https://blog.celestia.org/celestia-mainnet-is-live/',
+      url: 'https://blog.celestia.org/ginger/',
       date: '2024-11-05T00:00:00Z',
       description:
         'Celestia Ginger upgrade cuts the block time in half from 12 to 6 seconds.',
@@ -176,7 +176,7 @@ export const celestia: BlockchainDaLayer = {
     },
     {
       title: 'Block size increase to 8MB',
-      url: 'https://blog.celestia.org/celestia-mainnet-is-live/',
+      url: 'https://x.com/celestia/status/1881756463317860430/',
       date: '2025-01-28T00:00:00Z',
       description:
         'Celestia onchain governance votes to increase the block size from 2MB to 8MB.',
