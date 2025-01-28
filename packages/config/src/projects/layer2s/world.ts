@@ -130,7 +130,7 @@ export const world: Layer2 = {
   type: 'layer2',
   id: ProjectId('worldchain'),
   capability: 'universal',
-  createdAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
+  addedAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
@@ -144,7 +144,7 @@ export const world: Layer2 = {
     slug: 'world',
     purposes: ['Universal', 'Identity'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'World Chain is an OP Stack Rollup built to scale Proof of Personhood, aiming to offer priority blockspace for users with a World ID.',
     links: {
@@ -294,14 +294,16 @@ export const world: Layer2 = {
       ],
       references: [
         {
-          text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'DisputeGameFactory.sol - Etherscan source code, create() function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             disputeGameFactory,
           )}#code`,
         },
         {
-          text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
-          href: `https://etherscan.io/address/${permissionedDisputeGame.address}#code`,
+          title:
+            'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
+          url: `https://etherscan.io/address/${permissionedDisputeGame.address}#code`,
         },
       ],
     },
@@ -309,16 +311,17 @@ export const world: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'Derivation: Batch submission - OP Mainnet specs',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+          title: 'Derivation: Batch submission - OP Mainnet specs',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
         },
         {
-          text: 'BatchInbox - Etherscan address',
-          href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
+          title: 'BatchInbox - Etherscan address',
+          url: `https://etherscan.io/address/${sequencerInbox.toString()}`,
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -329,12 +332,13 @@ export const world: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'Sequencing Window - OP Mainnet Specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+          title: 'Sequencing Window - OP Mainnet Specs',
+          url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -353,14 +357,16 @@ export const world: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
@@ -370,8 +376,8 @@ export const world: Layer2 = {
         ...EXITS.FORCED('all-withdrawals'),
         references: [
           {
-            text: 'Forced withdrawal from an OP Stack blockchain',
-            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced withdrawal from an OP Stack blockchain',
+            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
           },
         ],
       },
@@ -384,8 +390,8 @@ export const world: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -403,8 +409,8 @@ export const world: Layer2 = {
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
         references: [
           {
-            text: 'OP stack specification: Fault Dispute Game',
-            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+            title: 'OP stack specification: Fault Dispute Game',
+            url: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
           },
         ],
       },
@@ -429,8 +435,8 @@ export const world: Layer2 = {
         )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
         references: [
           {
-            text: 'Fraud Proof Wars: OPFP',
-            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+            title: 'Fraud Proof Wars: OPFP',
+            url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
           },
         ],
       },
@@ -468,8 +474,8 @@ export const world: Layer2 = {
   },
   milestones: [
     {
-      name: 'World Chain Launch',
-      link: 'https://world.org/blog/announcements/world-chain-now-open-every-human', // TO UPDATE
+      title: 'World Chain Launch',
+      url: 'https://world.org/blog/announcements/world-chain-now-open-every-human', // TO UPDATE
       date: '2024-10-17T00:00:00Z',
       description: 'World Chain Mainnet is officially live.',
       type: 'general',

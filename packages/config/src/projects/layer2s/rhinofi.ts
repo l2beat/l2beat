@@ -61,7 +61,7 @@ export const rhinofi: Layer2 = {
   type: 'layer2',
   id: ProjectId('deversifi'),
   capability: 'appchain',
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -74,7 +74,7 @@ export const rhinofi: Layer2 = {
     slug: 'rhinofi',
     description: 'rhino.fi is a Validium based on the StarkEx technology.',
     purposes: ['Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://rhino.fi/'],
@@ -146,26 +146,10 @@ export const rhinofi: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      sources: [
-        {
-          contract: 'StarkExchange',
-          references: [
-            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F34#L183',
-          ],
-        },
-        {
-          contract: 'Committee',
-          references: [
-            'https://etherscan.io/address/0x28780349A33eEE56bb92241bAAB8095449e24306#code#F1#L63',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,
@@ -228,17 +212,17 @@ export const rhinofi: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Rebranding',
+      title: 'Rebranding',
       date: '2022-07-13T00:00:00Z',
-      link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
+      url: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
       description:
         'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi in one place.',
       type: 'general',
     },
     {
-      name: 'DeversiFi Relaunched using Starkware',
+      title: 'DeversiFi Relaunched using Starkware',
       date: '2020-06-03T00:00:00Z',
-      link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
+      url: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
       description:
         'DeversiFi is live, bringing first STARKex Validium for spot trading.',
       type: 'general',
@@ -247,7 +231,7 @@ export const rhinofi: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

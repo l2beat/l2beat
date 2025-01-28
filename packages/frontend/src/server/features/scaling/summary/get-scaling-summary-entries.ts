@@ -65,7 +65,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   capability: ScalingProjectCapability
   stage: StageConfig
   category: ScalingProjectCategory
-  provider: ScalingProjectStack | undefined
+  stack: ScalingProjectStack | undefined
   dataAvailability: ProjectDataAvailability | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvl: {
@@ -130,7 +130,7 @@ function getScalingSummaryEntry(
         : project.scalingStage,
     capability: project.scalingInfo.capability,
     category: project.scalingInfo.type,
-    provider: project.scalingInfo.stack,
+    stack: project.scalingInfo.stack,
     dataAvailability: project.scalingDa,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvl: {

@@ -78,24 +78,24 @@ export const celestia: BlockchainDaLayer = {
     `,
     references: [
       {
-        text: 'Celestia Specifications',
-        href: 'https://celestiaorg.github.io/celestia-app/specs/index.html',
+        title: 'Celestia Specifications',
+        url: 'https://celestiaorg.github.io/celestia-app/specs/index.html',
       },
       {
-        text: 'Celestia Core - CometBFT',
-        href: 'https://github.com/celestiaorg/celestia-core',
+        title: 'Celestia Core - CometBFT',
+        url: 'https://github.com/celestiaorg/celestia-core',
       },
       {
-        text: 'Celestia Node - Data Retrieval',
-        href: 'https://github.com/celestiaorg/celestia-node/blob/9ff58570ef86e505b718abfc755fd18643a2284c/share/eds/retriever.go#L60',
+        title: 'Celestia Node - Data Retrieval',
+        url: 'https://github.com/celestiaorg/celestia-node/blob/9ff58570ef86e505b718abfc755fd18643a2284c/share/eds/retriever.go#L60',
       },
       {
-        text: 'Bad Encoding Fraud Proofs',
-        href: 'https://github.com/celestiaorg/celestia-node/blob/main/docs/adr/adr-006-fraud-service.md',
+        title: 'Bad Encoding Fraud Proofs',
+        url: 'https://github.com/celestiaorg/celestia-node/blob/main/docs/adr/adr-006-fraud-service.md',
       },
       {
-        text: 'Fraud and Data Availability Proofs paper',
-        href: 'https://arxiv.org/pdf/1809.09044',
+        title: 'Fraud and Data Availability Proofs paper',
+        url: 'https://arxiv.org/pdf/1809.09044',
       },
     ],
     risks: [
@@ -111,7 +111,7 @@ export const celestia: BlockchainDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
+      addedAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
       layer: 'Celestia',
       description: `The risk profile in this page refers to L2s that do not integrate with a data availability bridge.
         Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.`,

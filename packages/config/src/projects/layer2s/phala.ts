@@ -59,7 +59,7 @@ const SEQUENCING_WINDOW_SECONDS = 3600 * 12
 export const phala: Layer2 = {
   id: ProjectId('phala'),
   capability: 'universal',
-  createdAt: new UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
+  addedAt: new UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
   display: {
     name: 'Phala',
     slug: 'phala',
@@ -164,22 +164,8 @@ export const phala: Layer2 = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(SEQUENCING_WINDOW_SECONDS),
       secondLine: formatDelay(SEQUENCING_WINDOW_SECONDS),
-      sources: [
-        {
-          contract: portal.name,
-          references: [],
-        },
-      ],
     },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: l2OutputOracle.name,
-          references: [],
-        },
-      ],
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stage: getStage(
     {
@@ -213,8 +199,8 @@ export const phala: Layer2 = {
         Through the SuccinctL2OutputOracle, the system also allows to switch to an optimistic mode, in which no proofs are required and a challenger can challenge the proposed output state root within the finalization period.`,
       references: [
         {
-          href: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-          text: 'Op-Succinct architecture',
+          url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+          title: 'Op-Succinct architecture',
         },
       ],
       risks: [
@@ -244,8 +230,8 @@ export const phala: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          href: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-          text: 'Op-Succinct architecture',
+          url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+          title: 'Op-Succinct architecture',
         },
       ],
       risks: [],
@@ -254,8 +240,8 @@ export const phala: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          href: 'https://etherscan.io/address/0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b',
-          text: 'BatchInbox - Etherscan address',
+          url: 'https://etherscan.io/address/0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b',
+          title: 'BatchInbox - Etherscan address',
         },
       ],
       risks: [],
@@ -264,14 +250,16 @@ export const phala: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'SuccinctL2OutputOracle.sol - Etherscan source code, CHALLENGER address',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'SuccinctL2OutputOracle.sol - Etherscan source code, CHALLENGER address',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             l2OutputOracle,
           )}#code`,
         },
         {
-          text: 'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER address',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER address',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             l2OutputOracle,
           )}#code`,
         },
@@ -283,20 +271,23 @@ export const phala: Layer2 = {
         ...EXITS.REGULAR_YIELDING('zk', finalizationPeriod),
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER check',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               l2OutputOracle,
             )}#code`,
           },
@@ -317,8 +308,8 @@ export const phala: Layer2 = {
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
-      name: 'Phala Network Launch',
-      link: 'https://x.com/PhalaNetwork/status/1877052813383184606',
+      title: 'Phala Network Launch',
+      url: 'https://x.com/PhalaNetwork/status/1877052813383184606',
       date: '2025-01-08T00:00:00Z',
       description: 'Phala Network is live on Ethereum mainnet.',
       type: 'general',

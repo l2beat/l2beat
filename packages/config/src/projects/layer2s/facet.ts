@@ -14,7 +14,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 )
 
 export const facet: Layer2 = opStackL2({
-  createdAt: new UnixTime(1735889012), // 2025-01-03T01:36:52Z
+  addedAt: new UnixTime(1735889012), // 2025-01-03T01:36:52Z
   discovery,
   additionalBadges: [Badge.Other.BasedSequencing],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -59,8 +59,9 @@ export const facet: Layer2 = opStackL2({
           'Users can initiate a withdrawal from the L1StandardBridge escrow by sending a transaction to the L1 contract, forcing the operator to either process it, halt all withdrawals or produce an invalid state transition. Deposits from the L1StandardBridge are disabled, and the use of the fast bridge is encouraged. There is no way to force the fast bridge operator (EOA) to process a withdrawal.',
         references: [
           {
-            text: 'PausedL1StandardBridge.sol - Etherscan source code, disabled _initiateBridgeERC20 function',
-            href: 'https://etherscan.io/address//0x8F75466D69a52EF53C7363F38834bEfC027A2909#code',
+            title:
+              'PausedL1StandardBridge.sol - Etherscan source code, disabled _initiateBridgeERC20 function',
+            url: 'https://etherscan.io/address//0x8F75466D69a52EF53C7363F38834bEfC027A2909#code',
           },
         ],
         risks: [
@@ -83,8 +84,8 @@ export const facet: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1733855495),
   milestones: [
     {
-      name: 'Facet Mainnet Launch',
-      link: 'https://x.com/0xFacet/status/1866610169620336761',
+      title: 'Facet Mainnet Launch',
+      url: 'https://x.com/0xFacet/status/1866610169620336761',
       date: '2024-12-10T00:00:00Z',
       description: 'Facet launches at Ethereum block 21373000.',
       type: 'general',

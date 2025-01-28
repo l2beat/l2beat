@@ -4,10 +4,7 @@ import {
 } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
 import { unionBy } from 'lodash'
-import type {
-  ScalingProjectReference,
-  ScalingProjectRiskViewEntry,
-} from '../../../types'
+import type { ReferenceLink } from '../../../types'
 import { type BadgeId, badges } from '../../badges'
 
 export function mergeBadges(
@@ -38,31 +35,15 @@ export function explorerReferences(
   explorerUrl: string | undefined,
   entries: {
     address: EthereumAddress
-    text: string
+    title: string
   }[],
-): ScalingProjectReference[] {
+): ReferenceLink[] {
   if (explorerUrl === undefined) {
     return []
   }
 
   return entries.map((e) => ({
-    href: `${explorerUrl}/address/${e.address.toString()}#code`,
-    text: e.text,
+    title: e.title,
+    url: `${explorerUrl}/address/${e.address.toString()}#code`,
   }))
-}
-
-export function explorerContractSourceReference(
-  explorerUrl: string | undefined,
-  contract: ContractParameters,
-): ScalingProjectRiskViewEntry['sources'] {
-  if (explorerUrl === undefined) {
-    return []
-  }
-
-  return [
-    {
-      contract: contract.name,
-      references: [`${explorerUrl}/address/${safeGetImplementation(contract)}`],
-    },
-  ]
 }

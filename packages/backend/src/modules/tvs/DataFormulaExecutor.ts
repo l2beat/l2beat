@@ -37,7 +37,9 @@ export class DataFormulaExecutor {
       const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
 
       for (const index in amounts) {
-        this.logger.info(`Processing amount ${index} of ${amounts.length}`)
+        this.logger.info(
+          `Processing amount ${Number(index) + 1} of ${amounts.length}`,
+        )
         const amount = amounts[index]
 
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
@@ -70,7 +72,9 @@ export class DataFormulaExecutor {
       }
 
       for (const index in prices) {
-        this.logger.info(`Processing price ${index} of ${prices.length}`)
+        this.logger.info(
+          `Processing price ${Number(index) + 1} of ${prices.length}`,
+        )
         const price = prices[index]
 
         const cachedValue = await this.storage.getPrice(price.id, timestamp)

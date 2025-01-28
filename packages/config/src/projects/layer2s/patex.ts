@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const patex: Layer2 = upcomingL2({
   id: 'patex',
   capability: 'universal',
-  createdAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
+  addedAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
   display: {
     category: 'Optimistic Rollup',
     name: 'Patex Network',

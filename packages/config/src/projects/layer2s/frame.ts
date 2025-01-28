@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const frame: Layer2 = upcomingL2({
   id: 'frame',
   capability: 'universal', // 'Frame team bought by Igloo Inc. in June 2024. Will contricute to Abstract network. Links no longer work'
-  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   display: {
     name: 'Frame',
     slug: 'frame',
@@ -13,7 +13,7 @@ export const frame: Layer2 = upcomingL2({
       'Frame is an Ethereum L2 designed to scale NFT adoption across the Ethereum ecosystem utilizing Arbitrum Nitro technology.',
     purposes: ['Universal', 'NFT'],
     category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://frame.xyz/'],
       apps: [],

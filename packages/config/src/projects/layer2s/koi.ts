@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const koi: Layer2 = upcomingL2({
   id: 'koi',
   capability: 'universal',
-  createdAt: new UnixTime(1736912127), // 2025-01-14T10:55:27Z
+  addedAt: new UnixTime(1736912127), // 2025-01-14T10:55:27Z
   display: {
     name: 'Koi Finance',
     slug: 'koi',
@@ -13,7 +13,7 @@ export const koi: Layer2 = upcomingL2({
       'Koi Finance is a DEX, farming platform, and Bond platform built on zkRollup and zkSync.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://koi.finance/'],
       apps: ['https://dapp.koi.finance/'],

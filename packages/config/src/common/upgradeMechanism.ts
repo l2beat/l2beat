@@ -1,11 +1,11 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { ScalingProjectTechnologyChoice } from '../types'
+import type { ProjectTechnologyChoice } from '../types'
 
 function ARBITRUM_DAO(
   l1Delay: number,
   challengeWindow: number,
   l2Delay: number,
-): ScalingProjectTechnologyChoice {
+): ProjectTechnologyChoice {
   const totalDelay = l1Delay + challengeWindow + l2Delay
   return {
     name: 'Arbitrum DAO is in charge of upgrades',
@@ -21,8 +21,8 @@ function ARBITRUM_DAO(
     risks: [],
     references: [
       {
-        text: 'Arbitrum DAO',
-        href: 'https://docs.arbitrum.foundation/concepts/arbitrum-dao',
+        title: 'Arbitrum DAO',
+        url: 'https://docs.arbitrum.foundation/concepts/arbitrum-dao',
       },
     ],
   }

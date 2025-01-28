@@ -1,3 +1,4 @@
+import { type ReferenceLink } from '@l2beat/config'
 import { Callout } from '~/components/callout'
 import {
   Tooltip,
@@ -18,7 +19,7 @@ import {
   type UsedInProject,
   UsedInProjectEntry,
 } from './permissions/used-in-project'
-import { type Reference, ReferenceList } from './reference-list'
+import { ReferenceList } from './reference-list'
 
 export interface TechnologyContract {
   name: string
@@ -30,7 +31,7 @@ export interface TechnologyContract {
   usedInProjects?: UsedInProject[]
   participants?: Participant[]
   upgradeConsiderations?: string
-  references: Reference[]
+  references: ReferenceLink[]
   implementationChanged: boolean
   highSeverityFieldChanged: boolean
 }

@@ -12,7 +12,7 @@ const updateInterval = 12 // hours
 
 export const HotShotLightClient = {
   id: 'HotShotLightClient',
-  createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
+  addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
   type: 'StandaloneDacBridge',
   display: {
     name: 'HotShot Light Client',
@@ -57,12 +57,12 @@ export const HotShotLightClient = {
   `,
     references: [
       {
-        text: 'Light Client Functionality',
-        href: 'https://docs.espressosys.com/network/espresso-architecture/the-espresso-network/internal-functionality',
+        title: 'Light Client Functionality',
+        url: 'https://docs.espressosys.com/network/espresso-architecture/the-espresso-network/internal-functionality',
       },
       {
-        text: 'Espresso Github Repository',
-        href: 'https://github.com/EspressoSystems/espresso-sequencer/tree/main/contracts',
+        title: 'Espresso Github Repository',
+        url: 'https://github.com/EspressoSystems/espresso-sequencer/tree/main/contracts',
       },
     ],
     risks: [

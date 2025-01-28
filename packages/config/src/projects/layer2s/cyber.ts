@@ -30,7 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const cyber: Layer2 = opStackL2({
-  createdAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
+  addedAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
   associatedTokens: ['CYBER'],
   discovery,
   additionalBadges: [
@@ -122,12 +122,12 @@ export const cyber: Layer2 = opStackL2({
     `,
       references: [
         {
-          text: 'Alt-DA Specification',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+          title: 'Alt-DA Specification',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
         },
         {
-          text: 'Security Considerations - Ethresear.ch ',
-          href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+          title: 'Security Considerations - Ethresear.ch ',
+          url: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
         },
       ],
       risks: [
@@ -142,7 +142,7 @@ export const cyber: Layer2 = opStackL2({
       ],
     },
     bridge: {
-      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
       type: 'IntegratedDacBridge',
       technology: {
         description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.

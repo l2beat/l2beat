@@ -10,7 +10,7 @@ import type { Layer2, Layer2Display } from '../types'
 
 export interface UpcomingConfigL2 {
   id: string
-  createdAt: UnixTime
+  addedAt: UnixTime
   display: Layer2Display
   capability: ScalingProjectCapability
   badges?: BadgeId[]
@@ -18,7 +18,7 @@ export interface UpcomingConfigL2 {
 
 export interface UpcomingConfigL3 {
   id: string
-  createdAt: UnixTime
+  addedAt: UnixTime
   display: ScalingProjectDisplay
   capability: ScalingProjectCapability
   hostChain: Layer3['hostChain']
@@ -30,8 +30,8 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
     isUpcoming: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
+    addedAt: templateVars.addedAt,
     capability: templateVars.capability,
-    createdAt: templateVars.createdAt,
     display: templateVars.display,
     stage: {
       stage: 'NotApplicable',
@@ -51,8 +51,8 @@ export function upcomingL3(templateVars: UpcomingConfigL3): Layer3 {
     isUpcoming: true,
     type: 'layer3',
     id: ProjectId(templateVars.id),
+    addedAt: templateVars.addedAt,
     capability: templateVars.capability,
-    createdAt: templateVars.createdAt,
     display: {
       ...templateVars.display,
     },

@@ -1,4 +1,5 @@
 'use client'
+import type { ReferenceLink } from '@l2beat/config'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
@@ -10,7 +11,6 @@ import {
 } from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
-import type { Reference } from '../reference-list'
 import { RiskList, type TechnologyRisk } from '../risk-list'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
@@ -29,7 +29,7 @@ export interface ContractsSectionProps {
   }>
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
-  references: Reference[]
+  references: ReferenceLink[]
   diagram?: DiagramParams
   isIncomplete?: boolean
   isUnderReview?: boolean

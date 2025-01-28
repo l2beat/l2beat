@@ -27,7 +27,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     name: p.display.name,
     shortName: p.display.shortName,
     slug: p.display.slug,
-    addedAt: p.createdAt,
+    addedAt: p.addedAt,
     // data
     statuses: {
       yellowWarning: p.display.headerWarning,
@@ -56,7 +56,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),
       reasonsForBeingOther: p.reasonsForBeingOther,
-      stack: p.display.provider,
+      stack: p.display.stack,
       raas: getRaas(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
@@ -134,7 +134,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     name: p.display.name,
     shortName: p.display.shortName,
     slug: p.display.slug,
-    addedAt: p.createdAt,
+    addedAt: p.addedAt,
     // data
     statuses: {
       yellowWarning: p.display.warning,

@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('soon')
 
 export const soon: Layer2 = opStackL2({
-  createdAt: new UnixTime(1726836904), // 2024-09-20T12:55:04Z
+  addedAt: new UnixTime(1726836904), // 2024-09-20T12:55:04Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
   additionalBadges: [Badge.DA.EigenDA, Badge.VM.SolanaVM],
@@ -45,8 +45,8 @@ export const soon: Layer2 = opStackL2({
         risks: [],
         references: [
           {
-            text: 'Soon Docs - Decoupled SVM',
-            href: 'https://docs.soo.network/introduction/decoupled-svm',
+            title: 'Soon Docs - Decoupled SVM',
+            url: 'https://docs.soo.network/introduction/decoupled-svm',
           },
         ],
       },

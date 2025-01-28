@@ -6,14 +6,14 @@ import type { Layer3 } from './types'
 export const hook: Layer3 = underReviewL3({
   id: 'hook',
   capability: 'universal',
-  createdAt: new UnixTime(1719928126), // 2024-07-02T13:48:46Z
+  addedAt: new UnixTime(1719928126), // 2024-07-02T13:48:46Z
   isArchived: true,
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Hook',
     slug: 'hook',
     category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
     headerWarning:

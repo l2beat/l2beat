@@ -5,14 +5,6 @@
     definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
     sentiment: "good"
-    sources: [
-      {
-        contract: "MorphRollup"
-        references: [
-          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
-        ]
-      }
-    ]
     value: "Onchain"
   }
   exitWindow: {
@@ -20,47 +12,17 @@
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
-    sources: [
-      {
-        contract: "MorphRollup"
-        references: [
-          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
-        ]
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
     definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "MorphRollup"
-        references: [
-          "https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code"
-        ]
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "L1MessageQueueWithGasPriceOracle"
-        references: [
-          "https://etherscan.io/address/0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA#code"
-        ]
-      }
-      {
-        contract: "EnforcedTxGateway"
-        references: [
-          "https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code"
-        ]
-      }
-    ]
     value: "No mechanism"
   }
   stateValidation: {

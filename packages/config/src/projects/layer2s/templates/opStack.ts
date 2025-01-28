@@ -35,21 +35,21 @@ import type {
   KnowledgeNugget,
   Milestone,
   ProjectDataAvailability,
+  ProjectEscrow,
+  ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProject,
   ScalingProjectCapability,
   ScalingProjectCategory,
   ScalingProjectContract,
   ScalingProjectDisplay,
-  ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
@@ -105,7 +105,7 @@ interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
   badge: BadgeId
 }
@@ -114,7 +114,7 @@ interface OpStackConfigCommon {
   capability?: ScalingProjectCapability
   architectureImage?: string
   isArchived?: true
-  createdAt: UnixTime
+  addedAt: UnixTime
   daProvider?: DAProvider
   dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
@@ -127,7 +127,7 @@ interface OpStackConfigCommon {
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -140,7 +140,7 @@ interface OpStackConfigCommon {
   nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
-  nonTemplateEscrows?: ScalingProjectEscrow[]
+  nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
@@ -185,7 +185,7 @@ function opStackCommon(
 ): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
     ScalingProjectDisplay,
-    'architectureImage' | 'purposes' | 'provider' | 'category' | 'warning'
+    'architectureImage' | 'purposes' | 'stack' | 'category' | 'warning'
   >
 } {
   const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
@@ -256,13 +256,13 @@ function opStackCommon(
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
+    addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
-    createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       architectureImage: templateVars.architectureImage ?? architectureImage,
-      provider: 'OP Stack',
+      stack: 'OP Stack',
       category:
         templateVars.display.category ??
         (postsToEthereum ? 'Optimistic Rollup' : 'Optimium'),
@@ -324,7 +324,7 @@ function opStackCommon(
         ],
         references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
+            title: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
             address: safeGetImplementation(l2OutputOracle),
           },
         ]),
@@ -335,13 +335,14 @@ function opStackCommon(
         references: [
           ...technologyDA(daProvider, usesBlobs).references,
           {
-            text: 'Derivation: Batch submission - OP Mainnet specs',
-            href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+            title: 'Derivation: Batch submission - OP Mainnet specs',
+            url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
           },
           ...explorerReferences(explorerUrl, [
-            { text: 'BatchInbox - address', address: sequencerInbox },
+            { title: 'BatchInbox - address', address: sequencerInbox },
             {
-              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              title:
+                'OptimismPortal.sol - source code, depositTransaction function',
               address: safeGetImplementation(portal),
             },
           ]),
@@ -351,11 +352,11 @@ function opStackCommon(
         ...OPERATOR.CENTRALIZED_OPERATOR,
         references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - source code, CHALLENGER address',
+            title: 'L2OutputOracle.sol - source code, CHALLENGER address',
             address: safeGetImplementation(l2OutputOracle),
           },
           {
-            text: 'L2OutputOracle.sol - source code, PROPOSER address',
+            title: 'L2OutputOracle.sol - source code, PROPOSER address',
             address: safeGetImplementation(l2OutputOracle),
           },
         ]),
@@ -365,12 +366,13 @@ function opStackCommon(
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
         references: [
           {
-            text: 'Sequencing Window - OP Mainnet Specs',
-            href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+            title: 'Sequencing Window - OP Mainnet Specs',
+            url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
           },
           ...explorerReferences(explorerUrl, [
             {
-              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              title:
+                'OptimismPortal.sol - source code, depositTransaction function',
               address: safeGetImplementation(portal),
             },
           ]),
@@ -388,15 +390,17 @@ function opStackCommon(
           ),
           references: explorerReferences(explorerUrl, [
             {
-              text: 'OptimismPortal.sol - source code, proveWithdrawalTransaction function',
+              title:
+                'OptimismPortal.sol - source code, proveWithdrawalTransaction function',
               address: safeGetImplementation(portal),
             },
             {
-              text: 'OptimismPortal.sol - source code, finalizeWithdrawalTransaction function',
+              title:
+                'OptimismPortal.sol - source code, finalizeWithdrawalTransaction function',
               address: safeGetImplementation(portal),
             },
             {
-              text: 'L2OutputOracle.sol - source code, PROPOSER check',
+              title: 'L2OutputOracle.sol - source code, PROPOSER check',
               address: safeGetImplementation(l2OutputOracle),
             },
           ]),
@@ -406,8 +410,8 @@ function opStackCommon(
           ...EXITS.FORCED('all-withdrawals'),
           references: [
             {
-              text: 'Forced withdrawal from an OP Stack blockchain',
-              href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+              title: 'Forced withdrawal from an OP Stack blockchain',
+              url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
             },
           ],
         },
@@ -421,8 +425,8 @@ function opStackCommon(
           risks: [],
           references: [
             {
-              text: 'Introducing EVM Equivalence',
-              href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+              title: 'Introducing EVM Equivalence',
+              url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
             },
           ],
         },
@@ -476,8 +480,7 @@ function opStackCommon(
     dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
-    riskView:
-      templateVars.riskView ?? getRiskView(templateVars, daProvider, portal),
+    riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
     stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
     dataAvailability: decideDA(daProvider, nativeDA),
   }
@@ -626,7 +629,6 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 function getRiskView(
   templateVars: OpStackConfigCommon,
   daProvider: DAProvider | undefined,
-  portal: ContractParameters,
 ): ScalingProjectRiskView {
   const FINALIZATION_PERIOD_SECONDS: number =
     templateVars.discovery.getContractValue<number>(
@@ -634,25 +636,14 @@ function getRiskView(
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-  const l2OutputOracle =
-    templateVars.l2OutputOracle ??
-    templateVars.discovery.getContract('L2OutputOracle')
-
   return {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       secondLine: formatChallengePeriod(FINALIZATION_PERIOD_SECONDS),
     },
-    dataAvailability: {
-      ...(daProvider === undefined
-        ? RISK_VIEW.DATA_ON_CHAIN
-        : daProvider.riskView),
-      sources: [{ contract: portal.name, references: [] }],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
-      sources: [{ contract: portal.name, references: [] }],
-    },
+    dataAvailability:
+      daProvider === undefined ? RISK_VIEW.DATA_ON_CHAIN : daProvider.riskView,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
     sequencerFailure: {
       // the value is inside the node config, but we have no reference to it
       // so we assume it to be the same value as in other op stack chains
@@ -660,12 +651,8 @@ function getRiskView(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
-      sources: [{ contract: portal.name, references: [] }],
     },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [{ contract: l2OutputOracle.name, references: [] }],
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   }
 }
 
@@ -729,7 +716,7 @@ function decideDA(
 function technologyDA(
   DA: DAProvider | undefined,
   usesBlobs: boolean | undefined,
-): ScalingProjectTechnologyChoice {
+): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

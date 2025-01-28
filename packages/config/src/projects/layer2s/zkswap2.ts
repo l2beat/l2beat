@@ -19,7 +19,7 @@ export const zkswap2: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkswap2'),
   capability: 'universal',
-  createdAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
+  addedAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
   isArchived: true,
   display: {
     name: 'ZKSwap 2.0',
@@ -29,7 +29,7 @@ export const zkswap2: Layer2 = {
     description:
       'ZKSwap is a fork of ZKsync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, but increase the TPS, and make transaction processing cheaper.',
     purposes: ['Payments', 'Exchange'],
-    provider: 'ZKsync Lite',
+    stack: 'ZKsync Lite',
     category: 'ZK Rollup',
 
     links: {
@@ -79,8 +79,8 @@ export const zkswap2: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'ZKSpace Whitepaper',
-          href: 'https://github.com/l2labs/zkspace-whitepaper',
+          title: 'ZKSpace Whitepaper',
+          url: 'https://github.com/l2labs/zkspace-whitepaper',
         },
       ],
     },

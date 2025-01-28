@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('aptos')
 export const aptos: Bridge = {
   type: 'bridge',
   id: ProjectId('aptos'),
-  createdAt: new UnixTime(1667124468), // 2022-10-30T10:07:48Z
+  addedAt: new UnixTime(1667124468), // 2022-10-30T10:07:48Z
   display: {
     name: 'Aptos (LayerZero)',
     slug: 'aptos',

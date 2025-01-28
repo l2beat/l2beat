@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const puffer: Layer2 = upcomingL2({
   id: 'puffer',
   capability: 'universal',
-  createdAt: new UnixTime(1729172001), // 2024-10-17T15:33:21
+  addedAt: new UnixTime(1729172001), // 2024-10-17T15:33:21
   display: {
     name: 'Puffer UniFi',
     slug: 'puffer',

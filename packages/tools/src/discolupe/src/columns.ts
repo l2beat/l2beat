@@ -39,7 +39,7 @@ const AVAILABLE_COLUMNS_RAW = [
     header: 'Provider',
     id: 'vi',
     align: 'right',
-    fn: (project: DiscoLupeProject) => project.display.provider ?? 'None',
+    fn: (project: DiscoLupeProject) => project.display.stack ?? 'None',
     displayFn: DivContainer,
   },
   {

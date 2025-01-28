@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('ebichain')
 
 export const ebichain: Layer2 = orbitStackL2({
   discovery,
-  createdAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
+  addedAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [
@@ -44,7 +44,7 @@ export const ebichain: Layer2 = orbitStackL2({
   discoveryDrivenData: true,
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

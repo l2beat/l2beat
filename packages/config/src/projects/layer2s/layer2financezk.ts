@@ -22,7 +22,7 @@ export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
   capability: 'universal',
-  createdAt: new UnixTime(1654522914), // 2022-06-06T13:41:54Z
+  addedAt: new UnixTime(1654522914), // 2022-06-06T13:41:54Z
   isArchived: true,
   display: {
     name: 'L2.Finance-zk',
@@ -32,7 +32,7 @@ export const layer2financezk: Layer2 = {
     description:
       'Celer’s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
     purposes: ['Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],

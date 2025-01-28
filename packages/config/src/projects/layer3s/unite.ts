@@ -5,7 +5,7 @@ import type { Layer3 } from './types'
 export const unite: Layer3 = upcomingL3({
   id: 'unite',
   capability: 'universal',
-  createdAt: new UnixTime(1722863398), // 2024-08-05T13:09:58Z
+  addedAt: new UnixTime(1722863398), // 2024-08-05T13:09:58Z
   hostChain: ProjectId('base'),
   display: {
     name: 'Unite',
@@ -14,7 +14,7 @@ export const unite: Layer3 = upcomingL3({
       'Unite Blockchain is a revolutionary Layer 3 (L3) EVM-compatible blockchain, designed to transform the landscape of mobile web3 gaming. It is the first L3 blockchain solution for Mass-Market Mobile Games.',
     purposes: ['Gaming'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       documentation: ['https://unite-1.gitbook.io/unite-docs'],
       repositories: [],

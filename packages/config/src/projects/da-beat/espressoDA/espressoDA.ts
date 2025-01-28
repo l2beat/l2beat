@@ -76,7 +76,7 @@ export const espressoDA: DaServiceDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
+      addedAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
       layer: 'EspressoDA',
       description: `The risk profile in this page refers to L2s that do not integrate with a data availability bridge.
         Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.`,

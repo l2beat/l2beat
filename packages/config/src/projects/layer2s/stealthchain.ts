@@ -5,14 +5,14 @@ import type { Layer2 } from './types'
 export const stealthchain: Layer2 = upcomingL2({
   id: 'stealthchain',
   capability: 'universal',
-  createdAt: new UnixTime(1694778975), // 2023-09-15T11:56:15Z
+  addedAt: new UnixTime(1694778975), // 2023-09-15T11:56:15Z
   display: {
     name: 'StealthChain',
     slug: 'stealthchain',
     description: 'Degen Stealth Launchpad, Cross Chain Token Bridge & LP Pool.',
     purposes: ['Launchpad'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://stealthchain.org'],
       apps: [],

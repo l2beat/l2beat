@@ -14,7 +14,7 @@ const arbitrumUpdateInterval = 1 // hours
 const baseUpdateInterval = 1 // hours
 
 export const SP1Blobstream = CELESTIA_BLOBSTREAM({
-  createdAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
+  addedAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
   usedIn: [
     {
       id: ProjectId('rari'),
@@ -52,12 +52,12 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
     `,
     references: [
       {
-        text: 'SP1 Blobstream Operator',
-        href: 'https://github.com/succinctlabs/sp1-blobstream/blob/b35c92bfcfc9a1711ea014cc871d6dd610dd5392/script/bin/operator.rs',
+        title: 'SP1 Blobstream Operator',
+        url: 'https://github.com/succinctlabs/sp1-blobstream/blob/b35c92bfcfc9a1711ea014cc871d6dd610dd5392/script/bin/operator.rs',
       },
       {
-        text: 'Succinct Gateway - Etherscan',
-        href: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
+        title: 'Succinct Gateway - Etherscan',
+        url: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
       },
     ],
     risks: [

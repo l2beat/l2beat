@@ -5,9 +5,9 @@ import {
   type Layer2LivenessConfig,
   type Layer2TxConfig,
   type Layer3,
-  type ScalingProjectEscrow,
-  type ScalingProjectTransactionApi,
+  type ProjectEscrow,
   type SharedEscrow,
+  type TransactionApiConfig,
   tokenList,
 } from '@l2beat/config'
 import {
@@ -32,7 +32,7 @@ export interface BackendProject {
   type: 'layer2' | 'bridge' | 'layer3'
   isUpcoming?: boolean
   escrows: BackendProjectEscrow[]
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   trackedTxsConfig?: TrackedTxConfigEntry[] | undefined
   livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
@@ -46,7 +46,7 @@ export interface BackendProjectEscrow {
   tokens: (Token & { isPreminted: boolean })[]
   chain: string
   includeInTotal?: boolean
-  source?: ScalingProjectEscrow['source']
+  source?: ProjectEscrow['source']
   bridgedUsing?: TokenBridgedUsing
   sharedEscrow?: SharedEscrow
 }
@@ -192,7 +192,7 @@ export function layer3ToBackendProject(layer3: Layer3): BackendProject {
   }
 }
 
-function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
+function toProjectEscrow(escrow: ProjectEscrow): BackendProjectEscrow {
   const chainId = chainConverter.toChainId(escrow.chain)
 
   const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
@@ -210,7 +210,7 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
 }
 
 export function mapTokens(
-  escrow: ScalingProjectEscrow,
+  escrow: ProjectEscrow,
   tokensOnChain: Token[],
 ): (Token & { isPreminted: boolean })[] {
   return tokensOnChain
@@ -221,20 +221,20 @@ export function mapTokens(
     .map((token) => ({ ...token, isPreminted: isPreminted(token, escrow) }))
 }
 
-function isTokenPhasedOut(token: Token, escrow: ScalingProjectEscrow): unknown {
+function isTokenPhasedOut(token: Token, escrow: ProjectEscrow): unknown {
   if (token.untilTimestamp === undefined) return false
 
   return token.untilTimestamp.lt(escrow.sinceTimestamp)
 }
 
-function isTokenIncluded(token: Token, escrow: ScalingProjectEscrow): boolean {
+function isTokenIncluded(token: Token, escrow: ProjectEscrow): boolean {
   return (
     (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
     !escrow.excludedTokens?.includes(token.symbol)
   )
 }
 
-function isPreminted(token: Token, escrow: ScalingProjectEscrow): boolean {
+function isPreminted(token: Token, escrow: ProjectEscrow): boolean {
   if (escrow.premintedTokens === undefined) {
     return false
   }

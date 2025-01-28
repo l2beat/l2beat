@@ -5,7 +5,7 @@ import type { Layer2 } from './types'
 export const unichain: Layer2 = upcomingL2({
   id: 'unichain',
   capability: 'universal',
-  createdAt: new UnixTime(1728932992), // 2024-10-14T19:09:00Z
+  addedAt: new UnixTime(1728932992), // 2024-10-14T19:09:00Z
   display: {
     name: 'Unichain',
     slug: 'unichain',
@@ -13,7 +13,7 @@ export const unichain: Layer2 = upcomingL2({
       'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
     purposes: ['Universal', 'Exchange'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://unichain.org/'],
       apps: ['https://unichain.org/bridge'],
