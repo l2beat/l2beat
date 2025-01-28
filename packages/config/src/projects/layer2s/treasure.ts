@@ -16,9 +16,8 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const treasure: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsKey: 'treasureValidators',
   additionalBadges: [Badge.DA.CustomDA],
-  createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
+  addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
@@ -76,17 +75,7 @@ export const treasure: Layer2 = zkStackL2({
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'ExecutorFacet',
-          references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL,
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -100,16 +89,16 @@ export const treasure: Layer2 = zkStackL2({
       ],
       references: [
         {
-          text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
         },
       ],
     },
   },
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://x.com/Treasure_DAO/status/1865101292752040255',
+      title: 'Mainnet launch',
+      url: 'https://x.com/Treasure_DAO/status/1865101292752040255',
       date: '2024-12-11T00:00:00Z',
       description: 'Treasure mainnet launches for all users.',
       type: 'general',

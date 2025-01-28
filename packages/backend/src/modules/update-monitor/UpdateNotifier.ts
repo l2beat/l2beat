@@ -240,42 +240,42 @@ function flattenReminders(
 }
 
 export function generateTemplatizedStatus(): string {
-  const providers: string[] = [
+  const stacks: string[] = [
     ...new Set(
       layer2s
         .filter((l2) => !l2.isUpcoming && !l2.isArchived && !l2.isUnderReview)
-        .map((l2) => l2.display.provider?.toString())
+        .map((l2) => l2.display.stack?.toString())
         .concat(
           layer3s
             .filter(
               (l3) => !l3.isUpcoming && !l3.isArchived && !l3.isUnderReview,
             )
-            .map((l3) => l3.display.provider?.toString()),
+            .map((l3) => l3.display.stack?.toString()),
         )
         .filter((p) => p !== undefined),
     ),
   ]
 
   const entries: {
-    provider: string
+    stack: string
     projectCount: number
     fullyTemplatizedCount: number
   }[] = []
 
-  for (const provider of providers) {
+  for (const stack of stacks) {
     const isFullyTemplatizedL2 = layer2s
-      .filter((l2) => l2.display.provider === provider)
+      .filter((l2) => l2.display.stack === stack)
       .filter((l2) => !l2.isUpcoming && !l2.isArchived && !l2.isUnderReview)
       .map((l2) => isDiscoveryDriven(l2))
     const isFullyTemplatizedL3 = layer3s
-      .filter((l3) => l3.display.provider === provider)
+      .filter((l3) => l3.display.stack === stack)
       .filter((l3) => !l3.isUpcoming && !l3.isArchived && !l3.isUnderReview)
       .map((l3) => isDiscoveryDriven(l3))
     const isFullyTemplatized = isFullyTemplatizedL2.concat(isFullyTemplatizedL3)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length
     entries.push({
-      provider,
+      stack,
       projectCount: isFullyTemplatized.length,
       fullyTemplatizedCount,
     })
@@ -290,7 +290,7 @@ export function generateTemplatizedStatus(): string {
     ).toFixed()
     const templatizationString = `${e.fullyTemplatizedCount}/${e.projectCount} (${percentage}%)`
 
-    rows.push([e.provider, templatizationString])
+    rows.push([e.stack, templatizationString])
   }
 
   const table = formatAsAsciiTable(headers, rows)

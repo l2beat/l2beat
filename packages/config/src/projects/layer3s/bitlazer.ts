@@ -5,7 +5,8 @@ import type { Layer3 } from './types'
 
 export const bitlazer: Layer3 = underReviewL3({
   id: 'bitlazer',
-  createdAt: new UnixTime(1737636289), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737636289), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,
@@ -18,7 +19,7 @@ export const bitlazer: Layer3 = underReviewL3({
     name: 'Bitlazer',
     slug: 'bitlazer',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Bitlazer is an Orbit stack L3 with AnyTrust DA powering BTC-focused DeFi applications and payments.',
     purposes: ['Bitcoin DApps'],

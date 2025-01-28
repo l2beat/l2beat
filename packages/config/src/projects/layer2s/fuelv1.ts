@@ -23,7 +23,8 @@ const discovery = new ProjectDiscovery('fuelv1')
 export const fuelv1: Layer2 = {
   type: 'layer2',
   id: ProjectId('fuelv1'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
     name: 'Fuel v1',
@@ -108,8 +109,8 @@ export const fuelv1: Layer2 = {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       references: [
         {
-          text: 'Background - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
+          title: 'Background - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
         },
       ],
     },
@@ -117,8 +118,8 @@ export const fuelv1: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'Background - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
+          title: 'Background - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
         },
       ],
     },
@@ -126,12 +127,12 @@ export const fuelv1: Layer2 = {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
         {
-          text: 'Architecture: A High-Level View - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
+          title: 'Architecture: A High-Level View - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
         },
         {
-          text: 'Mainnet deployment parameters - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Deployment%20Parameters.html#mainnet',
+          title: 'Mainnet deployment parameters - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Deployment%20Parameters.html#mainnet',
         },
       ],
     },
@@ -139,8 +140,8 @@ export const fuelv1: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       references: [
         {
-          text: 'Architecture: A High-Level View - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
+          title: 'Architecture: A High-Level View - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
         },
       ],
     },
@@ -149,8 +150,8 @@ export const fuelv1: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [
           {
-            text: 'Withdraw.yulp#L40 - Fuel documentation',
-            href: 'https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Withdraw.yulp#L40',
+            title: 'Withdraw.yulp#L40 - Fuel documentation',
+            url: 'https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Withdraw.yulp#L40',
           },
         ],
       },
@@ -169,8 +170,8 @@ export const fuelv1: Layer2 = {
   },
   milestones: [
     {
-      name: 'Fuel v1 is live on Mainnet',
-      link: 'https://twitter.com/fuellabs_/status/1344707195250896899',
+      title: 'Fuel v1 is live on Mainnet',
+      url: 'https://twitter.com/fuellabs_/status/1344707195250896899',
       date: '2020-12-31T00:00:00Z',
       description: 'First trustless Optimistic Rollup is live on Mainnet.',
       type: 'general',

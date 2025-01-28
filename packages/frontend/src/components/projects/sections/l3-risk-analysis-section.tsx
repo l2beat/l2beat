@@ -1,4 +1,4 @@
-import { type Sentiment } from '@l2beat/shared-pure'
+import type { Sentiment } from '@l2beat/config'
 import { type ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'

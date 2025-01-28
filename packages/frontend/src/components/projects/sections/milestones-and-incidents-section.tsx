@@ -107,7 +107,9 @@ function MilestonesBase(props: {
                 />
               )}
               <Icon className="absolute -left-8" />
-              <p className="text-lg font-bold leading-none">{milestone.name}</p>
+              <p className="text-lg font-bold leading-none">
+                {milestone.title}
+              </p>
               <p className="text-sm dark:text-gray-400">
                 {formatDate(milestone.date)}
               </p>
@@ -117,7 +119,7 @@ function MilestonesBase(props: {
                     {milestone.description}
                   </Markdown>
                 )}
-                <CustomLink className="text-sm" href={milestone.link}>
+                <CustomLink className="text-sm" href={milestone.url}>
                   Learn more
                 </CustomLink>
               </div>

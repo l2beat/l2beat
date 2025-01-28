@@ -5,14 +5,6 @@
     definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
     sentiment: "good"
-    sources: [
-      {
-        contract: "StarkPerpetual"
-        references: [
-          "https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82"
-        ]
-      }
-    ]
     value: "Onchain"
   }
   exitWindow: {
@@ -26,14 +18,6 @@
     definingMetric: Infinity
     description: "Users are able to trustlessly exit by submitting a Merkle proof of funds. Positions will be closed using the average price from the last batch state update."
     sentiment: "good"
-    sources: [
-      {
-        contract: "StarkPerpetual"
-        references: [
-          "https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32"
-        ]
-      }
-    ]
     value: "Use escape hatch"
   }
   sequencerFailure: {
@@ -41,14 +25,6 @@
     description: "Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for 14d, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means."
     secondLine: "14d delay"
     sentiment: "good"
-    sources: [
-      {
-        contract: "StarkPerpetual"
-        references: [
-          "https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46"
-        ]
-      }
-    ]
     value: "Force via L1"
   }
   stateValidation: {
@@ -56,14 +32,6 @@
     description: "STARKs are zero knowledge proofs that ensure state correctness."
     secondLine: undefined
     sentiment: "good"
-    sources: [
-      {
-        contract: "StarkPerpetual"
-        references: [
-          "https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125"
-        ]
-      }
-    ]
     value: "ZK proofs (ST)"
   }
 }

@@ -1,19 +1,17 @@
-import type {
-  AssetId,
-  ChainId,
-  EthereumAddress,
-  ProjectId,
-  StringWithAutocomplete,
-  UnixTime,
-  ValueWithSentiment,
-  WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
-import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './common'
+import type { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
 import type { BadgeId } from './projects/badges'
-import type { DacDaLayer } from './projects/da-beat'
+import type { DacDaLayer, ProjectDaTrackingConfig } from './projects/da-beat'
 import type { StageConfig, WarningWithSentiment } from './projects/layer2s'
 import type { ProofVerification } from './projects/types'
+
+export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
+
+export type WarningSentiment = 'bad' | 'warning' | 'neutral'
+export interface WarningValueWithSentiment {
+  value: string
+  sentiment: WarningSentiment
+}
 
 export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 export type ReasonForBeingInOther =
@@ -59,22 +57,21 @@ export interface KnowledgeNugget {
   thumbnail?: string
 }
 
-export type MilestoneType = 'general' | 'incident'
-
 export interface Milestone {
-  name: string
-  link: string
+  title: string
+  url: string
   date: string
   description?: string
-  type: MilestoneType
+  type: 'general' | 'incident'
 }
 
 /** Base interface for Layer2s and Layer3s. The hope is that Layer2 and Layer3 will dissapear and only this will remain. */
 export interface ScalingProject {
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  capability: ScalingProjectCapability
   /** Date of creation of the file (not the project) */
-  createdAt: UnixTime
+  addedAt: UnixTime
   /** Is this project archived? */
   isArchived?: boolean
   /** Is this project an upcoming rollup? */
@@ -117,6 +114,8 @@ export interface ScalingProject {
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
 
+export type ScalingProjectCapability = 'universal' | 'appchain'
+
 export type ScalingProjectCategory =
   | 'Optimistic Rollup'
   | 'ZK Rollup'
@@ -131,25 +130,11 @@ export interface ScalingProjectConfig {
   /** Tokens that can be used to pay the gas fee */
   gasTokens?: string[]
   /** List of contracts in which L1 funds are locked */
-  escrows: ScalingProjectEscrow[]
+  escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
-  transactionApi?: ScalingProjectTransactionApi
-}
-
-export interface ProjectExternalAssets {
-  /** Id of the external chain on which assets are held. */
-  chainId: ChainId
-  /** List of assets to include. */
-  assets: {
-    /** Id of a given asset. */
-    assetId: AssetId
-    /** L2 contract address of the asset. */
-    tokenAddress: string
-    /** "Creation time" of a given asset, we assume that it did not exists before that time. */
-    sinceTimestamp: UnixTime
-    /** How fine grained the asset is */
-    decimals: number
-  }[]
+  transactionApi?: TransactionApiConfig
+  /** Data availability tracking config */
+  daTracking?: ProjectDaTrackingConfig
 }
 
 export interface ScalingProjectContracts {
@@ -160,7 +145,7 @@ export interface ScalingProjectContracts {
   /** List of the contracts on the chain itself */
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   /** List of references backing up the claim */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
   /** The description and research is under review */
@@ -194,7 +179,7 @@ export interface ScalingProjectContract {
     pausableBy: string[]
   }
   /** List of references */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
@@ -212,19 +197,24 @@ export interface DataAvailabilityConfig {
   mode: DataAvailabilityMode
 }
 
-export type DataAvailabilityMode = (typeof DA_MODES)[keyof typeof DA_MODES]
-export type DataAvailabilityLayer = (typeof DA_LAYERS)[keyof typeof DA_LAYERS]
-type MappedDataAvailabilityBridge = {
-  [key in keyof typeof DA_BRIDGES]: (typeof DA_BRIDGES)[key] extends (
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    ...args: any[]
-  ) => infer R
-    ? R
-    : (typeof DA_BRIDGES)[key]
+export interface DataAvailabilityMode {
+  value: string
+  secondLine?: string
 }
 
-export type DataAvailabilityBridge =
-  MappedDataAvailabilityBridge[keyof MappedDataAvailabilityBridge]
+export interface DataAvailabilityLayer {
+  value: string
+  sentiment: Sentiment
+  secondLine?: string
+  description: string
+  fallbackDescription?: string
+}
+
+export interface DataAvailabilityBridge {
+  value: string
+  description: string
+  sentiment: Sentiment
+}
 
 export type ScalingProjectDisplay = {
   /** Name of the scaling project, will be used as a display name on the website */
@@ -235,22 +225,8 @@ export type ScalingProjectDisplay = {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
-  /** Technology provider */
-  provider?: ScalingProjectStack
-  mainPermissions?: {
-    proposer: {
-      value: string
-      secondLine?: string
-    }
-    challenger: {
-      value: StringWithAutocomplete<'None'>
-      secondLine?: string
-    }
-    upgrader: {
-      value: string
-      secondLine?: string
-    }
-  }
+  /** Technological stack */
+  stack?: ScalingProjectStack
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string
   /** Warning for TVL */
@@ -275,7 +251,43 @@ export type ScalingProjectDisplay = {
   upgradesAndGovernanceImage?: string
 }
 
-export type ScalingProjectEscrow = OldProjectEscrow | NewProjectEscrow
+export interface ProjectEscrow {
+  chain: string
+  /** Address of the escrow. Use etherscan to verify its correctness. */
+  address: EthereumAddress
+  /** Should use name of the contract for escrow name */
+  useContractName?: boolean
+  /** All the data about the escrow contract */
+  contract?: Omit<ScalingProjectContract, 'address'>
+  /** Timestamp of the deployment transaction of the escrow contract. */
+  sinceTimestamp: UnixTime
+  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
+  tokens: string[] | '*'
+  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
+  excludedTokens?: string[]
+  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
+  premintedTokens?: string[]
+  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
+  isHistorical?: boolean
+  /** Upcoming projects needs upcoming escrows (needed for TVL) */
+  isUpcoming?: boolean
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+  includeInTotal?: boolean
+  source?: 'canonical' | 'external' | 'native'
+  /** Bridge used for this escrow */
+  bridgedUsing?: {
+    bridges: {
+      name: string
+      /** Slug is used for the URL of the bridge on L2BEAT */
+      slug?: string
+    }[]
+    warning?: string
+  }
+  sharedEscrow?: SharedEscrow
+}
+
+export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
 
 export interface AggLayerEscrow {
   type: 'AggLayer'
@@ -302,79 +314,6 @@ export interface ElasticChainEscrow {
    * non-ETH gas tokens e.g. OKB, GPT
    */
   tokensToAssignFromL1?: string[]
-}
-
-export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
-
-interface OldProjectEscrow {
-  address: EthereumAddress
-  /** Timestamp of the deployment transaction of the escrow contract. */
-  sinceTimestamp: UnixTime
-  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
-  tokens: string[] | '*'
-  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
-  excludedTokens?: string[]
-  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
-  premintedTokens?: string[]
-  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
-  isHistorical?: boolean
-  /** Temporary flag meaning that escrow config was migrated to new format */
-  newVersion?: false
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
-  chain: string
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-  includeInTotal?: boolean
-  source?: 'canonical' | 'external' | 'native'
-  /** Bridge used for this escrow */
-  bridgedUsing?: {
-    bridges: {
-      name: string
-      /** Slug is used for the URL of the bridge on L2BEAT */
-      slug?: string
-    }[]
-    warning?: string
-  }
-  sharedEscrow?: SharedEscrow
-}
-
-interface NewProjectEscrow {
-  /** Address of the escrow. Use etherscan to verify its correctness. */
-  address: EthereumAddress
-  /** All the data about the escrow contract */
-  contract: Omit<ScalingProjectContract, 'address'>
-  /** Timestamp of the deployment transaction of the escrow contract. */
-  sinceTimestamp: UnixTime
-  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
-  tokens: string[] | '*'
-  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
-  excludedTokens?: string[]
-  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
-  premintedTokens?: string[]
-  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
-  isHistorical?: boolean
-  /** Temporary flag meaning that escrow config was migrated to new format */
-  newVersion?: true
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
-  /** Should use name of the contract for escrow name */
-  useContractName?: boolean
-  chain: string
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-  includeInTotal?: boolean
-  source?: 'canonical' | 'external' | 'native'
-  /** Bridge used for this escrow */
-  bridgedUsing?: {
-    bridges: {
-      name: string
-      /** Slug is used for the URL of the bridge on L2BEAT */
-      slug?: string
-    }[]
-    warning?: string
-  }
-  sharedEscrow?: SharedEscrow
 }
 
 export interface ScalingProjectLinks {
@@ -404,7 +343,7 @@ export interface ScalingProjectPermission {
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain?: string
   /** List of source code permalinks and useful materials */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
   participants?: ScalingProjectPermissionedAccount[]
   /** Indicates whether the permission comes from a role like Proposer or Guardian */
@@ -456,11 +395,9 @@ export type ScalingProjectPurpose =
   | 'IoT'
   | 'Restaking'
 
-export interface ScalingProjectReference {
-  /** Short text describing link contents */
-  text: string
-  /** URL of the link, preferably https */
-  href: string
+export interface ReferenceLink {
+  title: string
+  url: string
 }
 
 export interface ScalingProjectRisk {
@@ -483,16 +420,12 @@ export type ScalingProjectRiskCategory =
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'
 
-export interface ScalingProjectRiskViewEntry
-  extends ValueWithSentiment<string> {
+export interface ScalingProjectRiskViewEntry {
+  value: string
   description: string
+  secondLine?: string // second line in risk view
+  sentiment: Sentiment
   warning?: WarningValueWithSentiment
-  // second line in risk view
-  secondLine?: string
-  sources?: {
-    contract: string
-    references: string[]
-  }[]
   definingMetric?: number
 }
 
@@ -526,7 +459,7 @@ export type ScalingProjectStateValidationCategory = {
   title: CategoryTitle
   description: string
   risks?: ScalingProjectRisk[]
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
 }
 
 export interface ScalingProjectStateValidation {
@@ -537,32 +470,32 @@ export interface ScalingProjectStateValidation {
 
 export interface ScalingProjectTechnology {
   /** What state correctness mechanism is used in the project */
-  stateCorrectness?: ScalingProjectTechnologyChoice
+  stateCorrectness?: ProjectTechnologyChoice
   /** What is the new cryptography used in the project */
-  newCryptography?: ScalingProjectTechnologyChoice
+  newCryptography?: ProjectTechnologyChoice
   /** What is the data availability choice for the project */
-  dataAvailability?: ScalingProjectTechnologyChoice
+  dataAvailability?: ProjectTechnologyChoice
   /** What are the details about project operator(s) */
-  operator?: ScalingProjectTechnologyChoice
+  operator?: ProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
-  forceTransactions?: ScalingProjectTechnologyChoice
+  forceTransactions?: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */
-  exitMechanisms?: ScalingProjectTechnologyChoice[]
+  exitMechanisms?: ProjectTechnologyChoice[]
   /** What is solution to the mass exit problem */
-  massExit?: ScalingProjectTechnologyChoice
+  massExit?: ProjectTechnologyChoice
   /** Other considerations */
-  otherConsiderations?: ScalingProjectTechnologyChoice[]
+  otherConsiderations?: ProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
 }
 
-export interface ScalingProjectTechnologyChoice {
+export interface ProjectTechnologyChoice {
   /** Name of the specific technology choice */
   name: string
   /** Description of the specific technology choice. Null means missing information */
   description: string
   /** List of references backing up the claim */
-  references: ScalingProjectReference[]
+  references: ReferenceLink[]
   /** List of risks associated with the technology choice */
   risks: ScalingProjectRisk[]
   /** The description and research is incomplete */
@@ -571,15 +504,14 @@ export interface ScalingProjectTechnologyChoice {
   isUnderReview?: boolean
 }
 
-export type AdjustCount =
-  | { type: 'SubtractOne' }
-  | { type: 'SubtractOneSinceBlock'; blockNumber: number }
-
-export interface SimpleTransactionApi<T extends string> {
-  type: T
-  defaultUrl: string
-  defaultCallsPerMinute?: number
-}
+export type TransactionApiConfig =
+  | RpcTransactionApi
+  | StarkexTransactionApi
+  | CustomTransactionApi<'starknet'>
+  | CustomTransactionApi<'zksync'>
+  | CustomTransactionApi<'loopring'>
+  | CustomTransactionApi<'degate3'>
+  | CustomTransactionApi<'fuel'>
 
 export interface RpcTransactionApi {
   type: 'rpc'
@@ -589,6 +521,10 @@ export interface RpcTransactionApi {
   startBlock?: number
 }
 
+export type AdjustCount =
+  | { type: 'SubtractOne' }
+  | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+
 export interface StarkexTransactionApi {
   type: 'starkex'
   product: string[]
@@ -596,17 +532,14 @@ export interface StarkexTransactionApi {
   resyncLastDays?: number
 }
 
-export type ScalingProjectTransactionApi =
-  | SimpleTransactionApi<'starknet'>
-  | SimpleTransactionApi<'zksync'>
-  | SimpleTransactionApi<'loopring'>
-  | SimpleTransactionApi<'degate3'>
-  | SimpleTransactionApi<'fuel'>
-  | RpcTransactionApi
-  | StarkexTransactionApi
+export interface CustomTransactionApi<T extends string> {
+  type: T
+  defaultUrl: string
+  defaultCallsPerMinute?: number
+}
 
 export interface ProjectDataAvailability {
-  layer: ValueWithSentiment<string> & { secondLine?: string }
+  layer: DataAvailabilityLayer
   bridge: DataAvailabilityBridge
   mode: DataAvailabilityMode
 }

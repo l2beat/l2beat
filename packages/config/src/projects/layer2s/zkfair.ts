@@ -105,7 +105,8 @@ const requiredSignatures = discovery.getContractValue<number>(
 export const zkfair: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkfair'),
-  createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  capability: 'universal',
+  addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -119,7 +120,7 @@ export const zkfair: Layer2 = {
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://zkfair.io/'],
       apps: ['https://wallet.zkfair.io/'],
@@ -175,58 +176,19 @@ export const zkfair: Layer2 = {
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L820',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount,
-        requiredSignatures,
-      }),
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L587',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount,
+      requiredSignatures,
+    }),
     exitWindow: exitWindowRisk,
     // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
-    sequencerFailure: {
-      ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L247',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
     proposerFailure: {
       ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
       description:
         RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
         ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-      sources: [
-        {
-          contract: 'ZKFairValidium',
-          references: [
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L639',
-            'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L862',
-          ],
-        },
-      ],
     },
   },
   stage: {
@@ -237,8 +199,9 @@ export const zkfair: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
+          title:
+            'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
         },
       ],
     },
@@ -246,8 +209,9 @@ export const zkfair: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
       references: [
         {
-          text: 'ZKFairValidium.sol#L494 - Etherscan source code, sequencedBatches mapping',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L494',
+          title:
+            'ZKFairValidium.sol#L494 - Etherscan source code, sequencedBatches mapping',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L494',
         },
       ],
     },
@@ -265,8 +229,9 @@ export const zkfair: Layer2 = {
       ],
       references: [
         {
-          text: 'ZKFairValidium.sol#L61 - Etherscan source code, onlyTrustedSequencer modifier',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L461',
+          title:
+            'ZKFairValidium.sol#L61 - Etherscan source code, onlyTrustedSequencer modifier',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L461',
         },
       ],
     },
@@ -276,8 +241,9 @@ export const zkfair: Layer2 = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          text: 'ZKFairValidium.sol#L475 - Etherscan source code, isForceBatchAllowed modifier',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L475',
+          title:
+            'ZKFairValidium.sol#L475 - Etherscan source code, isForceBatchAllowed modifier',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L475',
         },
       ],
     },
@@ -286,8 +252,9 @@ export const zkfair: Layer2 = {
         ...EXITS.REGULAR('zk', 'merkle proof'),
         references: [
           {
-            text: 'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
+            title:
+              'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
+            url: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
           },
         ],
       },
@@ -387,16 +354,17 @@ export const zkfair: Layer2 = {
     ],
     references: [
       {
-        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
+        title:
+          'State injections - stateRoot and exitRoot are part of the validity proof input.',
+        url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   milestones: [
     {
-      name: 'ZKFair Mainnet is Live',
-      link: 'https://twitter.com/ZKFCommunity/status/1737307444181869017',
+      title: 'ZKFair Mainnet is Live',
+      url: 'https://twitter.com/ZKFCommunity/status/1737307444181869017',
       date: '2023-12-20T00:00:00Z',
       description: 'ZKFair launched.',
       type: 'general',
@@ -404,7 +372,7 @@ export const zkfair: Layer2 = {
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'State diffs',

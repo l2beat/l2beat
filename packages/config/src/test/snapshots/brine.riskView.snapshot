@@ -5,14 +5,6 @@
     definingMetric: 0.5
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/4 that is tasked with protecting and supplying the data."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "Committee"
-        references: [
-          "https://etherscan.io/address/0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446#code#F1#L60"
-        ]
-      }
-    ]
     value: "External (DAC)"
   }
   exitWindow: {

@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('edgeless')
 
 export const edgeless: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1712313901), // 2024-04-05T10:45:01Z
+  addedAt: new UnixTime(1712313901), // 2024-04-05T10:45:01Z
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -60,7 +60,7 @@ export const edgeless: Layer2 = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

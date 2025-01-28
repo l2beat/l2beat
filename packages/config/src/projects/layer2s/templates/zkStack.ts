@@ -26,15 +26,16 @@ import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   Milestone,
+  ProjectEscrow,
+  ProjectTechnologyChoice,
+  ScalingProjectCapability,
   ScalingProjectContract,
-  ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import type {
   ChainConfig,
@@ -57,15 +58,15 @@ export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
 
 export interface ZkStackConfigCommon {
-  createdAt: UnixTime
+  addedAt: UnixTime
+  capability?: ScalingProjectCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  validatorsKey: string
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
@@ -77,7 +78,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgePremintedTokens?: string[]
   diamondContract: ContractParameters
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -87,7 +88,7 @@ export interface ZkStackConfigCommon {
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
-  nonTemplateEscrows?: (upgrades: Upgradeability) => ScalingProjectEscrow[]
+  nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -221,50 +222,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
   }
 
-  const upgradedToV25 =
-    discovery.getContractValue<number[]>(
-      templateVars.diamondContract.name,
-      'getSemverProtocolVersion',
-    )[1] === 25
-
-  /**
-   * Fetches Validators from ValidatorTimelock events:
-   * It is more complicated to accommodate the case in which
-   * a validator is added and removed more than once.
-   */
-  // const validators = () => {
-  //   const validatorsAdded = discovery.getContractValue<string[]>(
-  //     'ValidatorTimelock',
-  //     templateVars.validatorsEvents.added,
-  //   )
-  //   const validatorsRemoved = discovery.getContractValue<string[]>(
-  //     'ValidatorTimelock',
-  //     templateVars.validatorsEvents.removed,
-  //   )
-
-  //   // Create a map to track the net state of each validator (added or removed)
-  //   const validatorStates = new Map<string, number>()
-
-  //   // Increment for added validators
-  //   validatorsAdded.forEach((validator) => {
-  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-  //   })
-
-  //   // Decrement for removed validators
-  //   validatorsRemoved.forEach((validator) => {
-  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-  //   })
-
-  //   // Filter validators that have a net positive state (added more times than removed)
-  //   return Array.from(validatorStates.entries())
-  //     .filter(([_, state]) => state > 0)
-  //     .map(([validator, _]) => validator)
-  // }
-
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
-    createdAt: templateVars.createdAt,
+    addedAt: templateVars.addedAt,
+    capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
         Badge.Stack.ZKStack,
@@ -278,7 +240,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
-      provider: 'ZK Stack',
+      stack: 'ZK Stack',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
@@ -344,152 +306,21 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         secondLine: formatExecutionDelay(executionDelayS),
-        sources: upgradedToV25
-          ? [
-              {
-                contract: 'ValidatorTimelock',
-                references: [
-                  'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169',
-                ],
-              },
-              {
-                contract: templateVars.diamondContract.name,
-                references: [
-                  'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529',
-                  'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F10#L26',
-                ],
-              },
-              {
-                contract: 'Verifier',
-                references: [
-                  'https://etherscan.io/address/0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66#code#F1#L343',
-                ],
-              },
-            ]
-          : [
-              {
-                contract: 'ValidatorTimelock',
-                references: [
-                  'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169',
-                ],
-              },
-              {
-                contract: templateVars.diamondContract.name,
-                references: [
-                  'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448',
-                  'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23',
-                ],
-              },
-              {
-                contract: 'Verifier',
-                references: [
-                  'https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F1#L343',
-                ],
-              },
-            ],
       },
       dataAvailability:
         (templateVars.nonTemplateRiskView?.dataAvailability ??
         daProvider !== undefined)
-          ? {
-              ...RISK_VIEW.DATA_EXTERNAL,
-              sources: [
-                {
-                  contract: 'ValidatorTimelock',
-                  references: [
-                    'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
-                    'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
-                  ],
-                },
-                {
-                  contract: templateVars.diamondContract.name,
-                  references: upgradedToV25
-                    ? [
-                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L267',
-                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L57', // validiumMode
-                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F12#L121',
-                      ]
-                    : [
-                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
-                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L52', // validiumMode
-                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
-                      ],
-                },
-              ],
-            }
-          : {
-              ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-              sources: [
-                {
-                  contract: 'ValidatorTimelock',
-                  references: [
-                    'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
-                    'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
-                  ],
-                },
-                {
-                  contract: templateVars.diamondContract.name,
-                  references: upgradedToV25
-                    ? [
-                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529',
-                        'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F12#L121',
-                      ]
-                    : [
-                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
-                        'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
-                      ],
-                },
-              ],
-            },
-      exitWindow: templateVars.nonTemplateRiskView?.exitWindow ?? {
-        ...RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
-        sources: [
-          {
-            contract: templateVars.diamondContract.name,
-            references: upgradedToV25
-              ? [
-                  'https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L130', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
-                  'https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L148', // executeUpgrade() onlyStateTransitionManager
-                ]
-              : [
-                  'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
-                  'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128', // executeUpgrade() onlyStateTransitionManager
-                ],
-          },
-        ],
-      },
-      sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
-        ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-        sources: [
-          {
-            contract: templateVars.diamondContract.name,
-            references: upgradedToV25
-              ? [
-                  'https://etherscan.io/address/0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L57',
-                  'https://etherscan.io/address/0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96',
-                ]
-              : [
-                  'https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53',
-                  'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
-                ],
-          },
-        ],
-      },
-      proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
-        ...RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
-        sources: [
-          {
-            contract: templateVars.diamondContract.name,
-            references: upgradedToV25
-              ? [
-                  'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L270',
-                ]
-              : [
-                  'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219',
-                ],
-          },
-        ],
-      },
+          ? RISK_VIEW.DATA_EXTERNAL
+          : RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
+      exitWindow:
+        templateVars.nonTemplateRiskView?.exitWindow ??
+        RISK_VIEW.EXIT_WINDOW_ZKSTACK(upgradeDelayWithScApprovalS),
+      sequencerFailure:
+        templateVars.nonTemplateRiskView?.sequencerFailure ??
+        RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
+      proposerFailure:
+        templateVars.nonTemplateRiskView?.proposerFailure ??
+        RISK_VIEW.PROPOSER_WHITELIST_GOVERNANCE,
     },
     stage:
       templateVars.stage ??
@@ -544,8 +375,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         ],
         references: [
           {
-            text: "L1 - L2 interoperability - Developer's documentation",
-            href: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
+            title: "L1 - L2 interoperability - Developer's documentation",
+            url: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
           },
         ],
       },
@@ -554,8 +385,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           ...EXITS.REGULAR('zk', 'merkle proof'),
           references: [
             {
-              text: 'Withdrawing funds - ZKsync documentation',
-              href: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
+              title: 'Withdrawing funds - ZKsync documentation',
+              url: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
             },
           ],
         },
@@ -745,9 +576,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   }
 }
 
-function technologyDA(
-  DA: DAProvider | undefined,
-): ScalingProjectTechnologyChoice {
+function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

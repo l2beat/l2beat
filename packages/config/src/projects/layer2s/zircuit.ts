@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { ScalingProjectTechnologyChoice } from '../../types'
+import type { ProjectTechnologyChoice } from '../../types'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 
@@ -13,7 +13,7 @@ const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
     'FINALIZATION_PERIOD_SECONDS',
   )
 
-const ZIRCUIT_STATE_CORRECTNESS: ScalingProjectTechnologyChoice = {
+const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
   name: 'Validity proofs (when available) ensure state correctness, but not DA', // proof is the only input to the Verifier
   description:
     'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently proofs are optional and state (by default) is considered optimistically to be valid. Moreover, the system doesn’t check that the transactions applied to the state are the ones published by the sequencer.',
@@ -27,8 +27,8 @@ const ZIRCUIT_STATE_CORRECTNESS: ScalingProjectTechnologyChoice = {
   ],
   references: [
     {
-      text: 'Verifier.sol - Etherscan source code',
-      href: 'https://etherscan.io/address/0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e#code#F1#L9',
+      title: 'Verifier.sol - Etherscan source code',
+      url: 'https://etherscan.io/address/0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e#code#F1#L9',
     },
   ],
 }
@@ -39,7 +39,7 @@ const upgradeability = {
 }
 
 export const zircuit: Layer2 = opStackL2({
-  createdAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
+  addedAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -181,8 +181,8 @@ export const zircuit: Layer2 = opStackL2({
   ],
   milestones: [
     {
-      name: 'Zircuit Mainnet Launch',
-      link: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',
+      title: 'Zircuit Mainnet Launch',
+      url: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',
       date: '2024-08-05T00:00:00.00Z',
       description: 'Zircuit is live on mainnet.',
       type: 'general',

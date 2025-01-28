@@ -1,16 +1,16 @@
-import {
-  type BlockchainDaLayer,
-  type DaServiceDaLayer,
-  type EnshrinedBridge,
-  type EthereumDaLayer,
-  type NoDaBridge,
-  type OnChainDaBridge,
-  type StandaloneDacBridge,
+import type {
+  BlockchainDaLayer,
+  DaServiceDaLayer,
+  EnshrinedBridge,
+  EthereumDaLayer,
+  NoDaBridge,
+  OnChainDaBridge,
+  StandaloneDacBridge,
 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type RosetteValue } from '~/components/rosette/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { RosetteValue } from '~/components/rosette/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
 import { getMultichainPermissionsSection } from '~/utils/project/contracts-and-permissions/get-multichain-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
@@ -161,6 +161,24 @@ export function getRegularDaProjectSections({
   }
 
   const items: ProjectDetailsSection[] = []
+
+  if (
+    !daLayer.isUpcoming &&
+    daLayer.milestones &&
+    daLayer.milestones.length > 0
+  ) {
+    const sortedMilestones = daLayer.milestones.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
+    items.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: sortedMilestones,
+      },
+    })
+  }
 
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)

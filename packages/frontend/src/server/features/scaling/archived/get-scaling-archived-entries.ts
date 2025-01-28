@@ -45,7 +45,7 @@ export async function getScalingArchivedEntries() {
 export interface ScalingArchivedEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
   purposes: string[]
-  provider: ScalingProjectStack | undefined
+  stack: ScalingProjectStack | undefined
   risks: RosetteValue[] | undefined
   totalTvl: number | undefined
   tvlOrder: number
@@ -60,7 +60,7 @@ function getScalingArchivedEntry(
     ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
-    provider: project.scalingInfo.stack,
+    stack: project.scalingInfo.stack,
     risks: getL2Risks(
       project.scalingRisks.stacked ?? project.scalingRisks.self,
     ),

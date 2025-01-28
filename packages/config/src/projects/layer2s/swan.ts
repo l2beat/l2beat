@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('swan')
 
 export const swan: Layer2 = opStackL2({
-  createdAt: new UnixTime(1722275591), // 2024-07-29T17:53:11Z
+  addedAt: new UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
   additionalBadges: [Badge.Infra.Superchain],
   additionalPurposes: ['AI', 'Storage'],
@@ -51,8 +51,8 @@ export const swan: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://swanchain.medium.com/announcement-swan-chain-mainnet-is-now-live-e34feadec170',
+      title: 'Mainnet launch',
+      url: 'https://swanchain.medium.com/announcement-swan-chain-mainnet-is-now-live-e34feadec170',
       date: '2024-07-02T00:00:00Z',
       description: 'Swan Mainnet launches.',
       type: 'general',

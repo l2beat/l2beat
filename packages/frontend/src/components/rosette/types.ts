@@ -1,7 +1,4 @@
-import {
-  type Sentiment,
-  type WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
+import type { Sentiment, WarningValueWithSentiment } from '@l2beat/config'
 
 export interface RosetteValue {
   name: string

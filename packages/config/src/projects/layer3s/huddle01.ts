@@ -5,7 +5,8 @@ import type { Layer3 } from './types'
 
 export const huddle01: Layer3 = underReviewL3({
   id: 'huddle01',
-  createdAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,
@@ -18,7 +19,7 @@ export const huddle01: Layer3 = underReviewL3({
     name: 'Huddle01',
     slug: 'huddle01',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Huddle01 is an Orbit stack L3 powering the dRTC protocol, a decentralized Real Time Communication Network operating an algorithmic prosumer marketplace for real-time data.',
     purposes: ['Information'],

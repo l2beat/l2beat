@@ -22,7 +22,8 @@ const discovery = new ProjectDiscovery('zkswap')
 export const zkswap: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkswap'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {
     name: 'ZKSwap 1.0',
@@ -32,7 +33,7 @@ export const zkswap: Layer2 = {
     description:
       'ZKSwap is a fork of ZKsync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, but increase the TPS, and make transaction processing cheaper.',
     purposes: ['Payments', 'Exchange'],
-    provider: 'ZKsync Lite',
+    stack: 'ZKsync Lite',
     category: 'ZK Rollup',
 
     links: {
@@ -81,8 +82,8 @@ export const zkswap: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ZKSwap Introduces Practical ZK Rollups - Medium blog',
-          href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
+          title: 'ZKSwap Introduces Practical ZK Rollups - Medium blog',
+          url: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
         },
       ],
     },
@@ -90,8 +91,8 @@ export const zkswap: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'ZKSwap Whitepaper - Medium blog',
-          href: 'https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d',
+          title: 'ZKSwap Whitepaper - Medium blog',
+          url: 'https://medium.com/zkswap/zkswap-whitepaper-a-layer-2-token-swap-protocol-based-on-zk-rollup-113671ef3e6d',
         },
       ],
     },
@@ -99,8 +100,8 @@ export const zkswap: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'ZKSwap Introduces Practical ZK Rollups - Medium blog',
-          href: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
+          title: 'ZKSwap Introduces Practical ZK Rollups - Medium blog',
+          url: 'https://medium.com/zkswap/zkswap-introduces-practical-zk-rollups-zkspeed-achieving-high-tps-and-low-gas-fees-in-real-6effe4e789e0',
         },
       ],
     },
@@ -108,8 +109,8 @@ export const zkswap: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ZKSwap Validator - ZKSwap wiki',
-          href: 'https://en.wiki.zks.org/techonology#3-validator',
+          title: 'ZKSwap Validator - ZKSwap wiki',
+          url: 'https://en.wiki.zks.org/techonology#3-validator',
         },
       ],
     },
@@ -117,8 +118,8 @@ export const zkswap: Layer2 = {
       ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
-          text: 'ZkSync.sol#L404 - ZKSwap source code',
-          href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
+          title: 'ZkSync.sol#L404 - ZKSwap source code',
+          url: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
         },
       ],
     },
@@ -127,8 +128,8 @@ export const zkswap: Layer2 = {
         ...EXITS.REGULAR('zk', 'no proof'),
         references: [
           {
-            text: 'Make Transaction',
-            href: 'https://en.wiki.zks.org/interact-with-zkswap/make-transaction#withdraw',
+            title: 'Make Transaction',
+            url: 'https://en.wiki.zks.org/interact-with-zkswap/make-transaction#withdraw',
           },
         ],
       },
@@ -136,8 +137,8 @@ export const zkswap: Layer2 = {
         ...EXITS.FORCED(),
         references: [
           {
-            text: 'ZkSync.sol#L404 - ZKSwap source code',
-            href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
+            title: 'ZkSync.sol#L404 - ZKSwap source code',
+            url: 'https://github.com/l2labs/zkswap-contracts-v2/blob/master/contracts/ZkSync.sol#L404',
           },
         ],
       },
@@ -145,8 +146,8 @@ export const zkswap: Layer2 = {
         ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
         references: [
           {
-            text: 'ZkSyncCommitBlock.sol#L230-L246 - ZKSwap source code',
-            href: 'https://github.com/l2labs/zkswap-contracts-v2/blob/3f650d28a266a56d49a3b3d2049cde34112efb14/contracts/ZkSyncCommitBlock.sol#L230-L246',
+            title: 'ZkSyncCommitBlock.sol#L230-L246 - ZKSwap source code',
+            url: 'https://github.com/l2labs/zkswap-contracts-v2/blob/3f650d28a266a56d49a3b3d2049cde34112efb14/contracts/ZkSyncCommitBlock.sol#L230-L246',
           },
         ],
       },

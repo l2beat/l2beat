@@ -1,4 +1,4 @@
-import { type Sentiment } from '@l2beat/shared-pure'
+import type { Sentiment } from '@l2beat/config'
 
 const sentimentOrder: Sentiment[] = ['bad', 'warning', 'neutral', 'good']
 

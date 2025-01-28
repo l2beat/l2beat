@@ -15,10 +15,9 @@ const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
 
 export const cronoszkevm: Layer2 = zkStackL2({
-  createdAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
+  addedAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,
-  validatorsKey: 'cronosValidators',
   additionalBadges: [Badge.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
@@ -51,17 +50,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'ExecutorFacet',
-          references: [
-            'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L58',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL,
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -75,8 +64,8 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ],
       references: [
         {
-          text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L58',
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L58',
         },
       ],
     },
@@ -112,8 +101,8 @@ export const cronoszkevm: Layer2 = zkStackL2({
   // },
   milestones: [
     {
-      name: 'Alpha Mainnet Launch',
-      link: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
+      title: 'Alpha Mainnet Launch',
+      url: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
       date: '2024-08-15T00:00:00Z',
       description: 'Cronos zkEVM Launches Its Alpha Mainnet powered by ZKsync.',
       type: 'general',

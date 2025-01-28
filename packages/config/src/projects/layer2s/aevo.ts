@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
-  createdAt: new UnixTime(1694090052), // 2023-09-07T12:34:12Z
+  addedAt: new UnixTime(1694090052), // 2023-09-07T12:34:12Z
   additionalBadges: [Badge.DA.EigenDA, Badge.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
@@ -67,31 +67,31 @@ export const aevo: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Aevo switches to EigenDA',
-      link: 'https://x.com/aevoxyz/status/1879728286093479947',
+      title: 'Aevo switches to EigenDA',
+      url: 'https://x.com/aevoxyz/status/1879728286093479947',
       date: '2025-01-15T00:00:00.00Z',
       description:
         'Aevo switches from Celestia to EigenDA for data availability.',
       type: 'general',
     },
     {
-      name: 'Aevo Open Mainnet Launch',
-      link: 'https://aevo.mirror.xyz/hV7VYkpk7caoYl2DbOFcSaZRRrK-8NeWqKczrgUff6k',
+      title: 'Aevo Open Mainnet Launch',
+      url: 'https://aevo.mirror.xyz/hV7VYkpk7caoYl2DbOFcSaZRRrK-8NeWqKczrgUff6k',
       date: '2023-06-14T00:00:00.00Z',
       description:
         'Aevo removes the whitelist and opens the mainnet to the public.',
       type: 'general',
     },
     {
-      name: 'Aevo switches to Celestia',
-      link: 'https://twitter.com/aevoxyz/status/1750013642278633510',
+      title: 'Aevo switches to Celestia',
+      url: 'https://twitter.com/aevoxyz/status/1750013642278633510',
       date: '2024-01-16T00:00:00.00Z',
       description: 'Aevo starts using Celestia for data availability.',
       type: 'general',
     },
     {
-      name: 'AEVO Token Airdrop',
-      link: 'https://aevo.mirror.xyz/5LfLIxt_lfdoVBUTtdofAVU6YXioBzGkbhtUWnaRT-U',
+      title: 'AEVO Token Airdrop',
+      url: 'https://aevo.mirror.xyz/5LfLIxt_lfdoVBUTtdofAVU6YXioBzGkbhtUWnaRT-U',
       date: '2024-03-13T00:00:00.00Z',
       description: 'AEVO token launches.',
       type: 'general',

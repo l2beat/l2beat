@@ -63,7 +63,8 @@ const finalizationPeriod = 0
 export const scroll: Layer2 = {
   type: 'layer2',
   id: ProjectId('scroll'),
-  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  capability: 'universal',
+  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Scroll',
@@ -331,76 +332,21 @@ export const scroll: Layer2 = {
     stateValidation: {
       ...STATE_ZKP_SN,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-          ],
-        },
-      ],
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-          ],
-        },
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154',
-          ],
-        },
-      ],
-    },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      sources: [
-        {
-          contract: 'L1MessageQueue',
-          references: [
-            'https://etherscan.io/address/0x137CC585F607EDeBBc3CA6360AffCFeab507B374#code',
-          ],
-        },
-        {
-          contract: 'EnforcedTxGateway',
-          references: [
-            'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    },
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_SNARKS,
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          title:
+            'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
+          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -408,8 +354,9 @@ export const scroll: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          title:
+            'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -417,8 +364,9 @@ export const scroll: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
-          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          title:
+            'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
+          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -426,12 +374,12 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code',
-          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+          title: 'EnforcedTxGateway.sol - Etherscan source code',
+          url: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
         },
         {
-          text: 'EnforcedTxGateway is paused - Etherscan proxy contract',
-          href: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
+          title: 'EnforcedTxGateway is paused - Etherscan proxy contract',
+          url: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
         },
       ],
     },
@@ -441,8 +389,9 @@ export const scroll: Layer2 = {
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
-            text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            href: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
+            title:
+              'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
+            url: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
           },
         ],
       },
@@ -780,47 +729,47 @@ export const scroll: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Batches reverted',
-      link: 'https://status.scroll.io/incidents/44k6s4qg6kcs',
+      title: 'Batches reverted',
+      url: 'https://status.scroll.io/incidents/44k6s4qg6kcs',
       date: '2024-07-05T00:00:00Z',
       description:
         'To fix a bug in the compression for batches 55 previously committed batches are reverted.',
       type: 'incident',
     },
     {
-      name: 'Darwin upgrade',
-      link: 'https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade',
+      title: 'Darwin upgrade',
+      url: 'https://scroll.io/blog/proof-recursion-scrolls-darwin-upgrade',
       date: '2024-08-21T00:00:00.00Z',
       description:
         'Introduces a reduction in gas fees through bundling multiple batches into a single validity proof.',
       type: 'general',
     },
     {
-      name: 'Curie upgrade',
-      link: 'https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade',
+      title: 'Curie upgrade',
+      url: 'https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade',
       date: '2024-07-03T00:00:00.00Z',
       description:
         'Introduces data compression, new opcodes, dynamic block time, and new transaction types.',
       type: 'general',
     },
     {
-      name: 'Bernoulli upgrade',
-      link: 'https://scroll.io/blog/blobs-are-here-scrolls-bernoulli-upgrade',
+      title: 'Bernoulli upgrade',
+      url: 'https://scroll.io/blog/blobs-are-here-scrolls-bernoulli-upgrade',
       date: '2024-04-29T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability, and the SHA2-256 precompile on L2.',
       type: 'general',
     },
     {
-      name: 'Scroll official launch',
-      link: 'https://x.com/Scroll_ZKP/status/1714286874020528554',
+      title: 'Scroll official launch',
+      url: 'https://x.com/Scroll_ZKP/status/1714286874020528554',
       date: '2023-10-17T00:00:00.00Z',
       description: 'Scroll announces its official launch.',
       type: 'general',
     },
     {
-      name: 'Scroll Alpha testnet launch',
-      link: 'https://scroll.io/blog/alphaTestnet',
+      title: 'Scroll Alpha testnet launch',
+      url: 'https://scroll.io/blog/alphaTestnet',
       date: '2023-02-27T00:00:00.00Z',
       description: 'Scroll launches its Alpha testnet on Goerli.',
       type: 'general',

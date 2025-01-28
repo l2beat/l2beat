@@ -1,15 +1,15 @@
 import type {
   EthereumAddress,
-  Sentiment,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
   UnixTime,
-  WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
 import type {
   ScalingProject,
   ScalingProjectConfig,
   ScalingProjectDisplay,
+  Sentiment,
+  WarningValueWithSentiment,
 } from '../../../types'
 
 export interface Layer2 extends ScalingProject {

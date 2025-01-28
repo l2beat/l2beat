@@ -72,8 +72,8 @@ export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
     `,
     references: [
       {
-        text: 'StarkEx Committee Service - Source Code',
-        href: 'https://github.com/starkware-libs/starkex-data-availability-committee',
+        title: 'StarkEx Committee Service - Source Code',
+        url: 'https://github.com/starkware-libs/starkex-data-availability-committee',
       },
     ],
   }

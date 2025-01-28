@@ -8,7 +8,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('shape')
 
 export const shape: Layer2 = opStackL2({
-  createdAt: new UnixTime(1730131160), // 2024-10-28
+  addedAt: new UnixTime(1730131160), // 2024-10-28
   additionalBadges: [Badge.RaaS.Alchemy, Badge.Infra.Superchain],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],

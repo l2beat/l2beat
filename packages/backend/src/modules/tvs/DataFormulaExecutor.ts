@@ -132,32 +132,26 @@ export class DataFormulaExecutor {
     config: BalanceOfEscrowAmountFormula,
     blockNumber: number,
   ): Promise<number> {
-    let sum = 0
+    this.logger.info(
+      `Fetching balance of ${config.address} token for escrow ${config.escrowAddress} on ${config.chain}`,
+    )
+    const escrowBalance =
+      config.address === 'native'
+        ? await this.balanceProvider.getNativeAssetBalance(
+            config.chain,
+            config.escrowAddress,
+            config.decimals,
+            blockNumber,
+          )
+        : await this.balanceProvider.getTokenBalance(
+            config.chain,
+            config.address,
+            config.escrowAddress,
+            config.decimals,
+            blockNumber,
+          )
 
-    for (const escrow of config.escrowAddresses) {
-      this.logger.info(
-        `Fetching balance of ${config.address} token for escrow ${escrow} on ${config.chain}`,
-      )
-      const escrowBalance =
-        config.address === 'native'
-          ? await this.balanceProvider.getNativeAssetBalance(
-              config.chain,
-              EthereumAddress(escrow),
-              config.decimals,
-              blockNumber,
-            )
-          : await this.balanceProvider.getTokenBalance(
-              config.chain,
-              config.address,
-              EthereumAddress(escrow),
-              config.decimals,
-              blockNumber,
-            )
-
-      sum += escrowBalance
-    }
-
-    return sum
+    return escrowBalance
   }
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
@@ -167,9 +161,7 @@ export class DataFormulaExecutor {
       return await this.priceProvider.getPrice(config.ticker, timestamp)
     } catch {
       // TODO temporary workaround for issues with rhinofi
-      this.logger.error(
-        `Error fetching circulating supply for ${config.ticker}. Assuming 0`,
-      )
+      this.logger.error(`Error fetching price for ${config.ticker}. Assuming 0`)
       return 0
     }
   }
