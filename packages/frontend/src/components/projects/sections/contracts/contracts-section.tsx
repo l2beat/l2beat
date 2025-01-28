@@ -97,11 +97,8 @@ export function ContractsSection(props: ContractsSectionProps) {
         </figure>
       )}
       {props.contracts.length > 0 && (
-        <>
-          <h3 className="font-bold">
-            The system consists of the following smart contracts on the host
-            chain ({props.chainName}):
-          </h3>
+        <div className="mt-8">
+          <ChainNameHeader>{props.chainName}</ChainNameHeader>
           <div className="my-4">
             {unchangedContracts.map((contract) => (
               <ContractEntry
@@ -119,17 +116,14 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             )}
           </div>
-        </>
+        </div>
       )}
       {Object.keys(paritionedNativeContracts).length > 0 &&
         Object.entries(paritionedNativeContracts).map(
           ([chainName, [changedContracts, unchangedContracts]]) => {
             return (
-              <div key={chainName}>
-                <h3 className="font-bold">
-                  The system consists of the following smart contracts on{' '}
-                  {chainName}:
-                </h3>
+              <div key={chainName} className="mt-8">
+                <ChainNameHeader>{chainName}</ChainNameHeader>
                 <div className="my-4">
                   {unchangedContracts.map((contract) => (
                     <ContractEntry
@@ -206,6 +200,15 @@ export function ContractsSection(props: ContractsSectionProps) {
       )}
       <ReferenceList references={props.references} />
     </ProjectSection>
+  )
+}
+
+function ChainNameHeader(props: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-baseline gap-3">
+      <h3 className="whitespace-pre text-2xl font-bold">{props.children}</h3>
+      <div className="w-full border-b-2 border-divider" />
+    </div>
   )
 }
 

@@ -5,7 +5,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -18,9 +17,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -177,7 +175,7 @@ export const kroma: Layer2 = {
       defaultUrl: 'https://api.kroma.network',
       defaultCallsPerMinute: 1500,
       startBlock: 1,
-      assessCount: subtractOne,
+      adjustCount: { type: 'SubtractOne' },
     },
     trackedTxs: [
       {

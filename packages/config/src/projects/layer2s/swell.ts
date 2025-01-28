@@ -23,8 +23,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -202,7 +201,7 @@ export const swell: Layer2 = {
       defaultUrl: 'https://rpc.ankr.com/swell',
       defaultCallsPerMinute: 700,
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(1),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
     finality: {
       type: 'OPStack',

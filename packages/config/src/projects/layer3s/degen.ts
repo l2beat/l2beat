@@ -1,8 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import { CONTRACTS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -48,7 +46,7 @@ export const degen: Layer3 = orbitStackL3({
     type: 'rpc',
     defaultUrl: 'https://rpc.degen.tips',
     defaultCallsPerMinute: 5000,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   chainConfig: {

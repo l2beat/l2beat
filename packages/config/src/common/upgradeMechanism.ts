@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { ScalingProjectTechnologyChoice } from './ScalingProject'
+import type { ScalingProjectTechnologyChoice } from '../types'
 import { CONTRACTS } from './contracts'
 
 function ARBITRUM_DAO(

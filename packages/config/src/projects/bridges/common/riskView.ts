@@ -1,4 +1,4 @@
-import type { ScalingProjectRiskViewEntry } from '../../../common'
+import type { ScalingProjectRiskViewEntry } from '../../../types'
 
 function NATIVE_AND_CANONICAL(
   gasTokens: string[],

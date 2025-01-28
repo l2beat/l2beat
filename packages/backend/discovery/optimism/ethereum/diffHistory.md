@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x207ed1d8a62a2a5c867d88c0f3750da68c724f5e
+
+# Diff at Mon, 27 Jan 2025 11:40:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 21667015
+- current block number: 21715623
+
+## Description
+
+This is a SystemConfig upgrade (v2.3.0, adding gasToken support) for five Superchain eco chains that use superchain governance.
+- op mainnet
+- metal
+- zora
+- arena-z
+- mode
+
+Due to temporary storage setter implementations, multiple upgrades are counted within a single tx.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
++        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+      values.$implementation:
+-        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
++        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.8:
++        ["2025-01-24T14:41:35.000Z","0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350",["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.7:
++        ["2025-01-24T14:41:35.000Z","0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        7
++        9
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      values.basefeeScalar:
++        5227
+      values.blobbasefeeScalar:
++        1014213
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 1458 +++++++++++++++++++-
+ 1 file changed, 1436 insertions(+), 22 deletions(-)
+```
+
 Generated with discovered.json: 0xfe4f950cc9481767f7f4d17684d9295c599d211a
 
 # Diff at Tue, 21 Jan 2025 11:19:15 GMT:

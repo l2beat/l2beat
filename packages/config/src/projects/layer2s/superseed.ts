@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
 import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 import type { Layer2 } from './types'
@@ -38,7 +37,7 @@ export const superseed: Layer2 = underReviewL2({
     type: 'rpc',
     defaultUrl: 'https://mainnet.superseed.xyz/',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   escrows: [

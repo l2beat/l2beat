@@ -2,11 +2,11 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   ProjectCountdowns,
   ProjectDataAvailability,
+  ReasonForBeingInOther,
   ScalingProjectCategory,
   ScalingProjectRiskView,
   ScalingProjectStack,
-} from '../../common'
-import type { ReasonForBeingInOther } from '../../common/ReasonForBeingInOther'
+} from '../../types'
 import type { BridgeDisplay, BridgeRiskView } from '../bridges'
 import type {
   EnshrinedBridge,

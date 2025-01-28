@@ -7,6 +7,7 @@ import type { Config } from './config'
 import type { ApplicationModule } from './modules/ApplicationModule'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
+import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
@@ -52,6 +53,14 @@ export class Application {
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
       initActivityModule(config, logger, clock, providers, database),
+      initDataAvailabilityModule(
+        config,
+        logger,
+        clock,
+        providers,
+        database,
+        peripherals,
+      ),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,

@@ -1,4 +1,8 @@
 import type { BackendProject } from '@l2beat/backend-shared'
+import type {
+  DaLayerTrackingConfig,
+  ProjectDaTrackingConfig,
+} from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type {
   AmountConfigEntry,
@@ -42,6 +46,7 @@ export interface Config {
     readonly callsPerMinute: number
     readonly timeout: number
   }
+  readonly da: DataAvailabilityTrackingConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -186,4 +191,12 @@ export interface DABeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+}
+
+export interface DataAvailabilityTrackingConfig {
+  readonly layers: DaLayerTrackingConfig[]
+  readonly projects: {
+    id: ProjectId
+    config: ProjectDaTrackingConfig
+  }[]
 }

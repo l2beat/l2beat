@@ -13,20 +13,19 @@ import {
   type BalanceOfEscrowAmountFormula,
   type CalculationFormula,
   type CirculatingSupplyAmountFormula,
-  type EscrowToken,
   type PriceConfig,
   type Token,
+  TokenId,
   type TotalSupplyAmountFormula,
   type TvsConfig,
   type ValueFormula,
-  isEscrowToken,
 } from './types'
 
 export function mapConfig(
   project: BackendProject,
   chain: ChainConfig,
 ): TvsConfig {
-  const tokens: Map<string, Token> = new Map()
+  const tokens: Token[] = []
 
   // map escrows to tokens
   for (const escrow of project.escrows) {
@@ -43,16 +42,8 @@ export function mapConfig(
         )
       }
 
-      const existingToken = tokens.get(legacyToken.id)
-
-      if (existingToken) {
-        assert(isEscrowToken(existingToken))
-        const updatedEscrowToken = updateEscrowToken(existingToken, escrow)
-        tokens.set(existingToken.id, updatedEscrowToken)
-      } else {
-        const token = createToken(legacyToken, project, chain, escrow)
-        tokens.set(token.id, token)
-      }
+      const token = createToken(legacyToken, project, chain, escrow)
+      tokens.push(token)
     }
   }
 
@@ -62,48 +53,12 @@ export function mapConfig(
   )
   for (const legacyToken of nonZeroSupplyTokens) {
     const token = createToken(legacyToken, project, chain)
-    tokens.set(token.id, token)
+    tokens.push(token)
   }
 
   return {
     projectId: project.projectId,
-    tokens: Array.from(tokens.values()),
-  }
-}
-
-function updateEscrowToken(
-  token: EscrowToken,
-  escrow: BackendProjectEscrow,
-): Token {
-  // add this escrow to tokens esccrows list
-  const escrowAddresses = [...token.amount.escrowAddresses, escrow.address]
-
-  let sinceTimestamp = token.sinceTimestamp
-  // update sinceTimestamp if needed
-  if (escrow.sinceTimestamp.lt(token.sinceTimestamp)) {
-    sinceTimestamp = escrow.sinceTimestamp
-  }
-
-  let untilTimestamp = token.untilTimestamp
-  // reset or update  untilTimestamp if needed
-  if (!escrow.untilTimestamp && token.untilTimestamp) {
-    untilTimestamp = undefined
-  } else if (
-    escrow.untilTimestamp &&
-    token.untilTimestamp &&
-    escrow.untilTimestamp.gt(token.untilTimestamp)
-  ) {
-    untilTimestamp = escrow.untilTimestamp
-  }
-
-  return {
-    ...token,
-    amount: {
-      ...token.amount,
-      escrowAddresses,
-    },
-    sinceTimestamp,
-    untilTimestamp,
+    tokens,
   }
 }
 
@@ -117,16 +72,23 @@ function createToken(
   let sinceTimestamp: UnixTime
   let untilTimestamp: UnixTime | undefined
   let source: 'canonical' | 'external' | 'native'
+  let id: TokenId
 
   switch (legacyToken.supply) {
     case 'zero':
       assert(escrow, 'Escrow is required for zero supply tokens')
 
+      id = TokenId.create(
+        escrow.chain,
+        legacyToken.address ?? 'native',
+        escrow.address,
+      )
+
       amountFormula = {
         type: 'balanceOfEscrow',
         address: legacyToken.address ?? 'native',
         chain: escrow.chain,
-        escrowAddresses: [escrow.address],
+        escrowAddress: escrow.address,
         decimals: legacyToken.decimals,
       } as BalanceOfEscrowAmountFormula
 
@@ -139,6 +101,8 @@ function createToken(
         chain.minTimestampForTvl,
         'Chain with token should have minTimestamp',
       )
+
+      id = TokenId.create(chain.name, legacyToken.address ?? 'native')
 
       amountFormula = {
         type: 'totalSupply',
@@ -159,6 +123,8 @@ function createToken(
         'Chain with token should have minTimestamp',
       )
 
+      id = TokenId.create(chain.name, legacyToken.address ?? 'native')
+
       amountFormula = {
         type: 'circulatingSupply',
         ticker: tokenToTicker(legacyToken),
@@ -176,9 +142,11 @@ function createToken(
   }
 
   return {
-    id: legacyToken.id,
+    id,
     // This is a temporary solution
     ticker: tokenToTicker(legacyToken),
+    symbol: legacyToken.symbol,
+    name: legacyToken.name,
     amount: amountFormula,
     sinceTimestamp,
     untilTimestamp,
@@ -238,7 +206,7 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
           formula.address,
           formula.chain,
           formula.decimals.toString(),
-          ...formula.escrowAddresses.sort(),
+          formula.escrowAddress,
         ]),
         ...formula,
       }

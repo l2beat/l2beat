@@ -169,7 +169,7 @@ export async function getL3ProjectDetails({
       props: {
         id: 'milestones-and-incidents',
         title: 'Milestones & Incidents',
-        milestones: project.milestones,
+        milestones: sortedMilestones,
       },
     })
   }

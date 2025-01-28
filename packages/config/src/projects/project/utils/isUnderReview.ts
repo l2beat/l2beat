@@ -1,4 +1,4 @@
-import type { ScalingProjectRiskViewEntry } from '../../../common'
+import type { ScalingProjectRiskViewEntry } from '../../../types'
 import type { Bridge } from '../../bridges'
 import type { Layer2 } from '../../layer2s'
 import type { Layer3 } from '../../layer3s'

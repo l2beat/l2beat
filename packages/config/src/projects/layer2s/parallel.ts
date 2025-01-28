@@ -1,7 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
 import type { Layer2 } from './types'
@@ -132,7 +130,7 @@ export const parallel: Layer2 = orbitStackL2({
     type: 'rpc',
     defaultUrl: 'https://rpc.parallel.fi',
     defaultCallsPerMinute: 120,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   discoveryDrivenData: true,

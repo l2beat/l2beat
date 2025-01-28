@@ -1,5 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { ScalingProject, ScalingProjectRiskView } from '../../../common'
+import type { ScalingProject, ScalingProjectRiskView } from '../../../types'
 
 export interface Layer3 extends ScalingProject {
   type: 'layer3'
