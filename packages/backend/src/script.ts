@@ -10,7 +10,12 @@ import {
   HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
 import { mapConfig } from './modules/tvs/mapConfig'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
@@ -57,7 +62,14 @@ async function main() {
       sourceName: chain,
       callsPerMinute: 120,
     })
-    rpcs.set(chain, new RpcClientPOC(rpc, logger))
+    rpcs.set(
+      chain,
+      new RpcClientPOC(
+        rpc,
+        EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        logger,
+      ),
+    )
     blockProviders.set(chain, new BlockProvider(chain, [rpc]))
   }
 
