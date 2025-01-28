@@ -39,7 +39,7 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
           />
         )}
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
       </TooltipContent>
     </Tooltip>

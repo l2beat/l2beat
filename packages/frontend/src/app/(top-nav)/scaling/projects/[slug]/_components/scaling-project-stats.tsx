@@ -91,7 +91,7 @@ export function ScalingProjectStats({ project, className }: Props) {
                   />
                 )}
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="max-w-[360px]">
                 <StageTooltip
                   stageConfig={project.stageConfig}
                   isAppchain={isAppchain}
