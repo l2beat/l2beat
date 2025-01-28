@@ -1,8 +1,6 @@
 import { writeFileSync } from 'fs'
 import path from 'path'
-import { layer2ToBackendProject } from '@l2beat/backend-shared'
 import { Logger, getEnv } from '@l2beat/backend-tools'
-import { layer2s } from '@l2beat/config'
 import {
   BlockProvider,
   CoingeckoClient,
@@ -10,9 +8,9 @@ import {
   HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { mapConfig } from './modules/tvs/mapConfig'
+import { bobConfig } from './modules/tvs/projects/bob'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
@@ -43,7 +41,7 @@ async function main() {
     coingeckoQueryService,
   )
 
-  const chains = ['ethereum', 'arbitrum']
+  const chains = ['ethereum', 'arbitrum', 'bob']
   const rpcs = new Map<string, RpcClient>()
   const blockProviders = new Map<string, BlockProvider>()
 
@@ -73,14 +71,9 @@ async function main() {
     logger,
   )
 
-  const arbitrum = layer2s.find((l) => l.id === ProjectId('arbitrum'))
-  assert(arbitrum, 'Arbitrum not found')
-  assert(arbitrum.chainConfig, 'Arbitrum chain config not defined')
-  const backendProject = layer2ToBackendProject(arbitrum)
+  const config = bobConfig //arbitrumConfig
 
-  const config = mapConfig(backendProject, arbitrum.chainConfig)
-
-  const timestamp = new UnixTime(1737972000) //UnixTime.now().toStartOf('hour')
+  const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
   const tvs = await localExecutor.run(config, [timestamp])
 
   const tokens = tvs.get(timestamp.toNumber())
@@ -112,7 +105,7 @@ async function main() {
     const tokenConfig = config.tokens.find((t) => t.id === token.tokenId)
     assert(tokenConfig, `Token config not found ${token.tokenId}`)
 
-    tvsBreakdown.total += token.valueForTotal
+    tvsBreakdown.total += token.valueForProject
 
     if (token.amount !== 0) {
       filteredConfig.push(tokenConfig)
@@ -127,13 +120,13 @@ async function main() {
 
     switch (tokenConfig.source) {
       case 'canonical':
-        tvsBreakdown.source.canonical += token.value
+        tvsBreakdown.source.canonical += token.valueForProject
         break
       case 'external':
-        tvsBreakdown.source.external += token.value
+        tvsBreakdown.source.external += token.valueForProject
         break
       case 'native':
-        tvsBreakdown.source.native += token.value
+        tvsBreakdown.source.native += token.valueForProject
         break
       default:
         throw new Error(`Unknown source ${tokenConfig.source}`)
@@ -141,13 +134,13 @@ async function main() {
 
     switch (tokenConfig.category) {
       case 'ether':
-        tvsBreakdown.category.ether += token.value
+        tvsBreakdown.category.ether += token.valueForProject
         break
       case 'stablecoin':
-        tvsBreakdown.category.stablecoin += token.value
+        tvsBreakdown.category.stablecoin += token.valueForProject
         break
       case 'other':
-        tvsBreakdown.category.other += token.value
+        tvsBreakdown.category.other += token.valueForProject
         break
       default:
         throw new Error(`Unknown source ${tokenConfig.source}`)
@@ -160,7 +153,7 @@ async function main() {
       tvsBreakdown,
       (_, v) => {
         if (typeof v === 'number') {
-          return `$${toBillionsString(v)}B`
+          return toDollarString(v)
         }
         return v
       },
@@ -181,6 +174,12 @@ async function main() {
   )
 }
 
-function toBillionsString(value: number) {
-  return (value / 1e9).toFixed(2)
+function toDollarString(value: number) {
+  if (value > 1e9) {
+    return `$${(value / 1e9).toFixed(2)}B`
+  } else if (value > 1e6) {
+    return `$${(value / 1e6).toFixed(2)}M`
+  } else {
+    return `$${value.toFixed(2)}`
+  }
 }
