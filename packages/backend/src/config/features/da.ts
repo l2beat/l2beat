@@ -6,11 +6,16 @@ import type {
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
 
-export function getDaTrackingConfig(): DataAvailabilityTrackingConfig {
+export function getDaTrackingConfig(
+  flags: FeatureFlags,
+): DataAvailabilityTrackingConfig {
   return {
-    layers: getDaLayers(),
-    projects: getProjectsWithDaTracking(),
+    layers: getDaLayers().filter((layer) => flags.isEnabled('da', layer)),
+    projects: getProjectsWithDaTracking().filter((project) =>
+      flags.isEnabled('da', project.id.toString()),
+    ),
   }
 }
 
