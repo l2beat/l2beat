@@ -11,7 +11,7 @@ import type {
 import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './common'
 import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
 import type { BadgeId } from './projects/badges'
-import type { DacDaLayer } from './projects/da-beat'
+import type { DacDaLayer, ProjectDaTrackingConfig } from './projects/da-beat'
 import type { StageConfig, WarningWithSentiment } from './projects/layer2s'
 import type { ProofVerification } from './projects/types'
 
@@ -134,6 +134,8 @@ export interface ScalingProjectConfig {
   escrows: ScalingProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: ScalingProjectTransactionApi
+  /** Data availability tracking config */
+  daTracking?: ProjectDaTrackingConfig
 }
 
 export interface ProjectExternalAssets {
