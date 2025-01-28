@@ -30,9 +30,15 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
+  DacDaLayer,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   KnowledgeNugget,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+  Layer3,
   Milestone,
   ProjectDataAvailability,
   ProjectEscrow,
@@ -49,20 +55,12 @@ import type {
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
+  StageConfig,
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types'
-import type { Layer3 } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import type { StageConfig } from '../common/stages/types'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-} from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 

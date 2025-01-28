@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import {
   DaEconomicSecurityRisk,
@@ -15,7 +16,6 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
 const l2Discovery = new ProjectDiscovery('nova', 'nova')

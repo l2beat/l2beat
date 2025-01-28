@@ -9,7 +9,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import type { Layer2 } from '../../projects/layer2s'
+import type { Layer2 } from '../../types'
 
 export const layer2aWithDups: Layer2 = {
   type: 'layer2',

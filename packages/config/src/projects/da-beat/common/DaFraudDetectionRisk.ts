@@ -1,4 +1,4 @@
-import type { DaRisk } from '../types'
+import type { DaRisk } from '../../../types'
 
 function DasWithBlobsReconstruction(erasureCoding: boolean): DaRisk {
   return {

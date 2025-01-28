@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import type { DaBridge } from '../types'
 import { toUsedInProject } from '../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('eigenda')

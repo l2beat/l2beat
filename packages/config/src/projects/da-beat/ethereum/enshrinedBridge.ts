@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { EnshrinedBridge } from '../../../types'
 import { EthereumDaBridgeRisks } from '../common'
-import type { EnshrinedBridge } from '../types'
 import { linkByDA } from '../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {

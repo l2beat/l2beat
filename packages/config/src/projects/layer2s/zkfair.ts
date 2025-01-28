@@ -21,9 +21,9 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
 const upgradeDelay = discovery.getContractValue<number>(

@@ -29,10 +29,10 @@ import {
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')

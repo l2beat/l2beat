@@ -1,10 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { DaServiceDaLayer } from '../../../types'
 import { aevo } from '../../layer2s/aevo'
 import { soon } from '../../layer2s/soon'
 import { donatuz } from '../../layer3s/donatuz'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { DaServiceDaLayer } from '../types'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './eigen-da-bridge'
 

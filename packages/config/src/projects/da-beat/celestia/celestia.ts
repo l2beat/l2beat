@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 import { SP1Blobstream } from './SP1Blobstream'
 
 export const blobstream = [SP1Blobstream]

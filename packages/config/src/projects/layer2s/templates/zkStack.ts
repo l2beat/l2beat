@@ -25,6 +25,10 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
@@ -42,16 +46,10 @@ import type {
   KnowledgeNugget,
   ReasonForBeingInOther,
 } from '../../../types'
+import type { StageConfig } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import type { StageConfig } from '../common/stages/types'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-} from '../types'
 import { mergeBadges } from './utils'
 
 export interface DAProvider {

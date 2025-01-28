@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const xrone: Layer3 = underReviewL3({
   id: 'xrone',

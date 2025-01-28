@@ -1,4 +1,4 @@
-import type { DaRisk } from '../types'
+import type { DaRisk } from '../../../types'
 
 const SelfVerify: DaRisk = {
   type: 'SelfVerify',

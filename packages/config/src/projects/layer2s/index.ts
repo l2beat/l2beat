@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
+import type { Layer2 } from '../../types'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
@@ -174,7 +175,6 @@ import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
-import type { Layer2 } from './types'
 import { unichain } from './unichain'
 import { wirex } from './wirex'
 import { witness } from './witness'
@@ -195,8 +195,6 @@ import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
-export * from './common'
-export * from './types'
 
 export const layer2s: Layer2[] = [
   abstract,

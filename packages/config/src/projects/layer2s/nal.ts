@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { underReviewL2 } from './templates/underReview'
-import type { Layer2 } from './types'
 
 export const nal: Layer2 = underReviewL2({
   id: 'nal',

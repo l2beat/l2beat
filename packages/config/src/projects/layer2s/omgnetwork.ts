@@ -9,7 +9,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('omgnetwork')
 

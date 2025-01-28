@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
-import type { Layer2 } from './types'
 
 export const superseed: Layer2 = underReviewL2({
   id: 'superseed',

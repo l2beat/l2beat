@@ -27,6 +27,9 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
+  Layer2,
+  Layer2Display,
+  Layer2TxConfig,
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
@@ -42,10 +45,9 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig, KnowledgeNugget } from '../../../types'
+import type { DacDaLayer } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types'
 import { getStage } from '../common/stages/getStage'
-import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export interface DAProvider {

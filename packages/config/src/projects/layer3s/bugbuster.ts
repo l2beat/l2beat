@@ -13,9 +13,9 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 

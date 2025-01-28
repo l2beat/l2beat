@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import type { DaBridge } from '../types'
 
 const discovery = new ProjectDiscovery('vector')
 

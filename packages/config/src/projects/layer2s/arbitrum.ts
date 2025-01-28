@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { CONTRACTS, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
@@ -11,7 +12,6 @@ import {
   getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')

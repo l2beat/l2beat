@@ -1,5 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { DaRisk } from '../types'
+import type { DaRisk } from '../../../types'
 
 const SelfPropose: DaRisk = {
   type: 'SelfPropose',

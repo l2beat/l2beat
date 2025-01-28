@@ -28,8 +28,8 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('canvasconnect')
 const upgradeDelaySeconds = discovery.getContractValue<number>(

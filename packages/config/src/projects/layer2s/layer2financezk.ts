@@ -12,7 +12,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierContracts } from '../../discovery/starkware'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2 } from '../layer2s'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from '../layer2s/templates/upcoming'
 
 export const dcamonster: Layer2 = upcomingL2({

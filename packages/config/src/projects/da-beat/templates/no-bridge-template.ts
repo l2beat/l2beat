@@ -1,7 +1,7 @@
+import type { DaBridgeRisks, NoDaBridge } from '../../../types'
+import type { DaLinks } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import type { DaBridgeRisks, NoDaBridge } from '../types'
-import type { DaLinks } from '../types'
 import { linkByDA } from '../utils/link-by-da'
 
 type TemplateSpecific = {

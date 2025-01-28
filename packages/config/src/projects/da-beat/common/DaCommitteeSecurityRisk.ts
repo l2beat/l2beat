@@ -1,5 +1,5 @@
 import type { Sentiment } from '../../../types'
-import type { DaRisk } from '../types'
+import type { DaRisk } from '../../../types'
 
 function RobustAndDiverseCommittee(value?: string): DaRisk {
   return {

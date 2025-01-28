@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const superposition: Layer3 = underReviewL3({
   id: 'superposition',
