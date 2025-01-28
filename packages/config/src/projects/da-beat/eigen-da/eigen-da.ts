@@ -102,4 +102,20 @@ export const eigenDA: DaServiceDaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
+  milestones: [
+    {
+      title: 'EigenDA launch on mainnet',
+      url: 'https://blog.eigenlayer.xyz/mainnet-launch-eigenlayer-eigenda/',
+      date: '2024-04-09T00:00:00Z',
+      description: 'EigenLayer and EigenDA launch on the Ethereum mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'EIGEN token unlock',
+      url: 'https://x.com/eigenlayer/status/1840967244408344619',
+      date: '2024-10-01T00:00:00Z',
+      description: 'EIGEN token becomes transferable.',
+      type: 'general',
+    },
+  ],
 }
