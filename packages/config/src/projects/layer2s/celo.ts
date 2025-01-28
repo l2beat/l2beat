@@ -4,7 +4,8 @@ import type { Layer2 } from './types'
 
 export const celo: Layer2 = upcomingL2({
   id: 'celo',
-  createdAt: new UnixTime(1718876598), // '2024-06-20T09:43:18Z'
+  capability: 'universal',
+  addedAt: new UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   display: {
     name: 'Celo',
     slug: 'celo',
@@ -12,7 +13,7 @@ export const celo: Layer2 = upcomingL2({
       'Celo announced a strategic move to integrate with the Ethereum ecosystem as an OP Stack L2.',
     purposes: ['Universal'],
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://celo.org/'],
       apps: [],

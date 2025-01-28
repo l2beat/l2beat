@@ -26,7 +26,7 @@ export async function getScalingUpcomingEntries() {
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
   initialOrder: number
   category: ScalingProjectCategory
-  provider: ScalingProjectStack | undefined
+  stack: ScalingProjectStack | undefined
   purposes: string[]
 }
 
@@ -36,7 +36,7 @@ function getScalingUpcomingEntry(
   return {
     ...getCommonScalingEntry({ project, changes: undefined }),
     category: project.scalingInfo.type,
-    provider: project.scalingInfo.stack,
+    stack: project.scalingInfo.stack,
     purposes: project.scalingInfo.purposes,
     initialOrder: project.addedAt.toNumber(),
   }

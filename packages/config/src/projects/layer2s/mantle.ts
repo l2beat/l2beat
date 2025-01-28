@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
@@ -64,7 +64,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
       `,
   },
   bridge: {
-    createdAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
+    addedAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
     type: 'IntegratedDacBridge',
     technology: {
       description: `
@@ -96,8 +96,7 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
 }
 
 export const mantle: Layer2 = opStackL2({
-  createdAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
-  additionalBadges: [Badge.DA.CustomDA],
+  addedAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
   daProvider: {
     layer: DA_LAYERS.MANTLE_DA,
     bridge: DA_BRIDGES.STAKED_OPERATORS({
@@ -123,15 +122,18 @@ export const mantle: Layer2 = opStackL2({
       ],
       references: [
         {
-          text: 'DataLayrServiceManager.sol#L389 - Etherscan source code, confirmDataStore function',
-          href: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L389',
+          title:
+            'DataLayrServiceManager.sol#L389 - Etherscan source code, confirmDataStore function',
+          url: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L389',
         },
         {
-          text: 'DataLayrServiceManager.sol#L404 - Etherscan source code, signature verification check ',
-          href: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L404',
+          title:
+            'DataLayrServiceManager.sol#L404 - Etherscan source code, signature verification check ',
+          url: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L404',
         },
       ],
     },
+    badge: Badge.DA.CustomDA,
   },
   associatedTokens: ['MNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
@@ -184,22 +186,22 @@ export const mantle: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://www.mantle.xyz/blog/announcements/mantle-network-mainnet-alpha',
+      title: 'Mainnet launch',
+      url: 'https://www.mantle.xyz/blog/announcements/mantle-network-mainnet-alpha',
       date: '2023-07-14T00:00:00.00Z',
       description: 'Mantle is live on mainnet.',
       type: 'general',
     },
     {
-      name: 'Mainnet v2 Tectonic Upgrade',
-      link: 'https://www.mantle.xyz/blog/announcements/mantle-completes-mainnet-v2-tectonic-upgrade',
+      title: 'Mainnet v2 Tectonic Upgrade',
+      url: 'https://www.mantle.xyz/blog/announcements/mantle-completes-mainnet-v2-tectonic-upgrade',
       date: '2024-03-15T00:00:00.00Z',
       description: 'Mantle completes Mainnet v2 Tectonic Upgrade.',
       type: 'general',
     },
     {
-      name: 'MNT token migration begins',
-      link: 'https://www.mantle.xyz/blog/announcements/bit-to-mnt-user-guide',
+      title: 'MNT token migration begins',
+      url: 'https://www.mantle.xyz/blog/announcements/bit-to-mnt-user-guide',
       date: '2023-07-11T00:00:00.00Z',
       description: 'User can exchange their BIT tokens to MNT tokens.',
       type: 'general',

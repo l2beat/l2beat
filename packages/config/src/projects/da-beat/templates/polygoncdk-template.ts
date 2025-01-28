@@ -48,8 +48,8 @@ export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
     `,
     references: [
       {
-        text: 'Polygon CDK Validium Documentation',
-        href: 'https://docs.polygon.technology/cdk/architecture/cdk-validium/#data-availability-committee-dac',
+        title: 'Polygon CDK Validium Documentation',
+        url: 'https://docs.polygon.technology/cdk/architecture/cdk-validium/#data-availability-committee-dac',
       },
     ],
   }

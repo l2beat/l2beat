@@ -10,68 +10,66 @@ import {
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
-  type ChainConfig,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  type DataAvailabilityBridge,
-  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  type KnowledgeNugget,
-  type Milestone,
   RISK_VIEW,
-  type ReasonForBeingInOther,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
-  type ScalingProjectContract,
-  type ScalingProjectEscrow,
-  type ScalingProjectPermission,
-  type ScalingProjectPurpose,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectStateDerivation,
-  type ScalingProjectStateValidation,
-  type ScalingProjectTechnology,
-  type ScalingProjectTechnologyChoice,
-  type ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../../common'
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type {
+  DataAvailabilityBridge,
+  DataAvailabilityLayer,
+  Milestone,
+  ProjectEscrow,
+  ProjectTechnologyChoice,
+  ReasonForBeingInOther,
+  ScalingProjectCapability,
+  ScalingProjectContract,
+  ScalingProjectPermission,
+  ScalingProjectPurpose,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
+  ScalingProjectTechnology,
+  TransactionApiConfig,
+} from '../../../types'
+import type { ChainConfig, KnowledgeNugget } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
 import { getStage } from '../common/stages/getStage'
 import type { Layer2, Layer2Display, Layer2TxConfig } from '../types'
-import {
-  explorerContractSourceReference,
-  explorerReferences,
-  mergeBadges,
-  safeGetImplementation,
-} from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
 
 export interface PolygonCDKStackConfig {
-  createdAt: UnixTime
+  addedAt: UnixTime
+  capability?: ScalingProjectCapability
   daProvider?: DAProvider
   dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   chainConfig?: ChainConfig
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateEscrows: ScalingProjectEscrow[]
+  nonTemplateEscrows: ProjectEscrow[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
@@ -163,15 +161,16 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 
   return {
     type: 'layer2',
-    createdAt: templateVars.createdAt,
+    addedAt: templateVars.addedAt,
     id: ProjectId(templateVars.discovery.projectName),
+    capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
-      provider: 'Polygon',
+      stack: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
         finalizationPeriod,
@@ -345,41 +344,19 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
         secondLine: formatExecutionDelay(finalizationPeriod),
-        sources: explorerContractSourceReference(
-          explorerUrl,
-          rollupManagerContract,
-        ),
       },
-      dataAvailability: {
-        ...riskViewDA(daProvider),
-        sources: [
-          {
-            contract: templateVars.rollupModuleContract.name,
-            references: [],
-          },
-        ],
-      },
+      dataAvailability: riskViewDA(daProvider),
       exitWindow: exitWindowRisk,
       // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
-      sequencerFailure: {
-        ...SEQUENCER_NO_MECHANISM(templateVars.isForcedBatchDisallowed),
-        sources: [
-          {
-            contract: templateVars.rollupModuleContract.name,
-            references: [],
-          },
-        ],
-      },
+      sequencerFailure: SEQUENCER_NO_MECHANISM(
+        templateVars.isForcedBatchDisallowed,
+      ),
       proposerFailure: {
         ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
         description:
           RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
           ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
         secondLine: formatDelay(trustedAggregatorTimeout + pendingStateTimeout),
-        sources: explorerContractSourceReference(
-          explorerUrl,
-          rollupManagerContract,
-        ),
       },
     },
     stage:
@@ -420,7 +397,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: explorerReferences(explorerUrl, [
           {
-            text: 'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
+            title:
+              'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
             address: safeGetImplementation(rollupManagerContract),
           },
         ]),
@@ -442,7 +420,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ],
         references: explorerReferences(explorerUrl, [
           {
-            text: `${templateVars.rollupModuleContract.name}.sol - source code, onlyTrustedSequencer modifier`,
+            title: `${templateVars.rollupModuleContract.name}.sol - source code, onlyTrustedSequencer modifier`,
             address: safeGetImplementation(templateVars.rollupModuleContract),
           },
         ]),
@@ -454,7 +432,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           'The mechanism for allowing users to submit their own transactions is currently disabled.',
         references: explorerReferences(explorerUrl, [
           {
-            text: `${templateVars.rollupModuleContract.name}.sol - source code, forceBatchAddress address`,
+            title: `${templateVars.rollupModuleContract.name}.sol - source code, forceBatchAddress address`,
             address: safeGetImplementation(templateVars.rollupModuleContract),
           },
         ]),
@@ -464,7 +442,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           ...EXITS.REGULAR('zk', 'merkle proof'),
           references: explorerReferences(explorerUrl, [
             {
-              text: 'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
+              title:
+                'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
               address: safeGetImplementation(bridge),
             },
           ]),
@@ -580,7 +559,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
       references: explorerReferences(explorerUrl, [
         {
-          text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
+          title:
+            'State injections - stateRoot and exitRoot are part of the validity proof input.',
           address: safeGetImplementation(rollupManagerContract),
         },
       ]),
@@ -614,9 +594,7 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
     : DA.riskView
 }
 
-function technologyDA(
-  DA: DAProvider | undefined,
-): ScalingProjectTechnologyChoice {
+function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

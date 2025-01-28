@@ -5,7 +5,7 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const astarzkevm: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -45,20 +45,10 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     }),
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: membersCountDAC,
-        requiredSignatures: requiredSignaturesDAC,
-      }),
-      sources: [
-        {
-          contract: 'PolygonDataCommittee.sol',
-          references: [
-            'https://etherscan.io/address/0xF4e87685e323818E0aE35dCdFc3B65106002E456#code',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: membersCountDAC,
+      requiredSignatures: requiredSignaturesDAC,
+    }),
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -72,8 +62,9 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          title:
+            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
@@ -157,8 +148,8 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'Astar zkEVM Launch',
-      link: 'https://astar.network/blog/astars-zkevm-mainnet-is-live-86096',
+      title: 'Astar zkEVM Launch',
+      url: 'https://astar.network/blog/astars-zkevm-mainnet-is-live-86096',
       date: '2024-03-06',
       description:
         'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',
@@ -168,7 +159,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   knowledgeNuggets: [],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

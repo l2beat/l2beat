@@ -16,7 +16,7 @@ export type SearchBarProject = SearchBarEntry & {
   id: string
   isUpcoming: boolean
   iconUrl: string
-  createdAt: number
+  addedAt: number
   kind: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zkCatalog'
   filePrepared?: Fuzzysort.Prepared
 }

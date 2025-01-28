@@ -5,7 +5,7 @@ import type {
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
-} from '../../../common'
+} from '../../../types'
 import type {
   Layer2,
   Layer2Config,
@@ -17,8 +17,9 @@ import { isUnderReview } from './isUnderReview'
 describe(isUnderReview.name, () => {
   const mockProject: Layer2 = {
     type: 'layer2',
-    createdAt: new UnixTime(1234567890),
+    addedAt: new UnixTime(1234567890),
     id: ProjectId('project-id'),
+    capability: 'universal',
     display: mockObject<Layer2Display>(),
     technology: mockObject<ScalingProjectTechnology>({
       isUnderReview: undefined,

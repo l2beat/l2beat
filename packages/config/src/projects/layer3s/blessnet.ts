@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -9,7 +9,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 
 export const blessnet: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
+  addedAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
   additionalPurposes: ['Interoperability'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   hostChain: ProjectId('arbitrum'),
@@ -63,7 +63,7 @@ export const blessnet: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

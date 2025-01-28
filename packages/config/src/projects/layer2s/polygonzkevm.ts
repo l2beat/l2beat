@@ -28,7 +28,7 @@ const upgradeDelayString = formatSeconds(
 )
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
   rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
   display: {
@@ -165,8 +165,9 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
       references: [
         {
-          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
-          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          title:
+            'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
+          url: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
         },
       ],
     },
@@ -174,8 +175,9 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
-          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+          title:
+            'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
+          url: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
     },
@@ -313,15 +315,15 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
   },
   milestones: [
     {
-      name: 'Polygon zkEVM Etrog upgrade',
-      link: 'https://docs.polygon.technology/zkEVM/architecture/protocol/etrog-upgrade/#etrog-upgrade',
+      title: 'Polygon zkEVM Etrog upgrade',
+      url: 'https://docs.polygon.technology/zkEVM/architecture/protocol/etrog-upgrade/#etrog-upgrade',
       date: '2024-02-13',
       description: 'Polygon zkEVM is upgraded to the Polygon Etrog version.',
       type: 'general',
     },
     {
-      name: 'Polygon zkEVM Mainnet Beta is Live',
-      link: 'https://polygon.technology/blog/polygon-zkevm-mainnet-beta-is-live?utm_source=twitter&utm_medium=social&utm_campaign=zkevm-launch&utm_term=mainnet-beta-live&utm_content=blog',
+      title: 'Polygon zkEVM Mainnet Beta is Live',
+      url: 'https://polygon.technology/blog/polygon-zkevm-mainnet-beta-is-live?utm_source=twitter&utm_medium=social&utm_campaign=zkevm-launch&utm_term=mainnet-beta-live&utm_content=blog',
       date: '2023-03-27T00:00:00Z',
       description: 'Polygon zkEVM public beta launched.',
       type: 'general',

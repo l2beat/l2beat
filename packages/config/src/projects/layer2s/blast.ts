@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
@@ -10,7 +10,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('blast')
 
 export const blast: Layer2 = opStackL2({
-  createdAt: new UnixTime(1700555008), // 2023-11-21T08:23:28Z
+  addedAt: new UnixTime(1700555008), // 2023-11-21T08:23:28Z
   discovery,
   display: {
     name: 'Blast',
@@ -44,16 +44,18 @@ export const blast: Layer2 = opStackL2({
         ),
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
           },
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            href: `https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code`,
+            title: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
+            url: `https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code`,
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
@@ -62,8 +64,8 @@ export const blast: Layer2 = opStackL2({
         ...EXITS.FORCED('all-withdrawals'),
         references: [
           {
-            text: 'Forced withdrawal from an OP Stack blockchain',
-            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced withdrawal from an OP Stack blockchain',
+            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
           },
         ],
       },
@@ -133,23 +135,23 @@ export const blast: Layer2 = opStackL2({
   },
   milestones: [
     {
-      name: 'Blast Network Launch',
-      link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
+      title: 'Blast Network Launch',
+      url: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
       date: '2024-02-29T00:00:00Z',
       description: 'Blast Network is live on mainnet.',
       type: 'general',
     },
     {
-      name: 'Blast upgrades to censor exploiter',
-      link: 'https://x.com/miszke_eth/status/1772946372309737970',
+      title: 'Blast upgrades to censor exploiter',
+      url: 'https://x.com/miszke_eth/status/1772946372309737970',
       date: '2024-03-26T00:00:00Z',
       description:
         'The Munchables exploiter is prohibited from forcing transactions.',
       type: 'incident',
     },
     {
-      name: 'Blast Mainnet starts using blobs',
-      link: 'https://x.com/Blast_L2/status/1793686918506623032',
+      title: 'Blast Mainnet starts using blobs',
+      url: 'https://x.com/Blast_L2/status/1793686918506623032',
       date: '2024-05-27T00:00:00Z',
       description: 'Blast Mainnet starts publishing data to blobs.',
       type: 'general',

@@ -102,7 +102,7 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 
 export const eigenDAbridge = {
   id: 'eigenda-bridge',
-  createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
+  addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   type: 'StandaloneDacBridge',
   display: {
     name: 'ServiceManager',
@@ -231,12 +231,12 @@ export const eigenDAbridge = {
   `,
     references: [
       {
-        text: 'EigenDA Registry Coordinator - Etherscan',
-        href: 'https://etherscan.io/address/0xdcabf0be991d4609096cce316df08d091356e03f',
+        title: 'EigenDA Registry Coordinator - Etherscan',
+        url: 'https://etherscan.io/address/0xdcabf0be991d4609096cce316df08d091356e03f',
       },
       {
-        text: 'EigenDA Service Manager - Etherscan',
-        href: 'https://etherscan.io/address/0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07',
+        title: 'EigenDA Service Manager - Etherscan',
+        url: 'https://etherscan.io/address/0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07',
       },
     ],
     risks: [

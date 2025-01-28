@@ -5,7 +5,7 @@ import { DesktopProjectLinks } from '~/components/projects/links/desktop-project
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
-import { type DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import type { DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import {
   DaProjectStats,
   type ProjectStat,
@@ -67,6 +67,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                   </div>
                   <GrissiniDetails
                     values={project.header.daLayerGrissiniValues}
+                    showTooltip
                   />
                 </div>
               </div>

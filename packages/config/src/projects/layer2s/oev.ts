@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('oevnetwork')
 
 export const oev: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
+  addedAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
   reasonsForBeingOther: [
@@ -45,7 +45,7 @@ export const oev: Layer2 = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

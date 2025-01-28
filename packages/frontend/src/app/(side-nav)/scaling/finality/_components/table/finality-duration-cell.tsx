@@ -1,5 +1,4 @@
-import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
-
+import type { WarningValueWithSentiment } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,

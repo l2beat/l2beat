@@ -36,7 +36,7 @@ const lockRequirementInWei = discovery.getContractValue<number>(
 export const near: Bridge = {
   type: 'bridge',
   id: ProjectId('near'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',

@@ -5,7 +5,8 @@ import type { Layer3 } from './types'
 
 export const onchain: Layer3 = underReviewL3({
   id: 'onchain',
-  createdAt: new UnixTime(1737469446), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737469446), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('base'),
   badges: [
     Badge.RaaS.Conduit,
@@ -18,7 +19,7 @@ export const onchain: Layer3 = underReviewL3({
     name: 'Onchain Chain',
     slug: 'onchain',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Onchain Chain is an Orbit stack L3 with AnyTrust DA powering the ONCHAIN score system that evaluates addresses connected to a farcaster profile based on their onchain activity.',
     purposes: ['Gaming', 'Social'],

@@ -4,7 +4,8 @@ import type { Layer2 } from './types'
 
 export const hemi: Layer2 = upcomingL2({
   id: 'hemi',
-  createdAt: new UnixTime(1727449740), // 2024-09-27T17:09:00Z
+  capability: 'universal',
+  addedAt: new UnixTime(1727449740), // 2024-09-27T17:09:00Z
   display: {
     name: 'Hemi',
     slug: 'hemi',
@@ -12,7 +13,7 @@ export const hemi: Layer2 = upcomingL2({
       'Hemi is an OP Stack based L2 on Ethereum focusing on interoperability with the Bitcoin blockchain.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://hemi.xyz'],
       apps: ['https://app.hemi.xyz'],

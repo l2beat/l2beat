@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { CONTRACTS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
@@ -10,7 +9,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
+  addedAt: new UnixTime(1716893370), // 2024-05-28T10:49:30Z
   discovery,
   additionalBadges: [
     Badge.DA.DAC,
@@ -90,7 +89,7 @@ export const sanko: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

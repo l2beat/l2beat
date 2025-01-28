@@ -5,7 +5,8 @@ import type { Layer3 } from './types'
 
 export const henez: Layer3 = underReviewL3({
   id: 'henez',
-  createdAt: new UnixTime(1737469444), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737469444), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,
@@ -18,7 +19,7 @@ export const henez: Layer3 = underReviewL3({
     name: 'Henez',
     slug: 'henez',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Henez is an Orbit stack L3 with AnyTrust DA powering chain- and account-abstracted DeFi applications.',
     purposes: ['Universal'],

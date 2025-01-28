@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('socket')
 export const socket: Bridge = {
   type: 'bridge',
   id: ProjectId('socket'),
-  createdAt: new UnixTime(1706204584), // 2024-01-25T17:43:04Z
+  addedAt: new UnixTime(1706204584), // 2024-01-25T17:43:04Z
   display: {
     name: 'Socket',
     slug: 'socket',
@@ -68,8 +68,8 @@ export const socket: Bridge = {
         'Vaults can use any registered switchboards. The validation model is chosen by the switchboard and their security can vary from using a canonical bridge to a third-party validation model.',
       references: [
         {
-          text: 'Protocol Design - Socket Documentation',
-          href: 'https://developer.socket.tech/Learn/protocol-design#architecture',
+          title: 'Protocol Design - Socket Documentation',
+          url: 'https://developer.socket.tech/Learn/protocol-design#architecture',
         },
       ],
       risks: [

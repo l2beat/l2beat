@@ -1,3 +1,4 @@
+import type { ReferenceLink } from '@l2beat/config'
 import {
   HostChainRisksWarning,
   type HostChainRisksWarningProps,
@@ -10,9 +11,9 @@ import {
 import { UnderReviewCallout } from '../under-review-callout'
 import { TechnologyIncompleteNote } from './contracts/technology-incomplete-note'
 import { ProjectSection } from './project-section'
-import { type Reference, ReferenceList } from './reference-list'
+import { ReferenceList } from './reference-list'
 import { RiskList, type TechnologyRisk } from './risk-list'
-import { type ProjectSectionProps } from './types'
+import type { ProjectSectionProps } from './types'
 
 export interface TechnologySectionProps extends ProjectSectionProps {
   items: TechnologyChoice[]
@@ -26,7 +27,7 @@ export interface TechnologyChoice {
   isIncomplete: boolean
   isUnderReview: boolean
   risks: TechnologyRisk[]
-  references: Reference[]
+  references: ReferenceLink[]
   relatedProjectBanner?: ProjectDetailsRelatedProjectBannerProps
 }
 

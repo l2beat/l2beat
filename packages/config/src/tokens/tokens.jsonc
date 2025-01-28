@@ -5812,5 +5812,37 @@
         ]
       }
     }
+  ],
+  "abstract": [
+    {
+      "symbol": "USDT",
+      "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
+      "source": "external",
+      "coingeckoId": "tether",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+      "source": "external",
+      "coingeckoId": "usd-coin", // the specific USDC.e for abstract has bad price history on CG
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    }
   ]
 }

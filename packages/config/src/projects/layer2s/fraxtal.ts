@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
@@ -17,8 +17,8 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
-  createdAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
-  additionalBadges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
+  addedAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
+  additionalBadges: [Badge.Infra.Superchain],
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {
@@ -33,12 +33,12 @@ export const fraxtal: Layer2 = opStackL2({
         'Fraxtal uses a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on chain inbox.',
       references: [
         {
-          text: 'Fraxtal documentation',
-          href: 'https://docs.frax.com/fraxtal',
+          title: 'Fraxtal documentation',
+          url: 'https://docs.frax.com/fraxtal',
         },
         {
-          text: 'On-Chain Inbox',
-          href: 'https://etherscan.io/address/0xff000000000000000000000000000000000420fc',
+          title: 'On-Chain Inbox',
+          url: 'https://etherscan.io/address/0xff000000000000000000000000000000000420fc',
         },
       ],
       risks: [
@@ -55,6 +55,7 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
     bridge: DA_BRIDGES.NONE,
+    badge: Badge.DA.CustomDA,
   },
   associatedTokens: ['FXS', 'FPIS'],
   discovery,
@@ -123,12 +124,12 @@ export const fraxtal: Layer2 = opStackL2({
       `,
       references: [
         {
-          text: 'FraxtalDA Documentation',
-          href: 'https://docs.frax.com/fraxtal/network/data-availability',
+          title: 'FraxtalDA Documentation',
+          url: 'https://docs.frax.com/fraxtal/network/data-availability',
         },
         {
-          text: 'Fraxtal DA Follower - Source Code',
-          href: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go',
+          title: 'Fraxtal DA Follower - Source Code',
+          url: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go',
         },
       ],
       risks: [
@@ -139,7 +140,7 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
     bridge: {
-      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
       type: 'NoDacBridge',
       technology: {
         description: `The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.

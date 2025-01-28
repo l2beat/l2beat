@@ -82,7 +82,7 @@ function getScalingApiEntry(
     type: project.type,
     hostChain: project.type === 'layer3' ? getHostChain(project) : undefined,
     category: project.display.category,
-    provider: project.display.provider,
+    provider: project.display.stack,
     purposes: project.display.purposes,
     isArchived: false,
     isUpcoming: false,
