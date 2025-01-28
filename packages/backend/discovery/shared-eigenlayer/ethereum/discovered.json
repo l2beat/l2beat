@@ -1,8 +1,8 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 21679901,
-  "configHash": "0x6b5526d4116ccbfe2faa92cafb369a80d2bf60b23fd5403cf9cb875a317b769d",
+  "blockNumber": 21723686,
+  "configHash": "0x6a1aeb2dc40c3824f42c982abf6bbb44d0bef41f60276f9fef6084c043d18120",
   "contracts": [
     {
       "name": "DepositContract",
@@ -14,17 +14,19 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x6fab1c0000000000",
-        "get_deposit_root": "0x9d0a1ed2ea9c6576ec93c9e7c54de9e45b227963f5a8240fc9a034ba205c9c0b"
+        "get_deposit_count": "0xa0d31c0000000000",
+        "get_deposit_root": "0xcaae0e0d2befc7b89a926d49d47a753e468cdae8dd870dae67ff6f259b9f27a8"
       },
       "derivedName": "DepositContract"
     },
     {
       "name": "PauserRegistry",
       "address": "0x0c431C66F4dE941d089625E5B423D00707977060",
+      "template": "eigenlayer/PauserRegistry",
       "sourceHashes": [
         "0x3b8d61b335423f5ba47369c8a865fa7f3296ba457e10069b0b9c46bcb03aa1e8"
       ],
+      "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.",
       "sinceTimestamp": 1686348935,
       "values": {
         "$immutable": true,
@@ -55,6 +57,7 @@
     {
       "name": "TokenHopper",
       "address": "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563",
+      "template": "eigenlayer/TokenHopper",
       "sourceHashes": [
         "0x7a33b4c0c58212ece91ddbb1006f31ba22a346c26b7b89555d88d72b195aec84"
       ],
@@ -73,7 +76,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1736989211,
+        "latestPress": 1737594011,
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -91,6 +94,7 @@
     {
       "name": "AVSDirectory",
       "address": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+      "template": "eigenlayer/AVSDirectory",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xda5855140fd893c11984d2ce3e5c9833d7024c104ca1eaf0a5b756f81e55087c"
@@ -181,7 +185,10 @@
           "0xB3e9F71637f0089F81dAeb3b6999d391F13736Dd",
           "0x44577f44D2A131c8033663996636d00Ce1F46808",
           "0xb6EC8E5c6dB00089737Bd9637cFF76bD8Bbe0474",
-          "0x42F15F9E4dF4994317453477e80e24797CC1A929"
+          "0x42F15F9E4dF4994317453477e80e24797CC1A929",
+          "0x35DebC00531Ac8771be5dbEf015feFD084efA958",
+          "0x6201bc0A699e3b10f324204e6F8EcdD0983De227",
+          "0x6f943318b05AD7c6EE596A220510A6D64B518dd8"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -203,6 +210,10 @@
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0c431C66F4dE941d089625E5B423D00707977060"
+        },
         {
           "permission": "act",
           "from": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
@@ -230,11 +241,13 @@
     {
       "name": "DelegationManager",
       "address": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+      "template": "eigenlayer/DelegationManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x236f85a005803b10e03d97356b1569532271b43a19b27c7479079c51b731709e"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -351,6 +364,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0c431C66F4dE941d089625E5B423D00707977060"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686325811,
       "values": {
@@ -646,7 +665,7 @@
         "name": "Backing Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1703257340108157830769230793",
+        "totalSupply": "1704544760622222953846153871",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -660,11 +679,13 @@
     {
       "name": "StrategyManager",
       "address": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+      "template": "eigenlayer/StrategyManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x02ef571f391efe8c4fe859f372cc691e345de88a1fc59df7f13eacbd8bba7bfa"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -825,7 +846,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32856,
+        "numPods": 32882,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -871,6 +892,7 @@
     {
       "name": "RewardAllStakersActionGenerator",
       "address": "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
+      "template": "eigenlayer/RewardAllStakersActionGenerator",
       "sourceHashes": [
         "0x519834dae9f17d3adac32cfef3f2d1e84185152157b8e20a0ff5837d33eb423a"
       ],
@@ -929,6 +951,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x0c431C66F4dE941d089625E5B423D00707977060"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1686327791,
       "values": {
@@ -1160,11 +1188,13 @@
     {
       "name": "EIGEN token",
       "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+      "template": "eigenlayer/EIGEN token",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x857392f0c602177fab038b9cc445ed977e9367e7ac3b70515f6296d459a585af"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1227,7 +1257,7 @@
         "name": "Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1703257340108157830769230793",
+        "totalSupply": "1704544760622222953846153871",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -2303,7 +2333,14 @@
     ]
   },
   "usedTemplates": {
+    "eigenlayer/AVSDirectory": "0x2a04edb4ae6fefbff182b022e911e95b661b3ae858fa04695112c39eaaf75d71",
+    "eigenlayer/DelegationManager": "0x0b175e41427b8f36011bf976432888f9a1298e1857cdd39380ec3b0de868ae5f",
+    "eigenlayer/EIGEN token": "0xa47d59e05f42fc2ca6509d9ae33c4f00491666cdf2c18f6fd94097dd0872dec7",
+    "eigenlayer/PauserRegistry": "0x4072012c2d9a6dcc9bcaac6075469c96090c7279b8ec8a2ae07c519449010ede",
+    "eigenlayer/RewardAllStakersActionGenerator": "0x94d0582365138af9de269527f03b2992790929bcab7b7d1ba5ee668a781975f9",
     "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
+    "eigenlayer/StrategyManager": "0x98c3bdea63c8e2933b01b0835c31f890ee6cb385bd0de9d528055c1fcf5bc7dc",
+    "eigenlayer/TokenHopper": "0x0b2eb1c60653a544c7c41ca85a5e199864d8997ebd6ba80b6a435b7ca3fa252f",
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
