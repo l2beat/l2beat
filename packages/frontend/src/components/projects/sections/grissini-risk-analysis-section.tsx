@@ -35,18 +35,22 @@ export function GrissiniRiskAnalysisSection({
       className={cn(hideRisks ? 'space-y-0' : 'space-y-6')}
     >
       {description && <Markdown>{description}</Markdown>}
-      <RiskValues
-        grissiniValues={layerGrissiniValues}
-        hideRisks={hideRisks}
-        title="DA Layer Risks"
-        hideTitle={hideTitle}
-      />
-      <RiskValues
-        grissiniValues={bridgeGrissiniValues}
-        hideRisks={hideRisks}
-        title="DA Bridge Risks"
-        hideTitle={hideTitle}
-      />
+      {layerGrissiniValues && layerGrissiniValues.length > 0 && (
+        <RiskValues
+          grissiniValues={layerGrissiniValues}
+          hideRisks={hideRisks}
+          title="DA Layer Risks"
+          hideTitle={hideTitle}
+        />
+      )}
+      {bridgeGrissiniValues && bridgeGrissiniValues.length > 0 && (
+        <RiskValues
+          grissiniValues={bridgeGrissiniValues}
+          hideRisks={hideRisks}
+          title="DA Bridge Risks"
+          hideTitle={hideTitle}
+        />
+      )}
     </ProjectSection>
   )
 }
@@ -58,36 +62,33 @@ function RiskValues({
   hideTitle,
 }: {
   title: string
-  grissiniValues: RosetteValue[] | undefined
+  grissiniValues: RosetteValue[]
   hideRisks?: boolean
   hideTitle?: boolean
 }) {
   return (
-    grissiniValues &&
-    grissiniValues.length > 0 && (
-      <div>
-        {!hideTitle && (
-          <div className="mb-2 text-lg font-bold md:text-xl">{title}</div>
-        )}
-        {Object.values(grissiniValues).map((value, key) => (
-          <div key={key} className="mb-6 flex flex-col gap-2">
-            <SingleGrissiniDetails
-              {...value}
-              className={hideRisks ? 'hidden' : ''}
-            />
-            {value.description && (
-              <Markdown
-                className={cn(
-                  'leading-snug text-gray-850 dark:text-gray-400 md:text-lg',
-                  hideRisks ? 'mt-0' : 'mt-1.5',
-                )}
-              >
-                {value.description}
-              </Markdown>
-            )}
-          </div>
-        ))}
-      </div>
-    )
+    <div>
+      {!hideTitle && (
+        <div className="mb-2 text-lg font-bold md:text-xl">{title}</div>
+      )}
+      {Object.values(grissiniValues).map((value, key) => (
+        <div key={key} className="mb-6 flex flex-col gap-2">
+          <SingleGrissiniDetails
+            {...value}
+            className={hideRisks ? 'hidden' : ''}
+          />
+          {value.description && (
+            <Markdown
+              className={cn(
+                'leading-snug text-gray-850 dark:text-gray-400 md:text-lg',
+                hideRisks ? 'mt-0' : 'mt-1.5',
+              )}
+            >
+              {value.description}
+            </Markdown>
+          )}
+        </div>
+      ))}
+    </div>
   )
 }
