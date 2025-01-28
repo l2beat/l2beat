@@ -1,7 +1,7 @@
-import { type Bridge } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { Bridge } from '@l2beat/config'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
 import { isTvlChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
@@ -77,10 +77,13 @@ export async function getBridgeProjectDetails(
   }
 
   if (bridge.milestones && bridge.milestones.length > 0) {
+    const sortedMilestones = bridge.milestones.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
     items.push({
       type: 'MilestonesAndIncidentsSection',
       props: {
-        milestones: bridge.milestones,
+        milestones: sortedMilestones,
         id: 'milestones-and-incidents',
         title: 'Milestones & Incidents',
       },
