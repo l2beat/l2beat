@@ -69,9 +69,6 @@
         }
       }
     },
-    "EIGENProxyAdmin": {
-      "description": "ProxyAdmin owner of the timelock contract owning the EIGEN token contract."
-    },
     "RewardAllStakersActionGenerator": {
       "description": "Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers."
     },
