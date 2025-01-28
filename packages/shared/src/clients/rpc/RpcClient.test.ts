@@ -1,14 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { utils } from 'ethers'
 import type { HttpClient } from '../http/HttpClient'
 import { RpcClient } from './RpcClient'
-
-export const erc20Interface = new utils.Interface([
-  'function balanceOf(address account) view returns (uint256)',
-  'function totalSupply() view returns (uint256)',
-])
 
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
