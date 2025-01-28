@@ -56,6 +56,37 @@
               "0xe2cf43bd009fb6c7b5c7b6d5cae83b0c49a676ef5ee3c3e94016e6c31e8b6fd2": "L2_TX_SENDER_ROLE"
             }
           }
+        },
+        "whitelistedSender": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xe2cf43bd009fb6c7b5c7b6d5cae83b0c49a676ef5ee3c3e94016e6c31e8b6fd2": "L2_TX_SENDER_ROLE"
+            },
+            "pickRoleMembers": "L2_TX_SENDER_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "address is part of the GRVTTransactionFilterer whitelist."
+              }
+            ]
+          }
+        },
+        "acAdmin": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "manage the whitelist of addresses."
+              }
+            ]
+          }
         }
       }
     }
