@@ -18,11 +18,16 @@ type Story = StoryObj<typeof StageBadge>
 export const Stages: Story = {
   render: () => (
     <div className="flex flex-col gap-2">
-      <StageBadge stage="Stage 0" />
-      <StageBadge stage="Stage 1" />
-      <StageBadge stage="Stage 2" />
-      <StageBadge stage="UnderReview" />
-      <StageBadge stage="NotApplicable" />
+      <StageBadge stage="Stage 0" isAppchain={false} />
+      <StageBadge stage="Stage 1" isAppchain={false} />
+      <StageBadge stage="Stage 2" isAppchain={false} />
+      <StageBadge stage="UnderReview" isAppchain={false} />
+      <StageBadge stage="NotApplicable" isAppchain={false} />
+      <StageBadge stage="Stage 0" isAppchain={true} />
+      <StageBadge stage="Stage 1" isAppchain={true} />
+      <StageBadge stage="Stage 2" isAppchain={true} />
+      <StageBadge stage="UnderReview" isAppchain={true} />
+      <StageBadge stage="NotApplicable" isAppchain={true} />
     </div>
   ),
 }

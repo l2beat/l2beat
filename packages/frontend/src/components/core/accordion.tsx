@@ -14,10 +14,7 @@ const AccordionItem = ({
 }: React.ComponentProps<typeof AccordionPrimitive.Item>) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn(
-      'border-b border-gray-200 last:border-none dark:border-zinc-700',
-      className,
-    )}
+    className={cn('border-b border-divider last:border-none', className)}
     {...props}
   />
 )
@@ -39,7 +36,7 @@ const AccordionTrigger = ({
       {...props}
     >
       {children}
-      <ChevronIcon className="size-4 shrink-0 fill-current transition-transform duration-200" />
+      <ChevronIcon className="size-4 shrink-0 fill-secondary transition-transform duration-200" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 )

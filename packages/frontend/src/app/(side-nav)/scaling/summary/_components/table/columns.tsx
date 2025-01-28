@@ -58,7 +58,12 @@ export const scalingSummaryColumns = [
     },
     {
       id: 'stage',
-      cell: (ctx) => <StageCell stageConfig={ctx.row.original.stage} />,
+      cell: (ctx) => (
+        <StageCell
+          stageConfig={ctx.row.original.stage}
+          isAppchain={ctx.row.original.capability === 'appchain'}
+        />
+      ),
       sortingFn: sortStages,
       sortUndefined: 'last',
       meta: {

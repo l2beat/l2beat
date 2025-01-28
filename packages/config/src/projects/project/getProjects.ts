@@ -46,6 +46,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
+      capability: p.capability,
       isOther:
         p.display.category === 'Other' ||
         (PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
