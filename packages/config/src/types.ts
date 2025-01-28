@@ -1,6 +1,4 @@
 import type {
-  AssetId,
-  ChainId,
   EthereumAddress,
   ProjectId,
   StringWithAutocomplete,
@@ -59,14 +57,12 @@ export interface KnowledgeNugget {
   thumbnail?: string
 }
 
-export type MilestoneType = 'general' | 'incident'
-
 export interface Milestone {
   name: string
   link: string
   date: string
   description?: string
-  type: MilestoneType
+  type: 'general' | 'incident'
 }
 
 /** Base interface for Layer2s and Layer3s. The hope is that Layer2 and Layer3 will dissapear and only this will remain. */
@@ -136,22 +132,6 @@ export interface ScalingProjectConfig {
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
   daTracking?: ProjectDaTrackingConfig
-}
-
-export interface ProjectExternalAssets {
-  /** Id of the external chain on which assets are held. */
-  chainId: ChainId
-  /** List of assets to include. */
-  assets: {
-    /** Id of a given asset. */
-    assetId: AssetId
-    /** L2 contract address of the asset. */
-    tokenAddress: string
-    /** "Creation time" of a given asset, we assume that it did not exists before that time. */
-    sinceTimestamp: UnixTime
-    /** How fine grained the asset is */
-    decimals: number
-  }[]
 }
 
 export interface ScalingProjectContracts {
