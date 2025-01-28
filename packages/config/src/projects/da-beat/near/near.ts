@@ -161,7 +161,7 @@ export const near: BlockchainDaLayer = {
       title: 'Near mainnet launch',
       url: 'https://near.org/blog/near-mainnet-genesis',
       date: '2020-04-22T00:00:00Z',
-      description: 'Near DA mainnet launches.',
+      description: 'Near mainnet launches.',
       type: 'general',
     },
     {
