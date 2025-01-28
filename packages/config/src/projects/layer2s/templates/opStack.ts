@@ -251,11 +251,17 @@ function opStackCommon(
     upgradeDelay: 'No delay',
   }
 
-  // 4 cases: Optimium, Optimium + Superchain, Rollup, Rollup + Superchain
-  // archi images defined locally in the project.ts take precedence over this one
-  const architectureImage = `opstack-${postsToEthereum ? 'rollup' : 'optimium'}${templateVars.discovery.hasContract('SuperchainConfig') ? '-superchain' : ''}`
-
   const fraudProofType = getFraudProofType(templateVars)
+
+  // archi images defined locally in the project.ts take precedence over this one
+  const architectureImage = ['opstack', postsToEthereum ? 'rollup' : 'optimium']
+  if (templateVars.discovery.hasContract('SuperchainConfig')) {
+    architectureImage.push('superchain')
+  }
+  if (fraudProofType !== 'None') {
+    architectureImage.push('opfp')
+  }
+
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
@@ -263,7 +269,7 @@ function opStackCommon(
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
-      architectureImage: templateVars.architectureImage ?? architectureImage,
+      architectureImage: templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
         (templateVars.stateValidationImage ??
         fraudProofType === 'Permissionless')
