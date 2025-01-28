@@ -29,7 +29,7 @@ import { utils } from 'ethers'
 import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 import type {
   ScalingProjectContract,
-  ScalingProjectEscrow,
+  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
   ScalingProjectReference,
@@ -141,12 +141,12 @@ export class ProjectDiscovery {
     upgradeDelay?: string
     isUpcoming?: boolean
     includeInTotal?: boolean
-    source?: ScalingProjectEscrow['source']
+    source?: ProjectEscrow['source']
     bridgedUsing?: TokenBridgedUsing
     isHistorical?: boolean
     untilTimestamp?: UnixTime
     sharedEscrow?: SharedEscrow
-  }): ScalingProjectEscrow {
+  }): ProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
     assert(
@@ -165,7 +165,6 @@ export class ProjectDiscovery {
 
     return {
       address,
-      newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
       excludedTokens,

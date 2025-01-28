@@ -28,7 +28,7 @@ import type {
   Milestone,
   ProjectTechnologyChoice,
   ScalingProjectContract,
-  ScalingProjectEscrow,
+  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
@@ -87,7 +87,7 @@ export interface ZkStackConfigCommon {
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
-  nonTemplateEscrows?: (upgrades: Upgradeability) => ScalingProjectEscrow[]
+  nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string

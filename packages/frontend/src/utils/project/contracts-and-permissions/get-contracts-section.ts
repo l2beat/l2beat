@@ -6,7 +6,7 @@ import {
   type Layer3,
   type ScalingProjectContract,
   type ScalingProjectContracts,
-  type ScalingProjectEscrow,
+  type ProjectEscrow,
   layer2s,
 } from '@l2beat/config'
 import {
@@ -40,7 +40,7 @@ type ProjectParams = {
   architectureImage?: string
   contracts: ScalingProjectContracts
   daSolution?: DaSolution
-  escrows: ScalingProjectEscrow[] | undefined
+  escrows: ProjectEscrow[] | undefined
 } & (
   | {
       type: (Layer2 | Bridge | DaLayer)['type']
@@ -134,7 +134,7 @@ export function getContractsSection(
 
   const escrows =
     projectParams.escrows
-      ?.filter((escrow) => escrow.newVersion && !escrow.isHistorical)
+      ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
         const isUnverified = isEscrowUnverified(
@@ -364,21 +364,19 @@ function isContractUnverified(
 }
 
 function isEscrowUnverified(
-  escrow: ScalingProjectEscrow,
+  escrow: ProjectEscrow,
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
-  const chain = escrow.newVersion
-    ? (escrow.contract.chain ?? 'ethereum')
-    : 'ethereum'
+  const chain = escrow.contract?.chain ?? 'ethereum'
   return (
     contractsVerificationStatuses[chain]?.[escrow.address.toString()] === false
   )
 }
 
 function escrowToProjectContract(
-  escrow: ScalingProjectEscrow,
+  escrow: ProjectEscrow,
 ): ScalingProjectContract {
-  assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
+  assert(escrow.contract, 'Old escrow format used') // old format misses upgradeability info
 
   const genericName =
     escrow.tokens === '*'
@@ -393,7 +391,7 @@ function escrowToProjectContract(
   }
 }
 
-function moreTokensFirst(a: ScalingProjectEscrow, b: ScalingProjectEscrow) {
+function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
   const aTokens = a.tokens === '*' ? Number.POSITIVE_INFINITY : a.tokens.length
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 

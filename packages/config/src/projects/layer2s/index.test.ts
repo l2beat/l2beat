@@ -58,7 +58,7 @@ describe('layer2s', () => {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
           for (const escrow of layer2.config.escrows.filter(
-            (e) => e.newVersion && !e.isHistorical,
+            (e) => e.contract && !e.isHistorical,
           )) {
             it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
               // try to resolve escrow by address

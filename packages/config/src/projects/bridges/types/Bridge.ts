@@ -4,7 +4,7 @@ import type {
   Milestone,
   ProjectTechnologyChoice,
   ScalingProjectContracts,
-  ScalingProjectEscrow,
+  ProjectEscrow,
   ScalingProjectLinks,
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
@@ -43,7 +43,7 @@ export interface BridgeDisplay {
 
 export interface BridgeConfig {
   associatedTokens?: string[]
-  escrows: ScalingProjectEscrow[]
+  escrows: ProjectEscrow[]
 }
 
 export interface BridgeRiskView {

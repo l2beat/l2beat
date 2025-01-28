@@ -2,7 +2,7 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type {
   ScalingProjectDisplay,
-  ScalingProjectEscrow,
+  ProjectEscrow,
   TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig } from '../../../types'
@@ -14,7 +14,7 @@ interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
   rpcUrl?: string
-  escrows?: ScalingProjectEscrow[]
+  escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
   transactionApi?: TransactionApiConfig
   badges?: BadgeId[]

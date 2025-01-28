@@ -33,7 +33,7 @@ import type {
   ProjectTechnologyChoice,
   ScalingProjectContract,
   ScalingProjectDisplay,
-  ScalingProjectEscrow,
+  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRisk,
@@ -116,8 +116,8 @@ interface OrbitStackConfigCommon {
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
-  nonTemplateEscrows?: ScalingProjectEscrow[]
-  overrideEscrows?: ScalingProjectEscrow[]
+  nonTemplateEscrows?: ProjectEscrow[]
+  overrideEscrows?: ProjectEscrow[]
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined

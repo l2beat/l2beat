@@ -31,7 +31,7 @@ import type {
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectContract,
-  ScalingProjectEscrow,
+  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskViewEntry,
@@ -72,7 +72,7 @@ export interface PolygonCDKStackConfig {
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateEscrows: ScalingProjectEscrow[]
+  nonTemplateEscrows: ProjectEscrow[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]

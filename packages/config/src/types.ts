@@ -126,7 +126,7 @@ export interface ScalingProjectConfig {
   /** Tokens that can be used to pay the gas fee */
   gasTokens?: string[]
   /** List of contracts in which L1 funds are locked */
-  escrows: ScalingProjectEscrow[]
+  escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
@@ -242,7 +242,43 @@ export type ScalingProjectDisplay = {
   upgradesAndGovernanceImage?: string
 }
 
-export type ScalingProjectEscrow = OldProjectEscrow | NewProjectEscrow
+export interface ProjectEscrow {
+  chain: string
+  /** Address of the escrow. Use etherscan to verify its correctness. */
+  address: EthereumAddress
+  /** Should use name of the contract for escrow name */
+  useContractName?: boolean
+  /** All the data about the escrow contract */
+  contract?: Omit<ScalingProjectContract, 'address'>
+  /** Timestamp of the deployment transaction of the escrow contract. */
+  sinceTimestamp: UnixTime
+  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
+  tokens: string[] | '*'
+  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
+  excludedTokens?: string[]
+  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
+  premintedTokens?: string[]
+  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
+  isHistorical?: boolean
+  /** Upcoming projects needs upcoming escrows (needed for TVL) */
+  isUpcoming?: boolean
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+  includeInTotal?: boolean
+  source?: 'canonical' | 'external' | 'native'
+  /** Bridge used for this escrow */
+  bridgedUsing?: {
+    bridges: {
+      name: string
+      /** Slug is used for the URL of the bridge on L2BEAT */
+      slug?: string
+    }[]
+    warning?: string
+  }
+  sharedEscrow?: SharedEscrow
+}
+
+export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
 
 export interface AggLayerEscrow {
   type: 'AggLayer'
@@ -269,79 +305,6 @@ export interface ElasticChainEscrow {
    * non-ETH gas tokens e.g. OKB, GPT
    */
   tokensToAssignFromL1?: string[]
-}
-
-export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
-
-interface OldProjectEscrow {
-  address: EthereumAddress
-  /** Timestamp of the deployment transaction of the escrow contract. */
-  sinceTimestamp: UnixTime
-  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
-  tokens: string[] | '*'
-  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
-  excludedTokens?: string[]
-  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
-  premintedTokens?: string[]
-  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
-  isHistorical?: boolean
-  /** Temporary flag meaning that escrow config was migrated to new format */
-  newVersion?: false
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
-  chain: string
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-  includeInTotal?: boolean
-  source?: 'canonical' | 'external' | 'native'
-  /** Bridge used for this escrow */
-  bridgedUsing?: {
-    bridges: {
-      name: string
-      /** Slug is used for the URL of the bridge on L2BEAT */
-      slug?: string
-    }[]
-    warning?: string
-  }
-  sharedEscrow?: SharedEscrow
-}
-
-interface NewProjectEscrow {
-  /** Address of the escrow. Use etherscan to verify its correctness. */
-  address: EthereumAddress
-  /** All the data about the escrow contract */
-  contract: Omit<ScalingProjectContract, 'address'>
-  /** Timestamp of the deployment transaction of the escrow contract. */
-  sinceTimestamp: UnixTime
-  /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
-  tokens: string[] | '*'
-  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
-  excludedTokens?: string[]
-  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
-  premintedTokens?: string[]
-  /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
-  isHistorical?: boolean
-  /** Temporary flag meaning that escrow config was migrated to new format */
-  newVersion?: true
-  /** Upcoming projects needs upcoming escrows (needed for TVL) */
-  isUpcoming?: boolean
-  /** Should use name of the contract for escrow name */
-  useContractName?: boolean
-  chain: string
-  /** Inclusive */
-  untilTimestamp?: UnixTime
-  includeInTotal?: boolean
-  source?: 'canonical' | 'external' | 'native'
-  /** Bridge used for this escrow */
-  bridgedUsing?: {
-    bridges: {
-      name: string
-      /** Slug is used for the URL of the bridge on L2BEAT */
-      slug?: string
-    }[]
-    warning?: string
-  }
-  sharedEscrow?: SharedEscrow
 }
 
 export interface ScalingProjectLinks {

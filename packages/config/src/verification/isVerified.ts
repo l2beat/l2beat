@@ -20,7 +20,7 @@ export function isVerified(
         return true
       }
 
-      return e.contract.isVerified
+      return e.contract?.isVerified
     }) ?? true
 
   const newVerification = escrowVerifications && contractsVerification

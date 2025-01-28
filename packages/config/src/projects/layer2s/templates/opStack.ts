@@ -41,7 +41,7 @@ import type {
   ScalingProjectCategory,
   ScalingProjectContract,
   ScalingProjectDisplay,
-  ScalingProjectEscrow,
+  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
@@ -138,7 +138,7 @@ interface OpStackConfigCommon {
   nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
-  nonTemplateEscrows?: ScalingProjectEscrow[]
+  nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
