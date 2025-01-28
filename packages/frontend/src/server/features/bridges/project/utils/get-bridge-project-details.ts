@@ -71,7 +71,7 @@ export async function getBridgeProjectDetails(
         projectId: bridge.id,
         tokens: tokens,
         isBridge: true,
-        milestones: [],
+        milestones: bridge.milestones ?? [],
       },
     })
   }
