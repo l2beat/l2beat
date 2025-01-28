@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const kontos: Layer2 = underReviewL2({
   id: 'kontos',
+  capability: 'universal',
   addedAt: new UnixTime(1730718191),
   display: {
     name: 'Kontos',

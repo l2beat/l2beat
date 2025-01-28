@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const kakarotzkevm: Layer2 = upcomingL2({
   id: 'kakarotzkevm',
+  capability: 'universal',
   addedAt: new UnixTime(1712943035), // 2024-04-12T17:30:35Z
   display: {
     name: 'Kakarot zkEVM',

@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const align: Layer2 = upcomingL2({
   id: 'align',
+  capability: 'universal',
   addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   display: {
     name: 'Align Network',

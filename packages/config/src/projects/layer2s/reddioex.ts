@@ -59,7 +59,8 @@ export const reddioex: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
-  addetAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,

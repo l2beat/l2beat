@@ -69,6 +69,7 @@ export interface Milestone {
 export interface ScalingProject {
   /** Unique, readable id, will be used in DB. DO NOT EDIT THIS PROPERTY */
   id: ProjectId
+  capability: ScalingProjectCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
   /** Is this project archived? */
@@ -112,6 +113,8 @@ export interface ScalingProject {
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
+
+export type ScalingProjectCapability = 'universal' | 'appchain'
 
 export type ScalingProjectCategory =
   | 'Optimistic Rollup'

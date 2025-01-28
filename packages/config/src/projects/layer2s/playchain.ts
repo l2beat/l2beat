@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const playchain: Layer2 = upcomingL2({
   id: 'playchain',
+  capability: 'universal',
   addedAt: new UnixTime(1715161986), // 2024-05-08T09:53:06Z
   display: {
     name: 'PlayChain',

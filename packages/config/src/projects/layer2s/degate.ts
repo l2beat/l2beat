@@ -52,7 +52,8 @@ export const degate: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate'),
-  addetAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  capability: 'appchain',
+  addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,

@@ -69,7 +69,8 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
-  addetAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
+  capability: 'universal',
+  addedAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,

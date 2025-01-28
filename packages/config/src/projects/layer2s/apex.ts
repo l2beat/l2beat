@@ -112,7 +112,8 @@ const dacConfig =
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
-  addetAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
+  addedAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
+  capability: 'appchain',
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,

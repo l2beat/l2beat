@@ -28,6 +28,7 @@ import type {
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
+  ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPurpose,
@@ -63,6 +64,7 @@ export interface DAProvider {
 
 export interface ZkStackConfigCommon {
   addedAt: UnixTime
+  capability?: ScalingProjectCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
   validatorsKey: string
@@ -265,6 +267,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
+    capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
         Badge.Stack.ZKStack,

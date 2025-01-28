@@ -19,6 +19,7 @@ const discovery = new ProjectDiscovery('hermez')
 export const hermez: Layer2 = {
   type: 'layer2',
   id: ProjectId('hermez'),
+  capability: 'universal',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {

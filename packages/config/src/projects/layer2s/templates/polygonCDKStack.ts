@@ -31,6 +31,7 @@ import type {
   ProjectEscrow,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
+  ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPurpose,
@@ -62,6 +63,7 @@ export interface DAProvider {
 
 export interface PolygonCDKStackConfig {
   addedAt: UnixTime
+  capability?: ScalingProjectCapability
   daProvider?: DAProvider
   dataAvailabilitySolution?: DacDaLayer
   discovery: ProjectDiscovery
@@ -166,6 +168,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     type: 'layer2',
     addedAt: templateVars.addedAt,
     id: ProjectId(templateVars.discovery.projectName),
+    capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,

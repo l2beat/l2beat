@@ -80,6 +80,7 @@ export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
   addedAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
+  capability: 'universal',
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,

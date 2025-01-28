@@ -32,6 +32,7 @@ import type {
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
+  ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
@@ -110,6 +111,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
 
 interface OrbitStackConfigCommon {
   addedAt: UnixTime
+  capability?: ScalingProjectCapability
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   stateValidationImage?: string
@@ -420,6 +422,7 @@ function orbitStackCommon(
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
+    capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
     contracts: discoveryDrivenSections
       ? discoveryDrivenSections.contracts

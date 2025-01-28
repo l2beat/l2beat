@@ -128,6 +128,7 @@ const permissionedGameMaxClockExtension =
 export const swell: Layer2 = {
   type: 'layer2',
   id: ProjectId('swell'),
+  capability: 'universal',
   addedAt: new UnixTime(1712341625), // 2024-04-05T18:27:05Z
   badges: [
     Badge.VM.EVM,

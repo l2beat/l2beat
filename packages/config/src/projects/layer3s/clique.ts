@@ -5,6 +5,7 @@ import type { Layer3 } from './types'
 
 export const clique: Layer3 = underReviewL3({
   id: 'clique',
+  capability: 'universal',
   addedAt: new UnixTime(1726595996), // 2024-09-17T17:59:56Z
   hostChain: ProjectId('base'),
   badges: [

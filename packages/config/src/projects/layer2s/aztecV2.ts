@@ -5,6 +5,7 @@ import type { Layer2 } from './types'
 export const aztecV2: Layer2 = upcomingL2({
   id: 'aztec-v2',
   addedAt: new UnixTime(1700568758), // '2023-11-21T12:12:38Z'
+  capability: 'universal',
   display: {
     name: 'Aztec',
     slug: 'aztec',

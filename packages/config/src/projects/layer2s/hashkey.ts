@@ -128,6 +128,7 @@ const permissionedGameMaxClockExtension =
 export const hashkey: Layer2 = {
   type: 'layer2',
   id: ProjectId('hashkey'),
+  capability: 'universal',
   addedAt: new UnixTime(1736518370), // 2025-01-10T17:09:00Z
   badges: [
     Badge.VM.EVM,

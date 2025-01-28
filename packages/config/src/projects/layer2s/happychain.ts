@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const happychain: Layer2 = upcomingL2({
   id: 'happy-chain',
+  capability: 'universal',
   addedAt: new UnixTime(1727519160), // 2024-09-27T17:09:00Z
   display: {
     name: 'Happy chain',
