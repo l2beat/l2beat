@@ -20,7 +20,7 @@ import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 import { InfoIcon } from '~/icons/info'
-import { type DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import type { DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
@@ -180,7 +180,10 @@ export function MultipleBridgeDetails({ project }: Props) {
         {project.selectedBridge.type === 'NoBridge' ? (
           <NoBridgeGrissiniDetailsPlaceholder />
         ) : (
-          <GrissiniDetails values={project.header.daBridgeGrissiniValues} />
+          <GrissiniDetails
+            values={project.header.daBridgeGrissiniValues}
+            showTooltip
+          />
         )}
       </div>
     </div>
