@@ -4,10 +4,10 @@
   "fields": {
     "pausers": {
       "handler": {
-        "type": "arrayFromOneEvent",
+        "type": "event",
+        "select": "pauser",
         "event": "PauserStatusChanged",
-        "valueKey": "pauser",
-        "flagKey": "canPause"
+        "where": ["=", "#canPause", true]
       },
       "target": {
         "permissions": [

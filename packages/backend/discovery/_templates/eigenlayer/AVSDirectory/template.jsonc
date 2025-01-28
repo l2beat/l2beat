@@ -3,9 +3,10 @@
   "fields": {
     "avs": {
       "handler": {
-        "type": "arrayFromOneEvent",
+        "type": "event",
+        "select": "avs",
         "event": "OperatorAVSRegistrationStatusUpdated",
-        "valueKey": "avs"
+        "where": ["=", "#status", true]
       }
     }
   },
