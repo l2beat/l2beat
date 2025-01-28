@@ -1,9 +1,8 @@
 import { compact } from 'lodash'
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { FullPageHeader } from '~/components/full-page-header'
 import { CustomLink } from '~/components/link/custom-link'
+import { MainPageHeader } from '~/components/main-page-header'
 import { env } from '~/env'
 import { CustomLinkIcon } from '~/icons/outlink'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -46,14 +45,11 @@ export default async function Page() {
   ])
 
   return (
-    <div>
+    <>
+      <MainPageHeader>Donate</MainPageHeader>
       <Header ethereumAddress={donateAddress} networks={networks} />
-      <ContentWrapper className="leading-[1.15]">
-        <main>
-          <DonateFundingSources />
-        </main>
-      </ContentWrapper>
-    </div>
+      <DonateFundingSources />
+    </>
   )
 }
 
@@ -65,18 +61,17 @@ interface HeaderProps {
   }[]
 }
 
-async function Header(props: HeaderProps) {
+function Header(props: HeaderProps) {
   return (
-    <FullPageHeader contentWrapperClassName="leading-[1.15]">
+    <div className="bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
       <div className="grid md:grid-cols-12">
         <div className="relative leading-normal md:col-span-7">
-          <h1 className="text-5xl font-bold md:text-6xl">Donate</h1>
-          <div className="mt-6 space-y-6">
-            <p>
+          <div className="space-y-4 text-primary">
+            <p className="text-xl font-bold">
               Thank you for supporting L2BEAT&apos;s mission to bring education
               and transparency to the blockchain space.
             </p>
-            <p>
+            <p className="text-base font-normal">
               We&apos;re committed to delivering accurate and reliable
               information. We strive to be an impartial and independent watchdog
               that acts in the best interest of users and the broader ecosystem
@@ -85,7 +80,7 @@ async function Header(props: HeaderProps) {
               educate themselves, transact securely, and make well-informed
               decisions.
             </p>
-            <p>
+            <p className="text-base font-normal">
               Your support means a lot to our small, independent team. Thank
               you!
             </p>
@@ -103,17 +98,17 @@ async function Header(props: HeaderProps) {
                   }}
                 />
               </div>
-              <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono text-lg">
+              <p className="mx-auto mt-4 inline-block w-[21ch] break-all font-mono text-lg font-normal">
                 {props.ethereumAddress}
               </p>
             </div>
             <div className="absolute flex size-full items-center justify-center">
-              <div className="size-[356px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
+              <div className="size-[250px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
             </div>
           </div>
 
-          <div className="relative z-10 mt-6">
-            <span className="text-sm uppercase text-purple-100 dark:text-pink-200">
+          <div className="relative z-10 mt-4">
+            <span className="text-xs font-medium uppercase text-purple-100 dark:text-pink-200">
               Donate through
             </span>
             <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
@@ -133,46 +128,46 @@ async function Header(props: HeaderProps) {
         </div>
         <div className="relative col-span-5 hidden items-center justify-center md:flex">
           <div className="z-10 flex flex-col items-center justify-center">
-            <div className="size-[236px] rounded-xl bg-white p-3">
+            <div className="size-[200px] rounded-xl bg-white p-3">
               <Image
                 alt="QR Code of donate address"
                 src="/images/qr-codes/donate.png"
-                width={212}
-                height={212}
+                width={176}
+                height={176}
                 style={{
                   imageRendering: 'pixelated',
                 }}
               />
             </div>
-            <p className="mx-auto mt-8 inline-block w-[21ch] break-all font-mono">
+            <p className="mx-auto mt-4 inline-block w-[21ch] break-all font-mono font-normal">
               {props.ethereumAddress}
             </p>
           </div>
           <div className="absolute flex size-full items-center justify-center">
-            <div className="size-[400px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
+            <div className="size-[300px] rounded-full bg-[#FFC2FD] blur-3xl dark:bg-[#7C387A]" />
           </div>
         </div>
       </div>
-    </FullPageHeader>
+    </div>
   )
 }
 
 function DonateFundingSources() {
   return (
-    <section id="funding-sources" className="mt-16 md:mt-20">
-      <div className="rounded-lg md:bg-surface-primary md:p-8">
-        <a
-          className="mb-6 text-2xl font-bold md:text-3xl md:leading-normal"
-          href="#funding-sources"
-        >
+    <section
+      id="funding-sources"
+      className="border-t border-divider md:mt-6 md:border-t-0"
+    >
+      <div className="bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
+        <a className="text-xl font-bold" href="#funding-sources">
           Funding sources
         </a>
-        <p className="mt-6 text-base">
+        <p className="mt-4 text-base leading-5">
           As a public goods company, L2BEAT is financed in the open by the
           community. For transparency, we are providing L2BEAT&apos;s funding
           sources below.
         </p>
-        <div className="mt-2 text-base leading-normal">
+        <div className="mt-6 text-base leading-normal">
           <p>
             Those funding sources have been categorized based on the
             contribution amounts:
