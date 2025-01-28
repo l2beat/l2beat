@@ -3,7 +3,7 @@ import {
   type BridgeRiskView,
   type Project,
   ProjectService,
-  type ValueWithSentiment,
+  type Sentiment,
 } from '@l2beat/config'
 import {
   type ProjectChanges,
@@ -40,7 +40,11 @@ export async function getBridgeRiskEntries() {
 
 export interface BridgesRiskEntry extends CommonBridgesEntry {
   type: BridgeDisplay['category']
-  destination: ValueWithSentiment<string>
+  destination: {
+    value: string
+    description?: string
+    sentiment: Sentiment
+  }
   riskView: BridgeRiskView
   tvlOrder: number
 }
@@ -59,7 +63,11 @@ function getBridgesRiskEntry(
   }
 }
 
-function getDestination(destinations: string[]): ValueWithSentiment<string> {
+function getDestination(destinations: string[]): {
+  value: string
+  description?: string
+  sentiment: Sentiment
+} {
   if (destinations.length === 0) {
     throw new Error('Invalid destination')
   }

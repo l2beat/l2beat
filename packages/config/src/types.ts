@@ -1,5 +1,4 @@
 import type { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './common'
 import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
 import type { BadgeId } from './projects/badges'
 import type { DacDaLayer, ProjectDaTrackingConfig } from './projects/da-beat'
@@ -8,22 +7,11 @@ import type { ProofVerification } from './projects/types'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
-export type ValueWithSentiment<T, S extends string = Sentiment> = {
-  sentiment: S
-  description?: string
-} & (T extends unknown[]
-  ? {
-      values: T
-    }
-  : {
-      value: T
-    })
-
-type WarningSentiment = 'bad' | 'warning' | 'neutral'
-export type WarningValueWithSentiment = ValueWithSentiment<
-  string,
-  WarningSentiment
->
+export type WarningSentiment = 'bad' | 'warning' | 'neutral'
+export interface WarningValueWithSentiment {
+  value: string
+  sentiment: WarningSentiment
+}
 
 export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 export type ReasonForBeingInOther =
@@ -206,19 +194,24 @@ export interface DataAvailabilityConfig {
   mode: DataAvailabilityMode
 }
 
-export type DataAvailabilityMode = (typeof DA_MODES)[keyof typeof DA_MODES]
-export type DataAvailabilityLayer = (typeof DA_LAYERS)[keyof typeof DA_LAYERS]
-type MappedDataAvailabilityBridge = {
-  [key in keyof typeof DA_BRIDGES]: (typeof DA_BRIDGES)[key] extends (
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    ...args: any[]
-  ) => infer R
-    ? R
-    : (typeof DA_BRIDGES)[key]
+export interface DataAvailabilityMode {
+  value: string
+  secondLine?: string
 }
 
-export type DataAvailabilityBridge =
-  MappedDataAvailabilityBridge[keyof MappedDataAvailabilityBridge]
+export interface DataAvailabilityLayer {
+  value: string
+  sentiment: Sentiment
+  secondLine?: string
+  description: string
+  fallbackDescription?: string
+}
+
+export interface DataAvailabilityBridge {
+  value: string
+  description: string
+  sentiment: Sentiment
+}
 
 export type ScalingProjectDisplay = {
   /** Name of the scaling project, will be used as a display name on the website */
@@ -424,12 +417,12 @@ export type ScalingProjectRiskCategory =
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'
 
-export interface ScalingProjectRiskViewEntry
-  extends ValueWithSentiment<string> {
+export interface ScalingProjectRiskViewEntry {
+  value: string
   description: string
+  secondLine?: string // second line in risk view
+  sentiment: Sentiment
   warning?: WarningValueWithSentiment
-  // second line in risk view
-  secondLine?: string
   sources?: {
     contract: string
     references: string[]
@@ -547,7 +540,7 @@ export interface CustomTransactionApi<T extends string> {
 }
 
 export interface ProjectDataAvailability {
-  layer: ValueWithSentiment<string> & { secondLine?: string }
+  layer: DataAvailabilityLayer
   bridge: DataAvailabilityBridge
   mode: DataAvailabilityMode
 }

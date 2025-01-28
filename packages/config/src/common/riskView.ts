@@ -6,7 +6,7 @@ import type {
   Sentiment,
   WarningValueWithSentiment,
 } from '../types'
-import { DATA_AVAILABILITY } from './dataAvailability'
+import { getDacSentiment } from './dataAvailability'
 
 // State validation
 
@@ -196,7 +196,7 @@ export function DATA_EXTERNAL_DAC(DAC?: {
   return {
     value: 'External (DAC)',
     description: `Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
-    sentiment: DATA_AVAILABILITY.DAC_SENTIMENT(DAC),
+    sentiment: getDacSentiment(DAC),
     definingMetric: DAC ? DAC.requiredSignatures / DAC.membersCount : -Infinity,
   }
 }
