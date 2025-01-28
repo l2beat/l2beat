@@ -33,7 +33,7 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
         {isAppchain && (
           <CircleQuestionMarkIcon
             className={cn(
-              'mt-[3px] size-4 fill-current',
+              'mt-px size-5 fill-current',
               getStageTextClassname(stageConfig.stage),
             )}
           />

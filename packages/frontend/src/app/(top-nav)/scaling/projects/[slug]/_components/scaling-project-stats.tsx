@@ -82,7 +82,7 @@ export function ScalingProjectStats({ project, className }: Props) {
                 {isAppchain && (
                   <CircleQuestionMarkIcon
                     className={cn(
-                      'mt-1 inline-block size-4',
+                      'mt-0.5 inline-block size-5',
                       isAppchain && [
                         'fill-current',
                         getStageTextClassname(project.stageConfig.stage),
