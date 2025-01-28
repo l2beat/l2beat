@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x99b2000bc8b5fc3c6e01f55b6fbb990949cbffbe
+Generated with discovered.json: 0x828b4c785ebeb4d554e814ff682f6c733052cd6d
 
-# Diff at Tue, 28 Jan 2025 06:23:58 GMT:
+# Diff at Tue, 28 Jan 2025 06:33:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21629172
@@ -146,21 +146,28 @@ discovery. Values are for block 21629172 (main branch discovery), not current.
 ```diff
     contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
     +++ description: None
-      receivedPermissions.2:
+      receivedPermissions.3:
 +        {"permission":"upgrade","from":"0xE17aeD2fC55f4A876315376ffA49FE6358113a65"}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a"}
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
       receivedPermissions.1.from:
 -        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
-+        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      receivedPermissions.1.description:
++        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+      receivedPermissions.1.via:
++        [{"address":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]
       receivedPermissions.0.permission:
 -        "upgrade"
 +        "configure"
       receivedPermissions.0.from:
 -        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
-+        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
       receivedPermissions.0.description:
-+        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
-      receivedPermissions.0.via:
-+        [{"address":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]
++        "set the conversion factor for gas token deposits."
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]
     }
@@ -199,6 +206,8 @@ discovery. Values are for block 21629172 (main branch discovery), not current.
     +++ description: None
       values.accessControl:
 -        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      issuedPermissions:
++        [{"permission":"configure","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","description":"set the conversion factor for gas token deposits.","via":[]}]
       directlyReceivedPermissions:
 +        [{"permission":"configure","from":"0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."}]
     }
@@ -216,7 +225,19 @@ discovery. Values are for block 21629172 (main branch discovery), not current.
 
 ```diff
     contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
-    +++ description: None
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
++        "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37"
+      issuedPermissions.0.description:
++        "approve deposits to GRVT via the GRVTBridgeProxy."
+      description:
++        "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT."
       receivedPermissions:
 +        [{"permission":"configure","from":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"address is part of the GRVTTransactionFilterer whitelist."}]
     }

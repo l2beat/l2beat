@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 21721209,
-  "configHash": "0xbbf5004dc3887303521917a60df91f3e033bbada70bb27f5269fc849fe28c311",
+  "configHash": "0xbf3578646b1fa6094bc230a098bc720e898721689500a1f1a0d7dfa1186d28e8",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -29,6 +29,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D",
+          "description": "set the conversion factor for gas token deposits."
+        },
         {
           "permission": "configure",
           "from": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
@@ -200,6 +205,14 @@
       "sourceHashes": [
         "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
       ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
+          "description": "set the conversion factor for gas token deposits.",
+          "via": []
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
@@ -232,7 +245,14 @@
         "0x79513625ec2b512bdcda0464cd8ee1528e0a641d809e74259c3da9f25766647d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
+          "description": "approve deposits to GRVT via the GRVTBridgeProxy.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
@@ -550,7 +570,16 @@
         }
       ]
     },
-    { "address": "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37" },
+    {
+      "address": "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
+          "description": "approve deposits to GRVT via the GRVTBridgeProxy."
+        }
+      ]
+    },
     { "address": "0x85deE82d32d78eaa59588B6574Df420ef2A74098" },
     { "address": "0x8E2A969f6685e27439D9F25630E62c8A2203B5Db" },
     { "address": "0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270" },
@@ -973,7 +1002,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
+    "shared-zk-stack/ChainAdmin": "0x59b433947459b51f5f56685f9922099f8571f5a75a669ceb2c6e8af49843e267",
     "shared-zk-stack/Diamond": "0x397e45da0a66ab5d9e4a95ee84d5610dec0ab033890a4a9c851ed9d77828725d",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"

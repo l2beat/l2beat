@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcfa4cccadc11e0f092d07c212c593637e92c1e3d
+Generated with discovered.json: 0x83c4f553e0fb31f4a3f4a7dfc1f3fa0a35ad3fec
 
-# Diff at Tue, 28 Jan 2025 06:08:52 GMT:
+# Diff at Tue, 28 Jan 2025 06:34:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21686341
@@ -68,7 +68,7 @@ discovery. Values are for block 21686341 (main branch discovery), not current.
       description:
 +        "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
       issuedPermissions:
-+        [{"permission":"configure","to":"0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]},{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"configure","to":"0xA8998F231a660Eca365B382943c71ad9b7619139","description":"whitelist or censor addresses that can send transactions from L1 to L2 (e.g. for withdrawals, queued transactions). This is enforced in the Mailbox Facet.","via":[]},{"permission":"configure","to":"0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]},{"permission":"configure","to":"0xfD7a03Cdb68E6488F950108A4d24f15519b87339","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]}]
++        [{"permission":"configure","to":"0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]},{"permission":"configure","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"configure","to":"0xA8998F231a660Eca365B382943c71ad9b7619139","description":"define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.","via":[]},{"permission":"configure","to":"0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]},{"permission":"configure","to":"0xfD7a03Cdb68E6488F950108A4d24f15519b87339","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"}]}]
     }
 ```
 
@@ -80,7 +80,7 @@ discovery. Values are for block 21686341 (main branch discovery), not current.
       issuedPermissions:
 +        [{"permission":"configure","to":"0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b","description":"manage the blacklist of addresses in the TransactionFilterer.","via":[]}]
       receivedPermissions:
-+        [{"permission":"configure","from":"0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","description":"whitelist or censor addresses that can send transactions from L1 to L2 (e.g. for withdrawals, queued transactions). This is enforced in the Mailbox Facet."}]
++        [{"permission":"configure","from":"0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","description":"define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."}]
     }
 ```
 

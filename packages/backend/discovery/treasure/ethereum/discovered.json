@@ -18,7 +18,7 @@
         {
           "permission": "configure",
           "from": "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
-          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871" }]
         }
       ],
@@ -111,7 +111,7 @@
         {
           "permission": "configure",
           "to": "0x282370D1e925ee897CB29Cb3beC13aAe0743067C",
-          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role).",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871" }]
         },
         {
@@ -296,7 +296,7 @@
       "fieldMeta": {
         "txFilterer": {
           "severity": "HIGH",
-          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
+          "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
         },
         "getProtocolVersion": {
           "severity": "MEDIUM",
@@ -330,11 +330,19 @@
       "sourceHashes": [
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
+          "description": "set the conversion factor for gas token deposits.",
+          "via": []
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "configure",
           "from": "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
-          "description": "manage fees, apply predefined upgrades and censor bridge transactions (ChainAdmin role)."
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
         }
       ],
       "sinceTimestamp": 1731546443,
@@ -378,7 +386,16 @@
     },
     { "address": "0x58244EA236D2ff57c023A4028E228f77dc328894" },
     { "address": "0xBAe65c4bA62799F68817Cbb2bB353Da4572C23Ae" },
-    { "address": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216" },
+    {
+      "address": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871",
+          "description": "set the conversion factor for gas token deposits."
+        }
+      ]
+    },
     { "address": "0xe25AdA29FA5873A24afEe1342422BD14e5809e03" }
   ],
   "abis": {
@@ -600,8 +617,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
-    "shared-zk-stack/Diamond": "0x0b33cf6de9567de78818bb6a88d149b4e6e2909a396e25a43bc0527c98771ea3",
+    "shared-zk-stack/ChainAdmin": "0x59b433947459b51f5f56685f9922099f8571f5a75a669ceb2c6e8af49843e267",
+    "shared-zk-stack/Diamond": "0x397e45da0a66ab5d9e4a95ee84d5610dec0ab033890a4a9c851ed9d77828725d",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

@@ -200,7 +200,7 @@
         {
           "permission": "configure",
           "to": "0xA8998F231a660Eca365B382943c71ad9b7619139",
-          "description": "whitelist or censor addresses that can send transactions from L1 to L2 (e.g. for withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
           "via": []
         },
         {
@@ -443,7 +443,7 @@
         {
           "permission": "configure",
           "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
-          "description": "whitelist or censor addresses that can send transactions from L1 to L2 (e.g. for withdrawals, queued transactions). This is enforced in the Mailbox Facet."
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
         }
       ],
       "sinceTimestamp": 1722304883,
@@ -889,7 +889,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/Diamond": "0x73a5ae532650eaa75fdff803825470c1cdf1797737bd9b6fffb6af80beb63c18",
+    "shared-zk-stack/Diamond": "0x397e45da0a66ab5d9e4a95ee84d5610dec0ab033890a4a9c851ed9d77828725d",
     "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
     "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
   }

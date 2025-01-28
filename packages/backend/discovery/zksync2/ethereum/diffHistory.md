@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xac56bc860e511a03d557e418553b7f04c3047f9a
+Generated with discovered.json: 0xdfe04b440b3f79cb7351716ef2c6c106ac86bae4
 
-# Diff at Mon, 27 Jan 2025 19:25:38 GMT:
+# Diff at Tue, 28 Jan 2025 06:34:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21630311
@@ -41,6 +41,9 @@ discovery. Values are for block 21630311 (main branch discovery), not current.
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
     +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.txFilterer.description:
+-        "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
++        "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
       fieldMeta.getProtocolVersion.description:
 -        "Protocol version, increments with each protocol change"
 +        "Protocol version, increments with each protocol upgrade."

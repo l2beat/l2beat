@@ -44,7 +44,20 @@
       }
     },
     "GRVTBridgeProxy": {
-      "ignoreRelatives": ["baseToken"]
+      "description": "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
+      "ignoreRelatives": ["baseToken"],
+      "fields": {
+        "depositApprover": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "approve deposits to GRVT via the GRVTBridgeProxy."
+              }
+            ]
+          }
+        }
+      }
     },
     "GRVTTransactionFilterer": {
       "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],

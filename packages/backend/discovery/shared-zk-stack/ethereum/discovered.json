@@ -1198,7 +1198,16 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x2cf3bD6a9056b39999F3883955E183F655345063",
+          "description": "set the conversion factor for gas token deposits."
+        }
+      ]
+    },
     { "address": "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac" },
     { "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709" },
     { "address": "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf" },
@@ -1784,7 +1793,7 @@
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
     "shared-zk-stack/BridgeHub": "0x105b9d2b288ca6414bec27635ab90e56ea25d32b87f09d838d9c09f28e153ef7",
-    "shared-zk-stack/ChainAdmin": "0x88970303a641eae13aeab6d75c38dff2f12b0e2f65c97071b070312d55f416c9",
+    "shared-zk-stack/ChainAdmin": "0x59b433947459b51f5f56685f9922099f8571f5a75a669ceb2c6e8af49843e267",
     "shared-zk-stack/EmergencyUpgradeBoard": "0x41fe293001ef4770af9803cf6f7ddcaf4a89f7da1d3c8d70e105158b2d5f9f24",
     "shared-zk-stack/GenesisUpgrade": "0xb39c7d1ef63b417f98ce9c6295d4122650e52a2c89a6c6b0d83368da9a10e8e1",
     "shared-zk-stack/Guardians": "0xff62451f1375a4f160a6675f8b84428df5ae4521aa2afcc2b29a4140df5d8ea9",
