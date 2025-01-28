@@ -66,6 +66,7 @@ interface HeaderProps {
 function Header({ networks }: HeaderProps) {
   return (
     <section className="bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
+      <h1 className="mb-4 text-3xl font-bold md:hidden">Donate</h1>
       <div className="grid md:grid-cols-12">
         <div className="leading-normal md:col-span-7">
           <DonationDescription />
@@ -83,7 +84,7 @@ function QrCodeSection({
   className,
 }: { className: string; mobile?: boolean }) {
   return (
-    <div className={cn('flex items-center justify-center', className)}>
+    <div className={cn('relative flex items-center justify-center', className)}>
       <div className="z-10 flex flex-col items-center justify-center">
         <div
           className={cn(
@@ -206,7 +207,7 @@ function FundingSourcesTable() {
     <div className="mt-4 overflow-x-auto pb-3">
       <table>
         <thead>
-          <tr className="h-14 border-b border-divider text-left text-sm text-secondary">
+          <tr className="h-8 border-b border-divider pb-2.5 pt-2 text-left text-[13px] font-semibold uppercase tracking-[-0.13px] text-zinc-500 ">
             <th className="min-w-[300px] md:pl-4">Source / Project</th>
             <th className="md:pl-4">Tier</th>
             <th className="md:pl-4">Description</th>
