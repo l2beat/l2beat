@@ -56,6 +56,7 @@ const committee = getCommittee(discovery)
 export const canvasconnect: Layer2 = {
   type: 'layer2',
   id: ProjectId('canvasconnect'),
+  capability: 'universal',
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   isArchived: true,
   display: {

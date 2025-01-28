@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const funki: Layer2 = underReviewL2({
   id: 'funki',
+  capability: 'universal',
   createdAt: new UnixTime(1728289959), // 2024-10-07T08:32:39Z
   display: {
     name: 'Funki',

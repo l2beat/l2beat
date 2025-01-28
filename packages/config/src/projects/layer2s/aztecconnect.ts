@@ -22,6 +22,7 @@ export const aztecconnect: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),
+  capability: 'universal',
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',

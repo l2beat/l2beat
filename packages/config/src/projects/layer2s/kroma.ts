@@ -79,6 +79,7 @@ const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
+  capability: 'universal',
   createdAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
   badges: [
     Badge.VM.EVM,

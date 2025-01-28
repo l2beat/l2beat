@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const degenlayer: Layer2 = upcomingL2({
   id: 'degenlayer',
+  capability: 'universal',
   createdAt: new UnixTime(1733383382), // 2024-12-05T07:23:02Z
   display: {
     name: 'DegenLayer',

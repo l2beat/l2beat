@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const singularityfinance: Layer2 = upcomingL2({
   id: 'singularityfinance',
+  capability: 'universal',
   createdAt: new UnixTime(1732266303), // 2024-11-22T09:05:03Z
   display: {
     name: 'Singularity Finance',

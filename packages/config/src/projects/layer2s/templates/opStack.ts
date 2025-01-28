@@ -235,6 +235,7 @@ function opStackCommon(
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
+    capability: 'universal',
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
     technology: {

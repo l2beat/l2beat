@@ -4,6 +4,7 @@ import type { Layer3 } from './types'
 
 export const meliora: Layer3 = upcomingL3({
   id: 'meliora',
+  capability: 'universal',
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   hostChain: ProjectId('arbitrum'),
   display: {

@@ -2,6 +2,7 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   type ChainConfig,
+  type ScalingProjectCapability,
   type ScalingProjectDisplay,
   type ScalingProjectEscrow,
   type ScalingProjectTransactionApi,
@@ -14,6 +15,7 @@ import type { Layer2, Layer2Display } from '../types'
 
 interface UnderReviewConfigCommon {
   id: string
+  capability: ScalingProjectCapability
   createdAt: UnixTime
   rpcUrl?: string
   escrows?: ScalingProjectEscrow[]
@@ -39,6 +41,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     isUnderReview: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
+    capability: templateVars.capability,
     createdAt: templateVars.createdAt,
     isArchived: templateVars.isArchived ?? undefined,
     display: templateVars.display,
@@ -76,6 +79,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     type: 'layer3',
     isUnderReview: true,
     id: ProjectId(templateVars.id),
+    capability: templateVars.capability,
     createdAt: templateVars.createdAt,
     isArchived: templateVars.isArchived ?? undefined,
     hostChain: templateVars.hostChain,

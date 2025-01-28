@@ -19,6 +19,7 @@ describe(isUnderReview.name, () => {
     type: 'layer2',
     createdAt: new UnixTime(1234567890),
     id: ProjectId('project-id'),
+    capability: 'universal',
     display: mockObject<Layer2Display>(),
     technology: mockObject<ScalingProjectTechnology>({
       isUnderReview: undefined,

@@ -58,6 +58,7 @@ const SEQUENCING_WINDOW_SECONDS = 3600 * 12
 
 export const phala: Layer2 = {
   id: ProjectId('phala'),
+  capability: 'universal',
   createdAt: new UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
   display: {
     name: 'Phala',

@@ -5,6 +5,7 @@ import type { Layer3 } from './types'
 
 export const onchain: Layer3 = underReviewL3({
   id: 'onchain',
+  capability: 'universal',
   createdAt: new UnixTime(1737469446), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('base'),
   badges: [

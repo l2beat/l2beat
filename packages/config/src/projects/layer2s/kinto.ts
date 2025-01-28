@@ -12,6 +12,7 @@ const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
 
 export const kinto: Layer2 = orbitStackL2({
+  capability: 'appchain',
   createdAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
   additionalBadges: [Badge.RaaS.Caldera],

@@ -4,6 +4,7 @@ import type { Layer3 } from './types'
 
 export const mxc: Layer3 = upcomingL3({
   id: ProjectId('mxc'),
+  capability: 'universal',
   createdAt: new UnixTime(1710847645), // 2024-03-19T11:27:25Z
   hostChain: ProjectId('arbitrum'),
   display: {

@@ -4,6 +4,7 @@ import type { Layer3 } from './types'
 
 export const aviveworld: Layer3 = upcomingL3({
   id: 'aviveworld',
+  capability: 'universal',
   createdAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
   hostChain: ProjectId('arbitrum'),
   display: {

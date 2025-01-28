@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const socialnetwork: Layer2 = upcomingL2({
   id: 'socialnetwork',
+  capability: 'universal',
   createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   display: {
     name: 'Social Network',

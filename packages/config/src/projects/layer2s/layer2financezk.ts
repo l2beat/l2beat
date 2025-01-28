@@ -21,6 +21,7 @@ const upgradeDelay = 0
 export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
+  capability: 'universal',
   createdAt: new UnixTime(1654522914), // 2022-06-06T13:41:54Z
   isArchived: true,
   display: {

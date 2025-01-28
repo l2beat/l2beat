@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const polygonmiden: Layer2 = upcomingL2({
   id: 'polygon-miden',
+  capability: 'universal',
   createdAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
   display: {
     name: 'Polygon Miden',

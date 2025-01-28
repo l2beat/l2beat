@@ -105,6 +105,7 @@ const requiredSignatures = discovery.getContractValue<number>(
 export const zkfair: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkfair'),
+  capability: 'universal',
   createdAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
   reasonsForBeingOther: [

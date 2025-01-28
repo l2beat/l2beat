@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const creator: Layer2 = upcomingL2({
   id: 'creator',
+  capability: 'universal',
   createdAt: new UnixTime(1724863689), // 2024-08-28T16:48:09Z
   display: {
     name: 'Creator',
