@@ -1,12 +1,16 @@
 import { utils } from 'ethers'
 
-import { assert, json } from '@l2beat/shared-pure'
-import { z } from 'zod'
-import { ClientCore, ClientCoreDependencies } from '../ClientCore'
-import { RpcClient } from '../rpc/RpcClient'
-import { BeaconChainError, Blob, BlockSidecarSchema } from './types'
+import { assert, type json } from '@l2beat/shared-pure'
+import type { z } from 'zod'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { RpcClient } from '../rpc/RpcClient'
+import {
+  BeaconChainError,
+  type Blob as BlobSchema,
+  BlockSidecarSchema,
+} from './types'
 
-export type Blob = z.infer<typeof Blob>
+export type Blob = z.infer<typeof BlobSchema>
 export interface BlobsInBlock {
   blobs: Blob[]
   blockNumber: number

@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('orbit')
 
@@ -16,7 +16,7 @@ const orbitMultisigThreshold = `${discovery.getContractValue<number>(
 export const orbit: Bridge = {
   type: 'bridge',
   id: ProjectId('orbit'),
-  createdAt: new UnixTime(1663234549), // 2022-09-15T09:35:49Z
+  addedAt: new UnixTime(1663234549), // 2022-09-15T09:35:49Z
   display: {
     name: 'Orbit Bridge',
     slug: 'orbit',
@@ -104,8 +104,8 @@ export const orbit: Bridge = {
       description: `Orbit Bridge is a cross-chain bridge that allows users to transfer tokens between different blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. When a user deposits tokens to an escrow contract on Ethereum, a message is relayed to a group o validators via Orbit Hub contract on Orbit chain to a minter contract on a destination chain, where "representation tokens" are minted. Deposited tokens are not locked and can be used in DeFi by Orbit Farm. When a user deposits minted tokens on the destination chain, they are burned and a message is relayed to validators through Orbit Hub contract on Orbit chain to the ETH vault bridge contract, which releases the tokens if at least ${orbitMultisigThreshold} validators have signed and liquidity is available. The source code of the farm contracts is not verified on Etherscan.`,
       references: [
         {
-          text: 'Bridging transactions',
-          href: 'https://bridge-docs.orbitchain.io/bridging-transaction',
+          title: 'Bridging transactions',
+          url: 'https://bridge-docs.orbitchain.io/bridging-transaction',
         },
       ],
       risks: [],
@@ -117,8 +117,8 @@ export const orbit: Bridge = {
         'Orbit Bridge actors include Operators and Validators. Operators relay data between Orbit Chain and supported chains, while Validators build multi-sig based consensus on validity of transactions.',
       references: [
         {
-          text: 'Orbit Bridge - How it works',
-          href: 'https://bridge-docs.orbitchain.io/how-it-works',
+          title: 'Orbit Bridge - How it works',
+          url: 'https://bridge-docs.orbitchain.io/how-it-works',
         },
       ],
       risks: [
@@ -196,9 +196,9 @@ export const orbit: Bridge = {
   ],
   milestones: [
     {
-      name: 'Orbit Bridge hacked for $81.5M',
+      title: 'Orbit Bridge hacked for $81.5M',
       date: '2024-01-01T00:00:00.00Z',
-      link: 'https://digifinex.medium.com/orbit-bridge-hacked-for-81-5-million-orbit-chain-ecosystem-plummets-1fe5b8d85ff3',
+      url: 'https://digifinex.medium.com/orbit-bridge-hacked-for-81-5-million-orbit-chain-ecosystem-plummets-1fe5b8d85ff3',
       type: 'incident',
     },
   ],

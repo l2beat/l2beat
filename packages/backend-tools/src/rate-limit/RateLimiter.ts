@@ -63,13 +63,4 @@ export class RateLimiter {
       .catch((err) => item.reject(err))
       .finally(() => this.execute())
   }
-
-  static COINGECKO = (coingeckoApiKey?: string) =>
-    new RateLimiter({
-      callsPerMinute: coingeckoApiKey ? 400 : 10,
-    })
-
-  static TEST = new RateLimiter({
-    callsPerMinute: 100_000,
-  })
 }

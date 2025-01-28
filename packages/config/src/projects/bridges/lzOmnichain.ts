@@ -11,14 +11,14 @@ import {
   ORACLES,
   RELAYERS,
 } from './lzOmnichain.contracts'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('lzomnichain')
 
 export const lzOmnichain: Bridge = {
   type: 'bridge',
   id: ProjectId('lzomnichain'),
-  createdAt: new UnixTime(1677513767), // 2023-02-27T16:02:47Z
+  addedAt: new UnixTime(1677513767), // 2023-02-27T16:02:47Z
   display: {
     name: 'Omnichain (LayerZero)',
     slug: 'omnichain',
@@ -79,8 +79,8 @@ export const lzOmnichain: Bridge = {
         Once block hash is submitted, Relayers can provide the proof for the transfers. The Oracle and Relayer used can be either default LayerZero contracts, or custom built by the token developers.',
       references: [
         {
-          text: 'LayerZero security model analysis',
-          href: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+          title: 'LayerZero security model analysis',
+          url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
         },
       ],
       risks: [

@@ -3,9 +3,9 @@ import { chains, layer2s, layer3s, tokenList } from '@l2beat/config'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { getChainsWithTokens } from '../features/chains'
-import { BlockApi } from './BlockApi'
-import { ChainApi } from './ChainApi'
-import { IndexerApi } from './IndexerApi'
+import type { BlockApi } from './BlockApi'
+import type { ChainApi } from './ChainApi'
+import type { IndexerApi } from './IndexerApi'
 
 export function getChainConfig(env: Env): ChainApi[] {
   const { configuredChains, projects } = getConfiguredChains()

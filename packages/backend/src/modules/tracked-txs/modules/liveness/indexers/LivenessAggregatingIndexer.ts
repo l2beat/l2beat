@@ -1,20 +1,20 @@
-import { BackendProject } from '@l2beat/config'
-import {
+import type { BackendProject } from '@l2beat/backend-shared'
+import type {
   AggregatedLivenessRange,
   AggregatedLivenessRecord,
   Database,
 } from '@l2beat/database'
 import {
-  ProjectId,
-  TrackedTxsConfigSubtype,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
   ManagedChildIndexer,
-  ManagedChildIndexerOptions,
+  type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
 import {
-  LivenessRecordWithConfig,
+  type LivenessRecordWithConfig,
   LivenessWithConfigService,
 } from '../services/LivenessWithConfigService'
 import { calculateIntervals } from '../utils/calculateIntervals'

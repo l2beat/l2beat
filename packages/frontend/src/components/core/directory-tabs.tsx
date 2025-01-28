@@ -2,6 +2,7 @@
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
+import { useTracking } from '~/hooks/use-custom-event'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from './overflow-wrapper'
 
@@ -12,9 +13,25 @@ import { OverflowWrapper } from './overflow-wrapper'
 const DirectoryTabs = ({
   ref,
   defaultValue,
+  onValueChange,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) => {
-  return <TabsPrimitive.Root ref={ref} defaultValue={defaultValue} {...props} />
+  const { track } = useTracking()
+  return (
+    <TabsPrimitive.Root
+      ref={ref}
+      defaultValue={defaultValue}
+      onValueChange={(value) => {
+        onValueChange?.(value)
+        track('directoryTabsChanged', {
+          props: {
+            value,
+          },
+        })
+      }}
+      {...props}
+    />
+  )
 }
 DirectoryTabs.displayName = TabsPrimitive.Root.displayName
 
@@ -64,7 +81,7 @@ const DirectoryTabsContent = ({
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      'rounded-xl rounded-tl-none bg-surface-primary px-4 pb-4 pt-3 max-md:rounded-tr-none md:px-6 md:pb-6',
+      'rounded-xl rounded-tl-none bg-surface-primary px-4 pb-4 pt-3 primary-card max-md:rounded-none md:px-6 md:pb-6',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand',
       className,
     )}

@@ -17,10 +17,10 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -75,7 +75,7 @@ const zksync2Upgradability = {
 }
 
 const ethereumUpgradability = {
-  upgradableBy: ['zkLinkOwner'],
+  upgradableBy: ['EthereumOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -97,11 +97,12 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
 export const zklinknova: Layer3 = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
-  createdAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
+  capability: 'universal',
+  addedAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
   hostChain: ProjectId('linea'),
   badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'zkLink Nova',
     slug: 'zklinknova',
     description:
@@ -125,7 +126,6 @@ export const zklinknova: Layer3 = {
         'https://t.me/zkLinkorg',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'zklinknova',
@@ -401,29 +401,10 @@ export const zklinknova: Layer3 = {
       },
     ],
   },
+  stage: { stage: 'NotApplicable' },
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-      sources: [
-        {
-          contract: 'zkLink',
-          references: [
-            'https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'zkLink',
-          references: [
-            'https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       upgradeDelaySeconds,
       executionDelaySeconds,

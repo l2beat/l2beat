@@ -1,3 +1,4 @@
+import { Logger, getEnv } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import {
   assert,
@@ -5,16 +6,25 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  Token,
+  type Token,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
-
-import { Logger } from '@l2beat/backend-tools'
 import { chains } from '../chains'
-import { bridges } from '../projects'
-import { config } from '../test/config'
+import { bridges } from '../projects/bridges'
 import { tokenList } from './tokens'
+
+// Github actions sets env as an empty string when secret is not set
+// this resulted in a bug on the outside contributors PRs
+// workaround: getting and optional string and then doing OR (||)
+// nullish coalescing (??) will not give expected result
+const config = {
+  alchemyApiKey:
+    getEnv().optionalString('CONFIG_ALCHEMY_API_KEY') ||
+    'mlGD422scpwVOpn3lye_swHEebbKQy0D',
+
+  coingeckoApiKey: getEnv().optionalString('COINGECKO_API_KEY') || undefined,
+}
 
 describe('tokens', () => {
   it('every token has a unique address and chainId', () => {

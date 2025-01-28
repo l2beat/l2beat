@@ -25,7 +25,7 @@ import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dydx')
 const maxPriorityDelay = discovery.getContractValue<number>(
@@ -77,7 +77,8 @@ export const dydx: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('dydx'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.Stack.StarkEx,
@@ -94,7 +95,7 @@ export const dydx: Layer2 = {
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'ZK Rollup',
     links: {
       websites: ['https://dydx.exchange/'],
@@ -122,7 +123,6 @@ export const dydx: Layer2 = {
         'https://linkedin.com/company/dydx',
       ],
     },
-    activityDataSource: 'Closed API',
     liveness: {
       explanation:
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
@@ -191,25 +191,9 @@ export const dydx: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
-          ],
-        },
-      ],
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
-          ],
-        },
-      ],
     },
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(maxPriorityDelay, 0),
@@ -222,26 +206,8 @@ export const dydx: Layer2 = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(freezeGracePeriod),
       secondLine: formatDelay(freezeGracePeriod),
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
-          ],
-        },
-      ],
     },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
-      sources: [
-        {
-          contract: 'StarkPerpetual',
-          references: [
-            'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
-          ],
-        },
-      ],
-    },
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   },
   technology: {
     stateCorrectness: {
@@ -249,8 +215,9 @@ export const dydx: Layer2 = {
       references: [
         ...STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS.references,
         {
-          text: 'UpdatePerpetualState.sol#L125 - Etherscan source code, verifyFact function call',
-          href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
+          title:
+            'UpdatePerpetualState.sol#L125 - Etherscan source code, verifyFact function call',
+          url: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L125',
         },
       ],
     },
@@ -260,8 +227,9 @@ export const dydx: Layer2 = {
       references: [
         ...TECHNOLOGY_DATA_AVAILABILITY.STARKEX_ON_CHAIN.references,
         {
-          text: 'UpdatePerpetualState.sol#L82 - Etherscan source code, updateState function',
-          href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
+          title:
+            'UpdatePerpetualState.sol#L82 - Etherscan source code, updateState function',
+          url: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',
         },
       ],
     },
@@ -270,8 +238,9 @@ export const dydx: Layer2 = {
       references: [
         ...OPERATOR.STARKEX_OPERATOR.references,
         {
-          text: 'Operator.sol#L42 - Etherscan source code, onlyOperator modifier',
-          href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F26#L42',
+          title:
+            'Operator.sol#L42 - Etherscan source code, onlyOperator modifier',
+          url: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F26#L42',
         },
       ],
     },
@@ -281,12 +250,14 @@ export const dydx: Layer2 = {
         ...FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW(freezeGracePeriod)
           .references,
         {
-          text: 'ForcedTrades.sol#L46 - Etherscan source code, forcedTradeRequest function',
-          href: 'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
+          title:
+            'ForcedTrades.sol#L46 - Etherscan source code, forcedTradeRequest function',
+          url: 'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F4#L46',
         },
         {
-          text: 'ForcedWithdrawals.sol#L32 - Etherscan source code, forcedWithdrawalRequest function',
-          href: 'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
+          title:
+            'ForcedWithdrawals.sol#L32 - Etherscan source code, forcedWithdrawalRequest function',
+          url: 'https://etherscan.io/address/0xc43f5526124877f9125e3b48101dca6d7c6b4ea3#code#F6#L32',
         },
       ],
     },
@@ -420,8 +391,8 @@ export const dydx: Layer2 = {
         delayDescriptionFromSeconds(maxPriorityDelay),
       references: [
         {
-          text: 'Rollup Admin documentation',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+          title: 'Rollup Admin documentation',
+          url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
         },
       ],
     },
@@ -440,12 +411,12 @@ export const dydx: Layer2 = {
       )}.`,
       references: [
         {
-          text: 'dYdX governance documentation',
-          href: 'https://docs.dydx.community/dydx-governance/',
+          title: 'dYdX governance documentation',
+          url: 'https://docs.dydx.community/dydx-governance/',
         },
         {
-          text: 'Priority Controller documentation',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+          title: 'Priority Controller documentation',
+          url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
         },
       ],
     },
@@ -459,8 +430,8 @@ export const dydx: Layer2 = {
         delayDescriptionFromSeconds(shortTimelockDelay),
       references: [
         {
-          text: 'Treasury Admin documentation',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+          title: 'Treasury Admin documentation',
+          url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
         },
       ],
     },
@@ -474,8 +445,8 @@ export const dydx: Layer2 = {
         delayDescriptionFromSeconds(longTimelockDelay),
       references: [
         {
-          text: 'Safety Module Admin',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+          title: 'Safety Module Admin',
+          url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
         },
       ],
     },
@@ -489,8 +460,8 @@ export const dydx: Layer2 = {
         delayDescriptionFromSeconds(merklePauserDelay),
       references: [
         {
-          text: 'Merkle Pauser documentation',
-          href: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#merkle-pauser-executor',
+          title: 'Merkle Pauser documentation',
+          url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#merkle-pauser-executor',
         },
       ],
     },
@@ -507,24 +478,24 @@ export const dydx: Layer2 = {
   },
   milestones: [
     {
-      name: 'Public launch',
-      link: 'https://dydx.exchange/blog/public',
+      title: 'Public launch',
+      url: 'https://dydx.exchange/blog/public',
       date: '2021-04-06T00:00:00Z',
       description:
         'Layer 2 cross-margined Perpetuals are now live in production for all traders.',
       type: 'general',
     },
     {
-      name: 'dYdX Foundation',
-      link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
+      title: 'dYdX Foundation',
+      url: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       date: '2021-08-03T00:00:00Z',
       description:
         'Independent foundation was created to participate in the Protocol governance.',
       type: 'general',
     },
     {
-      name: 'dYdX v4 announcement',
-      link: 'https://dydx.exchange/blog/dydx-chain',
+      title: 'dYdX v4 announcement',
+      url: 'https://dydx.exchange/blog/dydx-chain',
       date: '2022-06-22T00:00:00Z',
       description:
         'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK.',

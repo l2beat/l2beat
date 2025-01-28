@@ -1,4 +1,4 @@
-import { AggregatedL2Cost } from '../../kysely/generated/types'
+import type { AggregatedL2Cost } from '../../kysely/generated/types'
 
 export const selectAggregatedL2Costs = [
   'timestamp',

@@ -1,6 +1,6 @@
 import { FourByteClient } from './FourByteClient'
 import { methods } from './methods'
-import { Operation } from './types'
+import type { Operation } from './types'
 
 interface CountedOperation {
   level: number

@@ -1,15 +1,15 @@
-import { BackendProject } from '@l2beat/config'
-import {
+import type { BackendProject } from '@l2beat/backend-shared'
+import type {
   AggregatedL2CostRecord,
   Database,
   L2CostPriceRecord,
   L2CostRecord,
 } from '@l2beat/database'
-import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
+import type { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import {
   assert,
-  ProjectId,
-  UnixTime,
+  type ProjectId,
+  type UnixTime,
   clampRangeToDay,
 } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'

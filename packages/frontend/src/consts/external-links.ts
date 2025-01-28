@@ -11,10 +11,12 @@ export const externalLinks = {
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
   articles: {
     recategorisation:
-      'https://medium.com/l2beat/framework-update-l2-projects-recategorization-5d43b0d1fe50',
+      'https://medium.com/l2beat/framework-update-l2-projects-recategorisation-5d43b0d1fe50',
     stages:
       'https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe',
     finality:
       'https://medium.com/l2beat/tracking-time-to-finality-of-l2-transactions-051d32f5d5ba',
   },
+  askForZkCatalogVerification:
+    'https://l2beat.notion.site/ZK-Catalog-Verification-94e940aa2bff4287bb15a19f66e3cead?pvs=25',
 } as const

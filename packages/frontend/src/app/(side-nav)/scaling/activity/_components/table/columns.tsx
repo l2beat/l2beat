@@ -15,6 +15,7 @@ import { MaxCountCell } from './max-count-cell'
 export type ScalingActivityTableEntry = ScalingActivityEntry & {
   data:
     | {
+        isSynced: boolean
         change: number
         pastDayCount: number
         summedCount: number
@@ -41,7 +42,7 @@ export const getScalingActivityColumns = (
         return <NoDataBadge className="w-full" />
       }
       return (
-        <SyncStatusWrapper syncStatus={data.syncStatus}>
+        <SyncStatusWrapper isSynced={data.isSynced}>
           <PrimaryValueCell>
             {formatActivityCount(data.pastDayCount)}
           </PrimaryValueCell>
@@ -65,7 +66,7 @@ export const getScalingActivityColumns = (
         return null
       }
       return (
-        <SyncStatusWrapper syncStatus={data.syncStatus}>
+        <SyncStatusWrapper isSynced={data.isSynced}>
           <MaxCountCell
             maxCount={data.maxCount.value}
             timestamp={data.maxCount.timestamp}
@@ -86,7 +87,7 @@ export const getScalingActivityColumns = (
         return null
       }
       return (
-        <SyncStatusWrapper syncStatus={data.syncStatus}>
+        <SyncStatusWrapper isSynced={data.isSynced}>
           <ValueWithPercentageChange
             change={data.change}
             className="font-medium"
@@ -112,7 +113,7 @@ export const getScalingActivityColumns = (
         return null
       }
       return (
-        <SyncStatusWrapper syncStatus={data.syncStatus}>
+        <SyncStatusWrapper isSynced={data.isSynced}>
           <PrimaryValueCell>{formatUopsRatio(data.ratio)}</PrimaryValueCell>
         </SyncStatusWrapper>
       )

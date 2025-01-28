@@ -21,7 +21,7 @@
   }
   sequencerFailure: {
     definingMetric: 43200
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 12h delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
     secondLine: "12h delay"
     sentiment: "good"
     value: "Self sequence"
@@ -31,14 +31,6 @@
     description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve."
     secondLine: "3d 12h challenge period"
     sentiment: "good"
-    sources: [
-      {
-        contract: "DisputeGameFactory"
-        references: [
-          "https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code"
-        ]
-      }
-    ]
     value: "Fraud proofs (INT)"
   }
 }

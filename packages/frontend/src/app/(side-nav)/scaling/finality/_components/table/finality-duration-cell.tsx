@@ -1,6 +1,4 @@
-import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
-
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { WarningValueWithSentiment } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -12,13 +10,11 @@ import {
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type FinalityDataPoint } from '~/server/features/scaling/finality/schema'
-import { type SyncStatus } from '~/types/sync-status'
-import { formatTimestamp } from '~/utils/dates'
 import { DurationCell } from './duration-cell'
-import { GrayedOut } from './grayed-out'
+import { SyncStatusWrapper } from './sync-status-wrapper'
 
 type BaseProps = {
-  syncStatus: SyncStatus
+  isSynced: boolean
   warning?: WarningValueWithSentiment
 }
 
@@ -41,13 +37,9 @@ export function FinalityDurationCell(props: Props & BaseProps) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        {props.syncStatus.isSynced ? (
+        <SyncStatusWrapper isSynced={props.isSynced}>
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
-        ) : (
-          <GrayedOut>
-            <DurationCell durationInSeconds={props.timings.averageInSeconds} />
-          </GrayedOut>
-        )}
+        </SyncStatusWrapper>
 
         {props.warning && (
           <RoundedWarningIcon
@@ -58,16 +50,6 @@ export function FinalityDurationCell(props: Props & BaseProps) {
       </TooltipTrigger>
       <TooltipContent>
         <div className="font-medium">
-          {!props.syncStatus.isSynced && (
-            <>
-              <span className="whitespace-pre text-balance">
-                {`Values have not been synced since\n${format(
-                  props.syncStatus,
-                )}.`}
-              </span>
-              <HorizontalSeparator className="my-2 dark:border-slate-600" />
-            </>
-          )}
           <span>Past day avg. {popUpText}</span>
           <ul className="mt-1 list-inside list-disc">
             {props.scope === 'timeToInclusion' &&
@@ -114,11 +96,4 @@ export function FinalityDurationCell(props: Props & BaseProps) {
       </TooltipContent>
     </Tooltip>
   )
-}
-
-function format({ syncedUntil }: SyncStatus) {
-  return formatTimestamp(syncedUntil, {
-    mode: 'datetime',
-    longMonthName: true,
-  })
 }

@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { CurrentPriceRecord, toRecord, toRow } from './entity'
+import { type CurrentPriceRecord, toRecord, toRow } from './entity'
 import { selectCurrentPrice } from './select'
 
 export class CurrentPriceRepository extends BaseRepository {

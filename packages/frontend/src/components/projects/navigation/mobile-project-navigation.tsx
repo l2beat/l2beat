@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef } from 'react'
+import { type RefObject, useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
@@ -34,39 +34,59 @@ export function MobileProjectNavigation({ sections }: Props) {
   return (
     <OverflowWrapper
       ref={overflowContainer}
-      className="flex justify-center bg-white dark:bg-neutral-900"
+      className="flex justify-center bg-header-primary"
+      childrenClassName="w-full"
     >
-      <div className="flex items-center">
-        <a
+      <div className="flex items-center justify-between">
+        <Item
           href="#"
-          ref={isSummarySection ? selectedItem : undefined}
-          className={cn(
-            'whitespace-nowrap p-4 text-xs transition-colors',
-            isSummarySection && 'border-b-2 border-current text-brand',
-          )}
+          ref={isSummarySection ? selectedItem : null}
+          selected={!!isSummarySection}
         >
           Summary
-        </a>
+        </Item>
         {sections.map((section) => {
           const selected =
             section.id === currentSection?.id ||
             section.subsections?.some((s) => s.id === currentSection?.id)
 
           return (
-            <a
+            <Item
               key={section.id}
-              ref={selected ? selectedItem : undefined}
+              ref={selected ? selectedItem : null}
+              selected={!!selected}
               href={`#${section.id}`}
-              className={cn(
-                'whitespace-nowrap p-4 text-xs transition-colors',
-                selected && 'border-b-2 border-current text-brand',
-              )}
             >
               {section.title}
-            </a>
+            </Item>
           )
         })}
       </div>
     </OverflowWrapper>
+  )
+}
+
+function Item({
+  ref,
+  selected,
+  href,
+  children,
+}: {
+  ref: RefObject<null> | null
+  selected: boolean
+  href: string
+  children: React.ReactNode
+}) {
+  return (
+    <a
+      ref={ref}
+      href={href}
+      className={cn(
+        'flex h-10 w-full items-center justify-center whitespace-nowrap border-b border-divider px-4 text-center text-xs transition-colors',
+        selected && 'border-b border-current text-brand',
+      )}
+    >
+      {children}
+    </a>
   )
 }

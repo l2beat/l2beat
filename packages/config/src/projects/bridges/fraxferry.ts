@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('fraxferry')
 
@@ -20,7 +20,7 @@ const challengePeriod = formatSeconds(
 export const fraxferry: Bridge = {
   type: 'bridge',
   id: ProjectId('fraxferry'),
-  createdAt: new UnixTime(1712267205), // 2024-04-04T21:46:45Z
+  addedAt: new UnixTime(1712267205), // 2024-04-04T21:46:45Z
   display: {
     name: 'Frax Ferry',
     slug: 'fraxferry',
@@ -460,12 +460,12 @@ export const fraxferry: Bridge = {
         'The Frax Ferry is a permissioned bridge that can be used to transfer tokens between chains. Users can transfer tokens to the bridge escrow on the origin chain, and the bridge administrator (the `Captain`) periodically posts hashes of transaction batches on the destination chains. After the challenge period is expired, the batch is considered valid, and another permissioned account (`First Officer`) executes the transfer of the tokens on the destination chain.',
       references: [
         {
-          text: 'Fraxferry documentation',
-          href: 'https://docs.frax.finance/cross-chain/bridge',
+          title: 'Fraxferry documentation',
+          url: 'https://docs.frax.finance/cross-chain/bridge',
         },
         {
-          text: 'Fraxferry.sol - Etherscan source code',
-          href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L851',
+          title: 'Fraxferry.sol - Etherscan source code',
+          url: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L851',
         },
       ],
       risks: [],
@@ -475,16 +475,16 @@ export const fraxferry: Bridge = {
       description: `Hashes of transaction batches on the origin chains are posted periodically on the destination chains by the Frax Maintenance Bot EOA (the Captain). After the batch hash is posted on the destination chain, a challenge period begins. If no challenge is submitted within the challenge period of ${challengePeriod}, the batch is considered valid. The authorised bridge First Officer can then execute the transfer of the tokens on the destination chain. No slashing mechanism is implemented. During a challenge period, a batch can be challenged by a permissioned set of watchdogs, the Crew Members, by sending a transaction on the destination chain. Should a batch be disputed, the bridge is paused until it is unpaused by the bridge owner.`,
       references: [
         {
-          text: 'Fraxferry - Depart transactions batch function',
-          href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L851',
+          title: 'Fraxferry - Depart transactions batch function',
+          url: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L851',
         },
         {
-          text: 'Fraxferry - Dispute Batch function',
-          href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L882',
+          title: 'Fraxferry - Dispute Batch function',
+          url: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L882',
         },
         {
-          text: 'Fraxferry - Disembark Batch function',
-          href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L858',
+          title: 'Fraxferry - Disembark Batch function',
+          url: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L858',
         },
       ],
       risks: [
@@ -512,8 +512,8 @@ export const fraxferry: Bridge = {
         'Tokens on the destination chain are not upgradable. The owner of the token contract sets permissioned Minter addresses that can mint new tokens up to a max cap amount.',
       references: [
         {
-          text: 'Frax token - Arbiscan source code, minter_mint function',
-          href: 'https://arbiscan.io/address/0x17fc002b466eec40dae837fc4be5c67993ddbd6f?a=0x5a9bef8cea603aac78a523fb245c1a9264d50706#code#L1636',
+          title: 'Frax token - Arbiscan source code, minter_mint function',
+          url: 'https://arbiscan.io/address/0x17fc002b466eec40dae837fc4be5c67993ddbd6f?a=0x5a9bef8cea603aac78a523fb245c1a9264d50706#code#L1636',
         },
       ],
       risks: [], // do we need a risk for arbitrary permissioned minting / dilution risk ?

@@ -1,5 +1,5 @@
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { CoingeckoQueryService, QueryResultPoint } from '../../services'
+import { type CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 
 export class CirculatingSupplyProvider {
   constructor(private readonly client: CoingeckoQueryService) {}

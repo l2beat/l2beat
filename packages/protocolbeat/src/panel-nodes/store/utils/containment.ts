@@ -1,4 +1,4 @@
-import { Box } from '../State'
+import type { Box } from '../State'
 
 export function boxContains(box: Box, x: number, y: number): boolean {
   return (

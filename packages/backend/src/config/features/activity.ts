@@ -1,16 +1,16 @@
 import { Env } from '@l2beat/backend-tools'
-import { ScalingProjectTransactionApi, layer2s, layer3s } from '@l2beat/config'
+import { type TransactionApiConfig, layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
-import { BlockscoutChainConfig, EtherscanChainConfig } from '../Config'
+import type { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
+import type { BlockscoutChainConfig, EtherscanChainConfig } from '../Config'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 const DEFAULT_RESYNC_LAST_DAYS = 7
 
 export function getProjectsWithActivity(): {
   id: ProjectId
-  transactionApi: ScalingProjectTransactionApi
+  transactionApi: TransactionApiConfig
   name?: string
   explorerApi?: {
     url: string
@@ -30,7 +30,7 @@ export function getProjectsWithActivity(): {
         type: 'rpc',
         defaultUrl: 'https://eth-mainnet.alchemyapi.io/v2/demo',
         startBlock: 8929324,
-      } as ScalingProjectTransactionApi,
+      },
       explorerApi: {
         type: 'etherscan',
         url: 'https://api.etherscan.io/api',
@@ -56,7 +56,7 @@ export function getChainActivityBlockExplorerConfig(
   project: {
     id: ProjectId
     name?: string
-    transactionApi: ScalingProjectTransactionApi
+    transactionApi: TransactionApiConfig
     explorerApi?: {
       url: string
       type: 'etherscan' | 'blockscout'
@@ -83,7 +83,7 @@ export function getChainActivityBlockExplorerConfig(
 
 export function getChainActivityConfig(
   env: Env,
-  project: { id: ProjectId; transactionApi: ScalingProjectTransactionApi },
+  project: { id: ProjectId; transactionApi: TransactionApiConfig },
 ): ActivityTransactionConfig {
   if (project.transactionApi.type === 'rpc') {
     return {
@@ -103,7 +103,7 @@ export function getChainActivityConfig(
         project.transactionApi.defaultCallsPerMinute ??
           DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
-      assessCount: project.transactionApi.assessCount,
+      adjustCount: project.transactionApi.adjustCount,
       startBlock: project.transactionApi.startBlock,
     }
   } else if (project.transactionApi.type === 'starkex') {

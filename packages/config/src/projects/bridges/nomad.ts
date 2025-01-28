@@ -8,7 +8,7 @@ import {
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('nomad')
 const challengeWindowSeconds = discovery.getContractValue<number>(
@@ -19,7 +19,7 @@ const challengeWindowSeconds = discovery.getContractValue<number>(
 export const nomad: Bridge = {
   type: 'bridge',
   id: ProjectId('nomad'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Nomad',
@@ -169,9 +169,9 @@ export const nomad: Bridge = {
   ],
   milestones: [
     {
-      name: 'Contracts hacked for $190M',
+      title: 'Contracts hacked for $190M',
       date: '2022-08-02T00:00:00.00Z',
-      link: 'https://rekt.news/nomad-rekt/',
+      url: 'https://rekt.news/nomad-rekt/',
       type: 'incident',
     },
   ],

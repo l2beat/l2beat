@@ -1,32 +1,24 @@
-import Bugsnag from '@bugsnag/js'
 import {
   ElasticSearchTransport,
-  ElasticSearchTransportOptions,
+  type ElasticSearchTransportOptions,
   LogFormatterEcs,
   LogFormatterJson,
   LogFormatterPretty,
   Logger,
-  LoggerOptions,
-  LoggerTransportOptions,
+  type LoggerOptions,
+  type LoggerTransportOptions,
   getEnv,
 } from '@l2beat/backend-tools'
 
 import { Application } from './Application'
 import { getConfig } from './config'
-import { initializeErrorReporting, reportError } from './tools/ErrorReporter'
 
 main().catch(() => {
   process.exit(1)
 })
 
 async function main() {
-  const bugsnagApiKey = getEnv().optionalString('BUGSNAG_API_KEY')
   const environment = getEnv().optionalString('DEPLOYMENT_ENV') ?? 'local'
-
-  const isErrorReportingEnabled = initializeErrorReporting(
-    bugsnagApiKey,
-    environment,
-  )
 
   const logger = createLogger(environment)
 
@@ -37,32 +29,11 @@ async function main() {
   } catch (e) {
     logger.error('Failed to start the application', e)
 
-    if (isErrorReportingEnabled) {
-      await reportIndexError(e)
-    }
-
     // wait 10 seconds for the error to be reported
     console.log('Waiting 10 seconds for the error to be reported')
     await new Promise((resolve) => setTimeout(resolve, 10000))
 
     throw e
-  }
-}
-
-async function reportIndexError(e: unknown) {
-  if (typeof e === 'string') {
-    Bugsnag.notify(e, (event) => {
-      event.context = 'Backend index.ts'
-    })
-  } else if (e instanceof Error) {
-    Bugsnag.notify(e, (event) => {
-      event.context = 'Backend index.ts'
-    })
-  } else {
-    Bugsnag.notify('Unknown error', (event) => {
-      event.context = 'Backend index.ts'
-      event.addMetadata('error', { message: e })
-    })
   }
 }
 
@@ -98,7 +69,6 @@ function createLogger(environment: string): Logger {
     logLevel: getEnv().string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
     utc: isLocal ? false : true,
     transports: loggerTransports,
-    reportError: isLocal ? undefined : reportError,
   }
 
   return new Logger(options)

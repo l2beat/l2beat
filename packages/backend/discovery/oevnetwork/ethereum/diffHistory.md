@@ -1,4 +1,246 @@
-Generated with discovered.json: 0xe8cbeb7857d3e2aa3cdf4e13e39b509ce69cb12c
+Generated with discovered.json: 0x35bdf9a1302959dbca37a3b267f64bd866377d43
+
+# Diff at Mon, 20 Jan 2025 11:09:49 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21465199
+- current block number: 21465199
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465199 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.0.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+    }
+```
+
+```diff
+    contract OevNetworkMultisig (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      receivedPermissions.8.target:
+-        "0xe4F99a0734C87C298d73C161F54874225E416997"
+      receivedPermissions.8.from:
++        "0xe4F99a0734C87C298d73C161F54874225E416997"
+      receivedPermissions.7.target:
+-        "0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
+      receivedPermissions.7.from:
++        "0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
+      receivedPermissions.6.target:
+-        "0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
+      receivedPermissions.6.from:
++        "0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
+      receivedPermissions.5.target:
+-        "0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
+      receivedPermissions.5.from:
++        "0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
+      receivedPermissions.4.target:
+-        "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.4.from:
++        "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.3.target:
+-        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      receivedPermissions.3.from:
++        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      receivedPermissions.2.target:
+-        "0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
+      receivedPermissions.2.from:
++        "0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
+      receivedPermissions.1.target:
+-        "0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
+      receivedPermissions.1.from:
++        "0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
+      receivedPermissions.0.target:
+-        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      receivedPermissions.0.from:
++        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      directlyReceivedPermissions.0.target:
+-        "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      directlyReceivedPermissions.0.from:
++        "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x3401eafd7Ceb84265B2cC4252155e12B446E7c57) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions.0.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+    }
+```
+
+```diff
+    contract RollupProxy (0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2.target:
+-        "0xd4D2F3cB313e59A34089F6635c5c1c6145298640"
+      issuedPermissions.2.to:
++        "0xd4D2F3cB313e59A34089F6635c5c1c6145298640"
+      issuedPermissions.2.description:
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      issuedPermissions.1.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.via.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.0.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      directlyReceivedPermissions.2.target:
+-        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      directlyReceivedPermissions.2.from:
++        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      directlyReceivedPermissions.1.target:
+-        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      directlyReceivedPermissions.1.from:
++        "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      directlyReceivedPermissions.0.target:
+-        "0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      directlyReceivedPermissions.0.from:
++        "0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+    }
+```
+
+```diff
+    contract Inbox (0x7EF9d2fe20307165599101e93Ea05b04d46Af159) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235) {
+    +++ description: None
+      directlyReceivedPermissions.6.target:
+-        "0xe4F99a0734C87C298d73C161F54874225E416997"
+      directlyReceivedPermissions.6.from:
++        "0xe4F99a0734C87C298d73C161F54874225E416997"
+      directlyReceivedPermissions.5.target:
+-        "0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
+      directlyReceivedPermissions.5.from:
++        "0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
+      directlyReceivedPermissions.4.target:
+-        "0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
+      directlyReceivedPermissions.4.from:
++        "0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
+      directlyReceivedPermissions.3.target:
+-        "0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
+      directlyReceivedPermissions.3.from:
++        "0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
+      directlyReceivedPermissions.2.target:
+-        "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      directlyReceivedPermissions.2.from:
++        "0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      directlyReceivedPermissions.1.target:
+-        "0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
+      directlyReceivedPermissions.1.from:
++        "0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
+      directlyReceivedPermissions.0.target:
+-        "0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
+      directlyReceivedPermissions.0.from:
++        "0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.1.via.1.delay:
+-        0
+      issuedPermissions.1.via.0.delay:
+-        0
+      issuedPermissions.1.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.target:
+-        "0x23b6bFACe63BFa288783b8344574c75b78FaEd59"
+      issuedPermissions.0.to:
++        "0x23b6bFACe63BFa288783b8344574c75b78FaEd59"
+      issuedPermissions.0.description:
++        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+    }
+```
+
+```diff
+    contract Outbox (0xe4F99a0734C87C298d73C161F54874225E416997) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions.0.target:
+-        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+      issuedPermissions.0.via.1.delay:
+-        0
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x2bf43034b9559643e986A2fE3cE015a18247b904"
+    }
+```
+
+Generated with discovered.json: 0xfed2d74e40b4bff64279012db52073c5841b8996
 
 # Diff at Wed, 08 Jan 2025 10:44:53 GMT:
 

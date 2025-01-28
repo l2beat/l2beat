@@ -9,8 +9,8 @@ import { useMobileNav } from './mobile-nav-context'
 
 export const NavSideBarWrapper = ({
   children,
-  legacyNav,
-}: { children: React.ReactNode; legacyNav?: boolean }) => {
+  topNavbar,
+}: { children: React.ReactNode; topNavbar?: boolean }) => {
   const ref = useRef<HTMLDivElement>(null)
   const { open, setOpen } = useMobileNav()
   const timeout = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -18,7 +18,7 @@ export const NavSideBarWrapper = ({
 
   const sharedSizeClasses = cn(
     'h-screen w-full lg:w-60 [@supports(height:100dvh)]:h-dvh',
-    legacyNav && 'lg:hidden',
+    topNavbar && 'lg:hidden',
   )
 
   const onResize = useEventCallback(() => {
@@ -54,7 +54,7 @@ export const NavSideBarWrapper = ({
       >
         <div
           className={cn(
-            'flex flex-col gap-6 overflow-y-auto overflow-x-clip bg-surface-primary px-3.5 pt-4 transition-all duration-300 ease-out sm:w-[300px] lg:fixed lg:bg-background lg:px-5 lg:pt-[1.125rem]',
+            'flex flex-col gap-6 overflow-y-auto overflow-x-clip px-3.5 pt-4 transition-all duration-300 ease-out max-lg:bg-surface-primary sm:w-[300px] lg:fixed lg:px-5 lg:pt-[1.125rem]',
             sharedSizeClasses,
             resizing && 'transition-none',
           )}

@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { TvlCleanerRecord, toRecord, toRow } from './entity'
+import { type TvlCleanerRecord, toRecord, toRow } from './entity'
 import { selectTvlCleaner } from './select'
 
 export class TvlCleanerRepository extends BaseRepository {

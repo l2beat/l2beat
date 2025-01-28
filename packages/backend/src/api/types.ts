@@ -1,6 +1,6 @@
-import { Middleware } from '@koa/router'
-import { Context, Request } from 'koa'
-import { z } from 'zod'
+import type { Middleware } from '@koa/router'
+import type { Context, Request } from 'koa'
+import type { z } from 'zod'
 
 interface ParsedRequest extends Request {
   body?: unknown

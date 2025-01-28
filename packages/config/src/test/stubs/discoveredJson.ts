@@ -1,4 +1,7 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import type {
+  ContractParameters,
+  DiscoveryOutput,
+} from '@l2beat/discovery-types'
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
 export const contractStub: ContractParameters = {
@@ -8,7 +11,7 @@ export const contractStub: ContractParameters = {
   receivedPermissions: [
     {
       permission: 'sequence',
-      target: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+      from: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
     },
   ],
   values: {
@@ -73,7 +76,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
       receivedPermissions: [
         {
           permission: 'validate',
-          target: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+          from: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
         },
       ],
     },
@@ -82,7 +85,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
       receivedPermissions: [
         {
           permission: 'sequence',
-          target: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+          from: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
         },
       ],
     },

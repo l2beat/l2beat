@@ -1,11 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 export const dodochain: Layer3 = underReviewL3({
   id: 'dodochain',
-  createdAt: new UnixTime(1719224565), // 2024-06-24T10:22:45Z
+  capability: 'universal',
+  addedAt: new UnixTime(1719224565), // 2024-06-24T10:22:45Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'DODOchain',
@@ -14,7 +15,7 @@ export const dodochain: Layer3 = underReviewL3({
     description:
       'DODOchain is an Omni-Trading Layer-3 connecting liquidity from all chains including BTC and ETH L2s.',
     purposes: ['Universal', 'Interoperability'],
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://dodochain.com/'],
       apps: [],
@@ -28,6 +29,5 @@ export const dodochain: Layer3 = underReviewL3({
         'https://discord.com/invite/tyKReUK',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
 })

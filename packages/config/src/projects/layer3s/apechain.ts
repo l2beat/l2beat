@@ -1,25 +1,26 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('apechain', 'arbitrum')
 
 export const apechain: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
+  addedAt: new UnixTime(1719939717), // 2024-07-02T17:01:57Z
   hostChain: ProjectId('arbitrum'),
   additionalBadges: [
     Badge.DA.DAC,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
   ],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'ApeChain',
     slug: 'apechain',
     description:
@@ -36,7 +37,6 @@ export const apechain: Layer3 = orbitStackL3({
         'https://t.me/apechainofficial',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   discovery,
   bridge: discovery.getContract('ERC20Bridge'),
@@ -47,4 +47,10 @@ export const apechain: Layer3 = orbitStackL3({
   gasTokens: ['APE'],
   overrideEscrows: [],
   discoveryDrivenData: true,
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

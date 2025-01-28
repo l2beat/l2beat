@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { ReactNode, useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import {
+import type {
   ApiAddressEntry,
   ApiProjectChain,
   ApiProjectContract,

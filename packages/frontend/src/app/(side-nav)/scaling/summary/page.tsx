@@ -1,7 +1,7 @@
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
 import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
-import { MainPageCard } from '~/components/main-page-card'
 import { MainPageHeader } from '~/components/main-page-header'
+import { PrimaryCard } from '~/components/primary-card'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -22,17 +22,20 @@ const UNIT = 'usd'
 export default async function Page() {
   const [entries] = await Promise.all([
     getScalingSummaryEntries(),
-    api.tvl.recategorizedChart.prefetch({
+    api.tvl.recategorisedChart.prefetch({
       range: TIME_RANGE,
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
+      previewRecategorisation: false,
     }),
-    api.activity.recategorizedChart.prefetch({
+    api.activity.recategorisedChart.prefetch({
       range: TIME_RANGE,
       filter: { type: 'all' },
+      previewRecategorisation: false,
     }),
     api.activity.chartStats.prefetch({
       filter: { type: 'all' },
+      previewRecategorisation: false,
     }),
   ])
 
@@ -40,12 +43,12 @@ export default async function Page() {
     <HydrateClient>
       <MainPageHeader>Summary</MainPageHeader>
       <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-        <MainPageCard>
+        <PrimaryCard>
           <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
-        </MainPageCard>
-        <MainPageCard>
+        </PrimaryCard>
+        <PrimaryCard>
           <ScalingSummaryActivityChart timeRange={TIME_RANGE} />
-        </MainPageCard>
+        </PrimaryCard>
       </div>
       <ChartTabs className="lg:hidden" unit={UNIT} timeRange={TIME_RANGE} />
       <ScalingAssociatedTokensContextProvider>

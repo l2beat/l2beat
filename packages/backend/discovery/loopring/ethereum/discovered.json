@@ -2,7 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 21543795,
-  "configHash": "0xe9bd2973027e8cfcdb6f7b9058e779873badea948dc61b3fa4017b2e2777cdc3",
+  "configHash": "0xd473e327acc3d5546d6b5e6a74d98283855dcea9dd35ed32a59d4305de3780ca",
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
+          "to": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
           "via": []
         }
       ],
@@ -430,7 +430,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
+          "from": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -941,6 +941,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

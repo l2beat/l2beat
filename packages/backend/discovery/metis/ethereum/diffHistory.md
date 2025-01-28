@@ -1,3 +1,199 @@
+Generated with discovered.json: 0xf4257ce5241978fd108d06d4bc6f1faad08e051d
+
+# Diff at Mon, 20 Jan 2025 11:09:45 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21242106
+- current block number: 21242106
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7.target:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.7.from:
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.6.target:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.6.from:
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.5.target:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.5.from:
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.4.target:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.4.from:
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.3.target:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.3.from:
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.2.target:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.2.from:
++        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.1.target:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.1.from:
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.0.target:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
+      receivedPermissions.0.from:
++        "0x918778e825747a892b17C66fe7D24C618262867d"
+      directlyReceivedPermissions.0.target:
+-        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      directlyReceivedPermissions.0.from:
++        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      directlyReceivedPermissions.1.target:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      directlyReceivedPermissions.1.from:
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      directlyReceivedPermissions.0.target:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      directlyReceivedPermissions.0.from:
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.description:
++        "set and change address mappings."
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      issuedPermissions.0.to:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+Generated with discovered.json: 0x6a10bd6445b4572b3e0aa53692b4db70a921cca7
+
+# Diff at Mon, 20 Jan 2025 09:25:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      fieldMeta.getOwners.type:
++        "PERMISSION"
+      fieldMeta.getThreshold.type:
++        "PERMISSION"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      fieldMeta.StateCommitmentChain.type:
++        "CODE_CHANGE"
+    }
+```
+
 Generated with discovered.json: 0x5e91894fac1cc33d8a28a8c428389bbff89ad8e9
 
 # Diff at Wed, 04 Dec 2024 14:21:32 GMT:

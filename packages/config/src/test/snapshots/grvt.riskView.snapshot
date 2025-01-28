@@ -2,28 +2,31 @@
 
 {
   dataAvailability: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
+    sentiment: "bad"
+    value: "External"
   }
   exitWindow: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
+    sentiment: "bad"
+    value: "None"
   }
   proposerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    definingMetric: -Infinity
+    description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade."
+    sentiment: "warning"
+    value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 to be whitelisted."
+    sentiment: "bad"
+    value: "No mechanism"
   }
   stateValidation: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    definingMetric: Infinity
+    description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    secondLine: "21h execution delay"
+    sentiment: "good"
+    value: "ZK proofs (ST, SN)"
   }
 }

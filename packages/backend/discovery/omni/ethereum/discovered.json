@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 21579380,
-  "configHash": "0xe7e2181ba52dc7df5fa6c9434105df59650e73fd85b68bd5e05dee5a2b659649",
+  "blockNumber": 21679341,
+  "configHash": "0x234f21c317f24b881b0c8f184d2dfea1f8594fb7c8acc94611fa0ac963ab8d00",
   "contracts": [
     {
       "name": "OmniBridgeGovernance",
@@ -16,15 +16,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+          "from": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
         },
         {
           "permission": "upgrade",
-          "target": "0x88ad09518695c6c3712AC10a214bE5109a655671"
+          "from": "0x88ad09518695c6c3712AC10a214bE5109a655671"
         },
         {
           "permission": "upgrade",
-          "target": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+          "from": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -77,14 +77,14 @@
         "$members": [
           "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
           "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
-          "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0"
+          "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
         ],
         "$threshold": 2,
         "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -100,7 +100,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
         }
       ],
@@ -265,7 +265,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
         }
       ],
@@ -331,7 +331,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
+          "to": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
           "via": []
         }
       ],
@@ -377,7 +377,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "to": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
           "via": []
         }
       ],
@@ -420,7 +420,8 @@
       "fieldMeta": {
         "validatorList": {
           "severity": "MEDIUM",
-          "description": "Array of the signers in the validator multisig"
+          "description": "Array of the signers in the validator multisig",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "BridgeValidators"
@@ -439,15 +440,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
+          "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
         }
       ]
     },
     { "address": "0x3A259A51D200d902AC25BE2005d95EADA6a1bfc5" },
-    { "address": "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0" },
     { "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6" },
     { "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6" },
     { "address": "0x4743BA328C28dbC2b8B4e083b92cB4baA047494b" },
+    { "address": "0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf" },
     { "address": "0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B" },
     { "address": "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893" },
     { "address": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC" },
@@ -878,6 +879,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

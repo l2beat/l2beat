@@ -3,7 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('layerzerov2oft')
 const enaExecutor = EthereumAddress(
@@ -18,7 +18,7 @@ const enaExecutor = EthereumAddress(
 export const layerzerov2oft: Bridge = {
   type: 'bridge',
   id: ProjectId('layerzerov2oft'),
-  createdAt: new UnixTime(1718891395), // 2024-06-20T13:49:55Z
+  addedAt: new UnixTime(1718891395), // 2024-06-20T13:49:55Z
   display: {
     name: 'LayerZero v2 OFTs',
     slug: 'layerzerov2oft',
@@ -151,12 +151,12 @@ export const layerzerov2oft: Bridge = {
       ],
       references: [
         {
-          text: 'LayerZero V2 docs: Overview',
-          href: 'https://docs.layerzero.network/v2/home/v2-overview',
+          title: 'LayerZero V2 docs: Overview',
+          url: 'https://docs.layerzero.network/v2/home/v2-overview',
         },
         {
-          text: 'LayerZero V2 docs: OFT Quickstart',
-          href: 'https://docs.layerzero.network/v2/developers/evm/oft/quickstart',
+          title: 'LayerZero V2 docs: OFT Quickstart',
+          url: 'https://docs.layerzero.network/v2/developers/evm/oft/quickstart',
         },
       ],
     },
@@ -166,12 +166,12 @@ export const layerzerov2oft: Bridge = {
         'Each crosschain transaction is emitted on the origin chain and must be picked up and verified by preconfigured verifiers (LayerZero calls these DVNs). If they agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
       references: [
         {
-          text: 'Etherscan: Function setConfig() in SendUln302.sol',
-          href: 'https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F1#L30',
+          title: 'Etherscan: Function setConfig() in SendUln302.sol',
+          url: 'https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F1#L30',
         },
         {
-          text: 'L2Beat Blog: Circumventing Layer Zero',
-          href: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+          title: 'L2Beat Blog: Circumventing Layer Zero',
+          url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
         },
       ],
       risks: [
@@ -334,16 +334,16 @@ export const layerzerov2oft: Bridge = {
     risks: [],
     references: [
       {
-        text: 'LayerZero Docs: OFT Adapter',
-        href: 'https://docs.layerzero.network/v2/developers/evm/oft/adapter',
+        title: 'LayerZero Docs: OFT Adapter',
+        url: 'https://docs.layerzero.network/v2/developers/evm/oft/adapter',
       },
       {
-        text: 'LayerZero Docs: Deployed contracts and supported chains',
-        href: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts',
+        title: 'LayerZero Docs: Deployed contracts and supported chains',
+        url: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts',
       },
       {
-        text: 'LayerZero Docs: DVN addresses',
-        href: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/dvn-addresses',
+        title: 'LayerZero Docs: DVN addresses',
+        url: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/dvn-addresses',
       },
     ],
   },

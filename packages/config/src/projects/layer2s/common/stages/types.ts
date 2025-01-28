@@ -50,6 +50,7 @@ export interface StageConfigured {
   missing?: MissingStageRequirements
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
+  notice?: string
 }
 
 export interface StageConfiguredMessage {

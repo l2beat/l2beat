@@ -2,7 +2,8 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 20640703,
-  "configHash": "0x8a591324e40a30c710cd4945a74a4cd5f7f8cc53c7b6802a87a7b9233fde62df",
+  "configHash": "0x82d1fdd56e466cc4f9e75f941867b273933bb175c5b2d598cfb08ae9cdbbbfec",
+  "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
       "name": "Committee",
@@ -86,7 +87,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
+          "to": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
           "via": []
         }
       ],
@@ -367,7 +368,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"
+          "from": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -394,11 +395,13 @@
       "fieldMeta": {
         "getOwners": {
           "severity": "LOW",
-          "description": "Signers of the Multisig"
+          "description": "Signers of the Multisig",
+          "type": "PERMISSION"
         },
         "getThreshold": {
           "severity": "HIGH",
-          "description": "Threshold of the Multisig"
+          "description": "Threshold of the Multisig",
+          "type": "PERMISSION"
         }
       },
       "derivedName": "GnosisSafe"
@@ -835,6 +838,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

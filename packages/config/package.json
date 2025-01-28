@@ -24,24 +24,24 @@
     "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "workspace:*",
     "@l2beat/discovery": "workspace:*",
     "@l2beat/discovery-types": "workspace:*",
-    "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
-    "chalk": "^4.1.2",
-    "cheerio": "^1.0.0-rc.11",
-    "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
-    "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.7",
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/shared": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.12",
     "@types/node-fetch": "^2.6.11",
+    "chalk": "^4.1.2",
+    "cheerio": "^1.0.0-rc.11",
+    "dotenv": "^16.4.5",
+    "jsonc-parser": "^3.2.0",
+    "node-fetch": "^2.6.7",
     "p-limit": "^6.1.0"
   }
 }

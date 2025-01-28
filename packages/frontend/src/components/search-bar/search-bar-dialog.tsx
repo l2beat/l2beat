@@ -16,6 +16,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/command'
+import { useTracking } from '~/hooks/use-custom-event'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
 import {
@@ -35,6 +36,7 @@ interface Props {
 
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const { track } = useTracking()
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
   const router = useRouterWithProgressBar()
@@ -93,6 +95,17 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     setOpen(false)
   }
 
+  function onItemSelect(item: SearchBarProject | AnySearchBarEntry) {
+    setOpen(false)
+    setValue('')
+    router.push(item.href)
+    track('searchBarProjectSelected', {
+      props: {
+        name: item.name,
+      },
+    })
+  }
+
   // Hide virtual keyboard on touch start
   useOnClickOutside(inputRef, () => inputRef.current?.blur(), 'touchstart')
 
@@ -104,7 +117,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
     >
-      <Command shouldFilter={false} sidebar className="rounded-none">
+      <Command shouldFilter={false} className="rounded-none">
         <CommandInput
           ref={inputRef}
           placeholder="Search for projects"
@@ -124,11 +137,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                 return (
                   <SearchBarItem
                     key={project.id}
-                    onSelect={() => {
-                      setOpen(false)
-                      setValue('')
-                      router.push(project.href)
-                    }}
+                    onSelect={() => onItemSelect(project)}
                     label={entryToLabel(project)}
                   >
                     <Image
@@ -155,11 +164,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                   return (
                     <SearchBarItem
                       key={item.href}
-                      onSelect={() => {
-                        setOpen(false)
-                        setValue('')
-                        router.push(item.href)
-                      }}
+                      onSelect={() => onItemSelect(item)}
                       label={entryToLabel(item)}
                       value={
                         // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.

@@ -4,34 +4,40 @@
   "fields": {
     "ejectors": {
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "EjectorUpdated",
-        "valueKey": "ejector",
-        "flagKey": "status"
-      },
-      "target": {
-        "permissions": [
-          {
-            "type": "configure",
-            "description": "can eject DA operators from a quorum."
+        "target": {
+          "permissions": [
+            {
+              "type": "configure",
+              "description": "can eject DA operators from a quorum."
+            }
+          ],
+          "type": "event",
+          "select": "ejector",
+          "add": {
+            "event": "EjectorUpdated",
+            "where": ["=", "#status", true]
+          },
+          "remove": {
+            "event": "EjectorUpdated",
+            "where": ["!=", "#status", true]
           }
-        ]
-      }
-    },
-    "ejectionRateLimitWindow": {
-      "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",
-      "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "QuorumEjectionParams",
-        "valueKey": "rateLimitWindow"
-      }
-    },
-    "ejectableStakePercent": {
-      "description": "Max stake to be ejectable per time delta.",
-      "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "QuorumEjectionParams",
-        "valueKey": "ejectableStakePercent"
+        },
+        "ejectionRateLimitWindow": {
+          "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",
+          "handler": {
+            "type": "event",
+            "select": "rateLimitWindow",
+            "add": { "event": "QuorumEjectionParamsSet" }
+          }
+        },
+        "ejectableStakePercent": {
+          "description": "Max stake to be ejectable per time delta.",
+          "handler": {
+            "type": "event",
+            "select": "ejectableStakePercent",
+            "add": { "event": "QuorumEjectionParamsSet" }
+          }
+        }
       }
     }
   }

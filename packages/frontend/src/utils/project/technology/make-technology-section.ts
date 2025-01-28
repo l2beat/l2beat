@@ -1,10 +1,10 @@
-import { type ScalingProjectTechnologyChoice } from '@l2beat/config'
+import { type ProjectTechnologyChoice } from '@l2beat/config'
 import { type ProjectDetailsRelatedProjectBannerProps } from '~/components/project-details-related-project-banner'
 import { type TechnologyChoice } from '../../../components/projects/sections/technology-section'
 
 export function makeTechnologyChoice(
   id: string,
-  item: ScalingProjectTechnologyChoice,
+  item: ProjectTechnologyChoice,
   options: {
     relatedProjectBanner?: ProjectDetailsRelatedProjectBannerProps
   } = {},

@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const fluent: Layer2 = upcomingL2({
   id: 'fluent',
-  createdAt: new UnixTime(1721218971), // 2024-07-17T12:22:51Z
+  capability: 'universal',
+  addedAt: new UnixTime(1721218971), // 2024-07-17T12:22:51Z
   display: {
     name: 'Fluent',
     slug: 'fluent',

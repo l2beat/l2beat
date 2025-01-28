@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const zklighter: Layer2 = upcomingL2({
   id: 'zklighter',
-  createdAt: new UnixTime(1711551933), // 2024-03-27T15:05:33Z
+  capability: 'universal',
+  addedAt: new UnixTime(1711551933), // 2024-03-27T15:05:33Z
   display: {
     name: 'zkLighter',
     slug: 'zklighter',
@@ -12,7 +13,7 @@ export const zklighter: Layer2 = upcomingL2({
       'zkLighter is an efficient order book Validium on Ethereum - low cost, low latency, verifiable matching.',
     purposes: ['Universal', 'Exchange'],
     category: 'Validium',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://zk.lighter.xyz'],
       apps: [],

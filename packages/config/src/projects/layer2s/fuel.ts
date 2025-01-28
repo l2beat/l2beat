@@ -15,13 +15,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fuel')
 const depositLimitGlobal = formatEther(
@@ -43,14 +43,15 @@ const challengePeriod = discovery.getContractValue<number>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
-  createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
+  capability: 'appchain',
+  addedAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS],
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   }),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Fuel Ignition',
     slug: 'fuel',
     description:
@@ -74,7 +75,6 @@ export const fuel: Layer2 = {
         'https://youtube.com/channel/UCam2Sj3SvFSAIfDbP-4jWZQ',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
   type: 'layer2',
@@ -179,12 +179,12 @@ export const fuel: Layer2 = {
       ],
       references: [
         {
-          text: 'FuelChainState.sol - Etherscan source code, commit function',
-          href: 'https://etherscan.io/address/0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130#code',
+          title: 'FuelChainState.sol - Etherscan source code, commit function',
+          url: 'https://etherscan.io/address/0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130#code',
         },
         {
-          text: 'Fuel docs - Hybrid proving',
-          href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#hybrid-proving',
+          title: 'Fuel docs - Hybrid proving',
+          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#hybrid-proving',
         },
       ],
     },
@@ -192,12 +192,12 @@ export const fuel: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Sequencer - Etherscan address',
-          href: `https://etherscan.io/address/${sequencerAddress}`,
+          title: 'Sequencer - Etherscan address',
+          url: `https://etherscan.io/address/${sequencerAddress}`,
         },
         {
-          text: 'Fuel docs - Blobs',
-          href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#blobs',
+          title: 'Fuel docs - Blobs',
+          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#blobs',
         },
       ],
     },
@@ -206,12 +206,13 @@ export const fuel: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'FuelMessagePortalV3.sol - Etherscan source code, sendMessage function',
-          href: 'https://etherscan.io/address/0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf#code',
+          title:
+            'FuelMessagePortalV3.sol - Etherscan source code, sendMessage function',
+          url: 'https://etherscan.io/address/0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf#code',
         },
         {
-          text: 'Fuel docs - L1->L2 messaging',
-          href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#l1--l2-messaging',
+          title: 'Fuel docs - L1->L2 messaging',
+          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#l1--l2-messaging',
         },
       ],
     },
@@ -226,8 +227,8 @@ export const fuel: Layer2 = {
           'The FuelVM makes use of the UTXO model and a register-based design to enable parallel transaction processing. The language used is Sway and it does not support Solidity contracts.',
         references: [
           {
-            text: 'Fuel docs - FuelVM',
-            href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/the-fuelvm/#the-fuelvm',
+            title: 'Fuel docs - FuelVM',
+            url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/the-fuelvm/#the-fuelvm',
           },
         ],
         risks: [],
@@ -279,7 +280,7 @@ export const fuel: Layer2 = {
       ),
     },
     ...discovery.getMultisigPermission(
-      'FuelMultisig',
+      'FuelSecurityCouncil',
       'Can upgrade the FuelERC20Gateway, FuelMessagePortal and FuelChainState contracts, potentially gaining access to all funds. It can unpause contracts and remove L2->L1 messages from the blacklist. It can also limit the tokens that can be bridged to L2.',
     ),
   ],
@@ -287,18 +288,18 @@ export const fuel: Layer2 = {
     addresses: [
       discovery.getContractDetails('FuelERC20Gateway', {
         description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
-        upgradableBy: ['FuelMultisig'],
+        upgradableBy: ['FuelSecurityCouncil'],
         upgradeDelay: 'None',
       }),
       discovery.getContractDetails('FuelMessagePortal', {
         description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
-        upgradableBy: ['FuelMultisig'],
+        upgradableBy: ['FuelSecurityCouncil'],
         upgradeDelay: 'None',
       }),
       discovery.getContractDetails('FuelChainState', {
         description:
           'Contract that allows state root submissions and settlement.',
-        upgradableBy: ['FuelMultisig'],
+        upgradableBy: ['FuelSecurityCouncil'],
         upgradeDelay: 'None',
       }),
     ],
@@ -321,9 +322,9 @@ export const fuel: Layer2 = {
   },
   milestones: [
     {
-      name: 'Fuel Ignition Mainnet is Live',
+      title: 'Fuel Ignition Mainnet is Live',
       date: '2024-10-16T00:00:00Z',
-      link: 'https://x.com/fuel_network/status/1846536888003313786',
+      url: 'https://x.com/fuel_network/status/1846536888003313786',
       description: 'Fuel Ignition announces its official launch.',
       type: 'general',
     },

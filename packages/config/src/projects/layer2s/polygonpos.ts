@@ -12,10 +12,10 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -46,14 +46,15 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
 export const polygonpos: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
-  createdAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
+  capability: 'universal',
+  addedAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Polygon PoS',
     slug: 'polygon-pos',
     purposes: ['Universal'],
     category: 'Other',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
@@ -70,7 +71,6 @@ export const polygonpos: Layer2 = {
         'https://instagram.com/0xpolygon/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     description:
       'Polygon PoS is an EVM-compatible, proof of stake sidechain for Ethereum, planning to become a Validium with a state validating bridge. The bridge is currently validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
   },
@@ -89,6 +89,7 @@ export const polygonpos: Layer2 = {
       discovery.getEscrowDetails({
         // ERC20Predicate
         address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
+        premintedTokens: ['TRADE'],
         tokens: '*',
         ...upgrades,
       }),

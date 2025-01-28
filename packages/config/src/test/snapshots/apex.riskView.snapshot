@@ -5,32 +5,6 @@
     definingMetric: 0.6
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 3/5 that is tasked with protecting and supplying the data."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "StarkExchangeUSDC"
-        references: [
-          "https://etherscan.io/address/0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859#code#F36#L174"
-        ]
-      }
-      {
-        contract: "StarkExchangeUSDT"
-        references: [
-          "https://etherscan.io/address/0x5BfbE850d18b73ed98FB830e0A5E9F4970Bb93dA#code#F36#L174"
-        ]
-      }
-      {
-        contract: "CommitteeUSDC"
-        references: [
-          "https://etherscan.io/address/0x23cab3cf1aa7b929df5e9f3712aca3a6fb9494e4#code#F1#L84"
-        ]
-      }
-      {
-        contract: "CommitteeUSDT"
-        references: [
-          "https://etherscan.io/address/0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800#code#F1#L84"
-        ]
-      }
-    ]
     value: "External (DAC)"
   }
   exitWindow: {

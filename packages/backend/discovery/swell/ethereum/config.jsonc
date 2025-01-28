@@ -9,15 +9,6 @@
   "names": {
     "0x06F7fB1C74147e34Fce04a6828c7BF809B038d0E": "SwellChainMultisig"
   },
-  "types": {
-    "DisputeGameMap": {
-      "typeCaster": "Mapping",
-      "arg": {
-        "0": "FaultDisputeGame",
-        "1": "PermissionedDisputeGame"
-      }
-    }
-  },
   "overrides": {
     "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57": {
       // permissionedGamesTotal from the template ignored as they are using permissioned games by default

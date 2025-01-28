@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('amarok')
 
@@ -19,7 +19,7 @@ const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
 export const amarok: Bridge = {
   type: 'bridge',
   id: ProjectId('amarok'),
-  createdAt: new UnixTime(1680097524), // 2023-03-29T13:45:24Z
+  addedAt: new UnixTime(1680097524), // 2023-03-29T13:45:24Z
   display: {
     name: 'Connext',
     slug: 'connext',
@@ -37,24 +37,24 @@ export const amarok: Bridge = {
   },
   milestones: [
     {
-      name: 'Connext Amarok mainnet deployment',
-      link: 'https://blog.connext.network/connexts-amarok-upgrade-is-live-683099d61cbb',
+      title: 'Connext Amarok mainnet deployment',
+      url: 'https://blog.connext.network/connexts-amarok-upgrade-is-live-683099d61cbb',
       date: '2023-02-02T00:00:00Z',
       description: 'Connext Amarok mainnet deployment.',
       type: 'general',
     },
     {
-      name: 'Connext Amarok announced',
-      link: 'https://blog.connext.network/announcing-the-amarok-network-upgrade-5046317860a4',
+      title: 'Connext Amarok announced',
+      url: 'https://blog.connext.network/announcing-the-amarok-network-upgrade-5046317860a4',
       date: '2022-05-11T00:00:00Z',
       description:
         'The new, modular architecture for Connext Amarok has been announced.',
       type: 'general',
     },
     {
-      name: 'Bacco Upgrade',
+      title: 'Bacco Upgrade',
       date: '2023-12-07T00:00:00Z',
-      link: 'https://medium.com/connext/introducing-the-bacco-network-upgrade-73ad19cee9ed',
+      url: 'https://medium.com/connext/introducing-the-bacco-network-upgrade-73ad19cee9ed',
       type: 'general',
     },
   ],

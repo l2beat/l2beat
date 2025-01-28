@@ -1,12 +1,13 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
 import { createDatabase } from '@l2beat/database'
 import { ApiServer } from './api/ApiServer'
-import { Config } from './config'
-import { ApplicationModule } from './modules/ApplicationModule'
+import type { Config } from './config'
+import type { ApplicationModule } from './modules/ApplicationModule'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
+import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
@@ -18,7 +19,6 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
-import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
@@ -53,6 +53,14 @@ export class Application {
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
       initActivityModule(config, logger, clock, providers, database),
+      initDataAvailabilityModule(
+        config,
+        logger,
+        clock,
+        providers,
+        database,
+        peripherals,
+      ),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,
@@ -73,7 +81,6 @@ export class Application {
       config.api.port,
       logger,
       modules.flatMap((x) => x?.routers ?? []),
-      getErrorReportingMiddleware(),
     )
 
     if (config.isReadonly) {

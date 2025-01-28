@@ -1,7 +1,7 @@
 import {
+  type Project,
   type ProjectDataAvailability,
   ProjectService,
-  type ProjectWith,
   type ScalingProjectCategory,
   type ScalingProjectStack,
 } from '@l2beat/config'
@@ -12,7 +12,7 @@ import {
 } from '../../projects-change-report/get-projects-change-report'
 import {
   type CommonScalingEntry,
-  getCommonScalingEntry2,
+  getCommonScalingEntry,
 } from '../get-common-scaling-entry'
 import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
 import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
@@ -23,7 +23,6 @@ export async function getScalingDaEntries() {
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa'],
-      optional: ['countdowns'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -34,7 +33,7 @@ export async function getScalingDaEntries() {
       getScalingDaEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id] ?? 0,
+        tvl[project.id],
       ),
     )
     .filter((entry) => entry !== undefined)
@@ -46,20 +45,20 @@ export async function getScalingDaEntries() {
 export interface ScalingDaEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
   dataAvailability: ProjectDataAvailability
-  provider: ScalingProjectStack | undefined
+  stack: ScalingProjectStack | undefined
   tvlOrder: number
 }
 
 function getScalingDaEntry(
-  project: ProjectWith<'scalingInfo' | 'statuses' | 'scalingDa', 'countdowns'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingDa'>,
   changes: ProjectChanges,
-  tvl: number,
+  tvl: number | undefined,
 ): ScalingDaEntry {
   return {
-    ...getCommonScalingEntry2({ project, changes, syncStatus: undefined }),
+    ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
-    provider: project.scalingInfo.stack,
-    tvlOrder: tvl,
+    stack: project.scalingInfo.stack,
+    tvlOrder: tvl ?? -1,
   }
 }

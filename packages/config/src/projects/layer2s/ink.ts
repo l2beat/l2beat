@@ -1,5 +1,5 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
@@ -22,14 +22,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ink')
 
@@ -75,41 +74,42 @@ const proofMaturityDelaySeconds = discovery.getContractValue<number>(
 
 const portal = discovery.getContract('OptimismPortal2')
 
-// >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONED GAMES !!! UPDATE IF IT CHANGES
+// >>> NOTE: THE VALUES BELOW ARE JUST FOR PERMISSIONLESS GAMES !!! UPDATE IF IT CHANGES
 assert(
   discovery.getContractValue<number>('OptimismPortal2', 'respectedGameType') ===
-    1,
+    0,
 )
 
-const permissionedDisputeGameBonds = discovery.getContractValue<number[]>(
+const permissionlessDisputeGameBonds = discovery.getContractValue<number[]>(
   'DisputeGameFactory',
   'initBonds',
-)[1] // 1 is for permissioned games!
+)[0] // 0 is for permissionless games!
 
-const permissionedGameClockExtension = discovery.getContractValue<number>(
+const permissionlessGameClockExtension = discovery.getContractValue<number>(
   'PermissionedDisputeGame',
   'clockExtension',
 )
 
 const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
 
-const permissionedGameMaxDepth = discovery.getContractValue<number>(
-  'PermissionedDisputeGame',
+const permissionlessGameMaxDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
   'maxGameDepth',
 )
 
-const permissionedGameSplitDepth = discovery.getContractValue<number>(
-  'PermissionedDisputeGame',
+const permissionlessGameSplitDepth = discovery.getContractValue<number>(
+  'FaultDisputeGame',
   'splitDepth',
 )
 
-const permissionedGameFullCost = (() => {
+const permissionlessGameFullCost = (() => {
   let cost = 0
   const scaleFactor = 100000
-  for (let i = 0; i <= permissionedGameMaxDepth; i++) {
+  for (let i = 0; i <= permissionlessGameMaxDepth; i++) {
     cost =
       cost +
-      (permissionedDisputeGameBonds / scaleFactor) * exponentialBondsFactor ** i
+      (permissionlessDisputeGameBonds / scaleFactor) *
+        exponentialBondsFactor ** i
   }
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
@@ -119,15 +119,16 @@ const oracleChallengePeriod = discovery.getContractValue<number>(
   'challengePeriod',
 )
 
-const permissionedGameMaxClockExtension =
-  permissionedGameClockExtension * 2 + // at SPLIT_DEPTH - 1
+const permissionlessGameMaxClockExtension =
+  permissionlessGameClockExtension * 2 + // at SPLIT_DEPTH - 1
   oracleChallengePeriod + // at MAX_GAME_DEPTH - 1
-  permissionedGameClockExtension * (permissionedGameMaxDepth - 3) // the rest, excluding also the last depth
+  permissionlessGameClockExtension * (permissionlessGameMaxDepth - 3) // the rest, excluding also the last depth
 
 export const ink: Layer2 = {
   type: 'layer2',
   id: ProjectId('ink'),
-  createdAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  capability: 'universal',
+  addedAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
@@ -138,11 +139,12 @@ export const ink: Layer2 = {
   display: {
     name: 'Ink',
     slug: 'ink',
+    stateValidationImage: 'opfp',
     description:
       'Ink is an Optimistic Rollup built with the OP Stack by Kraken exchange.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://inkonchain.com/en-US'],
       apps: [],
@@ -158,7 +160,6 @@ export const ink: Layer2 = {
         'https://t.me/inkonchain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -189,7 +190,7 @@ export const ink: Layer2 = {
       defaultUrl: 'https://rpc-gel.inkonchain.com',
       defaultCallsPerMinute: 2000,
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(1),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
     finality: {
       type: 'OPStack',
@@ -239,15 +240,9 @@ export const ink: Layer2 = {
         discovery.getContractValue<number>(
           'OptimismPortal2',
           'respectedGameType',
-        ) === 1,
+        ) === 0,
       )
-      return {
-        ...RISK_VIEW.STATE_FP_INT,
-        description:
-          RISK_VIEW.STATE_FP_INT.description +
-          ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
-        sentiment: 'bad',
-      }
+      return RISK_VIEW.STATE_FP_INT
     })(),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
@@ -262,9 +257,9 @@ export const ink: Layer2 = {
         discovery.getContractValue<number>(
           'OptimismPortal2',
           'respectedGameType',
-        ) === 1,
+        ) === 0,
       )
-      return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
     })(),
   },
   technology: {
@@ -280,12 +275,16 @@ export const ink: Layer2 = {
       ],
       references: [
         {
-          text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: 'https://etherscan.io/address/0x10d7B35078d3baabB96Dd45a9143B94be65b12CD#code',
+          title:
+            'DisputeGameFactory.sol - Etherscan source code, create() function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
+            disputeGameFactory,
+          )}#code`,
         },
         {
-          text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0xa8E6a9bF1Ba2dF76C6787EAEbE2273Ae98498059#code',
+          title:
+            'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
+          url: 'https://etherscan.io/address/0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963#code',
         },
       ],
     },
@@ -293,16 +292,17 @@ export const ink: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'Derivation: Batch submission - OP Mainnet specs',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+          title: 'Derivation: Batch submission - OP Mainnet specs',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
         },
         {
-          text: 'BatchInbox - Etherscan address',
-          href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
+          title: 'BatchInbox - Etherscan address',
+          url: `https://etherscan.io/address/${sequencerInbox.toString()}`,
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -313,12 +313,13 @@ export const ink: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'Sequencing Window - OP Mainnet Specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+          title: 'Sequencing Window - OP Mainnet Specs',
+          url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -337,14 +338,16 @@ export const ink: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
@@ -354,8 +357,8 @@ export const ink: Layer2 = {
         ...EXITS.FORCED('all-withdrawals'),
         references: [
           {
-            text: 'Forced withdrawal from an OP Stack blockchain',
-            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced withdrawal from an OP Stack blockchain',
+            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
           },
         ],
       },
@@ -368,8 +371,8 @@ export const ink: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -377,45 +380,44 @@ export const ink: Layer2 = {
   },
   //stateDerivation: DERIVATION.OPSTACK('INK'),
   stateValidation: {
-    // NOTE THAT DESCRIPTIONS ARE SLIGHTLY MODIFIED BECAUSE PERMISSIONED
     description:
-      'Currently, updates to the system state can only be proposed and challenged by the same entity as the proof system is permissioned. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
     categories: [
       {
         title: 'State root proposals',
         description: `Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the \`create\` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to ${formatEther(
-          permissionedDisputeGameBonds,
+          permissionlessDisputeGameBonds,
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
         references: [
           {
-            text: 'OP stack specification: Fault Dispute Game',
-            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+            title: 'OP stack specification: Fault Dispute Game',
+            url: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
           },
         ],
       },
       {
         title: 'Challenges',
-        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionedGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
-          formatEther(permissionedGameFullCost),
+        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${permissionlessGameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
+          formatEther(permissionlessGameFullCost),
         ).toFixed(
           2,
         )} ETH from depth 0. Actors can participate in any challenge by calling the \`defend\` or \`attack\` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with ${formatSeconds(
           maxClockDuration,
         )}. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than ${formatSeconds(
-          permissionedGameClockExtension,
+          permissionlessGameClockExtension,
         )}, it generally gets extended by ${formatSeconds(
-          permissionedGameClockExtension,
+          permissionlessGameClockExtension,
         )} with the exception of ${formatSeconds(
-          permissionedGameClockExtension * 2,
-        )} right before depth ${permissionedGameSplitDepth}, and ${formatSeconds(
+          permissionlessGameClockExtension * 2,
+        )} right before depth ${permissionlessGameSplitDepth}, and ${formatSeconds(
           oracleChallengePeriod,
         )} right before the last depth. The maximum clock extension that a top level claim can get is therefore ${formatSeconds(
-          permissionedGameMaxClockExtension,
+          permissionlessGameMaxClockExtension,
         )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_report-cb-fault-proofs-non-mips.pdf)).`,
         references: [
           {
-            text: 'Fraud Proof Wars: OPFP',
-            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+            title: 'Fraud Proof Wars: OPFP',
+            url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
           },
         ],
       },
@@ -430,18 +432,44 @@ export const ink: Layer2 = {
     },
     stage1: {
       stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: false,
+      fraudProofSystemAtLeast5Outsiders: true,
       usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: false,
+      usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: true,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: false,
+      fraudProofSystemIsPermissionless: true,
       delayWith30DExitWindow: false,
     },
   }),
-  milestones: [],
+  chainConfig: {
+    name: 'ink',
+    chainId: 57073,
+    blockscoutV2ApiUrl: 'https://explorer.inkonchain.com/api/v2/',
+    explorerUrl: 'https://explorer.inkonchain.com/',
+    explorerApi: {
+      url: 'https://explorer.inkonchain.com/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1733498411),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1,
+        version: '3',
+      },
+    ],
+  },
+  milestones: [
+    {
+      title: 'Ink becomes Stage 1',
+      url: 'https://app.blocksec.com/explorer/tx/eth/0x20fdc1a418ba706e35ade3a2bf1e4c9198c3c62e79d1b688fd951b900d065c27',
+      date: '2025-01-22T00:00:00Z',
+      type: 'general',
+    },
+  ],
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: discovery.getDiscoveredContracts(),

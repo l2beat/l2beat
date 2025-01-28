@@ -1,4 +1,4 @@
-import { KnowledgeNugget } from './KnowledgeNugget'
+import type { KnowledgeNugget } from '../types'
 
 const THUMBNAILS = {
   ARBITRUM_01: 'arbitrum-01.jpg',

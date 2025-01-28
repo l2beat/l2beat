@@ -1,20 +1,20 @@
-import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff } from '@l2beat/discovery'
+import type { Logger } from '@l2beat/backend-tools'
+import type { DiscoveryDiff } from '@l2beat/discovery'
 import {
   assert,
-  ChainConverter,
-  ChainId,
-  EthereumAddress,
+  type ChainConverter,
+  type ChainId,
+  type EthereumAddress,
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
 import { isDiscoveryDriven, layer2s, layer3s } from '@l2beat/config'
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import {
-  Channel,
-  DiscordClient,
+  type Channel,
+  type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
@@ -240,42 +240,42 @@ function flattenReminders(
 }
 
 export function generateTemplatizedStatus(): string {
-  const providers: string[] = [
+  const stacks: string[] = [
     ...new Set(
       layer2s
         .filter((l2) => !l2.isUpcoming && !l2.isArchived && !l2.isUnderReview)
-        .map((l2) => l2.display.provider?.toString())
+        .map((l2) => l2.display.stack?.toString())
         .concat(
           layer3s
             .filter(
               (l3) => !l3.isUpcoming && !l3.isArchived && !l3.isUnderReview,
             )
-            .map((l3) => l3.display.provider?.toString()),
+            .map((l3) => l3.display.stack?.toString()),
         )
         .filter((p) => p !== undefined),
     ),
   ]
 
   const entries: {
-    provider: string
+    stack: string
     projectCount: number
     fullyTemplatizedCount: number
   }[] = []
 
-  for (const provider of providers) {
+  for (const stack of stacks) {
     const isFullyTemplatizedL2 = layer2s
-      .filter((l2) => l2.display.provider === provider)
+      .filter((l2) => l2.display.stack === stack)
       .filter((l2) => !l2.isUpcoming && !l2.isArchived && !l2.isUnderReview)
       .map((l2) => isDiscoveryDriven(l2))
     const isFullyTemplatizedL3 = layer3s
-      .filter((l3) => l3.display.provider === provider)
+      .filter((l3) => l3.display.stack === stack)
       .filter((l3) => !l3.isUpcoming && !l3.isArchived && !l3.isUnderReview)
       .map((l3) => isDiscoveryDriven(l3))
     const isFullyTemplatized = isFullyTemplatizedL2.concat(isFullyTemplatizedL3)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length
     entries.push({
-      provider,
+      stack,
       projectCount: isFullyTemplatized.length,
       fullyTemplatizedCount,
     })
@@ -290,7 +290,7 @@ export function generateTemplatizedStatus(): string {
     ).toFixed()
     const templatizationString = `${e.fullyTemplatizedCount}/${e.projectCount} (${percentage}%)`
 
-    rows.push([e.provider, templatizationString])
+    rows.push([e.stack, templatizationString])
   }
 
   const table = formatAsAsciiTable(headers, rows)

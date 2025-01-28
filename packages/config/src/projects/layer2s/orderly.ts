@@ -1,16 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('orderly')
 
 export const orderly: Layer2 = opStackL2({
-  createdAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
+  addedAt: new UnixTime(1707309065), // 2024-02-07T12:31:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [
     Badge.DA.Celestia,
@@ -19,11 +19,11 @@ export const orderly: Layer2 = opStackL2({
   ],
   additionalPurposes: ['Exchange'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Orderly Network',
     shortName: 'Orderly',
     slug: 'orderly',
@@ -46,7 +46,6 @@ export const orderly: Layer2 = opStackL2({
         'https://t.me/OrderlyNetworkAnnouncements',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     {
@@ -130,15 +129,15 @@ export const orderly: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'ORDER Token Airdrop',
-      link: 'https://orderly.network/blog/orderly-network-staking-unstake-ORDER/',
+      title: 'ORDER Token Airdrop',
+      url: 'https://orderly.network/blog/orderly-network-staking-unstake-ORDER/',
       date: '2024-08-26T00:00:00.00Z',
       description: 'ORDER token launched as a governance token.',
       type: 'general',
     },
     {
-      name: 'Orderly Network Mainnet Launch',
-      link: 'https://twitter.com/OrderlyNetwork/status/1749419001913237526',
+      title: 'Orderly Network Mainnet Launch',
+      url: 'https://twitter.com/OrderlyNetwork/status/1749419001913237526',
       date: '2024-01-22T00:00:00Z',
       description: 'Orderly Network is live on mainnet.',
       type: 'general',

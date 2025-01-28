@@ -1,5 +1,6 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
+import { PrimaryCard } from '~/components/primary-card'
 import { env } from '~/env'
 import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
 import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
@@ -9,7 +10,6 @@ import { CanonicallyBridgedTable } from './_components/tables/canonically-bridge
 import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
 import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
-import { TvlBreakdownSummaryBox } from './_components/tvl-breakdown-summary-box'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
@@ -64,29 +64,27 @@ export default async function Page(props: Props) {
       <TvlBreakdownPageHeader
         title={project.display.name}
         slug={project.display.slug}
+        tvl={project7dData}
+        tvlWarning={project.display.tvlWarning}
         tvlBreakdownTimestamp={dataTimestamp}
       />
-      <TvlBreakdownSummaryBox
-        tvl={{
-          value: project7dData.total,
-          change: project7dData.change.total,
-        }}
-        canonical={{
-          value: project7dData.breakdown.canonical,
-          change: project7dData.change.canonical,
-        }}
-        external={{
-          value: project7dData.breakdown.external,
-          change: project7dData.change.external,
-        }}
-        native={{
-          value: project7dData.breakdown.native,
-          change: project7dData.change.native,
-        }}
-      />
-      <NativelyMintedTable tokens={native} />
-      <ExternallyBridgedTable tokens={external} />
-      <CanonicallyBridgedTable tokens={canonical} />
+      <div className="md:mt-6 md:space-y-6">
+        {native.length > 0 && (
+          <PrimaryCard>
+            <NativelyMintedTable tokens={native} />
+          </PrimaryCard>
+        )}
+        {external.length > 0 && (
+          <PrimaryCard>
+            <ExternallyBridgedTable tokens={external} />
+          </PrimaryCard>
+        )}
+        {canonical.length > 0 && (
+          <PrimaryCard>
+            <CanonicallyBridgedTable tokens={canonical} />
+          </PrimaryCard>
+        )}
+      </div>
 
       <RequestTokenBox />
     </>

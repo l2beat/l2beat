@@ -44,19 +44,6 @@
     },
     "Arbitrator": {
       "ignoreMethods": ["proxiableUUID"]
-      /*
-      "fields": {
-        "secondaryGateways": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "SecondaryChainStatusUpdate",
-            "valueKey": "gateway",
-            "flagKey": "isActive",
-            "ignoreRelative": true
-          }
-        }
-      }
-      */
     },
     "LineaL1Gateway": {
       "extends": "zklinknova/secondaryGateway"

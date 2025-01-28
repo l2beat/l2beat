@@ -1,5 +1,11 @@
+import {
+  type ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
+import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
 import { unionBy } from 'lodash'
-import { BadgeId, badges } from '../../badges'
+import type { ReferenceLink } from '../../../types'
+import { type BadgeId, badges } from '../../badges'
 
 export function mergeBadges(
   inherentBadges: BadgeId[],
@@ -13,4 +19,31 @@ export function mergeBadges(
     (b) => badges[b].type !== 'Other' && badges[b].type !== 'VM',
   )
   return unionBy(rest, (b) => badges[b].type).concat(allowDuplicates)
+}
+
+export function safeGetImplementation(
+  contract: ContractParameters,
+): EthereumAddress {
+  const implementation = get$Implementations(contract.values)[0]
+  if (!implementation) {
+    throw new Error(`No implementation found for ${contract.name}`)
+  }
+  return implementation
+}
+
+export function explorerReferences(
+  explorerUrl: string | undefined,
+  entries: {
+    address: EthereumAddress
+    title: string
+  }[],
+): ReferenceLink[] {
+  if (explorerUrl === undefined) {
+    return []
+  }
+
+  return entries.map((e) => ({
+    title: e.title,
+    url: `${explorerUrl}/address/${e.address.toString()}#code`,
+  }))
 }

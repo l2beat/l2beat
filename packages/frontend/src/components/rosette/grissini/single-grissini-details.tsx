@@ -1,16 +1,18 @@
-import { type Sentiment } from '@l2beat/shared-pure'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/tooltip'
 import { cn } from '~/utils/cn'
 import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
+import type { RosetteValue } from '../types'
 import { SingleGrissini } from './single-grissini'
-
-interface SingleGrissiniDetailsProps {
-  name: string
-  sentiment: Sentiment
-  value: string
+interface SingleGrissiniDetailsProps extends RosetteValue {
   className?: string
+  showTooltip?: boolean
 }
 
 export function SingleGrissiniDetails({
@@ -18,21 +20,28 @@ export function SingleGrissiniDetails({
   sentiment,
   value,
   className,
+  description,
+  showTooltip,
 }: SingleGrissiniDetailsProps) {
-  return (
+  const content = (
     <div
       className={cn(
-        'flex h-[5.125rem] flex-row items-stretch rounded-[4px]',
+        'flex h-12 flex-row items-stretch rounded md:h-[5.125rem]',
         sentimentToTransparentBgColor(sentiment),
         className,
       )}
     >
-      <SingleGrissini sentiment={sentiment} className="h-full" />
-      <div className="flex flex-1 flex-col justify-center gap-1 p-4">
-        <div className="text-2xs font-semibold uppercase">{name}</div>
+      <SingleGrissini
+        sentiment={sentiment}
+        className="h-full shrink-0 max-md:w-1"
+      />
+      <div className="flex flex-1 flex-col items-start justify-center gap-1 p-4">
+        <div className="text-3xs font-semibold uppercase md:text-2xs">
+          {name}
+        </div>
         <div
           className={cn(
-            'text-lg font-bold leading-none',
+            'text-sm font-bold !leading-none md:text-lg',
             sentimentToTextColor(sentiment, { vibrant: true }),
           )}
         >
@@ -40,5 +49,14 @@ export function SingleGrissiniDetails({
         </div>
       </div>
     </div>
+  )
+
+  return showTooltip ? (
+    <Tooltip>
+      <TooltipTrigger>{content}</TooltipTrigger>
+      <TooltipContent>{description}</TooltipContent>
+    </Tooltip>
+  ) : (
+    content
   )
 }

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getProjects } from './api/api'
-import { ApiProjectEntry } from './api/types'
+import type { ApiProjectEntry } from './api/types'
 import { IconStarEmpty } from './icons/IconStarEmpty'
 import { IconStarFull } from './icons/IconStarFull'
 

@@ -1,4 +1,4 @@
-import { type Sentiment } from '@l2beat/shared-pure'
+import type { Sentiment } from '@l2beat/config'
 import { type ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
@@ -80,7 +80,7 @@ export function L3RiskAnalysisSection({
       <CombinedRiskTable l2={l2} l3={l3} combined={combined} />
       <div className="mt-8 flex flex-col gap-6 md:flex-row">
         <RosetteTile>
-          <span className="w-full text-xs font-medium dark:text-gray-600">
+          <span className="w-full text-xs font-medium text-primary">
             L2 & L3 individual risks
           </span>
           <div className="flex items-center justify-between">
@@ -88,7 +88,7 @@ export function L3RiskAnalysisSection({
           </div>
         </RosetteTile>
         <RosetteTile>
-          <span className="w-full text-xs font-medium dark:text-gray-600">
+          <span className="w-full text-xs font-medium text-primary">
             L3 combined risks
           </span>
           <div className="flex items-center justify-between">
@@ -121,7 +121,7 @@ function RosetteTile({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex w-full flex-col items-center gap-1 rounded-lg bg-gray-200 p-6 dark:bg-zinc-800">
+    <div className="flex w-full flex-col items-center gap-1 rounded-lg bg-surface-secondary p-6">
       {children}
     </div>
   )
@@ -171,7 +171,9 @@ function CombinedRiskTable(props: {
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             <HeaderCell className="rounded-tl">
               <span className="text-sm font-medium">{props.l2.name}</span>
-              <div className="text-[13px] font-normal text-gray-500">L2</div>
+              <div className="text-[13px] font-normal leading-none text-secondary">
+                L2
+              </div>
             </HeaderCell>
             {props.l2.risks.map((risk) => (
               <RiskCell key={risk.name} {...risk} />
@@ -180,7 +182,7 @@ function CombinedRiskTable(props: {
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             <HeaderCell>
               <span className="text-xs font-medium">{props.l3.name}</span>
-              <div className="text-[13px] font-normal text-gray-500">
+              <div className="text-[13px] font-normal leading-none text-secondary">
                 L3 • Individual
               </div>
             </HeaderCell>
@@ -191,7 +193,7 @@ function CombinedRiskTable(props: {
           <tr className="border-zinc-700 dark:border-zinc-300 [&>td:not(:last-child)]:border-r-0 [&>td]:border-t-2">
             <HeaderCell className="rounded-bl border-t-zinc-700 dark:border-t-zinc-300">
               <span className="text-xs font-medium">{props.l3.name}</span>
-              <div className="whitespace-nowrap text-[13px] font-normal text-gray-500">
+              <div className="whitespace-nowrap text-[13px] font-normal leading-none text-secondary">
                 L3 • Combined
               </div>
             </HeaderCell>
@@ -226,7 +228,7 @@ function HeaderCell({
   return (
     <td
       className={cn(
-        'border border-gray-50 bg-zinc-300 px-3 py-2 text-[13px] font-bold dark:border-gray-750 dark:bg-zinc-800',
+        'border border-divider bg-surface-secondary px-3 py-2 text-[13px] font-bold',
         className,
       )}
     >

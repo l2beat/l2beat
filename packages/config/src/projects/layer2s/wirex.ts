@@ -5,11 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('wirex')
 
@@ -38,11 +39,11 @@ const upgradeability = {
 }
 
 export const wirex: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['Payments'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'Pay Chain',
     slug: 'wirex',
     description:
@@ -59,7 +60,6 @@ export const wirex: Layer2 = polygonCDKStack({
         'https://wirexpaychain.com/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'wirex',
@@ -76,20 +76,10 @@ export const wirex: Layer2 = polygonCDKStack({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     }),
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: membersCountDAC,
-        requiredSignatures: requiredSignaturesDAC,
-      }),
-      sources: [
-        {
-          contract: 'PolygonDataCommittee.sol',
-          references: [
-            'https://etherscan.io/address/0xAce9269EaC3419937093154dea0AD44C36Df6963#code',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: membersCountDAC,
+      requiredSignatures: requiredSignaturesDAC,
+    }),
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -103,8 +93,9 @@ export const wirex: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          title:
+            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
@@ -169,8 +160,8 @@ export const wirex: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'Wirex Pay Chain Protocol Launch',
-      link: 'https://x.com/wirexpaychain/status/1828779629051793710',
+      title: 'Wirex Pay Chain Protocol Launch',
+      url: 'https://x.com/wirexpaychain/status/1828779629051793710',
       date: '2024-08-28',
       description:
         'Wirex Pay Chain launches officially, integrated with Polygon AggLayer.',
@@ -178,4 +169,12 @@ export const wirex: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

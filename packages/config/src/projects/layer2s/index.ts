@@ -10,6 +10,7 @@ import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { arcology } from './arcology'
+import { arenaz } from './arenaz'
 import { arithmic } from './arithmic'
 import { astarzkevm } from './astarzkevm'
 import { automata } from './automata'
@@ -23,7 +24,6 @@ import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
 import { camp } from './camp'
-import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
@@ -62,6 +62,8 @@ import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { gwyneth } from './gwyneth'
 import { happychain } from './happychain'
+import { hashkey } from './hashkey'
+import { haust } from './haust'
 import { hemi } from './hemi'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
@@ -75,6 +77,7 @@ import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
+import { koi } from './koi'
 import { kontos } from './kontos'
 import { kroma } from './kroma'
 import { lambda } from './lambda'
@@ -139,6 +142,7 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { river } from './river'
 import { rss3 } from './rss3'
+import { rufus } from './rufus'
 import { scroll } from './scroll'
 import { shape } from './shape'
 import { silicon } from './silicon'
@@ -151,6 +155,7 @@ import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
+import { status } from './status'
 import { stealthchain } from './stealthchain'
 import { superlumio } from './superlumio'
 import { superseed } from './superseed'
@@ -169,7 +174,7 @@ import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 import { unichain } from './unichain'
 import { wirex } from './wirex'
 import { witness } from './witness'
@@ -204,6 +209,7 @@ export const layer2s: Layer2[] = [
   apex,
   arbitrum,
   arcology,
+  arenaz,
   arithmic,
   astarzkevm,
   alienx,
@@ -218,7 +224,6 @@ export const layer2s: Layer2[] = [
   bob,
   bobanetwork,
   camp,
-  canto,
   capx,
   celo,
   cyber,
@@ -257,6 +262,8 @@ export const layer2s: Layer2[] = [
   gwyneth,
   hemi,
   happychain,
+  haust,
+  hashkey,
   hermez,
   hybrid,
   hychain,
@@ -268,6 +275,7 @@ export const layer2s: Layer2[] = [
   kakarotzkevm,
   karak,
   kinto,
+  koi,
   kontos,
   kroma,
   lambda,
@@ -334,6 +342,7 @@ export const layer2s: Layer2[] = [
   rise,
   river,
   rss3,
+  rufus,
   scroll,
   silicon,
   singularityfinance,
@@ -345,6 +354,7 @@ export const layer2s: Layer2[] = [
   sorare,
   specular,
   starknet,
+  status,
   stealthchain,
   shape,
   superlumio,

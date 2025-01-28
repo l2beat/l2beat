@@ -3,14 +3,14 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('synapse')
 
 export const synapse: Bridge = {
   type: 'bridge',
   id: ProjectId('synapse'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Synapse',
     slug: 'synapse',

@@ -1,10 +1,10 @@
-import { IProvider, ProxyDetector } from '@l2beat/discovery'
+import { type IProvider, ProxyDetector } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
-import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
-import { CliLogger } from '@l2beat/shared'
+import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import type { CliLogger } from '@l2beat/shared'
 import {
   assert,
-  EthereumAddress,
+  type EthereumAddress,
   Hash256,
   UnixTime,
   formatAsAsciiTable,

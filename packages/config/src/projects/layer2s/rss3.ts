@@ -1,17 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('rss3')
 
 export const rss3: Layer2 = opStackL2({
-  createdAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
-  additionalBadges: [Badge.DA.NearDA],
+  addedAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
   daProvider: {
     layer: DA_LAYERS.NEAR_DA,
     riskView: {
@@ -26,16 +25,16 @@ export const rss3: Layer2 = opStackL2({
         'Transaction data is submitted to a blob store contract on NearDA. Only hashes of blob data is published on an onchain inbox.',
       references: [
         {
-          text: 'REP-20 - Data Availability Layer Integration',
-          href: 'https://github.com/RSS3-Network/REPs/blob/main/REPs/REP-20.md',
+          title: 'REP-20 - Data Availability Layer Integration',
+          url: 'https://github.com/RSS3-Network/REPs/blob/main/REPs/REP-20.md',
         },
         {
-          text: 'RSS3 NearDA blob store contract',
-          href: 'https://nearblocks.io/address/vsl-da.near',
+          title: 'RSS3 NearDA blob store contract',
+          url: 'https://nearblocks.io/address/vsl-da.near',
         },
         {
-          text: 'On-Chain Inbox',
-          href: 'https://etherscan.io/address/0xfFFF000000000000000000000000000000012553',
+          title: 'On-Chain Inbox',
+          url: 'https://etherscan.io/address/0xfFFF000000000000000000000000000000012553',
         },
       ],
       risks: [
@@ -52,15 +51,16 @@ export const rss3: Layer2 = opStackL2({
       ],
     },
     bridge: DA_BRIDGES.NONE,
+    badge: Badge.DA.NearDA,
   },
   associatedTokens: ['RSS3'],
   discovery,
   additionalPurposes: ['AI', 'Information'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     shortName: 'RSS3 VSL',
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
@@ -83,7 +83,6 @@ export const rss3: Layer2 = opStackL2({
         'https://t.me/rss3_en',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {
@@ -108,15 +107,15 @@ export const rss3: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'RSS3 Mainnet Alpha Launch',
-      link: 'https://x.com/rss3_/status/1767370007275851789',
+      title: 'RSS3 Mainnet Alpha Launch',
+      url: 'https://x.com/rss3_/status/1767370007275851789',
       date: '2024-03-12T00:00:00Z',
       description: 'RSS3 Network Mainnet Alpha is live.',
       type: 'general',
     },
     {
-      name: 'RSS3 starts using NearDA',
-      link: 'https://x.com/rss3_/status/1788183577219436985',
+      title: 'RSS3 starts using NearDA',
+      url: 'https://x.com/rss3_/status/1788183577219436985',
       date: '2024-05-07T00:00:00Z',
       description: 'RSS3 Network starts publishing data to NearDA.',
       type: 'general',

@@ -1,7 +1,7 @@
-import Router from '@koa/router'
-import { ChildIndexer } from '@l2beat/uif'
+import type Router from '@koa/router'
+import type { ChildIndexer } from '@l2beat/uif'
 
-import { TxUpdaterInterface } from './tracked-txs/types/TxUpdaterInterface'
+import type { TxUpdaterInterface } from './tracked-txs/types/TxUpdaterInterface'
 
 export interface ApplicationModule {
   routers?: Router[]

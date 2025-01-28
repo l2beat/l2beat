@@ -1,8 +1,8 @@
 import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { partition } from 'lodash'
-import { DiscoveryLogger } from '../DiscoveryLogger'
-import { Analysis } from '../analysis/AddressAnalyzer'
+import type { DiscoveryLogger } from '../DiscoveryLogger'
+import type { Analysis } from '../analysis/AddressAnalyzer'
 
 export function printTemplatization(
   logger: DiscoveryLogger,

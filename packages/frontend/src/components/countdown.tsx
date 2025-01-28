@@ -52,6 +52,23 @@ export function Countdown({
   )
 }
 
+export function TextCountdown({ expiresAt }: { expiresAt: number }) {
+  const [secondsLeft, setSecondsLeft] = useState(
+    expiresAt - UnixTime.now().toNumber(),
+  )
+
+  useInterval(() => {
+    setSecondsLeft((timeLeft) => timeLeft - 1)
+  }, 1000)
+
+  const { days, hours, minutes, seconds } = getTimeParts(secondsLeft)
+  return (
+    <span>
+      {days} days {hours} hours {minutes} minutes {seconds} seconds
+    </span>
+  )
+}
+
 const MemoizedTimePart = memo(TimePart)
 function TimePart({
   children,

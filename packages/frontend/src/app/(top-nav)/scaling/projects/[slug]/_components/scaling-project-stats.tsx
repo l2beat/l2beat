@@ -1,5 +1,5 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { StageBadge } from '~/components/badge/stage-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -12,7 +12,7 @@ import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
-import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
@@ -26,18 +26,16 @@ export function ScalingProjectStats({ project, className }: Props) {
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5',
+        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5',
         className,
       )}
     >
       <ProjectStat
         title="Tokens"
-        value={
-          <TokenBreakdownStat breakdown={project.header.tvl?.tokenBreakdown} />
-        }
+        value={<TokenBreakdownStat tokenTvl={project.header.tvl?.tokens} />}
       />
       <ProjectStat
-        title="Daily UOPS"
+        title="Past day UOPS"
         tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
         value={
           project.header.activity ? (
@@ -115,9 +113,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-gray-500 dark:text-gray-600">
-          {props.title}
-        </span>
+        <span className="text-xs text-secondary">{props.title}</span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">

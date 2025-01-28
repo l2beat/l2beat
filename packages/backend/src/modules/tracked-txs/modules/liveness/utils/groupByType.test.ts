@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { expect, mockObject } from 'earl'
-import { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
+import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 import { groupByType } from './groupByType'
 
 describe(groupByType.name, () => {

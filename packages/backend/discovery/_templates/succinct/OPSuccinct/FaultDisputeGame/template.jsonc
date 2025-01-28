@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FaultDisputeGame",
+  "description": "It contains the logic of the dispute game.",
+  "ignoreMethods": [
+    "getNumToResolve",
+    "resolutionCheckpoints",
+    "resolvedSubgames"
+  ]
+}

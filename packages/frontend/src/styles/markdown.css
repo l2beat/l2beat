@@ -40,7 +40,7 @@
 }
 
 .mdc blockquote {
-  @apply border-l-2 border-gray-300 py-1 pl-4 dark:border-gray-700;
+  @apply border-l-2 border-divider py-1 pl-4;
 }
 
 .mdc ul {
@@ -79,11 +79,11 @@
 }
 
 .mdc table tr:not(:last-child) {
-  @apply border-b border-gray-300 dark:border-gray-700;
+  @apply border-b border-divider;
 }
 
 .mdc table thead tr:first-child:last-child {
-  @apply border-b border-gray-300 dark:border-gray-700;
+  @apply border-b border-divider;
 }
 
 .mdc table td {
@@ -92,7 +92,7 @@
 
 .mdc table th:not(:last-child),
 .mdc table td:not(:last-child) {
-  @apply border-r border-gray-300 text-sm dark:border-gray-700;
+  @apply border-r border-divider text-sm;
 }
 
 .mdc table th,
@@ -110,7 +110,7 @@
 }
 
 .mdc a[data-link-role="glossary"] {
-  @apply underline decoration-dotted md:underline-offset-2 decoration-blue-700 dark:decoration-blue-500;
+  @apply underline decoration-dotted md:underline-offset-2 decoration-link;
 }
 
 .mdc img {

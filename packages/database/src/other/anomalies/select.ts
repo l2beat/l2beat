@@ -1,4 +1,4 @@
-import { Anomaly } from '../../kysely/generated/types'
+import type { Anomaly } from '../../kysely/generated/types'
 
 export const selectAnomaly = [
   'timestamp',

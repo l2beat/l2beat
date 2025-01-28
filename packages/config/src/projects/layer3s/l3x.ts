@@ -1,24 +1,25 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
 export const l3x: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
+  addedAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
   hostChain: ProjectId('arbitrum'),
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'L3X',
@@ -94,4 +95,10 @@ export const l3x: Layer3 = orbitStackL3({
       chain: 'blast',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

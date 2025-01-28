@@ -2,9 +2,9 @@ import {
   type Layer2,
   type Layer3,
   PROJECT_COUNTDOWNS,
+  type ReasonForBeingInOther,
   type ScalingProjectCategory,
 } from '@l2beat/config'
-import { type ReasonForBeingInOther } from '@l2beat/config/build/src/common/ReasonForBeingInOther'
 
 export interface ProjectCountdownsWithContext {
   otherMigration?: {

@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 export const ankr: Bridge = {
   type: 'bridge',
   id: ProjectId('ankr'),
-  createdAt: new UnixTime(1710858245), // 2024-03-19T14:24:05Z
+  addedAt: new UnixTime(1710858245), // 2024-03-19T14:24:05Z
   isUnderReview: true,
   display: {
     name: 'Ankr',

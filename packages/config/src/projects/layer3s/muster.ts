@@ -1,22 +1,23 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('muster', 'arbitrum')
 
 export const muster: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1718609683), // 2024-06-17T07:34:43Z
+  addedAt: new UnixTime(1718609683), // 2024-06-17T07:34:43Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.AltLayer],
   hostChain: ProjectId('arbitrum'),
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Muster',
     slug: 'muster',
     redWarning:
@@ -34,7 +35,6 @@ export const muster: Layer3 = orbitStackL3({
       repositories: ['https://github.com/cometh-hq'],
       socialMedia: ['https://x.com/Cometh', 'https://blog.cometh.io/'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://muster.alt.technology',
   discovery,
@@ -42,4 +42,10 @@ export const muster: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

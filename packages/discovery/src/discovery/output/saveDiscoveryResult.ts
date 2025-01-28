@@ -1,11 +1,11 @@
 import { dirname, posix } from 'path'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
-import { DiscoveryLogger } from '../DiscoveryLogger'
-import { Analysis } from '../analysis/AddressAnalyzer'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { DiscoveryLogger } from '../DiscoveryLogger'
+import type { Analysis } from '../analysis/AddressAnalyzer'
+import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
@@ -45,13 +45,7 @@ async function saveDiscoveredJson(
   blockNumber: number,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
-  const project = toDiscoveryOutput(
-    config.name,
-    config.chain,
-    config.hash,
-    blockNumber,
-    results,
-  )
+  const project = toDiscoveryOutput(config, blockNumber, results)
   const json = await toPrettyJson(project)
   const discoveryFilename = options.discoveryFilename ?? 'discovered.json'
   await writeFile(posix.join(rootPath, discoveryFilename), json)

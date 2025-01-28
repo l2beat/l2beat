@@ -1,8 +1,9 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 20878349,
-  "configHash": "0x9f2a63feb17b6a63ff3e04a613e6e10404800c34a80bf98d0951ee464c231d4b",
+  "blockNumber": 21630127,
+  "configHash": "0xceb4cee1478e471326f07e709db9d05e23b7736b3ed527306f8292bcc92cc522",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "daiBridge",
@@ -15,7 +16,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
           "via": []
         }
       ],
@@ -48,7 +49,7 @@
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "totalBridgedDAI": "972213332991168800922732",
+        "totalBridgedDAI": "2831847350171131353750",
         "totalProtocolDAI": "1000000000000000000",
         "zkEvmBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
       },
@@ -59,14 +60,14 @@
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0xf303702e52579ed796873f92868d2ebedd55360bf53043519e6061b19df3eb4b"
+        "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1706364971,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+        "$implementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
         "$pastUpgrades": [
           [
             "2024-01-27T14:16:11.000Z",
@@ -87,9 +88,14 @@
             "2024-10-01T14:22:59.000Z",
             "0x069690e412d29d96bc94d6bf5c816e43bb401cbf948f3e3cad261e073e2d2afe",
             ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+          ],
+          [
+            "2025-01-15T12:16:11.000Z",
+            "0x9328cfd3d2833dca2d0ea16fbb34f8fc096c26ca8334476c5bf7107f32436029",
+            ["0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "admin": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
@@ -107,7 +113,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xd65a78b223b357e2cdd9473590e8e919508c3809828e8413bc10290c9e32fa7f",
+        "lastAccInputHash": "0xd702f4fdf81a5538fe26737b475a8bc52774aacc95f7e910273d1fa9ee445569",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -134,7 +140,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
           "via": []
         }
       ],
@@ -180,7 +186,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+          "to": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
           "via": []
         }
       ],
@@ -236,15 +242,15 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+          "from": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
         },
         {
           "permission": "upgrade",
-          "target": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+          "from": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
         },
         {
           "permission": "upgrade",
-          "target": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+          "from": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -345,11 +351,34 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function wrappedTokenAddress() view returns (address)"
     ],
-    "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71": [
+    "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": [
+      "constructor(address _implementation, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": [
+      "constructor(address impl_, bytes data_) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
       "error ExceedMaxVerifyBatches()",
+      "error FinalAccInputHashDoesNotMatch()",
       "error FinalNumBatchBelowLastVerifiedBatch()",
       "error FinalNumBatchDoesNotMatchPendingState()",
       "error FinalPendingStateNumInvalid()",
@@ -373,6 +402,7 @@
       "error InvalidRangeBatchTimeTarget()",
       "error InvalidRangeForceBatchTimeout()",
       "error InvalidRangeMultiplierBatchFee()",
+      "error L1InfoTreeLeafCountInvalid()",
       "error MaxTimestampSequenceInvalid()",
       "error NewAccInputHashDoesNotExist()",
       "error NewPendingStateTimeoutMustBeLower()",
@@ -402,6 +432,7 @@
       "event ForceBatch(uint64 indexed forceBatchNum, bytes32 lastGlobalExitRoot, address sequencer, bytes transactions)",
       "event InitialSequenceBatches(bytes transactions, bytes32 lastGlobalExitRoot, address sequencer)",
       "event Initialized(uint8 version)",
+      "event RollbackBatches(uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
       "event SequenceBatches(uint64 indexed numBatch, bytes32 l1InfoRoot)",
       "event SequenceForceBatches(uint64 indexed numBatch)",
       "event SetForceBatchAddress(address newForceBatchAddress)",
@@ -443,8 +474,9 @@
       "function onVerifyBatches(uint64 lastVerifiedBatch, bytes32 newStateRoot, address aggregator)",
       "function pendingAdmin() view returns (address)",
       "function pol() view returns (address)",
+      "function rollbackBatches(uint64 targetBatch, bytes32 accInputHashToRollback)",
       "function rollupManager() view returns (address)",
-      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)",
+      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)",
       "function sequenceForceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches)",
       "function setForceBatchAddress(address newForceBatchAddress)",
       "function setForceBatchTimeout(uint64 newforceBatchTimeout)",
@@ -453,28 +485,6 @@
       "function transferAdminRole(address newPendingAdmin)",
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
-    ],
-    "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": [
-      "constructor(address _implementation, bytes _data)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": [
-      "constructor(address impl_, bytes data_) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": [
       "constructor()",
@@ -632,6 +642,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

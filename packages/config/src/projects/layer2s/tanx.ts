@@ -19,7 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -31,7 +31,8 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('brine')
 
@@ -60,21 +61,22 @@ const committee = getCommittee(discovery)
 export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
-  createdAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
+  capability: 'appchain',
+  addedAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'tanX',
     slug: 'tanx',
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
     category: 'Validium',
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     links: {
       websites: ['https://tanx.fi/'],
       apps: ['https://trade.tanx.fi/'],
@@ -88,7 +90,6 @@ export const tanx: Layer2 = {
         'https://linkedin.com/company/tanx-fi',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -119,20 +120,10 @@ export const tanx: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      sources: [
-        {
-          contract: 'Committee',
-          references: [
-            'https://etherscan.io/address/0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446#code#F1#L60',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,
@@ -184,12 +175,18 @@ export const tanx: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2023-04-27T00:00:00.00Z',
-      link: 'https://tanx.fi/',
+      url: 'https://tanx.fi/',
       description: 'tanX is live on mainnet.',
       type: 'general',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    bridge: {
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 }

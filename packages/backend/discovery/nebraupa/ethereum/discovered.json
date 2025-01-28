@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 20826378,
-  "configHash": "0x4bbd4c33e95701f84a8a0db0888706ee07343788ddd5bfe2a40540c3f7a18360",
+  "configHash": "0xf6e12550ebd4d462529b0d123f133baf1d234bd58227095d207b776a70dd312f",
   "contracts": [
     {
       "name": "UpaVerifier",
@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
+          "to": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
           "via": []
         }
       ],
@@ -81,7 +81,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
+          "from": "0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -322,6 +322,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

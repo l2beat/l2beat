@@ -1,20 +1,19 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 // inbox on arbitrum: https://arbiscan.io/address/0xb0a00d053160e297324b7689b5e3f3af9a6fa4fb
 export const hook: Layer3 = underReviewL3({
   id: 'hook',
-  createdAt: new UnixTime(1719928126), // 2024-07-02T13:48:46Z
+  capability: 'universal',
+  addedAt: new UnixTime(1719928126), // 2024-07-02T13:48:46Z
   isArchived: true,
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Hook',
     slug: 'hook',
     category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
     headerWarning:
@@ -33,7 +32,6 @@ export const hook: Layer3 = underReviewL3({
         'https://warpcast.com/hookprotocol',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   // rpcUrl: 'https://hook.calderachain.xyz/http',
   transactionApi: {
@@ -41,7 +39,7 @@ export const hook: Layer3 = underReviewL3({
     startBlock: 1,
     defaultUrl: 'https://hook.calderachain.xyz/http',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     // BRIDGE

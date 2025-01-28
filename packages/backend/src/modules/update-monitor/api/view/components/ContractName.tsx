@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DashboardContract } from '../../props/getDashboardContracts'
+import type { DashboardContract } from '../../props/getDashboardContracts'
 import { DASHBOARD_COLORS } from '../constants'
 
 interface ContractNameProps {

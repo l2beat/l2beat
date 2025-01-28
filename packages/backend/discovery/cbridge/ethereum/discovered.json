@@ -1,8 +1,8 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 21242135,
-  "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
+  "blockNumber": 21628437,
+  "configHash": "0x8d912560d92ab12d0b02b92cd7432cc0846b60556aaecd397af742b2abbc748f",
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -31,7 +31,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
+          "to": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
           "via": []
         }
       ],
@@ -73,7 +73,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
+          "from": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
         }
       ],
       "sinceTimestamp": 1649432377,
@@ -108,7 +108,7 @@
       "sinceTimestamp": 1638346811,
       "values": {
         "$immutable": true,
-        "addseq": 5344,
+        "addseq": 5385,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -130,8 +130,8 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xc4de3f1d170aa551d4597b1e95173f6087e19d8d48f679df730508cfe6454371",
-        "triggerTime": 1732072759
+        "ssHash": "0x2873508ac0686ac90ca233a0e1279190271073db2b081aea5ce736f7ed8ae6b2",
+        "triggerTime": 1736781066
       },
       "derivedName": "Bridge"
     },
@@ -184,10 +184,11 @@
       "sourceHashes": [
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF140024969F6c76494a78518D9a99c8776B55f70"
+          "from": "0xF140024969F6c76494a78518D9a99c8776B55f70"
         }
       ],
       "sinceTimestamp": 1690520231,
@@ -251,13 +252,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-          "via": [
-            {
-              "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
-              "delay": 0
-            }
-          ]
+          "to": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+          "via": [{ "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }]
         }
       ],
       "sinceTimestamp": 1691384579,
@@ -323,14 +319,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xF140024969F6c76494a78518D9a99c8776B55f70",
+          "from": "0xF140024969F6c76494a78518D9a99c8776B55f70",
           "via": [{ "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+          "from": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
         }
       ],
       "ignoreInWatchMode": ["nextProposalId"],
@@ -902,6 +898,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

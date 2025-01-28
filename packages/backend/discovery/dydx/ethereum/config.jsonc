@@ -44,11 +44,10 @@
       "fields": {
         "OPERATORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event LogOperatorAdded(address operator)",
-            "addKey": "operator",
-            "removeEvent": "event LogOperatorRemoved(address operator)",
-            "removeKey": "operator"
+            "type": "event",
+            "select": "operator",
+            "add": { "event": "LogOperatorAdded" },
+            "remove": { "event": "LogOperatorRemoved" }
           }
         },
         "escapeVerifier": {
@@ -105,11 +104,10 @@
       "fields": {
         "EXECUTORS": {
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event ExecutorAuthorized(address executor)",
-            "addKey": "executor",
-            "removeEvent": "event ExecutorUnauthorized(address executor)",
-            "removeKey": "executor"
+            "type": "event",
+            "select": "executor",
+            "add": { "event": "ExecutorAuthorized" },
+            "remove": { "event": "ExecutorUnauthorized" }
           }
         },
         "accessControl": {
@@ -140,9 +138,9 @@
         },
         "slashings": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "Slashed",
-            "returnParams": ["amount", "recipient", "newExchangeRate"]
+            "type": "event",
+            "select": ["amount", "recipient", "newExchangeRate"],
+            "add": { "event": "Slashed" }
           }
         }
       }
@@ -156,9 +154,9 @@
         },
         "BORROWERS_LIST": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event ScheduledBorrowerAllocationChange(address indexed borrower,uint256 oldAllocation,uint256 newAllocation,uint256 epochNumber)",
-            "valueKey": "borrower"
+            "type": "event",
+            "select": "borrower",
+            "add": { "event": "ScheduledBorrowerAllocationChange" }
           }
         }
       },
@@ -200,10 +198,12 @@
       "fields": {
         "PRIORITY_CONTROLLERS": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
-            "valueKey": "account",
-            "flagKey": "isPriorityController"
+            "type": "event",
+            "select": "account",
+            "add": {
+              "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
+              "where": ["=", "#isPriorityController", true]
+            }
           }
         }
       }

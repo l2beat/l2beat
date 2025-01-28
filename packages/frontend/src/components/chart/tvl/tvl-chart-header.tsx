@@ -1,6 +1,5 @@
 import { INFINITY } from '~/consts/characters'
-import { useLastDefinedValue } from '~/hooks/use-last-defined-value'
-import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
+import type { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
@@ -23,7 +22,6 @@ export function TvlChartHeader({
   range,
   timeRange,
 }: Props) {
-  const lastTotalValue = useLastDefinedValue(value)
   const loading = useChartLoading()
 
   const changeOverTime =
@@ -44,10 +42,10 @@ export function TvlChartHeader({
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl">
-          {lastTotalValue === undefined ? (
+          {value === undefined ? (
             <Skeleton className="my-[5px] h-5 w-32 md:my-1.5 md:h-6" />
           ) : (
-            formatCurrency(lastTotalValue, unit)
+            formatCurrency(value, unit)
           )}
         </div>
         {loading ? (

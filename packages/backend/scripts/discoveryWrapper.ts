@@ -1,4 +1,4 @@
-import { DiscoveryModuleConfig, discover } from '@l2beat/discovery'
+import { type DiscoveryModuleConfig, discover } from '@l2beat/discovery'
 import { updateDiffHistory } from './updateDiffHistory'
 
 export async function discoverAndUpdateDiffHistory(

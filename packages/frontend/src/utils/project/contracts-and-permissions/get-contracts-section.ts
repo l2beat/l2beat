@@ -4,9 +4,10 @@ import {
   type DaLayer,
   type Layer2,
   type Layer3,
+  type ProjectEscrow,
+  type ReferenceLink,
   type ScalingProjectContract,
   type ScalingProjectContracts,
-  type ScalingProjectEscrow,
   layer2s,
 } from '@l2beat/config'
 import {
@@ -15,17 +16,17 @@ import {
   type EthereumAddress,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type ProjectSectionProps } from '~/components/projects/sections/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { ProjectSectionProps } from '~/components/projects/sections/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import {
-  type TechnologyContract,
-  type TechnologyContractAddress,
+import type {
+  TechnologyContract,
+  TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
-import { type ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
-import { type Reference } from '../../../components/projects/sections/reference-list'
+import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
@@ -38,7 +39,8 @@ type ProjectParams = {
   isVerified: boolean
   architectureImage?: string
   contracts: ScalingProjectContracts
-  escrows: ScalingProjectEscrow[] | undefined
+  daSolution?: DaSolution
+  escrows: ProjectEscrow[] | undefined
 } & (
   | {
       type: (Layer2 | Bridge | DaLayer)['type']
@@ -59,7 +61,10 @@ export function getContractsSection(
   contractsVerificationStatuses: ContractsVerificationStatuses,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
-  if (projectParams.contracts.addresses.length === 0) {
+  if (
+    projectParams.contracts.addresses.length === 0 &&
+    projectParams.daSolution?.contracts?.length === 0
+  ) {
     return undefined
   }
   const projectChangeReport = projectsChangeReport?.projects[projectParams.id]
@@ -103,9 +108,33 @@ export function getContractsSection(
     ),
   )
 
+  const daSolution =
+    projectParams.daSolution?.contracts &&
+    projectParams.daSolution.contracts.length !== 0
+      ? {
+          layerName: projectParams.daSolution?.layerName,
+          bridgeName: projectParams.daSolution?.bridgeName,
+          hostChain: slugToDisplayName(projectParams.daSolution?.hostChain),
+          contracts: projectParams.daSolution.contracts.flatMap((contract) => {
+            const isUnverified = isContractUnverified(
+              contract,
+              contractsVerificationStatuses,
+            )
+
+            return makeTechnologyContract(
+              contract,
+              projectParams,
+              isUnverified,
+              contractsVerificationStatuses,
+              projectChangeReport,
+            )
+          }),
+        }
+      : undefined
+
   const escrows =
     projectParams.escrows
-      ?.filter((escrow) => escrow.newVersion && !escrow.isHistorical)
+      ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
         const isUnverified = isEscrowUnverified(
@@ -160,6 +189,7 @@ export function getContractsSection(
     isIncomplete: projectParams.contracts?.isIncomplete,
     isUnderReview:
       projectParams.isUnderReview ?? projectParams.contracts?.isUnderReview,
+    daSolution,
   }
 }
 
@@ -255,7 +285,7 @@ function makeTechnologyContract(
       addresses.map((a) => a.address).includes(changedAddress),
   )
 
-  const additionalReferences: Reference[] = []
+  const additionalReferences: ReferenceLink[] = []
   const mainAddresses = [getAddress({ address: item.address })]
   const implementationAddresses =
     item.upgradeability?.implementations.map((implementation) =>
@@ -334,21 +364,19 @@ function isContractUnverified(
 }
 
 function isEscrowUnverified(
-  escrow: ScalingProjectEscrow,
+  escrow: ProjectEscrow,
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
-  const chain = escrow.newVersion
-    ? (escrow.contract.chain ?? 'ethereum')
-    : 'ethereum'
+  const chain = escrow.contract?.chain ?? 'ethereum'
   return (
     contractsVerificationStatuses[chain]?.[escrow.address.toString()] === false
   )
 }
 
 function escrowToProjectContract(
-  escrow: ScalingProjectEscrow,
+  escrow: ProjectEscrow,
 ): ScalingProjectContract {
-  assert(escrow.newVersion, 'Old escrow format used') // old format misses upgradeability info
+  assert(escrow.contract, 'Old escrow format used') // old format misses upgradeability info
 
   const genericName =
     escrow.tokens === '*'
@@ -363,7 +391,7 @@ function escrowToProjectContract(
   }
 }
 
-function moreTokensFirst(a: ScalingProjectEscrow, b: ScalingProjectEscrow) {
+function moreTokensFirst(a: ProjectEscrow, b: ProjectEscrow) {
   const aTokens = a.tokens === '*' ? Number.POSITIVE_INFINITY : a.tokens.length
   const bTokens = b.tokens === '*' ? Number.POSITIVE_INFINITY : b.tokens.length
 

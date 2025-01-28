@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('transporter')
 const upgradeDelay = discovery.getContractValue<number>(
@@ -26,7 +26,7 @@ const tokenPools = [...new Set(allTokenPools)]
 export const transporter: Bridge = {
   type: 'bridge',
   id: ProjectId('transporter'),
-  createdAt: new UnixTime(1718781548), // 2024-06-19T07:19:08Z
+  addedAt: new UnixTime(1718781548), // 2024-06-19T07:19:08Z
   display: {
     name: 'Transporter',
     slug: 'transporter',
@@ -89,8 +89,8 @@ export const transporter: Bridge = {
         of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root and submits a voteToBless() transaction, the second oracle committee can execute the message on the destination chain.`,
       references: [
         {
-          text: 'Risk Management Network',
-          href: 'https://docs.chain.link/ccip/concepts#risk-management-network',
+          title: 'Risk Management Network',
+          url: 'https://docs.chain.link/ccip/concepts#risk-management-network',
         },
       ],
       risks: [

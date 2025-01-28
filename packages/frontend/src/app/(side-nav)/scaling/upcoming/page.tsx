@@ -10,13 +10,13 @@ export const metadata = getDefaultMetadata({
   },
 })
 
-export default function Page() {
-  const entries = getScalingUpcomingEntries()
+export default async function Page() {
+  const entries = await getScalingUpcomingEntries()
   return (
     <>
       <MainPageHeader>Upcoming</MainPageHeader>
       <ScalingFilterContextProvider>
-        <ScalingUpcomingTables entries={entries} />
+        <ScalingUpcomingTables {...entries} />
       </ScalingFilterContextProvider>
     </>
   )

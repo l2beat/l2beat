@@ -1,4 +1,4 @@
-import {
+import type {
   ApiCodeResponse,
   ApiPreviewResponse,
   ApiProjectResponse,

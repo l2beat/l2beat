@@ -18,17 +18,13 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [entries] = await Promise.all([
     getScalingCostsEntries(),
-    api.costs.table.prefetch({ range: '30d' }),
+    api.costs.chart.prefetch({
+      range: '1y',
+      filter: { type: 'rollups' },
+      previewRecategorisation: false,
+    }),
+    api.costs.table.prefetch({ range: '1y' }),
   ])
-
-  const rollupsIds = entries.rollups.map((project) => project.id)
-  await api.costs.chart.prefetch({
-    range: '30d',
-    filter: {
-      type: 'projects',
-      projectIds: rollupsIds,
-    },
-  })
 
   return (
     <HydrateClient>

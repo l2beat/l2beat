@@ -1,10 +1,9 @@
+import { chainConverter, toBackendProject } from '@l2beat/backend-shared'
 import {
   type Bridge,
   type Layer2,
   type Layer3,
-  chainConverter,
   safeGetTokenByAssetId,
-  toBackendProject,
 } from '@l2beat/config'
 import {
   assert,

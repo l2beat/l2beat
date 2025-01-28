@@ -2,14 +2,14 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('orbiter')
 
 export const orbiter: Bridge = {
   type: 'bridge',
   id: ProjectId('orbiter'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Orbiter',
     slug: 'orbiter',
@@ -82,12 +82,12 @@ export const orbiter: Bridge = {
         "Orbiter Bridge is a cross-rollup bridge that uses liquidity provided by Makers to perform swaps. Makers provide liquidity to their own accounts (EOAs) on supported chains. A user performing a swap deposits tokens to Maker's EOA on source chain and that Maker is supposed to release corresponding tokens from their EOA on the destination chain. Currently only Orbiter team is acting as Makers.",
       references: [
         {
-          text: 'Documentation - Maker System',
-          href: 'https://docs.orbiter.finance/makersystem',
+          title: 'Documentation - Maker System',
+          url: 'https://docs.orbiter.finance/makersystem',
         },
         {
-          text: 'Documentation - Technology',
-          href: 'https://docs.orbiter.finance/technology',
+          title: 'Documentation - Technology',
+          url: 'https://docs.orbiter.finance/technology',
         },
       ],
       risks: [],
@@ -98,8 +98,8 @@ export const orbiter: Bridge = {
         "Even though the Orbiter team has plans to deploy a set of contracts that will i.e. require independent makers to post bonds as safeguard against not meeting their obligations, currently the system relies on trust that Orbiter Makers will disburse required tokens on the destination chain after seeing user's deposit on the source chain.",
       references: [
         {
-          text: 'Documentation - Maker System',
-          href: 'https://docs.orbiter.finance/makersystem',
+          title: 'Documentation - Maker System',
+          url: 'https://docs.orbiter.finance/makersystem',
         },
       ],
       risks: [

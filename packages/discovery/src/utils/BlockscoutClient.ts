@@ -4,22 +4,22 @@ import {
   EthereumAddress,
   Hash256,
   UnixTime,
-  json,
+  type json,
 } from '@l2beat/shared-pure'
 
-import { ContractSource } from './IEtherscanClient'
+import type { ContractSource } from './IEtherscanClient'
 
-import { HttpClient } from '@l2beat/shared'
+import type { HttpClient } from '@l2beat/shared'
 import {
   BlockscoutGetBlockNoByTime,
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
   OneTransactionListResult,
-  TwentyTransactionListResult,
+  TransactionListResult,
   UnverifiedContractSourceResult,
   parseBlockscoutResponse,
 } from './BlockscoutModels'
-import {
+import type {
   EtherscanUnsupportedMethods,
   IEtherscanClient,
 } from './IEtherscanClient'
@@ -184,7 +184,7 @@ export class BlockscoutClient implements IEtherscanClient {
     return new UnixTime(parseInt(resp.timeStamp, 10))
   }
 
-  async getLast10OutgoingTxs(
+  async getAtMost10RecentOutgoingTxs(
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]> {
@@ -193,21 +193,14 @@ export class BlockscoutClient implements IEtherscanClient {
       startblock: '0',
       endblock: blockNumber.toString(),
       page: '1',
-      offset: '20',
+      offset: '50',
       sort: 'desc',
     })
 
-    const resp = TwentyTransactionListResult.parse(response)
-    assert(resp)
+    const resp = TransactionListResult.parse(response)
     const outgoingTxs = resp
       .filter((tx) => EthereumAddress(tx.from) === address)
       .slice(0, 10)
-
-    assert(
-      outgoingTxs.length === 10,
-      'Not enough outgoing transactions, expected 10, received ' +
-        outgoingTxs.length.toString(),
-    )
 
     return outgoingTxs.map((r) => ({
       input: r.input,

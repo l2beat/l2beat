@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
@@ -22,7 +22,8 @@ export const aztecconnect: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'universal',
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',
     slug: 'aztecconnect',
@@ -44,7 +45,6 @@ export const aztecconnect: Layer2 = {
         'https://discord.gg/UDtJr9u',
       ],
     },
-    activityDataSource: 'Explorer API',
   },
   config: {
     escrows: [
@@ -80,52 +80,11 @@ export const aztecconnect: Layer2 = {
     mode: DA_MODES.STATE_DIFFS,
   }),
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'RollupProcessorV3',
-          references: [
-            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
-            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1041',
-            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1054',
-            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1135',
-          ],
-        },
-        {
-          contract: 'Verifier28x32',
-          references: [
-            'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'RollupProcessorV3',
-          references: [
-            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
-      sources: [
-        {
-          contract: 'RollupProcessorV3',
-          references: [
-            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L697',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
   },
   stage: getStage(
     {
@@ -161,8 +120,8 @@ export const aztecconnect: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'RollupProcessorV3.sol#L706 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
+          title: 'RollupProcessorV3.sol#L706 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
         },
       ],
     },
@@ -170,8 +129,8 @@ export const aztecconnect: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Verifier28x32.sol#L150 - Etherscan source code',
-          href: 'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
+          title: 'Verifier28x32.sol#L150 - Etherscan source code',
+          url: 'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
         },
       ],
     },
@@ -181,8 +140,8 @@ export const aztecconnect: Layer2 = {
         'Since EOL this is only true if the user themself runs the rollup locally and publishes the data.',
       references: [
         {
-          text: 'RollupProcessorV3.sol#L686 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
+          title: 'RollupProcessorV3.sol#L686 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
         },
       ],
     },
@@ -192,12 +151,13 @@ export const aztecconnect: Layer2 = {
       description: `Only specific addresses appointed by the owner were permitted to propose new blocks during regular rollup operation. Now that the system is EOL, the rollup can only be processed locally by volunteers.`,
       references: [
         {
-          text: 'RollupProcessorV3.sol#L692 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L692',
+          title: 'RollupProcessorV3.sol#L692 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L692',
         },
         {
-          text: 'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
-          href: 'https://github.com/AztecProtocol/aztec-connect-ejector',
+          title:
+            'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
+          url: 'https://github.com/AztecProtocol/aztec-connect-ejector',
         },
       ],
     },
@@ -213,8 +173,9 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
-            href: 'https://github.com/AztecProtocol/aztec-connect-ejector',
+            title:
+              'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
+            url: 'https://github.com/AztecProtocol/aztec-connect-ejector',
           },
         ],
       },
@@ -225,12 +186,12 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'RollupProcessorV3.sol#F1#L1174 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1174',
+            title: 'RollupProcessorV3.sol#F1#L1174 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1174',
           },
           {
-            text: 'RollupProcessorV3.sol#F1#L1332 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1332',
+            title: 'RollupProcessorV3.sol#F1#L1332 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1332',
           },
         ],
       },
@@ -243,8 +204,8 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Fast Privacy, Now - Aztec Medium Blog',
-            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+            title: 'Fast Privacy, Now - Aztec Medium Blog',
+            url: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
           },
         ],
       },
@@ -281,25 +242,25 @@ export const aztecconnect: Layer2 = {
   },
   milestones: [
     {
-      name: 'Aztec operator sunset',
+      title: 'Aztec operator sunset',
       date: '2024-04-30T00:00:00Z',
-      link: 'https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae',
+      url: 'https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae',
       description:
         'Aztec stops rollup operators, renouces ownership. Users must run the Rollup manually to withdraw.',
       type: 'general',
     },
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2022-07-07T00:00:00Z',
-      link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
+      url: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
       description:
         'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
       type: 'general',
     },
     {
-      name: 'Introducing Noir',
+      title: 'Introducing Noir',
       date: '2022-10-06T00:00:00Z',
-      link: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
+      url: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
       description:
         'Noir - programming language for zero-knowledge proofs, has been introduced.',
       type: 'general',

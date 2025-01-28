@@ -77,14 +77,14 @@
     "challenges": {
       "description": "Emitted on createChallenge() in RollupUserLogic.",
       "handler": {
-        "type": "stateFromEvent",
-        "event": "RollupChallengeStarted",
-        "returnParams": [
+        "type": "event",
+        "select": [
           "challengeIndex",
           "asserter",
           "challenger",
           "challengedNode"
-        ]
+        ],
+        "add": { "event": "RollupChallengeStarted" }
       }
     }
   }

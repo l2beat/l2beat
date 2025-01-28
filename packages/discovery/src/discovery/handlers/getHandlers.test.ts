@@ -1,6 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 
+import type { ContractConfig } from '../config/ContractConfig'
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
@@ -8,8 +8,13 @@ import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { StorageHandler } from './user/StorageHandler'
 
 describe(getHandlers.name, () => {
+  const mockConfig = mockObject<ContractConfig>({
+    fields: {},
+    ignoreMethods: [],
+  })
+
   it('returns empty handlers', () => {
-    const handlers = getHandlers([], undefined)
+    const handlers = getHandlers([], mockConfig)
     expect(handlers).toEqual([])
   })
 
@@ -20,7 +25,7 @@ describe(getHandlers.name, () => {
         'function bar() view returns (address)',
         'function baz(uint256 i) view returns (address)',
       ],
-      undefined,
+      mockConfig,
     )
     expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
@@ -38,7 +43,7 @@ describe(getHandlers.name, () => {
         'function bar() view returns (address)',
         'function bar(uint256 i) view returns (address)',
       ],
-      undefined,
+      mockConfig,
     )
     expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
@@ -51,7 +56,7 @@ describe(getHandlers.name, () => {
         'function bar(uint256 i) view returns (address)',
         'function bar() view returns (address)',
       ],
-      undefined,
+      mockConfig,
     )
     expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
@@ -61,7 +66,7 @@ describe(getHandlers.name, () => {
   it('ignores complex view methods', () => {
     const handlers = getHandlers(
       ['function complex(uint256 a, uint256 b) view returns (address)'],
-      undefined,
+      mockConfig,
     )
     expect(handlers).toEqual([])
   })
@@ -72,17 +77,22 @@ describe(getHandlers.name, () => {
         'function requireUnresolved(uint256 nodeNum) view',
         'function requireUnresolvedExists() view',
       ],
-      undefined,
+      mockConfig,
     )
     expect(handlers).toEqual([])
   })
 
   it('ignores write methods', () => {
-    const handlers = getHandlers(['function write()'], undefined)
+    const handlers = getHandlers(['function write()'], mockConfig)
     expect(handlers).toEqual([])
   })
 
   it('ignores methods added to ignore list', () => {
+    const config = mockObject<ContractConfig>({
+      ...mockConfig,
+      ignoreMethods: ['foo', 'baz', 'flip'],
+    })
+
     const handlers = getHandlers(
       [
         'function foo() view returns (uint256)',
@@ -91,10 +101,7 @@ describe(getHandlers.name, () => {
         'function flip(uint256 i) view returns (address)',
         'function flop(uint256 i) view returns (uint256)',
       ],
-      {
-        address: EthereumAddress.random(),
-        ignoreMethods: ['foo', 'baz', 'flip'],
-      },
+      config,
     )
     expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
@@ -106,13 +113,15 @@ describe(getHandlers.name, () => {
   })
 
   it('returns user handlers', () => {
-    const handlers = getHandlers([], {
-      address: EthereumAddress.random(),
+    const config = mockObject<ContractConfig>({
+      ...mockConfig,
       fields: {
         foo: { handler: { type: 'storage', slot: 1 } },
         bar: { handler: { type: 'storage', slot: 2 } },
       },
     })
+
+    const handlers = getHandlers([], config)
     expect(handlers).toEqual([
       new StorageHandler('bar', { type: 'storage', slot: 2 }),
       new StorageHandler('foo', { type: 'storage', slot: 1 }),
@@ -120,18 +129,20 @@ describe(getHandlers.name, () => {
   })
 
   it('prefers user handlers', () => {
+    const config = mockObject<ContractConfig>({
+      ...mockConfig,
+      fields: {
+        foo: { handler: { type: 'storage', slot: 1 } },
+        bar: { handler: { type: 'storage', slot: 2 } },
+      },
+    })
+
     const handlers = getHandlers(
       [
         'function foo() view returns (address)',
         'function baz() view returns (address)',
       ],
-      {
-        address: EthereumAddress.random(),
-        fields: {
-          foo: { handler: { type: 'storage', slot: 1 } },
-          bar: { handler: { type: 'storage', slot: 2 } },
-        },
-      },
+      config,
     )
     expect(handlers).toEqual([
       new StorageHandler('bar', { type: 'storage', slot: 2 }),
@@ -141,8 +152,8 @@ describe(getHandlers.name, () => {
   })
 
   it('handles constructor errors', () => {
-    const handlers = getHandlers([], {
-      address: EthereumAddress.random(),
+    const config = mockObject<ContractConfig>({
+      ...mockConfig,
       fields: {
         foo: {
           handler: {
@@ -152,6 +163,8 @@ describe(getHandlers.name, () => {
         },
       },
     })
+
+    const handlers = getHandlers([], config)
     expect(handlers).toEqual([
       new ErrorHandler('foo', 'Cannot find a matching method for foo'),
     ])

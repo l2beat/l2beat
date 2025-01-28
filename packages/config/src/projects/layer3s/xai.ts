@@ -1,24 +1,25 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { DaEconomicSecurityRisk } from '../da-beat/common'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
 export const xai: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
+  addedAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   hostChain: ProjectId('arbitrum'),
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD,
-    ],
     name: 'Xai',
     slug: 'xai',
     description:
@@ -35,7 +36,6 @@ export const xai: Layer3 = orbitStackL3({
         'https://discord.gg/xaigames',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -57,28 +57,31 @@ export const xai: Layer3 = orbitStackL3({
       ],
       references: [
         {
-          text: 'How is fraud proven - Arbitrum documentation FAQ',
-          href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+          title: 'How is fraud proven - Arbitrum documentation FAQ',
+          url: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
         {
-          text: 'Arbitrum Glossary: Challenge Period',
-          href: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
+          title: 'Arbitrum Glossary: Challenge Period',
+          url: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
         },
         {
-          text: 'RollupUser.sol - Etherscan source code, onlyValidator modifier',
-          href: `https://etherscan.io/address/0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A#code`,
+          title:
+            'RollupUser.sol - Etherscan source code, onlyValidator modifier',
+          url: `https://etherscan.io/address/0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A#code`,
         },
         {
-          text: 'Referee.sol - Etherscan source code, submitChallenge function',
-          href: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L337',
+          title:
+            'Referee.sol - Etherscan source code, submitChallenge function',
+          url: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L337',
         },
         {
-          text: 'Referee.sol - Etherscan source code, submitAssertionToChallenge function',
-          href: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L428',
+          title:
+            'Referee.sol - Etherscan source code, submitAssertionToChallenge function',
+          url: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L428',
         },
         {
-          text: 'Solutions to Delay Attacks on Rollups',
-          href: 'https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a',
+          title: 'Solutions to Delay Attacks on Rollups',
+          url: 'https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a',
         },
       ],
     },
@@ -95,11 +98,52 @@ export const xai: Layer3 = orbitStackL3({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'XAI Mainnet Launch',
-      link: 'https://x.com/XAI_GAMES/status/1744815749410242568',
+      title: 'XAI Mainnet Launch',
+      url: 'https://x.com/XAI_GAMES/status/1744815749410242568',
       date: '2024-01-09T00:00:00Z',
       description: 'XAI launches on Arbitrum One.',
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      knownMembers: [
+        {
+          external: false,
+          name: 'Xai',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Ex Populus',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Rug Radio',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'LayerZero',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Team Secret',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+        {
+          external: true,
+          name: 'Offchain Labs',
+          href: 'https://xai-foundation.gitbook.io/xai-network/about-xai/xai-protocol/anytrust-revolutionizing-blockchain-infrastructure/data-availability-servers-das',
+        },
+      ],
+    },
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    },
+    discovery,
+  }),
 })

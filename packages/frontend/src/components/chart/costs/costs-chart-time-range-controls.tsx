@@ -1,5 +1,5 @@
-import { type CostsMetric } from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
-import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import type { CostsMetric } from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
+import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
 
 interface Props {
@@ -17,6 +17,7 @@ export function CostsChartTimeRangeControls({
 }: Props) {
   return (
     <ChartTimeRangeControls
+      name="costsTimeRange"
       projectSection={projectSection}
       value={timeRange}
       setValue={setTimeRange}
@@ -24,12 +25,12 @@ export function CostsChartTimeRangeControls({
         {
           value: '1d',
           label: '1D',
-          disabled: metric === 'per-l2-tx',
+          disabled: metric === 'per-l2-uop',
         },
         {
           value: '7d',
           label: '7D',
-          disabled: metric === 'per-l2-tx',
+          disabled: metric === 'per-l2-uop',
         },
         {
           value: '30d',

@@ -1,6 +1,6 @@
-import { DiscoveryCache as DiscoveryCacheInterface } from '@l2beat/discovery'
+import type { DiscoveryCache as DiscoveryCacheInterface } from '@l2beat/discovery'
 
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 
 export class DiscoveryCache implements DiscoveryCacheInterface {
   constructor(private readonly db: Database) {}

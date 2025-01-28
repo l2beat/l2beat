@@ -1,25 +1,24 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
 export const rari: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
+  addedAt: new UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [
-    Badge.DA.Celestia,
+    Badge.DA.CelestiaBlobstream,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
   ],
   additionalPurposes: ['NFT'],
   discovery,
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
     name: 'RARI Chain',
     slug: 'rari',
     description:
@@ -34,7 +33,6 @@ export const rari: Layer3 = orbitStackL3({
       repositories: ['https://github.com/OffchainLabs/nitro'],
       socialMedia: ['https://twitter.com/RariChain'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
   nonTemplateContracts: [
@@ -75,8 +73,8 @@ export const rari: Layer3 = orbitStackL3({
   },
   milestones: [
     {
-      name: 'RARI Chain Mainnet Launch',
-      link: 'https://x.com/RariChain/status/1750157295466824066',
+      title: 'RARI Chain Mainnet Launch',
+      url: 'https://x.com/RariChain/status/1750157295466824066',
       date: '2024-01-24T00:00:00.00Z',
       description: 'RARI Chain launches on Arbitrum One.',
       type: 'general',

@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('chainport')
 const congressSize = discovery.getContractValue<number>(
@@ -16,7 +16,7 @@ const congressThreshold = discovery.getContractValue<number>(
 export const chainport: Bridge = {
   type: 'bridge',
   id: ProjectId('chainport'),
-  createdAt: new UnixTime(1696938823), // 2023-10-10T11:53:43Z
+  addedAt: new UnixTime(1696938823), // 2023-10-10T11:53:43Z
   display: {
     name: 'Chainport',
     slug: 'chainport',

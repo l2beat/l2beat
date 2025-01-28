@@ -68,7 +68,7 @@ export const columns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
+      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
@@ -79,12 +79,12 @@ export const columns = [
     cell: (ctx) => {
       const entry = ctx.row.original
       const showComingSoon =
-        !entry.data?.syncStatus.isSynced ||
+        !entry.data?.isSynced ||
         LIVENESS_ANOMALIES_COMING_SOON_PROJECTS.includes(entry.id.toString())
 
       return (
         <AnomalyIndicator
-          anomalyEntries={entry.anomalies}
+          anomalies={entry.anomalies}
           showComingSoon={showComingSoon}
         />
       )

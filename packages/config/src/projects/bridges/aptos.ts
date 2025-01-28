@@ -3,14 +3,14 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('aptos')
 
 export const aptos: Bridge = {
   type: 'bridge',
   id: ProjectId('aptos'),
-  createdAt: new UnixTime(1667124468), // 2022-10-30T10:07:48Z
+  addedAt: new UnixTime(1667124468), // 2022-10-30T10:07:48Z
   display: {
     name: 'Aptos (LayerZero)',
     slug: 'aptos',

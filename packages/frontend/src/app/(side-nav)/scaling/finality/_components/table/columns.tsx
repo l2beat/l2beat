@@ -30,7 +30,7 @@ export const scalingFinalityColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
+      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
@@ -74,7 +74,7 @@ export const scalingFinalityColumns = [
           scope="timeToInclusion"
           warning={data.timeToInclusion.warning}
           timings={data.timeToInclusion}
-          syncStatus={data.syncStatus}
+          isSynced={data.isSynced}
         />
       )
     },
@@ -98,7 +98,7 @@ export const scalingFinalityColumns = [
             scope="stateUpdateDelay"
             warning={data.stateUpdateDelay.warning}
             timings={data.stateUpdateDelay}
-            syncStatus={data.syncStatus}
+            isSynced={data.isSynced}
           />
         )
       ) : (

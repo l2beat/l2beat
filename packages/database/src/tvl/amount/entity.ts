@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { Amount } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { Amount } from '../../kysely/generated/types'
 
 export interface AmountRecord {
   timestamp: UnixTime

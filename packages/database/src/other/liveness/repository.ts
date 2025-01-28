@@ -1,7 +1,7 @@
-import { TrackedTxId } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxId } from '@l2beat/shared'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { LivenessRecord, toRecord, toRow } from './entity'
+import { type LivenessRecord, toRecord, toRow } from './entity'
 import { selectLiveness } from './select'
 
 export class LivenessRepository extends BaseRepository {

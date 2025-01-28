@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { upcomingL2 } from './templates/upcoming'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const xpla: Layer2 = upcomingL2({
   id: 'xpla',
-  createdAt: new UnixTime(1716818766), // 2024-05-27T14:06:06Z
+  capability: 'universal',
+  addedAt: new UnixTime(1716818766), // 2024-05-27T14:06:06Z
   display: {
     name: 'zkXPLA',
     slug: 'xpla',
@@ -12,7 +13,7 @@ export const xpla: Layer2 = upcomingL2({
       "XPLA is a global content powerhouse acting as the hub for digital media. The zkXPLA chain, built on ZKsync's ZK Stack technology, will optimize the deployment of games by publishers and developers and offer a seamless end-to-end gaming environment.",
     purposes: ['Universal', 'Gaming'],
     category: 'Validium',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://xpla.io'],
       apps: ['https://vault.xpla.io/'],

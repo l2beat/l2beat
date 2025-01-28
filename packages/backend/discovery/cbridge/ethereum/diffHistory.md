@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x61209e677b436bf8fc67364f992ada2059ec130a
+
+# Diff at Mon, 20 Jan 2025 11:09:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21628437
+- current block number: 21628437
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628437 (main branch discovery), not current.
+
+```diff
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f"
+      issuedPermissions.0.to:
++        "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
+      receivedPermissions.0.from:
++        "0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      directlyReceivedPermissions.0.target:
+-        "0xF140024969F6c76494a78518D9a99c8776B55f70"
+      directlyReceivedPermissions.0.from:
++        "0xF140024969F6c76494a78518D9a99c8776B55f70"
+    }
+```
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      issuedPermissions.0.target:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      issuedPermissions.0.via.0.delay:
+-        0
+      issuedPermissions.0.to:
++        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+    }
+```
+
+```diff
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0xF140024969F6c76494a78518D9a99c8776B55f70"
+      receivedPermissions.0.from:
++        "0xF140024969F6c76494a78518D9a99c8776B55f70"
+      directlyReceivedPermissions.0.target:
+-        "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+      directlyReceivedPermissions.0.from:
++        "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+    }
+```
+
+Generated with discovered.json: 0xa2edf6d7b9184986ae89e04786b66208da83f6ba
+
+# Diff at Wed, 15 Jan 2025 07:38:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ea176aee1470e5ec80e65adfc81a954f84584d8 block: 21242135
+- current block number: 21628437
+
+## Description
+
+Config related: displayName.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242135 (main branch discovery), not current.
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      displayName:
++        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0x4bb86c487f20b52caf8c229012010810a6afebe1
 
 # Diff at Fri, 22 Nov 2024 08:40:11 GMT:

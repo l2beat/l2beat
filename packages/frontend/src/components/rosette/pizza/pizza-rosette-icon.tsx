@@ -11,14 +11,14 @@ interface Props {
   values: RosetteValue[]
   isUnderReview?: boolean
   className?: string
-  background?: boolean
+  background?: 'header' | 'surface'
 }
 
 export function PizzaRosetteIcon({
   values,
   className,
   isUnderReview,
-  background = true,
+  background = 'header',
 }: Props) {
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
@@ -68,7 +68,11 @@ export function PizzaRosetteIcon({
             cx="90"
             cy="90"
             r="90"
-            className="fill-gray-100 dark:fill-neutral-700"
+            className={cn(
+              'stroke-divider stroke-2',
+              background === 'header' && 'fill-header-secondary',
+              background === 'surface' && 'fill-surface-secondary',
+            )}
           />
         )}
         <g clipPath="url(#inner-clip)">

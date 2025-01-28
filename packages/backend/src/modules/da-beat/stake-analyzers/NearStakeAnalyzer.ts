@@ -1,4 +1,4 @@
-import { HttpClient } from '@l2beat/shared'
+import type { HttpClient } from '@l2beat/shared'
 import { z } from 'zod'
 import { AbstractStakeAnalyzer } from './AbstractStakeAnalyzer'
 

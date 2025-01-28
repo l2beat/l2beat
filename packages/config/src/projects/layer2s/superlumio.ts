@@ -1,18 +1,18 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('superlumio')
 
 export const superlumio: Layer2 = opStackL2({
-  createdAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
+  addedAt: new UnixTime(1726646157), // 2024-09-18T07:55:57Z
   discovery,
   additionalBadges: [Badge.RaaS.Conduit],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'SuperLumio',
     slug: 'superlumio',
     description:
@@ -29,7 +29,6 @@ export const superlumio: Layer2 = opStackL2({
         'https://discord.com/invite/44QgPFHYqs',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.lumio.io',
   genesisTimestamp: new UnixTime(1708984633),
@@ -44,8 +43,8 @@ export const superlumio: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      name: 'SuperLumio Launch',
-      link: 'https://x.com/PontemNetwork/status/1762887219235127612',
+      title: 'SuperLumio Launch',
+      url: 'https://x.com/PontemNetwork/status/1762887219235127612',
       date: '2024-02-28T00:00:00Z',
       description: 'SuperLumio launch is announced on X.',
       type: 'general',

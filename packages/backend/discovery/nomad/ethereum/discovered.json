@@ -2,7 +2,7 @@
   "name": "nomad",
   "chain": "ethereum",
   "blockNumber": 19531994,
-  "configHash": "0xfb467e6b9ab858c1d1c3e015cef485c6f6f857e7aa631e3963d36849d272027c",
+  "configHash": "0xf9631481be83ee0024e5a56a53ed6275d3f1d51841bfdbdf904901db19f1a2d6",
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
@@ -15,7 +15,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
           "via": []
         }
       ],
@@ -100,7 +100,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
           "via": []
         }
       ],
@@ -162,7 +162,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
           "via": []
         }
       ],
@@ -222,7 +222,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
+          "to": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
           "via": []
         }
       ],
@@ -359,19 +359,19 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF"
+          "from": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF"
         },
         {
           "permission": "upgrade",
-          "target": "0x3009C99D370B780304D2098196f1EBF779a4777a"
+          "from": "0x3009C99D370B780304D2098196f1EBF779a4777a"
         },
         {
           "permission": "upgrade",
-          "target": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3"
+          "from": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3"
         },
         {
           "permission": "upgrade",
-          "target": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
+          "from": "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
         }
       ],
       "sinceTimestamp": 1641897946,
@@ -683,6 +683,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }

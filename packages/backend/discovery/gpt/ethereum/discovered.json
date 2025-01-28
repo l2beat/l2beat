@@ -1,8 +1,9 @@
 {
   "name": "gpt",
   "chain": "ethereum",
-  "blockNumber": 20676773,
-  "configHash": "0x053abff33590a72ba8325cd454e20b4de2c557bf4f2050207cc3c1934538c2e9",
+  "blockNumber": 21628462,
+  "configHash": "0x492a276fe0e24cc14a7c4ac3b6e1d6d3427721121e25610066ea3c8bd8498ded",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "Verifier",
@@ -25,13 +26,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-          "via": [
-            {
-              "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3",
-              "delay": 0
-            }
-          ]
+          "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+          "via": [{ "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3" }]
         }
       ],
       "sinceTimestamp": 1718797871,
@@ -71,10 +67,11 @@
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
+      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"
+          "from": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"
         }
       ],
       "sinceTimestamp": 1718797859,
@@ -124,7 +121,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x63ae50828d2bf7ff73897ce9f6d55515f6f8eb56a2d10a549b4bd0418e2ec12c",
+        "lastAccInputHash": "0x1a05446ac2f3937cfe2eeb29b10a9d1d98211a559a9692e41ecf0f3e15c393c9",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "gpt-mainnet",
@@ -153,14 +150,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
+          "from": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
           "via": [{ "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0xada59D145126A746976F0F56477aafFEB3acc8e3"
+          "from": "0xada59D145126A746976F0F56477aafFEB3acc8e3"
         }
       ]
     }
@@ -341,6 +338,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

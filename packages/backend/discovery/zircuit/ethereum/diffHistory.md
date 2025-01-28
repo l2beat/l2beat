@@ -1,4 +1,202 @@
-Generated with discovered.json: 0x562fccede2ebbf826b9387521eb8aa4414aa0fe9
+Generated with discovered.json: 0x07f4cb16c98af2f7125e127ee5a39218763632bc
+
+# Diff at Mon, 20 Jan 2025 11:10:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21564418
+- current block number: 21564418
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21564418 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      issuedPermissions.1.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.1.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.target:
+-        "0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
+      issuedPermissions.0.to:
++        "0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract ZircuitGuardianMultiSig (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      receivedPermissions.0.target:
+-        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+      receivedPermissions.0.from:
++        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.2.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.1.target:
+-        "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"
+      issuedPermissions.1.to:
++        "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"
+      issuedPermissions.0.target:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.to:
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      receivedPermissions.8.target:
+-        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
+      receivedPermissions.8.from:
++        "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
+      receivedPermissions.7.target:
+-        "0x994eEb321F9cD79B077a5455fC248c77f30Dd244"
+      receivedPermissions.7.from:
++        "0x994eEb321F9cD79B077a5455fC248c77f30Dd244"
+      receivedPermissions.6.target:
+-        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.6.from:
++        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.5.target:
+-        "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
+      receivedPermissions.5.from:
++        "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
+      receivedPermissions.4.target:
+-        "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
+      receivedPermissions.4.from:
++        "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
+      receivedPermissions.3.target:
+-        "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8"
+      receivedPermissions.3.from:
++        "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8"
+      receivedPermissions.2.target:
+-        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.2.from:
++        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.1.target:
+-        "0x2a721cBE81a128be0F01040e3353c3805A5EA091"
+      receivedPermissions.1.from:
++        "0x2a721cBE81a128be0F01040e3353c3805A5EA091"
+      receivedPermissions.0.target:
+-        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+      receivedPermissions.0.from:
++        "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.2.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.1.target:
+-        "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65"
+      issuedPermissions.1.to:
++        "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65"
+      issuedPermissions.0.target:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.to:
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.1.target:
+-        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.1.from:
++        "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      receivedPermissions.0.target:
+-        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      receivedPermissions.0.from:
++        "0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.to:
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+Generated with discovered.json: 0xb4f194ab21d15e9cd10698814e227839d45f81fb
 
 # Diff at Wed, 08 Jan 2025 09:08:58 GMT:
 

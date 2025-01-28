@@ -1,6 +1,7 @@
-import { PoolConfig } from 'pg'
+import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
+import { DataAvailabilityRepository } from './da-beat/data-availability/repository'
 import { StakeRepository } from './da-beat/stake/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
 import { FlatSourcesRepository } from './discovery/flat-sources/repository'
@@ -38,6 +39,7 @@ export function createDatabase(config?: PoolConfig) {
     // #region DA BEAT
     currentPrice: new CurrentPriceRepository(db),
     stake: new StakeRepository(db),
+    dataAvailability: new DataAvailabilityRepository(db),
     // #endregion
 
     // #region Discovery

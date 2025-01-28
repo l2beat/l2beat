@@ -4,55 +4,26 @@
   dataAvailability: {
     description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are not checked against the Blobstream bridge data roots onchain, but L2 nodes can verify data availability by running a Celestia light client."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "External"
-  }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
   }
   exitWindow: {
     definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
     secondLine: undefined
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
     definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "L2OutputOracle"
-        references: []
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     definingMetric: 43200
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 12h delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
     secondLine: "12h delay"
     sentiment: "good"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "Self sequence"
   }
   stateValidation: {
@@ -61,11 +32,6 @@
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }
 
@@ -75,18 +41,7 @@
   dataAvailability: {
     description: "Proof construction and state derivation fully rely on data that is posted on Celestia. Sequencer tx roots are not checked against the Blobstream bridge data roots onchain, but L2 nodes can verify data availability by running a Celestia light client."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "External"
-  }
-  destinationToken: {
-    description: "ETH transferred via this bridge is used to pay for gas and other tokens transferred are considered canonical on the destination chain."
-    sentiment: "good"
-    value: "Native & Canonical"
   }
   exitWindow: {
     definingMetric: -604800
@@ -99,17 +54,11 @@
     definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "L2OutputOracle"
-        references: []
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     definingMetric: 86400
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 1d delay on this operation."
     sentiment: "good"
     value: "Self sequence"
   }
@@ -119,10 +68,5 @@
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"
-  }
-  validatedBy: {
-    description: "Smart contracts on Ethereum validate all bridge transfers."
-    sentiment: "good"
-    value: "Ethereum"
   }
 }

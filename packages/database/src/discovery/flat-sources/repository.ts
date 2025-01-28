@@ -1,6 +1,6 @@
-import { ChainId, Hash256 } from '@l2beat/shared-pure'
+import { type ChainId, Hash256 } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { FlatSourcesRecord, toRecord, toRow } from './entity'
+import { type FlatSourcesRecord, toRecord, toRow } from './entity'
 import { selectFlatSources } from './select'
 
 export class FlatSourcesRepository extends BaseRepository {

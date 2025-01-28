@@ -2,16 +2,16 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lyra')
 
 export const lyra: Layer2 = opStackL2({
-  createdAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
+  addedAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [
     Badge.DA.Celestia,
@@ -21,11 +21,11 @@ export const lyra: Layer2 = opStackL2({
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Derive',
     slug: 'derive',
     description:
@@ -42,7 +42,6 @@ export const lyra: Layer2 = opStackL2({
         'https://discord.gg/Derive',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),
@@ -51,22 +50,22 @@ export const lyra: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Derive rebrand',
-      link: 'https://x.com/derivexyz/status/1828607400116658227',
+      title: 'Derive rebrand',
+      url: 'https://x.com/derivexyz/status/1828607400116658227',
       date: '2024-08-28T00:00:00Z',
       description: 'Lyra is now called Derive.',
       type: 'general',
     },
     {
-      name: 'Lyra V2 live on mainnet',
-      link: 'https://x.com/lyrafinance/status/1735516929341980748',
+      title: 'Lyra V2 live on mainnet',
+      url: 'https://x.com/lyrafinance/status/1735516929341980748',
       date: '2023-12-15T00:00:00Z',
       description: 'Lyra V2 launches on Mainnet.',
       type: 'general',
     },
     {
-      name: 'Lyra switches to Celestia',
-      link: 'https://x.com/lyrafinance/status/1750235026136965260',
+      title: 'Lyra switches to Celestia',
+      url: 'https://x.com/lyrafinance/status/1750235026136965260',
       date: '2024-01-16T00:00:00.00Z',
       type: 'general',
     },

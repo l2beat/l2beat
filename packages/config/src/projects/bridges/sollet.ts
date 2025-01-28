@@ -2,14 +2,14 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('sollet')
 
 export const sollet: Bridge = {
   type: 'bridge',
   id: ProjectId('sollet'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   isArchived: true,
   display: {
     name: 'Sollet',
@@ -46,8 +46,8 @@ export const sollet: Bridge = {
         'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead. Bridge contract supports withdrawals of assets locked on Ethereum but requests need to be signed by the contract owner (EOA account).',
       references: [
         {
-          text: 'Deprecating Sollet Bridge',
-          href: 'https://projectserum.medium.com/deprecating-sollet-bridge-5a092fbd5dda',
+          title: 'Deprecating Sollet Bridge',
+          url: 'https://projectserum.medium.com/deprecating-sollet-bridge-5a092fbd5dda',
         },
       ],
       risks: [

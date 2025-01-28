@@ -1,5 +1,5 @@
 'use client'
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { TokenCombobox } from '~/components/token-combobox'
@@ -130,7 +130,7 @@ function TokenChartUnitControls({
   return (
     <div className="flex flex-wrap items-center gap-2">
       {isClient ? (
-        <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroup name="tokenChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
           <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
         </RadioGroup>

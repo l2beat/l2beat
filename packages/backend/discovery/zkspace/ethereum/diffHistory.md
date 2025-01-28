@@ -1,4 +1,112 @@
-Generated with discovered.json: 0x5885827a7cbb530fcc5911a29557d46df4e60c2d
+Generated with discovered.json: 0x1695cf1114c7e480e37080097750c520739db45d
+
+# Diff at Mon, 20 Jan 2025 11:10:25 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 20432700
+- current block number: 20432700
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432700 (main branch discovery), not current.
+
+```diff
+    contract VerifierExit (0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      issuedPermissions.0.to:
++        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+    }
+```
+
+```diff
+    contract ZkSync (0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      issuedPermissions.0.to:
++        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+    }
+```
+
+```diff
+    contract Governance (0x83Cb1531Ec8447366501aE440478da245EcffB89) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      issuedPermissions.0.to:
++        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390) {
+    +++ description: None
+      receivedPermissions.5.target:
+-        "0xc632347cc96A4400653E3514eA148630455295b5"
+      receivedPermissions.5.from:
++        "0xc632347cc96A4400653E3514eA148630455295b5"
+      receivedPermissions.4.target:
+-        "0xc07f850b60E0EEd49a09E455b01a869C25963735"
+      receivedPermissions.4.from:
++        "0xc07f850b60E0EEd49a09E455b01a869C25963735"
+      receivedPermissions.3.target:
+-        "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af"
+      receivedPermissions.3.from:
++        "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af"
+      receivedPermissions.2.target:
+-        "0x83Cb1531Ec8447366501aE440478da245EcffB89"
+      receivedPermissions.2.from:
++        "0x83Cb1531Ec8447366501aE440478da245EcffB89"
+      receivedPermissions.1.target:
+-        "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+      receivedPermissions.1.from:
++        "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"
+      receivedPermissions.0.target:
+-        "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81"
+      receivedPermissions.0.from:
++        "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81"
+    }
+```
+
+```diff
+    contract Verifier (0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      issuedPermissions.0.to:
++        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+    }
+```
+
+```diff
+    contract UniswapV2Factory (0xc07f850b60E0EEd49a09E455b01a869C25963735) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      issuedPermissions.0.to:
++        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+    }
+```
+
+```diff
+    contract ZkSeaNFT (0xc632347cc96A4400653E3514eA148630455295b5) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+      issuedPermissions.0.to:
++        "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390"
+    }
+```
+
+Generated with discovered.json: 0x50fc71a5e2f32dfe52e2b340d4db6080686d0e8d
 
 # Diff at Mon, 14 Oct 2024 10:58:09 GMT:
 

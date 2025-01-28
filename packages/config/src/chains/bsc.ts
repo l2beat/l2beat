@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ChainConfig } from '../common/ChainConfig'
+import type { ChainConfig } from '../types'
 
 export const bsc: ChainConfig = {
   name: 'bsc',

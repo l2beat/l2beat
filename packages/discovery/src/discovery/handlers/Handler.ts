@@ -1,8 +1,8 @@
-import { ContractValue } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import type { ContractValue } from '@l2beat/discovery-types'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { utils } from 'ethers'
 
-import { IProvider } from '../provider/IProvider'
+import type { IProvider } from '../provider/IProvider'
 
 export interface HandlerResult {
   field: string

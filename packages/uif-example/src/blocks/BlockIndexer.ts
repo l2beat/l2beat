@@ -1,11 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
-import { ChildIndexer, IndexerOptions } from '@l2beat/uif'
+import type { Logger } from '@l2beat/backend-tools'
+import { ChildIndexer, type IndexerOptions } from '@l2beat/uif'
 
-import { HourlyIndexer } from '../HourlyIndexer'
+import type { HourlyIndexer } from '../HourlyIndexer'
 import { ONE_HOUR_MS } from '../utils'
-import { BlockIndexerRepository } from './BlockIndexerRepository'
-import { BlockRepository } from './BlockRepository'
-import { BlockService } from './BlockService'
+import type { BlockIndexerRepository } from './BlockIndexerRepository'
+import type { BlockRepository } from './BlockRepository'
+import type { BlockService } from './BlockService'
 
 export class BlockIndexer extends ChildIndexer {
   constructor(

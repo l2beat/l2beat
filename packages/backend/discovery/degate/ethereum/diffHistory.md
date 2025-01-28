@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xd206ff6b73ff0679030803edab38fa9f72e10ac7
+Generated with discovered.json: 0x835e7a6329ebf4eb64dbdbd54b12645b0a0216c7
+
+# Diff at Mon, 27 Jan 2025 08:44:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@19f9c78c593bd40f9a0b28c3dce98eac1bd1d1b8 block: 18939731
+- current block number: 18939731
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18939731 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (0xe63602a9B3DFE983187525AC985Fec4F57B24eD5) {
+    +++ description: None
+      values.shutdownTriggered.0:
+-        {"timestamp":1695894359}
++        1695894359
+    }
+```
+
+Generated with discovered.json: 0x2408f7136c1141fb31b03f60eb1aa62ab7f12e2d
 
 # Diff at Mon, 14 Oct 2024 10:50:25 GMT:
 

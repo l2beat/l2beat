@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
-import { HttpClient } from '../http/HttpClient'
-import { RpcClient } from '../rpc/RpcClient'
+import type { HttpClient } from '../http/HttpClient'
+import type { RpcClient } from '../rpc/RpcClient'
 import { BlobClient } from './BlobClient'
 
 function generateKzgCommitment(): string {

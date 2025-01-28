@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -15,16 +15,12 @@ const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
 
 export const cronoszkevm: Layer2 = zkStackL2({
-  createdAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
+  addedAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: 'cronosValidatorsAdded',
-    removed: 'cronosValidatorsRemoved',
-  },
   additionalBadges: [Badge.DA.CustomDA],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
     description:
@@ -40,7 +36,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
         'https://discord.com/invite/cronos',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['zkCRO'],
   rpcUrl: 'https://mainnet.zkevm.cronos.org',
@@ -55,17 +50,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'ExecutorFacet',
-          references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL,
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -79,8 +64,8 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ],
       references: [
         {
-          text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L58',
         },
       ],
     },
@@ -104,22 +89,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ...zkStackUpgrades,
     }),
   ],
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('CronosZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('CronosZkEVMAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the Cronos zkEVM diamond contract.',
-    }),
-    discovery.getContractDetails('TransactionFiltererDenyList', {
-      description:
-        'Censorship contract that is registered as the TransactionFilterer in the Cronos zkEVM diamond contract. Keeps a list of addresses that are not allowed to force transactions to the Layer 2 (`requestL2Transaction()`).',
-    }),
-  ],
   // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat
   // stateDerivation: {
   //   nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
@@ -130,30 +99,10 @@ export const cronoszkevm: Layer2 = zkStackL2({
   //   dataFormat:
   //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/09_pubdata.md).',
   // },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'CronosChainAdminMultisig',
-      'Inherits all *ChainAdmin* permissions.',
-    ),
-    {
-      name: 'CronosChainAdminEOA',
-      accounts: [
-        discovery.getAccessControlRolePermission(
-          'CronosZkEVMAdmin',
-          'ADMIN',
-        )[0],
-      ],
-      description: 'Inherits all *ChainAdmin* permissions.',
-    },
-    ...discovery.getMultisigPermission(
-      'TxFiltererOwnerMultisig',
-      'Owns the TransactionFiltererDenyList contract and can manage addresses in the censoring list. Currently also has all *ChainAdmin* permissions through the CronosZkEVMAdmin contract.',
-    ),
-  ],
   milestones: [
     {
-      name: 'Alpha Mainnet Launch',
-      link: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
+      title: 'Alpha Mainnet Launch',
+      url: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
       date: '2024-08-15T00:00:00Z',
       description: 'Cronos zkEVM Launches Its Alpha Mainnet powered by ZKsync.',
       type: 'general',

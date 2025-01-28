@@ -35,9 +35,9 @@
         },
         "shutdownTriggered": {
           "handler": {
-            "type": "stateFromEvent",
-            "event": "Shutdown",
-            "returnParams": ["timestamp"]
+            "type": "event",
+            "select": "timestamp",
+            "add": { "event": "Shutdown" }
           }
         }
       }
@@ -66,12 +66,24 @@
       "fields": {
         "blockSubmitters": {
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "PermissionUpdate",
-            "valueKey": "user",
-            "flagKey": "allowed",
-            "arg": "selector",
-            "argValue": "0x53228430"
+            "type": "event",
+            "select": "user",
+            "add": {
+              "event": "PermissionUpdate",
+              "where": [
+                "and",
+                ["=", "#selector", "0x53228430"],
+                ["=", "#allowed", true]
+              ]
+            },
+            "remove": {
+              "event": "PermissionUpdate",
+              "where": [
+                "and",
+                ["=", "#selector", "0x53228430"],
+                ["!=", "#allowed", true]
+              ]
+            }
           }
         }
       }

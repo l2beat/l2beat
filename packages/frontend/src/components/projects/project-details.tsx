@@ -1,6 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 
-import { cn } from '~/utils/cn'
 import { ChartSection } from './sections/chart-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
 import { MultiChainContractsSection } from './sections/contracts/multichain-contracts-section'
@@ -32,7 +31,7 @@ export interface ProjectDetailsProps {
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <div className={cn(!props.nested && 'max-md:px-4')}>
+    <div>
       {props.items.map((item, index) => {
         const { nested } = props
         const sectionOrder = props.parentSection

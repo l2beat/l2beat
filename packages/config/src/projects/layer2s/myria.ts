@@ -20,7 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -32,7 +32,8 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('myria')
 
@@ -61,21 +62,22 @@ const committee = getCommittee(discovery)
 export const myria: Layer2 = {
   type: 'layer2',
   id: ProjectId('myria'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'appchain',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
     name: 'Myria',
     slug: 'myria',
     description:
       'Myria is an expansive blockchain gaming ecosystem, comprised of a blockchain gaming hub and Myriaverse metaverse.',
     purposes: ['NFT', 'Exchange', 'Gaming'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://myria.com/'],
@@ -91,7 +93,6 @@ export const myria: Layer2 = {
         'https://instagram.com/myriagames',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -122,26 +123,10 @@ export const myria: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      sources: [
-        {
-          contract: 'StarkExchange',
-          references: [
-            'https://etherscan.io/address/0x67e198743BC19fa4757720eDd0e769f8291e1F1D#code#F14#L188',
-          ],
-        },
-        {
-          contract: 'Committee',
-          references: [
-            'https://etherscan.io/address/0x1e601435E181423e7A8430813d7500012a6169cB#code#F1#L60',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,
@@ -194,20 +179,26 @@ export const myria: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2022-08-26T00:00:00Z',
-      link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
+      url: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
       description:
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
       type: 'general',
     },
     {
-      name: 'MYRIA Token Airdrop',
+      title: 'MYRIA Token Airdrop',
       date: '2023-04-06T00:00:00Z',
-      link: 'https://medium.com/myria-official/the-myria-token-is-live-c8dd92b876cc',
+      url: 'https://medium.com/myria-official/the-myria-token-is-live-c8dd92b876cc',
       description: 'MYRIA token launches.',
       type: 'general',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    bridge: {
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 }

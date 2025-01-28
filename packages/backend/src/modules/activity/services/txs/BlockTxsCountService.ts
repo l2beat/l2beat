@@ -1,17 +1,16 @@
-import { AssessCount } from '@l2beat/config'
-import { ActivityRecord } from '@l2beat/database'
-import { BlockProvider } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ActivityRecord } from '@l2beat/database'
+import type { BlockProvider } from '@l2beat/shared'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { aggregatePerDay } from '../../utils/aggregatePerDay'
-import { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
-import { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
+import type { RpcUopsAnalyzer } from '../uops/analyzers/RpcUopsAnalyzer'
+import type { StarknetUopsAnalyzer } from '../uops/analyzers/StarknetUopsAnalyzer'
 
 interface Dependencies {
   provider: BlockProvider
   projectId: ProjectId
   uopsAnalyzer?: RpcUopsAnalyzer | StarknetUopsAnalyzer
-  assessCount?: AssessCount
+  assessCount: (count: number, blockNumber: number) => number
 }
 
 export class BlockTxsCountService {
@@ -22,12 +21,12 @@ export class BlockTxsCountService {
       const block = await this.$.provider.getBlockWithTransactions(blockNumber)
 
       const txs = block.transactions.length
-      const txsCount = this.$.assessCount?.(txs, blockNumber) ?? txs
+      const txsCount = this.$.assessCount(txs, blockNumber)
 
       let uopsCount: number | null = null
       if (this.$.uopsAnalyzer) {
         const uops = this.$.uopsAnalyzer.calculateUops(block)
-        uopsCount = this.$.assessCount?.(uops, blockNumber) ?? uops
+        uopsCount = this.$.assessCount(uops, blockNumber)
       }
 
       return {

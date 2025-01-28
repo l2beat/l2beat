@@ -1,6 +1,6 @@
-import { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
-import { CliLogger } from '@l2beat/shared'
-import { EthereumAddress, formatAsAsciiTable } from '@l2beat/shared-pure'
+import type { ExplorerConfig } from '@l2beat/discovery/dist/utils/IEtherscanClient'
+import type { CliLogger } from '@l2beat/shared'
+import { type EthereumAddress, formatAsAsciiTable } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getProvider } from './common/GetProvider'
 

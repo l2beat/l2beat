@@ -1,6 +1,8 @@
-import { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
-
-export type Project = Layer2 | Layer3 | Bridge
+import type { Bridge } from '../projects/bridges'
+import type { DaLayer } from '../projects/da-beat'
+import type { Layer2 } from '../projects/layer2s'
+import type { Layer3 } from '../projects/layer3s'
+import type { ScalingProjectContract } from '../types'
 
 /**
  * This function is used by checkVerifiedContracts.ts script to know on which
@@ -9,19 +11,23 @@ export type Project = Layer2 | Layer3 | Bridge
  * @param projects
  * @returns chain names of all the contracts and escrows in the provided projects.
  */
-export function getChainNames(...projects: Project[]): string[] {
+export function getChainNames(
+  ...projects: (Layer2 | Layer3 | Bridge)[]
+): string[] {
   return projects
     .flatMap(getProjectDevIds)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-export function getProjectDevIds(project: Project): string[] {
-  const escrowContracts = project.config.escrows.flatMap((escrow) => {
-    if (!escrow.newVersion) {
-      return []
-    }
-    return { address: escrow.address, ...escrow.contract }
-  })
+function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
+  const escrowContracts = project.config.escrows.flatMap(
+    (escrow): ScalingProjectContract[] => {
+      if (!escrow.contract) {
+        return []
+      }
+      return [{ address: escrow.address, ...escrow.contract }]
+    },
+  )
   const permissions =
     project.permissions !== 'UnderReview'
       ? project.permissions?.filter((p) => {
@@ -46,10 +52,8 @@ export function getChainNamesForDA(...daLayers: DaLayer[]): string[] {
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
-  const bridges = daLayer.bridges.filter(
-    (b) => b.type === 'OnChainBridge' || b.type === 'DAC',
-  )
+function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
+  const bridges = daLayer.bridges.filter((b) => b.type === 'OnChainBridge')
   const addresses = bridges.flatMap((b) =>
     Object.values(b.contracts.addresses).flat(),
   )

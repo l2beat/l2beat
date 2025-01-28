@@ -12,9 +12,9 @@ import { handleTickFailed } from './handlers/handleTickFailed'
 import { handleTickSucceeded } from './handlers/handleTickSucceeded'
 import { handleUpdateFailed } from './handlers/handleUpdateFailed'
 import { handleUpdateSucceeded } from './handlers/handleUpdateSucceeded'
-import { IndexerAction } from './types/IndexerAction'
-import { IndexerReducerResult } from './types/IndexerReducerResult'
-import { IndexerState } from './types/IndexerState'
+import type { IndexerAction } from './types/IndexerAction'
+import type { IndexerReducerResult } from './types/IndexerReducerResult'
+import type { IndexerState } from './types/IndexerState'
 
 export function indexerReducer(
   state: IndexerState,

@@ -1,8 +1,8 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { ContractSource } from '../../utils/IEtherscanClient'
-import { IProvider } from '../provider/IProvider'
+import type { ContractSource } from '../../utils/IEtherscanClient'
+import type { IProvider } from '../provider/IProvider'
 import { SourceCodeService } from './SourceCodeService'
 
 describe(SourceCodeService.name, () => {

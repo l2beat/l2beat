@@ -12,20 +12,6 @@
     description: "Non-emergency upgrades are initiated on L2 and go through a 3d delay. Since there is a 1d delay to force a tx (forcing the inclusion in the following state update), users have only 2d to exit. \n    \n  If users post a tx after that time, they would only be able to self propose a state root 12d 17h after the last state root was proposed and then wait for the 6d 8h challenge window, while the upgrade would be confirmed just after the 6d 8h challenge window and the 3d L1 timelock."
     secondLine: undefined
     sentiment: "bad"
-    sources: [
-      {
-        contract: "RollupProxy"
-        references: [
-          "https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43"
-        ]
-      }
-      {
-        contract: "Outbox"
-        references: [
-          "https://etherscan.io/address/0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f#code"
-        ]
-      }
-    ]
     value: "2d"
     warning: {
       sentiment: "bad"
@@ -41,14 +27,14 @@
   }
   sequencerFailure: {
     definingMetric: 86400
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There is a 1d delay on this operation."
+    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 1d delay on this operation."
     secondLine: "1d delay"
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
     definingMetric: 13
-    description: "Fraud proofs allow 13 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
+    description: "Fraud proofs allow 13 WHITELISTED actors watching the chain to prove that the state is incorrect. At least 5 Challengers are external to the Operator. Interactive proofs (INT) require multiple transactions over time to resolve. There is a 6d 8h challenge period."
     secondLine: "6d 8h challenge period"
     sentiment: "warning"
     value: "Fraud proofs (INT)"

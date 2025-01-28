@@ -1,14 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('ham', 'base')
 
 export const ham: Layer3 = opStackL3({
-  createdAt: new UnixTime(1722499160), // 2024-08-01T07:59:20Z
+  addedAt: new UnixTime(1722499160), // 2024-08-01T07:59:20Z
   discovery,
   hostChain: ProjectId('base'),
   additionalBadges: [
@@ -17,11 +17,11 @@ export const ham: Layer3 = opStackL3({
     Badge.RaaS.Caldera,
   ],
   additionalPurposes: ['Social'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Ham',
     slug: 'ham',
     description:
@@ -46,7 +46,6 @@ export const ham: Layer3 = opStackL3({
         'https://t.me/+B93fbhulpb5iYWYx',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1716590734),
   isNodeAvailable: true,

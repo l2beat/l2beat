@@ -120,7 +120,7 @@ async function Header(props: HeaderProps) {
               {props.networks.map((network) => (
                 <CustomLink
                   key={network.name}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 text-sm transition-colors duration-200 hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:w-max md:px-3 md:py-1"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm transition-colors duration-200 hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
                   href={network.linkURL}
                   underline={false}
                 >
@@ -160,7 +160,7 @@ async function Header(props: HeaderProps) {
 function DonateFundingSources() {
   return (
     <section id="funding-sources" className="mt-16 md:mt-20">
-      <div className="rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900">
+      <div className="rounded-lg md:bg-surface-primary md:p-8">
         <a
           className="mb-6 text-2xl font-bold md:text-3xl md:leading-normal"
           href="#funding-sources"
@@ -189,35 +189,35 @@ function DonateFundingSources() {
             </li>
           </ul>
         </div>
+        <div className="mt-4 overflow-x-auto pb-3">
+          <table>
+            <thead>
+              <tr className="h-14 border-b border-divider text-left text-sm text-secondary">
+                <th className="min-w-[300px] md:pl-4">Source / Project</th>
+                <th className="md:pl-4">Tier</th>
+                <th className="md:pl-4">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {fundingSources.map((item) => {
+                return (
+                  <tr
+                    className="h-14 border-b border-divider text-base last:border-b-0"
+                    key={item.source}
+                  >
+                    <td className="pr-4 md:px-4">{item.source}</td>
+                    <td className="pr-4 md:px-4">{item.tier}</td>
+                    <td className="whitespace-pre pr-4 md:whitespace-normal md:px-4">
+                      {item.description}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className="mt-8 font-bold">Last updated: January 2024</div>
       </div>
-      <div className="mt-4 overflow-x-auto pb-3">
-        <table>
-          <thead>
-            <tr className="h-14 border-b border-b-gray-200 text-left text-sm text-gray-50 dark:border-b-gray-800">
-              <th className="min-w-[300px] md:pl-4">Source / Project</th>
-              <th className="md:pl-4">Tier</th>
-              <th className="md:pl-4">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {fundingSources.map((item) => {
-              return (
-                <tr
-                  className="h-14 border-b border-b-gray-200 text-base last:border-b-0 dark:border-b-gray-800"
-                  key={item.source}
-                >
-                  <td className="pr-4 md:px-4">{item.source}</td>
-                  <td className="pr-4 md:px-4">{item.tier}</td>
-                  <td className="whitespace-pre pr-4 md:whitespace-normal md:px-4">
-                    {item.description}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div className="mt-8 font-bold">Last updated: January 2024</div>
     </section>
   )
 }

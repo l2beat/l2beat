@@ -1,4 +1,4 @@
-import { ContractValue } from '@l2beat/discovery-types'
+import type { ContractValue } from '@l2beat/discovery-types'
 import { Bytes } from '@l2beat/shared-pure'
 
 export function valueToBigInt(value: bigint | Bytes | ContractValue): bigint {

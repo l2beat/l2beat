@@ -18,6 +18,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
@@ -39,7 +40,7 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
+      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,
@@ -48,8 +49,8 @@ export const scalingSummaryColumns = [
   columnHelper.accessor(
     (e) => {
       if (
-        e.stage?.stage === 'NotApplicable' ||
-        e.stage?.stage === 'UnderReview'
+        e.stage.stage === 'NotApplicable' ||
+        e.stage.stage === 'UnderReview'
       ) {
         return undefined
       }
@@ -99,10 +100,13 @@ export const scalingSummaryColumns = [
       if (!data) {
         return <NoDataBadge />
       }
+
       return (
-        <ValueWithPercentageChange change={data?.change}>
-          {formatActivityCount(ctx.getValue())}
-        </ValueWithPercentageChange>
+        <SyncStatusWrapper isSynced={data.isSynced}>
+          <ValueWithPercentageChange change={data?.change}>
+            {formatActivityCount(ctx.getValue())}
+          </ValueWithPercentageChange>
+        </SyncStatusWrapper>
       )
     },
     sortUndefined: 'last',

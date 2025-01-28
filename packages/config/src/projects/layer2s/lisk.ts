@@ -1,21 +1,21 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lisk')
 
 export const lisk: Layer2 = opStackL2({
-  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   genesisTimestamp: new UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [Badge.RaaS.Gelato, Badge.Other.MigratedFromL1],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Lisk',
     slug: 'lisk',
     description:
@@ -37,7 +37,6 @@ export const lisk: Layer2 = opStackL2({
         'https://youtube.com/channel/UCuqpGfg_bOQ8Ja4pj811PWg',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   l1StandardBridgePremintedTokens: ['LSK'],
   nonTemplateExcludedTokens: ['USDC'],

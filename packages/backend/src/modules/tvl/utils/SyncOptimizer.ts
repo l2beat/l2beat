@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { Clock } from '../../../tools/Clock'
+import type { Clock } from '../../../tools/Clock'
 import { alignTimestamp } from './alignTimestamp'
 export class SyncOptimizer {
   private readonly gracePeriodDays = 3

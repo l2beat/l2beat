@@ -5,7 +5,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -18,9 +17,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -28,7 +26,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kroma')
 
@@ -81,22 +79,23 @@ const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
-  createdAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
+  addedAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
+  capability: 'universal',
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Kroma',
     slug: 'kroma',
     description:
       'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],
       apps: ['https://kroma.network/bridge/'],
@@ -115,7 +114,6 @@ export const kroma: Layer2 = {
         'https://medium.com/@kroma-network',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -178,7 +176,7 @@ export const kroma: Layer2 = {
       defaultUrl: 'https://api.kroma.network',
       defaultCallsPerMinute: 1500,
       startBlock: 1,
-      assessCount: subtractOne,
+      adjustCount: { type: 'SubtractOne' },
     },
     trackedTxs: [
       {
@@ -238,52 +236,12 @@ export const kroma: Layer2 = {
       sentiment: 'bad',
       secondLine: formatChallengePeriod(finalizationPeriod),
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'KromaPortal',
-          references: [
-            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430',
-          ],
-        },
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(timelockDefaultDelay, finalizationPeriod),
-      sources: [
-        {
-          contract: 'KromaPortal',
-          references: [
-            'https://etherscan.io/address/0x31F648572b67e60Ec6eb8E197E1848CC5F5558de',
-          ],
-        },
-      ],
-    },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-        HARDCODED.KROMA.SEQUENCING_WINDOW_SECONDS,
-      ),
-      sources: [
-        {
-          contract: 'KromaPortal',
-          references: [
-            'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#430',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
-      sources: [
-        {
-          contract: 'L2OutputOracle',
-          references: [
-            'https://etherscan.io/address/0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b#code#F1#L197',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDefaultDelay, finalizationPeriod),
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+      HARDCODED.KROMA.SEQUENCING_WINDOW_SECONDS,
+    ),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
   },
   stage: getStage(
     {
@@ -321,20 +279,23 @@ export const kroma: Layer2 = {
         resulting in a lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
       references: [
         {
-          text: 'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
-          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L437',
+          title:
+            'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
+          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L437',
         },
         {
-          text: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
-          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L514',
+          title: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
+          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L514',
         },
         {
-          text: 'Colosseum.sol#L434 - Etherscan source code, proveFault function',
-          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L570',
+          title:
+            'Colosseum.sol#L434 - Etherscan source code, proveFault function',
+          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L570',
         },
         {
-          text: 'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
-          href: 'https://drive.google.com/file/d/13TUxZ9KPyvUXNZGddALcJLin-xmp_Fkj/view',
+          title:
+            'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
+          url: 'https://drive.google.com/file/d/13TUxZ9KPyvUXNZGddALcJLin-xmp_Fkj/view',
         },
       ],
       risks: [
@@ -352,16 +313,17 @@ export const kroma: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Derivation: Batch Submission - Kroma specs',
-          href: 'https://specs.kroma.network/glossary.html#batch-submission',
+          title: 'Derivation: Batch Submission - Kroma specs',
+          url: 'https://specs.kroma.network/glossary.html#batch-submission',
         },
         {
-          text: 'BatchInbox - Etherscan address',
-          href: 'https://etherscan.io/address/0xff00000000000000000000000000000000000255',
+          title: 'BatchInbox - Etherscan address',
+          url: 'https://etherscan.io/address/0xff00000000000000000000000000000000000255',
         },
         {
-          text: 'KromaPortal.sol#L430 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+          title:
+            'KromaPortal.sol#L430 - Etherscan source code, depositTransaction function',
+          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
         },
       ],
     },
@@ -369,8 +331,8 @@ export const kroma: Layer2 = {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
         {
-          text: 'SystemConfig - batcher address',
-          href: 'https://etherscan.io/address/0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35#readProxyContract#F3',
+          title: 'SystemConfig - batcher address',
+          url: 'https://etherscan.io/address/0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35#readProxyContract#F3',
         },
       ],
     },
@@ -378,12 +340,13 @@ export const kroma: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'Sequencing Window - Kroma specs',
-          href: 'https://specs.kroma.network/glossary.html#sequencing-window',
+          title: 'Sequencing Window - Kroma specs',
+          url: 'https://specs.kroma.network/glossary.html#sequencing-window',
         },
         {
-          text: 'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+          title:
+            'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
+          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
         },
       ],
     },
@@ -392,12 +355,14 @@ export const kroma: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof', finalizationPeriod),
         references: [
           {
-            text: 'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L241',
+            title:
+              'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L241',
           },
           {
-            text: 'KromaPortal.sol#L324 - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L324',
+            title:
+              'KromaPortal.sol#L324 - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L324',
           },
         ],
       },
@@ -411,8 +376,8 @@ export const kroma: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -470,8 +435,8 @@ export const kroma: Layer2 = {
       description: `Members of the SecurityCouncil.`,
       references: [
         {
-          text: 'Security Council members - Announcing Kroma Security Council',
-          href: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
+          title: 'Security Council members - Announcing Kroma Security Council',
+          url: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
         },
       ],
     },
@@ -578,32 +543,32 @@ export const kroma: Layer2 = {
   },
   milestones: [
     {
-      name: 'Chain fork #2 - Output root replaced',
-      link: 'https://x.com/kroma_network/status/1774683208753590506',
+      title: 'Chain fork #2 - Output root replaced',
+      url: 'https://x.com/kroma_network/status/1774683208753590506',
       date: '2024-04-05T00:00:00Z',
       description:
         'The chain forked and an L2 output on Ethereum has to be replaced by the Security Council.',
       type: 'incident',
     },
     {
-      name: 'Chain fork - Output root replaced',
-      link: 'https://x.com/kroma_network/status/1767478100819153009',
+      title: 'Chain fork - Output root replaced',
+      url: 'https://x.com/kroma_network/status/1767478100819153009',
       date: '2024-03-18T00:00:00Z',
       description:
         'The chain forked and an L2 output on Ethereum has to be replaced by the Security Council.',
       type: 'incident',
     },
     {
-      name: 'Ecotone upgrade',
-      link: 'https://twitter.com/kroma_network/status/1783410075346063564',
+      title: 'Ecotone upgrade',
+      url: 'https://twitter.com/kroma_network/status/1783410075346063564',
       date: '2024-04-25T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability and more L2 opcodes.',
       type: 'general',
     },
     {
-      name: 'Kroma Mainnet Launch',
-      link: 'https://twitter.com/kroma_network/status/1699267271968055305?s=20',
+      title: 'Kroma Mainnet Launch',
+      url: 'https://twitter.com/kroma_network/status/1699267271968055305?s=20',
       date: '2023-09-06T00:00:00Z',
       description: 'Kroma is live on mainnet.',
       type: 'general',

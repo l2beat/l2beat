@@ -1,4 +1,4 @@
-import { BigNumber, BytesLike } from 'ethers'
+import type { BigNumber, BytesLike } from 'ethers'
 
 type ChangeL2BlockHeader = {
   deltaTimestamp: number

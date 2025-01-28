@@ -1,23 +1,23 @@
 import { Logger } from '@l2beat/backend-tools'
-import { AmountRecord, Database } from '@l2beat/database'
+import type { AmountRecord, Database } from '@l2beat/database'
 import {
-  AggLayerL2Token,
-  AggLayerNativeEtherPreminted,
+  type AggLayerL2Token,
+  type AggLayerNativeEtherPreminted,
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
-import { IndexerService } from '../../../tools/uif/IndexerService'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import {
+import type {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { AggLayerService } from '../services/AggLayerService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import type { AggLayerService } from '../services/AggLayerService'
+import type { SyncOptimizer } from '../utils/SyncOptimizer'
 import { AggLayerIndexer } from './AggLayerIndexer'
-import { AggLayerAmountConfig } from './types'
+import type { AggLayerAmountConfig } from './types'
 
 describe(AggLayerIndexer.name, () => {
   beforeEach(() => {

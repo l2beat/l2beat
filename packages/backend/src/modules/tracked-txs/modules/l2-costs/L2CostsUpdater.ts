@@ -1,9 +1,9 @@
-import { Logger } from '@l2beat/backend-tools'
-import { Database, L2CostRecord } from '@l2beat/database'
-import { TrackedTxId } from '@l2beat/shared'
-import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
-import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
-import { TrackedTxResult } from '../../types/model'
+import type { Logger } from '@l2beat/backend-tools'
+import type { Database, L2CostRecord } from '@l2beat/database'
+import type { TrackedTxId } from '@l2beat/shared'
+import type { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
+import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
+import type { TrackedTxResult } from '../../types/model'
 
 export class L2CostsUpdater implements TxUpdaterInterface {
   type: TrackedTxsConfigType = 'l2costs'

@@ -1,8 +1,9 @@
 {
   "name": "witness",
   "chain": "ethereum",
-  "blockNumber": 20491473,
-  "configHash": "0x5a18dc94a699ce771faca7fc8fd756e0d22f96fe60d5e177d853ca3c8c90f379",
+  "blockNumber": 21715800,
+  "configHash": "0x271dae2021804d278c07a38d665fb6d6a92123fc674159d78c7580ec08dc83df",
+  "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -16,10 +17,7 @@
     {
       "name": "WitnessValidium",
       "address": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-      "sourceHashes": [
-        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
-      ],
+      "unverified": true,
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1718558735,
@@ -53,7 +51,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xadda4c12ce443ca873491337a062c932f35adfb39c5dc1040c1986ec5587dcdc",
+        "lastAccInputHash": "0xce4aff4a9b6c9dfaec4366dc4e427cbf9752f6f25cf1b07572c08aad389b5b49",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "witnesschain",
@@ -79,7 +77,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
+          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"
         }
       ],
       "sinceTimestamp": 1718630195,
@@ -99,13 +97,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
-          "via": [
-            {
-              "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
-              "delay": 0
-            }
-          ]
+          "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+          "via": [{ "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }]
         }
       ],
       "sinceTimestamp": 1718630207,
@@ -148,14 +141,14 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "via": [{ "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "target": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"
+          "from": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"
         }
       ]
     },
@@ -286,16 +279,6 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -339,6 +322,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x171ea6062ecb94d6e7913ecd058660d724f0bcc40120cd2c11b836e5c0450091"
+    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
   }
 }

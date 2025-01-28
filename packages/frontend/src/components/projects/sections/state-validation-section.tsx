@@ -23,7 +23,7 @@ export function StateValidationSection({
       {diagram && (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={diagram} />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-xs text-secondary">
             {diagram.caption}
           </figcaption>
         </figure>

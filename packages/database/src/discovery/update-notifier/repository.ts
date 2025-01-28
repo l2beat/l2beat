@@ -1,6 +1,6 @@
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import type { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { UpdateNotifierRecord, toRecord, toRow } from './entity'
+import { type UpdateNotifierRecord, toRecord, toRow } from './entity'
 import { selectUpdateNotifier } from './select'
 
 export class UpdateNotifierRepository extends BaseRepository {

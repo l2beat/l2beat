@@ -1,3 +1,463 @@
+Generated with discovered.json: 0x181cb00a1b528cfc8141065ad0a024281ae91fcc
+
+# Diff at Tue, 28 Jan 2025 06:34:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21715649
+- current block number: 21716805
+
+## Description
+
+discodrive!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21715649 (main branch discovery), not current.
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      name:
+-        "EraChainAdminProxy"
++        "EraAdminProxy"
+      directlyReceivedPermissions:
++        [{"permission":"configure","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."},{"permission":"configure","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."},{"permission":"configure","from":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","description":"register new Elastic Chains in the shared bridge."}]
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29","via":[{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      issuedPermissions.0.via.0:
++        {"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}
+      issuedPermissions.0.description:
++        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
+      template:
++        "shared-zk-stack/BridgeHub"
+      description:
++        "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations."
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      description:
+-        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
+      fieldMeta:
+-        {"getOwners":{"severity":"LOW","description":"Signers of the multisig","type":"PERMISSION"},"getThreshold":{"severity":"HIGH","description":"Should be 4/8 per official docs","type":"PERMISSION"}}
+      receivedPermissions:
++        [{"permission":"configure","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"configure","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"configure","from":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","description":"register new Elastic Chains in the shared bridge.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: None
+```
+
+```diff
+    contract GenesisUpgrade (0x6e2BC597F1e83F9fC7c1f69157F2C12476873971) {
+    +++ description: Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts.
+      template:
++        "shared-zk-stack/GenesisUpgrade"
+      description:
++        "Helper contract that defines diamondcut data to initialize a new diamond implementation for the chain-specific system contracts."
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      template:
++        "shared-zk-stack/ProtocolUpgradeHandler"
+      description:
++        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"start (queue) upgrades.","via":[]},{"permission":"configure","to":"0xBDFfCC71FE84020238F2990a6D2954e87355De0D","description":"soft freeze, hard freeze, approve a protocol upgrade.","via":[]},{"permission":"configure","to":"0xD677e09324F8Bb3cC64F009973693f751c33A888","description":"extend the legal veto period, approve a protocol upgrade.","via":[]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      values.members:
+-        ["0x13f07d9BF17615f6a17F272fe1A913168C275A66","0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a","0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F","0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F","0x69462a81ba94D64c404575f1899a464F123497A2","0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A","0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0","0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88","0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803","0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44","0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e","0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231"]
+      values.$members:
++        ["0x13f07d9BF17615f6a17F272fe1A913168C275A66","0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a","0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F","0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F","0x69462a81ba94D64c404575f1899a464F123497A2","0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A","0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0","0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88","0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803","0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44","0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e","0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231"]
+      values.$threshold:
++        9
+      template:
++        "shared-zk-stack/SecurityCouncil"
+      description:
++        "Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3)."
+      receivedPermissions:
++        [{"permission":"configure","from":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897","description":"soft freeze, hard freeze, approve a protocol upgrade."}]
+      references:
++        [{"text":"Security Council members - ZK Nation docs","href":"https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213"},{"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"},{"permission":"upgrade","from":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213"},{"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"},{"permission":"upgrade","from":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"}]
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29","via":[{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      issuedPermissions.0.via.0:
++        {"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}
+      issuedPermissions.0.description:
++        "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
+      template:
++        "shared-zk-stack/StateTransitionManager"
+      description:
++        "Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic)."
+    }
+```
+
+```diff
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      values.members:
+-        ["0x015318c16AE443a20DE0A776dB06a59F0D279057","0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D","0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384","0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f","0x55c671BcE13120387Ded710A1d1b80C0e3d8E857","0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69","0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0","0xCe7a3dFcc35602155809920Ff65e093aa726f6cf"]
+      values.$members:
++        ["0x015318c16AE443a20DE0A776dB06a59F0D279057","0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D","0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384","0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f","0x55c671BcE13120387Ded710A1d1b80C0e3d8E857","0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69","0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0","0xCe7a3dFcc35602155809920Ff65e093aa726f6cf"]
+      values.$threshold:
++        5
+      template:
++        "shared-zk-stack/Guardians"
+      description:
++        "Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2."
+      receivedPermissions:
++        [{"permission":"configure","from":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897","description":"extend the legal veto period, approve a protocol upgrade."}]
+      references:
++        [{"text":"Guardians - ZK Nation docs","href":"https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians"}]
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29","via":[{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      issuedPermissions.0.via.0:
++        {"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}
+      issuedPermissions.0.description:
++        "register new Elastic Chains in the shared bridge."
+      template:
++        "shared-zk-stack/L1SharedBridge"
+      description:
++        "This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era."
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29) {
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+      template:
++        "shared-zk-stack/EmergencyUpgradeBoard"
+      description:
++        "A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897."
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]},{"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]},{"permission":"upgrade","from":"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897"}]
+    }
+```
+
+Generated with discovered.json: 0x1bea2349b623e76e37cd29e9fb16f8a540badb4f
+
+# Diff at Mon, 27 Jan 2025 11:46:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 21630370
+- current block number: 21715649
+
+## Description
+
+new zk stack chain added:
+
+🚀: posting batches
+✅: officially launched 
+
+Current ZK stack chains (BH.getAllHyperchains array): 
+1) ZKsync Era 324 RU 0x32400084C286CF3E17e7B677ea9583e60a000324 ETH 🚀✅
+2) CronosZkEvm 388 Validium 0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc zkCRO 🚀✅
+3) Sophon 50104 Validium 0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3 SOPH 🚀
+4) ZeroNetwork 543210 RU 0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9 ETH 🚀✅
+5) [Abstract](docs.abs.xyz) 2741 RU 0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9 ETH 🚀
+6) [GRVT](https://grvt.gitbook.io/grvt/introduction/architecture-overview) 325 Validium 0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E GBT (GRVTBaseToken) 🚀
+7) [Treasure Chain](https://docs.treasure.lol/chain) 61166 Validium 0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879 MAGIC 🚀✅
+8) Unknown 1345 Validium 0x89f90748A9a36C30A324481133fa198f4E16A824 ozETH
+
+abstract will launch today.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.7:
++        {"chainId":1345,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x49664fFe2c2335c28631629606E26a6971aEf261"}
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      values.getAllHyperchainChainIDs.7:
++        1345
+      values.getAllHyperchains.7:
++        "0x89f90748A9a36C30A324481133fa198f4E16A824"
+    }
+```
+
+Generated with discovered.json: 0x5fd268f6b8cd64ea74979363d5fc9b7bc1f7fbf5
+
+# Diff at Mon, 27 Jan 2025 08:45:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@19f9c78c593bd40f9a0b28c3dce98eac1bd1d1b8 block: 21630370
+- current block number: 21630370
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.cronosValidatorsAdded:
+-        ["0xACBD581D1BedB2F71d2F5F01f881586e0623d591","0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14","0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122","0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"]
+      values.cronosValidatorsRemoved:
+-        ["0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14","0xACBD581D1BedB2F71d2F5F01f881586e0623d591"]
+      values.grvtValidatorsAdded:
+-        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
+-        []
+      values.sophonValidatorsAdded:
+-        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.sophonValidatorsRemoved:
+-        []
+      values.treasureValidatorsAdded:
+-        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.treasureValidatorsRemoved:
+-        []
+      values.zeronetworkValidatorsAdded:
+-        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zeronetworkValidatorsRemoved:
+-        []
+      values.zksyncValidatorsAdded:
+-        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+      values.zksyncValidatorsRemoved:
+-        []
+      values.cronosValidators:
++        ["0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122","0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"]
+      values.grvtValidators:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.sophonValidators:
++        ["0x4cc87B0A504047967CeD9A955431B3229237e7de","0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"]
+      values.treasureValidators:
++        ["0x2572835e02b59078711aa0800490e80975e4169d","0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"]
+      values.zeronetworkValidators:
++        ["0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","0x479B7c95b9509E1A834C994fc94e3581aA8A73B9"]
+      values.zksyncValidators:
++        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+    }
+```
+
+Generated with discovered.json: 0xddf66763fd2f8f422ceeeff1382e701e28511520
+
+# Diff at Mon, 20 Jan 2025 11:10:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2c8b4f3d9910bb6371be9b4df87b70856e7d8c64 block: 21630370
+- current block number: 21630370
+
+## Description
+
+Rerun on the same block number. Applies fixes to permissions and via field. Renames permission's target to to/from.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      receivedPermissions.2.target:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.from:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.1.target:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.1.from:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.0.target:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.0.from:
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      issuedPermissions.0.target:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      issuedPermissions.0.to:
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+Generated with discovered.json: 0x9689f25484248ef4dcada49eedef9676e5c7572e
+
+# Diff at Mon, 20 Jan 2025 09:25:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@82d3b5c180381f7d2d0e30406b2ac10025d0614f block: 21630370
+- current block number: 21630370
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630370 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      fieldMeta.getOwners.type:
++        "PERMISSION"
+      fieldMeta.getThreshold.type:
++        "PERMISSION"
+    }
+```
+
+Generated with discovered.json: 0x089edefbfba6e10c0a05b5f4799e7ef7af5a1815
+
+# Diff at Fri, 10 Jan 2025 11:44:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e594a564c9c62a7edef1a6e3f64f955bf70aa8eb block: 21585244
+- current block number: 21593851
+
+## Description
+
+UpgradeTimestamp added for the latest ZKsync Protocol Upgrade v25 (QoL upgrade, partly reviewed below).
+
+## Watched changes
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.1:
++        {"_protocolVersion":107374182400,"_upgradeTimestamp":1736517600}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21585244 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.GrvtDiamond:
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.GrvtSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.grvtThirdBatchTS:
+-        1733327159
+      values.grvtValidatorsAdded:
++        ["0x58D14960E0a2be353eDdE61ad719196A2b816522","0x0b114d4675Cb79507e68F2616c93e124122c6ef0"]
+      values.grvtValidatorsRemoved:
++        []
+      fieldMeta.grvtThirdBatchTS:
+-        {"severity":"MEDIUM","description":"If non-zero, the third batch has been posted (launch monitor)."}
+    }
+```
+
 Generated with discovered.json: 0x403fce2f16a4bdb19d6487a08be2ae753e9a6875
 
 # Diff at Thu, 09 Jan 2025 06:50:39 GMT:

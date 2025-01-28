@@ -1,9 +1,10 @@
 import { createGetStage, isSatisfied } from './stage'
-import { ChecklistTemplate } from './types'
+import type { ChecklistTemplate } from './types'
 
 interface GetStageOptions {
   rollupNodeLink?: string
   securityCouncilReference?: string
+  notice?: string
 }
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
@@ -20,7 +21,10 @@ export const getStage = (
   }
 
   const blueprint = getBlueprint(opts)
-  return createGetStage(blueprint)(blueprintChecklist)
+  return {
+    ...createGetStage(blueprint)(blueprintChecklist),
+    notice: opts?.notice,
+  }
 }
 
 const getBlueprint = (opts?: GetStageOptions) =>

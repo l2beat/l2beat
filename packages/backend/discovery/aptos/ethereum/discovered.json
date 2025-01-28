@@ -2,7 +2,7 @@
   "name": "aptos",
   "chain": "ethereum",
   "blockNumber": 21264260,
-  "configHash": "0x43defd4d9d616c11db9544a123c18fd1ed48c242b914be665d06f6966334c877",
+  "configHash": "0x0c6806b55432622cb853beaad71f30ab56cd61f5ec225430a7fc58e98d888ab2",
   "contracts": [
     {
       "name": "LayerZero Proof Library",
@@ -94,7 +94,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+          "to": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
           "via": []
         }
       ],
@@ -200,7 +200,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+          "to": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
           "via": []
         }
       ],
@@ -253,7 +253,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x5a54fe5234E811466D5366846283323c954310B2"
+          "from": "0x5a54fe5234E811466D5366846283323c954310B2"
         }
       ],
       "sinceTimestamp": 1661448939,
@@ -278,7 +278,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "target": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          "from": "0x902F09715B6303d4173037652FA7377e5b98089E"
         }
       ],
       "sinceTimestamp": 1647317012,
@@ -661,6 +661,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x18527e82c3800311291da7323caa876f588cde67692c1c84d5ecb5161da61359"
+    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
 }
