@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const arcology: Layer2 = upcomingL2({
   id: 'arcology',
+  capability: 'universal',
   createdAt: new UnixTime(1719931771), // 2024-07-02T14:49:31Z
   display: {
     name: 'Arcology Network',

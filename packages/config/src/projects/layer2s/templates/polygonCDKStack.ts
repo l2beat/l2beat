@@ -29,6 +29,7 @@ import type {
   DataAvailabilityLayer,
   Milestone,
   ReasonForBeingInOther,
+  ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
@@ -61,6 +62,7 @@ export interface DAProvider {
 }
 
 export interface PolygonCDKStackConfig {
+  capability?: ScalingProjectCapability
   createdAt: UnixTime
   daProvider?: DAProvider
   dataAvailabilitySolution?: DacDaLayer
@@ -166,6 +168,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     type: 'layer2',
     createdAt: templateVars.createdAt,
     id: ProjectId(templateVars.discovery.projectName),
+    capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,

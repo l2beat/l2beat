@@ -33,6 +33,7 @@ const withdrawalDelay = discovery.getContractValue<number>(
 export const immutablezkevm: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablezkevm'),
+  capability: 'universal',
   createdAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
   reasonsForBeingOther: [

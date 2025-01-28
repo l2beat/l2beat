@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const haust: Layer2 = upcomingL2({
   id: 'haust',
+  capability: 'universal',
   createdAt: new UnixTime(1736600180), // 2024-11-12T10:56:20Z
   display: {
     name: 'Haust Network',

@@ -128,6 +128,7 @@ const permissionedGameMaxClockExtension =
 export const arenaz: Layer2 = {
   type: 'layer2',
   id: ProjectId('arenaz'),
+  capability: 'universal',
   createdAt: new UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
   badges: [
     Badge.VM.EVM,

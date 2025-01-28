@@ -129,6 +129,7 @@ const permissionedGameMaxClockExtension =
 export const world: Layer2 = {
   type: 'layer2',
   id: ProjectId('worldchain'),
+  capability: 'universal',
   createdAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
   badges: [
     Badge.VM.EVM,

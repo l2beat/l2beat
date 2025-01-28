@@ -121,6 +121,7 @@ const permissionlessGameMaxClockExtension =
 export const base: Layer2 = {
   type: 'layer2',
   id: ProjectId('base'),
+  capability: 'universal',
   createdAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [
     Badge.VM.EVM,

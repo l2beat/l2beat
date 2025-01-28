@@ -124,6 +124,7 @@ const permissionlessGameMaxClockExtension =
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
+  capability: 'universal',
   createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.EVM,

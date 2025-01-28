@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const moonveil: Layer2 = upcomingL2({
   id: 'moonveil',
+  capability: 'universal',
   createdAt: new UnixTime(1721918879), // 2024-07-25T14:47:59Z
   display: {
     name: 'Moonveil',

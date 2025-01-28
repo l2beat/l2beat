@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const axonum: Layer2 = upcomingL2({
   id: 'axonum',
+  capability: 'universal',
   createdAt: new UnixTime(1715871969), // 2024-05-16T15:06:09Z
   display: {
     name: 'Axonum',

@@ -30,6 +30,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   Milestone,
+  ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectEscrow,
@@ -109,6 +110,7 @@ export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
 ]
 
 interface OrbitStackConfigCommon {
+  capability?: ScalingProjectCapability
   createdAt: UnixTime
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
@@ -418,6 +420,7 @@ function orbitStackCommon(
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
+    capability: templateVars.capability ?? 'universal',
     createdAt: templateVars.createdAt,
     isArchived: templateVars.isArchived ?? undefined,
     contracts: discoveryDrivenSections

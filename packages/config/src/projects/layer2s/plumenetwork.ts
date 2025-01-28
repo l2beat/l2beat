@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const plumenetwork: Layer2 = upcomingL2({
   id: 'plumenetwork',
+  capability: 'universal',
   createdAt: new UnixTime(1719224239), // 2024-06-24T10:17:19Z
   display: {
     name: 'Plume Network',

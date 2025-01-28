@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const solo: Layer2 = upcomingL2({
   id: 'solo',
+  capability: 'universal',
   createdAt: new UnixTime(1734420940), // 2024-12-17T07:35:40Z
   display: {
     name: 'SOLO',

@@ -37,6 +37,7 @@ import type {
   ProjectDataAvailability,
   ReasonForBeingInOther,
   ScalingProject,
+  ScalingProjectCapability,
   ScalingProjectCategory,
   ScalingProjectContract,
   ScalingProjectDisplay,
@@ -110,6 +111,7 @@ interface DAProvider {
 }
 
 interface OpStackConfigCommon {
+  capability?: ScalingProjectCapability
   architectureImage?: string
   isArchived?: true
   createdAt: UnixTime
@@ -254,6 +256,7 @@ function opStackCommon(
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
+    capability: templateVars.capability ?? 'universal',
     createdAt: templateVars.createdAt,
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {

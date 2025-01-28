@@ -5,6 +5,7 @@ import type { Layer2 } from './types'
 
 export const superseed: Layer2 = underReviewL2({
   id: 'superseed',
+  capability: 'universal',
   createdAt: new UnixTime(1714316238), // 2024-04-28T14:57:18Z
   badges: [
     Badge.Infra.Superchain,

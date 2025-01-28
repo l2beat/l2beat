@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const azchain: Layer2 = upcomingL2({
   id: 'azchain',
+  capability: 'universal',
   createdAt: new UnixTime(1727519160), // 2024-09-27T17:09:00Z
   display: {
     name: 'AZ Chain',

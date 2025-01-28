@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const fuse: Layer2 = upcomingL2({
   id: 'fuse',
+  capability: 'universal',
   createdAt: new UnixTime(1692958606), // '2023-08-25T10:16:46Z'
   display: {
     name: 'Fuse',

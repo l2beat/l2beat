@@ -5,6 +5,7 @@ import type { Layer3 } from './types'
 
 export const teva: Layer3 = underReviewL3({
   id: 'teva',
+  capability: 'universal',
   createdAt: new UnixTime(1717416738), // 2024-06-03T12:12:18Z
   hostChain: ProjectId('zksync2'),
   display: {

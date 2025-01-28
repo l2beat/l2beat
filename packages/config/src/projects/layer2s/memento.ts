@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const memento: Layer2 = upcomingL2({
   id: 'memento',
+  capability: 'universal',
   createdAt: new UnixTime(1730879100), // 2024-11-6T07:45:00Z
   display: {
     name: 'Memento ZK Chain',

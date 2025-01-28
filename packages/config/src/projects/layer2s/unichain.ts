@@ -4,6 +4,7 @@ import type { Layer2 } from './types'
 
 export const unichain: Layer2 = upcomingL2({
   id: 'unichain',
+  capability: 'universal',
   createdAt: new UnixTime(1728932992), // 2024-10-14T19:09:00Z
   display: {
     name: 'Unichain',
