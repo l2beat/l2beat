@@ -11,7 +11,7 @@ export const world = opStackL2({
   createdAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
   genesisTimestamp,
   discovery,
-  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Alchemy],
+  additionalBadges: [Badge.RaaS.Alchemy],
   additionalPurposes: ['Identity'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {

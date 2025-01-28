@@ -10,7 +10,7 @@ const genesisTimestamp = new UnixTime(1731366083)
 export const arenaz = opStackL2({
   createdAt: new UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
   discovery,
-  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Gelato],
+  additionalBadges: [Badge.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {

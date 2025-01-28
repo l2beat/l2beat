@@ -1,7 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('soneium')
@@ -11,7 +10,6 @@ export const soneium = opStackL2({
   createdAt: new UnixTime(1724842746),
   discovery,
   genesisTimestamp,
-  additionalBadges: [Badge.Infra.Superchain],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Soneium',

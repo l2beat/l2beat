@@ -11,7 +11,7 @@ export const swell = opStackL2({
   createdAt: new UnixTime(1712341625), // 2024-04-05T18:27:05Z
   discovery,
   genesisTimestamp,
-  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.AltLayer],
+  additionalBadges: [Badge.RaaS.AltLayer],
   additionalPurposes: ['Restaking'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   associatedTokens: ['WLD'],
