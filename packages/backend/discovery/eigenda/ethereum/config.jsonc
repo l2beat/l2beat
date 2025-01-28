@@ -2,7 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "eigenda",
-  "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
+  "initialAddresses": [
+    "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+  ],
   "names": {
     "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "EigenDAServiceManager",
     "0x8247EF5705d3345516286B72bFE6D690197C2E99": "eigenDAProxyAdmin",
@@ -11,22 +14,42 @@
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
     "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
-    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
+    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerOwningMultisig",
     "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
     "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "EjectionManager",
+    "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505": "BLSApkRegistry",
     "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": "StakeRegistry",
     "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": "StrategyBase",
     "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B": "StakedALT",
-    "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault"
-  },
-  "sharedModules": {
-    "bloppi": "shared-eigenlayer"
+    "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault",
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
+    "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430": "EigenPod",
+    "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning"
   },
   "overrides": {
+    "TimelockControllerOwning": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "EigenPod": {
+      "ignoreRelatives": ["ethPOS"]
+    },
+    "EigenPodManager": {
+      "ignoreRelatives": ["ethPOS"]
+    },
+    "EIGEN Token": {
+      "ignoreRelatives": ["bEIGEN"]
+    },
     "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {
       "extends": "eigenlayer/Strategy" // temporary manual override until the proxy is verified and the shape fits
     },
     "EigenDAServiceManager": {
+      "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "ignoreRelatives": ["getRestakeableStrategies"], // strategies are already tracked in eigenLayer
       "ignoreInWatchMode": ["batchId", "taskNumber"],
       "fields": {
@@ -60,11 +83,50 @@
               "event": "BatchConfirmerStatusChanged",
               "where": ["!=", "#status", true]
             }
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can confirm batches to the DA bridge."
+              }
+            ]
+          }
+        },
+        "registryCoordinator": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can approve the replacement of churned operators from a quorum"
+              }
+            ]
+          }
+        },
+        "pauserRegistry": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can pause the DA bridge"
+              }
+            ]
+          }
+        },
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer"
+              }
+            ]
           }
         }
       }
     },
     "StakeRegistry": {
+      "description": "Keeps track of the total stake of each operator.",
       "fields": {
         "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH).",
@@ -80,9 +142,15 @@
     "EigenLayerBeaconOracle": {
       "ignoreMethods": ["timestampToBlockRoot"]
     },
+    "BLSApkRegistry": {
+      "description": "Keeps track of the BLS public keys of each operator and the quorum aggregated keys."
+    },
+    "EjectionManager": {
+      "description": "Responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA)."
+    },
     "RegistryCoordinator": {
       "ignoreInWatchMode": ["registeredOperators"],
-      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum",
+      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "fields": {
         "operatorSetParamsQuorum1": {
           "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
@@ -126,11 +194,17 @@
           "description": "The time in seconds that an operator must wait before being able to re-register after being ejected.",
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER"
+        },
+        "churnApprover": {
+          "target": {
+            "permissions": [
+              {
+                "type": "act"
+              }
+            ]
+          }
         }
       }
-    },
-    "EjectionManager": {
-      "extends": "eigenlayer/EjectionManager"
     },
     "StrategyBase": {
       "ignoreMethods": [
