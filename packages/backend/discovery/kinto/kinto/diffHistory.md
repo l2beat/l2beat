@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7a1cb8aa68644700fdd613745f9578b0e0d306a3
+
+# Diff at Tue, 28 Jan 2025 14:56:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b60bc0e936cb7b213e24f14ed69abaff22493651 block: 696015
+- current block number: 715537
+
+## Description
+
+flagged this with mat, i cannot see any upgrade from here on blockscout.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 696015 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
 Generated with discovered.json: 0x1e4b495aeaa68ce66965abedeae0ad84c3cef489
 
 # Diff at Mon, 27 Jan 2025 08:46:07 GMT:
