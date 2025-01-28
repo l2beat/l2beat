@@ -70,34 +70,33 @@ export function ScalingProjectStats({ project, className }: Props) {
         <ProjectStat
           title="Stage"
           value={
-            <span className="relative flex">
-              <a href="#stage">
-                <StageBadge
-                  stage={project.stageConfig.stage}
-                  isAppchain={isAppchain}
-                />
-              </a>
-              <Tooltip>
-                <TooltipTrigger className="mt-1 inline-block h-4 px-2">
+            <Tooltip>
+              <TooltipTrigger className="relative flex gap-2">
+                <a href="#stage">
+                  <StageBadge
+                    stage={project.stageConfig.stage}
+                    isAppchain={isAppchain}
+                  />
+                </a>
+                {isAppchain && (
                   <InfoIcon
                     className={cn(
-                      'size-4',
+                      'mt-1 inline-block size-4',
                       isAppchain && [
                         'fill-current',
                         getStageTextClassname(project.stageConfig.stage),
                       ],
                     )}
-                    variant={!isAppchain ? 'gray' : undefined}
                   />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <StageTooltip
-                    stageConfig={project.stageConfig}
-                    isAppchain={isAppchain}
-                  />
-                </TooltipContent>
-              </Tooltip>
-            </span>
+                )}
+              </TooltipTrigger>
+              <TooltipContent>
+                <StageTooltip
+                  stageConfig={project.stageConfig}
+                  isAppchain={isAppchain}
+                />
+              </TooltipContent>
+            </Tooltip>
           }
         />
       ) : null}
