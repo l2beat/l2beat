@@ -65,8 +65,9 @@ export class RpcClientPOC {
     let response = this.responses.get(id)
     while (response === undefined) {
       this.logger.debug(`Waiting ${id}`)
-      response = this.responses.get(id)
       await new Promise((resolve) => setTimeout(resolve, 1000))
+      response = this.responses.get(id)
+      this.responses.delete(id)
     }
 
     return response
@@ -123,6 +124,7 @@ export class RpcClientPOC {
       this.logger.debug(`Waiting ${id}`)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       response = this.multicallResponses.get(id)
+      this.multicallResponses.delete(id)
     }
 
     return response
