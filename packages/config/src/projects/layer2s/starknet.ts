@@ -1004,12 +1004,7 @@ export const starknet: Layer2 = {
         title: 'Proven Program',
         description:
           'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the proof system is implemented incorrectly.',
-          },
-        ],
+        risks: [],
       },
     ],
     proofVerification: {

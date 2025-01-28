@@ -1,6 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import type { ScalingProjectTechnologyChoice } from '../types'
-import { CONTRACTS } from './contracts'
 
 function ARBITRUM_DAO(
   l1Delay: number,
@@ -19,7 +18,7 @@ function ARBITRUM_DAO(
     )} delay for all L2 --> L1 messages (in total a delay of ${formatSeconds(
       totalDelay,
     )}). The Security Council can upgrade the contracts without any delay. It can also cancel any upgrades initiated by the DAO.`,
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(formatSeconds(totalDelay))],
+    risks: [],
     references: [
       {
         text: 'Arbitrum DAO',

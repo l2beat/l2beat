@@ -594,10 +594,6 @@ export const linea: Layer2 = {
         description: 'The source code of the circuits is currently not public.',
         risks: [
           {
-            category: 'Funds can be lost if',
-            text: 'the proof system is implemented incorrectly.',
-          },
-          {
             category: 'Funds can be stolen if',
             text: 'the prover is able to generate false proofs.',
           },
