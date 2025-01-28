@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { bobConfig } from './modules/tvs/projects/bob'
+import { arbitrumConfig } from './modules/tvs/projects/arbitrum'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
@@ -71,7 +71,7 @@ async function main() {
     logger,
   )
 
-  const config = bobConfig //arbitrumConfig
+  const config = arbitrumConfig
 
   const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
   const tvs = await localExecutor.run(config, [timestamp])

@@ -1,0 +1,4937 @@
+{
+  "projectId": "arbitrum",
+  "tokens": [
+    {
+      "id": "ethereum-native-0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+      "ticker": "ETH",
+      "symbol": "ETH",
+      "name": "Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1661457944,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4DC26fC5854e7648a064a4ABD590bBE71724C277-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "ANIME",
+      "symbol": "ANIME",
+      "name": "Animecoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xEABB8996eA1662cAd2f7fB715127852cd3262Ae9-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "CNFI",
+      "symbol": "CNFI",
+      "name": "Connect Financial",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEABB8996eA1662cAd2f7fB715127852cd3262Ae9",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0ff5A8451A839f5F0BB3562689D9A44089738D11-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "rDPX",
+      "symbol": "rDPX",
+      "name": "Dopex Rebate Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0ff5A8451A839f5F0BB3562689D9A44089738D11",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x72A9B1c9B191781bB15F1b98f443a1d916557c92-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "FFM",
+      "symbol": "FFM",
+      "name": "Florence Finance Medici",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x58b6A8A3302369DAEc383334672404Ee733aB239-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "LPT",
+      "symbol": "LPT",
+      "name": "Livepeer Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x57B946008913B82E4dF85f501cbAeD910e58D26C-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "POND",
+      "symbol": "POND",
+      "name": "Marlin POND",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x57B946008913B82E4dF85f501cbAeD910e58D26C",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "MCB",
+      "symbol": "MCB",
+      "name": "MUX Protocol",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xdAC17F958D2ee523a2206206994597C13D831ec7-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "USDT",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "USDC",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3-0xcEe284F754E854890e311e3280b767F80797180d",
+      "ticker": "YBR",
+      "symbol": "YBR",
+      "name": "YieldBricks",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623867835,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xBBc2AE13b23d715c30720F079fcd9B4a74093505-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ERN",
+      "symbol": "ERN",
+      "name": "@EthernityChain $ERN Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBBc2AE13b23d715c30720F079fcd9B4a74093505",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xE41d2489571d322189246DaFA5ebDe1F4699F498-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ZRX",
+      "symbol": "ZRX",
+      "name": "0x Protocol Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x111111111117dC0aa78b770fA6A738034120C302-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "1INCH",
+      "symbol": "1INCH",
+      "name": "1INCH Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x111111111117dC0aa78b770fA6A738034120C302",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "AAVE",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ACX",
+      "symbol": "ACX",
+      "name": "Across Protocol Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xB528edBef013aff855ac3c50b381f253aF13b997-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "AEVO",
+      "symbol": "AEVO",
+      "name": "Aevo",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "alUSD",
+      "symbol": "alUSD",
+      "name": "Alchemix USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x27702a26126e0B3702af63Ee09aC4d1A084EF628-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ALEPH",
+      "symbol": "ALEPH",
+      "name": "aleph.im v2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x27702a26126e0B3702af63Ee09aC4d1A084EF628",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ANKR",
+      "symbol": "ANKR",
+      "name": "Ankr Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xE95A203B1a91a908F9B9CE46459d101078c2c3cb-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ankrETH",
+      "symbol": "ankrETH",
+      "name": "Ankr Staked ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4d224452801ACEd8B2F0aebE155379bb5D594381-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "APE",
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4d224452801ACEd8B2F0aebE155379bb5D594381",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x52A8845DF664D76C69d2EEa607CD793565aF42B8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "APEX",
+      "symbol": "APEX",
+      "name": "ApeX Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x52A8845DF664D76C69d2EEa607CD793565aF42B8",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0b38210ea11411557c13457D4dA7dC6ea731B88a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "API3",
+      "symbol": "API3",
+      "name": "API3",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0b38210ea11411557c13457D4dA7dC6ea731B88a",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4104b135DBC9609Fc1A9490E61369036497660c8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "APW",
+      "symbol": "APW",
+      "name": "APWine Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4104b135DBC9609Fc1A9490E61369036497660c8",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "AIUS",
+      "symbol": "AIUS",
+      "name": "Arbius",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xC82E3dB60A52CF7529253b4eC688f631aad9e7c2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ARC",
+      "symbol": "ARC",
+      "name": "ARC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC82E3dB60A52CF7529253b4eC688f631aad9e7c2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6B0b3a982b4634aC68dD83a4DBF02311cE324181-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ALI",
+      "symbol": "ALI",
+      "name": "Artificial Liquid Intelligence Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B0b3a982b4634aC68dD83a4DBF02311cE324181",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA2120b9e674d3fC3875f415A7DF52e382F141225-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ATA",
+      "symbol": "ATA",
+      "name": "Automata",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA2120b9e674d3fC3875f415A7DF52e382F141225",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0001A500A6B18995B03f44bb040A5fFc28E45CB0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "OLAS",
+      "symbol": "OLAS",
+      "name": "Autonolas",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0001A500A6B18995B03f44bb040A5fFc28E45CB0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x467719aD09025FcC6cF6F8311755809d45a5E5f3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "AXL",
+      "symbol": "AXL",
+      "name": "Axelar",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x467719aD09025FcC6cF6F8311755809d45a5E5f3",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xDd66781D0E9a08D4FBb5eC7BAc80B691BE27F21D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "AXGT",
+      "symbol": "AXGT",
+      "name": "AxonDAO Governance Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDd66781D0E9a08D4FBb5eC7BAc80B691BE27F21D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x3472A5A71965499acd81997a54BBA8D852C6E53d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BADGER",
+      "symbol": "BADGER",
+      "name": "Badger",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3472A5A71965499acd81997a54BBA8D852C6E53d",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xba100000625a3754423978a60c9317c58a424e3D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BAL",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BNT",
+      "symbol": "BNT",
+      "name": "Bancor Network Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0D8775F648430679A709E98d2b0Cb6250d2887EF-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BAT",
+      "symbol": "BAT",
+      "name": "Basic Attention Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xF17e65822b568B3903685a7c9F496CF7656Cc6C2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BICO",
+      "symbol": "BICO",
+      "name": "Biconomy Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BIT",
+      "symbol": "BIT",
+      "name": "BitDAO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5283D291DBCF85356A21bA090E6db59121208b44-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BLUR",
+      "symbol": "BLUR",
+      "name": "Blur",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5283D291DBCF85356A21bA090E6db59121208b44",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4Fabb145d64652a948d72533023f6E7A623C7C53-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "BUSD",
+      "symbol": "BUSD",
+      "name": "BUSD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "CTSI",
+      "symbol": "CTSI",
+      "name": "Cartesi Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4F9254C83EB525f9FCf346490bbb3ed28a81C667-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "CELR",
+      "symbol": "CELR",
+      "name": "CelerToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4F9254C83EB525f9FCf346490bbb3ed28a81C667",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA2cd3D43c775978A96BdBf12d733D5A1ED94fb18-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "XCN",
+      "symbol": "XCN",
+      "name": "Chain",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA2cd3D43c775978A96BdBf12d733D5A1ED94fb18",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xb712d62fE84258292d1961B5150a19bC4Ab49026-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "XCHNG",
+      "symbol": "XCHNG",
+      "name": "Chainge",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb712d62fE84258292d1961B5150a19bC4Ab49026",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x514910771AF9Ca656af840dff83E8264EcF986CA-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LINK",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x41e5560054824eA6B0732E656E3Ad64E20e94E45-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "CVC",
+      "symbol": "CVC",
+      "name": "Civic",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x41e5560054824eA6B0732E656E3Ad64E20e94E45",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xBe9895146f7AF43049ca1c1AE358B0541Ea49704-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "cbETH",
+      "symbol": "cbETH",
+      "name": "Coinbase Wrapped Staked ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xc00e94Cb662C3520282E6f5717214004A7f26888-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "COMP",
+      "symbol": "COMP",
+      "name": "Compound",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xFE67A4450907459c3e1FFf623aA927dD4e28c67a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "NEXT",
+      "symbol": "NEXT",
+      "name": "Connext",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFE67A4450907459c3e1FFf623aA927dD4e28c67a",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PEOPLE",
+      "symbol": "PEOPLE",
+      "name": "ConstitutionDAO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "cvxCRV",
+      "symbol": "cvxCRV",
+      "name": "Convex CRV",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "CVX",
+      "symbol": "CVX",
+      "name": "Convex Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xDDB3422497E61e13543BeA06989C0789117555c5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "COTI",
+      "symbol": "COTI",
+      "name": "COTI Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDDB3422497E61e13543BeA06989C0789117555c5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "COW",
+      "symbol": "COW",
+      "name": "CoW Protocol Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "CRO",
+      "symbol": "CRO",
+      "name": "CRO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x321C2fE4446C7c963dc41Dd58879AF648838f98D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "CTX",
+      "symbol": "CTX",
+      "name": "Cryptex",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x321C2fE4446C7c963dc41Dd58879AF648838f98D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xD533a949740bb3306d119CC777fa900bA034cd52-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "CRV",
+      "symbol": "CRV",
+      "name": "Curve DAO Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "crvUSD",
+      "symbol": "crvUSD",
+      "name": "Curve.Fi USD Stablecoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0f51bb10119727a7e5eA3538074fb341F56B09Ad-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DAO",
+      "symbol": "DAO",
+      "name": "DAO Maker",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0f51bb10119727a7e5eA3538074fb341F56B09Ad",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0F5D2fB29fb7d3CFeE444a200298f468908cC942-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MANA",
+      "symbol": "MANA",
+      "name": "Decentraland MANA",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "USDD",
+      "symbol": "USDD",
+      "name": "Decentralized USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DPI",
+      "symbol": "DPI",
+      "name": "DefiPulse Index",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xDDdddd4301A082e62E84e43F474f044423921918-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DVF",
+      "symbol": "DVF",
+      "name": "DeversiFi Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDDdddd4301A082e62E84e43F474f044423921918",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DEXTF",
+      "symbol": "DEXTF",
+      "name": "DEXTF Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x888888435FDe8e7d4c54cAb67f206e4199454c60-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DFX",
+      "symbol": "DFX",
+      "name": "DFX Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x888888435FDe8e7d4c54cAb67f206e4199454c60",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DHT",
+      "symbol": "DHT",
+      "name": "dHedge DAO Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DIVI",
+      "symbol": "DIVI",
+      "name": "Divi",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DODO",
+      "symbol": "DODO",
+      "name": "DODO bird",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ELON",
+      "symbol": "ELON",
+      "name": "Dogelon",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x865377367054516e17014CcdED1e7d814EDC9ce4-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DOLA",
+      "symbol": "DOLA",
+      "name": "Dola USD Stablecoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DPX",
+      "symbol": "DPX",
+      "name": "Dopex Governance Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x92D6C1e31e14520e676a687F0a93788B716BEff5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DYDX",
+      "symbol": "DYDX",
+      "name": "dYdX",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6468e79A80C0eaB0F9A2B574c8d5bC374Af59414-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "eXRD",
+      "symbol": "eXRD",
+      "name": "E-RADIX",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6468e79A80C0eaB0F9A2B574c8d5bC374Af59414",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "EIGEN",
+      "symbol": "EIGEN",
+      "name": "Eigen",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "eUSD",
+      "symbol": "eUSD",
+      "name": "Electronic Dollar",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x57e114B691Db790C35207b2e685D4A43181e6061-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ENA",
+      "symbol": "ENA",
+      "name": "ENA",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ENJ",
+      "symbol": "ENJ",
+      "name": "Enjin Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xfE80D611c6403f70e5B1b9B722D2B3510B740B2B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "EQB",
+      "symbol": "EQB",
+      "name": "Equilibria Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfE80D611c6403f70e5B1b9B722D2B3510B740B2B",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA2085073878152aC3090eA13D1e41bD69e60Dc99-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ELG",
+      "symbol": "ELG",
+      "name": "EscoinToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA2085073878152aC3090eA13D1e41bD69e60Dc99",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x35fA164735182de50811E8e2E824cFb9B6118ac2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "eETH",
+      "symbol": "eETH",
+      "name": "ether.fi ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ETHFI",
+      "symbol": "ETHFI",
+      "name": "ether.fi governance token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ENS",
+      "symbol": "ENS",
+      "name": "Ethereum Name Service",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ETH+",
+      "symbol": "ETH+",
+      "name": "ETHPlus",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA35b1B31Ce002FBF2058D22F30f95D405200A15b-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ETHx",
+      "symbol": "ETHx",
+      "name": "ETHx",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "EURA",
+      "symbol": "EURA",
+      "name": "EURA (previously agEUR)",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xC581b735A1688071A1746c968e0798D642EDE491-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "EURT",
+      "symbol": "EURT",
+      "name": "Euro Tether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC581b735A1688071A1746c968e0798D642EDE491",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4E15361FD6b4BB609Fa63C81A2be19d873717870-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FTM",
+      "symbol": "FTM",
+      "name": "Fantom Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4E15361FD6b4BB609Fa63C81A2be19d873717870",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xa0246c9032bC3A600820415aE600c6388619A14D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FARM",
+      "symbol": "FARM",
+      "name": "FARM Reward Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa0246c9032bC3A600820415aE600c6388619A14D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FET",
+      "symbol": "FET",
+      "name": "Fetch",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x939069722D568B5498CcBA4356E800EaefEFD2a5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FNXAI",
+      "symbol": "FNXAI",
+      "name": "Finanx AI",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x939069722D568B5498CcBA4356E800EaefEFD2a5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xd0D56273290D339aaF1417D9bfa1bb8cFe8A0933-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FOOM",
+      "symbol": "FOOM",
+      "name": "FOOM",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd0D56273290D339aaF1417D9bfa1bb8cFe8A0933",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FORE",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x41545f8b9472D758bB669ed8EaEEEcD7a9C4Ec29-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FORT",
+      "symbol": "FORT",
+      "name": "Forta",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x41545f8b9472D758bB669ed8EaEEEcD7a9C4Ec29",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FOX",
+      "symbol": "FOX",
+      "name": "FOX",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x853d955aCEf822Db058eb8505911ED77F175b99e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FRAX",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5E8422345238F34275888049021821E8E08CAa1f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "frxETH",
+      "symbol": "frxETH",
+      "name": "Frax Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FPI",
+      "symbol": "FPI",
+      "name": "Frax Price Index",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FXS",
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GALA",
+      "symbol": "GALA",
+      "name": "Gala",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xd1d2Eb1B1e90B638588728b4130137D262C87cae-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GALA",
+      "symbol": "GALA",
+      "name": "Gala",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd1d2Eb1B1e90B638588728b4130137D262C87cae",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xBa3335588D9403515223F109EdC4eB7269a9Ab5D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GEAR",
+      "symbol": "GEAR",
+      "name": "Gearbox",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBa3335588D9403515223F109EdC4eB7269a9Ab5D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GENE",
+      "symbol": "GENE",
+      "name": "GenomesDAO",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GTC",
+      "symbol": "GTC",
+      "name": "Gitcoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6810e776880C02933D47DB1b9fc05908e5386b96-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GNO",
+      "symbol": "GNO",
+      "name": "Gnosis Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6810e776880C02933D47DB1b9fc05908e5386b96",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x830eB1204380E9c44434Db8700257025358707c6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GOB",
+      "symbol": "GOB",
+      "name": "Goons of Balatroon",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x830eB1204380E9c44434Db8700257025358707c6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0ab87046fBb341D058F17CBC4c1133F25a20a52f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "gOHM",
+      "symbol": "gOHM",
+      "name": "Governance OHM",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xeEAA40B28A2d1b0B08f6f97bB1DD4B75316c6107-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GOVI",
+      "symbol": "GOVI",
+      "name": "GOVI",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xeEAA40B28A2d1b0B08f6f97bB1DD4B75316c6107",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xc944E90C64B2c07662A292be6244BDf05Cda44a7-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "GRT",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x584bC13c7D411c00c01A62e8019472dE68768430-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "HEGIC",
+      "symbol": "HEGIC",
+      "name": "Hegic",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x584bC13c7D411c00c01A62e8019472dE68768430",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6c6EE5e31d828De241282B9606C8e98Ea48526E2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "HOT",
+      "symbol": "HOT",
+      "name": "HoloToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "HOP",
+      "symbol": "HOP",
+      "name": "Hop",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ILV",
+      "symbol": "ILV",
+      "name": "Illuvium",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "IMX",
+      "symbol": "IMX",
+      "name": "Immutable X",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "INJ",
+      "symbol": "INJ",
+      "name": "Injective Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "JASMY",
+      "symbol": "JASMY",
+      "name": "JasmyCoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x02e7F808990638E9e67E1f00313037EDe2362361-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "KIBSHI",
+      "symbol": "KIBSHI",
+      "name": "KiboShib",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x02e7F808990638E9e67E1f00313037EDe2362361",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "KNC",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal v2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LDO",
+      "symbol": "LDO",
+      "name": "Lido DAO Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xa3F4341C3fEf5963AB04135D2014AC7d68222E19-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LOGX",
+      "symbol": "LOGX",
+      "name": "LogX Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3F4341C3fEf5963AB04135D2014AC7d68222E19",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xf4d2888d29D722226FafA5d9B24F9164c092421E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LOOKS",
+      "symbol": "LOOKS",
+      "name": "LooksRare Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xf4d2888d29D722226FafA5d9B24F9164c092421E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LRC",
+      "symbol": "LRC",
+      "name": "LoopringCoin V2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LORDS",
+      "symbol": "LORDS",
+      "name": "Lords",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LQTY",
+      "symbol": "LQTY",
+      "name": "LQTY",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA8b919680258d369114910511cc87595aec0be6D-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LYXe",
+      "symbol": "LYXe",
+      "name": "LUKSO Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA8b919680258d369114910511cc87595aec0be6D",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5f98805A4E8be255a32880FDeC7F6728C6568bA0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LUSD",
+      "symbol": "LUSD",
+      "name": "LUSD Stablecoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LYRA",
+      "symbol": "LYRA",
+      "name": "Lyra Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MAGIC",
+      "symbol": "MAGIC",
+      "name": "MAGIC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MIM",
+      "symbol": "MIM",
+      "name": "Magic Internet Money",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MKR",
+      "symbol": "MKR",
+      "name": "Maker",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x3c3a81e81dc49A522A592e7622A7E711c06bf354-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MNT",
+      "symbol": "MNT",
+      "name": "Mantle",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x57B946008913B82E4dF85f501cbAeD910e58D26C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "POND",
+      "symbol": "POND",
+      "name": "Marlin POND",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x57B946008913B82E4dF85f501cbAeD910e58D26C",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x69af81e73A73B40adF4f3d4223Cd9b1ECE623074-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MASK",
+      "symbol": "MASK",
+      "name": "Mask Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x69af81e73A73B40adF4f3d4223Cd9b1ECE623074",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MATIC",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xec67005c4E498Ec7f55E092bd1d35cbC47C91892-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MLN",
+      "symbol": "MLN",
+      "name": "Melon Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xec67005c4E498Ec7f55E092bd1d35cbC47C91892",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x9E32b13ce7f2E80A01932B42553652E053D6ed8e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "Metis",
+      "symbol": "Metis",
+      "name": "Metis Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "Mog",
+      "symbol": "Mog",
+      "name": "Mog Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xb2490e357980cE57bF5745e181e537a64Eb367B1-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MOONS",
+      "symbol": "MOON",
+      "name": "Moons",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb2490e357980cE57bF5745e181e537a64Eb367B1",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "USDM",
+      "symbol": "USDM",
+      "name": "Mountain Protocol USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MXC",
+      "symbol": "MXC",
+      "name": "MXCToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "MYRIA",
+      "symbol": "MYRIA",
+      "name": "Myria",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "NEXO",
+      "symbol": "NEXO",
+      "name": "Nexo",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x610dBd98A28EbbA525e9926b6aaF88f9159edbfd-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "NSTR",
+      "symbol": "NSTR",
+      "name": "Nostra",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x610dBd98A28EbbA525e9926b6aaF88f9159edbfd",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x967da4048cD07aB37855c090aAF366e4ce1b9F48-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "OCEAN",
+      "symbol": "OCEAN",
+      "name": "Ocean Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x967da4048cD07aB37855c090aAF366e4ce1b9F48",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "OHM",
+      "symbol": "OHM",
+      "name": "Olympus",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xd26114cd6EE289AccF82350c8d8487fedB8A0C07-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "OMG",
+      "symbol": "OMG",
+      "name": "OMGToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "OMI",
+      "symbol": "OMI",
+      "name": "OMI Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ONDO",
+      "symbol": "ONDO",
+      "name": "Ondo",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8207c1FfC5B6804F6024322CcF34F29c3541Ae26-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "OGN",
+      "symbol": "OGN",
+      "name": "OriginToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8207c1FfC5B6804F6024322CcF34F29c3541Ae26",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x21BfBDa47A0B4B5b1248c767Ee49F7caA9B23697-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "OVR",
+      "symbol": "OVR",
+      "name": "OVR",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x21BfBDa47A0B4B5b1248c767Ee49F7caA9B23697",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PSP",
+      "symbol": "PSP",
+      "name": "ParaSwap",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xD528cf2E081f72908e086F8800977df826B5a483-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PBX",
+      "symbol": "PBX",
+      "name": "Paribus",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD528cf2E081f72908e086F8800977df826B5a483",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x45804880De22913dAFE09f4980848ECE6EcbAf78-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PAXG",
+      "symbol": "PAXG",
+      "name": "Paxos Gold",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x02f92800F57BCD74066F5709F1Daa1A4302Df875-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PEAS",
+      "symbol": "PEAS",
+      "name": "Peapods",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x02f92800F57BCD74066F5709F1Daa1A4302Df875",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x808507121B80c02388fAd14726482e061B8da827-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PENDLE",
+      "symbol": "PENDLE",
+      "name": "Pendle",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x808507121B80c02388fAd14726482e061B8da827",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xb9f599ce614Feb2e1BBe58F180F370D05b39344E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PORK",
+      "symbol": "PORK",
+      "name": "PepeFork",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb9f599ce614Feb2e1BBe58F180F370D05b39344E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xbC396689893D065F41bc2C6EcbeE5e0085233447-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PERP",
+      "symbol": "PERP",
+      "name": "Perpetual",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PNK",
+      "symbol": "PNK",
+      "name": "Pinakion",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x1796ae0b0fa4862485106a0de9b654eFE301D0b2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PMON",
+      "symbol": "PMON",
+      "name": "Polkamon",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1796ae0b0fa4862485106a0de9b654eFE301D0b2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "POL",
+      "symbol": "POL",
+      "name": "Polygon Ecosystem Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "POLY",
+      "symbol": "POLY",
+      "name": "Polymath",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6e5970DBd6fc7eb1f29C6D2eDF2bC4c36124C0C1-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "TRADE",
+      "symbol": "TRADE",
+      "name": "Polytrade",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6e5970DBd6fc7eb1f29C6D2eDF2bC4c36124C0C1",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PREMIA",
+      "symbol": "PREMIA",
+      "name": "Premia",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x430EF9263E76DAE63c84292C3409D61c598E9682-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "PYR",
+      "symbol": "PYR",
+      "name": "PYR Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x430EF9263E76DAE63c84292C3409D61c598E9682",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4a220E6096B25EADb88358cb44068A3248254675-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "QNT",
+      "symbol": "QNT",
+      "name": "Quant",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4a220E6096B25EADb88358cb44068A3248254675",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x12BB890508c125661E03b09EC06E404bc9289040-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "RACA",
+      "symbol": "RACA",
+      "name": "Radio Caca V2",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "RAI",
+      "symbol": "RAI",
+      "name": "Rai Reflex Index",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xD291E7a03283640FDc51b121aC401383A46cC623-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "RGT",
+      "symbol": "RGT",
+      "name": "Rari Governance Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD291E7a03283640FDc51b121aC401383A46cC623",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6De037ef9aD2725EB40118Bb1702EBb27e4Aeb24-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "RNDR",
+      "symbol": "RNDR",
+      "name": "Render Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6De037ef9aD2725EB40118Bb1702EBb27e4Aeb24",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xbf5495Efe5DB9ce00f80364C8B423567e58d2110-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ezETH",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x408e41876cCCDC0F92210600ef50372656052a38-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "REN",
+      "symbol": "REN",
+      "name": "Republic Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x408e41876cCCDC0F92210600ef50372656052a38",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8f8221aFbB33998d8584A2B05749bA73c37a938a-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "REQ",
+      "symbol": "REQ",
+      "name": "Request Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8f8221aFbB33998d8584A2B05749bA73c37a938a",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x320623b8E4fF03373931769A31Fc52A4E78B5d70-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "RSR",
+      "symbol": "RSR",
+      "name": "Reserve Rights",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x320623b8E4fF03373931769A31Fc52A4E78B5d70",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xae78736Cd615f374D3085123A210448E74Fc6393-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "rETH",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xD33526068D116cE69F19A9ee46F0bd304F21A51f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "RPL",
+      "symbol": "RPL",
+      "name": "Rocket Pool Protocol",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xc98D64DA73a6616c42117b582e832812e7B8D57F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "RSS3",
+      "symbol": "RSS3",
+      "name": "RSS3",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc98D64DA73a6616c42117b582e832812e7B8D57F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "rswETH",
+      "symbol": "rswETH",
+      "name": "rswETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x3845badAde8e6dFF049820680d1F14bD3903a5d0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SAND",
+      "symbol": "SAND",
+      "name": "SAND",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0655977FEb2f289A4aB78af67BAB0d17aAb84367-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "scrvUSD",
+      "symbol": "scrvUSD",
+      "name": "Savings crvUSD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x83F20F44975D03b1b09e64809B757c47f942BEeA-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "sDAI",
+      "symbol": "sDAI",
+      "name": "Savings Dai",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "sUSDS",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SHIB",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "Silo",
+      "symbol": "Silo",
+      "name": "Silo Governance Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x5B7533812759B45C2B44C19e320ba2cD2681b542-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "AGIX",
+      "symbol": "AGIX",
+      "name": "SingularityNET Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xAdF7C35560035944e805D98fF17d58CDe2449389-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SPEC",
+      "symbol": "SPEC",
+      "name": "Spectral Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xAdF7C35560035944e805D98fF17d58CDe2449389",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x090185f2135308BaD17527004364eBcC2D37e5F6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SPELL",
+      "symbol": "SPELL",
+      "name": "Spell Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x090185f2135308BaD17527004364eBcC2D37e5F6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SPX",
+      "symbol": "SPX",
+      "name": "SPX6900",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SSV",
+      "symbol": "SSV",
+      "name": "SSV Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9D65fF81a3c488d585bBfb0Bfe3c7707c7917f54",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xef3A930e1FfFFAcd2fc13434aC81bD278B0ecC8d-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "FIS",
+      "symbol": "FIS",
+      "name": "StaFi",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xef3A930e1FfFFAcd2fc13434aC81bD278B0ecC8d",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SDT",
+      "symbol": "SDT",
+      "name": "Stake DAO Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SDL",
+      "symbol": "SDL",
+      "name": "stake.link",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xac3E018457B222d93114458476f3E3416Abbe38F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "sfrxETH",
+      "symbol": "sfrxETH",
+      "name": "Staked Frax Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "sUSDz",
+      "symbol": "sUSDz",
+      "name": "Staked USDz",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xdB25f211AB05b1c97D595516F45794528a807ad8-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "EURS",
+      "symbol": "EURS",
+      "name": "STASIS EURS Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 2
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x744d70FDBE2Ba4CF95131626614a1763DF805B9E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SNT",
+      "symbol": "SNT",
+      "name": "Status Network Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "weETHs",
+      "symbol": "weETHs",
+      "name": "Super Symbiotic LRT",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SUPER",
+      "symbol": "SUPER",
+      "name": "SuperFarm",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "xSUSHI",
+      "symbol": "xSUSHI",
+      "name": "SushiBar",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6B3595068778DD592e39A122f4f5a5cF09C90fE2-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SUSHI",
+      "symbol": "SUSHI",
+      "name": "SushiToken",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0a6E7Ba5042B38349e437ec6Db6214AEC7B35676-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SWELL",
+      "symbol": "SWELL",
+      "name": "Swell Governance Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0a6E7Ba5042B38349e437ec6Db6214AEC7B35676",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xbe9F61555F50DD6167f2772e9CF7519790d96624-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SX",
+      "symbol": "SX",
+      "name": "SX Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SIS",
+      "symbol": "SIS",
+      "name": "Symbiosis",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0f2D719407FdBeFF09D87557AbB7232601FD9F29-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SYN",
+      "symbol": "SYN",
+      "name": "Synapse",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SNX",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x95CcffaE3Eb8767D4a941Ec43280961dde89F4dE-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "TBANK",
+      "symbol": "TBANK",
+      "name": "TaoBank",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95CcffaE3Eb8767D4a941Ec43280961dde89F4dE",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "TRB",
+      "symbol": "TRB",
+      "name": "Tellor Tributes",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8947da500Eb47F82df21143D0C01A29862a8C3c5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "THALES",
+      "symbol": "THALES",
+      "name": "Thales DAO Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8947da500Eb47F82df21143D0C01A29862a8C3c5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xBAac2B4491727D78D2b78815144570b9f2Fe8899-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "DOG",
+      "symbol": "DOG",
+      "name": "The Doge NFT",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBAac2B4491727D78D2b78815144570b9f2Fe8899",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xCdF7028ceAB81fA0C6971208e83fa7872994beE5-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "T",
+      "symbol": "T",
+      "name": "Threshold Network Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCdF7028ceAB81fA0C6971208e83fa7872994beE5",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0000000000095413afC295d19EDeb1Ad7B71c952-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "LON",
+      "symbol": "LON",
+      "name": "Tokenlon",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0000000000095413afC295d19EDeb1Ad7B71c952",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "TRIBE",
+      "symbol": "TRIBE",
+      "name": "Tribe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0000000000085d4780B73119b644AE5ecd22b376-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "TUSD",
+      "symbol": "TUSD",
+      "name": "TrueUSD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0000000000085d4780B73119b644AE5ecd22b376",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xD13c7342e1ef687C5ad21b27c2b65D772cAb5C8c-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "UOS",
+      "symbol": "UOS",
+      "name": "Ultra Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD13c7342e1ef687C5ad21b27c2b65D772cAb5C8c",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 4
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "UMA",
+      "symbol": "UMA",
+      "name": "UMA Voting Token v1",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "UNI",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "USDC",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "USUAL",
+      "symbol": "USUAL",
+      "name": "USUAL",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "VERI",
+      "symbol": "VERI",
+      "name": "Veritaseum",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xbbEE07B3e8121227AfCFe1E2B82772246226128e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "VRTX",
+      "symbol": "VRTX",
+      "name": "Vertex",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbbEE07B3e8121227AfCFe1E2B82772246226128e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "VITA",
+      "symbol": "VITA",
+      "name": "VitaDAO Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xde654f497A563dd7A121c176a125dD2F11F13a83-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "WXM",
+      "symbol": "WXM",
+      "name": "WeatherXM",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xde654f497A563dd7A121c176a125dD2F11F13a83",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xa02120696c7B8fE16C09C749E4598819b2B0E915-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "WXT",
+      "symbol": "WXT",
+      "name": "Wirex Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa02120696c7B8fE16C09C749E4598819b2B0E915",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x4691937a7508860F876c9c0a2a617E7d9E945D4B-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "WOO",
+      "symbol": "WOO",
+      "name": "Wootrade Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x163f8C2467924be0ae7B5347228CABF260318753-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "WLD",
+      "symbol": "WLD",
+      "name": "Worldcoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xEDB171C18cE90B633DB442f2A6F72874093b49Ef-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "WAMPL",
+      "symbol": "WAMPL",
+      "name": "Wrapped Ampleforth",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEDB171C18cE90B633DB442f2A6F72874093b49Ef",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x418D75f65a02b3D53B2418FB8E1fe493759c7605-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "WBNB",
+      "symbol": "WBNB",
+      "name": "Wrapped BNB",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x418D75f65a02b3D53B2418FB8E1fe493759c7605",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "WBTC",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "weETH",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "wUSDM",
+      "symbol": "wUSDM",
+      "name": "Wrapped Mountain Protocol USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xD31a59c85aE9D8edEFeC411D448f90841571b89c-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "SOL",
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "TONCOIN",
+      "symbol": "TONCOIN",
+      "name": "Wrapped TON Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "YFI",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xF55a93b613D172b86c2Ba3981a849DaE2aeCDE2f-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "YFX",
+      "symbol": "YFX",
+      "name": "YFX",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF55a93b613D172b86c2Ba3981a849DaE2aeCDE2f",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xfd418e42783382E86Ae91e445406600Ba144D162-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "ZRC",
+      "symbol": "ZRC",
+      "name": "Zircuit",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfd418e42783382E86Ae91e445406600Ba144D162",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "zunETH",
+      "symbol": "zunETH",
+      "name": "Zunami ETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6-0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+      "ticker": "zunUSD",
+      "symbol": "zunUSD",
+      "name": "Zunami USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1623784100,
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x6B175474E89094C44Da98b954EedeAC495271d0F-0xA10c7CE4b876998858b1a9E12b10092229539400",
+      "ticker": "DAI",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632133470,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0-0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+      "ticker": "wstETH",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1659608791,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "ethereum-0x58b6A8A3302369DAEc383334672404Ee733aB239-0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+      "ticker": "LPT",
+      "symbol": "LPT",
+      "name": "Livepeer Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
+        "chain": "ethereum",
+        "escrowAddress": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1644777090,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
+      "ticker": "ATH",
+      "symbol": "ATH",
+      "name": "Aethir Token",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1718150400,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548",
+      "ticker": "ARB",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "ARB"
+      },
+      "sinceTimestamp": 1679529600,
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "id": "arbitrum-0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
+      "ticker": "BIFI",
+      "symbol": "BIFI",
+      "name": "beefy.finance",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632385561,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x2297aEbD383787A160DD0d9F71508148769342E3",
+      "ticker": "BTC.b",
+      "symbol": "BTC.b",
+      "name": "Bitcoin",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2297aEbD383787A160DD0d9F71508148769342E3",
+        "chain": "arbitrum",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1668644839,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
+      "ticker": "BOOP",
+      "symbol": "BOOP",
+      "name": "Boop",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "BOOP"
+      },
+      "sinceTimestamp": 1703116800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8",
+      "ticker": "GRAIL",
+      "symbol": "GRAIL",
+      "name": "Camelot token",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "GRAIL"
+      },
+      "sinceTimestamp": 1670371200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
+      "ticker": "CATCH",
+      "symbol": "CATCH",
+      "name": "CATCH",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "CATCH"
+      },
+      "sinceTimestamp": 1718880774,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
+      "ticker": "CHEESE",
+      "symbol": "CHEESE",
+      "name": "CHEESE",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1717472231,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "ticker": "cbBTC",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "arbitrum",
+        "decimals": 8
+      },
+      "sinceTimestamp": 1731094732,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
+      "ticker": "DMT",
+      "symbol": "DMT",
+      "name": "DMT",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "DMT"
+      },
+      "sinceTimestamp": 1684901612,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xf8173a39c56a554837C4C7f104153A005D284D11",
+      "ticker": "EDU",
+      "symbol": "EDU",
+      "name": "EDU Coin",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf8173a39c56a554837C4C7f104153A005D284D11",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1719996579,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
+      "ticker": "EGP",
+      "symbol": "EGP",
+      "name": "Eigenpie",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "EGP"
+      },
+      "sinceTimestamp": 1727222400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x87AAfFdF26c6885f6010219208D5B161ec7609c0",
+      "ticker": "EQU",
+      "symbol": "EQU",
+      "name": "Equation",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "EQU"
+      },
+      "sinceTimestamp": 1698624000,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+      "ticker": "ETHFI",
+      "symbol": "ETHFI",
+      "name": "ether.fi governance token",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1718638923,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+      "ticker": "FRAX",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632766868,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x178412e79c25968a32e89b11f63B33F733770c2A",
+      "ticker": "frxETH",
+      "symbol": "frxETH",
+      "name": "Frax Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1673211956,
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
+      "ticker": "FPI",
+      "symbol": "FPI",
+      "name": "Frax Price Index",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1677013204,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x3405E88af759992937b84E58F2Fe691EF0EeA320",
+      "ticker": "FPIS",
+      "symbol": "FPIS",
+      "name": "Frax Price Index Share",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3405E88af759992937b84E58F2Fe691EF0EeA320",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1677013206,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
+      "ticker": "FXS",
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1632766868,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+      "ticker": "GNS",
+      "symbol": "GNS",
+      "name": "Gains Network",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1672175006,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
+      "ticker": "G3",
+      "symbol": "G3",
+      "name": "GAM3S.GG",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "G3"
+      },
+      "sinceTimestamp": 1712620800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
+      "ticker": "GHO",
+      "symbol": "GHO",
+      "name": "Gho Token",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1719102305,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
+      "ticker": "GMX",
+      "symbol": "GMX",
+      "name": "GMX",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "GMX"
+      },
+      "sinceTimestamp": 1631491200,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+      "ticker": "GRT",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1669815527,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x3404149e9EE6f17Fb41DB1Ce593ee48FBDcD9506",
+      "ticker": "HDN",
+      "symbol": "HDN",
+      "name": "Hydranet",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "HDN"
+      },
+      "sinceTimestamp": 1687566748,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
+      "ticker": "JOE",
+      "symbol": "JOE",
+      "name": "JoeToken",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1674495392,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x10393c20975cF177a3513071bC110f7962CD67da",
+      "ticker": "JONES",
+      "symbol": "JONES",
+      "name": "Jones DAO",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "JONES"
+      },
+      "sinceTimestamp": 1643500800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "ticker": "rsETH",
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1707187495,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "ticker": "ZRO",
+      "symbol": "ZRO",
+      "name": "LayerZero",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1718928000,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xF19547f9ED24aA66b03c3a552D181Ae334FBb8DB",
+      "ticker": "LODE",
+      "symbol": "LODE",
+      "name": "Lodestar",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "LODE"
+      },
+      "sinceTimestamp": 1669075200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xa61F74247455A40b01b0559ff6274441FAfa22A3",
+      "ticker": "MGP",
+      "symbol": "MGP",
+      "name": "Magpie Token",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa61F74247455A40b01b0559ff6274441FAfa22A3",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1677340301,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
+      "ticker": "MOLTEN",
+      "symbol": "MOLTEN",
+      "name": "Molten",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1712102400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "ticker": "MOR",
+      "symbol": "MOR",
+      "name": "MOR",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1716163200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+      "ticker": "USDM",
+      "symbol": "USDM",
+      "name": "Mountain Protocol USD",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1700232777,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x20547341E58fB558637FA15379C92e11F7b7F710",
+      "ticker": "MOZ",
+      "symbol": "MOZ",
+      "name": "Mozaic Token",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "MOZ"
+      },
+      "sinceTimestamp": 1694131200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xaeDF7656fBB47c5B97dD529aC1D0e807E051f2dd",
+      "ticker": "MXC",
+      "symbol": "MXC",
+      "name": "MXC Token",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "MXC"
+      },
+      "sinceTimestamp": 1687777847,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xdadeca1167fe47499e53Eb50F261103630974905",
+      "ticker": "NRN",
+      "symbol": "NRN",
+      "name": "Neuron",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "NRN"
+      },
+      "sinceTimestamp": 1719187200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
+      "ticker": "PEPE",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1683328069,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x3082CC23568eA640225c2467653dB90e9250AaA0",
+      "ticker": "RDNT",
+      "symbol": "RDNT",
+      "name": "Radiant",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1678676107,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "ticker": "ezETH",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1709142061,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xabD587f2607542723b17f14d00d99b987C29b074",
+      "ticker": "SDEX",
+      "symbol": "SDEX",
+      "name": "SmarDex Token",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xabD587f2607542723b17f14d00d99b987C29b074",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1688976153,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x11F98c7E42A367DaB4f200d2fdc460fb445CE9a8",
+      "ticker": "SPARTA",
+      "symbol": "SPARTA",
+      "name": "SPARTA",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "SPARTA"
+      },
+      "sinceTimestamp": 1691452800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
+      "ticker": "sFRAX",
+      "symbol": "sFRAX",
+      "name": "Staked FRAX",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1708387200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
+      "ticker": "sfrxETH",
+      "symbol": "sfrxETH",
+      "name": "Staked Frax Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1673211957,
+      "category": "ether",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "ticker": "sUSDe",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1710892800,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+      "ticker": "STG",
+      "symbol": "STG",
+      "name": "StargateToken",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1647561600,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xB299751B088336E165dA313c33e3195B8c6663A6",
+      "ticker": "STAR",
+      "symbol": "STAR",
+      "name": "StarHeroes",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "STAR"
+      },
+      "sinceTimestamp": 1710201600,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
+      "ticker": "TAP",
+      "symbol": "TAP",
+      "name": "TapToken",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "TAP"
+      },
+      "sinceTimestamp": 1718668800,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
+      "ticker": "TIA.n",
+      "symbol": "TIA.n",
+      "name": "TIA",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
+        "chain": "arbitrum",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1707004800,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "ticker": "USDC",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "decimals": 6
+      },
+      "sinceTimestamp": 1667248932,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "ticker": "USDe",
+      "symbol": "USDe",
+      "name": "USDe",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1710118453,
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
+      "ticker": "USDX",
+      "symbol": "USDX",
+      "name": "USDX",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1727308800,
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
+      "ticker": "VELA",
+      "symbol": "VELA",
+      "name": "VelaToken",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "VELA"
+      },
+      "sinceTimestamp": 1674864000,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
+      "ticker": "WINR",
+      "symbol": "WINR",
+      "name": "WINR",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "WINR"
+      },
+      "sinceTimestamp": 1679011200,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "ticker": "wOETH",
+      "symbol": "wOETH",
+      "name": "Wrapped OETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1707392291,
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+      "ticker": "SOL",
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+        "chain": "arbitrum",
+        "decimals": 9
+      },
+      "sinceTimestamp": 1671137208,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
+      "ticker": "XAI",
+      "symbol": "XAI",
+      "name": "Xai",
+      "amount": {
+        "type": "circulatingSupply",
+        "ticker": "XAI"
+      },
+      "sinceTimestamp": 1704758400,
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "id": "arbitrum-0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
+      "ticker": "XBG",
+      "symbol": "XBG",
+      "name": "XBorg",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
+        "chain": "arbitrum",
+        "decimals": 18
+      },
+      "sinceTimestamp": 1724198400,
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    }
+  ]
+}
