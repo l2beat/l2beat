@@ -67,10 +67,10 @@ function RiskValues({
     grissiniValues.length > 0 && (
       <div>
         {!hideTitle && (
-          <span className="text-lg font-bold md:text-xl">{title}</span>
+          <div className="mb-2 text-lg font-bold md:text-xl">{title}</div>
         )}
         {Object.values(grissiniValues).map((value, key) => (
-          <div key={key} className="mt-2 flex flex-col gap-2">
+          <div key={key} className="mb-6 flex flex-col gap-2">
             <SingleGrissiniDetails
               {...value}
               className={hideRisks ? 'hidden' : ''}
