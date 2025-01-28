@@ -97,7 +97,6 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
 
 export const mantle: Layer2 = opStackL2({
   createdAt: new UnixTime(1680782525), // 2023-04-06T12:02:05Z
-  additionalBadges: [Badge.DA.CustomDA],
   daProvider: {
     layer: DA_LAYERS.MANTLE_DA,
     bridge: DA_BRIDGES.STAKED_OPERATORS({
@@ -132,6 +131,7 @@ export const mantle: Layer2 = opStackL2({
         },
       ],
     },
+    badge: Badge.DA.CustomDA,
   },
   associatedTokens: ['MNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],

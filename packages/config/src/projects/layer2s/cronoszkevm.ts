@@ -100,22 +100,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
       ...zkStackUpgrades,
     }),
   ],
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('CronosZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('CronosZkEVMAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the Cronos zkEVM diamond contract.',
-    }),
-    discovery.getContractDetails('TransactionFiltererDenyList', {
-      description:
-        'Censorship contract that is registered as the TransactionFilterer in the Cronos zkEVM diamond contract. Keeps a list of addresses that are not allowed to force transactions to the Layer 2 (`requestL2Transaction()`).',
-    }),
-  ],
   // currently unclear if state derivation is significantly different from ZKsync Era, see telegram chat
   // stateDerivation: {
   //   nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
@@ -126,26 +110,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
   //   dataFormat:
   //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/09_pubdata.md).',
   // },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'CronosChainAdminMultisig',
-      'Inherits all *ChainAdmin* permissions.',
-    ),
-    {
-      name: 'CronosChainAdminEOA',
-      accounts: [
-        discovery.getAccessControlRolePermission(
-          'CronosZkEVMAdmin',
-          'ADMIN',
-        )[0],
-      ],
-      description: 'Inherits all *ChainAdmin* permissions.',
-    },
-    ...discovery.getMultisigPermission(
-      'TxFiltererOwnerMultisig',
-      'Owns the TransactionFiltererDenyList contract and can manage addresses in the censoring list. Currently also has all *ChainAdmin* permissions through the CronosZkEVMAdmin contract.',
-    ),
-  ],
   milestones: [
     {
       name: 'Alpha Mainnet Launch',
