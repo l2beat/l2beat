@@ -25,7 +25,6 @@ import {
   type ReasonForBeingInOther,
   type ScalingProject,
   type ScalingProjectCategory,
-  type ScalingProjectConfig,
   type ScalingProjectContract,
   type ScalingProjectDisplay,
   type ScalingProjectEscrow,
@@ -179,14 +178,10 @@ function opStackCommon(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
   incomingNativeDA?: ProjectDataAvailability,
-): Omit<ScalingProject, 'type' | 'display' | 'config'> & {
+): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
     ScalingProjectDisplay,
     'architectureImage' | 'purposes' | 'provider' | 'category' | 'warning'
-  >
-  config: Pick<
-    ScalingProjectConfig,
-    'associatedTokens' | 'gasTokens' | 'transactionApi' | 'escrows'
   >
 } {
   const nativeContractRisks = [CONTRACTS.UPGRADE_NO_DELAY_RISK]
