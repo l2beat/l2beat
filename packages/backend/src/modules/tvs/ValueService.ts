@@ -70,7 +70,7 @@ export class ValueService {
     timestamp: UnixTime,
   ): Promise<number> {
     const priceConfig = createPriceConfig(formula)
-    const price = await this.storage.getPrice(priceConfig.id, timestamp)
+    const price = await this.storage.getPrice(priceConfig.ticker, timestamp)
     assert(price !== undefined, `Price not found for ${priceConfig.ticker}`)
 
     const amount = await this.executeAmountFormula(formula.amount, timestamp)

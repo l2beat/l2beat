@@ -73,14 +73,17 @@ export class DataFormulaExecutor {
         prices.map(async (price, index) => {
           this.logger.debug(`Processing price ${index} of ${prices.length}`)
 
-          const cachedValue = await this.storage.getPrice(price.id, timestamp)
+          const cachedValue = await this.storage.getPrice(
+            price.ticker,
+            timestamp,
+          )
           if (cachedValue !== undefined) {
-            this.logger.debug(`Cached value found for ${price.id}`)
+            this.logger.debug(`Cached value found for ${price.ticker}`)
             return // Skip further processing for this price
           }
 
           const value = await this.fetchPrice(price, timestamp)
-          await this.storage.writePrice(price.id, timestamp, value)
+          await this.storage.writePrice(price.ticker, timestamp, value)
         }),
       )
 
